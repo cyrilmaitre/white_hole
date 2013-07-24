@@ -1029,6 +1029,12 @@
     <ClCompile Include="Reactor.cpp">
       <Filter>Fichiers sources\game\mapObject\entity\module</Filter>
     </ClCompile>
+    <ClCompile Include="EntityData.cpp">
+      <Filter>Fichiers sources\game\mapObject\entity</Filter>
+    </ClCompile>
+    <ClCompile Include="EntityMovableData.cpp">
+      <Filter>Fichiers sources\game\mapObject\entity</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h">
@@ -1744,6 +1750,12 @@
     </ClInclude>
     <ClInclude Include="Reactor.h">
       <Filter>Fichiers d%27en-tête\game\mapObject\entity\module</Filter>
+    </ClInclude>
+    <ClInclude Include="EntityData.h">
+      <Filter>Fichiers d%27en-tête\game\mapObject\entity</Filter>
+    </ClInclude>
+    <ClInclude Include="EntityMovableData.h">
+      <Filter>Fichiers d%27en-tête\game\mapObject\entity</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

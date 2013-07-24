@@ -99,6 +99,8 @@
     <ClCompile Include="CharacterShipItemStackUpdate.cpp" />
     <ClCompile Include="CharacterUpdate.cpp" />
     <ClCompile Include="DebugScreen.cpp" />
+    <ClCompile Include="EntityData.cpp" />
+    <ClCompile Include="EntityMovableData.cpp" />
     <ClCompile Include="EntityTarget.cpp" />
     <ClCompile Include="ExperienceBar.cpp" />
     <ClCompile Include="IdValueDouble.cpp" />
@@ -334,6 +336,8 @@
     <ClInclude Include="CharacterUpdate.h" />
     <ClInclude Include="DebugScreen.h" />
     <ClInclude Include="DestructableData.h" />
+    <ClInclude Include="EntityData.h" />
+    <ClInclude Include="EntityMovableData.h" />
     <ClInclude Include="EntityTarget.h" />
     <ClInclude Include="ExperienceBar.h" />
     <ClInclude Include="IdValueDouble.h" />

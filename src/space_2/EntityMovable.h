@@ -1,11 +1,13 @@
 #pragma once
 #include "Entity.h"
 #include "Movable.h"
+#include "EntityMovableData.h"
+#include "Reactor.h"
 
 // Define
 #define TARGET_DISTANCE_MAX_DEFAULT		50
 
-class EntityMovable : public Entity, public Movable
+class EntityMovable : public Entity, public Movable, public EntityMovableData
 {
 public:
 	// Constructor - Destructor
@@ -43,11 +45,9 @@ public:
 	virtual void updateQuickeningActive();
 	void update(sf::Event p_event);
 	void draw();
-	void loadSprite();
-	void unloadSprite();
-
 	double generateTargetPositionX();
 	double generateTargetPositionY();
+	void notifyReactorJsonChanged();
 
 
 protected:
@@ -60,6 +60,6 @@ protected:
 	double mSourceY;
 	double mTargetGenRange;
 
-	std::vector<sf::Sprite*> mReactorSprite;
+	std::vector<Reactor*> mReactors;
 };
 

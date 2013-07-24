@@ -3,19 +3,6 @@
 #include "MovableData.h"
 #include "Clock.h"
 
-// Define
-/*
-#define MOVABLE_VELOCITY_NUMBER		9		// Velocity for each cardinality
-#define MOVABLE_MOVE_N				0
-#define MOVABLE_MOVE_NE				1
-#define MOVABLE_MOVE_E				2
-#define MOVABLE_MOVE_SE				3
-#define MOVABLE_MOVE_S				4
-#define MOVABLE_MOVE_SO				5
-#define MOVABLE_MOVE_O				6
-#define MOVABLE_MOVE_NO				7
-#define MOVABLE_MOVE_NORMAL			8
-*/
 
 class Movable : public MovableData
 {
@@ -50,7 +37,7 @@ public:
 	float getVelocityAt(MovableCardinality p_cardinality);
 	void setVelocityAt(MovableCardinality cardinality, float p_velocity);
 
-	bool getQuickeningActiveAt(MovableCardinality p_cardinality);
+	bool isQuickeningActiveAt(MovableCardinality p_cardinality);
 	void setQuickeningActiveAt(MovableCardinality p_cardinality, bool p_value);
 
 	float getMoveX();

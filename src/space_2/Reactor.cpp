@@ -1,13 +1,38 @@
 #include "Reactor.h"
+#include "ToolsImage.h"
+#include "EntityMovable.h"
+
+
+//*************************************************************
+// Define
+//*************************************************************
+#define JSON_OFFSETX		"x"
+#define JSON_OFFSETY		"y"
+#define JSON_TYPE			"type"
+#define JSON_SIZE			"size"
+#define REACTOR_SPRITE		"reactor_wisp.png"
 
 
 //*************************************************************
 // Constructreur - Destructeur
 //*************************************************************
-Reactor::Reactor( EntityMovable* p_entity, ReactorType p_type, float p_offsetX, float p_offsetY )
+Reactor::Reactor( EntityMovable* p_entity, Json::Value p_reactorJson )
 {
 	this->mEntityMovable = NULL;
 	this->mReactor = NULL;
+
+	this->setEntityMovable(p_entity);
+	this->setOffsetX(p_reactorJson.get(JSON_OFFSETX, 0).asInt());
+	this->setOffsetY(p_reactorJson.get(JSON_OFFSETY, 0).asInt());
+	this->setType((ReactorType)p_reactorJson.get(JSON_TYPE, 0).asInt());
+	this->setSize(p_reactorJson.get(JSON_SIZE, 0).asInt());
+
+	if(this->getSize() > 0)
+	{
+		this->mReactor = new sf::Sprite(*Resource::resource->getTexture(REACTOR_SPRITE));
+		ToolsImage::setSpriteOriginCenter(this->mReactor);
+		ToolsImage::resizeSprite(this->mReactor, this->getSize(), this->getSize());
+	}
 }
 
 Reactor::~Reactor(void)
@@ -58,5 +83,63 @@ float Reactor::getOffsetY()
 void Reactor::setOffsetY( float p_y )
 {
 	this->mOffsetY = p_y;
+}
+
+int Reactor::getSize()
+{
+	return this->mSize;
+}
+
+void Reactor::setSize( int p_size )
+{
+	this->mSize = p_size;
+}
+
+bool Reactor::isActive()
+{
+	if(	this->getEntityMovable()->isQuickeningActiveAt(Movable::MovableCardinality::NorthEast) ||
+		this->getEntityMovable()->isQuickeningActiveAt(Movable::MovableCardinality::North) ||
+		this->getEntityMovable()->isQuickeningActiveAt(Movable::MovableCardinality::NorthWest) ||
+		this->getEntityMovable()->isQuickeningActiveAt(Movable::MovableCardinality::SouthEast) ||
+		this->getEntityMovable()->isQuickeningActiveAt(Movable::MovableCardinality::South) ||
+		this->getEntityMovable()->isQuickeningActiveAt(Movable::MovableCardinality::SouthWest))
+		return true;
+
+	if(this->getType() == ReactorType::Right)
+		return	this->getEntityMovable()->isQuickeningActiveAt(Movable::MovableCardinality::West);
+	else
+		return	this->getEntityMovable()->isQuickeningActiveAt(Movable::MovableCardinality::East);
+}
+
+
+//*************************************************************
+// Methods
+//*************************************************************
+void Reactor::update()
+{
+	if(this->getEntityMovable()->isVisible())
+		this->updatePosition();
+}
+
+void Reactor::updatePosition()
+{
+	if(this->mReactor != NULL && this->isActive())
+	{
+		sf::Vector2f reactorOffset;
+		reactorOffset.x = this->getOffsetX();
+		reactorOffset.y = this->getOffsetY();
+		reactorOffset = Tools::rotatePoint(reactorOffset, this->getEntityMovable()->getRotation());
+		this->mReactor->setPosition(this->getEntityMovable()->getScreenX() + reactorOffset.x, this->getEntityMovable()->getScreenY() + this->getEntityMovable()->getRocking() + reactorOffset.y);
+		this->mReactor->setRotation(this->getEntityMovable()->getRotation());
+	}
+}
+
+void Reactor::draw()
+{
+	if(this->getEntityMovable()->isVisible())
+	{
+		if(this->mReactor != NULL && this->isActive())
+			Resource::resource->getApp()->draw(*this->mReactor);
+	}
 }
 

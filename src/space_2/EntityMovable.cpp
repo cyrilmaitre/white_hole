@@ -123,6 +123,9 @@ void EntityMovable::update()
 	this->updateQuickeningActive();
 	Movable::update();
 	this->updatePosition();
+
+	for(int i = 0; i < this->mReactors.size(); i++)
+		this->mReactors[i]->update();
 }
 
 void EntityMovable::updateRotation()
@@ -161,6 +164,9 @@ void EntityMovable::update( sf::Event p_event )
 
 void EntityMovable::draw()
 {
+	for(int i = 0; i < this->mReactors.size(); i++)
+		this->mReactors[i]->draw();
+
 	Entity::draw();
 }
 
@@ -271,29 +277,26 @@ double EntityMovable::generateTargetPositionY()
 		return this->getSourceY() - distance;
 }
 
-void EntityMovable::loadSprite()
+void EntityMovable::notifyReactorJsonChanged()
 {
-	Entity::loadSprite();
+	// Delete
+	for(int i = 0; i < this->mReactors.size(); i++)
+		delete this->mReactors[i];
+	this->mReactors.clear();
 
-	for(int i = 0; i < this->getReactorCount(); i++)
+	// Add
+	Json::Value jsonReactors;   
+	Json::Reader reader;
+	bool parsingSuccessfull = reader.parse(this->getReactorJson(), jsonReactors);
+	if(parsingSuccessfull && jsonReactors.isArray())
 	{
-		sf::Sprite* currentSprite = new sf::Sprite(*Resource::resource->getTexture(REACTOR_IMG));
-		ToolsImage::setSpriteOriginCenter(currentSprite);
-		ToolsImage::resizeSprite(currentSprite, this->getReactorSize(), this->getReactorSize());
-
+		for(int i = 0; i < jsonReactors.size(); i++)
+		{
+			Json::Value currentJsonPosition = jsonReactors.get(i, NULL);
+			if(currentJsonPosition != NULL)
+				this->mReactors.push_back(new Reactor(this, currentJsonPosition));
+		}
 	}
-}
-
-void EntityMovable::unloadSprite()
-{
-	Entity::unloadSprite();
-
-	for(int i = 0; i < this->mReactorSprite.size(); i++)
-	{
-		if(this->mReactorSprite[i] != NULL)
-			delete this->mReactorSprite[i];
-	}
-	this->mReactorSprite.clear();
 }
 
 

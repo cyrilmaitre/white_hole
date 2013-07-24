@@ -1,7 +1,7 @@
 #pragma once
 #include "Resource.h"
-#include "EntityMovable.h"
 
+class EntityMovable;
 
 class Reactor
 {
@@ -9,12 +9,12 @@ public:
 	// Enum
 	enum ReactorType
 	{
-		Left,
+		Left = 0,
 		Right
 	};
 
 	// Constructor - Destructor
-	Reactor(EntityMovable* p_entity, ReactorType p_type, float p_offsetX, float p_offsetY);
+	Reactor(EntityMovable* p_entity, Json::Value p_reactorJson);
 	~Reactor(void);
 
 	// Getters - Setters
@@ -30,8 +30,14 @@ public:
 	float getOffsetY();
 	void setOffsetY(float p_y);
 
+	int getSize();
+	void setSize(int p_size);
+
+	bool isActive();
+
 	// Methods
 	void update();
+	void updatePosition();
 	void draw();
 
 
@@ -41,6 +47,7 @@ private:
 	ReactorType mType;
 	float mOffsetX;
 	float mOffsetY;
+	int mSize;
 	sf::Sprite *mReactor;
 };
 

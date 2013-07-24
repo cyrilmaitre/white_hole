@@ -11,10 +11,11 @@
 #include "Item.h"
 #include "RotableData.h"
 #include "MapObjectModel.h"
+#include "EntityMovableData.h"
 
 
 class ShipModel :	public Item, public MovableData, public DestructableData, public ContainerableData, public StuffableData, 
-					public UpgradableData, public WeaponableData, public RotableData, public MapObjectModel
+					public UpgradableData, public WeaponableData, public RotableData, public MapObjectModel, public EntityMovableData
 {
 public:
 	// Constructor - Destructor

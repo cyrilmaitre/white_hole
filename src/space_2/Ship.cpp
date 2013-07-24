@@ -84,6 +84,7 @@ void Ship::loadFromShipModel()
 		UpgradableData::loadFromUpgradableData(this->getShipModel());
 		StuffableData::loadFromStuffableData(this->getShipModel());
 		RotableData::loadFromRotableData(this->getShipModel());
+		EntityMovableData::loadFromEntityMovableData(this->getShipModel());
 
 		this->setScale(this->getShipModel()->getRandomScale());
 		this->setSize(this->getShipModel()->getHitBoxWidth(), this->getShipModel()->getHitBoxHeight());

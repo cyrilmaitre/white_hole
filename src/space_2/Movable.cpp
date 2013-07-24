@@ -40,7 +40,7 @@ void Movable::setVelocityAt( MovableCardinality cardinality, float p_velocity )
 	this->mVelocity[cardinality] = p_velocity;
 }
 
-bool Movable::getQuickeningActiveAt( MovableCardinality p_cardinality )
+bool Movable::isQuickeningActiveAt( MovableCardinality p_cardinality )
 {
 	return this->mQuickeningActive[p_cardinality];
 }
@@ -108,7 +108,6 @@ void Movable::update()
 	}
 	this->updateMove();
 
-	this->resetQuickeningActive();
 	this->resetQuickeningClock();
 	this->resetVelocityClock();
 }
