@@ -1,0 +1,4 @@
+Name:	Amazonite
+Derivation:	From the Amazon (in South America)
+Formula:	KAlSi3O8
+Description:	Green mottled stone. If you turn it, you sometimes see white glints (see below, right). 

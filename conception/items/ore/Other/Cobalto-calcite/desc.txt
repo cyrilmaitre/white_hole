@@ -1,0 +1,4 @@
+Name:	Cobalto-calcite
+Derivation:	From "Kobald" (German) goblin or demon
+Formula:	(Ca,Co)CO3
+Description:	Pink crystals 

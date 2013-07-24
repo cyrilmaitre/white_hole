@@ -1,0 +1,4 @@
+Name:	Stibnite
+Derivation:	From "stibi" (Greek), "stm" (Egyptian), "stem" (Coptic)
+Formula:	Sb2S3
+Description:	Shiny grey metal crystals coming to a point. 

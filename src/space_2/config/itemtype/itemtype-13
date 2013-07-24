@@ -1,0 +1,5 @@
+id = 13
+name = itemTypeAsteroidScannerName
+description = itemTypeAsteroidScannerDescription
+itemtype_parent = 12
+itemtype_leaf = true

@@ -1,0 +1,4 @@
+Name:	Vanadinite
+Derivation:	From "Vana dis" (Old Norse) the goddess Freyja from nordic myths
+Formula:	Pb5(VO4)3Cl
+Description:	Brownish red hexangonal crystals 

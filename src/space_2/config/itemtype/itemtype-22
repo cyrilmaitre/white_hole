@@ -1,0 +1,5 @@
+id = 22
+name = itemTypeWeaponUpgradeName
+description = itemTypeWeaponUpgradeDescription
+itemtype_parent = 16
+itemtype_leaf = true

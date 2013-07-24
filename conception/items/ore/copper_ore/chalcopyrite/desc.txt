@@ -1,0 +1,4 @@
+Name:	Chalcopyrite
+Derivation:	From "chalkos" & "pyrites" (Greek) copper & striking fire
+Formula:	CuFeS2
+Description:	Chalcopyrite is silvery with a golden tinge to it. 

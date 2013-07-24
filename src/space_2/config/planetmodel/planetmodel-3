@@ -1,0 +1,12 @@
+id = 3
+hitbox_width = 460
+hitbox_height = 460
+scale_min = 0.5
+scale_max = 1
+sprite = planet_3.png
+tempmin = -30
+tempmax = 10
+weightmin = 10000
+weightmax = 50000
+planes = 18;19
+planettype = 1

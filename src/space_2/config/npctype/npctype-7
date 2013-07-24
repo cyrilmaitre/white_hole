@@ -1,0 +1,5 @@
+id = 7
+name = npcTypeEvilAgressive
+color = #FF0000
+alignment = 2
+aggro = 0

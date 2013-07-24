@@ -1,0 +1,104 @@
+//************************************************************************************************
+// SKILLS CHARACTER
+//************************************************************************************************
+-> Skills passif
+-> Chaque pourcent dans un skill augmente l'efficacité du skill: 1 point en fighting augment de 0.1% les degat... etc
+-> Il y a des palier par skills qui débloque des compétences pasives: Par exemple 20% en drone permet d'avoir un drone en plus avoir soit.
+-> Le joueur a des attributs:
+	- Combat (faire des dégats, encaisser) 
+		- Chaque % augmente:
+			- Muitiplier damage
+			- Multiplier Shield / Armor / Structure
+			- Multiplier shield resist / Armor resist / Structure resist
+			- Multiplier shield regen / armor regen / structure regen
+		- Différent skills:
+			- Spé kinetic / laser / missile
+				- Spé vitesse d'attaque (5 level)
+				- Spé Multiplier de damage (5 level)
+				- Unlock Tier
+	- Drone (gerer des drones de combat) 
+		- Chaque % augmente:
+			- Hp 
+			- L'attaque
+			- La regen / resistence
+			- Vitesse
+		- Différents skills:
+			- Nombre de drones transportable
+			- Unlock tier / taille des drones
+	- Pilotage (virage, vitesse, rapidity, agilité)
+		- Chaque % augmente la vitesse, l'agilité du vaisseau piloté
+		- //Palier de skills pour unlock les differents type de vaisseau (lisence) => le character a un permis et il debloque les lisences au fur et à mesur pour piloter des vaisseau tjrs plus gros
+	- Minage (d'asteroid et nuage de gaz)
+		- Chaque % augmente la vitesse de minage
+		- 50% permet de miner du gaz
+		- x% permet de miner tel type de minerai
+	- Crafting (d'objet: bouclier, arme, upgrade)
+		- Chaque pourcent réduit le cout de craft
+		- x% permet de crafter tel tier d'object
+	- Alchimie (fission / fusion / converstion (en energie)) 
+		- Chaque pourcent augment l'energie récuperé par conversion, et réduit la quantité d'éngergie consommer avec fusion / fission
+		- x% 1 atome donne y atome-1 // y atome donne 1 atome+1
+	- Marchandage (achat / vente / marchandise illegale) 
+		- Chaque pourcent augment le prix de vente et réduit le prix d'achat
+		- 
+	- Salvage (récupération du des carcasse) 
+		- Chaque pourcent augment les chances de récupérer des objets en salvageant
+	- Construction (de batiment: station, defense, base... etc)
+		- Chaque pourcent réduit le cout de construction
+		- x% permet de construire une contruction de tier x
+			
+-> Ces attributs ont une valeur qui va de 0% à 100% (possibilité d'aller au dessus si skills / item qui up l'attribut)
+-> Quand le joueur gagne un niveau en récupérant de l'xp il gagne 5 points de skills qui permettent d'up à chauqe fois 1% d'un attributs
+-> Le joueur gagnbe de l'xp en minant, marchandant, combatant... etc
+-> Chaque pourcent d'un attributs augment l'efficacité de l'attributs. Par exemple up l'attribut minage fera miner plus vite, avec un meilleur rendement.
+
+
+-> Le joueur possèdent aussi un métier qui augment de base des atrributs (et permet de dépasser les 100%)
+	- Mercenaire: +5% combat / +5% pilotage / +5% drone
+	- Industrialist: +5% minage / +5% alchimie / +5% crafting
+	- Marchand: +10% salvage / +5% marchandage
+	- Constructeur: 10% construction / +5% crafting
+
+
+// Ajouter des métier, attributs, skills au fur et à mesure mais la c'est une bonne base je pense
+
+
+
+//************************************************************************************************
+// SKILLS VAISSEAU
+//************************************************************************************************
+-> Skill actif
+
+-> Attaque / défense / minage / boost
+
+-> Quand le joueur utilise un vaisseau celui ci gagne de l'xp et des niveaux. A chaque level il débloque 1 point de skill. Ce point peut etre utiliser pour débloquer des compétences
+-> Cahque compétence a un niveau requis par le joueur. Chaque compétence à un niveau (0 à 5 par ex)
+
+Attaque:
+	- Augmente les dégats de x% pendant ysec (0 à 5)
+	- Lance une salve de missile à l'endroit selectionné
+	- Tir sur tout les ennemy à vue
+	- 
+		
+Défense:
+	- Augmente le bouclier de x% pendant ysec (0 à 5)
+	- Leach le shield de l'ennemy selected 
+	
+
+Minage:
+	- Augmente la vitesse de minage de x% pendant ysec (0 à 5)
+	- Indique le champs d'astéroid le plus proche
+
+Boost:
+	- Augmente la vitesse de x% pendant ysec (0 à 5)
+	- Tp le vaisseau à l'endroit selectionner (distance max)
+
+
+
+//************************************************************************************************
+// UI
+//************************************************************************************************
+Window pour le character avec recap des infos et dépense des skills
+Window pour les skills avec le détails + les compétences débloqués
+Window pour le ship avec le detail + level + compétence à débloquer
+(eventuellement) Window pour les skill sur ship pour que ce soit plus claire

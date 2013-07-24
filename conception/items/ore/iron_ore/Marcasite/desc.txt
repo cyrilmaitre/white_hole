@@ -1,0 +1,4 @@
+Name:	Marcasite
+Derivation:	From "marqashith" (Arabic) Pyrites
+Formula:	FeS2
+Description:	Marcasite is very similar to Pyrites. It is slightly lighter,and the crystals are sometimes spear-like.

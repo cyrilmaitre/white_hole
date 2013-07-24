@@ -1,0 +1,4 @@
+Name:	Kyanite
+Derivation:	From "kyanos" (Greek) blue
+Formula:	Al2SiO5
+Description:	Blue bladed crystals 

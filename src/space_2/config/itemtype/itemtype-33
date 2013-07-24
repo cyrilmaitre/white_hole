@@ -1,0 +1,5 @@
+id = 33
+name = itemTypeAmmoMissile
+description = itemTypeAmmoMissileDescription
+itemtype_parent = 30
+itemtype_leaf = true

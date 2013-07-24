@@ -1,0 +1,4 @@
+Name:	Gold
+Derivation:	From "Gold" (German)
+Formula:	Au
+Description:	Bright yellow metal. 

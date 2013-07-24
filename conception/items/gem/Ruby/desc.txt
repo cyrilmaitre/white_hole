@@ -1,0 +1,6 @@
+Name:	Corundum - Ruby and Sapphire
+Derivation:	From "kurundum" (Tamil)
+From "rubeus" (Latin) red
+From "sappheiros" (Greek) lapis lazuli
+Formula:	Al2O3
+Description:	Very hard crystal. Red corundum is ruby (left). Blue curundum is sapphire (right). Or you can just have corundum (below right). 

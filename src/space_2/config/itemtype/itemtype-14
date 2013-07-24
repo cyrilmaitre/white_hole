@@ -1,0 +1,5 @@
+id = 14
+name = itemTypeDistrubtorName
+description = itemTypeDistrubtorDescription
+itemtype_parent = 12
+itemtype_leaf = true

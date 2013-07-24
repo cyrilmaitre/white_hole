@@ -1,0 +1,5 @@
+id = 2
+name = itemTypeGemName
+description = itemTypeGemDescription
+itemtype_parent = NULL
+itemtype_leaf = true 

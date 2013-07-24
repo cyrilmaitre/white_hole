@@ -1,0 +1,4 @@
+Name:	Sunstone
+Derivation:	From the sun
+Formula:	NaAlSi3O8 - CaAli2Si2O8
+Description:	An orange stone that glints golden as turned to the light. 

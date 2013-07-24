@@ -1,0 +1,5 @@
+id = 28
+name = itemTypeStationMineralName
+description = itemTypeStationMineralDescription
+itemtype_parent = 27
+itemtype_leaf = true

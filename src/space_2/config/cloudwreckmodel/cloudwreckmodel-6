@@ -1,0 +1,7 @@
+id = 6
+hitbox_width = 435
+hitbox_height = 410
+scale_min = 0.5
+scale_max = 1
+sprite = cloudwreck_6.png
+opacity = 0

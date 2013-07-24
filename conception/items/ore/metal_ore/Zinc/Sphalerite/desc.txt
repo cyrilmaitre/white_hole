@@ -1,0 +1,4 @@
+Name:	Sphalerite
+Derivation:	From "sphaleros" (Greek) deceptive
+Formula:	ZnS
+Description:	Dark and shiny. The photograph shows sphalerite crystals, but they are the dark lumps, NOT the small white quartz crystal. 

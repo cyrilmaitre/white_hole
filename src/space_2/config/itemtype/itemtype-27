@@ -1,0 +1,5 @@
+id = 27
+name = itemTypeStationName
+description = itemTypeStationDescription
+itemtype_parent = NULL
+itemtype_leaf = false

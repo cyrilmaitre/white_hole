@@ -1,0 +1,8 @@
+id = 9
+name = shipModelFXT03Name
+description = shipModelFXT03Description
+price = 500
+stackmax = 1
+sprite = 0-0
+itemtype = 35
+itemtier = 1

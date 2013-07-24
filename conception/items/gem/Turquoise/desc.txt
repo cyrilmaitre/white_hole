@@ -1,0 +1,4 @@
+Name:	Turquoise
+Derivation:	From "turkeis" (Old French) Turkish
+Formula:	CuAl6(PO4)4(OH)8.5H2O
+Description:	The mineral Turquoise gives its name to the colour, but it can also be pale blue. Opaque. 

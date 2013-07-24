@@ -1,0 +1,4 @@
+Name:	Spinel
+Derivation:	From "spinella" (Italian)
+Formula:	MgAl2O4
+Description:	Usually red, but can be other colours. It is an octohedral crystal. The picture below is a close-up of the crystal on the left. It is about 2mm across. 

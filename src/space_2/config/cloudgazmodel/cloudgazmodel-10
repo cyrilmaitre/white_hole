@@ -1,0 +1,6 @@
+id = 10
+hitbox_width = 1024
+hitbox_height = 1024
+scale_min = 2
+scale_max = 4
+sprite = cloudgaz_10.png

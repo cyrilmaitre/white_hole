@@ -1,0 +1,5 @@
+id = 23
+name = itemTypeWeaponName
+description = itemTypeWeaponDescription
+itemtype_parent = NULL
+itemtype_leaf = false

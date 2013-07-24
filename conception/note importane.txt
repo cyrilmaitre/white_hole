@@ -1,0 +1,50 @@
+
+
+Gameplay:
+- Déplacement avec les touches haut, bas, droite ou gauche (ou z, q, s, d)
+- Selection d'un item (station par exemple) / ennemi avec clic gauche
+- Tir sur un ennemi avec tir droit. Tir possible si dans champs de vision
+- Fission / fussion d'élément (voir plus bas)
+- Rechargement des armes... etc
+- Skills activable
+- Batiment constructible
+
+
+Batiment:
+- Construction de batiment possible
+- Sector composé d'un tableau de int représentant les batiments
+
+
+
+Liste de nom de vaisseau:
+http://en.wikipedia.org/wiki/Lists_of_ships
+
+
+
+// A propos de l'alchimie
+-> Skills fission / fusion
+-> Fission: Un élément donne 2 élement plus léger (requiers de l'énergie)
+-> Fussion: Deux éléments donne 1 élément plus lourd (requiers de l'énergie)
+-> 1 élement peut etre transformé en énergie
+-> Plus élément lourd plus il est rare
+
+-> Système de ressource en fonction du security level
+-> Sécurity level = level de danger (change de zone en zone)
+
+
+
+// Interraction avec:
+- Vaisseau enemie
+- Asteroid minier
+- Nuage de gaz
+- Station spatiale
+- NPC ami / ennemi (ship et autre)
+- Batiment (qu'on peut construire /!\ point hyper important + détruire)
+
+// But ultime: survivre le plus longtemps possible
+
+// Bank universelle entre station pour contenir les atomes, les crafts... etc
+
+- Créer un arbre de skills (compétence)
+
+// marchandise illégale ?

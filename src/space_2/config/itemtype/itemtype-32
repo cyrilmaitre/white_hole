@@ -1,0 +1,5 @@
+id = 32
+name = itemTypeAmmoLaserName
+description = itemTypeAmmoLaserDescription
+itemtype_parent = 30
+itemtype_leaf = true

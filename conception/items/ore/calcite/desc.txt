@@ -1,0 +1,4 @@
+Name:		Calcite
+Derivation:	From "calcis" (Latin) limestone
+Formula:	CaCO3
+Description:	Calcite comes in a wide range of colours and forms. The photograph to the left gives some idea of the range of colours. More information about calcite, and other rocks and minerals with the some chemical formula, are given below.

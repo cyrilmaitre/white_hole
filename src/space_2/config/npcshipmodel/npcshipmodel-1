@@ -1,0 +1,14 @@
+id = 1
+name = NPC Ship 0
+levelmin = 0
+levelmax = 10
+characterlevelmin = 0
+characterlevelmax = 15
+lootcreditmin = 10
+lootcreditmax = 100
+lootexperience = 100
+lootitem = 4(0.8);3(0.5);2(0.2);1(0.1)
+npctype = 7
+aggrorange = 500
+shipmodel = 7
+weapons = 12(1);13(3);15(5)

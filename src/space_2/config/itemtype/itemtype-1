@@ -1,0 +1,5 @@
+id = 1
+name = itemTypeElementName
+description = itemTypeElementDescription
+itemtype_parent = NULL
+itemtype_leaf = true

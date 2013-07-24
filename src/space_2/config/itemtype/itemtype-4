@@ -1,0 +1,5 @@
+id = 4
+name = itemTypeCalciteName
+description = itemTypeCalciteDescription
+itemtype_parent = 3
+itemtype_leaf = true

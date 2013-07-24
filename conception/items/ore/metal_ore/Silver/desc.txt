@@ -1,0 +1,4 @@
+Name:	Silver
+Derivation:	From "Silber" (German)
+Formula:	Ag
+Description:	Bright silver metal. 

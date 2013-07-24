@@ -1,0 +1,4 @@
+Name:	Cerussite
+Derivation:	From "keros" (Greek) wax
+Formula:	PbCO3
+Description:	White or grey. these crystals have combined or twinned to form an interesting shape. 

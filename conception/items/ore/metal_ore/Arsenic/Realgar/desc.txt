@@ -1,0 +1,4 @@
+Name:	Realgar
+Derivation:	From "rahj-al-ghar" (Arabic) powder of the mine
+Formula:	AsS
+Description:	Red. 

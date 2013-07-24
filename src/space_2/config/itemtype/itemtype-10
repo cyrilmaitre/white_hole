@@ -1,0 +1,5 @@
+id = 10
+name = itemTypeSilicateName 
+description = itemTypeSilicateDescription
+itemtype_parent = 3
+itemtype_leaf = true

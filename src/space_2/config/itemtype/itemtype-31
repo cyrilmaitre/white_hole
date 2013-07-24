@@ -1,0 +1,5 @@
+id = 31
+name = itemTypeAmmoKineticName
+description = itemTypeAmmoKineticDescription
+itemtype_parent = 30
+itemtype_leaf = true

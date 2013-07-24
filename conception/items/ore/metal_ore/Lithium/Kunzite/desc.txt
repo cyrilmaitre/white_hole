@@ -1,0 +1,4 @@
+Name:	Kunzite
+Derivation:	After George F Kunz (US geologist)
+Formula:	LiAlSi2O6
+Description:	Whitish crystal, sometimes looking pink (see below). 

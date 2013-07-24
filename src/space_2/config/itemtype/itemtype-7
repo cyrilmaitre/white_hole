@@ -1,0 +1,5 @@
+id = 7
+name = itemTypeIronName
+description = itemTypeIronDescription
+itemtype_parent = 3
+itemtype_leaf = true

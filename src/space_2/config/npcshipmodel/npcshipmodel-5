@@ -1,0 +1,14 @@
+id = 5
+name = NPC Ship 4
+levelmin = 10
+levelmax = 20
+characterlevelmin = 0
+characterlevelmax = 20
+lootcreditmin = 150
+lootcreditmax = 500
+lootexperience = 100
+lootitem = 4(0.8);3(0.5);2(0.2);1(0.1)
+npctype = 4
+aggrorange = 500
+shipmodel = 1
+weapons = 12(1);13(3);15(5)

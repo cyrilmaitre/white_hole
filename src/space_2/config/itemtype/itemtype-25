@@ -1,0 +1,5 @@
+id = 25
+name = itemTypeWeaponLazerName
+description = itemTypeWeaponLazerDescription
+itemtype_parent = 23
+itemtype_leaf = true

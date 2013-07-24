@@ -1,0 +1,8 @@
+id = 16
+name = weaponModelMediumLauncherLauncherName
+description = weaponModelMediumLauncherDescription
+price = 5000
+stackmax = 1
+sprite = 11-0
+itemtype = 26
+itemtier = 2

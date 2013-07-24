@@ -1,0 +1,413 @@
+# General
+loading = Loading
+welcome = Welcome
+version = Version
+back = Back
+level = Level
+play = Play
+active = Active
+inactive = Inactive
+menu = Menu
+degrees = Degrees
+degreesAb = °
+meter = Meter
+meterAb = m
+shield = Shield
+armor = Armor
+structure = Structure
+yes = Yes
+no = No
+infoAb = ?
+info = Info
+trashAb = X
+trash = Trash
+name = Name
+price = Price
+type = Type
+tier = Tier
+credit = Credit
+creditAb = Cred.
+race = Race
+job = Job
+open = Open
+recycle = Recycle
+lootAll = Loot All
+lootCredit = Loot Cred.
+#
+#
+# Running stats
+runningStatsTitle = Running Statistics:
+runningStatsAppWidth = * App's width:
+runningStatsAppHeight = * App's height:
+runningStatsAppFPS = * App's frame rate:
+runningStatsAppMemoryWorkingset = * App's memory:
+runningStatsAppCpuUsage = * App's cpu usage:
+runningStatsPlayerShipV = * Velocity:
+runningStatsPlayerShipQuickening = * Quickening:
+runningStatsPlayerShipPositionP1 = * Position plane 1:
+runningStatsPlayerShipPositionP10 = * Position plane 21:
+runningStatsPlayerShipPositionSector = * Position sector:
+runningStatsMapSectorsVisible = * Sectors visible:
+runningStatsMapSectorsCurrent = * Current sector:
+runningStatsMapSectorsCurrentPosition = * Position:
+runningStatsMapSectorsCurrentDangerLevel = * Danger level:
+runningStatsMapSectorsCurrentPlanets = * Planet count:
+runningStatsMapSectorsCurrentCloudGazs = * Cloud Gaz count:
+runningStatsMapSectorsCurrentCloudWreck = * Cloud Wreck count:
+runningStatsMapSectorsLoaded = * Sectors loaded:
+runningStatsBackgroundSpaceCached = * Background Space Cached:
+runningStatsSpawnedNpc = * Spawned
+runningStatsSelectedAngle = * Selected Angle:
+runningStatsSelectedDistance = * Selected Distance:
+runningStatsAutoManager = * Autos:
+runningStatsNetworkJobManager = * Network Jobs:
+runningStatsParticleManager = * Particles:
+runningStatsEntityManager = * Entities:
+runningStatsWreckManager = * Wrecks:
+#
+#
+# Windows
+windowsTitleJuckebox = Juckebox
+windowsTitlePilotedShip = Piloted Ship
+windowsTitleCargo = Your Cargo
+windowsTitleCargoLoot = Cargo
+#
+#
+# Title Screen
+titleScreenTBLoginFailed = Login failed
+titleScreenTFUsername = Username:
+titleScreenTFPassword = Password:
+titleScreenButtonLogin = Login
+titleScreenButtonOption = Options
+titleScreenButtonQuit = Quit
+titleScreenButtonDebug = Debug Screen
+#
+#
+# Select Screen
+selectScreenTitle = Select character
+selectScreenButtonCreateNew = Create New
+selectScreenButtonOption = Options
+selectScreenButtonLogout = Logout
+selectScreenNoCharacterSelected = Select character or create new one to play
+#
+#
+# Create Screen
+createScreenButtonCreate = Create
+createScreenTitle = Create new character
+createScreenAvatar = Avatar
+createScreenName = Name
+createScreenRace = Race
+createScreenSex = Sex
+createScreenJob = Job
+createScreenSkills = Skills
+createScreenSkillsPtsRemaining = SkillPoint remaining
+#
+#
+# Race
+raceHumanName = Human
+raceHumanDescription = Human from earth and that it. For more information go wikipedia.
+raceAndroidName = Android
+raceAndroidDescription = Robot created by human. They are very intelligent and are immortal. Yeah.
+#
+#
+# Job
+jobMercenaryName = Mercenary
+jobMercenaryDescription = Warrior of the space Yeah.
+jobIndustrialistName = Industrialist
+jobIndustrialistDescription = Crafting + alchimie... etc
+jobTraderName = Trader
+jobTraderDescription = Marchandage, toute ces petites choses
+jobBuilderName = Builder
+jobBuilderDescription = Construction, destruction. Aiiiiight
+#
+#
+# Skill
+skillFightingName = Fighting
+skillFightingDescription = Description of FFightingight skill
+skillDroneName = Drone
+skillDroneDescription = Description of Drone skill
+skillSteeringName = Steering
+skillSteeringDescription = Description of Steering skill
+skillMiningName = Mining
+skillMiningDescription = Description of Mining skill
+skillCraftingName = Crafting
+skillCraftingDescription = Description of Crafting skill
+skillAlchemyName = Alchemy
+skillAlchemyDescription = Description of Alchemy skill
+skillBargainingName = Bargaining
+skillBargainingDescription = Description of Bargaining skill
+skillSalvagingName = Salvaging
+skillSalvagingDescription = Description of Salvaging skill
+skillConstructionName = Construction
+skillConstructionDescription = Description of Construction skill
+#
+#
+# Character
+characterNameLabel = Name
+characterLevelLabel = Level
+#
+#
+# Item Tier
+itemTierIName = Tier I
+itemTierIDescription = Common 
+itemTierIIName = Tier II
+itemTierIIDescription = Uncommon
+itemTierIIIName = Tier III
+itemTierIIIDescription = Rare
+itemTierIVName = Tier IV
+itemTierIVDescription = Epic
+itemTierVName = Tier V
+itemTierVDescription = Legendary 
+#
+#
+# Item Type
+itemTypeElementName = Element
+itemTypeElementDescription = Element description... 
+itemTypeGemName = Gem
+itemTypeGemDescription = Gem description...
+itemTypeOreName = Ore
+itemTypeOreDescription = Ore description...
+itemTypeCalciteName = Calcite
+itemTypeCalciteDescription = Calcite description...
+itemTypeCopperName = Copper
+itemTypeCopperDescription = Copper description...
+itemTypeFeldsparName = Feldspar
+itemTypeFeldsparDescription = Feldspar description...
+itemTypeIronName = Iron
+itemTypeIronDescription = Iron description...
+itemTypeMetalName = Metal
+itemTypeMetalDescription = Metal description...
+itemTypeOreOtherName = Ore Other
+itemTypeOreOtherDescription = Ore Other description...
+itemTypeSilicateName = Silicate
+itemTypeSilicateDescription = Silicate description...
+itemTypeShipName = Ship
+itemTypeShipDescription = Ship description...
+itemTypeShipFrigateName = Ship Frigate
+itemTypeShipFrigateDescription = Ship Frigate description...
+itemTypeShipCruiserName = Ship Cruiser
+itemTypeShipCruiserDescription = Ship Cruiser description...
+itemTypeShipStuffName = Ship Stuff
+itemTypeShipStuffDescription = Ship Stuff description...
+itemTypeAsteroidScannerName = Asteroid Scanner
+itemTypeAsteroidScannerDescription = Asteroid Scanner description...
+itemTypeDistrubtorName = Distrubtor
+itemTypeDistrubtorDescription = Distrubtor description...
+itemTypeScannerName = Scanner
+itemTypeScannerDescription = Scanner description...
+itemTypeShipUpgradeName = Ship Upgrade
+itemTypeShipUpgradeDescription = Ship Upgrade description...
+itemTypeArmorUpgradeName = Armor Upgrade
+itemTypeArmorUpgradeDescription = Armor Upgrade description...
+itemTypeCargoUpgradeName = Cargo Upgrade
+itemTypeCargoUpgradeDescription = Cargo Upgrade description...
+itemTypePropulsionUpgradeName = Propulsion Upgrade
+itemTypePropulsionUpgradeDescription = Propulsion Upgrade description...
+itemTypeShieldUpgradeName = Shield Upgrade
+itemTypeShieldUpgradeDescription = Shield Upgrade description...
+itemTypeStructureUpgradeName = Structure Upgrade
+itemTypeStructureUpgradeDescription = Structure Upgrade description...
+itemTypeWeaponUpgradeName = Weapon Upgrade
+itemTypeWeaponUpgradeDescription = Weapon Upgrade description...
+itemTypeWeaponName = Weapon
+itemTypeWeaponDescription = Weapon description...
+itemTypeWeaponKineticName = Weapon Kinetic
+itemTypeWeaponKineticDescription = Weapon Kinetic description...
+itemTypeWeaponLazerName = Weapon Lazer
+itemTypeWeaponLazerDescription = Weapon Lazer description...
+itemTypeWeaponLauncherName = Weapon Launcher
+itemTypeWeaponLauncherDescription = Weapon Laucher description...
+itemTypeStationName = Station
+itemTypeStationDescription = Station description...
+itemTypeStationMineralName = Mineral Station 
+itemTypeStationMineralDescription = Mineral Station description...
+itemTypeStationOrbitalName = Orbital Station
+itemTypeStationOrbitalDescription = Orbital Station description...
+itemTypeAmmoName = Ammo
+itemTypeAmmoDescription = Ammo description...
+itemTypeAmmoKineticName = Ammo Kinetic
+itemTypeAmmoKineticDescription = Ammo Kinetic description...
+itemTypeAmmoLaserName = Ammo Laser
+itemTypeAmmoLaserDescription = Ammo Laser description...
+itemTypeAmmoMissile = Ammo Missile
+itemTypeAmmoMissileDescription = Ammo Missile description...
+itemTypeAmmoRoquet = Ammo Roquet
+itemTypeAmmoRoquetDescription = Ammo Roquet description...
+#
+#
+# Ship Type
+shipTypeBattleName = Battle Ship
+shipTypeBattleDescription = Ship for war
+shipTypeBattlecruiserName = Battlecruiser
+shipTypeBattlecruiserDescription = Battlecruiser description...
+shipTypeBattleshipName = Battleship
+shipTypeBattleshipDescription = Battleship description...
+shipTypeCarrierName = Carrier
+shipTypeCarrierDescription = Carrier description...
+shipTypeCruiserName = Cruiser
+shipTypeCruiserDescription = Cruiser description...
+shipTypeDestroyerName = Destroyer
+shipTypeDestroyerDescription = Destroyer description...
+shipTypeDreadnoughtName = Dreadnought
+shipTypeDreadnoughtDescription = Dreadnought description...
+shipTypeFighterName = Fighter
+shipTypeFighterDescription = Fighter description...
+shipTypeFrigateName = Frigate
+shipTypeFrigateDescription = Frigate description...
+shipTypeScoutName = Scout
+shipTypeScoutDescription = Ship to scout
+shipTypeTransportName = Transport
+shipTypeTransportDescription = Ship to Transport
+#
+#
+# Ship Model
+shipModelFXT01Name = FX-T01
+shipModelFXT01Description = FX-T01 description...
+shipModelFXT02Name = FX-T02
+shipModelFXT02Description = FX-T02 description...
+shipModelFXT03Name = FX-T03
+shipModelFXT03Description = FX-T03 description...
+#
+#
+# Window UiGame Ship Small
+uigShipSmallShieldLabel = Shield:
+uigShipSmallArmorLabel = Armor:
+uigShipSmallStructureLabel = Structure:
+#
+#
+# Window UiGame Object Selected
+uigObjectSelectedTitleCharacterShip = Ship
+uigObjectSelectedTitleNpcShip = Ship
+uigObjectSelectedTitleWreck = Wreck
+uigObjectSelectedObjectNameLabel = Name:
+uigObjectSelectedObjectLevelLabel = level:
+#
+#
+# Ammo Type
+ammoTypeNormalName = Normal
+ammoTypeNormalDescription = No bonus / malus damage 
+ammoTypeAntiShieldName = Anti-shield
+ammoTypeAntiShieldDescription = Bonus damage against shield, but malus damage against armor and structure
+ammoTypeAntiArmorName = Anti-armor
+ammoTypeAntiArmorDescription = Bonus damage against armor, but malus damage against shield and structure
+ammoTypeAntiStructureName = Anti-structure
+ammoTypeAntiStructureDescription = Bonus damage against structure, but malus damage against shield and armor
+#
+#
+# Weapon Type
+weaponTypeKineticName = Kinetic
+weaponTypeKineticDescription = Use kinetic ammo. Very fast but deal few damage.
+weaponTypeLaserName = Laser
+weaponTypeLaserDescription = Use laser ammo. Slow but deal high damage.
+weaponTypeLauncherName = Launcher
+weaponTypeLauncherDescription = Use missile or roquet ammo. Very slow but deal high splash damage.
+#
+#
+# Ammo
+ammo200mmName = 200mm
+ammo200mmDescription = 200mm Description...
+ammo200mmAntiShieldName = 200mm Anti-shield
+ammo200mmAntiShieldDescription = 200mm Anti-shield description...
+ammoLaserSmallName = Laser Small
+ammoLaserSmallDescription = Laser Small description...
+ammoLaserLargeName = Laser Large
+ammoLaserLargeDescription = Laser Large description...
+ammoMissileSmallName = Missile Small
+ammoMissileSmallDescription = Missile Small decription...
+ammoRoquetSmallName = Roquet Small
+ammoRoquetSmallDescription = Roquet Small description...
+#
+#
+# Weapon Model
+weaponModelLightAutoCannonName = Light Auto-Cannon
+weaponModelLightAutoCannonDescription = Light Auto-Cannon description...
+weaponModelMediumAutoCannonName = Medium Auto-Cannon
+weaponModelMediumAutoCannonDescription = Medium Auto-Cannon description...
+weaponModelLargeAutoCannonName = Large Auto-Cannon
+weaponModelLargeAutoCannonDescription = Large Auto-Cannon description...
+weaponModelLightLaserName = Light Laser
+weaponModelLightLaserDescription = Light Laser description...
+weaponModelMediumLaserName = Medium Laser
+weaponModelMediumLaserDescription = Medium Laser description...
+weaponModelLightLauncherName = Light Launcher
+weaponModelLightLauncherDescription = Light Launcher description...
+weaponModelMediumLauncherLauncherName = Medium Launcher
+weaponModelMediumLauncherDescription = Medium Launcher description...
+#
+#
+# Ui
+uiRangeInfo = Range indicator
+uiAngleInfo = Angle indicator
+uiWeaponInfoName = Name
+uiWeaponInfoType = Type
+uiWeaponInfoRange = Range
+uiWeaponInfoAngle = Angle
+uiWeaponInfoDps = Dps
+uiAmmoInfoName = Name
+uiAmmoInfoType = Type
+uiAmmoInfoShieldMultiplier = Shield multiplier
+uiAmmoInfoArmorMultiplier = Armor multiplier
+uiAmmoInfoStructureMultiplier = Structure multiplier
+uiAmmoInfoDamage = Damage
+uiAmmoInfoSplash = Splash
+#
+#
+# Menu Quick
+menuQuickCargo = Open your ship's Cargo
+menuQuickCharacter = Open your Character's sheet
+menuQuickChat = Open Chat
+menuQuickJukebox = Open Jukebox
+menuQuickQuest = Open Quest book
+menuQuickShip = Open your Ship's sheet
+menuQuickSystem = Open System menu
+menuQuickMap = Open Map
+#
+#
+# Item Stack
+itemStackSize = Stack size
+itemStackPrice = Stack price
+#
+#
+# Planet Type
+planetTypetTelluricName = Telluric
+planetTypetTelluricDescription = Telluric description...
+planetTypetGazName = Gaz
+planetTypetGazName = Gaz description...
+#
+#
+# Window Cargo
+windowCargoEstimation = Cargo's estimation:
+#
+#
+# Experience Bar
+experienceBarYourLevel = Your level:
+experienceBarYourShipLevel = Your ship's level:
+experienceBarExperience = Experience:
+experienceBarLevelProgression = Level progression:
+#
+#
+# Mini map
+miniMapWindowTitle = Dradis
+#
+#
+# Map Object Type
+mapObjectTypeDefault = Object
+mapObjectTypeShip = Ship
+mapObjectTypePlanet = Planet
+mapObjectTypeCloudGaz = Cloud Gaz
+mapObjectTypeCloudWreck = Cloud Wreck
+mapObjectTypeWreck = Wreck
+mapObjectTypeStart = Star
+mapObjectTypeStation = Station
+#
+#
+# Npc Type
+npcTypeGoodAgressive = Good Agressive
+npcTypeGoodNeutral = Good Neutral
+npcTypeGoodPassive = Good Passive
+npcTypeNeutralAgressive = Neutral Agressive
+npcTypeNeutralNeutral = Neutral
+npcTypeNeutralPassive = Neutral Passive
+npcTypeEvilAgressive = Evil Agressive
+npcTypeEvilNeutral = Evil Neutral
+npcTypeEvilPassive = Evil Passive

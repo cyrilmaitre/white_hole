@@ -1,0 +1,8 @@
+id = 1
+name = ammo200mmName
+description = ammo200mmDescription
+price = 10
+stackmax = 128
+sprite = 0-1
+itemtype = 31
+itemtier = 1

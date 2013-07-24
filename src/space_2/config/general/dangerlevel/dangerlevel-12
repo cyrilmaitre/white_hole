@@ -1,0 +1,11 @@
+id = 12
+dangerlevel = 12
+dangerlevelcolor = #443200
+shiptypespawncount = 1(5);2(5);3(5);4(5);5(5);6(5);7(30);8(30);9(30)
+shipmodelspawnchance = 4(0.3);3(0.6);2(0.8);1(1)
+planetcountmin = 1
+planetcountmax = 3
+cloudgazcountmin = 1
+cloudgazcountmax = 10
+cloudwreckcountmin = 0
+cloudwreckcountmax = 50

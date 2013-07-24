@@ -1,0 +1,40 @@
+Bonjour,
+
+
+Je suis étudiant en 3ème année dans une école d’ingénieur informatique. Je travail (seul) sur un Jeu Vidéo 2D, et je suis à la recherche d'un infographiste qui pourra s'occuper de la partie artistique du projet.
+
+
+[U][B]Le projet:[/B][/U]
+C'est un jeu 2D se déroulant dans l'espace, on retrouve donc des vaisseaux, planètes, astéroïdes... etc
+C'est un action-RPG qui se déroule dans un univers sandbox généré aléatoirement.
+
+Niveau avancement, l'analyse et la conception a été réalisé il y a environ 1 mois. L'architecture du jeu est terminé et je suis en phase de terminé le moteur générale du jeu.
+Il reste donc encore beaucoup de travail au niveau du code (à ce propos, le langage utilisé est le C++).
+
+
+
+[U][B]Le profil recherché:[/B][/U]
+Je recherche un étudiant ou une personne venant d'être diplômé, qui souhaite utiliser et approfondir ses compétences sur un projet concret qu'il pourra utiliser comme argument soit au sein de son école soit lors d'un entretien par exemple.
+
+Coté technique, c'est de la 2D avec une vue 3/4.
+Voici un exemple: 
+[IMG]http://files.sharenator.com/zelda3_Legend_of_Zelda_A_link_to_the_past_SNES_Review-s318x274-265118-580.jpg[/IMG]
+
+Concernant votre travail vous aurez carte-blanche. L'objectif est de laisser libre court à votre imagination et de vous laisser acquérir un maximum de compétence sur ce projet. 
+La seul restriction étant d'obtenir un univers cohérent graphiquement.
+
+Coté organisation j'utilise SVN et redmine, des outils qui permettent de faciliter le travail collaboratif.
+Nous organiserons également des visio-conférences afin de discuter de l'avancement du projet. A coter de cela, vous pourrez travailler à votre rythme. 
+
+
+
+Je reste volontairement assez flou sur les détails du projet. Je recherche quelqu'un aussi motivé que moi, le projet se déroulera sur plusieurs mois (jusque Aout 2012 environ), et j'aimerai travailler avec la même personne tous ce temps.
+Coté droit d'auteur, ce sera très simple. Tous ce que vous ferez vous appartiendra.
+
+
+Si vous êtes intérésser par se projet, contactez moi via se topic, ou la boite personnel et nous organisera une visio conférence (via skype par exemple) afin de vous donner plus de détail. 
+
+
+Cordialement,
+
+Ikg

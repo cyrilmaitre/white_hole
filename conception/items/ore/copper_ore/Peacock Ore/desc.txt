@@ -1,0 +1,4 @@
+Name:	Peacock Ore
+Derivation:	Called after its shimmering colours
+Formula:	Cu5FeS4
+Description:	The iridescent colours are on the surface, as a tarnish. They include green, yellow, blue, reddish-purple ... The mineral is opaque. 

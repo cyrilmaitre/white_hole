@@ -1,0 +1,4 @@
+Name:	Zincite
+Derivation:	From "zink" (German) origin unknown
+Formula:	ZnO
+Description:	Orange and translucent, or transparent. 

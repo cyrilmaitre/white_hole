@@ -1,0 +1,4 @@
+id = 4
+item = 2
+quantity_min = 10
+quantity_max = 50

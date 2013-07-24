@@ -1,0 +1,119 @@
+- Déplacement du vaisseau avec les touches haut, bas, droite ou gauche (ou z, q, s, d)
+- Affichage de 8 différents sprite en fonction de l'angle du vaisseau
+- Selection d'un item (station / ship enemie par exemple) avec clic gauche
+- Tir sur un ennemi avec tir droit. Tir possible si dans champs de vision
+- Gestion du rechargement des armes (icone de l'arme et quand plus de munition animation comme dans tower defense (rechargement des canon))
+- Différents skills activable 
+
+- Les enemies ont un level, des skills qui dépendent du level de sécu où se trouve l'user.
+- Les enemies lootent des items 
+- On peut salvage la carcasse des vaisseaux détruit pour récupérer des items (bar de fer, titane... etc)
+
+- Faire des NPC amicaux qui pouront nous aider
+- Le joueur peut aussi avoir des dones, comme dans eve online pour l'aider
+
+- Cf gameplay_fight.png
+
+
+
+// L'xp / level
+- Le joueur à un level: cf gameplay_skills
+- Le vaisseau a aussi un level. Plus on l'utilise plus il gagne d'xp / level
+	- Offre des bonnus d'attaque, défense, agilité... etc
+- Changement de ship / ship détruit -> perte du level
+
+
+
+__________________________________
+3 types d'armes:
+- Lance missile:
+	- Très lent mais missile fait bcp de dégat + splash damage
+
+- Arme laser:
+	- Lent mais laser fait beaucoup de damage
+
+- Arme kinetic
+	- Rapide mais projectile fait peu de damage
+
+- Name
+- Description
+- Bonus
+- Ammo current
+- Ammo Max
+- Speed (to reload)
+- Damage multiplier
+- actif ?
+-> Non stackable -> 1 par case
+
+
+
+__________________________________
+4 types de munition:
+- Normal:
+	- Aucun bonus / malus
+
+- Anti-shield:
+	- Bonus damage shield mais malus armor / structure
+
+- Anti-Armor:
+	- Bonus damage armor mais malus shield / structure
+
+- Anti-Structure:
+	- Bonus damage structure mais malus shield / armor
+
+- Speed
+- Damage 
+- Type
+-> item stackable: x par case
+
+__________________________________
+La target a des resist shields / armor / structure à prendre ne compte (réduction des dégats)
+
+
+
+
+
+
+Weapon: public Item
+-- Id
+-- Name
+-- Description
+-- ItemType
+-- ItemTier
+-- Price
+-- sprie
+- ItemType "mAmmoType"=> ammo kinetic / ammo laser / ammo missile
+- WeaponType
+- DamageMultiplier
+- AmmoMax
+---- Ammo
+- SpeedReload
+---- Actif
+---- CharacterShip (savoir si equiped)
+
+
+WeaponType:
+- Id
+- Name
+- Description
+// - Ammos => id_0; id_1;id_2.0..	les ammos accepté	=> A voir 
+
+AmmoType:
+- Id
+- Name 
+- Description
+- Bonus: ;shield;armor;structure;
+- Malus: ;shield;armor;structure;
+
+Ammo: public Item
+- Id
+-- Name
+-- Description
+-- ItemType
+-- ItemTier
+-- Price
+- Speed
+- Damage
+- AmmoType
+- WeaponType
+-- StackSize

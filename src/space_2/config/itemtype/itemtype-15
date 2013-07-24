@@ -1,0 +1,5 @@
+id = 15
+name = itemTypeScannerName
+description = itemTypeScannerDescription
+itemtype_parent = 12
+itemtype_leaf = true

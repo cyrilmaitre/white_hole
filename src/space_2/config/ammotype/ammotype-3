@@ -1,0 +1,6 @@
+id = 3
+name = ammoTypeAntiArmorName
+description = ammoTypeAntiArmorDescription
+color = #7BCC53
+damagebonus = 0;10;0
+damagemalus = 5;0;5

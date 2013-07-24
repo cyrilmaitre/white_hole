@@ -1,0 +1,5 @@
+id = 30
+name = itemTypeAmmoName
+description = itemTypeAmmoDescription
+itemtype_parent = NULL
+itemtype_leaf = false

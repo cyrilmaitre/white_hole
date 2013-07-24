@@ -1,0 +1,48 @@
+avatar_id
+name
+sex
+level / xp
+time in life
+metier:
+	- Mercenaire
+	- Mineur
+	- Marchand
+	- Alchimiste
+	- Crafteur
+	
+Skills
+
+
+======================================================================
+
+Il faut différencier Character et Ship qui ont tout deux un level, des skills... etc	
+
+Characters:
+	- Avatar
+	- Name
+	- Sex
+	- Race: Human / Android
+	- Level / Xp
+	- Time life
+	- Metier:
+		- Mercenaire: +5% combat / +5% pilotage / +5% drone
+		- Industrialist: +5% minage / +5% alchimie / +5% crafting
+		- Marchand: +10% salvage / +5% marchandage
+		- Constructeur: 10% construction / +5% crafting
+		
+		
+	- Atrributs: Chaque attributs commence à 0% et peut aller jusque 100% (plus avec des compétences, métier...)
+		- Combat (faire des dégats, encaisser) -> arbre 2 branches: attaque / defense
+		- Drone (gerer des drones de combat) -> arbre 1 branche: drone
+		- Pilotage (virage, vitesse, rapidity, agilité) -> arbre 1 branche: pilotage
+		- Minage (d'asteroid) -> arbre 2 branches: minerai / gaz
+		- Crafting (d'objet: bouclier, arme, upgrade) -> arbre 1 branche: crafting
+		- Alchimie (fission / fusion / converstion (en energie)) -> arbre 3 branches: fission / fusion / conversion
+		- Marchandage (achat / vente / marchandise illegale) -> arbre 2 branches: Légal / Illegale
+		- Salvage (récupération du des carcasse) -> arbre 1 branche: salvage
+		- Construction (de batiment: station, defense, base... etc) -> arbre 2 branches: construction defense arme / construction util
+	
+	- Compétence:
+		- Minage
+			- Minage rentable: +50% de recolte
+		... etc

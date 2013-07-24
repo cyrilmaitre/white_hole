@@ -1,0 +1,5 @@
+
+Name:	Moonstone
+Derivation:	From the moon, because of its glow
+Formula:	KAlSi3O8
+Description:	A translucent creamy white stone which seems to glow. 

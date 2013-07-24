@@ -1,0 +1,7 @@
+id = 25
+hitbox_width = 480
+hitbox_height = 480
+scale_min = 0.5
+scale_max = 1
+sprite = cloudwreck_25.png
+opacity = 100

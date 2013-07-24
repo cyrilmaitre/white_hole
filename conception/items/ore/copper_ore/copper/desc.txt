@@ -1,0 +1,4 @@
+Name:	Copper
+Derivation:	From "cuprum" (Latin) from Cyprus
+Formula:	Cu
+Description:	Copper is a beautiful colour, pinky gold. Since it is a metal, it is shiny (metallic lustre) and opaque. It is also quite heavy. Sometimes, you see crystals (see right).

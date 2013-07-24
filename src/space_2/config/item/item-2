@@ -1,0 +1,8 @@
+id = 2
+name = ammo200mmAntiShieldName
+description = ammo200mmAntiShieldDescription
+price = 15
+stackmax = 128
+sprite = 1-1
+itemtype = 31
+itemtier = 1

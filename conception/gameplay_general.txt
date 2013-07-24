@@ -1,0 +1,27 @@
+-> Système de ressource en fonction du security level
+-> Sécurity level = level de danger (change de zone en zone)
+-> 0 = safe et rare ;; 5 = neutre et commun ;; 10 = pas safe et rare
+
+
+// Interraction avec:
+- Vaisseau enemie
+- Asteroid minier
+- Nuage de gaz
+- Station spatiale
+- NPC ami / ennemi (ship et autre)
+- Batiment (qu'on peut construire /!\ point hyper important + détruire)
+
+// But ultime: survivre le plus longtemps possible
+
+// Bank universelle entre station pour contenir les atomes, les crafts... etc
+
+- Créer un arbre de skills (compétence)
+
+// marchandise illégale ?
+
+
+CARGO:
+-------
+- Le cargo d'un ship est le nombre de slot dispo dans le cargo. Un slot peut contenir un stack d'objet. 
+	-> CF wow, diablo... ect
+- Class "stackable" qui permet de stack des objects.

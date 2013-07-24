@@ -1,0 +1,4 @@
+Name:	Cassiterite
+Derivation:	From "kassi-tira" (Babylonian) and "kastiram" (Sanscript) tin
+Formula:	SnO2
+Description:	Reddish brown. It can have crystals, although this specimen is massive (meaning the crystals are so small that you can't see them). 

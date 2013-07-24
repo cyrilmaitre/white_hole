@@ -1,0 +1,5 @@
+
+Name:	Sodalite
+Derivation:	Named after sodium
+Formula:	Na8Al6Si6O24Cl2
+Description:	Opaque mottled blue stone, often with bits of white in it 

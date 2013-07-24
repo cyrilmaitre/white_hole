@@ -1,0 +1,4 @@
+Name	Sulphur
+Derivation	From sulphur or sulfur or sulpur (Latin) sulphur
+Formula	S
+Description	Yellow crystals which smell of fireworks (although really, of course, fireworks smell of sulphur!) 

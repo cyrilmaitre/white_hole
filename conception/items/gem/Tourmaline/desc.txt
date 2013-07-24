@@ -1,0 +1,4 @@
+Name:	Tourmaline
+Derivation:	From "toramalli" (Sinhalese) cornelian
+Formula:	Na(Mg,Fe,Li,Al,Mn)3Al6(BO3)3Si6O18(OH,F)4
+Description:	Tourmaline has a wide range of colours and some are shown here. Sometimes there are two colours in one crystal. The crystal in the bottom left hand corner is red in the middle and green round the outside (sometimes called "water-melon"!) The crystals are hexagonal, and can be quite long. 

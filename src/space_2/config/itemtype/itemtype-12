@@ -1,0 +1,5 @@
+id = 12
+name = itemTypeShipStuffName
+description = itemTypeShipStuffDescription
+itemtype_parent = NULL
+itemtype_leaf = false

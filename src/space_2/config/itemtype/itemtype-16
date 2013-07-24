@@ -1,0 +1,5 @@
+id = 16
+name = itemTypeShipUpgradeName
+description = itemTypeShipUpgradeDescription
+itemtype_parent = NULL
+itemtype_leaf = false

@@ -1,0 +1,4 @@
+Name:		Labradorite
+Derivation:	From Labrador in Canada, where it was first found
+Formula:	NaAlSi3O8 - CaAli2Si2O8
+Description:	Dull dark grey rock, which flashes peacock blue or green when turned at the right angle to the light. 

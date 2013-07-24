@@ -1,0 +1,59 @@
+===============================================================================
+Mission n°1:
+// Securité //
+
+Sécuriser les échanges de données entre l'application et le serveur
+
+
+===============================================================================
+Mission n°2.1:
+// Dev web //
+
+Générer les fichiers de configs depuis les données en base de données
+Mettre à jour la base de données régulièrement (modèle en java + data en db)
+
+
+===============================================================================
+Mission n°2.2:
+// Sécurité //
+
+Sécuriser les fichiers de configs ainsi que les fichiers ressources type images / string / sound... etc
+Chiffrement / zip en une archive / dezip et dechiffrement au lancement de l'appli
+Protection avec une clé récupéré depuis le serveur
+
+
+===============================================================================
+Mission n°3:
+// Dev web //
+
+Continuer le système de patch-note
+
+
+===============================================================================
+Mission n°4:
+// Game design //
+
+Créer des items / entity / equilibrer le taux de pop / sectors... etc
+
+
+===============================================================================
+Mission n°5:
+// Dev c++ / web //
+
+Faire un chat in-game
+Gestion de salon, liste d'amis... etc
+Info amis...
+
+
+===============================================================================
+Mission n°6:
+// Dev c++ //
+
+Developper une feature (me demander)
+
+
+===============================================================================
+Mission n°7:
+// Admin //
+
+Deployer une instance de prod et 2 instance de dev (une pour moi et une pour toi)

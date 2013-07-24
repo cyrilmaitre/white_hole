@@ -1,0 +1,5 @@
+id = 5
+name = itemTypeCopperName 
+description = itemTypeCopperDescription
+itemtype_parent = 3
+itemtype_leaf = true

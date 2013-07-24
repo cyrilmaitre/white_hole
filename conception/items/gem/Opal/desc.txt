@@ -1,0 +1,4 @@
+Name:	Opal
+Derivation:	From "opallis" (Greek) perhaps from "upala" (Sanscrit) gem
+Formula:	SiO2.nH2O (there is a variable amount of water)
+Description:	Milky white with a brilliant play of colours when you tilt it, in blues, reds, yellows or greens.

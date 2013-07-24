@@ -1,0 +1,5 @@
+ Halite
+Name:	Halite
+Derivation:	From "hals" (Greek) salt
+Formula:	NaCl
+Description:	The photograph on the right shows a single crystal, which is basically a cube, although this one is imcomplete. The other photograph shows lots of crystals jumbled together. Halite is transparent or translucent. 

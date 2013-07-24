@@ -1,0 +1,4 @@
+Name:	Graphite
+Derivation:	From "graphein" (Greek) to write
+Formula:	C
+Description:	Graphite is a dull grey lump, with a slight sheen to the surface. It is very soft, and tends to rub off on your hands. 

@@ -1,0 +1,5 @@
+
+Name:	Topaz
+Derivation:	From "topazos" (Greek) a green gem or "tapaz" (Sanscrit) to glow
+Formula:	Al2SiO4(OH,F)2
+Description:	Transparent or translucent crystal, either yellow or blue 

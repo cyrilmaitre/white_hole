@@ -1,0 +1,8 @@
+id = 4
+name = ammoLaserLargeName
+description = ammoLaserLargeDescription
+price = 30
+stackmax = 128
+sprite = 0-4
+itemtype = 32
+itemtier = 1

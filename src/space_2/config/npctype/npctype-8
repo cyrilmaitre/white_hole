@@ -1,0 +1,5 @@
+id = 8
+name = npcTypeEvilNeutral
+color = #FF0000
+alignment = 2
+aggro = 1

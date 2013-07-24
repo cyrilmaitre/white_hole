@@ -1,0 +1,5 @@
+id = 21
+name = itemTypeStructureUpgradeName
+description = itemTypeStructureUpgradeDescription
+itemtype_parent = 16
+itemtype_leaf = true

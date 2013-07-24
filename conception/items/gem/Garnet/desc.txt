@@ -1,0 +1,5 @@
+Name:	Garnet
+Derivation:	From "granatum" (Late Latin) pomegranate
+Formula:	(Mg,Fe,Mn,Ca)3Al2Si3O12
+or Ca3(Cr,Fe)2Si3O12
+Description:	Translucent polyhedral crystal. The best known colour is a deep red, perhaps with a purple tinge, but they can be green, brown, yellow or black. 

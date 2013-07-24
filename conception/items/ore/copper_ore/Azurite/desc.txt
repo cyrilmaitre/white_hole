@@ -1,0 +1,4 @@
+Name:	Azurite
+Derivation:	From "lajward" (Persian) blue
+Formula:	Cu3(CO3)2(OH)2
+Description:	Azurite is dark blue. It can have flat crystals. You can see layers of them to the left, and the specimen on the right is a single crystal. 

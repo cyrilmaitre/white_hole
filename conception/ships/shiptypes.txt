@@ -1,0 +1,28 @@
+// Combat
+-> permet de combattre des enemies
+frigate
+destroyer
+cruiser
+battlecruiser
+battleship
+carrier
+deadnought
+mothership
+titan
+
+
+// Construction
+-> Permet de construire quelque chose sur la map => par exemple un complexe minier pret d'un esteroid
+tiny builder
+small builder
+medium builder
+large builder 
+huge builder
+
+
+// Transport
+tiny transporter
+small transporter
+medium transporter
+large transporter
+huge transporter

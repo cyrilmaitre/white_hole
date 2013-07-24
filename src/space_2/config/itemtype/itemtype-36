@@ -1,0 +1,5 @@
+id = 36
+name = itemTypeShipCruiserName
+description = itemTypeShipCruiserDescription
+itemtype_parent = 11
+itemtype_leaf = true

@@ -1,0 +1,4 @@
+Name:	Pyrite
+Derivation:	From "pyrites" (Greek) fire, because sparks could be struck from it.
+Formula:	FeS2
+Description:	Pyrite is shiny and faintly tinged with yellow. Pyrites has two different shapes of crystals, as seen in these two photographs.

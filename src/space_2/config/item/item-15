@@ -1,0 +1,8 @@
+id = 15
+name = weaponModelLightLauncherName
+description = weaponModelLightLauncherDescription
+price = 5000
+stackmax = 1
+sprite = 10-0
+itemtype = 26
+itemtier = 2

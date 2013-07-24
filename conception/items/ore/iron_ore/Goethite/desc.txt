@@ -1,0 +1,4 @@
+Name:	Goethite
+Derivation:	Names after the German poet J W Von Goethe (1749-1832), who was also a mineral collector
+Formula:	FeO(OH)
+Description:	Dark brown crystals. This photograph shows goethite crystals on grey rock. 

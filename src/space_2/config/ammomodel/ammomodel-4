@@ -1,0 +1,14 @@
+# ITEM
+id = 4
+# AMMO
+lifeTime = 10
+damage = 10
+splashradius = 0
+ammotype = 3
+weapontype = 3 
+velocity = 1250
+quickening = 99999
+projectile_type = 3
+projectile_color = #009600
+projectile_scale = 1
+sound_fire = weapon_launcher_1.wav

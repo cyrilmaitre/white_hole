@@ -1,0 +1,559 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{39970792-E322-49B6-9602-522FBE2B83D7}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+    <RootNamespace>space_2</RootNamespace>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <LinkIncremental>true</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <LinkIncremental>false</LinkIncremental>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>Psapi.lib;sfml-audio-d.lib;sfml-graphics-d.lib;sfml-window-d.lib;sfml-system-d.lib;sfml-network-d.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <IgnoreSpecificDefaultLibraries>MSVCRT; LIBCMT</IgnoreSpecificDefaultLibraries>
+      <Profile>true</Profile>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalDependencies>Psapi.lib;sfml-audio.lib;sfml-graphics.lib;sfml-window.lib;sfml-system.lib;sfml-network.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <IgnoreSpecificDefaultLibraries>LIBCMT</IgnoreSpecificDefaultLibraries>
+      <Profile>true</Profile>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="AmmoModel.cpp" />
+    <ClCompile Include="AmmoModelFactory.cpp" />
+    <ClCompile Include="AmmoType.cpp" />
+    <ClCompile Include="AmmoTypeFactory.cpp" />
+    <ClCompile Include="Animation.cpp" />
+    <ClCompile Include="AnimationManager.cpp" />
+    <ClCompile Include="Auto.cpp" />
+    <ClCompile Include="AutoManager.cpp" />
+    <ClCompile Include="BackgroundGeneration.cpp" />
+    <ClCompile Include="BackgroundSpace.cpp" />
+    <ClCompile Include="BackgroundSpaceManager.cpp" />
+    <ClCompile Include="BaseScreen.cpp" />
+    <ClCompile Include="BonusSkills.cpp" />
+    <ClCompile Include="BootScreen.cpp" />
+    <ClCompile Include="Camera.cpp" />
+    <ClCompile Include="Character.cpp" />
+    <ClCompile Include="CharacterShipItemStackUpdate.cpp" />
+    <ClCompile Include="CharacterUpdate.cpp" />
+    <ClCompile Include="DebugScreen.cpp" />
+    <ClCompile Include="EntityTarget.cpp" />
+    <ClCompile Include="ExperienceBar.cpp" />
+    <ClCompile Include="IdValueDouble.cpp" />
+    <ClCompile Include="IdValueFloat.cpp" />
+    <ClCompile Include="IdValueInt.cpp" />
+    <ClCompile Include="IdValueLong.cpp" />
+    <ClCompile Include="ImpactBullet.cpp" />
+    <ClCompile Include="ImpactExplosion.cpp" />
+    <ClCompile Include="ImpactLaser.cpp" />
+    <ClCompile Include="ImpactManager.cpp" />
+    <ClCompile Include="Level.cpp" />
+    <ClCompile Include="Levelable.cpp" />
+    <ClCompile Include="LevelCharacter.cpp" />
+    <ClCompile Include="LevelFactory.cpp" />
+    <ClCompile Include="LevelShip.cpp" />
+    <ClCompile Include="MapMiniView.cpp" />
+    <ClCompile Include="MapObjectModel.cpp" />
+    <ClCompile Include="Npc.cpp" />
+    <ClCompile Include="NpcData.cpp" />
+    <ClCompile Include="NpcMovable.cpp" />
+    <ClCompile Include="ProjectileBullet.cpp" />
+    <ClCompile Include="ProjectileLaserBall.cpp" />
+    <ClCompile Include="ProjectileManager.cpp" />
+    <ClCompile Include="Reactor.cpp" />
+    <ClCompile Include="ResourceConfig.cpp" />
+    <ClCompile Include="Rotable.cpp" />
+    <ClCompile Include="RotableData.cpp" />
+    <ClCompile Include="ShipViewSmall.cpp" />
+    <ClCompile Include="CharacterViewSelect.cpp" />
+    <ClCompile Include="CharacterViewSelectSmall.cpp" />
+    <ClCompile Include="CloudGaz.cpp" />
+    <ClCompile Include="CloudGazManager.cpp" />
+    <ClCompile Include="CloudGazModel.cpp" />
+    <ClCompile Include="CloudGazModelfactory.cpp" />
+    <ClCompile Include="CloudWreck.cpp" />
+    <ClCompile Include="CloudWreckManager.cpp" />
+    <ClCompile Include="CloudWreckModel.cpp" />
+    <ClCompile Include="CloudWreckModelFactory.cpp" />
+    <ClCompile Include="Containerable.cpp" />
+    <ClCompile Include="ContainerableData.cpp" />
+    <ClCompile Include="ContainerRow.cpp" />
+    <ClCompile Include="ContainerRowView.cpp" />
+    <ClCompile Include="ContainerStack.cpp" />
+    <ClCompile Include="ContainerStackViewManager.cpp" />
+    <ClCompile Include="ContainerStackView.cpp" />
+    <ClCompile Include="ContainerView.cpp" />
+    <ClCompile Include="DangerLevelManager.cpp" />
+    <ClCompile Include="DangerLevel.cpp" />
+    <ClCompile Include="DangerLevelFactory.cpp" />
+    <ClCompile Include="DestructableData.cpp" />
+    <ClCompile Include="Effect.cpp" />
+    <ClCompile Include="EffectMap.cpp" />
+    <ClCompile Include="Entity.cpp" />
+    <ClCompile Include="EntityManager.cpp" />
+    <ClCompile Include="EntityMovable.cpp" />
+    <ClCompile Include="Equipable.cpp" />
+    <ClCompile Include="SplitString.cpp" />
+    <ClCompile Include="ExplosionEffect.cpp" />
+    <ClCompile Include="FactoryGet.cpp" />
+    <ClCompile Include="IdGenerator.cpp" />
+    <ClCompile Include="Impact.cpp" />
+    <ClCompile Include="ItemFactory.cpp" />
+    <ClCompile Include="ItemStack.cpp" />
+    <ClCompile Include="LifeBar.cpp" />
+    <ClCompile Include="LootItemModel.cpp" />
+    <ClCompile Include="LootItemModelFactory.cpp" />
+    <ClCompile Include="MapObjectdata.cpp" />
+    <ClCompile Include="MapObjectSelector.cpp" />
+    <ClCompile Include="MovableData.cpp" />
+    <ClCompile Include="Network.cpp" />
+    <ClCompile Include="NetworkJob.cpp" />
+    <ClCompile Include="NetworkJobManager.cpp" />
+    <ClCompile Include="NpcShip.cpp" />
+    <ClCompile Include="NpcShipModel.cpp" />
+    <ClCompile Include="NpcShipModelFactory.cpp" />
+    <ClCompile Include="NpcShipSpawner.cpp" />
+    <ClCompile Include="NpcType.cpp" />
+    <ClCompile Include="NpcTypeFactory.cpp" />
+    <ClCompile Include="PlanetManager.cpp" />
+    <ClCompile Include="PlanetModel.cpp" />
+    <ClCompile Include="PlanetModelFactory.cpp" />
+    <ClCompile Include="PlanetType.cpp" />
+    <ClCompile Include="PlanetTypeFactory.cpp" />
+    <ClCompile Include="Projectile.cpp" />
+    <ClCompile Include="ProjectileLaser.cpp" />
+    <ClCompile Include="ProjectileMissile.cpp" />
+    <ClCompile Include="ProjectileRoquet.cpp" />
+    <ClCompile Include="Rockable.cpp" />
+    <ClCompile Include="Skill.cpp" />
+    <ClCompile Include="CreateCharacterScreen.cpp" />
+    <ClCompile Include="Destructable.cpp" />
+    <ClCompile Include="EventManager.cpp" />
+    <ClCompile Include="Game.cpp" />
+    <ClCompile Include="Internationalisation.cpp" />
+    <ClCompile Include="Item.cpp" />
+    <ClCompile Include="ItemTier.cpp" />
+    <ClCompile Include="ItemTierFactory.cpp" />
+    <ClCompile Include="ItemType.cpp" />
+    <ClCompile Include="ItemTypeFactory.cpp" />
+    <ClCompile Include="Job.cpp" />
+    <ClCompile Include="JobFactory.cpp" />
+    <ClCompile Include="JobView.cpp" />
+    <ClCompile Include="jsoncpp.cpp" />
+    <ClCompile Include="Juckebox.cpp" />
+    <ClCompile Include="KeyValueFile.cpp" />
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="Map.cpp" />
+    <ClCompile Include="MapObject.cpp" />
+    <ClCompile Include="Movable.cpp" />
+    <ClCompile Include="Option.cpp" />
+    <ClCompile Include="Particle.cpp" />
+    <ClCompile Include="ParticleManager.cpp" />
+    <ClCompile Include="Planet.cpp" />
+    <ClCompile Include="CharacterShip.cpp" />
+    <ClCompile Include="Race.cpp" />
+    <ClCompile Include="RaceFactory.cpp" />
+    <ClCompile Include="RaceView.cpp" />
+    <ClCompile Include="Resource.cpp" />
+    <ClCompile Include="RunningStats.cpp" />
+    <ClCompile Include="Sector.cpp" />
+    <ClCompile Include="SelectCharacterScreen.cpp" />
+    <ClCompile Include="Session.cpp" />
+    <ClCompile Include="sha1.cpp" />
+    <ClCompile Include="Ship.cpp" />
+    <ClCompile Include="ShipFactory.cpp" />
+    <ClCompile Include="ShipModel.cpp" />
+    <ClCompile Include="ShipModelFactory.cpp" />
+    <ClCompile Include="ShipType.cpp" />
+    <ClCompile Include="ShipTypeFactory.cpp" />
+    <ClCompile Include="SkillCharacter.cpp" />
+    <ClCompile Include="SkillFactory.cpp" />
+    <ClCompile Include="SkillCharacterView.cpp" />
+    <ClCompile Include="SpriteParameter.cpp" />
+    <ClCompile Include="SpriteParameterFactory.cpp" />
+    <ClCompile Include="Star.cpp" />
+    <ClCompile Include="StarManager.cpp" />
+    <ClCompile Include="StarModel.cpp" />
+    <ClCompile Include="StarModelFactory.cpp" />
+    <ClCompile Include="Station.cpp" />
+    <ClCompile Include="StationManager.cpp" />
+    <ClCompile Include="StationModel.cpp" />
+    <ClCompile Include="StationModelFactory.cpp" />
+    <ClCompile Include="Stuffable.cpp" />
+    <ClCompile Include="StuffableData.cpp" />
+    <ClCompile Include="TitleScreen.cpp" />
+    <ClCompile Include="Tools.cpp" />
+    <ClCompile Include="ToolsImage.cpp" />
+    <ClCompile Include="ToolsMap.cpp" />
+    <ClCompile Include="Block.cpp" />
+    <ClCompile Include="Button.cpp" />
+    <ClCompile Include="Clickable.cpp" />
+    <ClCompile Include="Clock.cpp" />
+    <ClCompile Include="ClockManager.cpp" />
+    <ClCompile Include="FieldSet.cpp" />
+    <ClCompile Include="Focusable.cpp" />
+    <ClCompile Include="UserInterface.cpp" />
+    <ClCompile Include="Image.cpp" />
+    <ClCompile Include="Manager.cpp" />
+    <ClCompile Include="ManagerConfig.cpp" />
+    <ClCompile Include="MenuQuickMap.cpp" />
+    <ClCompile Include="ProgressBar.cpp" />
+    <ClCompile Include="TextMultiLine.cpp" />
+    <ClCompile Include="WindowCargo.cpp" />
+    <ClCompile Include="WindowCargoLoot.cpp" />
+    <ClCompile Include="WindowJukebox.cpp" />
+    <ClCompile Include="WindowMap.cpp" />
+    <ClCompile Include="WindowSelected.cpp" />
+    <ClCompile Include="WindowCharacter.cpp" />
+    <ClCompile Include="WindowSelectedCharacterShip.cpp" />
+    <ClCompile Include="WindowSelectedEntity.cpp" />
+    <ClCompile Include="WindowSelectedNpcShip.cpp" />
+    <ClCompile Include="WindowSelectedWreck.cpp" />
+    <ClCompile Include="WindowShipSmall.cpp" />
+    <ClCompile Include="Window.cpp" />
+    <ClCompile Include="ImageGIF.cpp" />
+    <ClCompile Include="ImageGIFFactory.cpp" />
+    <ClCompile Include="List.cpp" />
+    <ClCompile Include="Listable.cpp" />
+    <ClCompile Include="MenuQuick.cpp" />
+    <ClCompile Include="MenuQuickCargo.cpp" />
+    <ClCompile Include="MenuQuickCharacter.cpp" />
+    <ClCompile Include="MenuQuickChat.cpp" />
+    <ClCompile Include="MenuQuickItem.cpp" />
+    <ClCompile Include="MenuQuickJukebox.cpp" />
+    <ClCompile Include="MenuQuickQuest.cpp" />
+    <ClCompile Include="MenuQuickShip.cpp" />
+    <ClCompile Include="MenuQuickSystem.cpp" />
+    <ClCompile Include="Object.cpp" />
+    <ClCompile Include="PopupBubble.cpp" />
+    <ClCompile Include="Scrollable.cpp" />
+    <ClCompile Include="Scrollbar.cpp" />
+    <ClCompile Include="ScrollbarThumb.cpp" />
+    <ClCompile Include="Selectable.cpp" />
+    <ClCompile Include="SelectableGroup.cpp" />
+    <ClCompile Include="Text.cpp" />
+    <ClCompile Include="TextBox.cpp" />
+    <ClCompile Include="TextBoxMultiLine.cpp" />
+    <ClCompile Include="TextField.cpp" />
+    <ClCompile Include="ToolsUi.cpp" />
+    <ClCompile Include="View.cpp" />
+    <ClCompile Include="Upgradable.cpp" />
+    <ClCompile Include="UpgradableData.cpp" />
+    <ClCompile Include="User.cpp" />
+    <ClCompile Include="Weapon.cpp" />
+    <ClCompile Include="WeaponModel.cpp" />
+    <ClCompile Include="Weaponable.cpp" />
+    <ClCompile Include="WeaponableData.cpp" />
+    <ClCompile Include="WeaponModelFactory.cpp" />
+    <ClCompile Include="WeaponType.cpp" />
+    <ClCompile Include="WeaponTypeFactory.cpp" />
+    <ClCompile Include="WeaponView.cpp" />
+    <ClCompile Include="Wreck.cpp" />
+    <ClCompile Include="WreckManager.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="AmmoModel.h" />
+    <ClInclude Include="AmmoModelFactory.h" />
+    <ClInclude Include="AmmoType.h" />
+    <ClInclude Include="AmmoTypeFactory.h" />
+    <ClInclude Include="Animation.h" />
+    <ClInclude Include="AnimationManager.h" />
+    <ClInclude Include="Auto.h" />
+    <ClInclude Include="AutoManager.h" />
+    <ClInclude Include="BackgroundGeneration.h" />
+    <ClInclude Include="BackgroundSpace.h" />
+    <ClInclude Include="BackgroundSpaceManager.h" />
+    <ClInclude Include="BaseScreen.h" />
+    <ClInclude Include="BonusSkills.h" />
+    <ClInclude Include="BootScreen.h" />
+    <ClInclude Include="Camera.h" />
+    <ClInclude Include="Character.h" />
+    <ClInclude Include="CharacterShipItemStackUpdate.h" />
+    <ClInclude Include="CharacterUpdate.h" />
+    <ClInclude Include="DebugScreen.h" />
+    <ClInclude Include="DestructableData.h" />
+    <ClInclude Include="EntityTarget.h" />
+    <ClInclude Include="ExperienceBar.h" />
+    <ClInclude Include="IdValueDouble.h" />
+    <ClInclude Include="IdValueFloat.h" />
+    <ClInclude Include="IdValueInt.h" />
+    <ClInclude Include="IdValueLong.h" />
+    <ClInclude Include="ImpactBullet.h" />
+    <ClInclude Include="ImpactExplosion.h" />
+    <ClInclude Include="ImpactLaser.h" />
+    <ClInclude Include="ImpactManager.h" />
+    <ClInclude Include="json-forwards.h" />
+    <ClInclude Include="json.h" />
+    <ClInclude Include="Level.h" />
+    <ClInclude Include="Levelable.h" />
+    <ClInclude Include="LevelCharacter.h" />
+    <ClInclude Include="LevelFactory.h" />
+    <ClInclude Include="LevelShip.h" />
+    <ClInclude Include="MapMiniView.h" />
+    <ClInclude Include="MapObjectModel.h" />
+    <ClInclude Include="NetworkDefine.h" />
+    <ClInclude Include="Npc.h" />
+    <ClInclude Include="NpcData.h" />
+    <ClInclude Include="NpcMovable.h" />
+    <ClInclude Include="ProjectileBullet.h" />
+    <ClInclude Include="ProjectileLaserBall.h" />
+    <ClInclude Include="ProjectileManager.h" />
+    <ClInclude Include="Reactor.h" />
+    <ClInclude Include="ResourceConfig.h" />
+    <ClInclude Include="Rotable.h" />
+    <ClInclude Include="RotableData.h" />
+    <ClInclude Include="ShipViewSmall.h" />
+    <ClInclude Include="CharacterViewSelect.h" />
+    <ClInclude Include="CharacterViewSelectSmall.h" />
+    <ClInclude Include="CloudGaz.h" />
+    <ClInclude Include="CloudGazManager.h" />
+    <ClInclude Include="CloudGazModel.h" />
+    <ClInclude Include="CloudGazModelfactory.h" />
+    <ClInclude Include="CloudWreck.h" />
+    <ClInclude Include="CloudWreckManager.h" />
+    <ClInclude Include="CloudWreckModel.h" />
+    <ClInclude Include="CloudWreckModelFactory.h" />
+    <ClInclude Include="Containerable.h" />
+    <ClInclude Include="ContainerableData.h" />
+    <ClInclude Include="ContainerRow.h" />
+    <ClInclude Include="ContainerRowView.h" />
+    <ClInclude Include="ContainerStack.h" />
+    <ClInclude Include="ContainerStackViewManager.h" />
+    <ClInclude Include="ContainerStackView.h" />
+    <ClInclude Include="ContainerView.h" />
+    <ClInclude Include="DangerLevelManager.h" />
+    <ClInclude Include="DangerLevel.h" />
+    <ClInclude Include="DangerLevelFactory.h" />
+    <ClInclude Include="Effect.h" />
+    <ClInclude Include="EffectMap.h" />
+    <ClInclude Include="Entity.h" />
+    <ClInclude Include="EntityManager.h" />
+    <ClInclude Include="EntityMovable.h" />
+    <ClInclude Include="Equipable.h" />
+    <ClInclude Include="SplitString.h" />
+    <ClInclude Include="ExplosionEffect.h" />
+    <ClInclude Include="Factory.h" />
+    <ClInclude Include="FactoryGet.h" />
+    <ClInclude Include="IdValue.h" />
+    <ClInclude Include="IdGenerator.h" />
+    <ClInclude Include="Impact.h" />
+    <ClInclude Include="ItemFactory.h" />
+    <ClInclude Include="ItemStack.h" />
+    <ClInclude Include="LifeBar.h" />
+    <ClInclude Include="LootItemModel.h" />
+    <ClInclude Include="LootItemModelFactory.h" />
+    <ClInclude Include="MapObjectdata.h" />
+    <ClInclude Include="MapObjectSelector.h" />
+    <ClInclude Include="MovableData.h" />
+    <ClInclude Include="Network.h" />
+    <ClInclude Include="NetworkJob.h" />
+    <ClInclude Include="NetworkJobManager.h" />
+    <ClInclude Include="NpcShip.h" />
+    <ClInclude Include="NpcShipModel.h" />
+    <ClInclude Include="NpcShipModelFactory.h" />
+    <ClInclude Include="NpcShipSpawner.h" />
+    <ClInclude Include="NpcType.h" />
+    <ClInclude Include="NpcTypeFactory.h" />
+    <ClInclude Include="PlanetManager.h" />
+    <ClInclude Include="PlanetModel.h" />
+    <ClInclude Include="PlanetModelFactory.h" />
+    <ClInclude Include="PlanetType.h" />
+    <ClInclude Include="PlanetTypeFactory.h" />
+    <ClInclude Include="Projectile.h" />
+    <ClInclude Include="ProjectileLaser.h" />
+    <ClInclude Include="ProjectileMissile.h" />
+    <ClInclude Include="ProjectileRoquet.h" />
+    <ClInclude Include="Rockable.h" />
+    <ClInclude Include="Skill.h" />
+    <ClInclude Include="CreateCharacterScreen.h" />
+    <ClInclude Include="Dirent.h" />
+    <ClInclude Include="Internationalisation.h" />
+    <ClInclude Include="Item.h" />
+    <ClInclude Include="ItemTier.h" />
+    <ClInclude Include="ItemTierFactory.h" />
+    <ClInclude Include="ItemType.h" />
+    <ClInclude Include="ItemTypeFactory.h" />
+    <ClInclude Include="Job.h" />
+    <ClInclude Include="JobFactory.h" />
+    <ClInclude Include="JobView.h" />
+    <ClInclude Include="Juckebox.h" />
+    <ClInclude Include="KeyValueFile.h" />
+    <ClInclude Include="Particle.h" />
+    <ClInclude Include="ParticleManager.h" />
+    <ClInclude Include="CharacterShip.h" />
+    <ClInclude Include="Race.h" />
+    <ClInclude Include="RaceFactory.h" />
+    <ClInclude Include="RaceView.h" />
+    <ClInclude Include="ResourceDefine.h" />
+    <ClInclude Include="Destructable.h" />
+    <ClInclude Include="EventManager.h" />
+    <ClInclude Include="Game.h" />
+    <ClInclude Include="Map.h" />
+    <ClInclude Include="MapObject.h" />
+    <ClInclude Include="Movable.h" />
+    <ClInclude Include="Option.h" />
+    <ClInclude Include="Planet.h" />
+    <ClInclude Include="Resource.h" />
+    <ClInclude Include="RunningStats.h" />
+    <ClInclude Include="Sector.h" />
+    <ClInclude Include="SelectCharacterScreen.h" />
+    <ClInclude Include="Session.h" />
+    <ClInclude Include="sha1.h" />
+    <ClInclude Include="Ship.h" />
+    <ClInclude Include="ShipFactory.h" />
+    <ClInclude Include="ShipModel.h" />
+    <ClInclude Include="ShipModelFactory.h" />
+    <ClInclude Include="ShipType.h" />
+    <ClInclude Include="ShipTypeFactory.h" />
+    <ClInclude Include="SkillCharacter.h" />
+    <ClInclude Include="SkillFactory.h" />
+    <ClInclude Include="SkillCharacterView.h" />
+    <ClInclude Include="SpriteParameter.h" />
+    <ClInclude Include="SpriteParameterDefine.h" />
+    <ClInclude Include="SpriteParameterFactory.h" />
+    <ClInclude Include="Star.h" />
+    <ClInclude Include="StarManager.h" />
+    <ClInclude Include="StarModel.h" />
+    <ClInclude Include="StarModelFactory.h" />
+    <ClInclude Include="Station.h" />
+    <ClInclude Include="StationManager.h" />
+    <ClInclude Include="StationModel.h" />
+    <ClInclude Include="StationModelFactory.h" />
+    <ClInclude Include="Stuffable.h" />
+    <ClInclude Include="StuffableData.h" />
+    <ClInclude Include="TitleScreen.h" />
+    <ClInclude Include="Tools.h" />
+    <ClInclude Include="ToolsImage.h" />
+    <ClInclude Include="ToolsMap.h" />
+    <ClInclude Include="Block.h" />
+    <ClInclude Include="Button.h" />
+    <ClInclude Include="Clickable.h" />
+    <ClInclude Include="Clock.h" />
+    <ClInclude Include="ClockManager.h" />
+    <ClInclude Include="FieldSet.h" />
+    <ClInclude Include="Focusable.h" />
+    <ClInclude Include="UserInterface.h" />
+    <ClInclude Include="Image.h" />
+    <ClInclude Include="Manager.h" />
+    <ClInclude Include="ManagerConfig.h" />
+    <ClInclude Include="MenuQuickMap.h" />
+    <ClInclude Include="ProgressBar.h" />
+    <ClInclude Include="TextMultiLine.h" />
+    <ClInclude Include="ToolsUi.h" />
+    <ClInclude Include="WindowCargo.h" />
+    <ClInclude Include="WindowCargoLoot.h" />
+    <ClInclude Include="WindowJukebox.h" />
+    <ClInclude Include="WindowMap.h" />
+    <ClInclude Include="WindowSelected.h" />
+    <ClInclude Include="WindowCharacter.h" />
+    <ClInclude Include="WindowSelectedCharacterShip.h" />
+    <ClInclude Include="WindowSelectedEntity.h" />
+    <ClInclude Include="WindowSelectedNpcShip.h" />
+    <ClInclude Include="WindowSelectedWreck.h" />
+    <ClInclude Include="WindowShipSmall.h" />
+    <ClInclude Include="Window.h" />
+    <ClInclude Include="ImageGIF.h" />
+    <ClInclude Include="ImageGIFFactory.h" />
+    <ClInclude Include="List.h" />
+    <ClInclude Include="Listable.h" />
+    <ClInclude Include="MenuQuick.h" />
+    <ClInclude Include="MenuQuickCargo.h" />
+    <ClInclude Include="MenuQuickCharacter.h" />
+    <ClInclude Include="MenuQuickChat.h" />
+    <ClInclude Include="MenuQuickItem.h" />
+    <ClInclude Include="MenuQuickJukebox.h" />
+    <ClInclude Include="MenuQuickQuest.h" />
+    <ClInclude Include="MenuQuickShip.h" />
+    <ClInclude Include="MenuQuickSystem.h" />
+    <ClInclude Include="Object.h" />
+    <ClInclude Include="PopupBubble.h" />
+    <ClInclude Include="Scrollable.h" />
+    <ClInclude Include="Scrollbar.h" />
+    <ClInclude Include="ScrollbarThumb.h" />
+    <ClInclude Include="Selectable.h" />
+    <ClInclude Include="SelectableGroup.h" />
+    <ClInclude Include="Text.h" />
+    <ClInclude Include="TextBox.h" />
+    <ClInclude Include="TextBoxMultiLine.h" />
+    <ClInclude Include="TextField.h" />
+    <ClInclude Include="View.h" />
+    <ClInclude Include="Upgradable.h" />
+    <ClInclude Include="UpgradableData.h" />
+    <ClInclude Include="User.h" />
+    <ClInclude Include="Weapon.h" />
+    <ClInclude Include="WeaponModel.h" />
+    <ClInclude Include="Weaponable.h" />
+    <ClInclude Include="WeaponableData.h" />
+    <ClInclude Include="WeaponModelFactory.h" />
+    <ClInclude Include="WeaponType.h" />
+    <ClInclude Include="WeaponTypeFactory.h" />
+    <ClInclude Include="WeaponView.h" />
+    <ClInclude Include="Wreck.h" />
+    <ClInclude Include="WreckManager.h" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

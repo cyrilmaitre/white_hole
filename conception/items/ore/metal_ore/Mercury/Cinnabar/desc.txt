@@ -1,0 +1,4 @@
+Name:	Cinnabar
+Derivation:	From "kinnabari" (Greek - from Persian) cinnabar
+Formula:	HgS
+Description:	Red 

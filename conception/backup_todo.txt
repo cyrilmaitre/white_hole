@@ -1,0 +1,142 @@
+// Truc à faire quand le temps:
+Rotate indéfiniment à une certaine vitesse radiale
+Affichage des damage totaux quand relache du clic droit
+Gestion damage splash 
+Remove UiPopupBubble::updateAll(myEvent); de UiObject::updateAll( sf::Event myEvent) + Test si OK
+Add estimation globale du cargo
+Add sound quand plus bcp de vie: http://www.youtube.com/watch?v=SryKlp9peVM
+[Bug] Quand les projectils arrivent sur leur cible, ils ralentissent => normal pour les movables
+	- Faire en sorte de pas faire ca et de garder vitesse max jusqu'à impact 
+	- Vérifier que ca ne pose pas de souci pour la gestion de l'impact (si on depasse la cible par exemple => problème connue)
+Add les sounds en train d'etre joué dans les RunningStats
+Item stuffabke:
+	- Map
+	- Bon PRL
+
+// Refractor DB
+- dangerlevel
+- characterlevel
+
+// Site web:
+-> /!\ Méthode (via servlet admin) pour générer les fichiers de configurations en fonction de ce qui se trouve dans la database
+
+// Idée cartes
+	- Le vaisseau dois équiper un item "map" genre un scanner qui determine les niveaux de zoom possibles
+	- Par exemple 5 niveau de zoom différents, le premier vaisseau ne peut avoir accés qu'au premier niveau, et après ca évolue si on change l'item carte 
+	- Ca peut etre very nice (plus la carte propose des niveaux de zoom, plus elle est rare, plus elle est chère
+	- Voir plus bas
+
+// Faire une interface sur le site web pour add:
+	- des npc ship par danger level (avec %)
+	- des loots aux npc ship (avec %tage aussi)
+	-> Ca sera plus facile à éditer et avec le systeme de generation de ficheir de config c'est cool
+
+
+=================================================================
+
+Add planet (just graphic) => fichier de config avec taille max / poid min / max... etc
+	- FInir planet Manager
+	- Generation de planet (check pas de superposition, plane, taille... etc)
+	- Add dans sector + update + affichage
+Add petit astre (just graphic)
+Add gaz (just graphic)
+
+Map => voir les idées:
+	- Différents zoom en fonction de l'item map équipé (plus il est rare,  plus il permet de dezoomer)
+	- Pas possible de bouger sur la map (principe du dezoom)
+	- Plus c'est zoomé, plus c'est détaillé => avec les positions des ennemies au premier zoom par exemple, la position des planetes, stations, complexes, champs d'astéroid... etc
+		- Zoom current sector
+		- Zoom sector au alentour
+		- Zoom sector +x (jusqu'à +20 par exemple)
+	- Afficher une legende + posibilité de modifié le rendu (genre affichage du dangerlevel par un code couleur (pour avoir une vue globale.. etc)
+	- Repenser à tout ca + faire des schemas
+
+=> Faire un systeme de PRL
+	- Item dans stuffable (comme map) plus ou moins puissant 
+	- Open PRL menu (en bas à droite du menu centrale)
+		-> Permet de choisir la direction du bon + indique la destination (arrivé: x, y, sector... etc)
+	- Temps de rechargement
+	- PRL plus ou moins loin en fonction de l'item equiped
+	- Selection de l'angle + puissance ou destination final
+		-> affichage des coordonnées d'arrivé + sector d'arrivé
+
+=> Réflechir au systeme de progression 
+	- Character => Skills passif
+	- Ship => Skills actif + des attributs (+ d'armor / shield / structure / velocity / damage mul... etc)
+
+- Gestion mort / debris
+- Gerer un "DebrisManager" pour gérer les débris qui continnent les credit / loot... etc
+- gestion Xp / level
+	- Gestion pour le character
+	- Gestion pour le characterShip
+	- Gérer tout ca avec des levelManager (prototype existant!)
+- gestion sauvegarde en BDD (loot, credit, xp, level, kill (stats))
+
+
+Refractor EventManager with:
+	- isMouseButtonLeftClicked (button pressed)
+	- isMouseButtonRightClicked (button pressed)
+	- Gestion à chaque bloucle => 1 seul click peut etre prit en compte => permet d'eviter de cliquer sur un ship en dessous d'une window par exemple... super pratique
+
+[BUG] Dans creation de personnage quand on fait apparaitre la bubble quand ya 0% sur un skill, ya rien dans la bubble
+
+Faire des complexes
+- plusieurs niveau de plus en plus dur
+- récompenses a chaque niveau
+- bosses tout les x niveau
+- big récompenses tout les x niveau
+- quand le joueur perd / sort il recommence niveau 1. Voir pour faire un système de sauvegarde / palier
+- niveau / paliers bonus. Rejouabilite. Aller tjrs plus loins. 
+
+- Gérer le minage avec des batiments à construire pret du champs d'asteroid et qui mine tout seul mais qu'il faut aussi defendre :) => Remplace les mining barge / exhumer
+- système de point gagné en tuant un ennemis et echangeable contre du stuff
+-système de patron poir crafter
+- voir comment se procurer les patrons. Plus cest rare meilleur est le stuff + moins de temps requis pour craft + moins de ressources requise.
+- tout ce qui est bank et craft... etc cest en dehors de la map
+Cest cross map en faite. Du coup craft sur plusieurs jour par exemple.
+- système de niveau pour les craft ? A voir
+
+
+
+- gestion Deplécement npcShip 
+- gestion attaque NpcShip
+
+Faire un systeme de selection du plus proche / next... etc avec tab par exemple
+
+
+// NpcShipModel
+	- Stuff => Weapon, ... etc -> qui sont drop à la mort (genre % de chance)
+	- + loot suplémentaire: id_item(%)
+
+
+// Gestion destruction
+// Refractor LevelManager to have same thing of DangerLevelManegr
+// Add gain d'xp pour les NpcShipModel (en fonction du level du character etout etout)
+// gestion du gain d'xp
+// Gestion movement du npc ship + si target (agressive) + quand low hp peut etre back... etc fuite
+// Gestion fire des npc ship
+
+// Gestion loot... suppression du débris
+
+
+
+// Affichage d'u background / border different en fonction de l'itemTier
+// Implement nuage de gaz (cf dak orbit) plan 4 - 5 image pre calculé
+
+- Display interface (to left and bottom mod)
+	-> Level: Reste à faire => refractor level manager => CharacterLevelManager
+	-> refractor level manager => Comme CharacterLevelManager
+
+- Gérer l'inertie lors de l'orientation. Le ship suit pas la souris instentanément, ya une vitesse radique (radiant)
+
+- Info Job, Race, Skills
+- Interface Rest pour edit characte
+- error message quand Name ou Skill non attribués + quand la creation fouare
+- Launch game when user have selected his character
+- Methods to save hero each x time on server (use thread)
+
+- Juckebox
+Finir patch note site
+
+
+[Bug] Quand on créer un personnage et qu'on revient en arrière il faut se deco / reco pour qu'il apparaisse

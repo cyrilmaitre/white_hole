@@ -1,0 +1,5 @@
+id = 35
+name = itemTypeShipFrigateName
+description = itemTypeShipFrigateDescription
+itemtype_parent = 11
+itemtype_leaf = true

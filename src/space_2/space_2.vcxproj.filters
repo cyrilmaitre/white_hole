@@ -1,0 +1,1749 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Fichiers sources">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Fichiers d%27en-tête">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Fichiers de ressources">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Fichiers d%27en-tête\game">
+      <UniqueIdentifier>{6c11f55e-4f52-4902-bb09-c24365e8a5cd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fichiers sources\game">
+      <UniqueIdentifier>{076fd150-3253-4087-a5f5-bc4a6b6c74d8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fichiers d%27en-tête\game\mapObject">
+      <UniqueIdentifier>{a989ae32-a0b4-4b69-92af-ad6b43669797}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fichiers sources\game\mapObject">
+      <UniqueIdentifier>{6ed09b30-fb9b-46cf-9a1a-ab88a4fe603f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fichiers d%27en-tête\game\camera">
+      <UniqueIdentifier>{68978d1d-af1d-4985-ac1f-df329ef9cdd1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fichiers sources\game\camera">
+      <UniqueIdentifier>{97964554-3607-4111-851b-c31eb412f76b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fichiers sources\tools">
+      <UniqueIdentifier>{29198941-fef5-45e1-82ad-c8a47fedd4a6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fichiers d%27en-tête\tools">
+      <UniqueIdentifier>{59415405-32c4-4893-802d-113555b13d82}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fichiers d%27en-tête\screen">
+      <UniqueIdentifier>{ad053fa4-6523-4ef6-8103-342298844a75}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fichiers d%27en-tête\game\map">
+      <UniqueIdentifier>{55a3a100-a336-4ea5-aa4d-08ec47386c86}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fichiers sources\game\map">
+      <UniqueIdentifier>{a1d9c1f2-d8d2-4849-9896-39b589e24b0f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fichiers d%27en-tête\tools\background">
+      <UniqueIdentifier>{66669b73-1a47-40cd-ba0d-1cf5a2a18cfc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fichiers sources\tools\background">
+      <UniqueIdentifier>{5a2b6538-c77b-4560-9390-8ef93fa1a103}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fichiers d%27en-tête\game\general">
+      <UniqueIdentifier>{44f81ea4-596c-4ad9-be94-333678a6b439}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fichiers sources\game\general">
+      <UniqueIdentifier>{e1d79c54-ecf2-43fa-9bdd-358d5eb836e0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fichiers d%27en-tête\game\general\dangerlevel">
+      <UniqueIdentifier>{e78e740d-a45d-4e58-a2d7-62773c2d35e7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fichiers sources\game\general\dangerLevel">
+      <UniqueIdentifier>{4780f348-3d92-41bf-86aa-11a6225e552b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fichiers d%27en-tête\game\mapObject\automanaged">
+      <UniqueIdentifier>{2fc2810d-478d-4d8f-816c-8a48a99c4af9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fichiers d%27en-tête\game\mapObject\automanaged\effect">
+      <UniqueIdentifier>{e89ee0d3-0fac-47f4-b840-5b4a90333e46}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fichiers d%27en-tête\game\mapObject\automanaged\projectile">
+      <UniqueIdentifier>{e7ef14e4-1543-4da7-ab97-fa54b198cc3b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fichiers sources\game\mapObject\automanaged">
+      <UniqueIdentifier>{ebd24695-04e9-440c-bf05-b8cf336e4668}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fichiers sources\game\mapObject\automanaged\effect">
+      <UniqueIdentifier>{ef0e985f-e99d-42d4-9890-f2225170a06f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fichiers sources\game\mapObject\automanaged\projectile">
+      <UniqueIdentifier>{545ccd9f-2548-4100-996b-68eb97223c87}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fichiers sources\screen">
+      <UniqueIdentifier>{d2589cb5-3250-493a-b1dd-a2abdf1fab15}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fichiers d%27en-tête\game\general\level">
+      <UniqueIdentifier>{7198adf4-9020-42fa-8001-523c44f56a13}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fichiers sources\game\general\level">
+      <UniqueIdentifier>{7a8a4507-cf19-43c3-b412-365e14fcde46}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fichiers d%27en-tête\mks">
+      <UniqueIdentifier>{32e96077-24cb-45a4-a1a0-c4d014597a46}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fichiers d%27en-tête\mks\ui">
+      <UniqueIdentifier>{45af1904-6c7a-44ed-89b9-683d5d8930fa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fichiers d%27en-tête\mks\tools">
+      <UniqueIdentifier>{f8c04db1-6cea-4247-a95a-2f47eae267c3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fichiers sources\mks">
+      <UniqueIdentifier>{f95e13cf-155d-4bb2-8240-b27fbec717ef}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fichiers sources\mks\ui">
+      <UniqueIdentifier>{719976d9-2dc6-4ec4-ad96-92f4a8cd1f83}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fichiers sources\mks\tools">
+      <UniqueIdentifier>{227d2484-aec6-4701-936f-915e6b1f7186}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fichiers d%27en-tête\mks\engine">
+      <UniqueIdentifier>{63940051-ecf7-4eb3-92ec-1a06b3290e25}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fichiers sources\mks\engine">
+      <UniqueIdentifier>{eb7f7ddf-730d-40c6-863f-e0f745f85fd5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fichiers d%27en-tête\mks\resource">
+      <UniqueIdentifier>{d89744e7-f6f2-4009-93b3-db18f5425b80}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fichiers sources\mks\resource">
+      <UniqueIdentifier>{54d9e1cb-a9e4-41d3-9050-4ab56b3a840f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fichiers d%27en-tête\mks\tools\lib">
+      <UniqueIdentifier>{c5867535-2f81-4b37-aae1-8c820802a9ad}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fichiers sources\mks\tools\lib">
+      <UniqueIdentifier>{16a77bcd-fb2d-44d9-b2d0-63794ff7fce5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fichiers d%27en-tête\resource">
+      <UniqueIdentifier>{51b57ac7-89b0-45ca-bfc2-b935f21f2d7c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fichiers d%27en-tête\resource\image">
+      <UniqueIdentifier>{880ba055-c0e5-4990-8c6e-87e848fda1ec}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fichiers d%27en-tête\resource\sound">
+      <UniqueIdentifier>{95a92179-f85f-4805-95d0-976e94734efd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fichiers d%27en-tête\resource\network">
+      <UniqueIdentifier>{823e0bce-52a7-4038-a603-d24e58399274}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fichiers sources\resource">
+      <UniqueIdentifier>{5d4c17e7-3814-4b37-bb24-fe45d0d85e91}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fichiers sources\resource\image">
+      <UniqueIdentifier>{ffc534c7-cdf9-4912-8c2c-f97ae1ae3d24}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fichiers sources\resource\sound">
+      <UniqueIdentifier>{3d9f81d2-9138-4421-b830-917e04cb5f88}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fichiers sources\resource\network">
+      <UniqueIdentifier>{cfa54050-5590-4f96-b3c4-74e472108895}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fichiers sources\mks\resource\network">
+      <UniqueIdentifier>{508dd589-a0ad-4576-b3d4-f5441b0e320f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fichiers d%27en-tête\mks\resource\network">
+      <UniqueIdentifier>{c7743cb1-a5ed-4a61-bea6-ebdc37ae796c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fichiers sources\game\ui">
+      <UniqueIdentifier>{b1553c1c-9491-4bed-a0ce-ef8529fd2998}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fichiers sources\game\ui\composant">
+      <UniqueIdentifier>{e82f6d34-5e49-4100-98fe-56cb81f84bcc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fichiers sources\game\ui\animation">
+      <UniqueIdentifier>{467e6093-8dce-4ed1-a5b7-ce06c8f1ef5b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fichiers sources\game\ui\menuquick">
+      <UniqueIdentifier>{ba5e96aa-5f94-42f2-9477-5b6b204047e7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fichiers sources\game\ui\window">
+      <UniqueIdentifier>{9f32dd03-2386-432c-baf0-3c1db32835b1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fichiers d%27en-tête\game\ui">
+      <UniqueIdentifier>{e995a529-aa2d-4e42-bdfb-6225a3496edc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fichiers d%27en-tête\game\ui\composant">
+      <UniqueIdentifier>{a45428c8-5ae8-4b70-b964-fcf86d5ddd99}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fichiers d%27en-tête\game\ui\animation">
+      <UniqueIdentifier>{3dc33c18-fcd9-41ba-8a12-3f55cc24a1f7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fichiers d%27en-tête\game\ui\menuquick">
+      <UniqueIdentifier>{42518fea-4ae7-4540-8156-a19ccf33345d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fichiers d%27en-tête\game\ui\window">
+      <UniqueIdentifier>{f5e172d1-6040-47ad-92ef-ef1a84e53652}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fichiers d%27en-tête\game\item">
+      <UniqueIdentifier>{75a53630-e850-4bc3-be67-09267433669d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fichiers d%27en-tête\game\item\weapon">
+      <UniqueIdentifier>{234c7a14-3e30-4f30-bf7d-ed35634966fe}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fichiers d%27en-tête\game\item\container">
+      <UniqueIdentifier>{ed09530b-f4f2-4c06-8e92-3828232951f6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fichiers d%27en-tête\game\item\loot">
+      <UniqueIdentifier>{63b43b52-2d47-4b7d-8e2d-1eff96fb3788}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fichiers d%27en-tête\game\mapObject\cloudgaz">
+      <UniqueIdentifier>{dd2cb306-16e4-4311-b17e-713104561458}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fichiers d%27en-tête\game\mapObject\star">
+      <UniqueIdentifier>{ae33ef54-bbf2-4e12-ab3a-4ceb0aab9c99}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fichiers d%27en-tête\game\mapObject\cloudwreck">
+      <UniqueIdentifier>{80c4c019-d43e-404b-8a50-35d06bdea602}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fichiers d%27en-tête\game\mapObject\entity">
+      <UniqueIdentifier>{6d2b9380-9995-4e4c-871b-f2f50f60f44c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fichiers d%27en-tête\game\mapObject\entity\npc">
+      <UniqueIdentifier>{8a4b3108-c342-4609-b74c-33e081fb70df}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fichiers d%27en-tête\game\mapObject\entity\npc\ship">
+      <UniqueIdentifier>{a808607e-e63d-46a1-8de3-708ab24bfde0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fichiers d%27en-tête\game\mapObject\entity\npc\station">
+      <UniqueIdentifier>{e2ba46d8-be0b-4e33-adf6-76f4663a8170}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fichiers d%27en-tête\game\mapObject\entity\ship">
+      <UniqueIdentifier>{f959b71a-eff2-42ba-95b2-85ffd94441ad}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fichiers d%27en-tête\game\mapObject\entity\wreck">
+      <UniqueIdentifier>{56f79bb3-b332-4e71-8ef1-b82ed615e1e6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fichiers d%27en-tête\game\mapObject\particle">
+      <UniqueIdentifier>{60ea3339-5413-449b-abd7-67276cc248aa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fichiers d%27en-tête\game\mapObject\planet">
+      <UniqueIdentifier>{6d320575-666d-4e56-a82c-28b1959bca87}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fichiers sources\game\item">
+      <UniqueIdentifier>{d59c2e53-3e47-4a88-b5be-61e0e62bb6ca}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fichiers sources\game\item\weapon">
+      <UniqueIdentifier>{289abd50-e3a4-4c8b-ade5-3ec9c3604953}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fichiers sources\game\item\container">
+      <UniqueIdentifier>{33e65a81-6713-4dc0-a043-e36ca5c17c8a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fichiers sources\game\item\loot">
+      <UniqueIdentifier>{b755d49b-6422-47bd-9d10-4dfc497dd67d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fichiers sources\game\mapObject\cloudgaz">
+      <UniqueIdentifier>{8147b58e-5c74-48e0-855e-26c40d9cac86}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fichiers sources\game\mapObject\star">
+      <UniqueIdentifier>{26b5a434-3385-4fe4-b35e-68e1350864fd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fichiers sources\game\mapObject\cloudwreck">
+      <UniqueIdentifier>{27628b20-1e65-431d-8be5-18f3bbf220c5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fichiers sources\game\mapObject\entity">
+      <UniqueIdentifier>{f5093f2b-b009-4f25-ba35-e6a487269637}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fichiers sources\game\mapObject\entity\ship">
+      <UniqueIdentifier>{0655efd4-6a4d-4488-a9f0-ae276bc17b8a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fichiers sources\game\mapObject\entity\npc">
+      <UniqueIdentifier>{3ecc4d46-4464-44fc-a1a1-430acc8d27ba}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fichiers sources\game\mapObject\entity\npc\ship">
+      <UniqueIdentifier>{f4510f8c-0816-4b17-99c3-d4b8410bae24}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fichiers sources\game\mapObject\entity\npc\station">
+      <UniqueIdentifier>{82e48ccd-1846-4e0f-8190-045995f9236f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fichiers sources\game\mapObject\entity\wreck">
+      <UniqueIdentifier>{f2cb75a3-9d71-43be-b463-b54b4d91dc3c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fichiers sources\game\mapObject\particle">
+      <UniqueIdentifier>{dce0a647-eda3-42ac-af95-d7169753426c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fichiers sources\game\mapObject\planet">
+      <UniqueIdentifier>{a93da1ae-303b-4c3f-a200-58089000b84f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fichiers d%27en-tête\game\item\ammo">
+      <UniqueIdentifier>{2ec9dbd8-86b9-44c9-841e-47a3fc4fbfe9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fichiers sources\game\item\ammo">
+      <UniqueIdentifier>{5000af16-78d1-411e-862e-418050d661f7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fichiers d%27en-tête\game\factory">
+      <UniqueIdentifier>{8ec4cc3b-49f1-4a6c-944a-ba4a7b508825}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fichiers d%27en-tête\game\user">
+      <UniqueIdentifier>{7b69208c-c0b8-40e6-ab07-0b85360ef1d1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fichiers d%27en-tête\game\user\character">
+      <UniqueIdentifier>{5c35266a-0495-45dd-ba95-f60ae76f1f06}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fichiers d%27en-tête\game\user\character\job">
+      <UniqueIdentifier>{49babfda-1e76-4615-b6dc-64863b2730c6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fichiers d%27en-tête\game\user\character\race">
+      <UniqueIdentifier>{42ce0a1c-bfe6-443b-8bb3-eb5094ef1d98}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fichiers d%27en-tête\game\user\character\skill">
+      <UniqueIdentifier>{9f909756-6e04-4eb1-aa1a-db392d8a489b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fichiers sources\game\factory">
+      <UniqueIdentifier>{3f17343f-c36d-40bc-ad20-858e3fdb98d5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fichiers sources\game\user">
+      <UniqueIdentifier>{3fc5fcf5-814a-49d7-ba24-b2f5ae2ce9ae}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fichiers sources\game\user\character">
+      <UniqueIdentifier>{6763f623-b2eb-46ae-8d60-e736c82e7fed}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fichiers sources\game\user\character\job">
+      <UniqueIdentifier>{76615b9e-1938-4402-a161-59fc7dbd708c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fichiers sources\game\user\character\race">
+      <UniqueIdentifier>{ec22af0d-2668-4945-aef4-fbd703fbccc8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fichiers sources\game\user\character\skill">
+      <UniqueIdentifier>{87767aa4-9f91-4514-9c04-d15d051f164c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fichiers sources\game\mapObject\automanaged\effect\impact">
+      <UniqueIdentifier>{2dc96515-1838-4a1d-b2c5-ba070e91ab1b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fichiers d%27en-tête\game\mapObject\automanaged\effect\impact">
+      <UniqueIdentifier>{1dc95f2f-99d3-42d3-996e-a9e089456d69}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fichiers sources\game\mapObject\entity\module">
+      <UniqueIdentifier>{0a519caf-e6b3-4d7e-9adc-73465d2ed536}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fichiers d%27en-tête\game\mapObject\entity\module">
+      <UniqueIdentifier>{65cd191e-2ddb-4bc0-ae0c-f8c2e8e33dc6}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Game.cpp">
+      <Filter>Fichiers sources\game</Filter>
+    </ClCompile>
+    <ClCompile Include="MapObject.cpp">
+      <Filter>Fichiers sources\game\mapObject</Filter>
+    </ClCompile>
+    <ClCompile Include="Destructable.cpp">
+      <Filter>Fichiers sources\game\mapObject</Filter>
+    </ClCompile>
+    <ClCompile Include="Ship.cpp">
+      <Filter>Fichiers sources\game\mapObject\entity\ship</Filter>
+    </ClCompile>
+    <ClCompile Include="Planet.cpp">
+      <Filter>Fichiers sources\game\mapObject\planet</Filter>
+    </ClCompile>
+    <ClCompile Include="Camera.cpp">
+      <Filter>Fichiers sources\game\camera</Filter>
+    </ClCompile>
+    <ClCompile Include="Movable.cpp">
+      <Filter>Fichiers sources\game\mapObject</Filter>
+    </ClCompile>
+    <ClCompile Include="BootScreen.cpp">
+      <Filter>Fichiers sources\screen</Filter>
+    </ClCompile>
+    <ClCompile Include="TitleScreen.cpp">
+      <Filter>Fichiers sources\screen</Filter>
+    </ClCompile>
+    <ClCompile Include="SpriteParameterFactory.cpp">
+      <Filter>Fichiers sources\resource\image</Filter>
+    </ClCompile>
+    <ClCompile Include="Tools.cpp">
+      <Filter>Fichiers sources\tools</Filter>
+    </ClCompile>
+    <ClCompile Include="Juckebox.cpp">
+      <Filter>Fichiers sources\resource\sound</Filter>
+    </ClCompile>
+    <ClCompile Include="ParticleManager.cpp">
+      <Filter>Fichiers sources\game\mapObject\particle</Filter>
+    </ClCompile>
+    <ClCompile Include="Map.cpp">
+      <Filter>Fichiers sources\game\map</Filter>
+    </ClCompile>
+    <ClCompile Include="Sector.cpp">
+      <Filter>Fichiers sources\game\map</Filter>
+    </ClCompile>
+    <ClCompile Include="RunningStats.cpp">
+      <Filter>Fichiers sources\game\camera</Filter>
+    </ClCompile>
+    <ClCompile Include="Particle.cpp">
+      <Filter>Fichiers sources\game\mapObject\particle</Filter>
+    </ClCompile>
+    <ClCompile Include="BackgroundSpace.cpp">
+      <Filter>Fichiers sources\tools\background</Filter>
+    </ClCompile>
+    <ClCompile Include="BackgroundGeneration.cpp">
+      <Filter>Fichiers sources\tools\background</Filter>
+    </ClCompile>
+    <ClCompile Include="ShipType.cpp">
+      <Filter>Fichiers sources\game\mapObject\entity\ship</Filter>
+    </ClCompile>
+    <ClCompile Include="ShipTypeFactory.cpp">
+      <Filter>Fichiers sources\game\mapObject\entity\ship</Filter>
+    </ClCompile>
+    <ClCompile Include="ItemType.cpp">
+      <Filter>Fichiers sources\game\item</Filter>
+    </ClCompile>
+    <ClCompile Include="Item.cpp">
+      <Filter>Fichiers sources\game\item</Filter>
+    </ClCompile>
+    <ClCompile Include="ItemTier.cpp">
+      <Filter>Fichiers sources\game\item</Filter>
+    </ClCompile>
+    <ClCompile Include="ItemTierFactory.cpp">
+      <Filter>Fichiers sources\game\item</Filter>
+    </ClCompile>
+    <ClCompile Include="ItemTypeFactory.cpp">
+      <Filter>Fichiers sources\game\item</Filter>
+    </ClCompile>
+    <ClCompile Include="ShipModel.cpp">
+      <Filter>Fichiers sources\game\mapObject\entity\ship</Filter>
+    </ClCompile>
+    <ClCompile Include="ShipModelFactory.cpp">
+      <Filter>Fichiers sources\game\mapObject\entity\ship</Filter>
+    </ClCompile>
+    <ClCompile Include="ShipFactory.cpp">
+      <Filter>Fichiers sources\game\mapObject\entity\ship</Filter>
+    </ClCompile>
+    <ClCompile Include="SelectCharacterScreen.cpp">
+      <Filter>Fichiers sources\screen</Filter>
+    </ClCompile>
+    <ClCompile Include="CreateCharacterScreen.cpp">
+      <Filter>Fichiers sources\screen</Filter>
+    </ClCompile>
+    <ClCompile Include="BaseScreen.cpp">
+      <Filter>Fichiers sources\screen</Filter>
+    </ClCompile>
+    <ClCompile Include="Session.cpp">
+      <Filter>Fichiers sources\game</Filter>
+    </ClCompile>
+    <ClCompile Include="Race.cpp">
+      <Filter>Fichiers sources\game\user\character\race</Filter>
+    </ClCompile>
+    <ClCompile Include="RaceView.cpp">
+      <Filter>Fichiers sources\game\user\character\race</Filter>
+    </ClCompile>
+    <ClCompile Include="RaceFactory.cpp">
+      <Filter>Fichiers sources\game\user\character\race</Filter>
+    </ClCompile>
+    <ClCompile Include="Job.cpp">
+      <Filter>Fichiers sources\game\user\character\job</Filter>
+    </ClCompile>
+    <ClCompile Include="JobFactory.cpp">
+      <Filter>Fichiers sources\game\user\character\job</Filter>
+    </ClCompile>
+    <ClCompile Include="JobView.cpp">
+      <Filter>Fichiers sources\game\user\character\job</Filter>
+    </ClCompile>
+    <ClCompile Include="User.cpp">
+      <Filter>Fichiers sources\game\user</Filter>
+    </ClCompile>
+    <ClCompile Include="Character.cpp">
+      <Filter>Fichiers sources\game\user\character</Filter>
+    </ClCompile>
+    <ClCompile Include="Skill.cpp">
+      <Filter>Fichiers sources\game\user\character\skill</Filter>
+    </ClCompile>
+    <ClCompile Include="SkillFactory.cpp">
+      <Filter>Fichiers sources\game\user\character\skill</Filter>
+    </ClCompile>
+    <ClCompile Include="CharacterViewSelectSmall.cpp">
+      <Filter>Fichiers sources\game\user\character</Filter>
+    </ClCompile>
+    <ClCompile Include="CharacterViewSelect.cpp">
+      <Filter>Fichiers sources\game\user\character</Filter>
+    </ClCompile>
+    <ClCompile Include="DestructableData.cpp">
+      <Filter>Fichiers sources\game\mapObject</Filter>
+    </ClCompile>
+    <ClCompile Include="MovableData.cpp">
+      <Filter>Fichiers sources\game\mapObject</Filter>
+    </ClCompile>
+    <ClCompile Include="CharacterShip.cpp">
+      <Filter>Fichiers sources\game\mapObject\entity\ship</Filter>
+    </ClCompile>
+    <ClCompile Include="Containerable.cpp">
+      <Filter>Fichiers sources\game\mapObject</Filter>
+    </ClCompile>
+    <ClCompile Include="Weaponable.cpp">
+      <Filter>Fichiers sources\game\mapObject</Filter>
+    </ClCompile>
+    <ClCompile Include="ContainerableData.cpp">
+      <Filter>Fichiers sources\game\mapObject</Filter>
+    </ClCompile>
+    <ClCompile Include="Stuffable.cpp">
+      <Filter>Fichiers sources\game\mapObject</Filter>
+    </ClCompile>
+    <ClCompile Include="StuffableData.cpp">
+      <Filter>Fichiers sources\game\mapObject</Filter>
+    </ClCompile>
+    <ClCompile Include="Upgradable.cpp">
+      <Filter>Fichiers sources\game\mapObject</Filter>
+    </ClCompile>
+    <ClCompile Include="UpgradableData.cpp">
+      <Filter>Fichiers sources\game\mapObject</Filter>
+    </ClCompile>
+    <ClCompile Include="WeaponableData.cpp">
+      <Filter>Fichiers sources\game\mapObject</Filter>
+    </ClCompile>
+    <ClCompile Include="Equipable.cpp">
+      <Filter>Fichiers sources\game\mapObject</Filter>
+    </ClCompile>
+    <ClCompile Include="main.cpp">
+      <Filter>Fichiers sources</Filter>
+    </ClCompile>
+    <ClCompile Include="LifeBar.cpp">
+      <Filter>Fichiers sources\game\ui\composant</Filter>
+    </ClCompile>
+    <ClCompile Include="WeaponType.cpp">
+      <Filter>Fichiers sources\game\item\weapon</Filter>
+    </ClCompile>
+    <ClCompile Include="ItemStack.cpp">
+      <Filter>Fichiers sources\game\item</Filter>
+    </ClCompile>
+    <ClCompile Include="WeaponTypeFactory.cpp">
+      <Filter>Fichiers sources\game\item\weapon</Filter>
+    </ClCompile>
+    <ClCompile Include="FactoryGet.cpp">
+      <Filter>Fichiers sources\game\factory</Filter>
+    </ClCompile>
+    <ClCompile Include="WeaponModelFactory.cpp">
+      <Filter>Fichiers sources\game\item\weapon</Filter>
+    </ClCompile>
+    <ClCompile Include="Weapon.cpp">
+      <Filter>Fichiers sources\game\item\weapon</Filter>
+    </ClCompile>
+    <ClCompile Include="WeaponView.cpp">
+      <Filter>Fichiers sources\game\item\weapon</Filter>
+    </ClCompile>
+    <ClCompile Include="ToolsImage.cpp">
+      <Filter>Fichiers sources\tools</Filter>
+    </ClCompile>
+    <ClCompile Include="DangerLevelManager.cpp">
+      <Filter>Fichiers sources\game\general\dangerLevel</Filter>
+    </ClCompile>
+    <ClCompile Include="DangerLevel.cpp">
+      <Filter>Fichiers sources\game\general\dangerLevel</Filter>
+    </ClCompile>
+    <ClCompile Include="DangerLevelFactory.cpp">
+      <Filter>Fichiers sources\game\general\dangerLevel</Filter>
+    </ClCompile>
+    <ClCompile Include="NpcType.cpp">
+      <Filter>Fichiers sources\game\mapObject\entity\npc</Filter>
+    </ClCompile>
+    <ClCompile Include="NpcTypeFactory.cpp">
+      <Filter>Fichiers sources\game\mapObject\entity\npc</Filter>
+    </ClCompile>
+    <ClCompile Include="NpcShipModel.cpp">
+      <Filter>Fichiers sources\game\mapObject\entity\npc\ship</Filter>
+    </ClCompile>
+    <ClCompile Include="NpcShipModelFactory.cpp">
+      <Filter>Fichiers sources\game\mapObject\entity\npc\ship</Filter>
+    </ClCompile>
+    <ClCompile Include="NpcShip.cpp">
+      <Filter>Fichiers sources\game\mapObject\entity\npc\ship</Filter>
+    </ClCompile>
+    <ClCompile Include="NpcShipSpawner.cpp">
+      <Filter>Fichiers sources\game\mapObject\entity\npc\ship</Filter>
+    </ClCompile>
+    <ClCompile Include="MapObjectSelector.cpp">
+      <Filter>Fichiers sources\game\mapObject</Filter>
+    </ClCompile>
+    <ClCompile Include="MapObjectdata.cpp">
+      <Filter>Fichiers sources\game\mapObject</Filter>
+    </ClCompile>
+    <ClCompile Include="ToolsMap.cpp">
+      <Filter>Fichiers sources\tools</Filter>
+    </ClCompile>
+    <ClCompile Include="Entity.cpp">
+      <Filter>Fichiers sources\game\mapObject\entity</Filter>
+    </ClCompile>
+    <ClCompile Include="Animation.cpp">
+      <Filter>Fichiers sources\game\ui\animation</Filter>
+    </ClCompile>
+    <ClCompile Include="AnimationManager.cpp">
+      <Filter>Fichiers sources\game\ui\animation</Filter>
+    </ClCompile>
+    <ClCompile Include="Effect.cpp">
+      <Filter>Fichiers sources\game\mapObject\automanaged\effect</Filter>
+    </ClCompile>
+    <ClCompile Include="Projectile.cpp">
+      <Filter>Fichiers sources\game\mapObject\automanaged\projectile</Filter>
+    </ClCompile>
+    <ClCompile Include="ProjectileMissile.cpp">
+      <Filter>Fichiers sources\game\mapObject\automanaged\projectile</Filter>
+    </ClCompile>
+    <ClCompile Include="ProjectileLaser.cpp">
+      <Filter>Fichiers sources\game\mapObject\automanaged\projectile</Filter>
+    </ClCompile>
+    <ClCompile Include="EntityMovable.cpp">
+      <Filter>Fichiers sources\game\mapObject\entity</Filter>
+    </ClCompile>
+    <ClCompile Include="AutoManager.cpp">
+      <Filter>Fichiers sources\game\mapObject\automanaged</Filter>
+    </ClCompile>
+    <ClCompile Include="Auto.cpp">
+      <Filter>Fichiers sources\game\mapObject\automanaged</Filter>
+    </ClCompile>
+    <ClCompile Include="ProjectileRoquet.cpp">
+      <Filter>Fichiers sources\game\mapObject\automanaged\projectile</Filter>
+    </ClCompile>
+    <ClCompile Include="ContainerRow.cpp">
+      <Filter>Fichiers sources\game\item\container</Filter>
+    </ClCompile>
+    <ClCompile Include="ContainerView.cpp">
+      <Filter>Fichiers sources\game\item\container</Filter>
+    </ClCompile>
+    <ClCompile Include="ContainerStack.cpp">
+      <Filter>Fichiers sources\game\item\container</Filter>
+    </ClCompile>
+    <ClCompile Include="ItemFactory.cpp">
+      <Filter>Fichiers sources\game\item</Filter>
+    </ClCompile>
+    <ClCompile Include="ContainerStackView.cpp">
+      <Filter>Fichiers sources\game\item\container</Filter>
+    </ClCompile>
+    <ClCompile Include="PlanetType.cpp">
+      <Filter>Fichiers sources\game\mapObject\planet</Filter>
+    </ClCompile>
+    <ClCompile Include="PlanetTypeFactory.cpp">
+      <Filter>Fichiers sources\game\mapObject\planet</Filter>
+    </ClCompile>
+    <ClCompile Include="PlanetModel.cpp">
+      <Filter>Fichiers sources\game\mapObject\planet</Filter>
+    </ClCompile>
+    <ClCompile Include="PlanetManager.cpp">
+      <Filter>Fichiers sources\game\mapObject\planet</Filter>
+    </ClCompile>
+    <ClCompile Include="PlanetModelFactory.cpp">
+      <Filter>Fichiers sources\game\mapObject\planet</Filter>
+    </ClCompile>
+    <ClCompile Include="Rockable.cpp">
+      <Filter>Fichiers sources\game\mapObject</Filter>
+    </ClCompile>
+    <ClCompile Include="CloudGaz.cpp">
+      <Filter>Fichiers sources\game\mapObject\cloudgaz</Filter>
+    </ClCompile>
+    <ClCompile Include="CloudGazModelfactory.cpp">
+      <Filter>Fichiers sources\game\mapObject\cloudgaz</Filter>
+    </ClCompile>
+    <ClCompile Include="CloudGazManager.cpp">
+      <Filter>Fichiers sources\game\mapObject\cloudgaz</Filter>
+    </ClCompile>
+    <ClCompile Include="CloudGazModel.cpp">
+      <Filter>Fichiers sources\game\mapObject\cloudgaz</Filter>
+    </ClCompile>
+    <ClCompile Include="CloudWreck.cpp">
+      <Filter>Fichiers sources\game\mapObject\cloudwreck</Filter>
+    </ClCompile>
+    <ClCompile Include="CloudWreckModelFactory.cpp">
+      <Filter>Fichiers sources\game\mapObject\cloudwreck</Filter>
+    </ClCompile>
+    <ClCompile Include="CloudWreckManager.cpp">
+      <Filter>Fichiers sources\game\mapObject\cloudwreck</Filter>
+    </ClCompile>
+    <ClCompile Include="CloudWreckModel.cpp">
+      <Filter>Fichiers sources\game\mapObject\cloudwreck</Filter>
+    </ClCompile>
+    <ClCompile Include="ExplosionEffect.cpp">
+      <Filter>Fichiers sources\game\mapObject\automanaged\effect</Filter>
+    </ClCompile>
+    <ClCompile Include="EffectMap.cpp">
+      <Filter>Fichiers sources\game\mapObject\automanaged\effect</Filter>
+    </ClCompile>
+    <ClCompile Include="EntityManager.cpp">
+      <Filter>Fichiers sources\game\mapObject\entity</Filter>
+    </ClCompile>
+    <ClCompile Include="Wreck.cpp">
+      <Filter>Fichiers sources\game\mapObject\entity\wreck</Filter>
+    </ClCompile>
+    <ClCompile Include="WreckManager.cpp">
+      <Filter>Fichiers sources\game\mapObject\entity\wreck</Filter>
+    </ClCompile>
+    <ClCompile Include="ContainerRowView.cpp">
+      <Filter>Fichiers sources\game\item\container</Filter>
+    </ClCompile>
+    <ClCompile Include="ContainerStackViewManager.cpp">
+      <Filter>Fichiers sources\game\item\container</Filter>
+    </ClCompile>
+    <ClCompile Include="WeaponModel.cpp">
+      <Filter>Fichiers sources\game\item\weapon</Filter>
+    </ClCompile>
+    <ClCompile Include="LootItemModelFactory.cpp">
+      <Filter>Fichiers sources\game\item\loot</Filter>
+    </ClCompile>
+    <ClCompile Include="LootItemModel.cpp">
+      <Filter>Fichiers sources\game\item\loot</Filter>
+    </ClCompile>
+    <ClCompile Include="ShipViewSmall.cpp">
+      <Filter>Fichiers sources\game\mapObject\entity\ship</Filter>
+    </ClCompile>
+    <ClCompile Include="DebugScreen.cpp">
+      <Filter>Fichiers sources\screen</Filter>
+    </ClCompile>
+    <ClCompile Include="LevelShip.cpp">
+      <Filter>Fichiers sources\game\general\level</Filter>
+    </ClCompile>
+    <ClCompile Include="Level.cpp">
+      <Filter>Fichiers sources\game\general\level</Filter>
+    </ClCompile>
+    <ClCompile Include="LevelCharacter.cpp">
+      <Filter>Fichiers sources\game\general\level</Filter>
+    </ClCompile>
+    <ClCompile Include="LevelFactory.cpp">
+      <Filter>Fichiers sources\game\general\level</Filter>
+    </ClCompile>
+    <ClCompile Include="Levelable.cpp">
+      <Filter>Fichiers sources\game\mapObject</Filter>
+    </ClCompile>
+    <ClCompile Include="ExperienceBar.cpp">
+      <Filter>Fichiers sources\game\ui\composant</Filter>
+    </ClCompile>
+    <ClCompile Include="SkillCharacter.cpp">
+      <Filter>Fichiers sources\game\user\character\skill</Filter>
+    </ClCompile>
+    <ClCompile Include="SkillCharacterView.cpp">
+      <Filter>Fichiers sources\game\user\character\skill</Filter>
+    </ClCompile>
+    <ClCompile Include="MapMiniView.cpp">
+      <Filter>Fichiers sources\game\map</Filter>
+    </ClCompile>
+    <ClCompile Include="EntityTarget.cpp">
+      <Filter>Fichiers sources\game\mapObject\entity</Filter>
+    </ClCompile>
+    <ClCompile Include="BackgroundSpaceManager.cpp">
+      <Filter>Fichiers sources\tools\background</Filter>
+    </ClCompile>
+    <ClCompile Include="Star.cpp">
+      <Filter>Fichiers sources\game\mapObject\star</Filter>
+    </ClCompile>
+    <ClCompile Include="StarManager.cpp">
+      <Filter>Fichiers sources\game\mapObject\star</Filter>
+    </ClCompile>
+    <ClCompile Include="Npc.cpp">
+      <Filter>Fichiers sources\game\mapObject\entity\npc</Filter>
+    </ClCompile>
+    <ClCompile Include="NpcData.cpp">
+      <Filter>Fichiers sources\game\mapObject\entity\npc</Filter>
+    </ClCompile>
+    <ClCompile Include="NpcMovable.cpp">
+      <Filter>Fichiers sources\game\mapObject\entity\npc</Filter>
+    </ClCompile>
+    <ClCompile Include="Station.cpp">
+      <Filter>Fichiers sources\game\mapObject\entity\npc\station</Filter>
+    </ClCompile>
+    <ClCompile Include="StationModelFactory.cpp">
+      <Filter>Fichiers sources\game\mapObject\entity\npc\station</Filter>
+    </ClCompile>
+    <ClCompile Include="StationManager.cpp">
+      <Filter>Fichiers sources\game\mapObject\entity\npc\station</Filter>
+    </ClCompile>
+    <ClCompile Include="StationModel.cpp">
+      <Filter>Fichiers sources\game\mapObject\entity\npc\station</Filter>
+    </ClCompile>
+    <ClCompile Include="Object.cpp">
+      <Filter>Fichiers sources\mks\ui</Filter>
+    </ClCompile>
+    <ClCompile Include="IdGenerator.cpp">
+      <Filter>Fichiers sources\mks\tools</Filter>
+    </ClCompile>
+    <ClCompile Include="Focusable.cpp">
+      <Filter>Fichiers sources\mks\ui</Filter>
+    </ClCompile>
+    <ClCompile Include="Clickable.cpp">
+      <Filter>Fichiers sources\mks\ui</Filter>
+    </ClCompile>
+    <ClCompile Include="Selectable.cpp">
+      <Filter>Fichiers sources\mks\ui</Filter>
+    </ClCompile>
+    <ClCompile Include="Block.cpp">
+      <Filter>Fichiers sources\mks\ui</Filter>
+    </ClCompile>
+    <ClCompile Include="Button.cpp">
+      <Filter>Fichiers sources\mks\ui</Filter>
+    </ClCompile>
+    <ClCompile Include="Clock.cpp">
+      <Filter>Fichiers sources\mks\engine</Filter>
+    </ClCompile>
+    <ClCompile Include="ClockManager.cpp">
+      <Filter>Fichiers sources\mks\engine</Filter>
+    </ClCompile>
+    <ClCompile Include="FieldSet.cpp">
+      <Filter>Fichiers sources\mks\ui</Filter>
+    </ClCompile>
+    <ClCompile Include="Image.cpp">
+      <Filter>Fichiers sources\mks\ui</Filter>
+    </ClCompile>
+    <ClCompile Include="ImageGIF.cpp">
+      <Filter>Fichiers sources\mks\ui</Filter>
+    </ClCompile>
+    <ClCompile Include="SpriteParameter.cpp">
+      <Filter>Fichiers sources\mks\engine</Filter>
+    </ClCompile>
+    <ClCompile Include="ImageGIFFactory.cpp">
+      <Filter>Fichiers sources\resource\image</Filter>
+    </ClCompile>
+    <ClCompile Include="Scrollable.cpp">
+      <Filter>Fichiers sources\mks\ui</Filter>
+    </ClCompile>
+    <ClCompile Include="Scrollbar.cpp">
+      <Filter>Fichiers sources\mks\ui</Filter>
+    </ClCompile>
+    <ClCompile Include="ScrollbarThumb.cpp">
+      <Filter>Fichiers sources\mks\ui</Filter>
+    </ClCompile>
+    <ClCompile Include="View.cpp">
+      <Filter>Fichiers sources\mks\ui</Filter>
+    </ClCompile>
+    <ClCompile Include="List.cpp">
+      <Filter>Fichiers sources\mks\ui</Filter>
+    </ClCompile>
+    <ClCompile Include="Listable.cpp">
+      <Filter>Fichiers sources\mks\ui</Filter>
+    </ClCompile>
+    <ClCompile Include="Text.cpp">
+      <Filter>Fichiers sources\mks\ui</Filter>
+    </ClCompile>
+    <ClCompile Include="TextMultiLine.cpp">
+      <Filter>Fichiers sources\mks\ui</Filter>
+    </ClCompile>
+    <ClCompile Include="TextField.cpp">
+      <Filter>Fichiers sources\mks\ui</Filter>
+    </ClCompile>
+    <ClCompile Include="TextBoxMultiLine.cpp">
+      <Filter>Fichiers sources\mks\ui</Filter>
+    </ClCompile>
+    <ClCompile Include="TextBox.cpp">
+      <Filter>Fichiers sources\mks\ui</Filter>
+    </ClCompile>
+    <ClCompile Include="SelectableGroup.cpp">
+      <Filter>Fichiers sources\mks\ui</Filter>
+    </ClCompile>
+    <ClCompile Include="ProgressBar.cpp">
+      <Filter>Fichiers sources\mks\ui</Filter>
+    </ClCompile>
+    <ClCompile Include="PopupBubble.cpp">
+      <Filter>Fichiers sources\mks\ui</Filter>
+    </ClCompile>
+    <ClCompile Include="Manager.cpp">
+      <Filter>Fichiers sources\mks\engine</Filter>
+    </ClCompile>
+    <ClCompile Include="ManagerConfig.cpp">
+      <Filter>Fichiers sources\mks\engine</Filter>
+    </ClCompile>
+    <ClCompile Include="ResourceConfig.cpp">
+      <Filter>Fichiers sources\resource</Filter>
+    </ClCompile>
+    <ClCompile Include="Resource.cpp">
+      <Filter>Fichiers sources\resource</Filter>
+    </ClCompile>
+    <ClCompile Include="ToolsUi.cpp">
+      <Filter>Fichiers sources\mks\tools</Filter>
+    </ClCompile>
+    <ClCompile Include="sha1.cpp">
+      <Filter>Fichiers sources\mks\tools\lib</Filter>
+    </ClCompile>
+    <ClCompile Include="KeyValueFile.cpp">
+      <Filter>Fichiers sources\mks\tools</Filter>
+    </ClCompile>
+    <ClCompile Include="SplitString.cpp">
+      <Filter>Fichiers sources\mks\tools</Filter>
+    </ClCompile>
+    <ClCompile Include="jsoncpp.cpp">
+      <Filter>Fichiers sources\mks\tools\lib</Filter>
+    </ClCompile>
+    <ClCompile Include="IdValueLong.cpp">
+      <Filter>Fichiers sources\mks\tools</Filter>
+    </ClCompile>
+    <ClCompile Include="IdValueDouble.cpp">
+      <Filter>Fichiers sources\mks\tools</Filter>
+    </ClCompile>
+    <ClCompile Include="IdValueFloat.cpp">
+      <Filter>Fichiers sources\mks\tools</Filter>
+    </ClCompile>
+    <ClCompile Include="IdValueInt.cpp">
+      <Filter>Fichiers sources\mks\tools</Filter>
+    </ClCompile>
+    <ClCompile Include="Option.cpp">
+      <Filter>Fichiers sources\mks\resource</Filter>
+    </ClCompile>
+    <ClCompile Include="Internationalisation.cpp">
+      <Filter>Fichiers sources\mks\resource</Filter>
+    </ClCompile>
+    <ClCompile Include="NetworkJobManager.cpp">
+      <Filter>Fichiers sources\mks\resource\network</Filter>
+    </ClCompile>
+    <ClCompile Include="Network.cpp">
+      <Filter>Fichiers sources\mks\resource\network</Filter>
+    </ClCompile>
+    <ClCompile Include="NetworkJob.cpp">
+      <Filter>Fichiers sources\mks\resource\network</Filter>
+    </ClCompile>
+    <ClCompile Include="CharacterShipItemStackUpdate.cpp">
+      <Filter>Fichiers sources\resource\network</Filter>
+    </ClCompile>
+    <ClCompile Include="CharacterUpdate.cpp">
+      <Filter>Fichiers sources\resource\network</Filter>
+    </ClCompile>
+    <ClCompile Include="MenuQuickItem.cpp">
+      <Filter>Fichiers sources\game\ui\menuquick</Filter>
+    </ClCompile>
+    <ClCompile Include="MenuQuickSystem.cpp">
+      <Filter>Fichiers sources\game\ui\menuquick</Filter>
+    </ClCompile>
+    <ClCompile Include="MenuQuickShip.cpp">
+      <Filter>Fichiers sources\game\ui\menuquick</Filter>
+    </ClCompile>
+    <ClCompile Include="MenuQuickQuest.cpp">
+      <Filter>Fichiers sources\game\ui\menuquick</Filter>
+    </ClCompile>
+    <ClCompile Include="MenuQuickMap.cpp">
+      <Filter>Fichiers sources\game\ui\menuquick</Filter>
+    </ClCompile>
+    <ClCompile Include="MenuQuickJukebox.cpp">
+      <Filter>Fichiers sources\game\ui\menuquick</Filter>
+    </ClCompile>
+    <ClCompile Include="MenuQuickChat.cpp">
+      <Filter>Fichiers sources\game\ui\menuquick</Filter>
+    </ClCompile>
+    <ClCompile Include="MenuQuickCharacter.cpp">
+      <Filter>Fichiers sources\game\ui\menuquick</Filter>
+    </ClCompile>
+    <ClCompile Include="MenuQuickCargo.cpp">
+      <Filter>Fichiers sources\game\ui\menuquick</Filter>
+    </ClCompile>
+    <ClCompile Include="MenuQuick.cpp">
+      <Filter>Fichiers sources\game\ui\menuquick</Filter>
+    </ClCompile>
+    <ClCompile Include="Window.cpp">
+      <Filter>Fichiers sources\game\ui\window</Filter>
+    </ClCompile>
+    <ClCompile Include="WindowCargo.cpp">
+      <Filter>Fichiers sources\game\ui\window</Filter>
+    </ClCompile>
+    <ClCompile Include="WindowCargoLoot.cpp">
+      <Filter>Fichiers sources\game\ui\window</Filter>
+    </ClCompile>
+    <ClCompile Include="WindowCharacter.cpp">
+      <Filter>Fichiers sources\game\ui\window</Filter>
+    </ClCompile>
+    <ClCompile Include="WindowJukebox.cpp">
+      <Filter>Fichiers sources\game\ui\window</Filter>
+    </ClCompile>
+    <ClCompile Include="WindowMap.cpp">
+      <Filter>Fichiers sources\game\ui\window</Filter>
+    </ClCompile>
+    <ClCompile Include="WindowSelected.cpp">
+      <Filter>Fichiers sources\game\ui\window</Filter>
+    </ClCompile>
+    <ClCompile Include="WindowSelectedCharacterShip.cpp">
+      <Filter>Fichiers sources\game\ui\window</Filter>
+    </ClCompile>
+    <ClCompile Include="WindowSelectedEntity.cpp">
+      <Filter>Fichiers sources\game\ui\window</Filter>
+    </ClCompile>
+    <ClCompile Include="WindowSelectedNpcShip.cpp">
+      <Filter>Fichiers sources\game\ui\window</Filter>
+    </ClCompile>
+    <ClCompile Include="AmmoModel.cpp">
+      <Filter>Fichiers sources\game\item\ammo</Filter>
+    </ClCompile>
+    <ClCompile Include="AmmoTypeFactory.cpp">
+      <Filter>Fichiers sources\game\item\ammo</Filter>
+    </ClCompile>
+    <ClCompile Include="AmmoModelFactory.cpp">
+      <Filter>Fichiers sources\game\item\ammo</Filter>
+    </ClCompile>
+    <ClCompile Include="AmmoType.cpp">
+      <Filter>Fichiers sources\game\item\ammo</Filter>
+    </ClCompile>
+    <ClCompile Include="WindowSelectedWreck.cpp">
+      <Filter>Fichiers sources\game\ui\window</Filter>
+    </ClCompile>
+    <ClCompile Include="WindowShipSmall.cpp">
+      <Filter>Fichiers sources\game\ui\window</Filter>
+    </ClCompile>
+    <ClCompile Include="BonusSkills.cpp">
+      <Filter>Fichiers sources\game\user\character\skill</Filter>
+    </ClCompile>
+    <ClCompile Include="UserInterface.cpp">
+      <Filter>Fichiers sources\game\ui</Filter>
+    </ClCompile>
+    <ClCompile Include="EventManager.cpp">
+      <Filter>Fichiers sources\mks\engine</Filter>
+    </ClCompile>
+    <ClCompile Include="StarModel.cpp">
+      <Filter>Fichiers sources\game\mapObject\star</Filter>
+    </ClCompile>
+    <ClCompile Include="StarModelFactory.cpp">
+      <Filter>Fichiers sources\game\mapObject\star</Filter>
+    </ClCompile>
+    <ClCompile Include="MapObjectModel.cpp">
+      <Filter>Fichiers sources\game\mapObject</Filter>
+    </ClCompile>
+    <ClCompile Include="Rotable.cpp">
+      <Filter>Fichiers sources\game\mapObject</Filter>
+    </ClCompile>
+    <ClCompile Include="RotableData.cpp">
+      <Filter>Fichiers sources\game\mapObject</Filter>
+    </ClCompile>
+    <ClCompile Include="ProjectileLaserBall.cpp">
+      <Filter>Fichiers sources\game\mapObject\automanaged\projectile</Filter>
+    </ClCompile>
+    <ClCompile Include="ProjectileBullet.cpp">
+      <Filter>Fichiers sources\game\mapObject\automanaged\projectile</Filter>
+    </ClCompile>
+    <ClCompile Include="Impact.cpp">
+      <Filter>Fichiers sources\game\mapObject\automanaged\effect\impact</Filter>
+    </ClCompile>
+    <ClCompile Include="ImpactLaser.cpp">
+      <Filter>Fichiers sources\game\mapObject\automanaged\effect\impact</Filter>
+    </ClCompile>
+    <ClCompile Include="ImpactBullet.cpp">
+      <Filter>Fichiers sources\game\mapObject\automanaged\effect\impact</Filter>
+    </ClCompile>
+    <ClCompile Include="ImpactExplosion.cpp">
+      <Filter>Fichiers sources\game\mapObject\automanaged\effect\impact</Filter>
+    </ClCompile>
+    <ClCompile Include="ImpactManager.cpp">
+      <Filter>Fichiers sources\game\mapObject\automanaged\effect\impact</Filter>
+    </ClCompile>
+    <ClCompile Include="ProjectileManager.cpp">
+      <Filter>Fichiers sources\game\mapObject\automanaged\projectile</Filter>
+    </ClCompile>
+    <ClCompile Include="Reactor.cpp">
+      <Filter>Fichiers sources\game\mapObject\entity\module</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Game.h">
+      <Filter>Fichiers d%27en-tête\game</Filter>
+    </ClInclude>
+    <ClInclude Include="MapObject.h">
+      <Filter>Fichiers d%27en-tête\game\mapObject</Filter>
+    </ClInclude>
+    <ClInclude Include="Destructable.h">
+      <Filter>Fichiers d%27en-tête\game\mapObject</Filter>
+    </ClInclude>
+    <ClInclude Include="Ship.h">
+      <Filter>Fichiers d%27en-tête\game\mapObject\entity\ship</Filter>
+    </ClInclude>
+    <ClInclude Include="Planet.h">
+      <Filter>Fichiers d%27en-tête\game\mapObject\planet</Filter>
+    </ClInclude>
+    <ClInclude Include="Camera.h">
+      <Filter>Fichiers d%27en-tête\game\camera</Filter>
+    </ClInclude>
+    <ClInclude Include="Movable.h">
+      <Filter>Fichiers d%27en-tête\game\mapObject</Filter>
+    </ClInclude>
+    <ClInclude Include="TitleScreen.h">
+      <Filter>Fichiers d%27en-tête\screen</Filter>
+    </ClInclude>
+    <ClInclude Include="BootScreen.h">
+      <Filter>Fichiers d%27en-tête\screen</Filter>
+    </ClInclude>
+    <ClInclude Include="SpriteParameterFactory.h">
+      <Filter>Fichiers d%27en-tête\resource\image</Filter>
+    </ClInclude>
+    <ClInclude Include="Juckebox.h">
+      <Filter>Fichiers d%27en-tête\resource\sound</Filter>
+    </ClInclude>
+    <ClInclude Include="Particle.h">
+      <Filter>Fichiers d%27en-tête\game\mapObject\particle</Filter>
+    </ClInclude>
+    <ClInclude Include="ParticleManager.h">
+      <Filter>Fichiers d%27en-tête\game\mapObject\particle</Filter>
+    </ClInclude>
+    <ClInclude Include="Map.h">
+      <Filter>Fichiers d%27en-tête\game\map</Filter>
+    </ClInclude>
+    <ClInclude Include="Sector.h">
+      <Filter>Fichiers d%27en-tête\game\map</Filter>
+    </ClInclude>
+    <ClInclude Include="RunningStats.h">
+      <Filter>Fichiers d%27en-tête\game\camera</Filter>
+    </ClInclude>
+    <ClInclude Include="BackgroundGeneration.h">
+      <Filter>Fichiers d%27en-tête\tools\background</Filter>
+    </ClInclude>
+    <ClInclude Include="BackgroundSpace.h">
+      <Filter>Fichiers d%27en-tête\tools\background</Filter>
+    </ClInclude>
+    <ClInclude Include="ShipType.h">
+      <Filter>Fichiers d%27en-tête\game\mapObject\entity\ship</Filter>
+    </ClInclude>
+    <ClInclude Include="ShipTypeFactory.h">
+      <Filter>Fichiers d%27en-tête\game\mapObject\entity\ship</Filter>
+    </ClInclude>
+    <ClInclude Include="Item.h">
+      <Filter>Fichiers d%27en-tête\game\item</Filter>
+    </ClInclude>
+    <ClInclude Include="ItemType.h">
+      <Filter>Fichiers d%27en-tête\game\item</Filter>
+    </ClInclude>
+    <ClInclude Include="ItemTier.h">
+      <Filter>Fichiers d%27en-tête\game\item</Filter>
+    </ClInclude>
+    <ClInclude Include="ItemTierFactory.h">
+      <Filter>Fichiers d%27en-tête\game\item</Filter>
+    </ClInclude>
+    <ClInclude Include="SpriteParameterDefine.h">
+      <Filter>Fichiers d%27en-tête\resource\image</Filter>
+    </ClInclude>
+    <ClInclude Include="ShipModel.h">
+      <Filter>Fichiers d%27en-tête\game\mapObject\entity\ship</Filter>
+    </ClInclude>
+    <ClInclude Include="ShipModelFactory.h">
+      <Filter>Fichiers d%27en-tête\game\mapObject\entity\ship</Filter>
+    </ClInclude>
+    <ClInclude Include="ItemTypeFactory.h">
+      <Filter>Fichiers d%27en-tête\game\item</Filter>
+    </ClInclude>
+    <ClInclude Include="ShipFactory.h">
+      <Filter>Fichiers d%27en-tête\game\mapObject\entity\ship</Filter>
+    </ClInclude>
+    <ClInclude Include="Resource.h">
+      <Filter>Fichiers d%27en-tête\resource</Filter>
+    </ClInclude>
+    <ClInclude Include="SelectCharacterScreen.h">
+      <Filter>Fichiers d%27en-tête\screen</Filter>
+    </ClInclude>
+    <ClInclude Include="CreateCharacterScreen.h">
+      <Filter>Fichiers d%27en-tête\screen</Filter>
+    </ClInclude>
+    <ClInclude Include="BaseScreen.h">
+      <Filter>Fichiers d%27en-tête\screen</Filter>
+    </ClInclude>
+    <ClInclude Include="Session.h">
+      <Filter>Fichiers d%27en-tête\game</Filter>
+    </ClInclude>
+    <ClInclude Include="RaceView.h">
+      <Filter>Fichiers d%27en-tête\game\user\character\race</Filter>
+    </ClInclude>
+    <ClInclude Include="Race.h">
+      <Filter>Fichiers d%27en-tête\game\user\character\race</Filter>
+    </ClInclude>
+    <ClInclude Include="RaceFactory.h">
+      <Filter>Fichiers d%27en-tête\game\user\character\race</Filter>
+    </ClInclude>
+    <ClInclude Include="Job.h">
+      <Filter>Fichiers d%27en-tête\game\user\character\job</Filter>
+    </ClInclude>
+    <ClInclude Include="JobView.h">
+      <Filter>Fichiers d%27en-tête\game\user\character\job</Filter>
+    </ClInclude>
+    <ClInclude Include="JobFactory.h">
+      <Filter>Fichiers d%27en-tête\game\user\character\job</Filter>
+    </ClInclude>
+    <ClInclude Include="User.h">
+      <Filter>Fichiers d%27en-tête\game\user</Filter>
+    </ClInclude>
+    <ClInclude Include="Skill.h">
+      <Filter>Fichiers d%27en-tête\game\user\character\skill</Filter>
+    </ClInclude>
+    <ClInclude Include="SkillFactory.h">
+      <Filter>Fichiers d%27en-tête\game\user\character\skill</Filter>
+    </ClInclude>
+    <ClInclude Include="CharacterViewSelectSmall.h">
+      <Filter>Fichiers d%27en-tête\game\user\character</Filter>
+    </ClInclude>
+    <ClInclude Include="CharacterViewSelect.h">
+      <Filter>Fichiers d%27en-tête\game\user\character</Filter>
+    </ClInclude>
+    <ClInclude Include="MovableData.h">
+      <Filter>Fichiers d%27en-tête\game\mapObject</Filter>
+    </ClInclude>
+    <ClInclude Include="CharacterShip.h">
+      <Filter>Fichiers d%27en-tête\game\mapObject\entity\ship</Filter>
+    </ClInclude>
+    <ClInclude Include="Containerable.h">
+      <Filter>Fichiers d%27en-tête\game\mapObject</Filter>
+    </ClInclude>
+    <ClInclude Include="Weaponable.h">
+      <Filter>Fichiers d%27en-tête\game\mapObject</Filter>
+    </ClInclude>
+    <ClInclude Include="ContainerableData.h">
+      <Filter>Fichiers d%27en-tête\game\mapObject</Filter>
+    </ClInclude>
+    <ClInclude Include="Stuffable.h">
+      <Filter>Fichiers d%27en-tête\game\mapObject</Filter>
+    </ClInclude>
+    <ClInclude Include="StuffableData.h">
+      <Filter>Fichiers d%27en-tête\game\mapObject</Filter>
+    </ClInclude>
+    <ClInclude Include="Upgradable.h">
+      <Filter>Fichiers d%27en-tête\game\mapObject</Filter>
+    </ClInclude>
+    <ClInclude Include="UpgradableData.h">
+      <Filter>Fichiers d%27en-tête\game\mapObject</Filter>
+    </ClInclude>
+    <ClInclude Include="WeaponableData.h">
+      <Filter>Fichiers d%27en-tête\game\mapObject</Filter>
+    </ClInclude>
+    <ClInclude Include="Equipable.h">
+      <Filter>Fichiers d%27en-tête\game\mapObject</Filter>
+    </ClInclude>
+    <ClInclude Include="LifeBar.h">
+      <Filter>Fichiers d%27en-tête\game\ui\composant</Filter>
+    </ClInclude>
+    <ClInclude Include="WeaponType.h">
+      <Filter>Fichiers d%27en-tête\game\item\weapon</Filter>
+    </ClInclude>
+    <ClInclude Include="ItemStack.h">
+      <Filter>Fichiers d%27en-tête\game\item</Filter>
+    </ClInclude>
+    <ClInclude Include="WeaponTypeFactory.h">
+      <Filter>Fichiers d%27en-tête\game\item\weapon</Filter>
+    </ClInclude>
+    <ClInclude Include="Factory.h">
+      <Filter>Fichiers d%27en-tête\game\factory</Filter>
+    </ClInclude>
+    <ClInclude Include="FactoryGet.h">
+      <Filter>Fichiers d%27en-tête\game\factory</Filter>
+    </ClInclude>
+    <ClInclude Include="WeaponModel.h">
+      <Filter>Fichiers d%27en-tête\game\item\weapon</Filter>
+    </ClInclude>
+    <ClInclude Include="WeaponModelFactory.h">
+      <Filter>Fichiers d%27en-tête\game\item\weapon</Filter>
+    </ClInclude>
+    <ClInclude Include="Weapon.h">
+      <Filter>Fichiers d%27en-tête\game\item\weapon</Filter>
+    </ClInclude>
+    <ClInclude Include="WeaponView.h">
+      <Filter>Fichiers d%27en-tête\game\item\weapon</Filter>
+    </ClInclude>
+    <ClInclude Include="ToolsImage.h">
+      <Filter>Fichiers d%27en-tête\tools</Filter>
+    </ClInclude>
+    <ClInclude Include="DangerLevelManager.h">
+      <Filter>Fichiers d%27en-tête\game\general\dangerlevel</Filter>
+    </ClInclude>
+    <ClInclude Include="DangerLevel.h">
+      <Filter>Fichiers d%27en-tête\game\general\dangerlevel</Filter>
+    </ClInclude>
+    <ClInclude Include="DangerLevelFactory.h">
+      <Filter>Fichiers d%27en-tête\game\general\dangerlevel</Filter>
+    </ClInclude>
+    <ClInclude Include="NpcType.h">
+      <Filter>Fichiers d%27en-tête\game\mapObject\entity\npc</Filter>
+    </ClInclude>
+    <ClInclude Include="NpcTypeFactory.h">
+      <Filter>Fichiers d%27en-tête\game\mapObject\entity\npc</Filter>
+    </ClInclude>
+    <ClInclude Include="NpcShipModel.h">
+      <Filter>Fichiers d%27en-tête\game\mapObject\entity\npc\ship</Filter>
+    </ClInclude>
+    <ClInclude Include="NpcShipModelFactory.h">
+      <Filter>Fichiers d%27en-tête\game\mapObject\entity\npc\ship</Filter>
+    </ClInclude>
+    <ClInclude Include="NpcShip.h">
+      <Filter>Fichiers d%27en-tête\game\mapObject\entity\npc\ship</Filter>
+    </ClInclude>
+    <ClInclude Include="NpcShipSpawner.h">
+      <Filter>Fichiers d%27en-tête\game\mapObject\entity\npc\ship</Filter>
+    </ClInclude>
+    <ClInclude Include="MapObjectSelector.h">
+      <Filter>Fichiers d%27en-tête\game\mapObject</Filter>
+    </ClInclude>
+    <ClInclude Include="MapObjectdata.h">
+      <Filter>Fichiers d%27en-tête\game\mapObject</Filter>
+    </ClInclude>
+    <ClInclude Include="ToolsMap.h">
+      <Filter>Fichiers d%27en-tête\tools</Filter>
+    </ClInclude>
+    <ClInclude Include="Entity.h">
+      <Filter>Fichiers d%27en-tête\game\mapObject\entity</Filter>
+    </ClInclude>
+    <ClInclude Include="Animation.h">
+      <Filter>Fichiers d%27en-tête\game\ui\animation</Filter>
+    </ClInclude>
+    <ClInclude Include="AnimationManager.h">
+      <Filter>Fichiers d%27en-tête\game\ui\animation</Filter>
+    </ClInclude>
+    <ClInclude Include="Effect.h">
+      <Filter>Fichiers d%27en-tête\game\mapObject\automanaged\effect</Filter>
+    </ClInclude>
+    <ClInclude Include="Projectile.h">
+      <Filter>Fichiers d%27en-tête\game\mapObject\automanaged\projectile</Filter>
+    </ClInclude>
+    <ClInclude Include="ProjectileMissile.h">
+      <Filter>Fichiers d%27en-tête\game\mapObject\automanaged\projectile</Filter>
+    </ClInclude>
+    <ClInclude Include="ProjectileLaser.h">
+      <Filter>Fichiers d%27en-tête\game\mapObject\automanaged\projectile</Filter>
+    </ClInclude>
+    <ClInclude Include="EntityMovable.h">
+      <Filter>Fichiers d%27en-tête\game\mapObject\entity</Filter>
+    </ClInclude>
+    <ClInclude Include="Auto.h">
+      <Filter>Fichiers d%27en-tête\game\mapObject\automanaged</Filter>
+    </ClInclude>
+    <ClInclude Include="AutoManager.h">
+      <Filter>Fichiers d%27en-tête\game\mapObject\automanaged</Filter>
+    </ClInclude>
+    <ClInclude Include="ProjectileRoquet.h">
+      <Filter>Fichiers d%27en-tête\game\mapObject\automanaged\projectile</Filter>
+    </ClInclude>
+    <ClInclude Include="ContainerRow.h">
+      <Filter>Fichiers d%27en-tête\game\item\container</Filter>
+    </ClInclude>
+    <ClInclude Include="ContainerView.h">
+      <Filter>Fichiers d%27en-tête\game\item\container</Filter>
+    </ClInclude>
+    <ClInclude Include="ContainerStack.h">
+      <Filter>Fichiers d%27en-tête\game\item\container</Filter>
+    </ClInclude>
+    <ClInclude Include="ItemFactory.h">
+      <Filter>Fichiers d%27en-tête\game\item</Filter>
+    </ClInclude>
+    <ClInclude Include="ContainerStackView.h">
+      <Filter>Fichiers d%27en-tête\game\item\container</Filter>
+    </ClInclude>
+    <ClInclude Include="PlanetType.h">
+      <Filter>Fichiers d%27en-tête\game\mapObject\planet</Filter>
+    </ClInclude>
+    <ClInclude Include="PlanetTypeFactory.h">
+      <Filter>Fichiers d%27en-tête\game\mapObject\planet</Filter>
+    </ClInclude>
+    <ClInclude Include="PlanetModel.h">
+      <Filter>Fichiers d%27en-tête\game\mapObject\planet</Filter>
+    </ClInclude>
+    <ClInclude Include="PlanetManager.h">
+      <Filter>Fichiers d%27en-tête\game\mapObject\planet</Filter>
+    </ClInclude>
+    <ClInclude Include="PlanetModelFactory.h">
+      <Filter>Fichiers d%27en-tête\game\mapObject\planet</Filter>
+    </ClInclude>
+    <ClInclude Include="Rockable.h">
+      <Filter>Fichiers d%27en-tête\game\mapObject</Filter>
+    </ClInclude>
+    <ClInclude Include="CloudGaz.h">
+      <Filter>Fichiers d%27en-tête\game\mapObject\cloudgaz</Filter>
+    </ClInclude>
+    <ClInclude Include="CloudGazModelfactory.h">
+      <Filter>Fichiers d%27en-tête\game\mapObject\cloudgaz</Filter>
+    </ClInclude>
+    <ClInclude Include="CloudGazManager.h">
+      <Filter>Fichiers d%27en-tête\game\mapObject\cloudgaz</Filter>
+    </ClInclude>
+    <ClInclude Include="CloudGazModel.h">
+      <Filter>Fichiers d%27en-tête\game\mapObject\cloudgaz</Filter>
+    </ClInclude>
+    <ClInclude Include="CloudWreck.h">
+      <Filter>Fichiers d%27en-tête\game\mapObject\cloudwreck</Filter>
+    </ClInclude>
+    <ClInclude Include="CloudWreckModelFactory.h">
+      <Filter>Fichiers d%27en-tête\game\mapObject\cloudwreck</Filter>
+    </ClInclude>
+    <ClInclude Include="CloudWreckManager.h">
+      <Filter>Fichiers d%27en-tête\game\mapObject\cloudwreck</Filter>
+    </ClInclude>
+    <ClInclude Include="CloudWreckModel.h">
+      <Filter>Fichiers d%27en-tête\game\mapObject\cloudwreck</Filter>
+    </ClInclude>
+    <ClInclude Include="ExplosionEffect.h">
+      <Filter>Fichiers d%27en-tête\game\mapObject\automanaged\effect</Filter>
+    </ClInclude>
+    <ClInclude Include="EffectMap.h">
+      <Filter>Fichiers d%27en-tête\game\mapObject\automanaged\effect</Filter>
+    </ClInclude>
+    <ClInclude Include="EntityManager.h">
+      <Filter>Fichiers d%27en-tête\game\mapObject\entity</Filter>
+    </ClInclude>
+    <ClInclude Include="WreckManager.h">
+      <Filter>Fichiers d%27en-tête\game\mapObject\entity\wreck</Filter>
+    </ClInclude>
+    <ClInclude Include="Wreck.h">
+      <Filter>Fichiers d%27en-tête\game\mapObject\entity\wreck</Filter>
+    </ClInclude>
+    <ClInclude Include="ContainerRowView.h">
+      <Filter>Fichiers d%27en-tête\game\item\container</Filter>
+    </ClInclude>
+    <ClInclude Include="ContainerStackViewManager.h">
+      <Filter>Fichiers d%27en-tête\game\item\container</Filter>
+    </ClInclude>
+    <ClInclude Include="LootItemModelFactory.h">
+      <Filter>Fichiers d%27en-tête\game\item\loot</Filter>
+    </ClInclude>
+    <ClInclude Include="LootItemModel.h">
+      <Filter>Fichiers d%27en-tête\game\item\loot</Filter>
+    </ClInclude>
+    <ClInclude Include="Character.h">
+      <Filter>Fichiers d%27en-tête\game\user\character</Filter>
+    </ClInclude>
+    <ClInclude Include="ShipViewSmall.h">
+      <Filter>Fichiers d%27en-tête\game\mapObject\entity\ship</Filter>
+    </ClInclude>
+    <ClInclude Include="DebugScreen.h">
+      <Filter>Fichiers d%27en-tête\screen</Filter>
+    </ClInclude>
+    <ClInclude Include="Level.h">
+      <Filter>Fichiers d%27en-tête\game\general\level</Filter>
+    </ClInclude>
+    <ClInclude Include="LevelShip.h">
+      <Filter>Fichiers d%27en-tête\game\general\level</Filter>
+    </ClInclude>
+    <ClInclude Include="LevelCharacter.h">
+      <Filter>Fichiers d%27en-tête\game\general\level</Filter>
+    </ClInclude>
+    <ClInclude Include="LevelFactory.h">
+      <Filter>Fichiers d%27en-tête\game\general\level</Filter>
+    </ClInclude>
+    <ClInclude Include="Levelable.h">
+      <Filter>Fichiers d%27en-tête\game\mapObject</Filter>
+    </ClInclude>
+    <ClInclude Include="DestructableData.h">
+      <Filter>Fichiers d%27en-tête\game\mapObject</Filter>
+    </ClInclude>
+    <ClInclude Include="ExperienceBar.h">
+      <Filter>Fichiers d%27en-tête\game\ui\composant</Filter>
+    </ClInclude>
+    <ClInclude Include="SkillCharacter.h">
+      <Filter>Fichiers d%27en-tête\game\user\character\skill</Filter>
+    </ClInclude>
+    <ClInclude Include="SkillCharacterView.h">
+      <Filter>Fichiers d%27en-tête\game\user\character\skill</Filter>
+    </ClInclude>
+    <ClInclude Include="MapMiniView.h">
+      <Filter>Fichiers d%27en-tête\game\map</Filter>
+    </ClInclude>
+    <ClInclude Include="EntityTarget.h">
+      <Filter>Fichiers d%27en-tête\game\mapObject\entity</Filter>
+    </ClInclude>
+    <ClInclude Include="BackgroundSpaceManager.h">
+      <Filter>Fichiers d%27en-tête\tools\background</Filter>
+    </ClInclude>
+    <ClInclude Include="Star.h">
+      <Filter>Fichiers d%27en-tête\game\mapObject\star</Filter>
+    </ClInclude>
+    <ClInclude Include="StarManager.h">
+      <Filter>Fichiers d%27en-tête\game\mapObject\star</Filter>
+    </ClInclude>
+    <ClInclude Include="Npc.h">
+      <Filter>Fichiers d%27en-tête\game\mapObject\entity\npc</Filter>
+    </ClInclude>
+    <ClInclude Include="NpcData.h">
+      <Filter>Fichiers d%27en-tête\game\mapObject\entity\npc</Filter>
+    </ClInclude>
+    <ClInclude Include="NpcMovable.h">
+      <Filter>Fichiers d%27en-tête\game\mapObject\entity\npc</Filter>
+    </ClInclude>
+    <ClInclude Include="Station.h">
+      <Filter>Fichiers d%27en-tête\game\mapObject\entity\npc\station</Filter>
+    </ClInclude>
+    <ClInclude Include="StationModelFactory.h">
+      <Filter>Fichiers d%27en-tête\game\mapObject\entity\npc\station</Filter>
+    </ClInclude>
+    <ClInclude Include="StationManager.h">
+      <Filter>Fichiers d%27en-tête\game\mapObject\entity\npc\station</Filter>
+    </ClInclude>
+    <ClInclude Include="StationModel.h">
+      <Filter>Fichiers d%27en-tête\game\mapObject\entity\npc\station</Filter>
+    </ClInclude>
+    <ClInclude Include="Object.h">
+      <Filter>Fichiers d%27en-tête\mks\ui</Filter>
+    </ClInclude>
+    <ClInclude Include="IdGenerator.h">
+      <Filter>Fichiers d%27en-tête\mks\tools</Filter>
+    </ClInclude>
+    <ClInclude Include="Focusable.h">
+      <Filter>Fichiers d%27en-tête\mks\ui</Filter>
+    </ClInclude>
+    <ClInclude Include="Clickable.h">
+      <Filter>Fichiers d%27en-tête\mks\ui</Filter>
+    </ClInclude>
+    <ClInclude Include="Selectable.h">
+      <Filter>Fichiers d%27en-tête\mks\ui</Filter>
+    </ClInclude>
+    <ClInclude Include="Block.h">
+      <Filter>Fichiers d%27en-tête\mks\ui</Filter>
+    </ClInclude>
+    <ClInclude Include="Button.h">
+      <Filter>Fichiers d%27en-tête\mks\ui</Filter>
+    </ClInclude>
+    <ClInclude Include="Clock.h">
+      <Filter>Fichiers d%27en-tête\mks\engine</Filter>
+    </ClInclude>
+    <ClInclude Include="ClockManager.h">
+      <Filter>Fichiers d%27en-tête\mks\engine</Filter>
+    </ClInclude>
+    <ClInclude Include="FieldSet.h">
+      <Filter>Fichiers d%27en-tête\mks\ui</Filter>
+    </ClInclude>
+    <ClInclude Include="Image.h">
+      <Filter>Fichiers d%27en-tête\mks\ui</Filter>
+    </ClInclude>
+    <ClInclude Include="ImageGIF.h">
+      <Filter>Fichiers d%27en-tête\mks\ui</Filter>
+    </ClInclude>
+    <ClInclude Include="SpriteParameter.h">
+      <Filter>Fichiers d%27en-tête\mks\engine</Filter>
+    </ClInclude>
+    <ClInclude Include="ImageGIFFactory.h">
+      <Filter>Fichiers d%27en-tête\resource\image</Filter>
+    </ClInclude>
+    <ClInclude Include="Scrollable.h">
+      <Filter>Fichiers d%27en-tête\mks\ui</Filter>
+    </ClInclude>
+    <ClInclude Include="Scrollbar.h">
+      <Filter>Fichiers d%27en-tête\mks\ui</Filter>
+    </ClInclude>
+    <ClInclude Include="ScrollbarThumb.h">
+      <Filter>Fichiers d%27en-tête\mks\ui</Filter>
+    </ClInclude>
+    <ClInclude Include="View.h">
+      <Filter>Fichiers d%27en-tête\mks\ui</Filter>
+    </ClInclude>
+    <ClInclude Include="List.h">
+      <Filter>Fichiers d%27en-tête\mks\ui</Filter>
+    </ClInclude>
+    <ClInclude Include="Listable.h">
+      <Filter>Fichiers d%27en-tête\mks\ui</Filter>
+    </ClInclude>
+    <ClInclude Include="Text.h">
+      <Filter>Fichiers d%27en-tête\mks\ui</Filter>
+    </ClInclude>
+    <ClInclude Include="TextMultiLine.h">
+      <Filter>Fichiers d%27en-tête\mks\ui</Filter>
+    </ClInclude>
+    <ClInclude Include="TextField.h">
+      <Filter>Fichiers d%27en-tête\mks\ui</Filter>
+    </ClInclude>
+    <ClInclude Include="TextBoxMultiLine.h">
+      <Filter>Fichiers d%27en-tête\mks\ui</Filter>
+    </ClInclude>
+    <ClInclude Include="TextBox.h">
+      <Filter>Fichiers d%27en-tête\mks\ui</Filter>
+    </ClInclude>
+    <ClInclude Include="SelectableGroup.h">
+      <Filter>Fichiers d%27en-tête\mks\ui</Filter>
+    </ClInclude>
+    <ClInclude Include="ProgressBar.h">
+      <Filter>Fichiers d%27en-tête\mks\ui</Filter>
+    </ClInclude>
+    <ClInclude Include="PopupBubble.h">
+      <Filter>Fichiers d%27en-tête\mks\ui</Filter>
+    </ClInclude>
+    <ClInclude Include="Manager.h">
+      <Filter>Fichiers d%27en-tête\mks\engine</Filter>
+    </ClInclude>
+    <ClInclude Include="ManagerConfig.h">
+      <Filter>Fichiers d%27en-tête\mks\engine</Filter>
+    </ClInclude>
+    <ClInclude Include="ResourceConfig.h">
+      <Filter>Fichiers d%27en-tête\resource</Filter>
+    </ClInclude>
+    <ClInclude Include="ToolsUi.h">
+      <Filter>Fichiers d%27en-tête\mks\tools</Filter>
+    </ClInclude>
+    <ClInclude Include="Dirent.h">
+      <Filter>Fichiers d%27en-tête\mks\tools\lib</Filter>
+    </ClInclude>
+    <ClInclude Include="sha1.h">
+      <Filter>Fichiers d%27en-tête\mks\tools\lib</Filter>
+    </ClInclude>
+    <ClInclude Include="KeyValueFile.h">
+      <Filter>Fichiers d%27en-tête\mks\tools</Filter>
+    </ClInclude>
+    <ClInclude Include="SplitString.h">
+      <Filter>Fichiers d%27en-tête\mks\tools</Filter>
+    </ClInclude>
+    <ClInclude Include="json.h">
+      <Filter>Fichiers d%27en-tête\mks\tools\lib</Filter>
+    </ClInclude>
+    <ClInclude Include="json-forwards.h">
+      <Filter>Fichiers d%27en-tête\mks\tools\lib</Filter>
+    </ClInclude>
+    <ClInclude Include="Tools.h">
+      <Filter>Fichiers d%27en-tête\tools</Filter>
+    </ClInclude>
+    <ClInclude Include="IdValue.h">
+      <Filter>Fichiers d%27en-tête\mks\tools</Filter>
+    </ClInclude>
+    <ClInclude Include="IdValueDouble.h">
+      <Filter>Fichiers d%27en-tête\mks\tools</Filter>
+    </ClInclude>
+    <ClInclude Include="IdValueLong.h">
+      <Filter>Fichiers d%27en-tête\mks\tools</Filter>
+    </ClInclude>
+    <ClInclude Include="IdValueFloat.h">
+      <Filter>Fichiers d%27en-tête\mks\tools</Filter>
+    </ClInclude>
+    <ClInclude Include="IdValueInt.h">
+      <Filter>Fichiers d%27en-tête\mks\tools</Filter>
+    </ClInclude>
+    <ClInclude Include="Option.h">
+      <Filter>Fichiers d%27en-tête\mks\resource</Filter>
+    </ClInclude>
+    <ClInclude Include="Internationalisation.h">
+      <Filter>Fichiers d%27en-tête\mks\resource</Filter>
+    </ClInclude>
+    <ClInclude Include="NetworkDefine.h">
+      <Filter>Fichiers d%27en-tête\resource\network</Filter>
+    </ClInclude>
+    <ClInclude Include="ResourceDefine.h">
+      <Filter>Fichiers d%27en-tête\resource</Filter>
+    </ClInclude>
+    <ClInclude Include="Network.h">
+      <Filter>Fichiers d%27en-tête\mks\resource\network</Filter>
+    </ClInclude>
+    <ClInclude Include="NetworkJob.h">
+      <Filter>Fichiers d%27en-tête\mks\resource\network</Filter>
+    </ClInclude>
+    <ClInclude Include="NetworkJobManager.h">
+      <Filter>Fichiers d%27en-tête\mks\resource\network</Filter>
+    </ClInclude>
+    <ClInclude Include="CharacterShipItemStackUpdate.h">
+      <Filter>Fichiers d%27en-tête\resource\network</Filter>
+    </ClInclude>
+    <ClInclude Include="CharacterUpdate.h">
+      <Filter>Fichiers d%27en-tête\resource\network</Filter>
+    </ClInclude>
+    <ClInclude Include="MenuQuickItem.h">
+      <Filter>Fichiers d%27en-tête\game\ui\menuquick</Filter>
+    </ClInclude>
+    <ClInclude Include="MenuQuickSystem.h">
+      <Filter>Fichiers d%27en-tête\game\ui\menuquick</Filter>
+    </ClInclude>
+    <ClInclude Include="MenuQuickShip.h">
+      <Filter>Fichiers d%27en-tête\game\ui\menuquick</Filter>
+    </ClInclude>
+    <ClInclude Include="MenuQuickQuest.h">
+      <Filter>Fichiers d%27en-tête\game\ui\menuquick</Filter>
+    </ClInclude>
+    <ClInclude Include="MenuQuickMap.h">
+      <Filter>Fichiers d%27en-tête\game\ui\menuquick</Filter>
+    </ClInclude>
+    <ClInclude Include="MenuQuickJukebox.h">
+      <Filter>Fichiers d%27en-tête\game\ui\menuquick</Filter>
+    </ClInclude>
+    <ClInclude Include="MenuQuickChat.h">
+      <Filter>Fichiers d%27en-tête\game\ui\menuquick</Filter>
+    </ClInclude>
+    <ClInclude Include="MenuQuickCharacter.h">
+      <Filter>Fichiers d%27en-tête\game\ui\menuquick</Filter>
+    </ClInclude>
+    <ClInclude Include="MenuQuickCargo.h">
+      <Filter>Fichiers d%27en-tête\game\ui\menuquick</Filter>
+    </ClInclude>
+    <ClInclude Include="MenuQuick.h">
+      <Filter>Fichiers d%27en-tête\game\ui\menuquick</Filter>
+    </ClInclude>
+    <ClInclude Include="Window.h">
+      <Filter>Fichiers d%27en-tête\game\ui\window</Filter>
+    </ClInclude>
+    <ClInclude Include="WindowCargo.h">
+      <Filter>Fichiers d%27en-tête\game\ui\window</Filter>
+    </ClInclude>
+    <ClInclude Include="WindowCargoLoot.h">
+      <Filter>Fichiers d%27en-tête\game\ui\window</Filter>
+    </ClInclude>
+    <ClInclude Include="WindowCharacter.h">
+      <Filter>Fichiers d%27en-tête\game\ui\window</Filter>
+    </ClInclude>
+    <ClInclude Include="WindowJukebox.h">
+      <Filter>Fichiers d%27en-tête\game\ui\window</Filter>
+    </ClInclude>
+    <ClInclude Include="WindowMap.h">
+      <Filter>Fichiers d%27en-tête\game\ui\window</Filter>
+    </ClInclude>
+    <ClInclude Include="WindowSelected.h">
+      <Filter>Fichiers d%27en-tête\game\ui\window</Filter>
+    </ClInclude>
+    <ClInclude Include="WindowSelectedCharacterShip.h">
+      <Filter>Fichiers d%27en-tête\game\ui\window</Filter>
+    </ClInclude>
+    <ClInclude Include="WindowSelectedEntity.h">
+      <Filter>Fichiers d%27en-tête\game\ui\window</Filter>
+    </ClInclude>
+    <ClInclude Include="WindowSelectedNpcShip.h">
+      <Filter>Fichiers d%27en-tête\game\ui\window</Filter>
+    </ClInclude>
+    <ClInclude Include="AmmoModel.h">
+      <Filter>Fichiers d%27en-tête\game\item\ammo</Filter>
+    </ClInclude>
+    <ClInclude Include="AmmoTypeFactory.h">
+      <Filter>Fichiers d%27en-tête\game\item\ammo</Filter>
+    </ClInclude>
+    <ClInclude Include="AmmoModelFactory.h">
+      <Filter>Fichiers d%27en-tête\game\item\ammo</Filter>
+    </ClInclude>
+    <ClInclude Include="AmmoType.h">
+      <Filter>Fichiers d%27en-tête\game\item\ammo</Filter>
+    </ClInclude>
+    <ClInclude Include="WindowSelectedWreck.h">
+      <Filter>Fichiers d%27en-tête\game\ui\window</Filter>
+    </ClInclude>
+    <ClInclude Include="WindowShipSmall.h">
+      <Filter>Fichiers d%27en-tête\game\ui\window</Filter>
+    </ClInclude>
+    <ClInclude Include="BonusSkills.h">
+      <Filter>Fichiers d%27en-tête\game\user\character\skill</Filter>
+    </ClInclude>
+    <ClInclude Include="UserInterface.h">
+      <Filter>Fichiers d%27en-tête\game\ui</Filter>
+    </ClInclude>
+    <ClInclude Include="EventManager.h">
+      <Filter>Fichiers d%27en-tête\mks\engine</Filter>
+    </ClInclude>
+    <ClInclude Include="StarModel.h">
+      <Filter>Fichiers d%27en-tête\game\mapObject\star</Filter>
+    </ClInclude>
+    <ClInclude Include="StarModelFactory.h">
+      <Filter>Fichiers d%27en-tête\game\mapObject\star</Filter>
+    </ClInclude>
+    <ClInclude Include="MapObjectModel.h">
+      <Filter>Fichiers d%27en-tête\game\mapObject</Filter>
+    </ClInclude>
+    <ClInclude Include="RotableData.h">
+      <Filter>Fichiers d%27en-tête\game\mapObject</Filter>
+    </ClInclude>
+    <ClInclude Include="Rotable.h">
+      <Filter>Fichiers d%27en-tête\game\mapObject</Filter>
+    </ClInclude>
+    <ClInclude Include="ProjectileLaserBall.h">
+      <Filter>Fichiers d%27en-tête\game\mapObject\automanaged\projectile</Filter>
+    </ClInclude>
+    <ClInclude Include="ProjectileBullet.h">
+      <Filter>Fichiers d%27en-tête\game\mapObject\automanaged\projectile</Filter>
+    </ClInclude>
+    <ClInclude Include="Impact.h">
+      <Filter>Fichiers d%27en-tête\game\mapObject\automanaged\effect\impact</Filter>
+    </ClInclude>
+    <ClInclude Include="ImpactLaser.h">
+      <Filter>Fichiers d%27en-tête\game\mapObject\automanaged\effect\impact</Filter>
+    </ClInclude>
+    <ClInclude Include="ImpactBullet.h">
+      <Filter>Fichiers d%27en-tête\game\mapObject\automanaged\effect\impact</Filter>
+    </ClInclude>
+    <ClInclude Include="ImpactExplosion.h">
+      <Filter>Fichiers d%27en-tête\game\mapObject\automanaged\effect\impact</Filter>
+    </ClInclude>
+    <ClInclude Include="ImpactManager.h">
+      <Filter>Fichiers d%27en-tête\game\mapObject\automanaged\effect\impact</Filter>
+    </ClInclude>
+    <ClInclude Include="ProjectileManager.h">
+      <Filter>Fichiers d%27en-tête\game\mapObject\automanaged\projectile</Filter>
+    </ClInclude>
+    <ClInclude Include="Reactor.h">
+      <Filter>Fichiers d%27en-tête\game\mapObject\entity\module</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>

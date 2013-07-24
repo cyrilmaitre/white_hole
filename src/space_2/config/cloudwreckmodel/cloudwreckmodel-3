@@ -1,0 +1,7 @@
+id = 3
+hitbox_width = 170
+hitbox_height = 205
+scale_min = 0.5
+scale_max = 1
+sprite = cloudwreck_3.png
+opacity = 90

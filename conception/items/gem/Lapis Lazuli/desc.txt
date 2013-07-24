@@ -1,0 +1,4 @@
+Name:	Lapis Lazuli
+Derivation:	From "lapis" (Latin) stone + "lazuli" (Arabic) blue
+Formula:	(Na,Ca)8(Al,Si)12O24(S,SO4)
+Description:	Bright blue, with silvery veins in. 

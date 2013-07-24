@@ -1,0 +1,6 @@
+id = 1
+hitbox_width = 120
+hitbox_height = 120
+scale_min = 0.5
+scale_max = 1.5
+sprite = star_1.png

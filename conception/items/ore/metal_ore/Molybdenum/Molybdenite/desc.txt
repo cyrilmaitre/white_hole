@@ -1,0 +1,4 @@
+Name:	Molybdenite
+Derivation:	From "molybdaina" (Greek) a lump of lead, or graphite
+Formula:	MoS2
+Description:	Hexangonal shiny metallic crystal, which you can bend easily. (The white bit is quartz). 

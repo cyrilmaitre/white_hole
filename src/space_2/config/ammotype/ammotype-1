@@ -1,0 +1,6 @@
+id = 1
+name = ammoTypeNormalName
+description = ammoTypeNormalDescription
+color = #7A5844
+damagebonus = 0;0;0
+damagemalus = 0;0;0

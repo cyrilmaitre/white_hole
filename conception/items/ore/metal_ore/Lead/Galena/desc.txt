@@ -1,0 +1,4 @@
+Name	Galena
+Derivation	From galena (Latin) lead ore
+Formula	PbS
+Description	Shiny with square crystals interlocking with each other. The thing you notice most with galena is how heavy it is. Gold has a higher specific gravity, but you don't get to hold large lumps of gold! 

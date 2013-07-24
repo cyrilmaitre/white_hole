@@ -1,0 +1,6 @@
+- Construction de batiment possible
+- Sector composé d'un tableau de int représentant les batiments
+- Batiment de défense (tourelle... etc) 
+- Batiment utile (station, station de minage, usine... etc)
+- Tout les batiments sont destructibles
+- Les stations orbitale possèdent la bank universelle qui permet de stocker des objets qui seront accessible partout, dans n'importe qu'elle autre station

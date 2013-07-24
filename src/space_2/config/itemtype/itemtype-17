@@ -1,0 +1,5 @@
+id = 17
+name = itemTypeArmorUpgradeName
+description = itemTypeArmorUpgradeDescription
+itemtype_parent = 16
+itemtype_leaf = true

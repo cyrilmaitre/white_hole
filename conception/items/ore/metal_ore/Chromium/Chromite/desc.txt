@@ -1,0 +1,5 @@
+
+Name:	Chromite
+Derivation:	From "chroma" (Greek) colour
+Formula:	FeCr2O4
+Description:	Dark and opaque. Slighty shiny. Rather boring, really. 

@@ -1,0 +1,7 @@
+Le gameplay du minage est différent de ce qu'on vois sur Eve par exemple.
+
+Dans space u mad, le joueur dois construire un complexe minier pret / sur l'asteroid (cela coute de l'argent / du temps).
+Ensuite ce complexe minier dois etre defendu. Tant qu'il n'est pas detruit, il recolte le / les asteroids. Cette extration peut ensuite etre recupéré par le joueur
+
+// Meme principe pour les gaz cloud
+// Meme principe pour les wrecks cloud

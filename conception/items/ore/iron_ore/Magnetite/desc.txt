@@ -1,0 +1,4 @@
+Name:	Magnetite
+Derivation:	From Magnesia where it was found
+Formula:	Fe3O4
+Description:	Dark grey, slightly shiny. 

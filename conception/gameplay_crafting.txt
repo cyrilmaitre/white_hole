@@ -1,0 +1,16 @@
+-> Skills fission / fusion
+-> Fission: Un élément donne 2 élement plus léger (requiers de l'énergie)
+-> Fusion: Deux éléments donne 1 élément plus lourd (requiers de l'énergie)
+-> Skill transformation: 1 élement peut etre transformé en énergie
+-> Plus élément lourd plus il est rare
+-> Skill décomposition: transforme un item (arme, minerai, gaz... etc) en atome le consituant (perte d'élement en fonction du level du skill)
+
+-> Le joueur peut possèder des atomes de l'ensemble du tableau périodique
+-> Il utilise ensuite ces atomes pour crafter des items: 
+	- par exemple pour faire un laser level I: Il lui faudra du fer, du carbone... etc (quantité à définir)
+
+-> Le joueur récupère ces ressources soit:
+	- En recyclant des items (qu'il à looté, crafté ou récupérer sur une carcasse de vaisseau)
+	- En minant des astéroides / nuage de gaz et il décompose le minerai / gaz en atome
+
+-> Ensuite jouer sur la fission / fusion / transformation pour avoir les bon atomes et craft l'object voulue

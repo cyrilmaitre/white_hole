@@ -1,0 +1,5 @@
+
+Name:	Manganite
+Derivation:	From "magnesia" (Latin) because it looked like magnetite (natural magnets). Manganite is NOT magnetic.
+Formula:	MnO(OH)
+Description:	Black needle crystal. (The gleamy pink stuff is NOT manganite.) 

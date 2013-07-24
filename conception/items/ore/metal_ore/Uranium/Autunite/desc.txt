@@ -1,0 +1,4 @@
+Name:	Autunite
+Derivation:	From "Autun" a place in France
+Formula:	Ca(UO2)2(PO4)2.10-12H2O
+Description:	Yellowish green. It crumbles easily. 

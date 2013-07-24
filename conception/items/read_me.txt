@@ -1,0 +1,1 @@
+Icon size: 512x512 minimum

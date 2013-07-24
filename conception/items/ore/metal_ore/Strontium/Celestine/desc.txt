@@ -1,0 +1,4 @@
+Name:	Celestine
+Derivation:	From "coelestus" (Latin) heavenly - because it is often blue
+Formula:	SrSO4
+Description:	Pale blue translucent crystals, although it can be white. 

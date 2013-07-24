@@ -1,0 +1,4 @@
+Name:	Rhodochrosite
+Derivation:	From "rhodochros" (Greek) rose-coloured
+Formula:	MnCO3
+Description:	Usually pink and white stripes. The specimen on the right is rhodochrosite crystals.

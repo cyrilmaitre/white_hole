@@ -1,0 +1,5 @@
+id = 18
+name = itemTypeCargoUpgradeName
+description = itemTypeCargoUpgradeDescription
+itemtype_parent = 16
+itemtype_leaf = true

@@ -1,0 +1,6 @@
+id = 3
+hitbox_width = 150
+hitbox_height = 150
+scale_min = 0.5
+scale_max = 1.5
+sprite = star_3.png

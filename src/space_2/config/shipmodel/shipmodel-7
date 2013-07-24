@@ -1,0 +1,31 @@
+# ITEM
+id = 7
+#SHIP MODEL
+hitbox_width = 48
+hitbox_height = 48
+scale_min = 1
+scale_max = 1
+sprite = frigate-02.png
+ship_type = 1
+sprite_wreck = shipWreck_carlot_01.png
+sprite_shield = frigateshield-01.png
+explosion_size = 1
+shield = 1000
+shield_regen = 5
+shield_resist = 0
+armor = 1500
+armor_regen = 2
+armor_resist = 0
+structure = 2000
+structure_regen = 1
+structure_resist = 0
+velocity = 1200
+quickening = 800
+cargo = 50
+weapon_slot = 4
+upgrade_slot = 2
+stuff_slot = 2
+rotation_velocity = 180
+reactor_count = 2
+reactor_size = 5
+reactor_position = [{"x":-14,"y":20},{"x":23,"y":20}]

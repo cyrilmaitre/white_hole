@@ -1,0 +1,4 @@
+Name:	Rhodonite
+Derivation:	From "rhodon" (Greek) a rose
+Formula:	(Mn,Fe,Ca)SiO3
+Description:	The gleamy pink stuff is rhodonite. There are often black veins in it

@@ -1,0 +1,5 @@
+id = 20
+name = itemTypeShieldUpgradeName
+description = itemTypeShieldUpgradeDescription
+itemtype_parent = 16
+itemtype_leaf = true

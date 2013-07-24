@@ -1,0 +1,8 @@
+id = 14
+name = weaponModelMediumLaserName
+description = weaponModelMediumLaserDescription
+price = 5000
+stackmax = 1
+sprite = 8-0
+itemtype = 25
+itemtier = 2

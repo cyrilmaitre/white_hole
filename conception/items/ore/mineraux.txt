@@ -1,0 +1,126 @@
+================= ORE ========================
+
+Calcite : http://gwydir.demon.co.uk/jo/minerals/calcite.htm 
+
+
+Feldspar:
+	Labradorite : http://gwydir.demon.co.uk/jo/minerals/labradorite.htm 
+	Amazonite : http://gwydir.demon.co.uk/jo/minerals/amazonite.htm
+	Sunstone : http://gwydir.demon.co.uk/jo/minerals/sunstone.htm
+	
+
+Copper Ore:
+	Copper : http://gwydir.demon.co.uk/jo/minerals/copper.htm
+	Chalcopyrite : http://gwydir.demon.co.uk/jo/minerals/cpyrites.htm
+	Peacock Ore : http://gwydir.demon.co.uk/jo/minerals/peacock.htm
+	Azurite : http://gwydir.demon.co.uk/jo/minerals/azurite.htm
+	Dioptase : http://gwydir.demon.co.uk/jo/minerals/dioptase.htm
+	
+--- pas vérifier au dessus
+Iron Ore:
+	Pyrite : http://gwydir.demon.co.uk/jo/minerals/pyrite.htm
+	Marcasite : http://gwydir.demon.co.uk/jo/minerals/marcasite.htm
+	Hematite : http://gwydir.demon.co.uk/jo/minerals/hematite.htm
+	Goethite : 	http://gwydir.demon.co.uk/jo/minerals/goethite.htm
+	Magnetite : http://gwydir.demon.co.uk/jo/minerals/magnetite.htm
+	
+	
+Metal Ore:
+	Chromium:
+		Chromite : http://gwydir.demon.co.uk/jo/minerals/chromite.htm
+		
+	Lead:
+		Cerussite : http://gwydir.demon.co.uk/jo/minerals/cerussite.htm
+		Galena : http://gwydir.demon.co.uk/jo/minerals/galena.htm
+		
+	Mercury:
+		Cinnabar : http://gwydir.demon.co.uk/jo/minerals/cinnabar.htm
+		
+	Barium:
+		Barite : http://gwydir.demon.co.uk/jo/minerals/barite.htm
+		
+	Zinc:
+		Zincite : http://gwydir.demon.co.uk/jo/minerals/zincite.htm
+		Sphalerite : http://gwydir.demon.co.uk/jo/minerals/sphalerite.htm
+		
+	Tin:
+		Cassiterite : http://gwydir.demon.co.uk/jo/minerals/cassiterite.htm
+		
+	Lithium:
+		Kunzite : http://gwydir.demon.co.uk/jo/minerals/kunzite.htm
+		
+	Strontium:
+		Celestine : http://gwydir.demon.co.uk/jo/minerals/celestine.htm
+		
+		
+	Manganese:
+		Manganite : http://gwydir.demon.co.uk/jo/minerals/manganite.htm
+		Rhodonite : http://gwydir.demon.co.uk/jo/minerals/rhodonite.htm
+		Rhodochrosite : http://gwydir.demon.co.uk/jo/minerals/rhodochrosite.htm	
+		
+	Arsenic:
+		Orpiment : http://gwydir.demon.co.uk/jo/minerals/orpiment.htm
+		Realgar : http://gwydir.demon.co.uk/jo/minerals/realgar.htm
+		
+	Antimony:
+		Stibnite : http://gwydir.demon.co.uk/jo/minerals/stibnite.htm
+		
+	Uranium:
+		Autunite : http://gwydir.demon.co.uk/jo/minerals/autunite.htm
+		
+	Vanadinium:
+		Vanadinite : http://gwydir.demon.co.uk/jo/minerals/vanadinite.htm
+		
+	Molybdenum:
+		Molybdenite : http://gwydir.demon.co.uk/jo/minerals/molybdenite.htm
+		
+	Gold : http://gwydir.demon.co.uk/jo/minerals/gold.htm
+	
+	Silver : http://gwydir.demon.co.uk/jo/minerals/silver.htm
+	
+
+Silicates:
+	Clear Quartz : http://gwydir.demon.co.uk/jo/minerals/quartz.htm
+	Rutilated Quartz : http://gwydir.demon.co.uk/jo/minerals/rutil.htm
+	
+	
+Other:
+	Graphite : http://gwydir.demon.co.uk/jo/minerals/graphite.htm
+	Sulphur : http://gwydir.demon.co.uk/jo/minerals/sulphur.htm
+	Halite : http://gwydir.demon.co.uk/jo/minerals/halite.htm
+	Cobalto-calcite : http://gwydir.demon.co.uk/jo/minerals/cobalto.htm
+	Mica : http://gwydir.demon.co.uk/jo/minerals/mica.htm
+	Kyanite : http://gwydir.demon.co.uk/jo/minerals/kyanite.htm
+	Sodalite : http://gwydir.demon.co.uk/jo/minerals/sodalite.htm
+		
+		
+		
+		
+
+================= GEM ========================
+
+Diamond : http://gwydir.demon.co.uk/jo/minerals/diamond.htm
+Ruby : http://gwydir.demon.co.uk/jo/minerals/corundum.htm
+Emerald : http://gwydir.demon.co.uk/jo/minerals/beryl.htm
+Topaz : http://gwydir.demon.co.uk/jo/minerals/topaz.htm
+Amethyst : http://gwydir.demon.co.uk/jo/minerals/amethyst.htm
+Tourmaline : http://gwydir.demon.co.uk/jo/minerals/tourmaline.htm
+Opal : http://gwydir.demon.co.uk/jo/minerals/opal.htm
+Amber : http://gwydir.demon.co.uk/jo/minerals/amber.htm
+Turquoise : http://gwydir.demon.co.uk/jo/minerals/turquoise.htm
+Jet : http://gwydir.demon.co.uk/jo/minerals/jet.htm
+Malachite : http://gwydir.demon.co.uk/jo/minerals/malachite.htm
+Lapis Lazuli : http://gwydir.demon.co.uk/jo/minerals/lapis.htm
+Spinel : http://gwydir.demon.co.uk/jo/minerals/spinel.htm
+Olivene : http://gwydir.demon.co.uk/jo/minerals/olivene.htm
+Garnet : http://gwydir.demon.co.uk/jo/minerals/garnet.htm
+Jade : http://gwydir.demon.co.uk/jo/minerals/jade.htm
+Zircon : http://gwydir.demon.co.uk/jo/minerals/zircon.htm
+Moonstone : http://gwydir.demon.co.uk/jo/minerals/moonstone.htm
+Chrysoberyl : http://gwydir.demon.co.uk/jo/minerals/chrysoberyl.htm
+
+
+
+================= Element ========================
+H : Hydrogen : http://en.wikipedia.org/wiki/Hydrogen
+

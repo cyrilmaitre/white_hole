@@ -1,0 +1,5 @@
+id = 3
+name = itemTypeOreName 
+description = itemTypeOreDescription
+itemtype_parent = NULL
+itemtype_leaf = false

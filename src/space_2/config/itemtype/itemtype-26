@@ -1,0 +1,5 @@
+id = 26
+name = itemTypeWeaponLauncherName
+description = itemTypeWeaponLauncherDescription
+itemtype_parent = 23
+itemtype_leaf = true

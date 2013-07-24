@@ -1,0 +1,4 @@
+Name:	Mica
+Derivation:	From "mica" (Latin) a crumb, probably influenced by "micare" (Latin) to glitter
+Formula:	Various, e.g. KAl2(AlSi3O10)(OH,F)2
+Description:	Flat sheets, perhaps very thin, even transparent, or of various colours, which glitter. Sometimes the sheets lie flat, sometimes they're jumbled together. 

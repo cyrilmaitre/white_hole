@@ -1,0 +1,4 @@
+Name:	Orpiment
+Derivation:	From "aurum pigmentum" (Latin) gold pigment
+Formula:	As2S3
+Description:	Bright yellow. If exposed to light, it tends to turn red. You can see red bits in the specimen. 

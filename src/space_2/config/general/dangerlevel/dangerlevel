@@ -1,0 +1,5 @@
+levelmin = 0
+levelmax = 20
+levelcount = 21
+levelupchancemin = 0.2
+levelupchancemax = 0.8

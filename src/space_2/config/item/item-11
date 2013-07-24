@@ -1,0 +1,8 @@
+id = 11
+name = weaponModelMediumAutoCannonName
+description = weaponModelMediumAutoCannonDescription
+price = 2500
+stackmax = 1
+sprite = 1-0
+itemtype = 24
+itemtier = 2

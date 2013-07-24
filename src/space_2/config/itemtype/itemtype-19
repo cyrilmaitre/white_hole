@@ -1,0 +1,5 @@
+id = 19
+name = itemTypePropulsionUpgradeName
+description = itemTypePropulsionUpgradeDescription
+itemtype_parent = 16
+itemtype_leaf = true
