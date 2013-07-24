@@ -5,24 +5,12 @@
 #define APP_SCREEN_COLOR				32
 #define APP_GAME_NAME					"White Hole"
 
-// Images
-#define FOLDER_IMAGE						"image/"
-#define FOLDER_IMAGE_BOOT					FOLDER_IMAGE"boot/"
-#define FOLDER_IMAGE_SPACE					FOLDER_IMAGE"space/"
-#define FOLDER_IMAGE_SPACE_SHIP				FOLDER_IMAGE_SPACE"ship/"
-#define FOLDER_IMAGE_SPACE_CLOUDGAZ			FOLDER_IMAGE_SPACE"cloud_gaz/"
-#define FOLDER_IMAGE_SPACE_CLOUDWRECK		FOLDER_IMAGE_SPACE"cloud_wreck/"
-#define FOLDER_IMAGE_SPACE_SHIP				FOLDER_IMAGE_SPACE"ship/"
-#define FOLDER_IMAGE_SPACE_PLANET			FOLDER_IMAGE_SPACE"planet/"
-#define FOLDER_IMAGE_SPACE_TURRET			FOLDER_IMAGE_SPACE"turret/"
-#define FOLDER_IMAGE_SPACE_STAR				FOLDER_IMAGE_SPACE"star/"
-#define FOLDER_IMAGE_SPACE_WRECK			FOLDER_IMAGE_SPACE"wreck/"
-#define FOLDER_IMAGE_SPACE_STATION			FOLDER_IMAGE_SPACE"station/"
-#define FOLDER_IMAGE_SPACE_PROJECTILE		FOLDER_IMAGE_SPACE"projectile/"
-#define FOLDER_IMAGE_UIGAME					FOLDER_IMAGE"uigame/"
-#define FOLDER_IMAGE_UIGAME_WINDOW			FOLDER_IMAGE_UIGAME"window/"
-#define FOLDER_IMAGE_MISC					FOLDER_IMAGE"misc/"
+// .mkk resources
+#define MKK_FONTS		"res/fonts.mkk"
+#define MKK_IMAGES		"res/images.mkk"
+#define MKK_SOUNDS		"res/sounds.mkk"
 
+// Images
 #define IMG_BOOT_SCREEN						"boot_screen.png"
 #define IMG_WINDOW_TOPLEFT					"window_topLeft.png"
 #define IMG_WINDOW_TOP						"window_top.png"
@@ -64,7 +52,6 @@
 #define IMG_PROJECTILE_ROCKET_GLOW			"projectile_rocket_glow.png"
 
 // Fonts
-#define FOLDER_FONT					"font/"
 #define FONT_MKS_KONTRAPUNKT		"mks_kontrapunkt.ttf"
 #define FONT_MKS_UNIBODY			"mks_unibody.ttf"
 #define FONT_DEFAULT				FONT_MKS_KONTRAPUNKT
@@ -72,7 +59,6 @@
 #define FONT_UITHEME				FONT_MKS_UNIBODY
 
 // Sound
-#define FOLDER_SOUND					"sound/"
 #define SOUND_SHIPJET					"ship_jet.wav"
 #define SOUND_OBJECTDESTRUCTION			"object_destruction.wav"
 #define SOUND_WEAPON_KINETIC_1			"weapon_kinetic_1.wav"
@@ -80,7 +66,7 @@
 #define SOUND_WEAPON_KINETIC_RELOAD		"weapon_kinetic_reload.wav"
 
 // Music
-#define FOLDER_MUSIC					"sound/music/"
+#define FOLDER_MUSIC					"music/"
 
 #define MUSIC_THEME_1					"theme_1.wav"
 #define MUSIC_THEME_2					"theme_2.wav"

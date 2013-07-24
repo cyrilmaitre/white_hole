@@ -9,6 +9,7 @@
 #include "Option.h"
 #include "ParticleManager.h"
 #include "RunningStats.h"
+
 #include "Dirent.h"
 #include "BackgroundSpace.h"
 #include "Session.h"
@@ -423,53 +424,39 @@ void Resource::unload()
 //*************************************************************
 void Resource::loadImages()
 {
-	this->loadImages(FOLDER_IMAGE);
-	this->loadImages(FOLDER_IMAGE_BOOT);
-	this->loadImages(FOLDER_IMAGE_SPACE_SHIP);
-	this->loadImages(FOLDER_IMAGE_SPACE);
-	this->loadImages(FOLDER_IMAGE_SPACE_CLOUDGAZ);
-	this->loadImages(FOLDER_IMAGE_SPACE_CLOUDWRECK);
-	this->loadImages(FOLDER_IMAGE_SPACE_SHIP);
-	this->loadImages(FOLDER_IMAGE_SPACE_PLANET);
-	this->loadImages(FOLDER_IMAGE_SPACE_TURRET);
-	this->loadImages(FOLDER_IMAGE_SPACE_STAR);
-	this->loadImages(FOLDER_IMAGE_SPACE_WRECK);
-	this->loadImages(FOLDER_IMAGE_SPACE_STATION);
-	this->loadImages(FOLDER_IMAGE_SPACE_PROJECTILE);
-	this->loadImages(FOLDER_IMAGE_UIGAME);
-	this->loadImages(FOLDER_IMAGE_UIGAME_WINDOW);
-	this->loadImages(FOLDER_IMAGE_MISC);
+	this->loadImagesFromMKK(MKK_IMAGES);
 }
 
-void Resource::loadImages( std::string path )
+void Resource::loadImagesFromMKK(std:: string path)
 {
-	DIR *dir;
-	struct dirent *ent;
-	dir = opendir(path.data());
+	if(mDatImage.Read(path)) {
 
-	if (dir != NULL)
-	{
-		while ((ent = readdir (dir)) != NULL)
+		// Get file list from .mkk
+		std::vector<sFileEntry>* entries = mDatImage.getEntries();
+		
+
+		for (unsigned int i=0;i<entries->size();i++)
 		{
-			string file_name = ent->d_name;
+			char* buffer;
 
-			if(file_name[0] != '.' && ent->d_type != DT_DIR)
-			{
-				Image *tmpImage = new Image();
-				if(tmpImage->loadFromFile(path+file_name))
-					tmpImage->createMaskFromColor(Color(0,255,255));
-				else
-					cout << "Error while loading image: " << path+file_name << endl;
+			std::string file_name = (*entries)[i].name;			// current filename
+			buffer = mDatImage.GetFile(file_name);	// file content (buffer)
 
-				this->mImage.insert(pair<string, Image*>(file_name, tmpImage));
-			}
+			cout << "-> " << file_name << " size: " << mDatImage.GetFileSize(file_name) << endl;
+
+			Image *tmpImage = new Image();
+			if(tmpImage->loadFromMemory(buffer, mDatImage.GetFileSize(file_name)) || buffer == NULL)
+				tmpImage->createMaskFromColor(Color(0,255,255));
+			else
+				cout << "Error while loading image: " << path+file_name << endl;
+
+			this->mImage.insert(pair<string, Image*>(file_name, tmpImage));
+
 		}
-		closedir(dir);
 	}
-	else
-	{
-		cout << "Enable to find image folder: " << path << endl;
-	}	
+	else {
+		cout << "Unable to load image from .mkk: " << path << endl;
+	}
 }
 
 void Resource::unloadImages()
@@ -525,35 +512,37 @@ void Resource::unloadTextures()
 //*************************************************************
 void Resource::loadFonts()
 {
-	this->loadFonts(FOLDER_FONT);
+	this->loadFontsFromMKK(MKK_FONTS);
 }
 
-void Resource::loadFonts( std::string path )
+void Resource::loadFontsFromMKK(std:: string path)
 {
-	DIR *dir;
-	struct dirent *ent;
-	dir = opendir(path.data());
+	if(mDatFont.Read(path)) {
 
-	if (dir != NULL)
-	{
-		while ((ent = readdir (dir)) != NULL)
+		// Get file list from .mkk
+		std::vector<sFileEntry>* entries = mDatFont.getEntries();
+		
+
+		for (unsigned int i=0;i<entries->size();i++)
 		{
-			string file_name = ent->d_name;
+			char* buffer;
 
-			if(file_name[0] != '.' && ent->d_type != DT_DIR)
-			{
-				Font *tmpFont = new Font();
-				if(!tmpFont->loadFromFile(path+file_name))
-					cout << "Error while loading font: " << path+file_name << endl;
+			std::string file_name = (*entries)[i].name;			// current filename
+			buffer = mDatFont.GetFile(file_name);	// file content (buffer)
 
-				this->mFont.insert(pair<string, Font*>(file_name, tmpFont));
-			}
+			cout << "-> " << file_name << " size: " << mDatFont.GetFileSize(file_name) << endl;
+
+
+			Font *tmpFont = new Font();
+			if(!tmpFont->loadFromMemory(buffer, mDatFont.GetFileSize(file_name)) || buffer == NULL)
+				cout << "Error while loading font: " << file_name << endl;
+
+			this->mFont.insert(pair<string, Font*>(file_name, tmpFont));
+
 		}
-		closedir(dir);
 	}
-	else
-	{
-		cout << "Enable to find font folder: " << path << endl;
+	else {
+		cout << "Unable to load font from .mkk: " << path << endl;
 	}
 }
 
@@ -575,36 +564,37 @@ void Resource::unloadFonts()
 //*************************************************************
 void Resource::loadSoundBuffers()
 {
-	this->loadSoundBuffers(FOLDER_SOUND);
+	this->loadSoundBuffersFromMKK(MKK_SOUNDS);
 }
 
-void Resource::loadSoundBuffers( std::string path )
+void Resource::loadSoundBuffersFromMKK(std:: string path)
 {
-	DIR *dir;
-	struct dirent *ent;
-	dir = opendir(path.data());
+	if(mDatSound.Read(path)) {
 
-	if (dir != NULL)
-	{
-		while ((ent = readdir (dir)) != NULL)
+		// Get file list from .mkk
+		std::vector<sFileEntry>* entries = mDatSound.getEntries();
+		
+
+		for (unsigned int i=0;i<entries->size();i++)
 		{
-			string file_name = ent->d_name;
+			char* buffer;
 
-			if(file_name[0] != '.' && ent->d_type != DT_DIR)
-			{
-				SoundBuffer *tmpSoundBuffer = new SoundBuffer();
-				if (!tmpSoundBuffer->loadFromFile(path+file_name))						
-					cout << "Error while loading sound: " << path+file_name << endl;
+			std::string file_name = (*entries)[i].name;			// current filename
+			buffer = mDatSound.GetFile(file_name);	// file content (buffer)
 
-				this->mBuffer.insert(pair<string, SoundBuffer*>(file_name, tmpSoundBuffer));
-			}
+			cout << "-> " << file_name << " size: " << mDatSound.GetFileSize(file_name) << endl;
+
+			SoundBuffer *tmpSoundBuffer = new SoundBuffer();
+			if (!tmpSoundBuffer->loadFromMemory(buffer, mDatSound.GetFileSize(file_name)) || buffer == NULL)
+				cout << "Error while loading sound: " << path+file_name << endl;
+
+			this->mBuffer.insert(pair<string, SoundBuffer*>(file_name, tmpSoundBuffer));
+
 		}
-		closedir(dir);
 	}
-	else
-	{
-		cout << "Enable to find sound folder: " << path << endl;
-	}	
+	else {
+		cout << "Unable to load sound from .mkk: " << path << endl;
+	}
 }
 
 void Resource::unloadSoundBuffers()

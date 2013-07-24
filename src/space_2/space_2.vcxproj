@@ -116,6 +116,7 @@
     <ClCompile Include="LevelShip.cpp" />
     <ClCompile Include="MapMiniView.cpp" />
     <ClCompile Include="MapObjectModel.cpp" />
+    <ClCompile Include="MkkFormat.cpp" />
     <ClCompile Include="Npc.cpp" />
     <ClCompile Include="NpcData.cpp" />
     <ClCompile Include="NpcMovable.cpp" />
@@ -353,6 +354,7 @@
     <ClInclude Include="LevelShip.h" />
     <ClInclude Include="MapMiniView.h" />
     <ClInclude Include="MapObjectModel.h" />
+    <ClInclude Include="MkkFormat.h" />
     <ClInclude Include="NetworkDefine.h" />
     <ClInclude Include="Npc.h" />
     <ClInclude Include="NpcData.h" />
