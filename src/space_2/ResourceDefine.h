@@ -24,6 +24,12 @@
 #define FOLDER_IMAGE_UIGAME_SCREENSTATION	FOLDER_IMAGE_UIGAME"station_background/"
 #define FOLDER_IMAGE_MISC					FOLDER_IMAGE"misc/"
 
+// .mkk resources
+#define MKK_FONTS		"res/fonts.mkk"
+#define MKK_IMAGES		"res/images.mkk"
+#define MKK_SOUNDS		"res/sounds.mkk"
+
+// Images
 #define IMG_BOOT_SCREEN						"boot_screen.png"
 #define IMG_WINDOW_TOPLEFT					"window_topLeft.png"
 #define IMG_WINDOW_TOP						"window_top.png"
@@ -63,7 +69,6 @@
 #define IMG_PROJECTILE_ROCKET_GLOW			"projectile_rocket_glow.png"
 
 // Fonts
-#define FOLDER_FONT					"font/"
 #define FONT_MKS_KONTRAPUNKT		"mks_kontrapunkt.ttf"
 #define FONT_MKS_UNIBODY			"mks_unibody.ttf"
 #define FONT_DEFAULT				FONT_MKS_KONTRAPUNKT
@@ -71,7 +76,6 @@
 #define FONT_UITHEME				FONT_MKS_UNIBODY
 
 // Sound
-#define FOLDER_SOUND					"sound/"
 #define SOUND_SHIPJET					"ship_jet.wav"
 #define SOUND_OBJECTDESTRUCTION			"object_destruction.wav"
 #define SOUND_WEAPON_KINETIC_1			"weapon_kinetic_1.wav"
@@ -79,7 +83,7 @@
 #define SOUND_WEAPON_KINETIC_RELOAD		"weapon_kinetic_reload.wav"
 
 // Music
-#define FOLDER_MUSIC					"sound/music/"
+#define FOLDER_MUSIC					"music/"
 
 #define MUSIC_THEME_1					"theme_1.wav"
 #define MUSIC_THEME_2					"theme_2.wav"

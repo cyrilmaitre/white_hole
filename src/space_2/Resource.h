@@ -14,6 +14,7 @@
 #include "Tools.h"
 #include "Network.h"
 #include "ThreadTerminator.h"
+#include "MkkFormat.h"
 
 // Define divers
 #define RESOURCE_APP_FRAME_LIMIT			500
@@ -65,17 +66,17 @@ public:
 	void loadAsync();
 	void loadSync();
 	void loadImages();
-	void loadImages(std::string path);
+	void loadImagesFromMKK(std:: string path);
 	void loadTextures();
 	void loadFonts();
-	void loadFonts(std::string path);
+	void loadFontsFromMKK(std:: string path);
 	void loadSoundBuffers();
-	void loadSoundBuffers(std::string path);
+	void loadSoundBuffersFromMKK(std:: string path);
 	void loadMusic();
 	void loadMusic(std::string path);
 	void loadConfigs();
 	void loadConfigs(std::string path);
-
+	
 	void unload();
 	void unloadImages();
 	void unloadTextures();
@@ -105,7 +106,10 @@ private:
 	Internationalisation *mBundle;
 	Juckebox *mJuckebox;
 	ThreadTerminator* mThreadterminator;
-	
+	cDAT mDatSound;
+	cDAT mDatFont;
+	cDAT mDatImage;
+
 	bool mAppRunning;
 };
 

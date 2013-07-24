@@ -1251,6 +1251,9 @@
     <ClCompile Include="HangarShipAddView.cpp">
       <Filter>Fichiers sources\game\ui\stationscreen\panel\hangar</Filter>
     </ClCompile>
+    <ClCompile Include="MkkFormat.cpp">
+      <Filter>Fichiers sources\mks\tools</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h">
@@ -2140,6 +2143,9 @@
     </ClInclude>
     <ClInclude Include="HangarShipAddView.h">
       <Filter>Fichiers d%27en-tête\game\ui\stationscreen\panel\hangar</Filter>
+    </ClInclude>
+    <ClInclude Include="MkkFormat.h">
+      <Filter>Fichiers d%27en-tête\mks\tools</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

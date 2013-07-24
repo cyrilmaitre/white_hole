@@ -143,6 +143,7 @@
     <ClCompile Include="MarketItemStockView.cpp" />
     <ClCompile Include="Node.cpp" />
     <ClCompile Include="NodeData.cpp" />
+    <ClCompile Include="MkkFormat.cpp" />
     <ClCompile Include="Npc.cpp" />
     <ClCompile Include="NpcData.cpp" />
     <ClCompile Include="NpcMovable.cpp" />
@@ -436,6 +437,7 @@
     <ClInclude Include="MarketItemListView.h" />
     <ClInclude Include="MarketItemStockBar.h" />
     <ClInclude Include="MarketItemStockView.h" />
+    <ClInclude Include="MkkFormat.h" />
     <ClInclude Include="NetworkDefine.h" />
     <ClInclude Include="Node.h" />
     <ClInclude Include="NodeData.h" />
