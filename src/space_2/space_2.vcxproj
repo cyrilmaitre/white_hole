@@ -125,6 +125,7 @@
     <ClCompile Include="ProjectileLaserBall.cpp" />
     <ClCompile Include="ProjectileManager.cpp" />
     <ClCompile Include="Reactor.cpp" />
+    <ClCompile Include="ReactorDustEffect.cpp" />
     <ClCompile Include="ResourceConfig.cpp" />
     <ClCompile Include="Rotable.cpp" />
     <ClCompile Include="RotableData.cpp" />
@@ -365,6 +366,7 @@
     <ClInclude Include="ProjectileLaserBall.h" />
     <ClInclude Include="ProjectileManager.h" />
     <ClInclude Include="Reactor.h" />
+    <ClInclude Include="ReactorDustEffect.h" />
     <ClInclude Include="ResourceConfig.h" />
     <ClInclude Include="Rotable.h" />
     <ClInclude Include="RotableData.h" />

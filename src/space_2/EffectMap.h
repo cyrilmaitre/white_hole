@@ -13,6 +13,7 @@ public:
 	~EffectMap(void);
 
 	// Methods
-	virtual void update();
+	void update();
+	void draw();
 };
 

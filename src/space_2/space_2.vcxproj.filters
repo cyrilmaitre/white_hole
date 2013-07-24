@@ -1035,6 +1035,9 @@
     <ClCompile Include="EntityMovableData.cpp">
       <Filter>Fichiers sources\game\mapObject\entity</Filter>
     </ClCompile>
+    <ClCompile Include="ReactorDustEffect.cpp">
+      <Filter>Fichiers sources\game\mapObject\automanaged\effect</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h">
@@ -1756,6 +1759,9 @@
     </ClInclude>
     <ClInclude Include="EntityMovableData.h">
       <Filter>Fichiers d%27en-tête\game\mapObject\entity</Filter>
+    </ClInclude>
+    <ClInclude Include="ReactorDustEffect.h">
+      <Filter>Fichiers d%27en-tête\game\mapObject\automanaged\effect</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

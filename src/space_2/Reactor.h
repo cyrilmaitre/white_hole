@@ -42,6 +42,7 @@ public:
 	void updatePosition();
 	void updateActive();
 	void updateReactorAlpha();
+	void updateReactorDust();
 	void draw();
 
 
@@ -50,7 +51,9 @@ private:
 	EntityMovable* mEntityMovable;
 	ReactorType mType;
 	float mOffsetX;
+	float mOffsetXWithRotate;
 	float mOffsetY;
+	float mOffsetYWithRotate;
 	int mSize;
 	bool mActive;
 	sf::Sprite *mReactor;
@@ -58,5 +61,10 @@ private:
 	float mReactorAlphaSpeed;
 
 	mks::Clock mReactorClock;
+	mks::Clock mReactorDustClock;
+	float mReactorDustTick;
+
+	// Methods
+	void computeReactorDustTick();
 };
 

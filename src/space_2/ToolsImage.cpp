@@ -21,8 +21,8 @@ void ToolsImage::resizeSprite( sf::Sprite *p_sprite, int newWidth, int newHeight
 {
 	if(p_sprite != NULL)
 	{
-		float widthFactor = 1;
-		float heightFactor = 1;
+		float widthFactor = 0;
+		float heightFactor = 0;
 		if(newWidth > 0)
 			widthFactor = (float)newWidth / (float)p_sprite->getLocalBounds().width;
 		if(newHeight > 0)

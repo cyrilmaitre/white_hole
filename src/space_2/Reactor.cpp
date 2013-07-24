@@ -1,6 +1,8 @@
 #include "Reactor.h"
 #include "ToolsImage.h"
 #include "EntityMovable.h"
+#include "AutoManager.h"
+#include "ReactorDustEffect.h"
 
 
 //*************************************************************
@@ -12,6 +14,8 @@
 #define JSON_SIZE					"size"
 #define JSON_REACTORALPHASPEED		"reactoralphaspeed"
 #define REACTOR_SPRITE				"reactor_wisp.png"
+#define REACTORDUST_TICK_MIN		50		// millisec
+#define REACTORDUST_TICK_MAX		100		// millisec
 
 
 //*************************************************************
@@ -27,16 +31,16 @@ Reactor::Reactor( EntityMovable* p_entity, Json::Value p_reactorJson )
 
 	this->setEntityMovable(p_entity);
 	this->setOffsetX(p_reactorJson.get(JSON_OFFSETX, 0).asInt());
+	this->mOffsetXWithRotate = this->mOffsetX;
 	this->setOffsetY(p_reactorJson.get(JSON_OFFSETY, 0).asInt());
+	this->mOffsetYWithRotate = this->mOffsetY;
 	this->setType((ReactorType)p_reactorJson.get(JSON_TYPE, 0).asInt());
 	this->setSize(p_reactorJson.get(JSON_SIZE, 0).asInt());
+	this->computeReactorDustTick();
 
-	if(this->getSize() > 0)
-	{
-		this->mReactor = new sf::Sprite(*Resource::resource->getTexture(REACTOR_SPRITE));
-		ToolsImage::setSpriteOriginCenter(this->mReactor);
-		ToolsImage::resizeSprite(this->mReactor, this->getSize(), this->getSize());
-	}
+	this->mReactor = new sf::Sprite(*Resource::resource->getTexture(REACTOR_SPRITE));
+	ToolsImage::setSpriteOriginCenter(this->mReactor);
+	ToolsImage::resizeSprite(this->mReactor, this->getSize(), this->getSize());
 }
 
 Reactor::~Reactor(void)
@@ -120,6 +124,7 @@ void Reactor::update()
 		this->updateActive();
 		this->updateReactorAlpha();
 		this->updatePosition();
+		this->updateReactorDust();
 	}
 }
 
@@ -131,7 +136,9 @@ void Reactor::updatePosition()
 		reactorOffset.x = this->getOffsetX();
 		reactorOffset.y = this->getOffsetY();
 		reactorOffset = Tools::rotatePoint(reactorOffset, this->getEntityMovable()->getRotation());
-		this->mReactor->setPosition(this->getEntityMovable()->getScreenX() + reactorOffset.x, this->getEntityMovable()->getScreenY() + this->getEntityMovable()->getRocking() + reactorOffset.y);
+		this->mOffsetXWithRotate = reactorOffset.x;
+		this->mOffsetYWithRotate = reactorOffset.y;
+		this->mReactor->setPosition(this->getEntityMovable()->getScreenX() + this->mOffsetXWithRotate, this->getEntityMovable()->getScreenY() + this->getEntityMovable()->getRocking() + this->mOffsetYWithRotate);
 		this->mReactor->setRotation(this->getEntityMovable()->getRotation());
 	}
 }
@@ -166,6 +173,23 @@ void Reactor::updateReactorAlpha()
 	this->mReactor->setColor(sf::Color(255, 255, 255, this->mReactorAlpha));
 }
 
+void Reactor::updateReactorDust()
+{
+	if(	this->getEntityMovable()->isQuickeningActiveAt(Movable::MovableCardinality::NorthEast) ||
+		this->getEntityMovable()->isQuickeningActiveAt(Movable::MovableCardinality::North) ||
+		this->getEntityMovable()->isQuickeningActiveAt(Movable::MovableCardinality::NorthWest))
+	{
+		if(this->mReactorDustClock.getElapsedTimeAsMilliseconds() > this->mReactorDustTick)
+		{
+			double mDustX = this->getEntityMovable()->Object::getX() + this->mOffsetXWithRotate;
+			double mDustY = this->getEntityMovable()->Object::getY() + this->getEntityMovable()->getRocking() + this->mOffsetYWithRotate;
+			AutoManager::add(new ReactorDustEffect(mDustX, mDustY, this->getSize()));
+			this->computeReactorDustTick();
+			this->mReactorDustClock.restart();
+		}
+	}
+}
+
 void Reactor::draw()
 {
 	if(this->getEntityMovable()->isVisible())
@@ -173,4 +197,9 @@ void Reactor::draw()
 		if(this->mReactor != NULL)
 			Resource::resource->getApp()->draw(*this->mReactor);
 	}
+}
+
+void Reactor::computeReactorDustTick()
+{
+	this->mReactorDustTick = Tools::random(REACTORDUST_TICK_MIN, REACTORDUST_TICK_MAX);
 }

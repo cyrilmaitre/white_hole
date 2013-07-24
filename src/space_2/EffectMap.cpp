@@ -21,3 +21,8 @@ void EffectMap::update()
 {
 	MapObject::update();
 }
+
+void EffectMap::draw()
+{
+	MapObject::draw();
+}

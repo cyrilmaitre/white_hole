@@ -10,11 +10,8 @@ ExplosionEffect::ExplosionEffect(Entity* p_entity)
 	this->mExplosionGif = NULL;
 	this->mLiveTime = 0;
 
-	this->setX(p_entity->Object::getX());
-	this->setY(p_entity->Object::getY());
-	this->setWidth(p_entity->Object::getWidth());
-	this->setHeight(p_entity->Object::getHeight());
-
+	this->setPosition(p_entity->Object::getX(), p_entity->Object::getY());
+	this->setSize(p_entity->Object::getWidth(), p_entity->Object::getHeight());
 	this->configureExplosion(p_entity);
 }
 
@@ -44,8 +41,7 @@ void ExplosionEffect::updatePosition()
 	{
 		if(this->mExplosionGif != NULL)
 		{
-			this->mExplosionGif->setX(this->getScreenX());
-			this->mExplosionGif->setY(this->getScreenY());
+			this->mExplosionGif->setPosition(this->getScreenX(), this->getScreenY());
 		}
 	}
 }
