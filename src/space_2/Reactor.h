@@ -1,5 +1,6 @@
 #pragma once
 #include "Resource.h"
+#include "Clock.h"
 
 class EntityMovable;
 
@@ -34,10 +35,13 @@ public:
 	void setSize(int p_size);
 
 	bool isActive();
+	void setActve(bool p_active);
 
 	// Methods
 	void update();
 	void updatePosition();
+	void updateActive();
+	void updateReactorAlpha();
 	void draw();
 
 
@@ -48,6 +52,11 @@ private:
 	float mOffsetX;
 	float mOffsetY;
 	int mSize;
+	bool mActive;
 	sf::Sprite *mReactor;
+	float mReactorAlpha;
+	float mReactorAlphaSpeed;
+
+	mks::Clock mReactorClock;
 };
 

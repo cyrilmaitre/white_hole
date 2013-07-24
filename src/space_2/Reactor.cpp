@@ -6,11 +6,12 @@
 //*************************************************************
 // Define
 //*************************************************************
-#define JSON_OFFSETX		"x"
-#define JSON_OFFSETY		"y"
-#define JSON_TYPE			"type"
-#define JSON_SIZE			"size"
-#define REACTOR_SPRITE		"reactor_wisp.png"
+#define JSON_OFFSETX				"x"
+#define JSON_OFFSETY				"y"
+#define JSON_TYPE					"type"
+#define JSON_SIZE					"size"
+#define JSON_REACTORALPHASPEED		"reactoralphaspeed"
+#define REACTOR_SPRITE				"reactor_wisp.png"
 
 
 //*************************************************************
@@ -20,6 +21,9 @@ Reactor::Reactor( EntityMovable* p_entity, Json::Value p_reactorJson )
 {
 	this->mEntityMovable = NULL;
 	this->mReactor = NULL;
+	this->mActive = false;
+	this->mReactorAlpha = 0;
+	this->mReactorAlphaSpeed = p_reactorJson.get(JSON_REACTORALPHASPEED, 0).asFloat();
 
 	this->setEntityMovable(p_entity);
 	this->setOffsetX(p_reactorJson.get(JSON_OFFSETX, 0).asInt());
@@ -97,18 +101,12 @@ void Reactor::setSize( int p_size )
 
 bool Reactor::isActive()
 {
-	if(	this->getEntityMovable()->isQuickeningActiveAt(Movable::MovableCardinality::NorthEast) ||
-		this->getEntityMovable()->isQuickeningActiveAt(Movable::MovableCardinality::North) ||
-		this->getEntityMovable()->isQuickeningActiveAt(Movable::MovableCardinality::NorthWest) ||
-		this->getEntityMovable()->isQuickeningActiveAt(Movable::MovableCardinality::SouthEast) ||
-		this->getEntityMovable()->isQuickeningActiveAt(Movable::MovableCardinality::South) ||
-		this->getEntityMovable()->isQuickeningActiveAt(Movable::MovableCardinality::SouthWest))
-		return true;
+	return this->mActive;
+}
 
-	if(this->getType() == ReactorType::Right)
-		return	this->getEntityMovable()->isQuickeningActiveAt(Movable::MovableCardinality::West);
-	else
-		return	this->getEntityMovable()->isQuickeningActiveAt(Movable::MovableCardinality::East);
+void Reactor::setActve( bool p_active )
+{
+	this->mActive = p_active;
 }
 
 
@@ -118,12 +116,16 @@ bool Reactor::isActive()
 void Reactor::update()
 {
 	if(this->getEntityMovable()->isVisible())
+	{
+		this->updateActive();
+		this->updateReactorAlpha();
 		this->updatePosition();
+	}
 }
 
 void Reactor::updatePosition()
 {
-	if(this->mReactor != NULL && this->isActive())
+	if(this->mReactor != NULL)
 	{
 		sf::Vector2f reactorOffset;
 		reactorOffset.x = this->getOffsetX();
@@ -134,12 +136,41 @@ void Reactor::updatePosition()
 	}
 }
 
+void Reactor::updateActive()
+{
+	if(	this->getEntityMovable()->isQuickeningActiveAt(Movable::MovableCardinality::NorthEast) ||
+		this->getEntityMovable()->isQuickeningActiveAt(Movable::MovableCardinality::North) ||
+		this->getEntityMovable()->isQuickeningActiveAt(Movable::MovableCardinality::NorthWest) ||
+		this->getEntityMovable()->isQuickeningActiveAt(Movable::MovableCardinality::SouthEast) ||
+		this->getEntityMovable()->isQuickeningActiveAt(Movable::MovableCardinality::South) ||
+		this->getEntityMovable()->isQuickeningActiveAt(Movable::MovableCardinality::SouthWest))
+		this->mActive = true;
+	else if(this->getType() == ReactorType::Right)
+		this->mActive =	this->getEntityMovable()->isQuickeningActiveAt(Movable::MovableCardinality::West);
+	else
+		this->mActive =	this->getEntityMovable()->isQuickeningActiveAt(Movable::MovableCardinality::East);
+}
+
+void Reactor::updateReactorAlpha()
+{
+	if(this->isActive())
+		this->mReactorAlpha += this->mReactorClock.getElapsedTimeAsSeconds() * this->mReactorAlphaSpeed;
+	else
+		this->mReactorAlpha -= this->mReactorClock.getElapsedTimeAsSeconds() * this->mReactorAlphaSpeed;
+	this->mReactorClock.restart();
+	if(this->mReactorAlpha < 0)
+		this->mReactorAlpha = 0;
+	else if(this->mReactorAlpha > 255)
+		this->mReactorAlpha = 255;
+
+	this->mReactor->setColor(sf::Color(255, 255, 255, this->mReactorAlpha));
+}
+
 void Reactor::draw()
 {
 	if(this->getEntityMovable()->isVisible())
 	{
-		if(this->mReactor != NULL && this->isActive())
+		if(this->mReactor != NULL)
 			Resource::resource->getApp()->draw(*this->mReactor);
 	}
 }
-
