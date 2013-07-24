@@ -26,4 +26,4 @@ weapon_slot = 4
 upgrade_slot = 2
 stuff_slot = 2
 rotation_velocity = 180
-reactors = [{"x":-13,"y":20,"type":0,"size":20},{"x":12,"y":20,"type":1,"size":20}]
+reactors = [{"x":-14,"y":22,"type":0,"size":20},{"x":14,"y":22,"type":1,"size":20}]

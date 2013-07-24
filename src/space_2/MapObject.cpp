@@ -61,7 +61,7 @@ double MapObject::getSectorX()
 	return positionXSector;
 }
 
-int MapObject::getScreenX()
+float MapObject::getScreenX()
 {
 	return this->mScreenPosition.x;
 }
@@ -85,7 +85,7 @@ double MapObject::getSectorY()
 	return positionYSector;
 }
 
-int MapObject::getScreenY()
+float MapObject::getScreenY()
 {
 	return this->mScreenPosition.y;
 }

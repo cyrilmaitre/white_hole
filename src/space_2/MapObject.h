@@ -124,11 +124,11 @@ public:
 	double getX(int plane);
 	double getSectorX();
 	double getCenterX(int plane);
-	int getScreenX();
+	float getScreenX();
 	double getY(int plane);
 	double getSectorY();
 	double getCenterY(int plane);
-	int getScreenY();
+	float getScreenY();
 
 	void setWidth(int p_witdh);
 	void setHeight(int p_height);
