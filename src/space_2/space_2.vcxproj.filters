@@ -1047,6 +1047,9 @@
     <ClCompile Include="FlashingLightEffect.cpp">
       <Filter>Fichiers sources\game\mapObject\entity\effect</Filter>
     </ClCompile>
+    <ClCompile Include="RadarEffect.cpp">
+      <Filter>Fichiers sources\game\mapObject\entity\effect</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h">
@@ -1779,6 +1782,9 @@
       <Filter>Fichiers d%27en-tête\game\mapObject\entity\effect</Filter>
     </ClInclude>
     <ClInclude Include="FlashingLightEffect.h">
+      <Filter>Fichiers d%27en-tête\game\mapObject\entity\effect</Filter>
+    </ClInclude>
+    <ClInclude Include="RadarEffect.h">
       <Filter>Fichiers d%27en-tête\game\mapObject\entity\effect</Filter>
     </ClInclude>
   </ItemGroup>

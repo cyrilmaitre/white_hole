@@ -127,6 +127,7 @@
     <ClCompile Include="ProjectileBullet.cpp" />
     <ClCompile Include="ProjectileLaserBall.cpp" />
     <ClCompile Include="ProjectileManager.cpp" />
+    <ClCompile Include="RadarEffect.cpp" />
     <ClCompile Include="ReactorEffect.cpp" />
     <ClCompile Include="ReactorDustEffect.cpp" />
     <ClCompile Include="ResourceConfig.cpp" />
@@ -371,6 +372,7 @@
     <ClInclude Include="ProjectileBullet.h" />
     <ClInclude Include="ProjectileLaserBall.h" />
     <ClInclude Include="ProjectileManager.h" />
+    <ClInclude Include="RadarEffect.h" />
     <ClInclude Include="ReactorEffect.h" />
     <ClInclude Include="ReactorDustEffect.h" />
     <ClInclude Include="ResourceConfig.h" />
