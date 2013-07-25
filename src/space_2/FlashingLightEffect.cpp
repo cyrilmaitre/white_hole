@@ -15,7 +15,7 @@
 #define IMG_LIGHT_GREY				"light_grey.png"
 #define IMG_LIGHT_PURPLE			"light_purple.png"
 #define IMG_LIGHT_RED				"light_red.png"
-#define FLASH_SIZE_PERCENT			0.25
+#define FLASH_SIZE_PERCENT			0.35
 #define FLASH_TIME					50 //ms
 
 
