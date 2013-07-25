@@ -5,13 +5,21 @@
 
 cDAT::cDAT (void)
 {
-	m_buffer = NULL;
+
 }
 
 cDAT::~cDAT (void)
 {
-	if (m_buffer!=NULL)
-	delete (m_buffer);
+	if(m_buffers.size() > 0)
+	{
+		typedef std::map<std::string, char*>::iterator it_type;
+		for(it_type iterator = m_buffers.begin(); iterator != m_buffers.end(); iterator++) {
+			if(iterator->second != NULL) {
+				delete iterator->second;
+				iterator->second = NULL;
+			}
+		}
+	}
 }
 
 bool cDAT::Create (std::vector<std::string> files, std::string destination, bool withoutDirname)
@@ -156,7 +164,7 @@ char* cDAT::GetFile (std::string filename)
 	// FIX pb_fonts (un peu moche) du problème de chargement des fonts
 	// car le pointeur était delete. or, SFML doit pouvoir accéder au pointeur n'importe quand
 	// (pour les fonts et music. Pas pour les images)
-	char* m_buffer;
+	m_buffers[filename] = NULL;
 
 	//Cleaning properly an ancient file loaded
 	// FIX pb_fonts
@@ -175,9 +183,9 @@ char* cDAT::GetFile (std::string filename)
 		if (m_entries[i].name == filename)
 		{
 			//We are allocating memory to the buffer
-			m_buffer = new char[(m_entries[i].size)];
+			m_buffers[filename] = new char[(m_entries[i].size)];
 			//Simple error catch
-			if (m_buffer==NULL)
+			if (m_buffers[filename]==NULL)
 				return (NULL);
 			//Opening the DAT file ot read the file datas needed
 			datfile.open (m_datfile.c_str(), std::ifstream::in | std::ifstream::binary);
@@ -186,11 +194,11 @@ char* cDAT::GetFile (std::string filename)
 				//Going to the right position
 				datfile.seekg (m_entries[i].offset, std::ios::beg);
 				//Reading
-				datfile.read (m_buffer, m_entries[i].size);
+				datfile.read (m_buffers[filename], m_entries[i].size);
 				//We can close the DAT file
 				datfile.close();
 				//Returning the buffer
-				return (m_buffer);
+				return (m_buffers[filename]);
 			}
 		}
 	}

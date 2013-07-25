@@ -20,3 +20,9 @@
 /space_2.write.1.tlog
 /vc100.idb
 /vc100.pdb
+/*.obj
+/*.log
+/*.tlog
+/*.manifest
+/*.rc
+/*.res

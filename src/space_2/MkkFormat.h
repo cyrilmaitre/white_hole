@@ -2,6 +2,7 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <map>
 
 #define DAT_HEADER_ID "MKKSDAT"
 #define DAT_HEADER_ID_L 7			// length of header ID
@@ -30,7 +31,7 @@ class cDAT
 		std::string m_datfile; /// name of the DAT file
 		sDATHeader m_header; /// file header
 		std::vector<sFileEntry> m_entries; /// vector of files entries
-		char* m_buffer; /// Buffer pointing on a file in memory
+		std::map<std::string, char*> m_buffers;
 	public :
 		cDAT (void);
 		~cDAT (void);
