@@ -12,10 +12,11 @@
 //*************************************************************
 // Constructor - Destructor
 //*************************************************************
-ReactorDustEffect::ReactorDustEffect( double p_x, double p_y, float p_size )
+ReactorDustEffect::ReactorDustEffect( double p_x, double p_y, float p_size, float p_alpha )
 {
 	this->setPosition(p_x, p_y);
 	this->mSize = p_size;
+	this->mAlpha = p_alpha;
 	this->setVisible(true);
 	this->setLiveTime(REACTORDUST_LIVETIME);
 }
@@ -47,6 +48,7 @@ void ReactorDustEffect::loadSprite()
 	this->mObjectSprite = new sf::Sprite(*Resource::resource->getTexture(REACTORDUST_SPRITE));
 	ToolsImage::setSpriteOriginCenter(this->mObjectSprite);
 	ToolsImage::resizeSprite(this->mObjectSprite, this->mSize, this->mSize);
+	this->mObjectSprite->setColor(sf::Color(255, 255, 255, this->mAlpha));
 	this->updateSprite();
 }
 

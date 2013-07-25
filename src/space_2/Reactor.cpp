@@ -183,7 +183,7 @@ void Reactor::updateReactorDust()
 		{
 			double mDustX = this->getEntityMovable()->Object::getX() + this->mOffsetXWithRotate;
 			double mDustY = this->getEntityMovable()->Object::getY() + this->getEntityMovable()->getRocking() + this->mOffsetYWithRotate;
-			AutoManager::add(new ReactorDustEffect(mDustX, mDustY, this->getSize()));
+			AutoManager::add(new ReactorDustEffect(mDustX, mDustY, this->getSize(), this->mReactorAlpha));
 			this->computeReactorDustTick();
 			this->mReactorDustClock.restart();
 		}
