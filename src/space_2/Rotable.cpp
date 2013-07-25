@@ -1,13 +1,14 @@
 #include "Rotable.h"
+#include "Tools.h"
 
 
 //*************************************************************
 // Constructor - Destructor
 //*************************************************************
-Rotable::Rotable( MapObject* p_object )
+Rotable::Rotable()
 {
-	this->mMapObject = p_object;
-	this->mRotationTarget = this->mMapObject->getRotation();
+	this->mRotation = 0;
+	this->mRotationTarget = this->mRotation;
 }
 
 Rotable::~Rotable(void)
@@ -18,6 +19,25 @@ Rotable::~Rotable(void)
 //*************************************************************
 // Getters - Setters
 //*************************************************************
+float Rotable::getRotation()
+{
+	return this->mRotation;
+}
+
+void Rotable::setRotation( float p_rotation )
+{
+	if(p_rotation > 360)
+		p_rotation -= 360;
+	else if(p_rotation < 0)
+		p_rotation = 360 - Tools::getAbsolute(p_rotation);
+
+	if(this->mRotation != p_rotation)
+	{
+		this->mRotation = p_rotation;
+		this->notifyRotationChanged();
+	}
+}
+
 float Rotable::getRotationTarget()
 {
 	return this->mRotationTarget;
@@ -39,30 +59,33 @@ void Rotable::update()
 
 void Rotable::updateRotation()
 {
-	if(this->mMapObject != NULL)
+	if(this->getRotationTarget() != this->getRotation())
 	{
-		if(this->getRotationTarget() != this->mMapObject->getRotation())
+		if(this->isRotationVelocityInstant())
 		{
-			if(this->isRotationVelocityInstant())
-			{
-				this->mMapObject->setRotation(this->getRotationTarget());
-			}
+			this->setRotation(this->getRotationTarget());
+		}
+		else
+		{
+			float targetDiff = this->getRotationTarget() - this->getRotation();
+			bool up = targetDiff < -180 || (targetDiff > 0 && targetDiff < 180);
+			float newRotation = 0;
+
+			if(up)
+				newRotation = this->getRotation() + this->mRotationClock.getElapsedTimeAsSeconds() * this->getRotationVelocity();
 			else
-			{
-				float targetDiff = this->getRotationTarget() - this->mMapObject->getRotation();
-				bool up = targetDiff < -180 || (targetDiff > 0 && targetDiff < 180);
-				float newRotation = 0;
+				newRotation = this->getRotation() - this->mRotationClock.getElapsedTimeAsSeconds() * this->getRotationVelocity();
 
-				if(up)
-					newRotation = this->mMapObject->getRotation() + this->mRotationClock.getElapsedTimeAsSeconds() * this->getRotationVelocity();
-				else
-					newRotation = this->mMapObject->getRotation() - this->mRotationClock.getElapsedTimeAsSeconds() * this->getRotationVelocity();
-
-				if(Tools::isBetween(this->getRotationTarget(), this->mMapObject->getRotation(), newRotation))
-					newRotation = this->getRotationTarget();
-				this->mMapObject->setRotation(newRotation);
-				this->mRotationClock.restart();
-			}
+			if(Tools::isBetween(this->getRotationTarget(), this->getRotation(), newRotation))
+				newRotation = this->getRotationTarget();
+			this->setRotation(newRotation);
+			this->mRotationClock.restart();
 		}
 	}
 }
+
+void Rotable::notifyRotationChanged()
+{
+
+}
+

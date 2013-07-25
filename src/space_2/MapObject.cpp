@@ -240,25 +240,6 @@ void MapObject::setSector( Sector* p_sector )
 	this->mSector = p_sector;
 }
 
-float MapObject::getRotation()
-{
-	return this->mRotation;
-}
-
-void MapObject::setRotation( float p_rotation )
-{
-	if(p_rotation > 360)
-		p_rotation -= 360;
-	else if(p_rotation < 0)
-		p_rotation = 360 - Tools::getAbsolute(p_rotation);
-
-	if(this->mRotation != p_rotation)
-	{
-		this->mRotation = p_rotation;
-		this->notifyRotationChanged();
-	}
-}
-
 float MapObject::getScale()
 {
 	return this->mScale;
@@ -415,11 +396,6 @@ void MapObject::notifySizeChanged()
 {
 	Selectable::notifySizeChanged();
 	this->updateHitBox();
-}
-
-void MapObject::notifyRotationChanged()
-{
-
 }
 
 void MapObject::notifyScaleChanged()

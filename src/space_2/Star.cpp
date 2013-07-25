@@ -178,7 +178,7 @@ void Star::loadSprite()
 		this->mObjectSprite = new sf::Sprite;
 		this->mObjectSprite->setTexture(*Resource::resource->getTexture(this->getStarModel()->getSprite()));
 		ToolsImage::setSpriteOriginCenter(this->mObjectSprite);
-		this->mObjectSprite->setRotation(this->mRotation);
+		this->mObjectSprite->setRotation(this->getRotation());
 		this->mObjectSprite->setScale(this->mScale, this->mScale);
 		this->mObjectSprite->setColor(STAR_COLOR);
 	}

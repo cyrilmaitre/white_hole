@@ -19,7 +19,7 @@
 //*************************************************************
 // Constructreur - Destructeur
 //*************************************************************
-Entity::Entity( int p_plane ) : MapObject(p_plane), Rotable(this)
+Entity::Entity( int p_plane ) : MapObject(p_plane)
 {
 	this->mShieldSprite = NULL;
 	this->mTBDistance.setFontColor(ENTITY_DISTANCE_FONT_COLOR);

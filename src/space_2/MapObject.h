@@ -6,7 +6,7 @@
 #include "IdGenerator.h"
 #include "TextBox.h"
 #include "Clock.h"
-
+#include "Rotable.h"
 
 
 // Define
@@ -80,7 +80,7 @@
 
 class Sector;
 
-class MapObject: public Selectable
+class MapObject: public Selectable, public Rotable
 {
 public:
 	// Enum
@@ -157,9 +157,6 @@ public:
 	Sector* getSector();
 	void setSector(Sector* p_sector);
 
-	float getRotation();
-	void setRotation(float p_rotation);
-
 	float getScale();
 	void setScale(float p_scale);
 
@@ -180,7 +177,6 @@ public:
 	void notifyVisibleChanged();
 	void notifyScreenPositionChanged();
 	void notifySizeChanged();
-	virtual void notifyRotationChanged();
 	virtual void notifyScaleChanged();
 
 	void activateSelectable();
@@ -215,7 +211,6 @@ protected:
 	// Attributs
 	long mId;
 	int mPlane;
-	float mRotation;
 	float mScale;
 	sf::FloatRect mHitBox;							// On screen
 	MapObjectType mObjectType;

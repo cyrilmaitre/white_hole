@@ -4,7 +4,6 @@
 #include "Rockable.h"
 #include "Equipable.h"
 #include "EntityTarget.h"
-#include "Rotable.h"
 #include "EntityData.h"
 #include "FlashingLightEffect.h"
 
@@ -17,7 +16,7 @@
 #define ENTITY_DISTANCE_FONT_COLOR			sf::Color(225, 225, 225, 125)
 #define ENTITY_DISTANCE_FONT_SIZE			12
 
-class Entity: public MapObject, public Destructable, public Rockable, public Equipable, public Rotable, public EntityData
+class Entity: public MapObject, public Destructable, public Rockable, public Equipable, public EntityData
 {
 public:
 	// Constructor - Destructor
