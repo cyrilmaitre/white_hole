@@ -1,4 +1,4 @@
-#include "Reactor.h"
+#include "ReactorEffect.h"
 #include "ToolsImage.h"
 #include "EntityMovable.h"
 #include "AutoManager.h"
@@ -21,7 +21,7 @@
 //*************************************************************
 // Constructreur - Destructeur
 //*************************************************************
-Reactor::Reactor( EntityMovable* p_entity, Json::Value p_reactorJson ) : EntityMovableEffect(p_entity)
+ReactorEffect::ReactorEffect( EntityMovable* p_entity, Json::Value p_reactorJson ) : EntityMovableEffect(p_entity)
 {
 	this->mReactor = NULL;
 	this->mActive = false;
@@ -32,7 +32,7 @@ Reactor::Reactor( EntityMovable* p_entity, Json::Value p_reactorJson ) : EntityM
 	this->setOffsetY(p_reactorJson.get(JSON_OFFSETY, 0).asInt());
 	this->updateOffsetRotate();
 	this->setSize(p_reactorJson.get(JSON_SIZE, 0).asInt());
-	this->setType((ReactorType)p_reactorJson.get(JSON_TYPE, 0).asInt());
+	this->setType((ReactorEffectType)p_reactorJson.get(JSON_TYPE, 0).asInt());
 	this->computeReactorDustTick();
 
 	this->mReactor = new sf::Sprite(*Resource::resource->getTexture(REACTOR_SPRITE));
@@ -40,7 +40,7 @@ Reactor::Reactor( EntityMovable* p_entity, Json::Value p_reactorJson ) : EntityM
 	ToolsImage::resizeSprite(this->mReactor, this->getSize(), this->getSize());
 }
 
-Reactor::~Reactor(void)
+ReactorEffect::~ReactorEffect(void)
 {
 	if(this->mReactor != NULL)
 		delete this->mReactor;
@@ -50,22 +50,22 @@ Reactor::~Reactor(void)
 //*************************************************************
 // Getters - Setters
 //*************************************************************
-Reactor::ReactorType Reactor::getType()
+ReactorEffect::ReactorEffectType ReactorEffect::getType()
 {
 	return this->mType;
 }
 
-void Reactor::setType( ReactorType p_type )
+void ReactorEffect::setType( ReactorEffectType p_type )
 {
 	this->mType = p_type;
 }
 
-bool Reactor::isActive()
+bool ReactorEffect::isActive()
 {
 	return this->mActive;
 }
 
-void Reactor::setActve( bool p_active )
+void ReactorEffect::setActve( bool p_active )
 {
 	this->mActive = p_active;
 }
@@ -74,7 +74,7 @@ void Reactor::setActve( bool p_active )
 //*************************************************************
 // Methods
 //*************************************************************
-void Reactor::update()
+void ReactorEffect::update()
 {
 	EntityMovableEffect::update();
 	if(this->getEntityMovable()->isVisible())
@@ -86,7 +86,7 @@ void Reactor::update()
 	}
 }
 
-void Reactor::updatePosition()
+void ReactorEffect::updatePosition()
 {
 	if(this->mReactor != NULL)
 	{
@@ -95,7 +95,7 @@ void Reactor::updatePosition()
 	}
 }
 
-void Reactor::updateActive()
+void ReactorEffect::updateActive()
 {
 	if(	this->getEntityMovable()->isQuickeningActiveAt(Movable::MovableCardinality::NorthEast) ||
 		this->getEntityMovable()->isQuickeningActiveAt(Movable::MovableCardinality::North) ||
@@ -104,13 +104,13 @@ void Reactor::updateActive()
 		this->getEntityMovable()->isQuickeningActiveAt(Movable::MovableCardinality::South) ||
 		this->getEntityMovable()->isQuickeningActiveAt(Movable::MovableCardinality::SouthWest))
 		this->mActive = true;
-	else if(this->getType() == ReactorType::Right)
+	else if(this->getType() == ReactorEffectType::Right)
 		this->mActive =	this->getEntityMovable()->isQuickeningActiveAt(Movable::MovableCardinality::West);
 	else
 		this->mActive =	this->getEntityMovable()->isQuickeningActiveAt(Movable::MovableCardinality::East);
 }
 
-void Reactor::updateReactorAlpha()
+void ReactorEffect::updateReactorAlpha()
 {
 	if(this->isActive())
 		this->mReactorAlpha += this->mReactorClock.getElapsedTimeAsSeconds() * this->mReactorAlphaSpeed;
@@ -125,7 +125,7 @@ void Reactor::updateReactorAlpha()
 	this->mReactor->setColor(sf::Color(255, 255, 255, this->mReactorAlpha));
 }
 
-void Reactor::updateReactorDust()
+void ReactorEffect::updateReactorDust()
 {
 	if(	this->getEntityMovable()->isQuickeningActiveAt(Movable::MovableCardinality::NorthEast) ||
 		this->getEntityMovable()->isQuickeningActiveAt(Movable::MovableCardinality::North) ||
@@ -142,7 +142,7 @@ void Reactor::updateReactorDust()
 	}
 }
 
-void Reactor::draw()
+void ReactorEffect::draw()
 {
 	EntityMovableEffect::draw();
 	if(this->getEntityMovable()->isVisible())
@@ -152,7 +152,7 @@ void Reactor::draw()
 	}
 }
 
-void Reactor::computeReactorDustTick()
+void ReactorEffect::computeReactorDustTick()
 {
 	this->mReactorDustTick = Tools::random(REACTORDUST_TICK_MIN, REACTORDUST_TICK_MAX);
 }

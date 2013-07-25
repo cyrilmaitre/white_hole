@@ -5,7 +5,7 @@
 #include "Game.h"
 #include "AutoManager.h"
 #include "ExplosionEffect.h"
-#include "FlashingLight.h"
+#include "FlashingLightEffect.h"
 
 
 //*************************************************************
@@ -150,7 +150,7 @@ void Entity::notifyFlashingLightJsonChanged()
 		{
 			Json::Value currentJson = jsonFlashingLight.get(i, NULL);
 			if(currentJson != NULL)
-				this->mFlashingLights.push_back(new FlashingLight(this, currentJson));
+				this->mFlashingLights.push_back(new FlashingLightEffect(this, currentJson));
 		}
 	}
 }

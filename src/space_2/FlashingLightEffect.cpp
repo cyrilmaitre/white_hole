@@ -1,4 +1,4 @@
-#include "FlashingLight.h"
+#include "FlashingLightEffect.h"
 #include "ToolsImage.h"
 #include "Tools.h"
 
@@ -25,7 +25,7 @@
 //*************************************************************
 // Constructreur - Destructeur
 //*************************************************************
-FlashingLight::FlashingLight( Entity* p_entity, Json::Value p_lightJson ) : EntityEffect(p_entity)
+FlashingLightEffect::FlashingLightEffect( Entity* p_entity, Json::Value p_lightJson ) : EntityEffect(p_entity)
 {
 	this->setOffsetX(p_lightJson.get(JSON_OFFSETX, 0).asInt());
 	this->setOffsetY(p_lightJson.get(JSON_OFFSETY, 0).asInt());
@@ -47,7 +47,7 @@ FlashingLight::FlashingLight( Entity* p_entity, Json::Value p_lightJson ) : Enti
 	ToolsImage::resizeSprite(&this->mFlashSprite, this->getSize() * FLASH_SIZE_PERCENT, this->getSize() * FLASH_SIZE_PERCENT);
 }
 
-FlashingLight::~FlashingLight(void)
+FlashingLightEffect::~FlashingLightEffect(void)
 {
 }
 
@@ -55,7 +55,7 @@ FlashingLight::~FlashingLight(void)
 //*************************************************************
 // Getters - Setters
 //*************************************************************
-std::string FlashingLight::getLightSprite()
+std::string FlashingLightEffect::getLightSprite()
 {
 	switch(this->mLightColor)
 	{
@@ -85,7 +85,7 @@ std::string FlashingLight::getLightSprite()
 //*************************************************************
 // Methods
 //*************************************************************
-void FlashingLight::update()
+void FlashingLightEffect::update()
 {
 	EntityEffect::update();
 	if(this->getEntity()->isVisible())
@@ -95,7 +95,7 @@ void FlashingLight::update()
 	}
 }
 
-void FlashingLight::updatePosition()
+void FlashingLightEffect::updatePosition()
 {
 	this->mLightSprite.setPosition(	this->getEntity()->getScreenX() + this->getOffsetXRotate(), 
 									this->getEntity()->getScreenY() + this->getEntity()->getRocking() + this->getOffsetYRotate());
@@ -104,7 +104,7 @@ void FlashingLight::updatePosition()
 									this->getEntity()->getScreenY() + this->getEntity()->getRocking() + this->getOffsetYRotate());
 }
 
-void FlashingLight::updateFlash()
+void FlashingLightEffect::updateFlash()
 {
 	if(this->mFlashClock.getElapsedTimeAsMilliseconds() > this->mFlashTick)
 	{
@@ -118,7 +118,7 @@ void FlashingLight::updateFlash()
 	}
 }
 
-void FlashingLight::draw()
+void FlashingLightEffect::draw()
 {
 	EntityEffect::draw();
 	if(this->getEntity()->isVisible())
@@ -129,7 +129,7 @@ void FlashingLight::draw()
 	}
 }
 
-void FlashingLight::computeFlashTick()
+void FlashingLightEffect::computeFlashTick()
 {
 	this->mFlashTick = Tools::random(this->mFlashTickMin, this->mFlashTickMax);
 }

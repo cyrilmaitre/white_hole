@@ -2,7 +2,7 @@
 #include "Entity.h"
 #include "Movable.h"
 #include "EntityMovableData.h"
-#include "Reactor.h"
+#include "ReactorEffect.h"
 
 // Define
 #define TARGET_DISTANCE_MAX_DEFAULT		50
@@ -60,6 +60,6 @@ protected:
 	double mSourceY;
 	double mTargetGenRange;
 
-	std::vector<Reactor*> mReactors;
+	std::vector<ReactorEffect*> mReactors;
 };
 

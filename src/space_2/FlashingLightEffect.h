@@ -3,7 +3,7 @@
 #include "Clock.h"
 
 
-class FlashingLight : public EntityEffect
+class FlashingLightEffect : public EntityEffect
 {
 public:
 	// Enum
@@ -17,8 +17,8 @@ public:
 	};
 
 	// Constructor - Destructor
-	FlashingLight(Entity* p_entity, Json::Value p_lightJson);
-	~FlashingLight(void);
+	FlashingLightEffect(Entity* p_entity, Json::Value p_lightJson);
+	~FlashingLightEffect(void);
 
 	// Getters - Setters
 	std::string getLightSprite();

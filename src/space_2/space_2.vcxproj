@@ -105,7 +105,7 @@
     <ClCompile Include="EntityMovableEffect.cpp" />
     <ClCompile Include="EntityTarget.cpp" />
     <ClCompile Include="ExperienceBar.cpp" />
-    <ClCompile Include="FlashingLight.cpp" />
+    <ClCompile Include="FlashingLightEffect.cpp" />
     <ClCompile Include="IdValueDouble.cpp" />
     <ClCompile Include="IdValueFloat.cpp" />
     <ClCompile Include="IdValueInt.cpp" />
@@ -127,7 +127,7 @@
     <ClCompile Include="ProjectileBullet.cpp" />
     <ClCompile Include="ProjectileLaserBall.cpp" />
     <ClCompile Include="ProjectileManager.cpp" />
-    <ClCompile Include="Reactor.cpp" />
+    <ClCompile Include="ReactorEffect.cpp" />
     <ClCompile Include="ReactorDustEffect.cpp" />
     <ClCompile Include="ResourceConfig.cpp" />
     <ClCompile Include="Rotable.cpp" />
@@ -346,7 +346,7 @@
     <ClInclude Include="EntityMovableEffect.h" />
     <ClInclude Include="EntityTarget.h" />
     <ClInclude Include="ExperienceBar.h" />
-    <ClInclude Include="FlashingLight.h" />
+    <ClInclude Include="FlashingLightEffect.h" />
     <ClInclude Include="IdValueDouble.h" />
     <ClInclude Include="IdValueFloat.h" />
     <ClInclude Include="IdValueInt.h" />
@@ -371,7 +371,7 @@
     <ClInclude Include="ProjectileBullet.h" />
     <ClInclude Include="ProjectileLaserBall.h" />
     <ClInclude Include="ProjectileManager.h" />
-    <ClInclude Include="Reactor.h" />
+    <ClInclude Include="ReactorEffect.h" />
     <ClInclude Include="ReactorDustEffect.h" />
     <ClInclude Include="ResourceConfig.h" />
     <ClInclude Include="Rotable.h" />

@@ -294,7 +294,7 @@ void EntityMovable::notifyReactorJsonChanged()
 		{
 			Json::Value currentJson = jsonReactors.get(i, NULL);
 			if(currentJson != NULL)
-				this->mReactors.push_back(new Reactor(this, currentJson));
+				this->mReactors.push_back(new ReactorEffect(this, currentJson));
 		}
 	}
 }

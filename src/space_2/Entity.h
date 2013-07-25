@@ -6,7 +6,7 @@
 #include "EntityTarget.h"
 #include "Rotable.h"
 #include "EntityData.h"
-#include "FlashingLight.h"
+#include "FlashingLightEffect.h"
 
 // Define
 #define ENTITY_BORDER_FOCUS_SIZE			1
@@ -49,6 +49,6 @@ private:
 	mks::Clock mShieldClock;
 	TextBox mTBDistance;
 
-	std::vector<FlashingLight*> mFlashingLights;
+	std::vector<FlashingLightEffect*> mFlashingLights;
 };
 

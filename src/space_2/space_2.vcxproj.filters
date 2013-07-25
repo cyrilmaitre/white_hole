@@ -1026,9 +1026,6 @@
     <ClCompile Include="ProjectileManager.cpp">
       <Filter>Fichiers sources\game\mapObject\automanaged\projectile</Filter>
     </ClCompile>
-    <ClCompile Include="Reactor.cpp">
-      <Filter>Fichiers sources\game\mapObject\entity\effect</Filter>
-    </ClCompile>
     <ClCompile Include="EntityData.cpp">
       <Filter>Fichiers sources\game\mapObject\entity</Filter>
     </ClCompile>
@@ -1044,7 +1041,10 @@
     <ClCompile Include="EntityMovableEffect.cpp">
       <Filter>Fichiers sources\game\mapObject\entity\effect</Filter>
     </ClCompile>
-    <ClCompile Include="FlashingLight.cpp">
+    <ClCompile Include="ReactorEffect.cpp">
+      <Filter>Fichiers sources\game\mapObject\entity\effect</Filter>
+    </ClCompile>
+    <ClCompile Include="FlashingLightEffect.cpp">
       <Filter>Fichiers sources\game\mapObject\entity\effect</Filter>
     </ClCompile>
   </ItemGroup>
@@ -1760,9 +1760,6 @@
     <ClInclude Include="ProjectileManager.h">
       <Filter>Fichiers d%27en-tête\game\mapObject\automanaged\projectile</Filter>
     </ClInclude>
-    <ClInclude Include="Reactor.h">
-      <Filter>Fichiers d%27en-tête\game\mapObject\entity\effect</Filter>
-    </ClInclude>
     <ClInclude Include="EntityData.h">
       <Filter>Fichiers d%27en-tête\game\mapObject\entity</Filter>
     </ClInclude>
@@ -1778,7 +1775,10 @@
     <ClInclude Include="EntityMovableEffect.h">
       <Filter>Fichiers d%27en-tête\game\mapObject\entity\effect</Filter>
     </ClInclude>
-    <ClInclude Include="FlashingLight.h">
+    <ClInclude Include="ReactorEffect.h">
+      <Filter>Fichiers d%27en-tête\game\mapObject\entity\effect</Filter>
+    </ClInclude>
+    <ClInclude Include="FlashingLightEffect.h">
       <Filter>Fichiers d%27en-tête\game\mapObject\entity\effect</Filter>
     </ClInclude>
   </ItemGroup>
