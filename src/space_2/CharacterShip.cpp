@@ -7,6 +7,7 @@
 #include "Weapon.h"
 #include "Game.h"
 #include "ToolsMap.h"
+#include "ToolsImage.h"
 
 
 //*************************************************************
@@ -27,7 +28,7 @@ CharacterShip::CharacterShip( Json::Value json, Character *p_character ): Ship(0
 
 	this->mArrowObjectSelected = NULL;
 	this->mArrowObjectSelected = SpriteParameterFactory::getSpriteParameterIcon32X32()->getSpritePtr(IC_32X32_ARROW);
-	this->mArrowObjectSelected->setOrigin(this->mArrowObjectSelected->getLocalBounds().width / 2, this->mArrowObjectSelected->getLocalBounds().height / 2);
+	ToolsImage::setSpriteOriginCenter(this->mArrowObjectSelected);
 }
 
 CharacterShip::~CharacterShip(void)
@@ -95,9 +96,7 @@ void CharacterShip::draw()
 void CharacterShip::drawArrowObjectSelected()
 {
 	if(Game::game->getMap()->getMapObjectSelector()->hasObjectSelected() && Game::game->getMap()->getMapObjectSelector()->isObjectSelectedOutOfScreen())
-	{
 		Resource::resource->getApp()->draw(*this->mArrowObjectSelected);
-	}
 }
 
 void CharacterShip::update( sf::Event p_event )
@@ -146,8 +145,8 @@ void CharacterShip::updateSprite()
 	if(Game::game->getMap() != NULL && Game::game->getMap()->getMapObjectSelector()->hasObjectSelected())
 	{
 		float angle = ToolsMap::getAngleAbsolute(this, Game::game->getMap()->getMapObjectSelector()->getSelectedMapObject());
-		this->mArrowObjectSelected->setPosition(this->getScreenX() + (this->getRadius() * cos(Tools::degreeToRadian(angle + 270))), 
-												this->getScreenY() + (this->getRadius() * sin(Tools::degreeToRadian(angle + 270))));
+		this->mArrowObjectSelected->setPosition(this->getScreenX() + (this->getRadius() * 2 * cos(Tools::degreeToRadian(angle + 270))), 
+												this->getScreenY() + (this->getRadius() * 2 * sin(Tools::degreeToRadian(angle + 270))));
 		this->mArrowObjectSelected->setRotation(angle - 90);
 	}
 }
