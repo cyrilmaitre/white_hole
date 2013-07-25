@@ -5,6 +5,7 @@
 #include "Game.h"
 #include "AutoManager.h"
 #include "ExplosionEffect.h"
+#include "FlashingLight.h"
 
 
 //*************************************************************
@@ -66,6 +67,9 @@ void Entity::update()
 		this->mTBDistance.setX(objectPositionScreen.x - this->mTBDistance.getWidth() / 2);
 		this->mTBDistance.setY(objectPositionScreen.y + CIRCLE_SELECTED_SIZE / 2 + this->getRocking() + ENTITY_DISTANCE_OFFSETY);
 	}
+
+	for(int i = 0; i < this->mFlashingLights.size(); i++)
+		this->mFlashingLights[i]->update();
 }
 
 void Entity::updateShieldSprite()
@@ -129,6 +133,28 @@ void Entity::notifyRotationChanged()
 		this->mShieldSprite->setRotation(this->getRotation());
 }
 
+void Entity::notifyFlashingLightJsonChanged()
+{
+	// Delete
+	for(int i = 0; i < this->mFlashingLights.size(); i++)
+		delete this->mFlashingLights[i];
+	this->mFlashingLights.clear();
+
+	// Add
+	Json::Value jsonFlashingLight;   
+	Json::Reader reader;
+	bool parsingSuccessfull = reader.parse(this->getFlashingLightJson(), jsonFlashingLight);
+	if(parsingSuccessfull && jsonFlashingLight.isArray())
+	{
+		for(int i = 0; i < jsonFlashingLight.size(); i++)
+		{
+			Json::Value currentJson = jsonFlashingLight.get(i, NULL);
+			if(currentJson != NULL)
+				this->mFlashingLights.push_back(new FlashingLight(this, currentJson));
+		}
+	}
+}
+
 void Entity::draw()
 {
 	if(this->isVisible())
@@ -138,6 +164,9 @@ void Entity::draw()
 	}
 
 	MapObject::draw();
+
+	for(int i = 0; i < this->mFlashingLights.size(); i++)
+		this->mFlashingLights[i]->draw();
 
 	if(this->isVisible())
 	{

@@ -292,9 +292,9 @@ void EntityMovable::notifyReactorJsonChanged()
 	{
 		for(int i = 0; i < jsonReactors.size(); i++)
 		{
-			Json::Value currentJsonPosition = jsonReactors.get(i, NULL);
-			if(currentJsonPosition != NULL)
-				this->mReactors.push_back(new Reactor(this, currentJsonPosition));
+			Json::Value currentJson = jsonReactors.get(i, NULL);
+			if(currentJson != NULL)
+				this->mReactors.push_back(new Reactor(this, currentJson));
 		}
 	}
 }
