@@ -325,11 +325,11 @@
     <Filter Include="Fichiers d%27en-tête\game\mapObject\automanaged\effect\impact">
       <UniqueIdentifier>{1dc95f2f-99d3-42d3-996e-a9e089456d69}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Fichiers sources\game\mapObject\entity\module">
-      <UniqueIdentifier>{0a519caf-e6b3-4d7e-9adc-73465d2ed536}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Fichiers d%27en-tête\game\mapObject\entity\module">
+    <Filter Include="Fichiers d%27en-tête\game\mapObject\entity\effect">
       <UniqueIdentifier>{65cd191e-2ddb-4bc0-ae0c-f8c2e8e33dc6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fichiers sources\game\mapObject\entity\effect">
+      <UniqueIdentifier>{0a519caf-e6b3-4d7e-9adc-73465d2ed536}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -1027,7 +1027,7 @@
       <Filter>Fichiers sources\game\mapObject\automanaged\projectile</Filter>
     </ClCompile>
     <ClCompile Include="Reactor.cpp">
-      <Filter>Fichiers sources\game\mapObject\entity\module</Filter>
+      <Filter>Fichiers sources\game\mapObject\entity\effect</Filter>
     </ClCompile>
     <ClCompile Include="EntityData.cpp">
       <Filter>Fichiers sources\game\mapObject\entity</Filter>
@@ -1037,6 +1037,12 @@
     </ClCompile>
     <ClCompile Include="ReactorDustEffect.cpp">
       <Filter>Fichiers sources\game\mapObject\automanaged\effect</Filter>
+    </ClCompile>
+    <ClCompile Include="EntityEffect.cpp">
+      <Filter>Fichiers sources\game\mapObject\entity\effect</Filter>
+    </ClCompile>
+    <ClCompile Include="EntityMovableEffect.cpp">
+      <Filter>Fichiers sources\game\mapObject\entity\effect</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1752,7 +1758,7 @@
       <Filter>Fichiers d%27en-tête\game\mapObject\automanaged\projectile</Filter>
     </ClInclude>
     <ClInclude Include="Reactor.h">
-      <Filter>Fichiers d%27en-tête\game\mapObject\entity\module</Filter>
+      <Filter>Fichiers d%27en-tête\game\mapObject\entity\effect</Filter>
     </ClInclude>
     <ClInclude Include="EntityData.h">
       <Filter>Fichiers d%27en-tête\game\mapObject\entity</Filter>
@@ -1762,6 +1768,12 @@
     </ClInclude>
     <ClInclude Include="ReactorDustEffect.h">
       <Filter>Fichiers d%27en-tête\game\mapObject\automanaged\effect</Filter>
+    </ClInclude>
+    <ClInclude Include="EntityEffect.h">
+      <Filter>Fichiers d%27en-tête\game\mapObject\entity\effect</Filter>
+    </ClInclude>
+    <ClInclude Include="EntityMovableEffect.h">
+      <Filter>Fichiers d%27en-tête\game\mapObject\entity\effect</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -1,10 +1,9 @@
 #pragma once
-#include "Resource.h"
 #include "Clock.h"
+#include "EntityMovableEffect.h"
 
-class EntityMovable;
 
-class Reactor
+class Reactor : public EntityMovableEffect
 {
 public:
 	// Enum
@@ -19,20 +18,8 @@ public:
 	~Reactor(void);
 
 	// Getters - Setters
-	EntityMovable* getEntityMovable();
-	void setEntityMovable(EntityMovable* p_entity);
-
 	ReactorType getType();
 	void setType(ReactorType p_type);
-
-	float getOffsetX();
-	void setOffsetX(float p_x);
-
-	float getOffsetY();
-	void setOffsetY(float p_y);
-
-	int getSize();
-	void setSize(int p_size);
 
 	bool isActive();
 	void setActve(bool p_active);
@@ -48,14 +35,9 @@ public:
 
 private:
 	// Attributs
-	EntityMovable* mEntityMovable;
 	ReactorType mType;
-	float mOffsetX;
-	float mOffsetXWithRotate;
-	float mOffsetY;
-	float mOffsetYWithRotate;
-	int mSize;
 	bool mActive;
+
 	sf::Sprite *mReactor;
 	float mReactorAlpha;
 	float mReactorAlphaSpeed;

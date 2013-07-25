@@ -100,7 +100,9 @@
     <ClCompile Include="CharacterUpdate.cpp" />
     <ClCompile Include="DebugScreen.cpp" />
     <ClCompile Include="EntityData.cpp" />
+    <ClCompile Include="EntityEffect.cpp" />
     <ClCompile Include="EntityMovableData.cpp" />
+    <ClCompile Include="EntityMovableEffect.cpp" />
     <ClCompile Include="EntityTarget.cpp" />
     <ClCompile Include="ExperienceBar.cpp" />
     <ClCompile Include="IdValueDouble.cpp" />
@@ -338,7 +340,9 @@
     <ClInclude Include="DebugScreen.h" />
     <ClInclude Include="DestructableData.h" />
     <ClInclude Include="EntityData.h" />
+    <ClInclude Include="EntityEffect.h" />
     <ClInclude Include="EntityMovableData.h" />
+    <ClInclude Include="EntityMovableEffect.h" />
     <ClInclude Include="EntityTarget.h" />
     <ClInclude Include="ExperienceBar.h" />
     <ClInclude Include="IdValueDouble.h" />

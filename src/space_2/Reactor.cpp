@@ -21,21 +21,18 @@
 //*************************************************************
 // Constructreur - Destructeur
 //*************************************************************
-Reactor::Reactor( EntityMovable* p_entity, Json::Value p_reactorJson )
+Reactor::Reactor( EntityMovable* p_entity, Json::Value p_reactorJson ) : EntityMovableEffect(p_entity)
 {
-	this->mEntityMovable = NULL;
 	this->mReactor = NULL;
 	this->mActive = false;
 	this->mReactorAlpha = 0;
 	this->mReactorAlphaSpeed = p_reactorJson.get(JSON_REACTORALPHASPEED, 0).asFloat();
 
-	this->setEntityMovable(p_entity);
 	this->setOffsetX(p_reactorJson.get(JSON_OFFSETX, 0).asInt());
-	this->mOffsetXWithRotate = this->mOffsetX;
 	this->setOffsetY(p_reactorJson.get(JSON_OFFSETY, 0).asInt());
-	this->mOffsetYWithRotate = this->mOffsetY;
-	this->setType((ReactorType)p_reactorJson.get(JSON_TYPE, 0).asInt());
+	this->updateOffsetRotate();
 	this->setSize(p_reactorJson.get(JSON_SIZE, 0).asInt());
+	this->setType((ReactorType)p_reactorJson.get(JSON_TYPE, 0).asInt());
 	this->computeReactorDustTick();
 
 	this->mReactor = new sf::Sprite(*Resource::resource->getTexture(REACTOR_SPRITE));
@@ -53,16 +50,6 @@ Reactor::~Reactor(void)
 //*************************************************************
 // Getters - Setters
 //*************************************************************
-EntityMovable* Reactor::getEntityMovable()
-{
-	return this->mEntityMovable;
-}
-
-void Reactor::setEntityMovable( EntityMovable* p_entity )
-{
-	this->mEntityMovable = p_entity;
-}
-
 Reactor::ReactorType Reactor::getType()
 {
 	return this->mType;
@@ -71,36 +58,6 @@ Reactor::ReactorType Reactor::getType()
 void Reactor::setType( ReactorType p_type )
 {
 	this->mType = p_type;
-}
-
-float Reactor::getOffsetX()
-{
-	return this->mOffsetX;
-}
-
-void Reactor::setOffsetX( float p_x )
-{
-	this->mOffsetX = p_x;
-}
-
-float Reactor::getOffsetY()
-{
-	return this->mOffsetY;
-}
-
-void Reactor::setOffsetY( float p_y )
-{
-	this->mOffsetY = p_y;
-}
-
-int Reactor::getSize()
-{
-	return this->mSize;
-}
-
-void Reactor::setSize( int p_size )
-{
-	this->mSize = p_size;
 }
 
 bool Reactor::isActive()
@@ -119,6 +76,7 @@ void Reactor::setActve( bool p_active )
 //*************************************************************
 void Reactor::update()
 {
+	EntityMovableEffect::update();
 	if(this->getEntityMovable()->isVisible())
 	{
 		this->updateActive();
@@ -132,14 +90,8 @@ void Reactor::updatePosition()
 {
 	if(this->mReactor != NULL)
 	{
-		sf::Vector2f reactorOffset;
-		reactorOffset.x = this->getOffsetX();
-		reactorOffset.y = this->getOffsetY();
-		reactorOffset = Tools::rotatePoint(reactorOffset, this->getEntityMovable()->getRotation());
-		this->mOffsetXWithRotate = reactorOffset.x;
-		this->mOffsetYWithRotate = reactorOffset.y;
-		this->mReactor->setPosition(this->getEntityMovable()->getScreenX() + this->mOffsetXWithRotate, this->getEntityMovable()->getScreenY() + this->getEntityMovable()->getRocking() + this->mOffsetYWithRotate);
-		this->mReactor->setRotation(this->getEntityMovable()->getRotation());
+		this->mReactor->setPosition(this->getEntityMovable()->getScreenX() + this->getOffsetXRotate(), 
+									this->getEntityMovable()->getScreenY() + this->getEntityMovable()->getRocking() + this->getOffsetYRotate());
 	}
 }
 
@@ -181,8 +133,8 @@ void Reactor::updateReactorDust()
 	{
 		if(this->mReactorDustClock.getElapsedTimeAsMilliseconds() > this->mReactorDustTick)
 		{
-			double mDustX = this->getEntityMovable()->Object::getX() + this->mOffsetXWithRotate;
-			double mDustY = this->getEntityMovable()->Object::getY() + this->getEntityMovable()->getRocking() + this->mOffsetYWithRotate;
+			double mDustX = this->getEntityMovable()->Object::getX() + this->getOffsetXRotate();
+			double mDustY = this->getEntityMovable()->Object::getY() + this->getEntityMovable()->getRocking() + this->getOffsetYRotate();
 			AutoManager::add(new ReactorDustEffect(mDustX, mDustY, this->getSize(), this->mReactorAlpha));
 			this->computeReactorDustTick();
 			this->mReactorDustClock.restart();
@@ -192,6 +144,7 @@ void Reactor::updateReactorDust()
 
 void Reactor::draw()
 {
+	EntityMovableEffect::draw();
 	if(this->getEntityMovable()->isVisible())
 	{
 		if(this->mReactor != NULL)
