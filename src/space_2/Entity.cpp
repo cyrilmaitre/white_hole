@@ -57,7 +57,6 @@ void Entity::update()
 	Destructable::update();
 	Rockable::update();
 	Weaponable::update();
-	Rotable::update();
 
 	this->updateShieldSprite();
 	if(this->isSelected())

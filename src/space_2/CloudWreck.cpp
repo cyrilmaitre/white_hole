@@ -22,8 +22,9 @@ CloudWreck::CloudWreck(void)
 	this->setObjectOpacity(MapObjectOpacity::Opacity4);
 	this->desactivateOverable();
 
-	this->setRotationDirection(Tools::randomBool());
-	this->setRotationSpeed(Tools::random(ROTATIONSPEED_MIN, ROTATIONSPEED_MAX));
+	this->setRotationInfinite(true);
+	this->setRotationInfiniteRight(Tools::randomBool());
+	this->setRotationVelocity(Tools::random(ROTATIONSPEED_MIN, ROTATIONSPEED_MAX));
 }
 
 CloudWreck::~CloudWreck(void)
@@ -48,26 +49,6 @@ void CloudWreck::setCloudModel( CloudWreckModel* p_model )
 	}
 }
 
-float CloudWreck::getRotationSpeed()
-{
-	return this->mRotationSpeed;
-}
-
-void CloudWreck::setRotationSpeed( float p_speed )
-{
-	this->mRotationSpeed = p_speed;
-}
-
-bool CloudWreck::getRotationDirection()
-{
-	return this->mRotationDirection;
-}
-
-void CloudWreck::setRotationDirection( bool p_direction )
-{
-	this->mRotationDirection = p_direction;
-}
-
 
 //*************************************************************
 // Methods
@@ -75,13 +56,6 @@ void CloudWreck::setRotationDirection( bool p_direction )
 void CloudWreck::update()
 {
 	MapObject::update();
-
-	float rotationDiff = this->mRotationClock.getElapsedTimeAsSeconds() * this->getRotationSpeed();
-	this->mRotationClock.restart();
-	if(this->getRotationDirection() == ROTATIONDIRECTION_RIGHT)
-		this->setRotation(this->getRotation() + rotationDiff);
-	else
-		this->setRotation(this->getRotation() - rotationDiff);
 }
 
 void CloudWreck::notifyCloudModelChanged()

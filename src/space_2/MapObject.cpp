@@ -285,6 +285,8 @@ bool MapObject::hasObjectSpriteParameter()
 //*************************************************************
 void MapObject::update()
 {
+	Rotable::update();
+
 	if(!this->hasSector())
 		this->updateVisible();
 

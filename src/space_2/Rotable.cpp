@@ -59,7 +59,16 @@ void Rotable::update()
 
 void Rotable::updateRotation()
 {
-	if(this->getRotationTarget() != this->getRotation())
+	if(this->isRotationInfinite())
+	{
+		float rotationDiff = this->mRotationClock.getElapsedTimeAsSeconds() * this->getRotationVelocity();
+		this->mRotationClock.restart();
+		if(this->isRotationInfiniteRight())
+			this->setRotation(this->getRotation() + rotationDiff);
+		else
+			this->setRotation(this->getRotation() - rotationDiff);
+	}
+	else if(this->getRotationTarget() != this->getRotation())
 	{
 		if(this->isRotationVelocityInstant())
 		{
