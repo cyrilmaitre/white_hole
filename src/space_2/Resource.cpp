@@ -553,7 +553,7 @@ void Resource::loadFontsFromMKK(std:: string path)
 			std::string file_name = (*entries)[i].name;			// current filename
 			buffer = mDatFont.GetFile(file_name);	// file content (buffer)
 
-			cout << "-> " << file_name << " size: " << mDatFont.GetFileSize(file_name) << endl;
+			// cout << "-> " << file_name << " size: " << mDatFont.GetFileSize(file_name) << endl;
 
 
 			Font *tmpFont = new Font();
