@@ -466,7 +466,7 @@ void Resource::loadImagesFromMKK(std:: string path)
 			std::string file_name = (*entries)[i].name;			// current filename
 			buffer = mDatImage.GetFile(file_name);	// file content (buffer)
 
-			cout << "-> " << file_name << " size: " << mDatImage.GetFileSize(file_name) << endl;
+			// cout << "-> " << file_name << " size: " << mDatImage.GetFileSize(file_name) << endl;
 
 			Image *tmpImage = new Image();
 			if(tmpImage->loadFromMemory(buffer, mDatImage.GetFileSize(file_name)) || buffer == NULL)
@@ -545,12 +545,11 @@ void Resource::loadFontsFromMKK(std:: string path)
 
 		// Get file list from .mkk
 		std::vector<sFileEntry>* entries = mDatFont.getEntries();
-		
-
+		std::vector<std::string> buffers;
 		for (unsigned int i=0;i<entries->size();i++)
 		{
+			
 			char* buffer;
-
 			std::string file_name = (*entries)[i].name;			// current filename
 			buffer = mDatFont.GetFile(file_name);	// file content (buffer)
 
@@ -562,7 +561,6 @@ void Resource::loadFontsFromMKK(std:: string path)
 				cout << "Error while loading font: " << file_name << endl;
 
 			this->mFont.insert(pair<string, Font*>(file_name, tmpFont));
-
 		}
 	}
 	else {
@@ -606,7 +604,7 @@ void Resource::loadSoundBuffersFromMKK(std:: string path)
 			std::string file_name = (*entries)[i].name;			// current filename
 			buffer = mDatSound.GetFile(file_name);	// file content (buffer)
 
-			cout << "-> " << file_name << " size: " << mDatSound.GetFileSize(file_name) << endl;
+			// cout << "-> " << file_name << " size: " << mDatSound.GetFileSize(file_name) << endl;
 
 			SoundBuffer *tmpSoundBuffer = new SoundBuffer();
 			if (!tmpSoundBuffer->loadFromMemory(buffer, mDatSound.GetFileSize(file_name)) || buffer == NULL)
