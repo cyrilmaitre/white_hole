@@ -10,7 +10,7 @@
 #define BACKGROUND_COLOR		sf::Color(128, 128, 128, 75)
 #define BORDER_COLOR			sf::Color(128, 128, 128, 125)
 #define BORDER_SIZE				2
-#define ROTATION_FREQ			500	// ms
+#define ROTATION_SPEED			25	// degree per sec
 
 
 //*************************************************************
@@ -19,7 +19,7 @@
 ShipViewSmall::ShipViewSmall(void)
 {
 	this->mSprite = NULL;
-	this->mSpriteColumn = 0;
+	this->mRotation = 0;
 
 	this->setWidth(DEFAULT_WIDTH);
 	this->setHeight(DEFAULT_HEIGHT);
@@ -78,13 +78,12 @@ void ShipViewSmall::notifyShipChanged()
 			this->mSprite = NULL;
 		}
 
-		this->mSpriteColumn = 0;
-		this->mSprite = SpriteParameterFactory::getSpriteParameter(this->getShip()->getShipModel()->getSprite(), SHIP_SPRITE_COLUMN, SHIP_SPRITE_LINE, false);
-		this->mSprite->selectSprite(this->mSpriteColumn, 0);
+		this->mSprite = new sf::Sprite(*Resource::resource->getTexture(this->getShip()->getShipModel()->getSprite()));
+		ToolsImage::setSpriteOriginCenter(this->mSprite);
+		this->mSprite->setRotation(this->mRotation);
 		this->updateSpriteSize();
 		this->updateSpritePosition();
 	}
-	
 }
 
 void ShipViewSmall::notifySizeChanged()
@@ -95,17 +94,18 @@ void ShipViewSmall::notifySizeChanged()
 
 void ShipViewSmall::update()
 {
+	this->updateRotation();
+}
+
+void ShipViewSmall::updateRotation()
+{
 	if(this->mSprite != NULL)
 	{
-		if(this->mClock.getElapsedTimeAsMilliseconds() > ROTATION_FREQ)
-		{
-			this->mSpriteColumn++;
-			if(this->mSpriteColumn >= SHIP_SPRITE_COLUMN)
-				this->mSpriteColumn = 0;
-
-			this->mSprite->selectSprite(this->mSpriteColumn, 0);
-			this->mClock.restart();
-		}
+		this->mRotation += this->mClock.getElapsedTimeAsSeconds() * ROTATION_SPEED;
+		this->mClock.restart();
+		if(this->mRotation > 360)
+			this->mRotation = 0;
+		this->mSprite->setRotation(this->mRotation);
 	}
 }
 
@@ -113,25 +113,25 @@ void ShipViewSmall::draw()
 {
 	Block::draw();
 	if(this->mSprite != NULL)
-	{
-		Resource::resource->getApp()->draw(this->mSprite->getSprite());
-	}
+		Resource::resource->getApp()->draw(*this->mSprite);
 }
 
 void ShipViewSmall::updateSpritePosition()
 {
 	if(this->mSprite != NULL)
-		this->mSprite->getSprite().setPosition(this->getX(), this->getY());
+		this->mSprite->setPosition(	this->getX() + ((this->getWidth() - this->mSprite->getLocalBounds().width) / 2) + this->mSprite->getLocalBounds().width / 2, 
+									this->getY() + ((this->getHeight() - this->mSprite->getLocalBounds().height) / 2) + this->mSprite->getLocalBounds().height / 2);
 }
 
 void ShipViewSmall::updateSpriteSize()
 {
 	if(this->mSprite != NULL)
 	{
-		if(this->mSprite->getSprite().getLocalBounds().width > this->getWidth() || this->mSprite->getSprite().getLocalBounds().height > this->getHeight())
+		if(this->mSprite->getLocalBounds().width > this->getWidth() || this->mSprite->getLocalBounds().height > this->getHeight())
 		{
 			int size = this->getWidth() > this->getHeight() ? this->getWidth() : this->getHeight();
-			this->mSprite->getSprite().setScale((float)size / this->mSprite->getSpriteWidth(), (float)size / this->mSprite->getSpriteHeight());
+			this->mSprite->setScale((float)size / this->mSprite->getLocalBounds().width, (float)size / this->mSprite->getLocalBounds().height);
 		}
 	}
 }
+

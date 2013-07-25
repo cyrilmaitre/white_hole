@@ -22,14 +22,15 @@ public:
 	void update();
 	void updateSpritePosition();
 	void updateSpriteSize();
+	void updateRotation();
 	void draw();
 
 
 private:
 	// Attributs
 	Ship* mShip;
-	SpriteParameter* mSprite;
-	int mSpriteColumn;
+	sf::Sprite* mSprite;
+	float mRotation;
 	mks::Clock mClock;
 };
 
