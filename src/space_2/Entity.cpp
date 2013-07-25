@@ -67,6 +67,9 @@ void Entity::update()
 		this->mTBDistance.setY(objectPositionScreen.y + CIRCLE_SELECTED_SIZE / 2 + this->getRocking() + ENTITY_DISTANCE_OFFSETY);
 	}
 
+	for(int i = 0; i < this->mRadars.size(); i++)
+		this->mRadars[i]->update();
+
 	for(int i = 0; i < this->mFlashingLights.size(); i++)
 		this->mFlashingLights[i]->update();
 }
@@ -154,6 +157,28 @@ void Entity::notifyFlashingLightJsonChanged()
 	}
 }
 
+void Entity::notifyRadarJsonChanged()
+{
+	// Delete
+	for(int i = 0; i < this->mRadars.size(); i++)
+		delete this->mRadars[i];
+	this->mRadars.clear();
+
+	// Add
+	Json::Value jsonRadar;   
+	Json::Reader reader;
+	bool parsingSuccessfull = reader.parse(this->getRadarJson(), jsonRadar);
+	if(parsingSuccessfull && jsonRadar.isArray())
+	{
+		for(int i = 0; i < jsonRadar.size(); i++)
+		{
+			Json::Value currentJson = jsonRadar.get(i, NULL);
+			if(currentJson != NULL)
+				this->mRadars.push_back(new RadarEffect(this, currentJson));
+		}
+	}
+}
+
 void Entity::draw()
 {
 	if(this->isVisible())
@@ -163,6 +188,9 @@ void Entity::draw()
 	}
 
 	MapObject::draw();
+
+	for(int i = 0; i < this->mRadars.size(); i++)
+		this->mRadars[i]->draw();
 
 	for(int i = 0; i < this->mFlashingLights.size(); i++)
 		this->mFlashingLights[i]->draw();

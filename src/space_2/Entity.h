@@ -6,6 +6,7 @@
 #include "EntityTarget.h"
 #include "EntityData.h"
 #include "FlashingLightEffect.h"
+#include "RadarEffect.h"
 
 // Define
 #define ENTITY_BORDER_FOCUS_SIZE			1
@@ -39,6 +40,7 @@ public:
 	void shieldImpact();
 	void notifyRotationChanged();
 	void notifyFlashingLightJsonChanged();
+	void notifyRadarJsonChanged();
 
 
 private:
@@ -49,5 +51,6 @@ private:
 	TextBox mTBDistance;
 
 	std::vector<FlashingLightEffect*> mFlashingLights;
+	std::vector<RadarEffect*> mRadars;
 };
 

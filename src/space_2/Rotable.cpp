@@ -91,6 +91,10 @@ void Rotable::updateRotation()
 			this->mRotationClock.restart();
 		}
 	}
+	else
+	{
+		this->mRotationClock.restart();
+	}
 }
 
 void Rotable::notifyRotationChanged()

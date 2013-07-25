@@ -6,9 +6,6 @@
 //*************************************************************
 // Define
 //*************************************************************
-#define JSON_OFFSETX				"x"
-#define JSON_OFFSETY				"y"
-#define JSON_SIZE					"size"
 #define JSON_COLOR					"color"
 #define JSON_FLASHTICKMIN			"tickmin"
 #define JSON_FLASHTICKMAX			"tickmax"
@@ -25,13 +22,8 @@
 //*************************************************************
 // Constructreur - Destructeur
 //*************************************************************
-FlashingLightEffect::FlashingLightEffect( Entity* p_entity, Json::Value p_lightJson ) : EntityEffect(p_entity)
+FlashingLightEffect::FlashingLightEffect( Entity* p_entity, Json::Value p_lightJson ) : EntityEffect(p_entity, p_lightJson)
 {
-	this->setOffsetX(p_lightJson.get(JSON_OFFSETX, 0).asInt());
-	this->setOffsetY(p_lightJson.get(JSON_OFFSETY, 0).asInt());
-	this->updateOffsetRotate();
-	this->setSize(p_lightJson.get(JSON_SIZE, 0).asInt());
-
 	this->mLightColor = (LightColor)p_lightJson.get(JSON_COLOR, 0).asInt();
 	this->mFlashTickMin = p_lightJson.get(JSON_FLASHTICKMIN, 0).asFloat();
 	this->mFlashTickMax = p_lightJson.get(JSON_FLASHTICKMAX, 0).asFloat();

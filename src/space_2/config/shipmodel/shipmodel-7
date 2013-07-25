@@ -27,4 +27,4 @@ upgrade_slot = 2
 stuff_slot = 2
 rotation_velocity = 180
 reactors = [{"x":-14,"y":22,"type":0,"size":20,"reactoralphaspeed":200},{"x":14,"y":22,"type":1,"size":20,"reactoralphaspeed":200}]
-flashinglights = [{"x":-14,"y":5,"color":0,"size":32,"tickmin":1000,"tickmax":2500},{"x":14,"y":5,"type":1,"size":32,"tickmin":1000,"tickmax":2500}]
+flashinglights = [{"x":-14,"y":5,"color":0,"size":32,"tickmin":1000,"tickmax":2500},{"x":14,"y":5,"color":0,"size":32,"tickmin":1000,"tickmax":2500}]

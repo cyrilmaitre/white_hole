@@ -8,10 +8,7 @@
 //*************************************************************
 // Define
 //*************************************************************
-#define JSON_OFFSETX				"x"
-#define JSON_OFFSETY				"y"
 #define JSON_TYPE					"type"
-#define JSON_SIZE					"size"
 #define JSON_REACTORALPHASPEED		"reactoralphaspeed"
 #define REACTOR_SPRITE				"reactor_wisp.png"
 #define REACTORDUST_TICK_MIN		50		// millisec
@@ -21,17 +18,13 @@
 //*************************************************************
 // Constructreur - Destructeur
 //*************************************************************
-ReactorEffect::ReactorEffect( EntityMovable* p_entity, Json::Value p_reactorJson ) : EntityMovableEffect(p_entity)
+ReactorEffect::ReactorEffect( EntityMovable* p_entity, Json::Value p_reactorJson ) : EntityMovableEffect(p_entity, p_reactorJson)
 {
 	this->mReactor = NULL;
 	this->mActive = false;
 	this->mReactorAlpha = 0;
 	this->mReactorAlphaSpeed = p_reactorJson.get(JSON_REACTORALPHASPEED, 0).asFloat();
 
-	this->setOffsetX(p_reactorJson.get(JSON_OFFSETX, 0).asInt());
-	this->setOffsetY(p_reactorJson.get(JSON_OFFSETY, 0).asInt());
-	this->updateOffsetRotate();
-	this->setSize(p_reactorJson.get(JSON_SIZE, 0).asInt());
 	this->setType((ReactorEffectType)p_reactorJson.get(JSON_TYPE, 0).asInt());
 	this->computeReactorDustTick();
 

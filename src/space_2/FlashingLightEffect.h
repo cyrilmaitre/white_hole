@@ -10,10 +10,10 @@ public:
 	enum LightColor
 	{
 		Blue = 0,
-		Green,
-		Grey,
-		Purple,
-		Red
+		Green = 1,
+		Grey = 2,
+		Purple = 3,
+		Red = 4
 	};
 
 	// Constructor - Destructor

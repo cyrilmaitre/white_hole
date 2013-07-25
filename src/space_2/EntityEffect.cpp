@@ -3,14 +3,22 @@
 
 
 //*************************************************************
+// Define
+//*************************************************************
+#define JSON_OFFSETX				"x"
+#define JSON_OFFSETY				"y"
+#define JSON_SIZE					"size"
+
+
+//*************************************************************
 // Constructreur - Destructeur
 //*************************************************************
-EntityEffect::EntityEffect( Entity* p_entity, sf::Vector2f p_offset, int p_size )
+EntityEffect::EntityEffect( Entity* p_entity, Json::Value p_json, sf::Vector2f p_offset, int p_size )
 {
 	this->setEntity(p_entity);
-	this->setOffsetX(p_offset.x);
-	this->setOffsetY(p_offset.y);
-	this->setSize(p_size);
+	this->setOffsetX(p_json.get(JSON_OFFSETX, 0).asInt());
+	this->setOffsetY(p_json.get(JSON_OFFSETY, 0).asInt());
+	this->setSize(p_json.get(JSON_SIZE, 0).asInt());
 	this->updateOffsetRotate();
 }
 
