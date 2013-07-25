@@ -37,18 +37,6 @@ int main(int argc, char** argv) {
 			else
 				displayHelp();
 		}
-		else if(argv[1] == std::string("fullcreate")) {
-			if(argc == 4) {
-				if(directoryExists(argv[3])) {
-					list_dir(argv[3], true);
-					createDatFile(argv[2]);
-				}
-				else
-					cout << "Invalid directory\n";
-			}
-			else
-				displayHelp();
-		}
 		else if(argv[1] == std::string("read")) {
 			if(argc == 3) {
 				cDAT Dat;
@@ -108,7 +96,6 @@ void displayHelp() {
 	cout << "\n";
 	cout<<"usage:"<< "\n";
 		cout << "\t mkkutil.exe create <new .dat file> <target directory>\n";
-		cout << "\t mkkutil.exe fullcreate <new .dat file> <target directory (recursive)>\n";
 		cout << "\t mkkutil.exe read <.dat file>\n";
 	cout << "\n";
 }

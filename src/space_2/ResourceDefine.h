@@ -11,6 +11,8 @@
 #define MKK_SOUNDS		"res/sounds.mkk"
 
 // Images
+#define FOLDER_IMAGE						"image/"
+#define FOLDER_IMAGE_BOOT					FOLDER_IMAGE"boot/"
 #define IMG_BOOT_SCREEN						"boot_screen.png"
 #define IMG_WINDOW_TOPLEFT					"window_topLeft.png"
 #define IMG_WINDOW_TOP						"window_top.png"
