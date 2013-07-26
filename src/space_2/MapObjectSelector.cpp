@@ -100,15 +100,20 @@ void MapObjectSelector::update()
 				break;
 			}
 
-			if(selectedEntity != 0 && windowEntity)
+			if(selectedEntity != 0)
 			{
-				Game::game->getUserInterface()->getWindowSelectedEntity()->setEntity(selectedEntity);
-				Game::game->getUserInterface()->setWindowSelected(Game::game->getUserInterface()->getWindowSelectedEntity());
+				if(windowEntity)
+				{
+					Game::game->getUserInterface()->getWindowSelectedEntity()->setEntity(selectedEntity);
+					Game::game->getUserInterface()->setWindowSelected(Game::game->getUserInterface()->getWindowSelectedEntity());
+				}
+				Game::game->getCharacterShip()->getTarget()->setEntity(selectedEntity);
 			}
 		}
 		else
 		{
 			Game::game->getUserInterface()->setWindowSelected(NULL);
+			Game::game->getCharacterShip()->getTarget()->setEntity(NULL);
 		}
 	}
 

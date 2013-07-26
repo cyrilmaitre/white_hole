@@ -1,6 +1,7 @@
 #include "TurretEffect.h"
 #include "Tools.h"
 #include "ToolsImage.h"
+#include "ToolsMap.h"
 
 
 //*************************************************************
@@ -49,14 +50,25 @@ void TurretEffect::update()
 
 void TurretEffect::updateTurret()
 {
-	if(this->mTurrentClock.getElapsedTimeAsSeconds() > this->mTurretRotationTick)
+	if(this->getEntity()->getTarget()->isEntityValid())
 	{
-		this->setRotationTarget(Tools::random(0, 360));
-		this->computeTurretRotationTick();
-		this->mTurrentClock.restart();
+		this->setRotationTarget(Tools::getAngle(this->getEntity()->Object::getX() + this->getOffsetXRotate(), 
+												this->getEntity()->Object::getY() + this->getOffsetYRotate(), 
+												this->getEntity()->getTarget()->getEntity()->getX(this->getEntity()->getPlane()), 
+												this->getEntity()->getTarget()->getEntity()->getY(this->getEntity()->getPlane())));
+		this->setRotation(this->getRotationTarget());
+		this->mTurretSprite.setRotation(this->getRotation());
 	}
-
-	this->mTurretSprite.setRotation(this->getEntity()->getRotation() + this->getRotation());
+	else
+	{
+		if(this->mTurrentClock.getElapsedTimeAsSeconds() > this->mTurretRotationTick)
+		{
+			this->setRotationTarget(Tools::random(0, 360));
+			this->computeTurretRotationTick();
+			this->mTurrentClock.restart();
+		}
+		this->mTurretSprite.setRotation(this->getEntity()->getRotation() + this->getRotation());
+	}	
 }
 
 void TurretEffect::updatePosition()

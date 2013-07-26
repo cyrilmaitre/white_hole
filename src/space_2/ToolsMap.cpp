@@ -38,7 +38,7 @@ float ToolsMap::getAngle( MapObject* p_source, MapObject* p_target )
 
 float ToolsMap::getAngleAbsolute( MapObject* p_source, MapObject* p_target )
 {
-	return Tools::getAngle(p_source->getX(MAPOBJECT_PLANE_1), p_source->getY(MAPOBJECT_PLANE_1), p_target->getX(MAPOBJECT_PLANE_1), p_target->getY(MAPOBJECT_PLANE_1));
+	return Tools::getAngle(p_source->Object::getX(), p_source->Object::getY(), p_target->getX(p_source->getPlane()), p_target->getY(p_source->getPlane()));
 }
 
 float ToolsMap::getDistance( MapObject* p_source, MapObject* p_target )

@@ -313,22 +313,12 @@ void Weapon::update()
 	if(this->getAmmoCount() == 0)
 		this->reload();
 
-	if(ToolsMap::isCharacterShip(this->getEntity()))
+	if(this->getEntity() != NULL && this->getEntity()->getTarget()->isEntityValid())
 	{
-		this->setRangeOk(	Game::game->getMap()->getMapObjectSelector()->getSelectedMapObject() != NULL && 
-							Game::game->getMap()->getMapObjectSelector()->getSelectedMapObject()->getObjectType() != MapObject::MapObjectType::TypeCharacterShip &&    
-							Game::game->getMap()->getMapObjectSelector()->getObjectSelectedDistance() < this->getWeaponModel()->getRange());
-		this->setAngleOk(	Game::game->getMap()->getMapObjectSelector()->getSelectedMapObject() != NULL && 
-							Game::game->getMap()->getMapObjectSelector()->getSelectedMapObject()->getObjectType() != MapObject::MapObjectType::TypeCharacterShip &&
-							Game::game->getMap()->getMapObjectSelector()->getObjectSelectedAngle() < this->getWeaponModel()->getRangeAngle());
-	}
-	else
-	{
-		if(this->getEntity() != NULL && this->getEntity()->getTarget()->isEntityValid())
-		{
-			this->setRangeOk(ToolsMap::getDistance(this->getEntity(), this->getEntity()->getTarget()->getEntity()) < this->getWeaponModel()->getRange());
-			this->setAngleOk(ToolsMap::getAngle(this->getEntity(), this->getEntity()->getTarget()->getEntity()) < this->getWeaponModel()->getRangeAngle());
-		}
+		this->setRangeOk(	this->getEntity() != this->getEntity()->getTarget()->getEntity() &&
+							ToolsMap::getDistance(this->getEntity(), this->getEntity()->getTarget()->getEntity()) < this->getWeaponModel()->getRange());
+		this->setAngleOk(	this->getEntity() != this->getEntity()->getTarget()->getEntity() &&
+							ToolsMap::getAngle(this->getEntity(), this->getEntity()->getTarget()->getEntity()) < this->getWeaponModel()->getRangeAngle());
 	}
 }
 
