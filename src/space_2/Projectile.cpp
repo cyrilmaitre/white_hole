@@ -25,8 +25,9 @@ Projectile::Projectile( Entity* p_source, Entity* p_target, Weapon* p_weapon, fl
 	this->setQuickening(p_weapon->getAmmo()->getQuickening());
 	this->setRotationVelocityInstant(true);
 
-	this->setX(p_source->Object::getX());
-	this->setY(p_source->Object::getY());
+	sf::Vector2f sourceOffset = p_source->getWeaponOffset();
+	this->setX(p_source->Object::getX() + sourceOffset.x);
+	this->setY(p_source->Object::getY() + sourceOffset.y);
 	this->setSourceX(p_source->Object::getX());
 	this->setSourceY(p_source->Object::getY());
 
@@ -37,6 +38,9 @@ Projectile::Projectile( Entity* p_source, Entity* p_target, Weapon* p_weapon, fl
 	else
 		this->setTargetDistanceMax(TARGET_DISTANCE_MAX);
 	this->setMode(MovableMode::ModeNormalWithoutDecelerate);
+
+	this->EntityMovable::updateRotation();
+	this->Rotable::updateRotation();
 }
 
 Projectile::~Projectile(void)

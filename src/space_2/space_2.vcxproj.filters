@@ -1053,6 +1053,9 @@
     <ClCompile Include="TurretEffect.cpp">
       <Filter>Fichiers sources\game\mapObject\entity\effect</Filter>
     </ClCompile>
+    <ClCompile Include="WeaponEffect.cpp">
+      <Filter>Fichiers sources</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h">
@@ -1792,6 +1795,9 @@
     </ClInclude>
     <ClInclude Include="TurretEffect.h">
       <Filter>Fichiers d%27en-tête\game\mapObject\entity\effect</Filter>
+    </ClInclude>
+    <ClInclude Include="WeaponEffect.h">
+      <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

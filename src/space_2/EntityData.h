@@ -20,12 +20,16 @@ public:
 	std::string getTurretJson();
 	void setTurretJson(std::string p_json);
 
+	std::string getWeaponJson();
+	void setWeaponJson(std::string p_json);
+
 	// Methods
 	void loadFromConfig(KeyValueFile* p_config);
 	void loadFromEntityData(EntityData* p_data);
 	virtual void notifyFlashingLightJsonChanged();
 	virtual void notifyRadarJsonChanged();
 	virtual void notifyTurretJsonChanged();
+	virtual void notifyWeaponJsonChanged();
 
 
 private:
@@ -33,5 +37,6 @@ private:
 	std::string mFlashingLightJson;
 	std::string mRadarJson;
 	std::string mTurretJson;
+	std::string mWeaponJson;
 };
 

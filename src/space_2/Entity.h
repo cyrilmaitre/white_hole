@@ -8,6 +8,7 @@
 #include "FlashingLightEffect.h"
 #include "RadarEffect.h"
 #include "TurretEffect.h"
+#include "WeaponEffect.h"
 
 // Define
 #define ENTITY_BORDER_FOCUS_SIZE			1
@@ -28,6 +29,7 @@ public:
 	// Getters - Setters
 	EntityTarget* getTarget();
 	bool isDestroy();
+	sf::Vector2f getWeaponOffset();
 
 	// Methods
 	void update();
@@ -39,10 +41,12 @@ public:
 	void unloadSprite();
 	void destroy();
 	void shieldImpact();
+	void selectNextWeapon();
 	void notifyRotationChanged();
 	void notifyFlashingLightJsonChanged();
 	void notifyRadarJsonChanged();
 	void notifyTurretJsonChanged();
+	void notifyWeaponJsonChanged();
 
 
 private:
@@ -52,8 +56,10 @@ private:
 	mks::Clock mShieldClock;
 	TextBox mTBDistance;
 
-	std::vector<FlashingLightEffect*> mFlashingLights;
-	std::vector<RadarEffect*> mRadars;
-	std::vector<TurretEffect*> mTurrets;
+	std::vector<FlashingLightEffect*> mFlashingLightEffects;
+	std::vector<RadarEffect*> mRadarEffects;
+	std::vector<TurretEffect*> mTurretEffects;
+	std::vector<WeaponEffect*> mWeaponEffects;
+	int mWeaponEffectCurrent;
 };
 

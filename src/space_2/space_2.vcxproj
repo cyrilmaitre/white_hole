@@ -269,6 +269,7 @@
     <ClCompile Include="MenuQuickMap.cpp" />
     <ClCompile Include="ProgressBar.cpp" />
     <ClCompile Include="TextMultiLine.cpp" />
+    <ClCompile Include="WeaponEffect.cpp" />
     <ClCompile Include="WindowCargo.cpp" />
     <ClCompile Include="WindowCargoLoot.cpp" />
     <ClCompile Include="WindowJukebox.cpp" />
@@ -518,6 +519,7 @@
     <ClInclude Include="ProgressBar.h" />
     <ClInclude Include="TextMultiLine.h" />
     <ClInclude Include="ToolsUi.h" />
+    <ClInclude Include="WeaponEffect.h" />
     <ClInclude Include="WindowCargo.h" />
     <ClInclude Include="WindowCargoLoot.h" />
     <ClInclude Include="WindowJukebox.h" />

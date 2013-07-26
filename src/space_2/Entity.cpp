@@ -22,6 +22,7 @@
 Entity::Entity( int p_plane ) : MapObject(p_plane)
 {
 	this->mShieldSprite = NULL;
+	this->mWeaponEffectCurrent = 0;
 	this->mTBDistance.setFontColor(ENTITY_DISTANCE_FONT_COLOR);
 	this->mTBDistance.setFontSize(ENTITY_DISTANCE_FONT_SIZE);
 	this->mTBDistance.setText(Tools::buildStringWithInt(0) + Resource::resource->getBundle()->getString("meterAb"));
@@ -47,6 +48,18 @@ bool Entity::isDestroy()
 	return !this->hasStructure();
 }
 
+sf::Vector2f Entity::getWeaponOffset()
+{
+	sf::Vector2f offset(0, 0);
+	if(this->mWeaponEffects.size() > 0)
+	{
+		offset.x = this->mWeaponEffects[this->mWeaponEffectCurrent]->getOffsetXRotate();
+		offset.y = this->mWeaponEffects[this->mWeaponEffectCurrent]->getOffsetYRotate();
+		this->selectNextWeapon();
+	}
+	return offset;
+}
+
 
 //*************************************************************
 // Methods
@@ -67,14 +80,17 @@ void Entity::update()
 		this->mTBDistance.setY(objectPositionScreen.y + CIRCLE_SELECTED_SIZE / 2 + this->getRocking() + ENTITY_DISTANCE_OFFSETY);
 	}
 
-	for(int i = 0; i < this->mRadars.size(); i++)
-		this->mRadars[i]->update();
+	for(int i = 0; i < this->mRadarEffects.size(); i++)
+		this->mRadarEffects[i]->update();
 
-	for(int i = 0; i < this->mFlashingLights.size(); i++)
-		this->mFlashingLights[i]->update();
+	for(int i = 0; i < this->mFlashingLightEffects.size(); i++)
+		this->mFlashingLightEffects[i]->update();
 
-	for(int i = 0; i < this->mTurrets.size(); i++)
-		this->mTurrets[i]->update();
+	for(int i = 0; i < this->mWeaponEffects.size(); i++)
+		this->mWeaponEffects[i]->update();
+
+	for(int i = 0; i < this->mTurretEffects.size(); i++)
+		this->mTurretEffects[i]->update();
 }
 
 void Entity::updateShieldSprite()
@@ -141,9 +157,9 @@ void Entity::notifyRotationChanged()
 void Entity::notifyFlashingLightJsonChanged()
 {
 	// Delete
-	for(int i = 0; i < this->mFlashingLights.size(); i++)
-		delete this->mFlashingLights[i];
-	this->mFlashingLights.clear();
+	for(int i = 0; i < this->mFlashingLightEffects.size(); i++)
+		delete this->mFlashingLightEffects[i];
+	this->mFlashingLightEffects.clear();
 
 	// Add
 	Json::Value jsonFlashingLight;   
@@ -155,7 +171,7 @@ void Entity::notifyFlashingLightJsonChanged()
 		{
 			Json::Value currentJson = jsonFlashingLight.get(i, NULL);
 			if(currentJson != NULL)
-				this->mFlashingLights.push_back(new FlashingLightEffect(this, currentJson));
+				this->mFlashingLightEffects.push_back(new FlashingLightEffect(this, currentJson));
 		}
 	}
 }
@@ -163,9 +179,9 @@ void Entity::notifyFlashingLightJsonChanged()
 void Entity::notifyRadarJsonChanged()
 {
 	// Delete
-	for(int i = 0; i < this->mRadars.size(); i++)
-		delete this->mRadars[i];
-	this->mRadars.clear();
+	for(int i = 0; i < this->mRadarEffects.size(); i++)
+		delete this->mRadarEffects[i];
+	this->mRadarEffects.clear();
 
 	// Add
 	Json::Value jsonRadar;   
@@ -177,7 +193,7 @@ void Entity::notifyRadarJsonChanged()
 		{
 			Json::Value currentJson = jsonRadar.get(i, NULL);
 			if(currentJson != NULL)
-				this->mRadars.push_back(new RadarEffect(this, currentJson));
+				this->mRadarEffects.push_back(new RadarEffect(this, currentJson));
 		}
 	}
 }
@@ -185,9 +201,9 @@ void Entity::notifyRadarJsonChanged()
 void Entity::notifyTurretJsonChanged()
 {
 	// Delete
-	for(int i = 0; i < this->mTurrets.size(); i++)
-		delete this->mTurrets[i];
-	this->mTurrets.clear();
+	for(int i = 0; i < this->mTurretEffects.size(); i++)
+		delete this->mTurretEffects[i];
+	this->mTurretEffects.clear();
 
 	// Add
 	Json::Value jsonTurret;   
@@ -199,7 +215,29 @@ void Entity::notifyTurretJsonChanged()
 		{
 			Json::Value currentJson = jsonTurret.get(i, NULL);
 			if(currentJson != NULL)
-				this->mTurrets.push_back(new TurretEffect(this, currentJson));
+				this->mTurretEffects.push_back(new TurretEffect(this, currentJson));
+		}
+	}
+}
+
+void Entity::notifyWeaponJsonChanged()
+{
+	// Delete
+	for(int i = 0; i < this->mWeaponEffects.size(); i++)
+		delete this->mWeaponEffects[i];
+	this->mWeaponEffects.clear();
+
+	// Add
+	Json::Value jsonWeapon;   
+	Json::Reader reader;
+	bool parsingSuccessfull = reader.parse(this->getWeaponJson(), jsonWeapon);
+	if(parsingSuccessfull && jsonWeapon.isArray())
+	{
+		for(int i = 0; i < jsonWeapon.size(); i++)
+		{
+			Json::Value currentJson = jsonWeapon.get(i, NULL);
+			if(currentJson != NULL)
+				this->mWeaponEffects.push_back(new WeaponEffect(this, currentJson));
 		}
 	}
 }
@@ -214,14 +252,17 @@ void Entity::draw()
 
 	MapObject::draw();
 
-	for(int i = 0; i < this->mRadars.size(); i++)
-		this->mRadars[i]->draw();
+	for(int i = 0; i < this->mRadarEffects.size(); i++)
+		this->mRadarEffects[i]->draw();
 
-	for(int i = 0; i < this->mFlashingLights.size(); i++)
-		this->mFlashingLights[i]->draw();
+	for(int i = 0; i < this->mFlashingLightEffects.size(); i++)
+		this->mFlashingLightEffects[i]->draw();
 
-	for(int i = 0; i < this->mTurrets.size(); i++)
-		this->mTurrets[i]->draw();
+	for(int i = 0; i < this->mWeaponEffects.size(); i++)
+		this->mWeaponEffects[i]->draw();
+
+	for(int i = 0; i < this->mTurretEffects.size(); i++)
+		this->mTurretEffects[i]->draw();
 
 	if(this->isVisible())
 	{
@@ -249,6 +290,13 @@ void Entity::shieldImpact()
 		this->mShieldSprite->setColor(sf::Color(255, 255, 255, SHIELDIMPACT_ALPHA));
 		this->mShieldClock.restart();
 	}
+}
+
+void Entity::selectNextWeapon()
+{
+	this->mWeaponEffectCurrent++;
+	if(this->mWeaponEffectCurrent >= this->mWeaponEffects.size())
+		this->mWeaponEffectCurrent = 0;
 }
 
 

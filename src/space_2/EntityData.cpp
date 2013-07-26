@@ -7,6 +7,7 @@
 #define CONFIG_FLASHINGLIGHTS	"flashinglights"
 #define CONFIG_RADARS			"radars"
 #define CONFIG_TURRETS			"turrets"
+#define CONFIG_WEAPONS			"weapons"
 
 
 //*************************************************************
@@ -66,6 +67,20 @@ void EntityData::setTurretJson( std::string p_json )
 	}
 }
 
+std::string EntityData::getWeaponJson()
+{
+	return this->mWeaponJson;
+}
+
+void EntityData::setWeaponJson( std::string p_json )
+{
+	if(this->mWeaponJson != p_json)
+	{
+		this->mWeaponJson = p_json;
+		this->notifyWeaponJsonChanged();
+	}
+}
+
 
 //*************************************************************
 // Methods
@@ -80,6 +95,9 @@ void EntityData::loadFromConfig( KeyValueFile* p_config )
 
 	if(p_config->has(CONFIG_TURRETS))
 		this->setTurretJson(p_config->getString(CONFIG_TURRETS));
+
+	if(p_config->has(CONFIG_WEAPONS))
+		this->setWeaponJson(p_config->getString(CONFIG_WEAPONS));
 }
 
 void EntityData::loadFromEntityData( EntityData* p_data )
@@ -87,6 +105,7 @@ void EntityData::loadFromEntityData( EntityData* p_data )
 	this->setFlashingLightJson(p_data->getFlashingLightJson());
 	this->setRadarJson(p_data->getRadarJson());
 	this->setTurretJson(p_data->getTurretJson());
+	this->setWeaponJson(p_data->getWeaponJson());
 }
 
 void EntityData::notifyFlashingLightJsonChanged()
@@ -103,3 +122,10 @@ void EntityData::notifyTurretJsonChanged()
 {
 
 }
+
+void EntityData::notifyWeaponJsonChanged()
+{
+
+}
+
+
