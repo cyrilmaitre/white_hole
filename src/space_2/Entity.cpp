@@ -53,8 +53,8 @@ sf::Vector2f Entity::getWeaponOffset()
 	sf::Vector2f offset(0, 0);
 	if(this->mWeaponEffects.size() > 0)
 	{
-		offset.x = this->mWeaponEffects[this->mWeaponEffectCurrent]->getOffsetXRotate();
-		offset.y = this->mWeaponEffects[this->mWeaponEffectCurrent]->getOffsetYRotate();
+		offset.x = this->mWeaponEffects[this->mWeaponEffectCurrent]->getOffsetAmmoX();
+		offset.y = this->mWeaponEffects[this->mWeaponEffectCurrent]->getOffsetAmmoY();
 		this->selectNextWeapon();
 	}
 	return offset;

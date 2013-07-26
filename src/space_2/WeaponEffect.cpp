@@ -25,6 +25,20 @@ WeaponEffect::~WeaponEffect(void)
 
 
 //*************************************************************
+// Getters - Setterss
+//*************************************************************
+float WeaponEffect::getOffsetAmmoX()
+{
+	return this->getOffsetXRotate();
+}
+
+float WeaponEffect::getOffsetAmmoY()
+{
+	return this->getOffsetYRotate() + this->getEntity()->getRocking();
+}
+
+
+//*************************************************************
 // Methods
 //*************************************************************
 void WeaponEffect::update()
@@ -56,3 +70,4 @@ void WeaponEffect::draw()
 		Resource::resource->getApp()->draw(this->mWeaponSprite);
 	}
 }
+

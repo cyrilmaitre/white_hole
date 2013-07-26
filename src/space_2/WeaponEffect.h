@@ -8,6 +8,10 @@ public:
 	WeaponEffect(Entity* p_entity, Json::Value p_weaponJson);
 	~WeaponEffect(void);
 
+	// Getters - Setters
+	float getOffsetAmmoX();
+	float getOffsetAmmoY();
+
 	// Methods
 	void update();
 	void updateWeapon();
