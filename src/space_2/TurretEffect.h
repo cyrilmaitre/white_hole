@@ -24,7 +24,7 @@ private:
 	// Attributs
 	sf::Sprite mTurretSprite;
 	float mTurretRotationTick;
-	mks::Clock mTurrentClock;
+	mks::Clock mTurretClock;
 
 	// Methods
 	void computeTurretRotationTick();

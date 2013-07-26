@@ -61,11 +61,11 @@ void TurretEffect::updateTurret()
 	}
 	else
 	{
-		if(this->mTurrentClock.getElapsedTimeAsSeconds() > this->mTurretRotationTick)
+		if(this->mTurretClock.getElapsedTimeAsSeconds() > this->mTurretRotationTick)
 		{
 			this->setRotationTarget(Tools::random(0, 360));
 			this->computeTurretRotationTick();
-			this->mTurrentClock.restart();
+			this->mTurretClock.restart();
 		}
 		this->mTurretSprite.setRotation(this->getEntity()->getRotation() + this->getRotation());
 	}	
