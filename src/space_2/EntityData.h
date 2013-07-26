@@ -17,16 +17,21 @@ public:
 	std::string getRadarJson();
 	void setRadarJson(std::string p_json);
 
+	std::string getTurretJson();
+	void setTurretJson(std::string p_json);
+
 	// Methods
 	void loadFromConfig(KeyValueFile* p_config);
 	void loadFromEntityData(EntityData* p_data);
 	virtual void notifyFlashingLightJsonChanged();
 	virtual void notifyRadarJsonChanged();
+	virtual void notifyTurretJsonChanged();
 
 
 private:
 	// Attributs
 	std::string mFlashingLightJson;
 	std::string mRadarJson;
+	std::string mTurretJson;
 };
 

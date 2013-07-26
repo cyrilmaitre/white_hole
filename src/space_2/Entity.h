@@ -7,6 +7,7 @@
 #include "EntityData.h"
 #include "FlashingLightEffect.h"
 #include "RadarEffect.h"
+#include "TurretEffect.h"
 
 // Define
 #define ENTITY_BORDER_FOCUS_SIZE			1
@@ -41,6 +42,7 @@ public:
 	void notifyRotationChanged();
 	void notifyFlashingLightJsonChanged();
 	void notifyRadarJsonChanged();
+	void notifyTurretJsonChanged();
 
 
 private:
@@ -52,5 +54,6 @@ private:
 
 	std::vector<FlashingLightEffect*> mFlashingLights;
 	std::vector<RadarEffect*> mRadars;
+	std::vector<TurretEffect*> mTurrets;
 };
 

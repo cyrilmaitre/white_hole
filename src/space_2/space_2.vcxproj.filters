@@ -1050,6 +1050,9 @@
     <ClCompile Include="RadarEffect.cpp">
       <Filter>Fichiers sources\game\mapObject\entity\effect</Filter>
     </ClCompile>
+    <ClCompile Include="TurretEffect.cpp">
+      <Filter>Fichiers sources\game\mapObject\entity\effect</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h">
@@ -1785,6 +1788,9 @@
       <Filter>Fichiers d%27en-tête\game\mapObject\entity\effect</Filter>
     </ClInclude>
     <ClInclude Include="RadarEffect.h">
+      <Filter>Fichiers d%27en-tête\game\mapObject\entity\effect</Filter>
+    </ClInclude>
+    <ClInclude Include="TurretEffect.h">
       <Filter>Fichiers d%27en-tête\game\mapObject\entity\effect</Filter>
     </ClInclude>
   </ItemGroup>

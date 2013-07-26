@@ -28,3 +28,4 @@ stuff_slot = 2
 rotation_velocity = 180
 reactors = [{"x":-14,"y":22,"type":0,"size":20,"reactoralphaspeed":200},{"x":14,"y":22,"type":1,"size":20,"reactoralphaspeed":200}]
 flashinglights = [{"x":-14,"y":5,"color":4,"size":32,"tickmin":1000,"tickmax":2500},{"x":14,"y":5,"color":4,"size":32,"tickmin":1000,"tickmax":2500}]
+turrets = [{"x":-32,"y":0,"size":48,"rotationvelocity":180,"sprite":"turret_one_1.png"},{"x":32,"y":0,"size":48,"rotationvelocity":180,"sprite":"turret_one_1.png"}]

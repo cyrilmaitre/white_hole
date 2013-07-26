@@ -72,6 +72,9 @@ void Entity::update()
 
 	for(int i = 0; i < this->mFlashingLights.size(); i++)
 		this->mFlashingLights[i]->update();
+
+	for(int i = 0; i < this->mTurrets.size(); i++)
+		this->mTurrets[i]->update();
 }
 
 void Entity::updateShieldSprite()
@@ -179,6 +182,28 @@ void Entity::notifyRadarJsonChanged()
 	}
 }
 
+void Entity::notifyTurretJsonChanged()
+{
+	// Delete
+	for(int i = 0; i < this->mTurrets.size(); i++)
+		delete this->mTurrets[i];
+	this->mTurrets.clear();
+
+	// Add
+	Json::Value jsonTurret;   
+	Json::Reader reader;
+	bool parsingSuccessfull = reader.parse(this->getTurretJson(), jsonTurret);
+	if(parsingSuccessfull && jsonTurret.isArray())
+	{
+		for(int i = 0; i < jsonTurret.size(); i++)
+		{
+			Json::Value currentJson = jsonTurret.get(i, NULL);
+			if(currentJson != NULL)
+				this->mTurrets.push_back(new TurretEffect(this, currentJson));
+		}
+	}
+}
+
 void Entity::draw()
 {
 	if(this->isVisible())
@@ -194,6 +219,9 @@ void Entity::draw()
 
 	for(int i = 0; i < this->mFlashingLights.size(); i++)
 		this->mFlashingLights[i]->draw();
+
+	for(int i = 0; i < this->mTurrets.size(); i++)
+		this->mTurrets[i]->draw();
 
 	if(this->isVisible())
 	{

@@ -28,7 +28,6 @@ public:
 	void updatePosition();
 	void draw();
 	void notifyRadarTypeChanged();
-	void computeRadarRotationTick();
 
 
 private:
@@ -37,5 +36,8 @@ private:
 	sf::Sprite mRadarSprite;
 	float mRadarRotationTick;
 	mks::Clock mRadarClock;
+
+	// Methods
+	void computeRadarRotationTick();
 };
 

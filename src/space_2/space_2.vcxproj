@@ -261,6 +261,7 @@
     <ClCompile Include="ClockManager.cpp" />
     <ClCompile Include="FieldSet.cpp" />
     <ClCompile Include="Focusable.cpp" />
+    <ClCompile Include="TurretEffect.cpp" />
     <ClCompile Include="UserInterface.cpp" />
     <ClCompile Include="Image.cpp" />
     <ClCompile Include="Manager.cpp" />
@@ -508,6 +509,7 @@
     <ClInclude Include="ClockManager.h" />
     <ClInclude Include="FieldSet.h" />
     <ClInclude Include="Focusable.h" />
+    <ClInclude Include="TurretEffect.h" />
     <ClInclude Include="UserInterface.h" />
     <ClInclude Include="Image.h" />
     <ClInclude Include="Manager.h" />
