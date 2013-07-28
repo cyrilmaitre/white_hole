@@ -700,6 +700,7 @@ void Resource::loadConfigs()
 	this->loadConfigs(FOLDER_CONFIG_LOOTITEMMODEL);
 	this->loadConfigs(FOLDER_CONFIG_STATIONMODEL);
 	this->loadConfigs(FOLDER_CONFIG_STARMODEL);
+	this->loadConfigs(FOLDER_CONFIG_TURRETEFFECTMODEL);
 }
 
 void Resource::loadConfigs( std::string path )

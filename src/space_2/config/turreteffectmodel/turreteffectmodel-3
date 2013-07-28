@@ -1,0 +1,2 @@
+sprite = turret_three.png
+weapon_position = [{"x":-28,"y":-10},{"x":-1,"y":-19},{"x":26,"y":-10}]

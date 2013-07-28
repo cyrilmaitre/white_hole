@@ -41,6 +41,7 @@ void FactoryGet::init()
 	SkillFactory::mInstance = new SkillFactory();
 	StationModelFactory::mInstance = new StationModelFactory();
 	StarModelFactory::mInstance = new StarModelFactory();
+	TurretEffectModelFactory::mInstance = new TurretEffectModelFactory();
 }
 
 void FactoryGet::uninit()
@@ -113,6 +114,9 @@ void FactoryGet::uninit()
 
 	StarModelFactory::mInstance->uninit();
 	delete StarModelFactory::mInstance;
+
+	TurretEffectModelFactory::mInstance->uninit();
+	delete TurretEffectModelFactory::mInstance;
 }
 
 ShipTypeFactory * FactoryGet::getShipTypeFactory()
@@ -228,4 +232,9 @@ StationModelFactory * FactoryGet::getStationModelFactory()
 StarModelFactory * FactoryGet::getStarModelFactory()
 {
 	return StarModelFactory::mInstance;
+}
+
+TurretEffectModelFactory * FactoryGet::getTurretEffectModelFactory()
+{
+	return TurretEffectModelFactory::mInstance;
 }

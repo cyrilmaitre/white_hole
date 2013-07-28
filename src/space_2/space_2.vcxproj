@@ -262,6 +262,8 @@
     <ClCompile Include="FieldSet.cpp" />
     <ClCompile Include="Focusable.cpp" />
     <ClCompile Include="TurretEffect.cpp" />
+    <ClCompile Include="TurretEffectModel.cpp" />
+    <ClCompile Include="TurretEffectModelFactory.cpp" />
     <ClCompile Include="UserInterface.cpp" />
     <ClCompile Include="Image.cpp" />
     <ClCompile Include="Manager.cpp" />
@@ -511,6 +513,8 @@
     <ClInclude Include="FieldSet.h" />
     <ClInclude Include="Focusable.h" />
     <ClInclude Include="TurretEffect.h" />
+    <ClInclude Include="TurretEffectModel.h" />
+    <ClInclude Include="TurretEffectModelFactory.h" />
     <ClInclude Include="UserInterface.h" />
     <ClInclude Include="Image.h" />
     <ClInclude Include="Manager.h" />

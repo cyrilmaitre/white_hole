@@ -2,6 +2,7 @@
 #include "EntityEffect.h"
 #include "Rotable.h"
 #include "Clock.h"
+#include "TurretEffectModel.h"
 
 
 class TurretEffect : public EntityEffect, public Rotable
@@ -12,16 +13,20 @@ public:
 	~TurretEffect(void);
 
 	// Getters - Setters
+	TurretEffectModel* getTurretModel();
+	void setTurretModel(TurretEffectModel* p_model);
 
 	// Methods
 	void update();
 	void updateTurret();
 	void updatePosition();
 	void draw();
+	void notifyTurretModelChanged();
 
 
 private:
 	// Attributs
+	TurretEffectModel* mTurretModel;
 	sf::Sprite mTurretSprite;
 	float mTurretRotationTick;
 	mks::Clock mTurretClock;

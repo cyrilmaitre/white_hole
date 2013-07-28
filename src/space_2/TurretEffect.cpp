@@ -2,13 +2,14 @@
 #include "Tools.h"
 #include "ToolsImage.h"
 #include "ToolsMap.h"
+#include "FactoryGet.h"
 
 
 //*************************************************************
 // Define
 //*************************************************************
 #define JSON_ROTATIONVELOCITY		"rotationvelocity"
-#define JSON_SPRITE					"sprite"
+#define JSON_TURRETMODEL			"turret_model"
 #define SPRITE_DEFAULT				"turret_one_1.png"
 #define TURRET_ROTATION_TICKMIN		3.f	// sec
 #define TURRET_ROTATION_TICKMAX		6.f // sec
@@ -20,8 +21,9 @@
 TurretEffect::TurretEffect( Entity* p_entity, Json::Value p_turretJson ) : EntityEffect(p_entity, p_turretJson)
 {
 	this->setRotationVelocity(p_turretJson.get(JSON_ROTATIONVELOCITY, 0).asFloat());
+	this->setTurretModel(FactoryGet::getTurretEffectModelFactory()->getTurretEffectModel(p_turretJson.get(JSON_TURRETMODEL, 1).asInt()));
 
-	this->mTurretSprite.setTexture(*Resource::resource->getTexture(p_turretJson.get(JSON_SPRITE, SPRITE_DEFAULT).asString()));
+	this->mTurretSprite.setTexture(*Resource::resource->getTexture(this->getTurretModel()->getSprite()));
 	ToolsImage::setSpriteOriginCenter(&this->mTurretSprite);
 	ToolsImage::resizeSprite(&this->mTurretSprite, this->getSize(), this->getSize());
 
@@ -31,6 +33,23 @@ TurretEffect::TurretEffect( Entity* p_entity, Json::Value p_turretJson ) : Entit
 TurretEffect::~TurretEffect( void )
 {
 
+}
+
+//*************************************************************
+// Getters - Setters
+//*************************************************************
+TurretEffectModel* TurretEffect::getTurretModel()
+{
+	return this->mTurretModel;
+}
+
+void TurretEffect::setTurretModel( TurretEffectModel* p_model )
+{
+	if(this->mTurretModel = p_model)
+	{
+		this->mTurretModel = p_model;
+		this->notifyTurretModelChanged();
+	}
 }
 
 
@@ -90,3 +109,10 @@ void TurretEffect::computeTurretRotationTick()
 {
 	this->mTurretRotationTick = Tools::random(TURRET_ROTATION_TICKMIN, TURRET_ROTATION_TICKMAX);
 }
+
+void TurretEffect::notifyTurretModelChanged()
+{
+
+}
+
+

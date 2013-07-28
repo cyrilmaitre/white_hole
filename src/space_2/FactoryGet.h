@@ -22,6 +22,7 @@
 #include "SkillFactory.h"
 #include "StationModelFactory.h"
 #include "StarModelFactory.h"
+#include "TurretEffectModelFactory.h"
 
 class FactoryGet
 {
@@ -50,6 +51,7 @@ public:
 	static SkillFactory *getSkillFactory();
 	static StationModelFactory *getStationModelFactory();
 	static StarModelFactory *getStarModelFactory();
+	static TurretEffectModelFactory *getTurretEffectModelFactory();
 
 	static void init();
 	static void uninit();

@@ -331,6 +331,12 @@
     <Filter Include="Fichiers sources\game\mapObject\entity\effect">
       <UniqueIdentifier>{0a519caf-e6b3-4d7e-9adc-73465d2ed536}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Fichiers d%27en-tête\game\mapObject\entity\effect\turret">
+      <UniqueIdentifier>{b1b11c3c-59f3-41ca-8593-04410cb1eb7b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fichiers sources\game\mapObject\entity\effect\turret">
+      <UniqueIdentifier>{7e41cc5b-db33-431e-b96e-d99f51041160}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Game.cpp">
@@ -1051,10 +1057,16 @@
       <Filter>Fichiers sources\game\mapObject\entity\effect</Filter>
     </ClCompile>
     <ClCompile Include="TurretEffect.cpp">
-      <Filter>Fichiers sources\game\mapObject\entity\effect</Filter>
+      <Filter>Fichiers sources\game\mapObject\entity\effect\turret</Filter>
     </ClCompile>
     <ClCompile Include="WeaponEffect.cpp">
-      <Filter>Fichiers sources</Filter>
+      <Filter>Fichiers sources\game\mapObject\entity\effect</Filter>
+    </ClCompile>
+    <ClCompile Include="TurretEffectModelFactory.cpp">
+      <Filter>Fichiers sources\game\mapObject\entity\effect\turret</Filter>
+    </ClCompile>
+    <ClCompile Include="TurretEffectModel.cpp">
+      <Filter>Fichiers sources\game\mapObject\entity\effect\turret</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1794,10 +1806,16 @@
       <Filter>Fichiers d%27en-tête\game\mapObject\entity\effect</Filter>
     </ClInclude>
     <ClInclude Include="TurretEffect.h">
-      <Filter>Fichiers d%27en-tête\game\mapObject\entity\effect</Filter>
+      <Filter>Fichiers d%27en-tête\game\mapObject\entity\effect\turret</Filter>
     </ClInclude>
     <ClInclude Include="WeaponEffect.h">
-      <Filter>Fichiers d%27en-tête</Filter>
+      <Filter>Fichiers d%27en-tête\game\mapObject\entity\effect</Filter>
+    </ClInclude>
+    <ClInclude Include="TurretEffectModelFactory.h">
+      <Filter>Fichiers d%27en-tête\game\mapObject\entity\effect\turret</Filter>
+    </ClInclude>
+    <ClInclude Include="TurretEffectModel.h">
+      <Filter>Fichiers d%27en-tête\game\mapObject\entity\effect\turret</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
