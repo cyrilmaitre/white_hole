@@ -10,6 +10,8 @@
 //*************************************************************
 #define JSON_ROTATIONVELOCITY		"rotationvelocity"
 #define JSON_TURRETMODEL			"turret_model"
+#define JSON_WEAPONSPRITE			"weapon_sprite"
+#define WEAPONSPRITE_DEFAULT		"cannon_basic.png"
 #define SPRITE_DEFAULT				"turret_one_1.png"
 #define TURRET_ROTATION_TICKMIN		3.f	// sec
 #define TURRET_ROTATION_TICKMAX		6.f // sec
@@ -21,6 +23,7 @@
 TurretEffect::TurretEffect( Entity* p_entity, Json::Value p_turretJson ) : EntityEffect(p_entity, p_turretJson)
 {
 	this->setRotationVelocity(p_turretJson.get(JSON_ROTATIONVELOCITY, 0).asFloat());
+	this->setWeaponEffectSprite(p_turretJson.get(JSON_WEAPONSPRITE, WEAPONSPRITE_DEFAULT).asString());
 	this->setTurretModel(FactoryGet::getTurretEffectModelFactory()->getTurretEffectModel(p_turretJson.get(JSON_TURRETMODEL, 1).asInt()));
 
 	this->mTurretSprite.setTexture(*Resource::resource->getTexture(this->getTurretModel()->getSprite()));
@@ -32,7 +35,9 @@ TurretEffect::TurretEffect( Entity* p_entity, Json::Value p_turretJson ) : Entit
 
 TurretEffect::~TurretEffect( void )
 {
-
+	for(int i = 0; i < this->mWeaponEffect.size(); i++)
+		delete this->mWeaponEffect[i];
+	this->mWeaponEffect.clear();
 }
 
 //*************************************************************
@@ -52,6 +57,16 @@ void TurretEffect::setTurretModel( TurretEffectModel* p_model )
 	}
 }
 
+std::string TurretEffect::getWeaponEffectSprite()
+{
+	return this->mWeaponEffectSprite;
+}
+
+void TurretEffect::setWeaponEffectSprite( std::string p_sprite )
+{
+	this->mWeaponEffectSprite = p_sprite;
+}
+
 
 //*************************************************************
 // Methods
@@ -64,6 +79,9 @@ void TurretEffect::update()
 	{
 		this->updateTurret();
 		this->updatePosition();
+
+		for(int i = 0; i < this->mWeaponEffect.size(); i++)
+			this->mWeaponEffect[i]->update();
 	}
 }
 
@@ -74,9 +92,9 @@ void TurretEffect::updateTurret()
 		this->setRotationTarget(Tools::getAngle(this->getEntity()->Object::getX() + this->getOffsetXRotate(), 
 												this->getEntity()->Object::getY() + this->getOffsetYRotate(), 
 												this->getEntity()->getTarget()->getEntity()->getX(this->getEntity()->getPlane()), 
-												this->getEntity()->getTarget()->getEntity()->getY(this->getEntity()->getPlane())));
+												this->getEntity()->getTarget()->getEntity()->getY(this->getEntity()->getPlane())) - this->getEntity()->getRotation());
 		this->setRotation(this->getRotationTarget());
-		this->mTurretSprite.setRotation(this->getRotation());
+		this->mTurretSprite.setRotation(this->getEntity()->getRotation() + this->getRotation());
 	}
 	else
 	{
@@ -102,6 +120,8 @@ void TurretEffect::draw()
 	if(this->getEntity()->isVisible())
 	{
 		Resource::resource->getApp()->draw(this->mTurretSprite);
+		for(int i = 0; i < this->mWeaponEffect.size(); i++)
+			this->mWeaponEffect[i]->draw();
 	}
 }
 
@@ -112,7 +132,15 @@ void TurretEffect::computeTurretRotationTick()
 
 void TurretEffect::notifyTurretModelChanged()
 {
-
+	if(this->getTurretModel() != NULL)
+	{
+		for(int i = 0; i < this->getTurretModel()->getWeaponPositionCount(); i++)
+		{
+			sf::Vector2f currentOffset = this->getTurretModel()->getWeaponPosition(i);
+			this->mWeaponEffect.push_back(new WeaponEffect(this, currentOffset.x, currentOffset.y));
+		}
+	}
 }
+
 
 

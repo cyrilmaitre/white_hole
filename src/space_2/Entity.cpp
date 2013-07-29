@@ -32,6 +32,22 @@ Entity::~Entity(void)
 {
 	if(this->mShieldSprite != NULL)
 		delete this->mShieldSprite;
+
+	for(int i = 0; i < this->mRadarEffects.size(); i++)
+		delete this->mRadarEffects[i];
+	this->mRadarEffects.clear();
+
+	for(int i = 0; i < this->mFlashingLightEffects.size(); i++)
+		delete this->mFlashingLightEffects[i];
+	this->mFlashingLightEffects.clear();
+
+	for(int i = 0; i < this->mWeaponEffects.size(); i++)
+		delete this->mWeaponEffects[i];
+	this->mWeaponEffects.clear();
+
+	for(int i = 0; i < this->mTurretEffects.size(); i++)
+		delete this->mTurretEffects[i];
+	this->mTurretEffects.clear();
 }
 
 
@@ -86,11 +102,11 @@ void Entity::update()
 	for(int i = 0; i < this->mFlashingLightEffects.size(); i++)
 		this->mFlashingLightEffects[i]->update();
 
-	for(int i = 0; i < this->mWeaponEffects.size(); i++)
-		this->mWeaponEffects[i]->update();
-
 	for(int i = 0; i < this->mTurretEffects.size(); i++)
 		this->mTurretEffects[i]->update();
+
+	for(int i = 0; i < this->mWeaponEffects.size(); i++)
+		this->mWeaponEffects[i]->update();
 }
 
 void Entity::updateShieldSprite()

@@ -7,7 +7,7 @@ class EntityEffect
 {
 public:
 	// Constructor - Destructor
-	EntityEffect(Entity* p_entity, Json::Value p_json, sf::Vector2f p_offset = sf::Vector2f(0, 0), int p_size = 0);
+	EntityEffect(Entity* p_entity, Json::Value p_json);
 	~EntityEffect(void);
 
 	// Getters - Setters
@@ -31,7 +31,7 @@ public:
 
 	// Methods
 	virtual void update();
-	void updateOffsetRotate();
+	virtual void updateOffsetRotate();
 	virtual void draw();
 
 

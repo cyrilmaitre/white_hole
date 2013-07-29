@@ -5,7 +5,7 @@
 //*************************************************************
 // Constructreur - Destructeur
 //*************************************************************
-EntityMovableEffect::EntityMovableEffect( EntityMovable* p_entity, Json::Value p_json, sf::Vector2f p_offset, int p_size ) : EntityEffect(p_entity, p_json, p_offset, p_size)
+EntityMovableEffect::EntityMovableEffect( EntityMovable* p_entity, Json::Value p_json ) : EntityEffect(p_entity, p_json)
 {
 	this->setEntityMovable(p_entity);
 }

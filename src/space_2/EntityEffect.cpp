@@ -13,13 +13,16 @@
 //*************************************************************
 // Constructreur - Destructeur
 //*************************************************************
-EntityEffect::EntityEffect( Entity* p_entity, Json::Value p_json, sf::Vector2f p_offset, int p_size )
+EntityEffect::EntityEffect( Entity* p_entity, Json::Value p_json )
 {
 	this->setEntity(p_entity);
-	this->setOffsetX(p_json.get(JSON_OFFSETX, 0).asInt());
-	this->setOffsetY(p_json.get(JSON_OFFSETY, 0).asInt());
-	this->setSize(p_json.get(JSON_SIZE, 0).asInt());
-	this->updateOffsetRotate();
+	if(p_json != NULL)
+	{
+		this->setOffsetX(p_json.get(JSON_OFFSETX, 0).asInt());
+		this->setOffsetY(p_json.get(JSON_OFFSETY, 0).asInt());
+		this->setSize(p_json.get(JSON_SIZE, 0).asInt());
+		this->updateOffsetRotate();
+	}
 }
 
 EntityEffect::~EntityEffect(void)

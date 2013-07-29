@@ -3,6 +3,7 @@
 #include "Rotable.h"
 #include "Clock.h"
 #include "TurretEffectModel.h"
+#include "WeaponEffect.h"
 
 
 class TurretEffect : public EntityEffect, public Rotable
@@ -15,6 +16,9 @@ public:
 	// Getters - Setters
 	TurretEffectModel* getTurretModel();
 	void setTurretModel(TurretEffectModel* p_model);
+
+	std::string getWeaponEffectSprite();
+	void setWeaponEffectSprite(std::string p_sprite);
 
 	// Methods
 	void update();
@@ -30,6 +34,9 @@ private:
 	sf::Sprite mTurretSprite;
 	float mTurretRotationTick;
 	mks::Clock mTurretClock;
+
+	std::string mWeaponEffectSprite;
+	std::vector<WeaponEffect*> mWeaponEffect;
 
 	// Methods
 	void computeTurretRotationTick();
