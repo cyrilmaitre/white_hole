@@ -24,11 +24,13 @@ TurretEffect::TurretEffect( Entity* p_entity, Json::Value p_turretJson ) : Entit
 {
 	this->setRotationVelocity(p_turretJson.get(JSON_ROTATIONVELOCITY, 0).asFloat());
 	this->setWeaponEffectSprite(p_turretJson.get(JSON_WEAPONSPRITE, WEAPONSPRITE_DEFAULT).asString());
-	this->setTurretModel(FactoryGet::getTurretEffectModelFactory()->getTurretEffectModel(p_turretJson.get(JSON_TURRETMODEL, 1).asInt()));
 
+	this->mTurretModel = FactoryGet::getTurretEffectModelFactory()->getTurretEffectModel(p_turretJson.get(JSON_TURRETMODEL, 1).asInt());
 	this->mTurretSprite.setTexture(*Resource::resource->getTexture(this->getTurretModel()->getSprite()));
 	ToolsImage::setSpriteOriginCenter(&this->mTurretSprite);
 	ToolsImage::resizeSprite(&this->mTurretSprite, this->getSize(), this->getSize());
+	this->setTurretScale(this->mTurretSprite.getScale().x);
+	this->notifyTurretModelChanged();
 
 	this->computeTurretRotationTick();
 }
@@ -55,6 +57,16 @@ void TurretEffect::setTurretModel( TurretEffectModel* p_model )
 		this->mTurretModel = p_model;
 		this->notifyTurretModelChanged();
 	}
+}
+
+float TurretEffect::getTurretScale()
+{
+	return this->mTurretScale;
+}
+
+void TurretEffect::setTurretScale( float p_scale )
+{
+	this->mTurretScale = p_scale;
 }
 
 std::string TurretEffect::getWeaponEffectSprite()
@@ -137,7 +149,7 @@ void TurretEffect::notifyTurretModelChanged()
 		for(int i = 0; i < this->getTurretModel()->getWeaponPositionCount(); i++)
 		{
 			sf::Vector2f currentOffset = this->getTurretModel()->getWeaponPosition(i);
-			this->mWeaponEffect.push_back(new WeaponEffect(this, currentOffset.x, currentOffset.y));
+			this->mWeaponEffect.push_back(new WeaponEffect(this, currentOffset.x * this->getTurretScale(), currentOffset.y * this->getTurretScale()));
 		}
 	}
 }

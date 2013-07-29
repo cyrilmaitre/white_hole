@@ -26,10 +26,10 @@ WeaponEffect::WeaponEffect( TurretEffect* p_turret, float p_offsetx, float p_off
 	this->mTurret = p_turret;
 	this->mWeaponSprite.setTexture(*Resource::resource->getTexture(this->mTurret->getWeaponEffectSprite()));
 	ToolsImage::setSpriteOriginCenter(&this->mWeaponSprite);
-	this->setSize(this->mWeaponSprite.getLocalBounds().width);
+	this->mWeaponSprite.setScale(this->mTurret->getTurretScale(), this->mTurret->getTurretScale());
 
 	this->setOffsetX(p_offsetx);
-	this->setOffsetY(p_offsety - this->mWeaponSprite.getLocalBounds().height / 2);
+	this->setOffsetY(p_offsety - this->mWeaponSprite.getGlobalBounds().height / 2);
 	this->updateOffsetRotate();
 }
 

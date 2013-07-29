@@ -17,6 +17,9 @@ public:
 	TurretEffectModel* getTurretModel();
 	void setTurretModel(TurretEffectModel* p_model);
 
+	float getTurretScale();
+	void setTurretScale(float p_scale);
+
 	std::string getWeaponEffectSprite();
 	void setWeaponEffectSprite(std::string p_sprite);
 
@@ -32,6 +35,8 @@ private:
 	// Attributs
 	TurretEffectModel* mTurretModel;
 	sf::Sprite mTurretSprite;
+	float mTurretScale;
+
 	float mTurretRotationTick;
 	mks::Clock mTurretClock;
 
