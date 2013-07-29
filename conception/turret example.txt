@@ -1,0 +1,1 @@
+turrets = [{"x":-72,"y":0,"size":96,"rotationvelocity":180,"turret_model":3,"weapon_sprite":"cannon_rapid.png"},{"x":72,"y":0,"size":96,"rotationvelocity":180,"turret_model":2,"weapon_sprite":"cannon_rapid.png"}]

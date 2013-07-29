@@ -1,5 +1,6 @@
 #pragma once
 #include "EntityEffect.h"
+#include "Clock.h"
 
 class TurretEffect;
 
@@ -15,11 +16,15 @@ public:
 	float getOffsetAmmoX();
 	float getOffsetAmmoY();
 
+	bool isFiring();
+	void setFiring(bool p_firing);
+
 	// Methods
 	void update();
 	void updateWeapon();
 	void updatePosition();
 	void updateOffsetRotate();
+	void updateFiring();
 	void draw();
 
 
@@ -27,5 +32,8 @@ private:
 	// Attributs
 	TurretEffect* mTurret;
 	sf::Sprite mWeaponSprite;
+	sf::Sprite mWeaponFireSprite;
+	bool mFiring;
+	mks::Clock mFiringClock;
 };
 

@@ -71,6 +71,7 @@ sf::Vector2f Entity::getWeaponOffset()
 	{
 		offset.x = this->mWeaponEffects[this->mWeaponEffectCurrent]->getOffsetAmmoX();
 		offset.y = this->mWeaponEffects[this->mWeaponEffectCurrent]->getOffsetAmmoY();
+		this->mWeaponEffects[this->mWeaponEffectCurrent]->setFiring(true);
 		this->selectNextWeapon();
 	}
 	return offset;

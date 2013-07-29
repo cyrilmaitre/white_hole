@@ -8,6 +8,9 @@
 //*************************************************************
 #define JSON_SPRITE					"sprite"
 #define SPRITE_DEFAULT				"radar_1.png"
+#define SPRITE_FIRE					"cannon_fire_effect.png"
+#define SPRITE_FIRE_PERCENT			0.75	// %
+#define FIRING_TIME					150		// ms
 
 
 //*************************************************************
@@ -16,9 +19,14 @@
 WeaponEffect::WeaponEffect( Entity* p_entity, Json::Value p_weaponJson ) : EntityEffect(p_entity, p_weaponJson)
 {
 	this->mTurret = NULL;
+	
 	this->mWeaponSprite.setTexture(*Resource::resource->getTexture(p_weaponJson.get(JSON_SPRITE, SPRITE_DEFAULT).asString()));
 	ToolsImage::setSpriteOriginCenter(&this->mWeaponSprite);
 	ToolsImage::resizeSprite(&this->mWeaponSprite, this->getSize(), this->getSize());
+
+	this->mWeaponFireSprite.setTexture(*Resource::resource->getTexture(SPRITE_FIRE));
+	this->mWeaponFireSprite.setOrigin(this->mWeaponFireSprite.getLocalBounds().width / 2, this->mWeaponFireSprite.getLocalBounds().height);
+	ToolsImage::resizeSprite(&this->mWeaponFireSprite, this->getSize() * SPRITE_FIRE_PERCENT, this->getSize() * SPRITE_FIRE_PERCENT);
 }
 
 WeaponEffect::WeaponEffect( TurretEffect* p_turret, float p_offsetx, float p_offsety ) : EntityEffect(NULL, NULL)
@@ -27,6 +35,11 @@ WeaponEffect::WeaponEffect( TurretEffect* p_turret, float p_offsetx, float p_off
 	this->mWeaponSprite.setTexture(*Resource::resource->getTexture(this->mTurret->getWeaponEffectSprite()));
 	ToolsImage::setSpriteOriginCenter(&this->mWeaponSprite);
 	this->mWeaponSprite.setScale(this->mTurret->getTurretScale(), this->mTurret->getTurretScale());
+	this->setSize(this->mWeaponSprite.getGlobalBounds().width);
+
+	this->mWeaponFireSprite.setTexture(*Resource::resource->getTexture(SPRITE_FIRE));
+	this->mWeaponFireSprite.setOrigin(this->mWeaponFireSprite.getLocalBounds().width / 2, this->mWeaponFireSprite.getLocalBounds().height);
+	ToolsImage::resizeSprite(&this->mWeaponFireSprite, this->getSize() * SPRITE_FIRE_PERCENT, this->getSize() * SPRITE_FIRE_PERCENT);
 
 	this->setOffsetX(p_offsetx);
 	this->setOffsetY(p_offsety - this->mWeaponSprite.getGlobalBounds().height / 2);
@@ -57,6 +70,18 @@ float WeaponEffect::getOffsetAmmoY()
 		return this->getOffsetYRotate() + this->getEntity()->getRocking();
 }
 
+bool WeaponEffect::isFiring()
+{
+	bool returnValue = this->mFiring;
+	this->mFiring = false;
+	return returnValue;
+}
+
+void WeaponEffect::setFiring( bool p_firing )
+{
+	this->mFiring = p_firing;
+}
+
 
 //*************************************************************
 // Methods
@@ -68,25 +93,53 @@ void WeaponEffect::update()
 	{
 		this->updateWeapon();
 		this->updatePosition();
+		this->updateFiring();
 	}
+}
+
+void WeaponEffect::updateFiring()
+{
+	if(this->isFiring())
+		this->mFiringClock.restart();
+
+	if(this->mFiringClock.getElapsedTimeAsMilliseconds() < FIRING_TIME)
+		this->mWeaponFireSprite.setColor(sf::Color(255, 255, 255, 255 * (1.f - (float)this->mFiringClock.getElapsedTimeAsMilliseconds() / (float)FIRING_TIME)));
+	else
+		this->mWeaponFireSprite.setColor(sf::Color(255, 255, 255, 0));
 }
 
 void WeaponEffect::updateWeapon()
 {
 	if(this->mTurret != NULL)
-		this->mWeaponSprite.setRotation(this->mTurret->getRotation() + this->mTurret->getEntity()->getRotation());
+	{
+		float rotation = this->mTurret->getRotation() + this->mTurret->getEntity()->getRotation();
+		this->mWeaponSprite.setRotation(rotation);
+		this->mWeaponFireSprite.setRotation(rotation);
+	}
 	else
-		this->mWeaponSprite.setRotation(this->getEntity()->getRotation());
+	{
+		float rotation = this->getEntity()->getRotation();
+		this->mWeaponSprite.setRotation(rotation);
+		this->mWeaponFireSprite.setRotation(rotation);
+	}
 }
 
 void WeaponEffect::updatePosition()
 {
 	if(this->mTurret != NULL)
-		this->mWeaponSprite.setPosition(	this->mTurret->getEntity()->getScreenX() + this->mTurret->getOffsetXRotate() + this->getOffsetXRotate(), 
-											this->mTurret->getEntity()->getScreenY() + this->mTurret->getEntity()->getRocking() + this->mTurret->getOffsetYRotate() + this->getOffsetYRotate());	
+	{
+		float positionX = this->mTurret->getEntity()->getScreenX() + this->mTurret->getOffsetXRotate() + this->getOffsetXRotate();
+		float positionY = this->mTurret->getEntity()->getScreenY() + this->mTurret->getEntity()->getRocking() + this->mTurret->getOffsetYRotate() + this->getOffsetYRotate();
+		this->mWeaponSprite.setPosition(positionX, positionY);	
+		this->mWeaponFireSprite.setPosition(positionX, positionY);
+	}
 	else
-		this->mWeaponSprite.setPosition(	this->getEntity()->getScreenX() + this->getOffsetXRotate(), 
-											this->getEntity()->getScreenY() + this->getEntity()->getRocking() + this->getOffsetYRotate());	
+	{
+		float positionX = this->getEntity()->getScreenX() + this->getOffsetXRotate();
+		float positionY = this->getEntity()->getScreenY() + this->getEntity()->getRocking() + this->getOffsetYRotate();
+		this->mWeaponSprite.setPosition(positionX, positionY);	
+		this->mWeaponFireSprite.setPosition(positionX, positionY);
+	}
 }
 
 void WeaponEffect::updateOffsetRotate()
@@ -103,6 +156,8 @@ void WeaponEffect::draw()
 	if((this->mTurret != NULL && this->mTurret->getEntity()->isVisible()) || (this->getEntity() != NULL && this->getEntity()->isVisible()))
 	{
 		Resource::resource->getApp()->draw(this->mWeaponSprite);
+		Resource::resource->getApp()->draw(this->mWeaponFireSprite);
 	}
 }
+
 

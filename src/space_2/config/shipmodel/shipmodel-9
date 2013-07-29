@@ -28,5 +28,4 @@ stuff_slot = 2
 rotation_velocity = 180
 reactors = [{"x":-14,"y":22,"type":0,"size":20,"reactoralphaspeed":200},{"x":14,"y":22,"type":1,"size":20,"reactoralphaspeed":200}]
 flashinglights = [{"x":-14,"y":5,"color":4,"size":32,"tickmin":1000,"tickmax":2500},{"x":14,"y":5,"color":4,"size":32,"tickmin":1000,"tickmax":2500}]
-turrets = [{"x":-72,"y":0,"size":96,"rotationvelocity":180,"turret_model":3,"weapon_sprite":"cannon_rapid.png"},{"x":72,"y":0,"size":96,"rotationvelocity":180,"turret_model":2,"weapon_sprite":"cannon_rapid.png"}]
 weapons = [{"x":-19,"y":-13,"size":18,"sprite":"cannon_basic.png"},{"x":19,"y":-13,"size":18,"sprite":"cannon_basic.png"}]
