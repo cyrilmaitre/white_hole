@@ -274,11 +274,11 @@ void Entity::draw()
 	for(int i = 0; i < this->mFlashingLightEffects.size(); i++)
 		this->mFlashingLightEffects[i]->draw();
 
-	for(int i = 0; i < this->mWeaponEffects.size(); i++)
-		this->mWeaponEffects[i]->draw();
-
 	for(int i = 0; i < this->mTurretEffects.size(); i++)
 		this->mTurretEffects[i]->draw();
+
+	for(int i = 0; i < this->mWeaponEffects.size(); i++)
+		this->mWeaponEffects[i]->draw();
 
 	if(this->isVisible())
 	{
@@ -313,6 +313,11 @@ void Entity::selectNextWeapon()
 	this->mWeaponEffectCurrent++;
 	if(this->mWeaponEffectCurrent >= this->mWeaponEffects.size())
 		this->mWeaponEffectCurrent = 0;
+}
+
+void Entity::addWeaponEffect( WeaponEffect* p_weapon )
+{
+	this->mWeaponEffects.push_back(p_weapon);
 }
 
 

@@ -32,6 +32,7 @@ public:
 	sf::Vector2f getWeaponOffset();
 
 	// Methods
+	void addWeaponEffect(WeaponEffect* p_weapon);
 	void update();
 	void updateShieldSprite();
 	void updateSprite();

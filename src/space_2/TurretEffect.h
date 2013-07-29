@@ -35,13 +35,11 @@ private:
 	// Attributs
 	TurretEffectModel* mTurretModel;
 	sf::Sprite mTurretSprite;
+	std::string mWeaponEffectSprite;
 	float mTurretScale;
 
 	float mTurretRotationTick;
 	mks::Clock mTurretClock;
-
-	std::string mWeaponEffectSprite;
-	std::vector<WeaponEffect*> mWeaponEffect;
 
 	// Methods
 	void computeTurretRotationTick();

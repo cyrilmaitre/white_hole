@@ -37,9 +37,7 @@ TurretEffect::TurretEffect( Entity* p_entity, Json::Value p_turretJson ) : Entit
 
 TurretEffect::~TurretEffect( void )
 {
-	for(int i = 0; i < this->mWeaponEffect.size(); i++)
-		delete this->mWeaponEffect[i];
-	this->mWeaponEffect.clear();
+
 }
 
 //*************************************************************
@@ -91,9 +89,6 @@ void TurretEffect::update()
 	{
 		this->updateTurret();
 		this->updatePosition();
-
-		for(int i = 0; i < this->mWeaponEffect.size(); i++)
-			this->mWeaponEffect[i]->update();
 	}
 }
 
@@ -132,8 +127,6 @@ void TurretEffect::draw()
 	if(this->getEntity()->isVisible())
 	{
 		Resource::resource->getApp()->draw(this->mTurretSprite);
-		for(int i = 0; i < this->mWeaponEffect.size(); i++)
-			this->mWeaponEffect[i]->draw();
 	}
 }
 
@@ -149,7 +142,7 @@ void TurretEffect::notifyTurretModelChanged()
 		for(int i = 0; i < this->getTurretModel()->getWeaponPositionCount(); i++)
 		{
 			sf::Vector2f currentOffset = this->getTurretModel()->getWeaponPosition(i);
-			this->mWeaponEffect.push_back(new WeaponEffect(this, currentOffset.x * this->getTurretScale(), currentOffset.y * this->getTurretScale()));
+			this->getEntity()->addWeaponEffect(new WeaponEffect(this, currentOffset.x * this->getTurretScale(), currentOffset.y * this->getTurretScale()));
 		}
 	}
 }

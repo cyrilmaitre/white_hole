@@ -43,12 +43,18 @@ WeaponEffect::~WeaponEffect(void)
 //*************************************************************
 float WeaponEffect::getOffsetAmmoX()
 {
-	return this->getOffsetXRotate();
+	if(this->mTurret != NULL)
+		return this->mTurret->getOffsetXRotate() + this->getOffsetXRotate();
+	else
+		return this->getOffsetXRotate();
 }
 
 float WeaponEffect::getOffsetAmmoY()
 {
-	return this->getOffsetYRotate() + this->getEntity()->getRocking();
+	if(this->mTurret != NULL)
+		return this->mTurret->getEntity()->getRocking() + this->mTurret->getOffsetYRotate() + this->getOffsetYRotate();
+	else
+		return this->getOffsetYRotate() + this->getEntity()->getRocking();
 }
 
 
