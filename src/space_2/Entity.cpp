@@ -100,14 +100,14 @@ void Entity::update()
 	for(int i = 0; i < this->mRadarEffects.size(); i++)
 		this->mRadarEffects[i]->update();
 
-	for(int i = 0; i < this->mFlashingLightEffects.size(); i++)
-		this->mFlashingLightEffects[i]->update();
-
 	for(int i = 0; i < this->mTurretEffects.size(); i++)
 		this->mTurretEffects[i]->update();
 
 	for(int i = 0; i < this->mWeaponEffects.size(); i++)
 		this->mWeaponEffects[i]->update();
+
+	for(int i = 0; i < this->mFlashingLightEffects.size(); i++)
+		this->mFlashingLightEffects[i]->update();
 }
 
 void Entity::updateShieldSprite()
@@ -272,14 +272,14 @@ void Entity::draw()
 	for(int i = 0; i < this->mRadarEffects.size(); i++)
 		this->mRadarEffects[i]->draw();
 
-	for(int i = 0; i < this->mFlashingLightEffects.size(); i++)
-		this->mFlashingLightEffects[i]->draw();
-
 	for(int i = 0; i < this->mTurretEffects.size(); i++)
 		this->mTurretEffects[i]->draw();
 
 	for(int i = 0; i < this->mWeaponEffects.size(); i++)
 		this->mWeaponEffects[i]->draw();
+
+	for(int i = 0; i < this->mFlashingLightEffects.size(); i++)
+		this->mFlashingLightEffects[i]->draw();
 
 	if(this->isVisible())
 	{
