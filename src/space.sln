@@ -5,6 +5,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "space_2", "space_2\space_2.
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "mkkutil", "mkkutil\mkkutil.vcxproj", "{F1652955-E0EC-4E48-AD83-1D65CC7EE3B6}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "chatserver", "chatserver\chatserver.vcxproj", "{F901F842-9346-4E18-A167-DB7834962432}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -35,6 +37,16 @@ Global
 		{F1652955-E0EC-4E48-AD83-1D65CC7EE3B6}.Release|Mixed Platforms.Build.0 = Release|Win32
 		{F1652955-E0EC-4E48-AD83-1D65CC7EE3B6}.Release|Win32.ActiveCfg = Release|Win32
 		{F1652955-E0EC-4E48-AD83-1D65CC7EE3B6}.Release|Win32.Build.0 = Release|Win32
+		{F901F842-9346-4E18-A167-DB7834962432}.Debug|Any CPU.ActiveCfg = Debug|Win32
+		{F901F842-9346-4E18-A167-DB7834962432}.Debug|Mixed Platforms.ActiveCfg = Debug|Win32
+		{F901F842-9346-4E18-A167-DB7834962432}.Debug|Mixed Platforms.Build.0 = Debug|Win32
+		{F901F842-9346-4E18-A167-DB7834962432}.Debug|Win32.ActiveCfg = Debug|Win32
+		{F901F842-9346-4E18-A167-DB7834962432}.Debug|Win32.Build.0 = Debug|Win32
+		{F901F842-9346-4E18-A167-DB7834962432}.Release|Any CPU.ActiveCfg = Release|Win32
+		{F901F842-9346-4E18-A167-DB7834962432}.Release|Mixed Platforms.ActiveCfg = Release|Win32
+		{F901F842-9346-4E18-A167-DB7834962432}.Release|Mixed Platforms.Build.0 = Release|Win32
+		{F901F842-9346-4E18-A167-DB7834962432}.Release|Win32.ActiveCfg = Release|Win32
+		{F901F842-9346-4E18-A167-DB7834962432}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
