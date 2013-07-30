@@ -100,6 +100,7 @@
     <ClCompile Include="Character.cpp" />
     <ClCompile Include="CharacterShipItemStackUpdate.cpp" />
     <ClCompile Include="CharacterUpdate.cpp" />
+    <ClCompile Include="ChatClient.cpp" />
     <ClCompile Include="DebugScreen.cpp" />
     <ClCompile Include="EntityTarget.cpp" />
     <ClCompile Include="ExperienceBar.cpp" />
@@ -335,6 +336,8 @@
     <ClInclude Include="Character.h" />
     <ClInclude Include="CharacterShipItemStackUpdate.h" />
     <ClInclude Include="CharacterUpdate.h" />
+    <ClInclude Include="ChatClient.h" />
+    <ClInclude Include="ChatDefine.h" />
     <ClInclude Include="DebugScreen.h" />
     <ClInclude Include="DestructableData.h" />
     <ClInclude Include="EntityTarget.h" />

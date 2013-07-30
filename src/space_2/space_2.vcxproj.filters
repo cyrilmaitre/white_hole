@@ -331,6 +331,12 @@
     <Filter Include="Fichiers d%27en-tête\game\mapObject\entity\module">
       <UniqueIdentifier>{65cd191e-2ddb-4bc0-ae0c-f8c2e8e33dc6}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Fichiers d%27en-tête\resource\network\chat">
+      <UniqueIdentifier>{9b215eab-b349-4144-981a-c5d32fff9521}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fichiers sources\resource\network\chat">
+      <UniqueIdentifier>{9f5acf72-1a6e-4a99-8227-db0f120ab32a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Game.cpp">
@@ -1031,6 +1037,9 @@
     </ClCompile>
     <ClCompile Include="MkkFormat.cpp">
       <Filter>Fichiers sources\mks\tools</Filter>
+    </ClCompile>
+    <ClCompile Include="ChatClient.cpp">
+      <Filter>Fichiers sources\resource\network\chat</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1750,6 +1759,12 @@
     </ClInclude>
     <ClInclude Include="MkkFormat.h">
       <Filter>Fichiers d%27en-tête\mks\tools</Filter>
+    </ClInclude>
+    <ClInclude Include="ChatClient.h">
+      <Filter>Fichiers d%27en-tête\resource\network\chat</Filter>
+    </ClInclude>
+    <ClInclude Include="ChatDefine.h">
+      <Filter>Fichiers d%27en-tête\resource\network\chat</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
