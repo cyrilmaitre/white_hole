@@ -1,4 +1,5 @@
 #include "ChatServer.h"
+#include "Debug.h"
 #include "../space_2/ChatDefine.h"
 
 ///***operator overloads for sf::Packet***///
@@ -16,93 +17,232 @@ sf::Packet& operator << (sf::Packet& packet, const S2C_Command s2c_command)
 
 // * CLIENT to SERVER *
 // -- Chat
-
-
-ChatServer::ChatServer(void)
+sf::Packet& operator >> (sf::Packet& packet, C2S_Chat& c2s_chat)
 {
+	return packet >> c2s_chat.message >> c2s_chat.to >> c2s_chat.dstType;
+}
+
+
+ChatServer::ChatServer(void) : listener(sf::TcpListener()), selector(sf::SocketSelector())
+{
+	mRunning = false;
 }
 
 
 void ChatServer::Create()
 {
-	Create(CHAT_SERVER_PORT);
+	Create((unsigned short)CHAT_SERVER_PORT);
 }
 
-void ChatServer::Create(sf::Uint16 port)
+void ChatServer::Create(unsigned short port)
 {
 
-	//we should never have any running threads here so we don't need to lock
 	mPort = port;
-
-
-	//start the listen server in own thread
-	mNetThread = std::unique_ptr<sf::Thread>(new sf::Thread(&ChatServer::mRunServer, this));
-	mRunThread = true;
-	mNetThread->launch();
+	mRunServer();
 }
 
 void ChatServer::mRunServer(void)
 {
 	// Create a socket to listen to new connections
-	sf::TcpListener listener;
-	listener.listen(mPort);
-
-	// Create a list to store the future clients
-	std::list< std::shared_ptr<Client> > clients;
-
-	// Create a selector
-	sf::SocketSelector selector;
+	sf::Socket::Status status = listener.listen(mPort);
+	if(status != sf::Socket::Status::Done) {
+		{ std::ostringstream msg; msg << "Unable to bind port: " << mPort << ""; Debug::msg(msg); }
+		exit(EXIT_FAILURE);
+	}
+	{ std::ostringstream msg; msg << "Server starting on port: " << mPort << ""; Debug::msg(msg); }
 
 	// Add the listener to the selector
 	selector.add(listener);
 
+	//
+	mRunning = true;
+
 	// Enter loop to handle new connection and updating of server / clients
-	while(mRunThread)
+	while(mRunning)
 	{		
 		//Make the selector wait for data on any socket
 		if(selector.wait(sf::Time(sf::seconds(0.5f))))
 		{
-			//If there are available slots test the listener - TODO report server full to client
+			//If there are available slots test the listener
 			if(selector.isReady(listener))
 			{
+				{ std::ostringstream msg; msg << "Selector is ready" << ""; Debug::msg(msg); }
+
 				//The listener is ready: there is a pending connection
 				std::shared_ptr<Client> client = std::shared_ptr<Client>(new Client);
 				
 				if(listener.accept(*client->socket) == sf::Socket::Done)
 				{
+
 					sf::Packet packet;
 					if(clients.size() < MAX_CLIENTS)
 					{
-						//Add the new client to the clients list
-						clients.push_back(client);
-
-						//Add the new client to the selector so that we will
-						//be notified when he sends something
-						selector.add(*client->socket);
+						//adding new client (not authenticated at the moment, just tcp connected)
+						AddClient(client);
 
 						//send motd to new client
 						S2C_Command s2c_cmd(ServerCommand::MOTD, SERVER_MOTD);
 						{
-							sf::Lock lock(mMutex);
 							packet << s2c_cmd;
 						}
-						client->socket->send(packet);
+						SendPacket(packet, client);
 					}
 					else
 					{
 						//send rejection message because server is full and tidy up
 						S2C_Command s2c_cmd(ServerCommand::SAY, "Connection refused. Reason: Server full.");
 						{
-							sf::Lock lock(mMutex);
 							packet << s2c_cmd;
 						}
-						client->socket->send(packet);
-						client->socket->disconnect();
+						SendPacket(packet, client);
+						DropClient(client);
 					}
 
 				}
-			}		
+				else 
+				{
+					DropClient(client);
+				}
+			}
+
+		}
+		else
+		{
+			//The listener socket is not ready, test all other sockets (the clients)
+			for(auto it = clients.begin(); it != clients.end(); ++it)
+			{
+				{ std::ostringstream msg; msg << "Alo 1" << ""; Debug::msg(msg); }
+				std::shared_ptr<Client> client = *it;
+				sf::Packet packet;
+
+				//check to see if we can receive data
+				if (selector.isReady(*client->socket))
+				{
+					{ std::ostringstream msg; msg << "Alo 2" << ""; Debug::msg(msg); }
+					//The client has sent some data, we can receive it
+					if (client->socket->receive(packet) == sf::Socket::Done)
+					{
+						{ std::ostringstream msg; msg << "Alo 3" << ""; Debug::msg(msg); }
+						HandlePacket(packet, client);
+					}
+					else
+					{
+						{ std::ostringstream msg; msg << "Alo 4" << ""; Debug::msg(msg); }
+						DropClient(client);
+					}
+				}
+
+			}
 		}
 
+	}
+}
+
+
+void ChatServer::AddClient(std::shared_ptr<Client> client)
+{
+	client->state = ClientState::TCP_CONNECTED;
+
+	//Add the new client to the clients list
+	clients.push_back(client);
+
+	//Add the new client to the selector so that we will
+	//be notified when he sends something
+	selector.add(*client->socket);
+
+	{ std::ostringstream msg; msg << "Client " << clients.size() << "added in clientlist: " << client->socket->getRemoteAddress() << ""; Debug::msg(msg); }
+}
+
+
+void ChatServer::DropClient(std::shared_ptr<Client> client)
+{
+	client->state = ClientState::DROPPED; // this might seems useless since it will be delete later. it's just a security.
+
+	{ std::ostringstream msg; msg << "Client disconnected - " << client->socket->getRemoteAddress().toString() << "";	Debug::msg(msg); }
+	client->socket->disconnect();
+	selector.remove(*client->socket);
+
+	// If the client is the "clients" std::list
+	if(std::find(clients.begin(), clients.end(), client) != clients.end()) {
+		clients.remove(client);
+		{ std::ostringstream msg; msg << "Clients size is now " << clients.size() << ""; Debug::msg(msg); }
+	} else {
+		{ std::ostringstream msg; msg << "Client wasn't in list" << "";	Debug::msg(msg); }
+	}
+}
+
+bool ChatServer::SendPacket(sf::Packet &packet, std::shared_ptr<Client> client)
+{
+    bool packetSent = false;
+    
+    for(int i = 0; i < MAX_PACKETSEND_RETRY; i++)
+    {
+        // Si le packet a été envoyé
+        if(client->socket->send(packet) == sf::Socket::Status::Done)
+        {
+            packetSent = true;
+			{ std::ostringstream msg; msg << "[SEND] Packet sent - size=" << packet.getDataSize() << ""; Debug::msg(msg); }
+            break;
+        }
+    }
+    
+    // Si on n'arrive à pas envoyer, on drop le client
+    if(!packetSent) {
+		{ std::ostringstream msg; msg << "[SEND] Error: Packet NOT sent ! - size=" << packet.getDataSize() << ""; Debug::msg(msg); }
+        DropClient(client);
+    }
+
+	return packetSent;
+}
+
+
+void ChatServer::HandlePacket(sf::Packet& packet, std::shared_ptr<Client> client)
+{	
+	{ std::ostringstream msg; msg << "[RECV] Received data - size:" << packet.getDataSize() << ""; Debug::msg(msg); }
+
+	// If client is authed
+	switch(client->state)
+	{
+	case ClientState::AUTHED:
+		{
+		// We expect only chat messages from client at the moment
+		C2S_Chat c2s_chat;
+
+		// If we can read the message
+		if(packet >> c2s_chat)
+		{
+			// We receive this:
+			//(std::string)	c2s_chat.message;
+			//(std::string)	c2s_chat.to;
+			//(sf::Uint16)	c2s_chat.dstType;
+
+			// Let's broadcast the message to all users
+			for(auto it = clients.begin(); it != clients.end(); ++it)
+			{
+				std::shared_ptr<Client> client = *it;
+
+			}
+		}
+		break;
+		}
+
+
+	case ClientState::MUTED:
+		{
+		break;
+		}
+			
+	case ClientState::DROPPED:
+	case ClientState::UNKNOWN_CS:
+		{
+		// holy shit, this case shouldn't happen
+		break;
+		}
+
+	default:
+		{
+		// holy shit, this case shouldn't happen
+		break;
+		}
 	}
 }

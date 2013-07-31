@@ -2,9 +2,10 @@
 #include <list>
 #include <SFML/Network.hpp>
 
-#define SERVER_NAME		"Makaki"
-#define SERVER_MOTD		"Sisi la famille"
-#define MAX_CLIENTS		1200
+#define SERVER_NAME				"Makaki"
+#define SERVER_MOTD				"Sisi la famille"
+#define MAX_CLIENTS				1
+#define MAX_PACKETSEND_RETRY	5
 
 // ------------
 // --- ENUM ---
@@ -14,8 +15,8 @@ enum ClientState
 {
 	UNKNOWN_CS,
 	TCP_CONNECTED,
+	DROPPED,
 	AUTHED,
-	OFFLINE,
 	MUTED
 };
 
@@ -70,17 +71,25 @@ struct S2C_Command
 	std::string argument;
 };
 
+// Client To Server - Chat
+struct C2S_Chat
+{
+	C2S_Chat(std::string message = "", std::string to = "", sf::Uint16 dstType = ChatDstType::NONE)
+		: message(message),	to(to), dstType(dstType)
+	{}
+
+	std::string to, message;
+	sf::Uint16 dstType;
+};
+
 struct Client
 {
 	Client()
-		: socket(std::unique_ptr<sf::TcpSocket>(new sf::TcpSocket)), uid(0), state(ClientState::UNKNOWN_CS)
-	{
-		//generate a unique ID from location in memory
-		uid = (sf::Uint32)socket.get();
-	}
+		: socket(std::unique_ptr<sf::TcpSocket>(new sf::TcpSocket)), state(ClientState::UNKNOWN_CS)
+	{}
+
 	ClientState state;
 	std::unique_ptr<sf::TcpSocket> socket;
-	sf::Uint32 uid;
 	std::string name;
 };
 
@@ -93,15 +102,19 @@ class ChatServer
 public:
 	ChatServer(void);
 	void Create(void);
-	void Create(sf::Uint16 port);
-	void Broadcast(sf::Packet packet);
+	void Create(unsigned short port);
+	void AddClient(std::shared_ptr<Client> client);
+	void DropClient(std::shared_ptr<Client> client);
+	void HandlePacket(sf::Packet& packet, std::shared_ptr<Client> client);
+	bool SendPacket(sf::Packet &packet, std::shared_ptr<Client> client);
+	void Broadcast(sf::Packet& packet);
 	void Disconnect(void);
 
 private:
-	sf::Uint16 mPort;
-	std::unique_ptr<sf::Thread> mNetThread;
-	bool mRunThread;
-	sf::Mutex mMutex;
-
-	void mRunServer(void);	// Threaded function (1 server/language: EN, FR ? see later)
+	sf::SocketSelector selector;
+	sf::TcpListener listener;
+	std::list< std::shared_ptr<Client> > clients;	// List to store the future clients
+	unsigned short mPort;
+	bool mRunning;
+	void mRunServer(void);
 };
