@@ -1,11 +1,11 @@
 #include <iostream>
 #include "ChatServer.h"
 
-int main()
+int main(int argc, char** argv)
 {
 	//create object
 	ChatServer chatServer;
-	//start a server on the default port with logging enabled
+	//start a server on the default port
 	chatServer.Create();
 
 	//wait for input to quit
