@@ -1,10 +1,10 @@
 #pragma once
-#include <list>
+#include <vector>
 #include <SFML/Network.hpp>
 
 #define SERVER_NAME				"Makaki"
 #define SERVER_MOTD				"Sisi la famille"
-#define MAX_CLIENTS				1
+#define MAX_CLIENTS				10
 #define MAX_PACKETSEND_RETRY	5
 
 // ------------
@@ -113,7 +113,7 @@ public:
 private:
 	sf::SocketSelector selector;
 	sf::TcpListener listener;
-	std::list< std::shared_ptr<Client> > clients;	// List to store the future clients
+	std::vector< std::shared_ptr<Client> > clients;	// List to store the future clients
 	unsigned short mPort;
 	bool mRunning;
 	void mRunServer(void);

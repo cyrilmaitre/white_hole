@@ -45,11 +45,12 @@ void ChatServer::mRunServer(void)
 {
 	// Create a socket to listen to new connections
 	sf::Socket::Status status = listener.listen(mPort);
+
 	if(status != sf::Socket::Status::Done) {
 		{ std::ostringstream msg; msg << "Unable to bind port: " << mPort << ""; Debug::msg(msg); }
 		exit(EXIT_FAILURE);
 	}
-	{ std::ostringstream msg; msg << "Server starting on port: " << mPort << ""; Debug::msg(msg); }
+	{ std::ostringstream msg; msg << "Server starting on port: " << mPort << ". Listener blocking: " << listener.isBlocking() << ""; Debug::msg(msg); }
 
 	// Add the listener to the selector
 	selector.add(listener);
@@ -61,7 +62,7 @@ void ChatServer::mRunServer(void)
 	while(mRunning)
 	{		
 		//Make the selector wait for data on any socket
-		if(selector.wait())
+		if(selector.wait(sf::Time(sf::seconds(0.5f))))
 		{
 			//If there are available slots test the listener
 			if(selector.isReady(listener))
@@ -70,7 +71,7 @@ void ChatServer::mRunServer(void)
 
 				//The listener is ready: there is a pending connection
 				std::shared_ptr<Client> client = std::shared_ptr<Client>(new Client);
-				
+
 				if(listener.accept(*client->socket) == sf::Socket::Done)
 				{
 
@@ -101,6 +102,7 @@ void ChatServer::mRunServer(void)
 				}
 				else 
 				{
+					{ std::ostringstream msg; msg << "Error, can't get connection with client " << client->socket->getRemoteAddress() << ""; Debug::msg(msg); }
 					DropClient(client);
 				}
 			}
@@ -108,32 +110,61 @@ void ChatServer::mRunServer(void)
 			{
 				{ std::ostringstream msg; msg << "Clients size is now " << clients.size() << ""; Debug::msg(msg); }
 				//The listener socket is not ready, test all other sockets (the clients)
-				for(auto it = clients.begin(); it != clients.end(); ++it)
+
+				for(int i = 0; i < clients.size(); i++)
 				{
 					{ std::ostringstream msg; msg << "Alo 1" << ""; Debug::msg(msg); }
-					std::shared_ptr<Client> client = *it;
+					std::shared_ptr<Client> client = clients[i];
 					sf::Packet packet;
 
 					//check to see if we can receive data
 					if (selector.isReady(*client->socket))
 					{
+
 						{ std::ostringstream msg; msg << "Alo 2" << ""; Debug::msg(msg); }
+
 						//The client has sent some data, we can receive it
-						if (client->socket->receive(packet) == sf::Socket::Done)
+						sf::Socket::Status status = client->socket->receive(packet);
+						switch(status)
 						{
-							{ std::ostringstream msg; msg << "Alo 3" << ""; Debug::msg(msg); }
+						case sf::Socket::Status::Done:
+							{
+							{ std::ostringstream msg; msg << "Packet received successfuly" << ""; Debug::msg(msg); }
 							HandlePacket(packet, client);
-						}
-						else
-						{
-							{ std::ostringstream msg; msg << "Alo 4" << ""; Debug::msg(msg); }
+							}
+
+						case sf::Socket::Status::Disconnected:
+							{
+							{ std::ostringstream msg; msg << "Packet received with code: Status::Disconnected ("<< status << ")"; Debug::msg(msg); }
 							DropClient(client);
+							break;
+							}
+
+						default:
+							{
+							{ std::ostringstream msg; msg << "Packet received with code: "<< status << ""; Debug::msg(msg); }
+							break;
+							}
 						}
 					}
+					else {
+						{ std::ostringstream msg; msg << "Foufou not ready" << ""; Debug::msg(msg); }
+					}
+					{ std::ostringstream msg; msg << "Foufou 164615 - " << clients.size() << ""; Debug::msg(msg); }
 
 				}
 			}
 		}
+
+		{ std::ostringstream msg; msg << "Foufou 2035415454"  << clients.size() << "";; Debug::msg(msg); }
+
+
+		// Delete from vector all DROPPED client.
+		clients.erase(std::remove_if(clients.begin(), clients.end(), 
+			[&](std::shared_ptr<Client> const& client){
+				return client->state == ClientState::DROPPED;
+		}), clients.end());
+
 	}
 }
 
@@ -155,22 +186,24 @@ void ChatServer::AddClient(std::shared_ptr<Client> client)
 
 void ChatServer::DropClient(std::shared_ptr<Client> client)
 {
-	{ std::ostringstream msg; msg << "Foufou" << "";	Debug::msg(msg); }
 	client->state = ClientState::DROPPED; // this might seems useless since it will be delete later. it's just a security.
 
 	{ std::ostringstream msg; msg << "Client disconnected - " << client->socket->getRemoteAddress().toString() << "";	Debug::msg(msg); }
 	client->socket->disconnect();
 	selector.remove(*client->socket);
 
-	// If the client is the "clients" std::list
-	if(std::find(clients.begin(), clients.end(), client) != clients.end()) {
-		// TODO
-		clients.erase(std::remove(clients.begin(), clients.end(), client), clients.end()); // NOT WORK
 
+	// If the client is the "clients" std::list 
+	/*
+	if(std::find(clients.begin(), clients.end(), client) != clients.end()) {
+
+		// TODO
+		clients.erase(std::remove(clients.begin(), clients.end(), client), clients.end());
 		{ std::ostringstream msg; msg << "Clients size is now " << clients.size() << ""; Debug::msg(msg); }
+
 	} else {
 		{ std::ostringstream msg; msg << "Client wasn't in list" << "";	Debug::msg(msg); }
-	}
+	}*/
 }
 
 bool ChatServer::SendPacket(sf::Packet &packet, std::shared_ptr<Client> client)
