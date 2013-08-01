@@ -23,7 +23,7 @@ sf::Packet& operator >> (sf::Packet& packet, C2S_Chat& c2s_chat)
 }
 
 
-ChatServer::ChatServer(void) : listener(sf::TcpListener()), selector(sf::SocketSelector())
+ChatServer::ChatServer(void)
 {
 	mRunning = false;
 }
@@ -61,7 +61,7 @@ void ChatServer::mRunServer(void)
 	while(mRunning)
 	{		
 		//Make the selector wait for data on any socket
-		if(selector.wait(sf::Time(sf::seconds(0.5f))))
+		if(selector.wait())
 		{
 			//If there are available slots test the listener
 			if(selector.isReady(listener))
@@ -104,37 +104,36 @@ void ChatServer::mRunServer(void)
 					DropClient(client);
 				}
 			}
-
-		}
-		else
-		{
-			//The listener socket is not ready, test all other sockets (the clients)
-			for(auto it = clients.begin(); it != clients.end(); ++it)
+			else
 			{
-				{ std::ostringstream msg; msg << "Alo 1" << ""; Debug::msg(msg); }
-				std::shared_ptr<Client> client = *it;
-				sf::Packet packet;
-
-				//check to see if we can receive data
-				if (selector.isReady(*client->socket))
+				{ std::ostringstream msg; msg << "Clients size is now " << clients.size() << ""; Debug::msg(msg); }
+				//The listener socket is not ready, test all other sockets (the clients)
+				for(auto it = clients.begin(); it != clients.end(); ++it)
 				{
-					{ std::ostringstream msg; msg << "Alo 2" << ""; Debug::msg(msg); }
-					//The client has sent some data, we can receive it
-					if (client->socket->receive(packet) == sf::Socket::Done)
-					{
-						{ std::ostringstream msg; msg << "Alo 3" << ""; Debug::msg(msg); }
-						HandlePacket(packet, client);
-					}
-					else
-					{
-						{ std::ostringstream msg; msg << "Alo 4" << ""; Debug::msg(msg); }
-						DropClient(client);
-					}
-				}
+					{ std::ostringstream msg; msg << "Alo 1" << ""; Debug::msg(msg); }
+					std::shared_ptr<Client> client = *it;
+					sf::Packet packet;
 
+					//check to see if we can receive data
+					if (selector.isReady(*client->socket))
+					{
+						{ std::ostringstream msg; msg << "Alo 2" << ""; Debug::msg(msg); }
+						//The client has sent some data, we can receive it
+						if (client->socket->receive(packet) == sf::Socket::Done)
+						{
+							{ std::ostringstream msg; msg << "Alo 3" << ""; Debug::msg(msg); }
+							HandlePacket(packet, client);
+						}
+						else
+						{
+							{ std::ostringstream msg; msg << "Alo 4" << ""; Debug::msg(msg); }
+							DropClient(client);
+						}
+					}
+
+				}
 			}
 		}
-
 	}
 }
 
@@ -156,6 +155,7 @@ void ChatServer::AddClient(std::shared_ptr<Client> client)
 
 void ChatServer::DropClient(std::shared_ptr<Client> client)
 {
+	{ std::ostringstream msg; msg << "Foufou" << "";	Debug::msg(msg); }
 	client->state = ClientState::DROPPED; // this might seems useless since it will be delete later. it's just a security.
 
 	{ std::ostringstream msg; msg << "Client disconnected - " << client->socket->getRemoteAddress().toString() << "";	Debug::msg(msg); }
@@ -164,7 +164,9 @@ void ChatServer::DropClient(std::shared_ptr<Client> client)
 
 	// If the client is the "clients" std::list
 	if(std::find(clients.begin(), clients.end(), client) != clients.end()) {
-		clients.remove(client);
+		// TODO
+		clients.erase(std::remove(clients.begin(), clients.end(), client), clients.end()); // NOT WORK
+
 		{ std::ostringstream msg; msg << "Clients size is now " << clients.size() << ""; Debug::msg(msg); }
 	} else {
 		{ std::ostringstream msg; msg << "Client wasn't in list" << "";	Debug::msg(msg); }
@@ -220,8 +222,13 @@ void ChatServer::HandlePacket(sf::Packet& packet, std::shared_ptr<Client> client
 			for(auto it = clients.begin(); it != clients.end(); ++it)
 			{
 				std::shared_ptr<Client> client = *it;
+				{ std::ostringstream msg; msg << "broadcast to: " << client->socket->getRemoteAddress().toString() << "";	Debug::msg(msg); }
 
 			}
+		}
+		else
+		{
+			{ std::ostringstream msg; msg << "Malformed packet" << "";	Debug::msg(msg); }
 		}
 		break;
 		}
