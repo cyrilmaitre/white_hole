@@ -85,7 +85,7 @@ struct C2S_Chat
 struct Client
 {
 	Client()
-		: socket(std::unique_ptr<sf::TcpSocket>(new sf::TcpSocket)), state(ClientState::UNKNOWN_CS)
+		: socket(std::unique_ptr<sf::TcpSocket>(new sf::TcpSocket)), state(ClientState::UNKNOWN_CS), name("UnknownPlayer")
 	{}
 
 	ClientState state;
