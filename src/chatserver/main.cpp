@@ -1,6 +1,9 @@
 #include <iostream>
 #include "ChatServer.h"
 
+#include <vector>
+#include "SFML\Network.hpp"
+
 int main(int argc, char** argv)
 {
 	//create object
