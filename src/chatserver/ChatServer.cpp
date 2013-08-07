@@ -228,51 +228,70 @@ void ChatServer::HandlePacket(sf::Packet& packet, std::shared_ptr<Client> client
 	// If client is authed
 	switch(client->state)
 	{
+	case ClientState::TCP_CONNECTED:
+		{
+			// Should auth something around there
+			break;
+		}
+
 	case ClientState::AUTHED:
 		{
-		// We expect only chat messages from client at the moment
-		C2S_Chat c2s_chat;
 
-		// If we can read the message
-		if(packet >> c2s_chat)
-		{
-			// We receive this:
-			//(std::string)	c2s_chat.message;
-			//(std::string)	c2s_chat.to;
-			//(sf::Uint16)	c2s_chat.dstType;
-
-			// Let's broadcast the message to all users
-			for(auto it = clients.begin(); it != clients.end(); ++it)
+			// If client can speak
+			if(!(client->attributes & ClientAttributes::ATTR_MUTED))
 			{
-				std::shared_ptr<Client> client = *it;
-				{ std::ostringstream msg; msg << "broadcast to: " << client->socket->getRemoteAddress().toString() << "";	Debug::msg(msg); }
+				// We expect only chat messages from client at the moment
+				C2S_Chat c2s_chat;
 
-			}
-		}
-		else
-		{
-			{ std::ostringstream msg; msg << "Malformed packet" << "";	Debug::msg(msg); }
-		}
-		break;
-		}
+				// If we can read the message
+				if(packet >> c2s_chat)
+				{
+					// We receive this:
+					//(std::string)	c2s_chat.message;
+					//(std::string)	c2s_chat.to;
+					//(sf::Uint16)	c2s_chat.dstType;
+					S2C_Chat s2c_chat;
+					sf::Packet packet;
+			
+					s2c_chat.from = client->name;
+					s2c_chat.to = c2s_chat.to;
+					s2c_chat.message = c2s_chat.message;
+					s2c_chat.dstType = c2s_chat.dstType;
 
+					packet << s2c_chat;
 
-	case ClientState::MUTED:
-		{
-		break;
+					// Let's broadcast the message to all authed users
+					for(auto it = clients.begin(); it != clients.end(); ++it)
+					{
+						std::shared_ptr<Client> dstClient = *it;
+						if(dstClient->state == ClientState::AUTHED)
+						{
+							{ std::ostringstream msg; msg << "broadcast to: " << client->socket->getRemoteAddress().toString() << "";	Debug::msg(msg); }
+							SendPacket(packet, dstClient);
+						}
+
+					}
+				}
+				else
+				{
+					{ std::ostringstream msg; msg << "Malformed packet" << "";	Debug::msg(msg); }
+				}
+
+			} // -- end of client can speak
+			break;
 		}
 			
 	case ClientState::DROPPED:
 	case ClientState::UNKNOWN_CS:
 		{
-		// holy shit, this case shouldn't happen
-		break;
+			// holy shit, this case shouldn't happen
+			break;
 		}
 
 	default:
 		{
-		// holy shit, this case shouldn't happen
-		break;
+			// holy shit, this case shouldn't happen
+			break;
 		}
 	}
 }

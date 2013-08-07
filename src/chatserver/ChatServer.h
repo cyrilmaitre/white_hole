@@ -16,10 +16,22 @@ enum ClientState
 	UNKNOWN_CS,
 	TCP_CONNECTED,
 	DROPPED,
-	AUTHED,
-	MUTED
+	AUTHED
 };
 
+enum ClientAttributes
+{
+	ATTR_NONE	= 0,	// 00000000
+
+	ATTR_MUTED	= 1,	// 00000001 :2^0
+	ATTR_VOICE	= 2,	// 00000010 :2^1
+	ATTR_MOD	= 4,	// 00000100 :2^2
+	ATTR_ADMIN	= 8,	// 00001000 :2^3
+	ATTR_AFK	= 16	// 00010000 :2^4
+};
+
+
+// Commands sent by the server to clients for display purposes (ex: "Bob has been kicked")
 enum ServerCommand
 {
 	UNKNOWN_CMD,
@@ -32,6 +44,7 @@ enum ServerCommand
 };
 
 
+// Is this a channel to a channel or to a user (= private message)
 enum ChatDstType
 {
 	NONE,
@@ -39,16 +52,38 @@ enum ChatDstType
 	CHANNEL
 };
 
+// Is is a command (kick, ban, motd, etc) or a chat message
 enum S2C_Type
 {
 	CHAT,
-	COMMAND
+	COMMAND,
+	AUTHENTICATION
+};
+
+enum AuthResponse
+{
+	OK,				// valid IDs = auth OK
+	INVALID_IDS,	// invalid IDs
+	ERROR,			// error sent from the server (ex: if cannot contact database)
+	MAINTENANCE,	// maintenance mode, can't connect
+	BANNED			// should receive "BANNED" only if IDs are valids
 };
 
 // --------------
 // --- STRUCT ---
 // --------------
+// AUTH -----------------------------------------------------
+struct S2C_Auth
+{
+	S2C_Auth(){}
+};
 
+struct C2S_Auth
+{
+	C2S_Auth(){}
+};
+
+// CHAT -----------------------------------------------------
 // Server To Client - Chat
 struct S2C_Chat
 {
@@ -60,16 +95,6 @@ struct S2C_Chat
 	sf::Uint16 dstType;
 };
 
-// Server To Client - Commands
-struct S2C_Command
-{
-	S2C_Command(sf::Uint16 command = ServerCommand::UNKNOWN_CMD, std::string argument = "")
-		: command(command), argument(argument)
-	{}
-
-	sf::Uint16 command;
-	std::string argument;
-};
 
 // Client To Server - Chat
 struct C2S_Chat
@@ -82,13 +107,27 @@ struct C2S_Chat
 	sf::Uint16 dstType;
 };
 
+// COMMANDS  -----------------------------------------------------
+// Server To Client - Commands
+struct S2C_Command
+{
+	S2C_Command(sf::Uint16 command = ServerCommand::UNKNOWN_CMD, std::string argument = "")
+		: command(command), argument(argument)
+	{}
+
+	sf::Uint16 command;
+	std::string argument;
+};
+
+// CLIENT 
 struct Client
 {
 	Client()
-		: socket(std::unique_ptr<sf::TcpSocket>(new sf::TcpSocket)), state(ClientState::UNKNOWN_CS), name("UnknownPlayer")
+		: socket(std::unique_ptr<sf::TcpSocket>(new sf::TcpSocket)), state(ClientState::UNKNOWN_CS), name("UnknownPlayer"), attributes(ClientAttributes::ATTR_NONE)
 	{}
 
 	ClientState state;
+	ClientAttributes attributes;
 	std::unique_ptr<sf::TcpSocket> socket;
 	std::string name;
 };
