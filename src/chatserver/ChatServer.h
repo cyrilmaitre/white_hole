@@ -1,5 +1,6 @@
 #pragma once
 #include <vector>
+#include "Client.h"
 #include <SFML/Network.hpp>
 
 #define SERVER_NAME				"Makaki"
@@ -10,25 +11,6 @@
 // ------------
 // --- ENUM ---
 // ------------
-
-enum ClientState
-{
-	UNKNOWN_CS,
-	TCP_CONNECTED,
-	DROPPED,
-	AUTHED
-};
-
-enum ClientAttributes
-{
-	ATTR_NONE	= 0,	// 00000000
-
-	ATTR_MUTED	= 1,	// 00000001 :2^0
-	ATTR_VOICE	= 2,	// 00000010 :2^1
-	ATTR_MOD	= 4,	// 00000100 :2^2
-	ATTR_ADMIN	= 8,	// 00001000 :2^3
-	ATTR_AFK	= 16	// 00010000 :2^4
-};
 
 
 // Commands sent by the server to clients for display purposes (ex: "Bob has been kicked")
@@ -120,9 +102,9 @@ struct S2C_Command
 };
 
 // CLIENT 
-struct Client
+struct SClient
 {
-	Client()
+	SClient()
 		: socket(std::unique_ptr<sf::TcpSocket>(new sf::TcpSocket)), state(ClientState::UNKNOWN_CS), name("UnknownPlayer"), attributes(ClientAttributes::ATTR_NONE)
 	{}
 
