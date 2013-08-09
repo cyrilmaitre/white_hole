@@ -161,20 +161,8 @@ char* cDAT::GetFile (std::string filename)
 	//The input file stream from which we want information
 	std::ifstream datfile;
 
-	// FIX pb_fonts (un peu moche) du problème de chargement des fonts
-	// car le pointeur était delete. or, SFML doit pouvoir accéder au pointeur n'importe quand
-	// (pour les fonts et music. Pas pour les images)
+	//Creation de la pair dont la clef est le nom du fichier
 	m_buffers[filename] = NULL;
-
-	//Cleaning properly an ancient file loaded
-	// FIX pb_fonts
-	/*
-	if (m_buffer != NULL)
-	{
-		delete (m_buffer);
-		m_buffer = NULL;
-	}
-	*/
 
 	//First, we have to find the file needed
 	for (unsigned int i=0; i<m_header.nb_files;i++)

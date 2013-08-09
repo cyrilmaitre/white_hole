@@ -71,9 +71,9 @@ void ChatServer::mRunServer(void)
 
 				//The listener is ready: there is a pending connection
 				std::shared_ptr<Client> client = std::shared_ptr<Client>(new Client);
-				client->socket->setBlocking(false);
+				client->getSocket().setBlocking(false);
 
-				if(listener.accept(*client->socket) == sf::Socket::Done)
+				if(listener.accept(client->getSocket()) == sf::Socket::Done)
 				{
 
 					sf::Packet packet;
@@ -103,7 +103,7 @@ void ChatServer::mRunServer(void)
 				}
 				else 
 				{
-					{ std::ostringstream msg; msg << "Error, can't get connection with client " << client->socket->getRemoteAddress() << ""; Debug::msg(msg); }
+					{ std::ostringstream msg; msg << "Error, can't get connection with client " << client->getSocket().getRemoteAddress() << ""; Debug::msg(msg); }
 					DropClient(client);
 				}
 
@@ -117,11 +117,11 @@ void ChatServer::mRunServer(void)
 				sf::Packet packet;
 
 				//check to see if we can receive data
-				if (selector.isReady(*client->socket))
+				if (selector.isReady(client->getSocket()))
 				{
 
 					//The client has sent some data, we can receive it
-					sf::Socket::Status status = client->socket->receive(packet);
+					sf::Socket::Status status = client->getSocket().receive(packet);
 
 					// Packet status ?
 					if(status == sf::Socket::Status::Done)
@@ -144,7 +144,7 @@ void ChatServer::mRunServer(void)
 					}
 					else
 					{
-						{ std::ostringstream msg; msg << "/!\ ERROR This code is not handle by SFML 2.0/2.1 : ("<< status << ")"; Debug::msg(msg); }
+						{ std::ostringstream msg; msg << "(!) ERROR This code is not handle by SFML 2.0/2.1 : ("<< status << ")"; Debug::msg(msg); }
 					}
 
 				} // -- end of client socket ready
@@ -164,26 +164,26 @@ void ChatServer::mRunServer(void)
 
 void ChatServer::AddClient(std::shared_ptr<Client> client)
 {
-	client->state = ClientState::TCP_CONNECTED;
+	client->setState(ClientState::TCP_CONNECTED);
 
 	//Add the new client to the clients list
 	clients.push_back(client);
 
 	//Add the new client to the selector so that we will
 	//be notified when he sends something
-	selector.add(*client->socket);
+	selector.add(client->getSocket());
 
-	{ std::ostringstream msg; msg << "Client " << clients.size() << "added in clientlist: " << client->socket->getRemoteAddress() << ""; Debug::msg(msg); }
+	{ std::ostringstream msg; msg << "Client " << clients.size() << "added in clientlist: " << client->getSocket().getRemoteAddress() << ""; Debug::msg(msg); }
 }
 
 
 void ChatServer::DropClient(std::shared_ptr<Client> client)
 {
-	client->state = ClientState::DROPPED; // this might seems useless since it will be delete later. it's just a security.
+	client->setState(ClientState::DROPPED); // this might seems useless since it will be delete later. it's just a security.
 
-	{ std::ostringstream msg; msg << "Client disconnected - " << client->socket->getRemoteAddress().toString() << "";	Debug::msg(msg); }
+	{ std::ostringstream msg; msg << "Client disconnected - " << client->getSocket().getRemoteAddress().toString() << "";	Debug::msg(msg); }
 
-	selector.remove(*client->socket);
+	selector.remove(client->getSocket());
 
 	std::vector<std::shared_ptr<Client>>::iterator it;
     for (it = clients.begin(); it != clients.end();) {
@@ -203,7 +203,7 @@ bool ChatServer::SendPacket(sf::Packet &packet, std::shared_ptr<Client> client)
     for(int i = 0; i < MAX_PACKETSEND_RETRY; i++)
     {
         // Si le packet a été envoyé
-        if(client->socket->send(packet) == sf::Socket::Status::Done)
+        if(client->getSocket().send(packet) == sf::Socket::Status::Done)
         {
             packetSent = true;
 			{ std::ostringstream msg; msg << "[SEND] Packet sent - size=" << packet.getDataSize() << ""; Debug::msg(msg); }
@@ -226,7 +226,7 @@ void ChatServer::HandlePacket(sf::Packet& packet, std::shared_ptr<Client> client
 	{ std::ostringstream msg; msg << "[RECV] Received data - size:" << packet.getDataSize() << ""; Debug::msg(msg); }
 
 	// If client is authed
-	switch(client->state)
+	switch(client->getState())
 	{
 	case ClientState::TCP_CONNECTED:
 		{
@@ -238,7 +238,7 @@ void ChatServer::HandlePacket(sf::Packet& packet, std::shared_ptr<Client> client
 		{
 
 			// If client can speak
-			if(!(client->attributes & ClientAttributes::ATTR_MUTED))
+			if(!(client->hasAttribute(ClientAttributes::ATTR_MUTED)))
 			{
 				// We expect only chat messages from client at the moment
 				C2S_Chat c2s_chat;
@@ -253,7 +253,7 @@ void ChatServer::HandlePacket(sf::Packet& packet, std::shared_ptr<Client> client
 					S2C_Chat s2c_chat;
 					sf::Packet packet;
 			
-					s2c_chat.from = client->name;
+					s2c_chat.from = client->getName();
 					s2c_chat.to = c2s_chat.to;
 					s2c_chat.message = c2s_chat.message;
 					s2c_chat.dstType = c2s_chat.dstType;
@@ -264,9 +264,9 @@ void ChatServer::HandlePacket(sf::Packet& packet, std::shared_ptr<Client> client
 					for(auto it = clients.begin(); it != clients.end(); ++it)
 					{
 						std::shared_ptr<Client> dstClient = *it;
-						if(dstClient->state == ClientState::AUTHED)
+						if(dstClient->getState() == ClientState::AUTHED)
 						{
-							{ std::ostringstream msg; msg << "broadcast to: " << client->socket->getRemoteAddress().toString() << "";	Debug::msg(msg); }
+							{ std::ostringstream msg; msg << "broadcast to: " << client->getSocket().getRemoteAddress().toString() << "";	Debug::msg(msg); }
 							SendPacket(packet, dstClient);
 						}
 
