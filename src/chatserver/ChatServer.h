@@ -6,7 +6,7 @@
 #define SERVER_NAME				"Makaki"
 #define SERVER_MOTD				"Sisi la famille"
 #define MAX_CLIENTS				10
-#define MAX_PACKETSEND_RETRY	5
+#define MAX_S_PACKETSEND_RETRY	5
 
 // ------------
 // --- ENUM ---
@@ -101,19 +101,6 @@ struct S2C_Command
 	std::string argument;
 };
 
-// CLIENT 
-struct SClient
-{
-	SClient()
-		: socket(std::unique_ptr<sf::TcpSocket>(new sf::TcpSocket)), state(ClientState::UNKNOWN_CS), name("UnknownPlayer"), attributes(ClientAttributes::ATTR_NONE)
-	{}
-
-	ClientState state;
-	ClientAttributes attributes;
-	std::unique_ptr<sf::TcpSocket> socket;
-	std::string name;
-};
-
 // -------------
 // --- CLASS ---
 // -------------
@@ -122,14 +109,14 @@ class ChatServer
 {
 public:
 	ChatServer(void);
-	void Create(void);
-	void Create(unsigned short port);
-	void AddClient(std::shared_ptr<Client> client);
-	void DropClient(std::shared_ptr<Client> client);
-	void HandlePacket(sf::Packet& packet, std::shared_ptr<Client> client);
-	bool SendPacket(sf::Packet &packet, std::shared_ptr<Client> client);
-	void Broadcast(sf::Packet& packet);
-	void Disconnect(void);
+	void create(void);
+	void create(unsigned short p_port);
+	void addClient(std::shared_ptr<Client> p_client);
+	void dropClient(std::shared_ptr<Client> p_client);
+	void handlePacket(sf::Packet& p_packet, std::shared_ptr<Client> p_client);
+	bool sendPacket(sf::Packet& p_packet, std::shared_ptr<Client> p_client);
+	void broadcast(sf::Packet& p_packet);
+	void disconnect(void);
 
 private:
 	sf::SocketSelector selector;

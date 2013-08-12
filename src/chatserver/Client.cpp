@@ -72,7 +72,7 @@ void Client::setName(std::string p_name)
 // - test if client has an attribute
 bool Client::hasAttribute(ClientAttributes p_attribute)
 {
-	return true;
+	return false;
 }
 
 // - add an attribute to the client
