@@ -82,9 +82,6 @@
     <Filter Include="Fichiers sources\game\mapObject\automanaged\projectile">
       <UniqueIdentifier>{545ccd9f-2548-4100-996b-68eb97223c87}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Fichiers sources\screen">
-      <UniqueIdentifier>{d2589cb5-3250-493a-b1dd-a2abdf1fab15}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Fichiers d%27en-tête\game\general\level">
       <UniqueIdentifier>{7198adf4-9020-42fa-8001-523c44f56a13}</UniqueIdentifier>
     </Filter>
@@ -385,6 +382,9 @@
     <Filter Include="Fichiers sources\resource\network\chat">
       <UniqueIdentifier>{9f5acf72-1a6e-4a99-8227-db0f120ab32a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Fichiers sources\resource\screen">
+      <UniqueIdentifier>{d2589cb5-3250-493a-b1dd-a2abdf1fab15}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Game.cpp">
@@ -409,10 +409,10 @@
       <Filter>Fichiers sources\game\mapObject</Filter>
     </ClCompile>
     <ClCompile Include="BootScreen.cpp">
-      <Filter>Fichiers sources\screen</Filter>
+      <Filter>Fichiers sources\resource\screen</Filter>
     </ClCompile>
     <ClCompile Include="TitleScreen.cpp">
-      <Filter>Fichiers sources\screen</Filter>
+      <Filter>Fichiers sources\resource\screen</Filter>
     </ClCompile>
     <ClCompile Include="SpriteParameterFactory.cpp">
       <Filter>Fichiers sources\resource\image</Filter>
@@ -469,13 +469,13 @@
       <Filter>Fichiers sources\game\mapObject\entity\ship</Filter>
     </ClCompile>
     <ClCompile Include="SelectCharacterScreen.cpp">
-      <Filter>Fichiers sources\screen</Filter>
+      <Filter>Fichiers sources\resource\screen</Filter>
     </ClCompile>
     <ClCompile Include="CreateCharacterScreen.cpp">
-      <Filter>Fichiers sources\screen</Filter>
+      <Filter>Fichiers sources\resource\screen</Filter>
     </ClCompile>
     <ClCompile Include="BaseScreen.cpp">
-      <Filter>Fichiers sources\screen</Filter>
+      <Filter>Fichiers sources\resource\screen</Filter>
     </ClCompile>
     <ClCompile Include="Session.cpp">
       <Filter>Fichiers sources\game</Filter>
@@ -742,7 +742,7 @@
       <Filter>Fichiers sources\game\mapObject\entity\ship</Filter>
     </ClCompile>
     <ClCompile Include="DebugScreen.cpp">
-      <Filter>Fichiers sources\screen</Filter>
+      <Filter>Fichiers sources\resource\screen</Filter>
     </ClCompile>
     <ClCompile Include="LevelShip.cpp">
       <Filter>Fichiers sources\game\general\level</Filter>
@@ -1260,7 +1260,10 @@
     <ClCompile Include="MkkFormat.cpp">
       <Filter>Fichiers sources\mks\tools</Filter>
     </ClCompile>
-    <ClCompile Include="ChatClient.cpp">
+    <ClCompile Include="..\chatserver\ChatClient.cpp">
+      <Filter>Fichiers sources\resource\network\chat</Filter>
+    </ClCompile>
+    <ClCompile Include="..\chatserver\Debug.cpp">
       <Filter>Fichiers sources\resource\network\chat</Filter>
     </ClCompile>
   </ItemGroup>
@@ -2156,10 +2159,13 @@
     <ClInclude Include="MkkFormat.h">
       <Filter>Fichiers d%27en-tête\mks\tools</Filter>
     </ClInclude>
-    <ClInclude Include="ChatClient.h">
+    <ClInclude Include="..\chatserver\Chat.h">
       <Filter>Fichiers d%27en-tête\resource\network\chat</Filter>
     </ClInclude>
-    <ClInclude Include="ChatDefine.h">
+    <ClInclude Include="..\chatserver\ChatClient.h">
+      <Filter>Fichiers d%27en-tête\resource\network\chat</Filter>
+    </ClInclude>
+    <ClInclude Include="..\chatserver\Debug.h">
       <Filter>Fichiers d%27en-tête\resource\network\chat</Filter>
     </ClInclude>
   </ItemGroup>

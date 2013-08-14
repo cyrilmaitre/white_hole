@@ -1,6 +1,4 @@
 #include "ChatServer.h"
-#include "Debug.h"
-#include "../space_2/ChatDefine.h"
 
 // ----------------------------------------------------------------------
 // operator overloads for sf::Packet
@@ -9,12 +7,12 @@
 // -- Chat
 sf::Packet& operator << (sf::Packet& packet, const S2C_Chat s2c_chat)
 {
-	return packet << (sf::Uint16) S2C_Type::CHAT << s2c_chat.from << s2c_chat.message << s2c_chat.to << s2c_chat.dstType;
+	return packet << (sf::Uint16) PacketType::CHAT << s2c_chat.from << s2c_chat.message << s2c_chat.to << s2c_chat.dstType;
 }
 // -- Command
 sf::Packet& operator << (sf::Packet& packet, const S2C_Command s2c_command)
 {
-	return packet << (sf::Uint16) S2C_Type::COMMAND << s2c_command.command << s2c_command.argument;
+	return packet << (sf::Uint16) PacketType::COMMAND << s2c_command.command << s2c_command.argument;
 }
 
 // * CLIENT to SERVER (receive) *
@@ -22,6 +20,12 @@ sf::Packet& operator << (sf::Packet& packet, const S2C_Command s2c_command)
 sf::Packet& operator >> (sf::Packet& packet, C2S_Chat& c2s_chat)
 {
 	return packet >> c2s_chat.message >> c2s_chat.to >> c2s_chat.dstType;
+}
+
+// -- Command
+sf::Packet& operator >> (sf::Packet& packet, C2S_Command& c2s_command)
+{
+	return packet >> c2s_command.command >> c2s_command.argument;
 }
 
 // ----------------------------------------------------------------------
@@ -48,6 +52,9 @@ void ChatServer::create(unsigned short port)
 	this->mRunServer();
 }
 
+/*
+	threaded method (main loop)
+*/
 void ChatServer::mRunServer(void)
 {
 	// Create a socket to listen to new connections
@@ -90,7 +97,7 @@ void ChatServer::mRunServer(void)
 						this->addClient(client);
 
 						//send motd to new client
-						S2C_Command s2c_cmd(ServerCommand::MOTD, SERVER_MOTD);
+						S2C_Command s2c_cmd(ServerCommand::S_MOTD, SERVER_MOTD);
 						{
 							packet << s2c_cmd;
 						}
@@ -99,7 +106,7 @@ void ChatServer::mRunServer(void)
 					else
 					{
 						//send rejection message because server is full and tidy up
-						S2C_Command s2c_cmd(ServerCommand::SAY, "Connection refused. Reason: Server full.");
+						S2C_Command s2c_cmd(ServerCommand::S_SAY, "Connection refused. Reason: Server full.");
 						{
 							packet << s2c_cmd;
 						}
@@ -168,7 +175,9 @@ void ChatServer::mRunServer(void)
 	clients.shrink_to_fit();
 }
 
-
+/*
+	add a client in vector & selector
+*/
 void ChatServer::addClient(std::shared_ptr<Client> p_client)
 {
 	p_client->setState(ClientState::TCP_CONNECTED);
@@ -187,6 +196,9 @@ void ChatServer::addClient(std::shared_ptr<Client> p_client)
 }
 
 
+/*
+	remove client from selector & from vector (if in it)
+*/
 void ChatServer::dropClient(std::shared_ptr<Client> p_client)
 {
 	p_client->setState(ClientState::DROPPED); // this might seems useless since it will be delete later. it's just a security.
@@ -206,7 +218,11 @@ void ChatServer::dropClient(std::shared_ptr<Client> p_client)
 	}
 }
 
-bool ChatServer::sendPacket(sf::Packet& p_packet, std::shared_ptr<Client> p_client)
+
+/*
+	send packet to a client, drop client if dropClientIfFailed=true
+*/
+bool ChatServer::sendPacket(sf::Packet& p_packet, std::shared_ptr<Client> p_client, bool dropClientIfFailed)
 {
     bool packetSent = false;
     
@@ -221,19 +237,81 @@ bool ChatServer::sendPacket(sf::Packet& p_packet, std::shared_ptr<Client> p_clie
         }
     }
     
-    // Si on n'arrive à pas envoyer, on drop le client
+    // Si on n'arrive à pas envoyer
     if(!packetSent) {
+		p_client->notifyDroppedPacket();
 		{ std::ostringstream msg; msg << "[SEND] Error: Packet NOT sent ! - size=" << p_packet.getDataSize() << ""; Debug::msg(msg); }
-        this->dropClient(p_client);
+
+		if(dropClientIfFailed)
+			this->dropClient(p_client);
     }
 
 	return packetSent;
 }
 
 
+
+/*
+	broadcast
+*/
+void ChatServer::broadcast(sf::Packet& p_packet, BroadcastCondition& p_broadcastCond)
+{
+	{ std::ostringstream msg; msg << "[BROADCAST] Starting..." << "";	Debug::msg(msg); }
+
+	// Nb of client that will be sent messages
+	sf::Uint64 targetedClients = 0;
+
+	// Let's broadcast the message
+	for(auto it = clients.begin(); it != clients.end(); ++it)
+	{
+		// CLIENT
+		std::shared_ptr<Client> dstClient = *it;
+
+		// CONDITIONS
+		// 1. if UID condition && UID == client.UID => continue (= do not send to this client)
+		if(p_broadcastCond.ignoreClientID != 0 && dstClient->getUniqueID() == p_broadcastCond.ignoreClientID)
+			continue;
+
+		// 2. if clientState condition && clientState != client.clientState (= wrong state, so do not send)
+		if(p_broadcastCond.clientState != ClientState::UNKNOWN_CS && p_broadcastCond.clientState != dstClient->getState())
+			continue;
+
+		// 3. if attributes condition && client has not this clientatttribute
+		if(p_broadcastCond.clientHasAttributes != ClientAttributes::ATTR_NONE && !dstClient->hasAttribute(p_broadcastCond.clientHasAttributes))
+			continue;
+
+		
+		// SEND
+		this->sendPacket(p_packet, dstClient);
+		++targetedClients;
+
+	} // -- end of broadcast loop
+
+	{ std::ostringstream msg; msg << "[BROADCAST] Finished - Sent to " << targetedClients << "/" << clients.size() << " clients" << "";	Debug::msg(msg); }
+}
+
+
+/*
+	handle every packet received
+*/
 void ChatServer::handlePacket(sf::Packet& p_packet, std::shared_ptr<Client> p_client)
 {	
-	{ std::ostringstream msg; msg << "[RECV] Received data - cstate:" << p_client->getState() << "psize:" << p_packet.getDataSize() << ""; Debug::msg(msg); }
+	
+
+
+	sf::Uint16 packetType;
+	// Message type ? (command, chat?)
+	if(!(p_packet >> packetType))
+	{
+		{ std::ostringstream msg; msg << "Error, can't retrieve packetType" << ""; Debug::msg(msg); }
+		return;
+	}
+
+	{ std::ostringstream msg; msg 
+		<< "[RECV] Received data - cstate:" << p_client->getState() 
+		<< " / ptype:" << packetType 
+		<< " / psize:" << p_packet.getDataSize() << ""; Debug::msg(msg); }
+
 
 	// If client is authed
 	switch(p_client->getState())
@@ -247,9 +325,11 @@ void ChatServer::handlePacket(sf::Packet& p_packet, std::shared_ptr<Client> p_cl
 
 	case ClientState::AUTHED:
 		{
-
+			// --------------------------------------------------
+			// ---------------------- CHAT ----------------------
+			// --------------------------------------------------
 			// If client can speak
-			if(!(p_client->hasAttribute(ClientAttributes::ATTR_MUTED)))
+			if(packetType == PacketType::CHAT && !(p_client->hasAttribute(ClientAttributes::ATTR_MUTED)))
 			{
 				// We expect only chat messages from client at the moment
 				C2S_Chat c2s_chat;
@@ -272,23 +352,67 @@ void ChatServer::handlePacket(sf::Packet& p_packet, std::shared_ptr<Client> p_cl
 					packet << s2c_chat;
 
 					// Let's broadcast the message to all authed users
-					for(auto it = clients.begin(); it != clients.end(); ++it)
-					{
-						std::shared_ptr<Client> dstClient = *it;
-						if(dstClient->getState() == ClientState::AUTHED)
-						{
-							{ std::ostringstream msg; msg << "broadcast to: " << p_client->getSocket().getRemoteAddress().toString() << "";	Debug::msg(msg); }
-							this->sendPacket(packet, dstClient);
-						}
+					BroadcastCondition bc;
+					bc.ignoreClientID = p_client->getUniqueID();
+					bc.clientState = ClientState::AUTHED;
 
+					this->broadcast(packet, bc);
+				}
+				else
+				{
+					{ std::ostringstream msg; msg << "Malformed chat packet" << "";	Debug::msg(msg); }
+				}
+
+			} // -- end of packetType=CHAT && client can speak
+
+			// --------------------------------------------------
+			// --------------------- COMMAND --------------------
+			// --------------------------------------------------
+			if(packetType == PacketType::COMMAND)
+			{
+				C2S_Command c2s_command;
+				// If we can read the message
+				if(p_packet >> c2s_command)
+				{
+					// switch on command ID
+					switch(c2s_command.command)
+					{
+						// QUIT
+					case ClientCommand::C_QUIT:
+						{
+							// drop the client since he wants to leave
+							// this->dropClient(p_client);
+
+							// argument of the cmd (basically the nickname of the leaver)
+							std::string argument;
+							argument += p_client->getName();
+							argument += "@";
+							argument += p_client->getSocket().getRemoteAddress().toString();
+							S2C_Command s2c_command(ServerCommand::S_QUIT, argument);
+
+							// packet to broadcast
+							sf::Packet packet;
+							packet << s2c_command;
+
+							// lets notify all cflients that this one has left
+							BroadcastCondition bc;
+							bc.ignoreClientID = p_client->getUniqueID();
+							bc.clientState = ClientState::AUTHED;
+
+							this->broadcast(packet, bc);
+						}
+						break;
+
+						// NOTHING
+					default:
+						break;
 					}
 				}
 				else
 				{
-					{ std::ostringstream msg; msg << "Malformed packet" << "";	Debug::msg(msg); }
+					{ std::ostringstream msg; msg << "Malformed command packet" << "";	Debug::msg(msg); }
 				}
-
-			} // -- end of client can speak
+			}
 			
 		}
 		break;

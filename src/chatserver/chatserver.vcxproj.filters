@@ -13,39 +13,57 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Header Files\chat">
+      <UniqueIdentifier>{c0fbe7c9-e813-45bc-a754-d0ea8065a955}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\chat\server">
+      <UniqueIdentifier>{1c454e25-015c-4d2d-8cbf-f0f91ed91843}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\chat\client">
+      <UniqueIdentifier>{d2cd7a30-306b-4363-a2ae-93b83719320e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\chat">
+      <UniqueIdentifier>{c47bd814-83b4-4fb2-b544-3db16ba2922d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\chat\server">
+      <UniqueIdentifier>{857d17c4-9008-4af1-9911-b59133157fed}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\chat\client">
+      <UniqueIdentifier>{d84e37fa-3e27-43f1-a28a-cb06729b4d3d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="ChatServer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Debug.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Client.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\chat\server</Filter>
+    </ClCompile>
+    <ClCompile Include="ChatServer.cpp">
+      <Filter>Source Files\chat\server</Filter>
     </ClCompile>
     <ClCompile Include="ChatClient.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\chat\client</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="ChatServer.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\space_2\ChatDefine.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Debug.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Client.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="ChatServer.h">
+      <Filter>Header Files\chat\server</Filter>
     </ClInclude>
     <ClInclude Include="ChatClient.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\chat\client</Filter>
+    </ClInclude>
+    <ClInclude Include="Client.h">
+      <Filter>Header Files\chat\server</Filter>
+    </ClInclude>
+    <ClInclude Include="Chat.h">
+      <Filter>Header Files\chat</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -39,6 +39,9 @@ public:
 	Client(void);
 	~Client(void);
 
+	// uid
+	sf::Uint64 getUniqueID();
+
 	// state
 	ClientState getState();
 	void setState(ClientState p_state);
@@ -60,11 +63,18 @@ public:
 
 	bool isNamed();
 
+	// nb dropped packets
+	sf::Uint64	getNbDroppedPackets();
+	void		notifyDroppedPacket();
+
+
 
 private:
+	sf::Uint64 mUniqueID;
 	ClientState mState;
 	sf::Uint16 mAttributes;
 	std::unique_ptr<sf::TcpSocket> mSocket;
 	std::string mName;
+	sf::Uint64 mNbDroppedPackets;
 };
 

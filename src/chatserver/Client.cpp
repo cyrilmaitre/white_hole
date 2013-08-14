@@ -7,8 +7,10 @@ Client::Client(void) :
 	mSocket(std::unique_ptr<sf::TcpSocket>(new sf::TcpSocket)),
 	mState(ClientState::UNKNOWN_CS),
 	mName(UNNAMED_PLAYER),
-	mAttributes(ClientAttributes::ATTR_NONE)
+	mAttributes(ClientAttributes::ATTR_NONE),
+	mNbDroppedPackets(0)
 {
+	this->mUniqueID = (sf::Uint64) mSocket.get();
 }
 
 
@@ -20,6 +22,13 @@ Client::~Client(void)
 // ----------------------------------------------------------------------
 // getters,setters
 // ----------------------------------------------------------------------
+// <uniqueID>
+sf::Uint64 Client::getUniqueID()
+{
+	return this->mUniqueID;
+}
+// </uniqueID>
+
 // <state>
 ClientState Client::getState()
 {
@@ -63,6 +72,14 @@ void Client::setName(std::string p_name)
 }
 // </name>
 
+// <mNbDroppedPackets>
+sf::Uint64	Client::getNbDroppedPackets()
+{
+	return this->mNbDroppedPackets;
+}
+// </mNbDroppedPackets>
+
+
 
 // ----------------------------------------------------------------------
 // methods
@@ -96,3 +113,11 @@ bool Client::isNamed()
 	return (this->getName().compare(UNNAMED_PLAYER) != 0);
 }
 // </name>
+
+
+// <mNbDroppedPackets>
+void Client::notifyDroppedPacket()
+{
+	++(this->mNbDroppedPackets);
+}
+// </mNbDroppedPackets>
