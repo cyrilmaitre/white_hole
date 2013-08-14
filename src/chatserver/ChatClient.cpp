@@ -1,7 +1,8 @@
 #include "ChatClient.h"
-#include "ChatServer.h"
-#include "Debug.h"
-#include "../space_2/ChatDefine.h"
+#include "signal.h"
+
+sf::Mutex	ChatClient::mutex;
+ChatBuffer	ChatClient::chatBuffer;
 
 // ----------------------------------------------------------------------
 // operator overloads for sf::Packet
@@ -10,7 +11,12 @@
 // -- Chat
 sf::Packet& operator << (sf::Packet& packet, const C2S_Chat c2s_chat)
 {
-	return packet << c2s_chat.message << c2s_chat.to << c2s_chat.dstType;
+	return packet << (sf::Uint16) PacketType::CHAT << c2s_chat.message << c2s_chat.to << c2s_chat.dstType;
+}
+// -- Commad
+sf::Packet& operator << (sf::Packet& packet, const C2S_Command c2s_command)
+{
+	return packet << (sf::Uint16) PacketType::COMMAND << c2s_command.command << c2s_command.argument;
 }
 
 // * CLIENT to SERVER (receive) *
@@ -27,10 +33,11 @@ sf::Packet& operator >> (sf::Packet& packet, S2C_Chat& s2c_chat)
 }
 
 
+
 // ----------------------------------------------------------------------
 // (con/de)structor
 // ----------------------------------------------------------------------
-ChatClient::ChatClient(void) : mServerPort(CHAT_SERVER_PORT), mServerIP(CHAT_SERVER_HOST)
+ChatClient::ChatClient(void) : mServerPort(CHAT_SERVER_PORT), mServerIP(CHAT_SERVER_HOST), mRunning(false)
 {
 }
 
@@ -42,11 +49,33 @@ ChatClient::~ChatClient(void)
 // ----------------------------------------------------------------------
 // methods
 // ----------------------------------------------------------------------
-void ChatClient::connect(void)
+// <chatbuffer>
+ChatBuffer& ChatClient::getChatBuffer()
 {
-	mRunClient();
+	sf::Lock lock(ChatClient::mutex);
+	return ChatClient::chatBuffer;
 }
 
+void ChatClient::pushChatBuffer(C2S_Chat& c2s_chat)
+{
+	sf::Lock lock(ChatClient::mutex);
+	ChatClient::chatBuffer.push_back(c2s_chat);
+}
+
+void ChatClient::clearChatBuffer()
+{
+	sf::Lock lock(ChatClient::mutex);
+	ChatClient::chatBuffer.clear();
+	ChatClient::chatBuffer.shrink_to_fit();
+}
+// </chatbuffer>
+
+
+void ChatClient::connect(void)
+{
+	mRunning = true;
+	mRunClient();
+}
 
 bool ChatClient::sendPacket(sf::Packet& p_packet)
 {
@@ -74,14 +103,15 @@ bool ChatClient::sendPacket(sf::Packet& p_packet)
 
 void ChatClient::handlePacket(sf::Packet& p_packet)
 {	
-	{ std::ostringstream msg; msg << "[RECV] Received data - size:" << p_packet.getDataSize() << ""; Debug::msg(msg); }
 
-	sf::Uint16 s2c_type;
+	sf::Uint16 packetType;
 	// Message type ? (command, chat?)
-	if(p_packet >> s2c_type)
+	if(p_packet >> packetType)
 	{
+		{ std::ostringstream msg; msg << "[RECV] Received data - ptype:" << packetType << " size:" << p_packet.getDataSize() << ""; Debug::msg(msg); }
+
 		// Chat
-		if(s2c_type == S2C_Type::CHAT)
+		if(packetType == PacketType::CHAT)
 		{
 			S2C_Chat s2c_chat;
 			if(p_packet >> s2c_chat)
@@ -89,7 +119,7 @@ void ChatClient::handlePacket(sf::Packet& p_packet)
 				{ std::ostringstream msg; msg << "[CHAT] FROM <" << s2c_chat.from << "> TO <" << s2c_chat.to << "("<< s2c_chat.dstType <<")> : " << s2c_chat.message << ""; Debug::msg(msg); }
 			}
 		}
-		else if(s2c_type == S2C_Type::COMMAND)
+		else if(packetType == PacketType::COMMAND)
 		{
 			S2C_Command s2c_command;
 			if(p_packet >> s2c_command)
@@ -97,13 +127,13 @@ void ChatClient::handlePacket(sf::Packet& p_packet)
 				{ std::ostringstream msg; msg << "[CMD] #" << s2c_command.command << ":" << s2c_command.argument << ""; Debug::msg(msg); }
 			}
 		}
-		else if(s2c_type == S2C_Type::AUTHENTICATION)
+		else if(packetType == PacketType::AUTHENTICATION)
 		{
 		}
 	}
 	else
 	{
-		{ std::ostringstream msg; msg << "Error, can't retrieve s2c_type" << ""; Debug::msg(msg); }
+		{ std::ostringstream msg; msg << "Error, can't retrieve packetType" << ""; Debug::msg(msg); }
 	}
 }
 
@@ -116,20 +146,41 @@ void ChatClient::mRunClient(void)
 	{
 		{ std::ostringstream msg; msg << "Connection OK !" << ""; Debug::msg(msg); }
 
-
+		// adding some messages to the buffer
 		C2S_Chat c2s_chat;
 		c2s_chat.dstType = ChatDstType::CHANNEL;
 		c2s_chat.message = "Coucou";
 		c2s_chat.to = "trololo";
-		sf::Packet packetSend;
-		packetSend << c2s_chat;
-		this->sendPacket(packetSend);
+		this->pushChatBuffer(c2s_chat);
+		c2s_chat.message = "wésh";
+		this->pushChatBuffer(c2s_chat);
+		c2s_chat.message = "message 3";
+		this->pushChatBuffer(c2s_chat);
 
 		sf::Packet packet;
 		while(mRunning)
 		{
 			// ------------------- Envoi --------------------------------------------------------------------------------
-			// si packet buffer non vide, on envoi
+			// <Thread safe>
+			{
+				sf::Lock lock(ChatClient::mutex);
+				ChatBuffer chatbuffer(ChatClient::getChatBuffer());
+
+				// si packet buffer non vide, on envoie tout son contenu
+				if(!chatbuffer.empty())
+				{
+					for(auto it = chatbuffer.begin(); it != chatbuffer.end(); ++it)
+					{
+						C2S_Chat c2s_chat = *it;
+						sf::Packet packet;
+						packet << c2s_chat;
+						this->sendPacket(packet);
+					}
+				}
+
+				ChatClient::clearChatBuffer();
+			}
+			// </Thread safe>
 
 			// ------------------- Réception ----------------------------------------------------------------------------
 			sf::Socket::Status status = mSocket.receive(packet);
@@ -157,16 +208,30 @@ void ChatClient::mRunClient(void)
 			{
 				{ std::ostringstream msg; msg << "(!) ERROR This code is not handle by SFML 2.0/2.1 : ("<< status << ")"; Debug::msg(msg); }
 			}
-			packet.clear();
 			// ----------------------------------------------------------------------------------------------------------
-
-			sf::sleep(sf::seconds(0.1f));
+			packet.clear();						// important
+			sf::sleep(sf::milliseconds(10));	// for CPU
+			// ----------------------------------------------------------------------------------------------------------
 		}
 	}
 	else
 	{
 		{ std::ostringstream msg; msg << "(!) Couldn't connect to chat server, status : ("<< status << ")"; Debug::msg(msg); }
 	}
+}
+
+void ChatClient::terminate(void)
+{
+	C2S_Command c2s_command(ClientCommand::C_QUIT, "Closed by user");
+	sf::Packet packet;
+	packet << c2s_command;
+	this->sendPacket(packet);
+
+	/*
+	if(this->sendPacket(packet) == sf::Socket::Status::Done)
+		this->disconnect();
+	exit(1);
+	*/
 }
 
 void ChatClient::disconnect(void)

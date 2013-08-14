@@ -73,7 +73,7 @@
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\space_2\ChatDefine.h" />
+    <ClInclude Include="Chat.h" />
     <ClInclude Include="ChatClient.h" />
     <ClInclude Include="ChatServer.h" />
     <ClInclude Include="Client.h" />
