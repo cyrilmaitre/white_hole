@@ -9,11 +9,19 @@ sf::Packet& operator << (sf::Packet& packet, const S2C_Chat s2c_chat)
 {
 	return packet << (sf::Uint16) PacketType::CHAT << s2c_chat.from << s2c_chat.message << s2c_chat.to << s2c_chat.dstType;
 }
+
 // -- Command
 sf::Packet& operator << (sf::Packet& packet, const S2C_Command s2c_command)
 {
 	return packet << (sf::Uint16) PacketType::COMMAND << s2c_command.command << s2c_command.argument;
 }
+
+// -- Auth
+sf::Packet& operator << (sf::Packet& packet, const S2C_Auth s2c_auth)
+{
+	return packet << (sf::Uint16) PacketType::AUTHENTICATION << s2c_auth.authResponse << s2c_auth.optionnalMessage;
+}
+
 
 // * CLIENT to SERVER (receive) *
 // -- Chat
@@ -26,6 +34,12 @@ sf::Packet& operator >> (sf::Packet& packet, C2S_Chat& c2s_chat)
 sf::Packet& operator >> (sf::Packet& packet, C2S_Command& c2s_command)
 {
 	return packet >> c2s_command.command >> c2s_command.argument;
+}
+
+// -- Auth
+sf::Packet& operator >> (sf::Packet& packet, C2S_Auth& c2s_auth)
+{
+	return packet >> c2s_auth.user >> c2s_auth.sha1password;
 }
 
 // ----------------------------------------------------------------------

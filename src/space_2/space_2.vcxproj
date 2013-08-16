@@ -323,6 +323,7 @@
     <ClCompile Include="WindowMessageSuccess.cpp" />
     <ClCompile Include="WindowMessageError.cpp" />
     <ClCompile Include="WindowMessageInfo.cpp" />
+    <ClCompile Include="WindowChat.cpp" />
     <ClCompile Include="WindowJukebox.cpp" />
     <ClCompile Include="WindowMap.cpp" />
     <ClCompile Include="WindowMessage.cpp" />
@@ -628,6 +629,7 @@
     <ClInclude Include="WindowMessageSuccess.h" />
     <ClInclude Include="WindowMessageError.h" />
     <ClInclude Include="WindowMessageInfo.h" />
+    <ClInclude Include="WindowChat.h" />
     <ClInclude Include="WindowJukebox.h" />
     <ClInclude Include="WindowMap.h" />
     <ClInclude Include="WindowMessage.h" />

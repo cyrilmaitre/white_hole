@@ -1,6 +1,6 @@
 #include "MenuQuickChat.h"
 #include "SpriteParameterFactory.h"
-
+#include "Game.h"
 
 //*************************************************************
 // Constructor - Destructor
@@ -21,5 +21,5 @@ MenuQuickChat::~MenuQuickChat(void)
 //*************************************************************
 void MenuQuickChat::notifyItemClicked()
 {
-
+		Game::game->getUserInterface()->getWindowChat()->setOpen(!Game::game->getUserInterface()->getWindowChat()->isOpen());
 }

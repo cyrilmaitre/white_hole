@@ -3,22 +3,24 @@
 
 #define MAX_C_PACKETSEND_RETRY	5
 
-typedef std::vector<C2S_Chat> ChatBuffer;
+typedef std::vector<C2S_Chat> InputBuffer;
+typedef std::vector<S2C_Chat> OutputBuffer;
 
 class ChatClient
 {
 public:
-	// static members
-	static sf::Mutex	mutex;
 
 	// (con/de)structor
 	ChatClient(void);
 	~ChatClient(void);
 
-	// chatbuffer
-	static ChatBuffer& getChatBuffer();
-	static void pushChatBuffer(C2S_Chat& c2s_chat);
-	static void clearChatBuffer();
+	// chat input buffer (send)
+	const InputBuffer& getInputBuffer();
+	void pushInputBuffer(C2S_Chat& c2s_chat);
+
+	// chat output buffer (received)
+	const OutputBuffer& getOutputBuffer();
+	void clearOutputBuffer();
 
 	// others methods
 	void connect(void);
@@ -27,15 +29,27 @@ public:
 	void disconnect(void);
 	void terminate(void);
 
+	// tread
+	sf::Mutex& getMutex();
+
 private:
 	sf::TcpSocket		mSocket;
 	unsigned short		mServerPort;
 	sf::IpAddress		mServerIP;
 	bool				mRunning;
-	static ChatBuffer	chatBuffer;	// std::vector<C2S_Chat>
 
-	// threaded function
-	void			mRunClient(void);
+	// buffers
+	OutputBuffer		mOutputBuffer;
+	void				pushOutputBuffer(S2C_Chat& s2c_chat);
+	InputBuffer			mInputBuffer;
+	void				clearInputBuffer();
+
+
+	// thread
+	sf::Mutex					mMutex;
+	std::unique_ptr<sf::Thread> mThread;
+	void						mRunClient(void);
+
 	
 };
 

@@ -15,6 +15,7 @@
 #include "Network.h"
 #include "ThreadTerminator.h"
 #include "MkkFormat.h"
+#include "../chatserver/ChatClient.h"
 
 // Define divers
 #define RESOURCE_APP_FRAME_LIMIT			500
@@ -76,6 +77,8 @@ public:
 	void loadMusic(std::string path);
 	void loadConfigs();
 	void loadConfigs(std::string path);
+
+	ChatClient* getChatClient();
 	
 	void unload();
 	void unloadImages();
@@ -109,7 +112,9 @@ private:
 	cDAT mDatSound;
 	cDAT mDatFont;
 	cDAT mDatImage;
+	ChatClient* mChatClient;
 
 	bool mAppRunning;
+
 };
 

@@ -1,9 +1,6 @@
 #include "ChatClient.h"
 #include "signal.h"
 
-sf::Mutex	ChatClient::mutex;
-ChatBuffer	ChatClient::chatBuffer;
-
 // ----------------------------------------------------------------------
 // operator overloads for sf::Packet
 // ----------------------------------------------------------------------
@@ -19,7 +16,15 @@ sf::Packet& operator << (sf::Packet& packet, const C2S_Command c2s_command)
 	return packet << (sf::Uint16) PacketType::COMMAND << c2s_command.command << c2s_command.argument;
 }
 
-// * CLIENT to SERVER (receive) *
+// -- Auth
+sf::Packet& operator << (sf::Packet& packet, const C2S_Auth c2s_auth)
+{
+	return packet << (sf::Uint16) PacketType::AUTHENTICATION << c2s_auth.user << c2s_auth.sha1password;
+}
+
+
+
+// * SERVER to CLIENT (receive) *
 // -- Commad
 sf::Packet& operator >> (sf::Packet& packet, S2C_Command& s2c_command)
 {
@@ -32,6 +37,11 @@ sf::Packet& operator >> (sf::Packet& packet, S2C_Chat& s2c_chat)
 	return packet >> s2c_chat.from >> s2c_chat.message >> s2c_chat.to >> s2c_chat.dstType; 
 }
 
+// -- Auth
+sf::Packet& operator >> (sf::Packet& packet, S2C_Auth& s2c_auth)
+{
+	return packet >> s2c_auth.authResponse >> s2c_auth.optionnalMessage;
+}
 
 
 // ----------------------------------------------------------------------
@@ -49,32 +59,69 @@ ChatClient::~ChatClient(void)
 // ----------------------------------------------------------------------
 // methods
 // ----------------------------------------------------------------------
+// <mutex>
+sf::Mutex& ChatClient::getMutex()
+{
+	return this->mMutex;
+}
+// </mutex>
+
 // <chatbuffer>
-ChatBuffer& ChatClient::getChatBuffer()
+// out
+const OutputBuffer& ChatClient::getOutputBuffer()
 {
-	sf::Lock lock(ChatClient::mutex);
-	return ChatClient::chatBuffer;
+	sf::Lock lock(mMutex);
+	return this->mOutputBuffer;
 }
 
-void ChatClient::pushChatBuffer(C2S_Chat& c2s_chat)
+void ChatClient::clearOutputBuffer()
 {
-	sf::Lock lock(ChatClient::mutex);
-	ChatClient::chatBuffer.push_back(c2s_chat);
+	sf::Lock lock(mMutex);
+	mOutputBuffer.clear();
+	mOutputBuffer.shrink_to_fit();
 }
 
-void ChatClient::clearChatBuffer()
+void ChatClient::pushOutputBuffer(S2C_Chat& s2c_chat)
 {
-	sf::Lock lock(ChatClient::mutex);
-	ChatClient::chatBuffer.clear();
-	ChatClient::chatBuffer.shrink_to_fit();
+	sf::Lock lock(mMutex);
+	mOutputBuffer.push_back(s2c_chat);
+}
+
+// int
+const InputBuffer& ChatClient::getInputBuffer()
+{
+	sf::Lock lock(mMutex);
+	return this->mInputBuffer;
+}
+
+void ChatClient::pushInputBuffer(C2S_Chat& c2s_chat)
+{
+	sf::Lock lock(mMutex);
+	mInputBuffer.push_back(c2s_chat);
+}
+
+void ChatClient::clearInputBuffer()
+{
+	sf::Lock lock(mMutex);
+	mInputBuffer.clear();
+	mInputBuffer.shrink_to_fit();
 }
 // </chatbuffer>
 
 
+// Launch the thread connecting to the chat server
 void ChatClient::connect(void)
 {
-	mRunning = true;
-	mRunClient();
+	if(!mRunning)
+	{
+		mThread = std::unique_ptr<sf::Thread>(new sf::Thread(&ChatClient::mRunClient, this));
+		mRunning = true;
+		mThread->launch();
+	}
+	else
+	{
+		{ std::ostringstream msg; msg << "[ERR] Thread already running !" << ""; Debug::msg(msg); }
+	}
 }
 
 bool ChatClient::sendPacket(sf::Packet& p_packet)
@@ -116,6 +163,7 @@ void ChatClient::handlePacket(sf::Packet& p_packet)
 			S2C_Chat s2c_chat;
 			if(p_packet >> s2c_chat)
 			{
+				this->pushOutputBuffer(s2c_chat);
 				{ std::ostringstream msg; msg << "[CHAT] FROM <" << s2c_chat.from << "> TO <" << s2c_chat.to << "("<< s2c_chat.dstType <<")> : " << s2c_chat.message << ""; Debug::msg(msg); }
 			}
 		}
@@ -151,11 +199,12 @@ void ChatClient::mRunClient(void)
 		c2s_chat.dstType = ChatDstType::CHANNEL;
 		c2s_chat.message = "Coucou";
 		c2s_chat.to = "trololo";
-		this->pushChatBuffer(c2s_chat);
+		this->pushInputBuffer(c2s_chat);
 		c2s_chat.message = "wésh";
-		this->pushChatBuffer(c2s_chat);
+		this->pushInputBuffer(c2s_chat);
 		c2s_chat.message = "message 3";
-		this->pushChatBuffer(c2s_chat);
+		this->pushInputBuffer(c2s_chat);
+
 
 		sf::Packet packet;
 		while(mRunning)
@@ -163,8 +212,8 @@ void ChatClient::mRunClient(void)
 			// ------------------- Envoi --------------------------------------------------------------------------------
 			// <Thread safe>
 			{
-				sf::Lock lock(ChatClient::mutex);
-				ChatBuffer chatbuffer(ChatClient::getChatBuffer());
+				sf::Lock lock(mMutex);
+				InputBuffer chatbuffer(this->getInputBuffer());
 
 				// si packet buffer non vide, on envoie tout son contenu
 				if(!chatbuffer.empty())
@@ -178,7 +227,7 @@ void ChatClient::mRunClient(void)
 					}
 				}
 
-				ChatClient::clearChatBuffer();
+				this->clearInputBuffer();
 			}
 			// </Thread safe>
 
@@ -222,20 +271,20 @@ void ChatClient::mRunClient(void)
 
 void ChatClient::terminate(void)
 {
+	sf::Lock lock(mMutex);
+
 	C2S_Command c2s_command(ClientCommand::C_QUIT, "Closed by user");
 	sf::Packet packet;
 	packet << c2s_command;
-	this->sendPacket(packet);
 
-	/*
 	if(this->sendPacket(packet) == sf::Socket::Status::Done)
 		this->disconnect();
-	exit(1);
-	*/
 }
 
 void ChatClient::disconnect(void)
 {
+	sf::Lock lock(mMutex);
+
 	mRunning = false;
 	mSocket.disconnect();
 	{ std::ostringstream msg; msg << "Disconnected" << ""; Debug::msg(msg); }

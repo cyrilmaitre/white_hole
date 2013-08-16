@@ -1266,6 +1266,9 @@
     <ClCompile Include="..\chatserver\Debug.cpp">
       <Filter>Fichiers sources\resource\network\chat</Filter>
     </ClCompile>
+    <ClCompile Include="WindowChat.cpp">
+      <Filter>Fichiers sources\game\ui\window</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h">
@@ -2167,6 +2170,9 @@
     </ClInclude>
     <ClInclude Include="..\chatserver\Debug.h">
       <Filter>Fichiers d%27en-tête\resource\network\chat</Filter>
+    </ClInclude>
+    <ClInclude Include="WindowChat.h">
+      <Filter>Fichiers d%27en-tête\game\ui\window</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
