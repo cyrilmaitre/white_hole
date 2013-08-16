@@ -270,6 +270,7 @@
     <ClCompile Include="TextMultiLine.cpp" />
     <ClCompile Include="WindowCargo.cpp" />
     <ClCompile Include="WindowCargoLoot.cpp" />
+    <ClCompile Include="WindowChat.cpp" />
     <ClCompile Include="WindowJukebox.cpp" />
     <ClCompile Include="WindowMap.cpp" />
     <ClCompile Include="WindowSelected.cpp" />
@@ -515,6 +516,7 @@
     <ClInclude Include="ToolsUi.h" />
     <ClInclude Include="WindowCargo.h" />
     <ClInclude Include="WindowCargoLoot.h" />
+    <ClInclude Include="WindowChat.h" />
     <ClInclude Include="WindowJukebox.h" />
     <ClInclude Include="WindowMap.h" />
     <ClInclude Include="WindowSelected.h" />

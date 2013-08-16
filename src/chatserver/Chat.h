@@ -52,11 +52,12 @@ enum ChatDstType
 
 enum AuthResponse
 {
-	OK,				// valid IDs = auth OK
-	INVALID_IDS,	// invalid IDs
-	ERROR,			// error sent from the server (ex: if cannot contact database)
-	MAINTENANCE,	// maintenance mode, can't connect
-	BANNED			// should receive "BANNED" only if IDs are valids
+	AR_NONE,
+	AR_OK,				// valid IDs = auth OK
+	AR_INVALID_IDS,		// invalid IDs
+	AR_ERROR,			// error sent from the server (ex: if cannot contact database)
+	AR_MAINTENANCE,		// maintenance mode, can't connect
+	AR_BANNED			// should receive "BANNED" only if IDs are valids
 };
 
 // --------------
@@ -65,12 +66,21 @@ enum AuthResponse
 // AUTH -----------------------------------------------------
 struct S2C_Auth
 {
-	S2C_Auth(){}
+	S2C_Auth(sf::Uint16 authResponse = AuthResponse::AR_NONE, std::string optionnalMessage = "")
+		: authResponse(authResponse), optionnalMessage(optionnalMessage)
+	{}
+
+	sf::Uint16 authResponse;
+	std::string optionnalMessage;
 };
 
 struct C2S_Auth
 {
-	C2S_Auth(){}
+	C2S_Auth(std::string user, std::string sha1password)
+		: user(user), sha1password(sha1password)
+	{}
+
+	std::string user, sha1password;
 };
 
 // CHAT -----------------------------------------------------

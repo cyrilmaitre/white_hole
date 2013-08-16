@@ -42,7 +42,7 @@ Resource * Resource::resource;
 //*************************************************************
 // Constructreur - Destructeur
 //*************************************************************
-Resource::Resource(): mApp(VideoMode(Option::option->getAppScreenWidth(), Option::option->getAppScreenHeight(), APP_SCREEN_COLOR), APP_GAME_NAME, Option::option->getAppScreenMode(), sf::ContextSettings(0, 0, Option::option->getAppAntiAliasingLevel()))
+Resource::Resource(): mApp(VideoMode(Option::option->getAppScreenWidth(), Option::option->getAppScreenHeight(), APP_SCREEN_COLOR), APP_GAME_NAME, Option::option->getAppScreenMode(), sf::ContextSettings(0, 0, Option::option->getAppAntiAliasingLevel())), mChatClient(new ChatClient)
 {
 	//*************************************************************
 	// Sauvegarde de l'objet ressource
@@ -113,6 +113,10 @@ Resource::~Resource()
 		if(this->mViewMap[i] != NULL)
 			delete this->mViewMap[i];
 	}
+
+	// Delete chatclient
+	delete this->mChatClient;
+	this->mChatClient = NULL;
 }
 
 
@@ -716,9 +720,7 @@ void Resource::loadConfigs( std::string path )
 }
 
 
-
-
-
-
-
-
+ChatClient* Resource::getChatClient()
+{
+	return this->mChatClient;
+}

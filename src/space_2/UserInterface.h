@@ -1,5 +1,6 @@
 #pragma once
 #include "WindowCharacter.h"
+#include "WindowChat.h"
 #include "WindowJukebox.h"
 #include "WindowShipSmall.h"
 #include "WindowSelected.h"
@@ -28,6 +29,7 @@ public:
 	// Getters - Setters
 	WindowShipSmall* getWindowShipSmall();
 	WindowCharacter* getWindowCharacter();
+	WindowChat* getWindowChat();
 	WindowJukebox* getWindowJukebox();
 	WindowSelectedCharacterShip* getWindowSelectedCharacterShip();
 	WindowSelectedNpcShip* getWindowSelectedNpcShip();
@@ -69,6 +71,7 @@ private:
 
 	std::vector<Window*> mWindowDynamics;
 	WindowCharacter *mWindowCharacter;
+	WindowChat *mWindowChat;
 	WindowCargo *mWindowCargo;
 	WindowCargoLoot *mWindowCargoLoot;
 	WindowMap *mWindowMap;

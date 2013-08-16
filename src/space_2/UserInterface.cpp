@@ -36,12 +36,14 @@ UserInterface::UserInterface(void)
 
 	// Window dynamics
 	this->mWindowCharacter	= new WindowCharacter();
+	this->mWindowChat	= new WindowChat();
 	this->mWindowCargo = new WindowCargo();
 	this->mWindowCargoLoot = new WindowCargoLoot();
 	this->mWindowMap = new WindowMap();
 	this->mWindowJukebox = new WindowJukebox();
 
 	this->mWindowDynamics.push_back(this->mWindowCharacter);
+	this->mWindowDynamics.push_back(this->mWindowChat);
 	this->mWindowDynamics.push_back(this->mWindowCargo);
 	this->mWindowDynamics.push_back(this->mWindowCargoLoot);
 	this->mWindowDynamics.push_back(this->mWindowMap);
@@ -64,6 +66,7 @@ UserInterface::~UserInterface(void)
 	delete this->mWindowSelectedEntity;
 
 	delete this->mWindowCharacter;
+	delete this->mWindowChat;
 	delete this->mWindowCargo;
 	delete this->mWindowCargoLoot;
 	delete this->mWindowMap;
@@ -77,6 +80,11 @@ UserInterface::~UserInterface(void)
 WindowCharacter* UserInterface::getWindowCharacter()
 {
 	return this->mWindowCharacter;
+}
+
+WindowChat* UserInterface::getWindowChat()
+{
+	return this->mWindowChat;
 }
 
 WindowJukebox* UserInterface::getWindowJukebox()

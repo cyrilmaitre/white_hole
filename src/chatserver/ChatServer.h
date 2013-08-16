@@ -5,7 +5,7 @@
 
 #define SERVER_NAME				"Makaki"
 #define SERVER_MOTD				"Sisi la famille"
-#define MAX_CLIENTS				10
+#define MAX_CLIENTS				3
 #define MAX_S_PACKETSEND_RETRY	5
 
 // -------------

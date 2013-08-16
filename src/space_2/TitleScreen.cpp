@@ -143,7 +143,11 @@ void TitleScreen::launch()
 			
 		// Action
 		if(this->mButtonQuit.isClicked())
+		{
+			//klm
+			Resource::resource->getChatClient()->terminate(); // disconnect chat
 			this->launchQuit();
+		}
 
 		if(this->mButtonDebug.isClicked())
 			this->launchDebugScreen();
@@ -160,6 +164,7 @@ void TitleScreen::launch()
 		// Draw
 		this->draw();
 	}
+
 }
 
 void TitleScreen::update()
@@ -259,6 +264,9 @@ void TitleScreen::authenticateRequest()
 		{
 			Session::setAuthenticated(true);
 			Session::setUserJson(jsonResponse);
+
+			//klm
+			Resource::resource->getChatClient()->connect(); //chat connect
 		}
 		else
 		{
