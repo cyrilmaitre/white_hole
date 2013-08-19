@@ -59,6 +59,14 @@ ChatClient::~ChatClient(void)
 // ----------------------------------------------------------------------
 // methods
 // ----------------------------------------------------------------------
+//<running>
+bool ChatClient::isRunning(void)
+{
+	sf::Lock lock(mMutex);
+	return this->mRunning;
+}
+// </running>
+
 // <mutex>
 sf::Mutex& ChatClient::getMutex()
 {
@@ -204,10 +212,10 @@ void ChatClient::mRunClient(void)
 		this->pushInputBuffer(c2s_chat);
 		c2s_chat.message = "message 3";
 		this->pushInputBuffer(c2s_chat);
-
+		
 
 		sf::Packet packet;
-		while(mRunning)
+		while(this->isRunning())
 		{
 			// ------------------- Envoi --------------------------------------------------------------------------------
 			// <Thread safe>
@@ -267,24 +275,28 @@ void ChatClient::mRunClient(void)
 	{
 		{ std::ostringstream msg; msg << "(!) Couldn't connect to chat server, status : ("<< status << ")"; Debug::msg(msg); }
 	}
+	
+	{ std::ostringstream msg; msg << "Thread ended" << ""; Debug::msg(msg); }
 }
 
 void ChatClient::terminate(void)
 {
 	sf::Lock lock(mMutex);
 
-	C2S_Command c2s_command(ClientCommand::C_QUIT, "Closed by user");
-	sf::Packet packet;
-	packet << c2s_command;
+	if(this->isRunning())
+	{
+		C2S_Command c2s_command(ClientCommand::C_QUIT, "Closed by user");
+		sf::Packet packet;
+		packet << c2s_command;
 
-	if(this->sendPacket(packet) == sf::Socket::Status::Done)
+		this->sendPacket(packet);
 		this->disconnect();
+	}
 }
 
 void ChatClient::disconnect(void)
 {
 	sf::Lock lock(mMutex);
-
 	mRunning = false;
 	mSocket.disconnect();
 	{ std::ostringstream msg; msg << "Disconnected" << ""; Debug::msg(msg); }
