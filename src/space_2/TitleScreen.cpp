@@ -103,8 +103,8 @@ TitleScreen::TitleScreen(void)
 	this->updatePosition();
 
 	// Debug
-	this->mTextFieldUsername.setValue("ikg");
-	this->mTextFieldPassword.setValue("quiksilver");
+	this->mTextFieldUsername.setValue("watwat");
+	this->mTextFieldPassword.setValue("watwat");
 }
 
 TitleScreen::~TitleScreen(void)
@@ -143,11 +143,7 @@ void TitleScreen::launch()
 			
 		// Action
 		if(this->mButtonQuit.isClicked())
-		{
-			//klm
-			Resource::resource->getChatClient()->terminate(); // disconnect chat
 			this->launchQuit();
-		}
 
 		if(this->mButtonDebug.isClicked())
 			this->launchDebugScreen();
@@ -164,7 +160,6 @@ void TitleScreen::launch()
 		// Draw
 		this->draw();
 	}
-
 }
 
 void TitleScreen::update()

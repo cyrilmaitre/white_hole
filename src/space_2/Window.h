@@ -4,6 +4,7 @@
 #include "Selectable.h"
 #include "Button.h"
 #include "TextBox.h"
+#include "TextBoxMultiLine.h"
 
 
 class Window: public Selectable

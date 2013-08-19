@@ -17,5 +17,7 @@ int main()
 		mTitleScreen.launch();
 	}
 
+	Resource::resource->getChatClient()->terminate(); // disconnect chat
+
 	return EXIT_SUCCESS;
 }

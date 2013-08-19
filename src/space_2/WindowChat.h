@@ -11,5 +11,9 @@ public:
 
 	// Methods
 	void drawContent();
+	void notifyPositionChanged();
+
+private:
+	TextBoxMultiLine txtbox;
 };
 

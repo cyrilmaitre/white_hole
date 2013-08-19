@@ -13,14 +13,17 @@ public:
 	// (con/de)structor
 	ChatClient(void);
 	~ChatClient(void);
+	
+	// running
+	bool isRunning(void);
 
 	// chat input buffer (send)
-	const InputBuffer& getInputBuffer();
-	void pushInputBuffer(C2S_Chat& c2s_chat);
+	const InputBuffer& getInputBuffer(void);
+	void pushInputBuffer(C2S_Chat& c2s_chat);		// add a chat message to the buffer (public)
 
 	// chat output buffer (received)
-	const OutputBuffer& getOutputBuffer();
-	void clearOutputBuffer();
+	const OutputBuffer& getOutputBuffer(void);
+	void clearOutputBuffer(void);					// clear received messages buffer (public)
 
 	// others methods
 	void connect(void);
@@ -30,7 +33,7 @@ public:
 	void terminate(void);
 
 	// tread
-	sf::Mutex& getMutex();
+	sf::Mutex& getMutex(void);
 
 private:
 	sf::TcpSocket		mSocket;
@@ -40,15 +43,15 @@ private:
 
 	// buffers
 	OutputBuffer		mOutputBuffer;
-	void				pushOutputBuffer(S2C_Chat& s2c_chat);
+	void				pushOutputBuffer(S2C_Chat& s2c_chat);	// store received messages (private)
 	InputBuffer			mInputBuffer;
-	void				clearInputBuffer();
+	void				clearInputBuffer();						// clear sent messages (private)
 
 
 	// thread
 	sf::Mutex					mMutex;
 	std::unique_ptr<sf::Thread> mThread;
-	void						mRunClient(void);
+	void						mRunClient(void);	// threaded function
 
 	
 };
