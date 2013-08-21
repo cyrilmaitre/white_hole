@@ -1,6 +1,5 @@
 #include "WindowChat.h"
 
-
 //*************************************************************
 // Define
 //*************************************************************
@@ -45,24 +44,35 @@ void WindowChat::drawContent()
 	std::string chat = txtbox.getText();
 	{
 		sf::Lock lock(Resource::resource->getChatClient()->getMutex());
-		OutputBuffer chatbuffer(Resource::resource->getChatClient()->getOutputBuffer());
+		OutputBuffer outputbuffer(Resource::resource->getChatClient()->getOutputBuffer());
 
 		
 
 		// si packet buffer non vide, on envoie tout son contenu
-		if(!chatbuffer.empty())
+		if(!outputbuffer.empty())
 		{
-			for(auto it = chatbuffer.begin(); it != chatbuffer.end(); ++it)
+			for(auto it = outputbuffer.begin(); it != outputbuffer.end(); ++it)
 			{
-				S2C_Chat s2c_chat = *it;
-				chat += "<"+s2c_chat.from+"> "+s2c_chat.message+"<br/>";
+
+				std::shared_ptr<Message> message = *it;
+				// Si c'est un message chat
+				if(message->packetType == PacketType::CHAT) {
+					S2C_Chat* s2c_chat = dynamic_cast<S2C_Chat *>(message.get());
+					chat += "<"+s2c_chat->from+"> "+s2c_chat->message+"<br/>";
+				}
+				// Si c'est une commande
+				else if(message->packetType == PacketType::COMMAND) {
+					S2C_Command* s2c_command = dynamic_cast<S2C_Command *>(message.get());
+					chat += "<SERVER CMD> ";
+					chat += Chat::serverCmdToString(s2c_command->command);
+					chat += " -> "+s2c_command->argument+"<br/>";
+				}
 			}
 		}
 
 		
 		Resource::resource->getChatClient()->clearOutputBuffer();
 	}
-
 	txtbox.setText(chat);
 	txtbox.draw();
 }

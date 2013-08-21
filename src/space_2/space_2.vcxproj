@@ -84,6 +84,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\chatserver\Chat.cpp" />
     <ClCompile Include="..\chatserver\ChatClient.cpp" />
     <ClCompile Include="..\chatserver\Debug.cpp" />
     <ClCompile Include="AmmoModel.cpp" />

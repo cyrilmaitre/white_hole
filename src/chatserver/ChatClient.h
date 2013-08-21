@@ -3,8 +3,8 @@
 
 #define MAX_C_PACKETSEND_RETRY	5
 
-typedef std::vector<C2S_Chat> InputBuffer;
-typedef std::vector<S2C_Chat> OutputBuffer;
+typedef std::vector<std::shared_ptr<Message>> InputBuffer;
+typedef std::vector<std::shared_ptr<Message>> OutputBuffer;
 
 class ChatClient
 {
@@ -19,7 +19,7 @@ public:
 
 	// chat input buffer (send)
 	const InputBuffer& getInputBuffer(void);
-	void pushInputBuffer(C2S_Chat& c2s_chat);		// add a chat message to the buffer (public)
+	void pushInputBuffer(std::shared_ptr<Message> p_message);		// add a chat message to the buffer (public)
 
 	// chat output buffer (received)
 	const OutputBuffer& getOutputBuffer(void);
@@ -43,9 +43,9 @@ private:
 
 	// buffers
 	OutputBuffer		mOutputBuffer;
-	void				pushOutputBuffer(S2C_Chat& s2c_chat);	// store received messages (private)
+	void				pushOutputBuffer(std::shared_ptr<Message> p_message);	// store received messages (private)
 	InputBuffer			mInputBuffer;
-	void				clearInputBuffer();						// clear sent messages (private)
+	void				clearInputBuffer();										// clear sent messages (private)
 
 
 	// thread

@@ -66,6 +66,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Chat.cpp" />
     <ClCompile Include="ChatClient.cpp" />
     <ClCompile Include="ChatServer.cpp" />
     <ClCompile Include="Client.cpp" />

@@ -36,6 +36,7 @@ public:
 	void create(void);
 	void create(unsigned short p_port);
 	void addClient(std::shared_ptr<Client> p_client);
+	void authenticate(std::shared_ptr<Client> p_client, C2S_Auth p_auth);
 	void dropClient(std::shared_ptr<Client> p_client);
 	void handlePacket(sf::Packet& p_packet, std::shared_ptr<Client> p_client);
 	bool sendPacket(sf::Packet& p_packet, std::shared_ptr<Client> p_client, bool dropClientIfFailed = false);
