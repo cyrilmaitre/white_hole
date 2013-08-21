@@ -10,12 +10,29 @@
 // ------------
 // --- ENUM ---
 // ------------
+
+enum PeerType
+{
+	CLIENT,
+	SERVER
+};
+
 // Is is a command (kick, ban, motd, etc) or a chat message
 enum PacketType
 {
 	CHAT,
 	COMMAND,
 	AUTHENTICATION
+};
+
+enum MessageType
+{
+	MT_S2C_Auth,
+	MT_C2S_Auth,
+	MT_S2C_Chat,
+	MT_C2S_Chat,
+	MT_S2C_Command,
+	MT_C2S_Command,
 };
 
 // Commands sent by the server to clients for display purposes (ex: "Bob has been kicked")
@@ -63,69 +80,104 @@ enum AuthResponse
 // --------------
 // --- STRUCT ---
 // --------------
+// TOP STRUCT OF ALL MESSAGES
+struct Message
+{
+	Message(PacketType packetType, MessageType messageType, PeerType peerType) 
+		: packetType(packetType), messageType(messageType), peerType(peerType)
+	{}
+
+	sf::Uint16 packetType;
+	sf::Uint16 messageType;
+	sf::Uint16 peerType;
+
+	virtual sf::Packet& insertIntoPacket(sf::Packet& packet) const { return packet; }
+};
+
+
 // AUTH -----------------------------------------------------
-struct S2C_Auth
+struct S2C_Auth : public Message
 {
 	S2C_Auth(sf::Uint16 authResponse = AuthResponse::AR_NONE, std::string optionnalMessage = "")
-		: authResponse(authResponse), optionnalMessage(optionnalMessage)
+		: Message(PacketType::AUTHENTICATION, MessageType::MT_S2C_Auth, PeerType::SERVER),	// infos
+		authResponse(authResponse), optionnalMessage(optionnalMessage)						// datas
 	{}
 
 	sf::Uint16 authResponse;
 	std::string optionnalMessage;
+	virtual sf::Packet& toPacket(sf::Packet& packet) const { return packet << this->packetType << this->authResponse << this->optionnalMessage; }
 };
 
-struct C2S_Auth
+
+
+struct C2S_Auth : public Message
 {
-	C2S_Auth(std::string user, std::string sha1password)
-		: user(user), sha1password(sha1password)
+	C2S_Auth(std::string user = "", std::string sha1password = "")
+		: Message(PacketType::AUTHENTICATION, MessageType::MT_C2S_Auth,  PeerType::CLIENT),	// infos
+		user(user), sha1password(sha1password)												// datas
 	{}
 
 	std::string user, sha1password;
+	virtual sf::Packet& insertIntoPacket(sf::Packet& packet) const { return packet << this->packetType << this->user << this->sha1password; }
 };
 
 // CHAT -----------------------------------------------------
 // Server To Client - Chat
-struct S2C_Chat
+struct S2C_Chat : public Message
 {
 	S2C_Chat(std::string from = "", std::string message = "", std::string to = "", sf::Uint16 dstType = ChatDstType::NONE)
-		: from(from), message(message),	to(to), dstType(dstType)
+		: Message(PacketType::CHAT, MessageType::MT_S2C_Chat,  PeerType::SERVER),		// infos
+		from(from), message(message),	to(to), dstType(dstType)						// datas
 	{}
 
 	std::string from, to, message;
 	sf::Uint16 dstType;
+	virtual sf::Packet& insertIntoPacket(sf::Packet& packet) const { return packet << this->packetType << this->from << this->message << this->to << this->dstType; }
 };
 
 
 // Client To Server - Chat
-struct C2S_Chat
+struct C2S_Chat : public Message
 {
 	C2S_Chat(std::string message = "", std::string to = "", sf::Uint16 dstType = ChatDstType::NONE)
-		: message(message),	to(to), dstType(dstType)
+		: Message(PacketType::CHAT, MessageType::MT_C2S_Chat,  PeerType::CLIENT),	// infos
+		message(message),	to(to), dstType(dstType)								// datas
 	{}
 
 	std::string to, message;
 	sf::Uint16 dstType;
+	virtual sf::Packet& insertIntoPacket(sf::Packet& packet) const { return packet << this->packetType << this->message << this->to << this->dstType; }
 };
 
 // COMMANDS  -----------------------------------------------------
 // Server To Client - Commands
-struct S2C_Command
+struct S2C_Command : public Message
 {
 	S2C_Command(sf::Uint16 command = ServerCommand::S_UNKNOWN_CMD, std::string argument = "")
-		: command(command), argument(argument)
+		: Message(PacketType::COMMAND, MessageType::MT_S2C_Command,  PeerType::SERVER),	// infos
+		command(command), argument(argument)											// datas
 	{}
 
-	sf::Uint16 command;
-	std::string argument;
+	sf::Uint16	command;
+	std::string	argument;
+	virtual sf::Packet& insertIntoPacket(sf::Packet& packet) const { return packet << this->packetType << this->command << this->argument; }
 };
 
 // Client To Server - Commands
-struct C2S_Command
+struct C2S_Command : public Message
 {
 	C2S_Command(sf::Uint16 command = ClientCommand::C_UNKNOWN_CMD, std::string argument = "")
-		: command(command), argument(argument)
+		: Message(PacketType::COMMAND, MessageType::MT_C2S_Command,  PeerType::CLIENT),	// infos
+		command(command), argument(argument)											// datas
 	{}
 
-	sf::Uint16 command;
-	std::string argument;
+	sf::Uint16	command;
+	std::string	argument; 
+	virtual sf::Packet& insertIntoPacket(sf::Packet& packet) const { return packet << this->packetType << this->command << this->argument; }
+};
+
+
+class Chat {
+public:
+	static std::string serverCmdToString(sf::Uint16 p_command);
 };

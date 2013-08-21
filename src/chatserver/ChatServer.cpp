@@ -7,19 +7,19 @@
 // -- Chat
 sf::Packet& operator << (sf::Packet& packet, const S2C_Chat s2c_chat)
 {
-	return packet << (sf::Uint16) PacketType::CHAT << s2c_chat.from << s2c_chat.message << s2c_chat.to << s2c_chat.dstType;
+	return s2c_chat.insertIntoPacket(packet);
 }
 
 // -- Command
 sf::Packet& operator << (sf::Packet& packet, const S2C_Command s2c_command)
 {
-	return packet << (sf::Uint16) PacketType::COMMAND << s2c_command.command << s2c_command.argument;
+	return packet << s2c_command.packetType << s2c_command.command << s2c_command.argument;
 }
 
 // -- Auth
 sf::Packet& operator << (sf::Packet& packet, const S2C_Auth s2c_auth)
 {
-	return packet << (sf::Uint16) PacketType::AUTHENTICATION << s2c_auth.authResponse << s2c_auth.optionnalMessage;
+	return packet << s2c_auth.packetType << s2c_auth.authResponse << s2c_auth.optionnalMessage;
 }
 
 
@@ -196,9 +196,6 @@ void ChatServer::addClient(std::shared_ptr<Client> p_client)
 {
 	p_client->setState(ClientState::TCP_CONNECTED);
 
-	
-	p_client->setState(ClientState::AUTHED); // TEST
-
 	//Add the new client to the clients list
 	clients.push_back(p_client);
 
@@ -209,12 +206,71 @@ void ChatServer::addClient(std::shared_ptr<Client> p_client)
 	{ std::ostringstream msg; msg << "Client " << clients.size() << "added in clientlist: " << p_client->getSocket().getRemoteAddress() << ""; Debug::msg(msg); }
 }
 
+/*
+	Authenticate the user
+*/
+void ChatServer::authenticate(std::shared_ptr<Client> p_client, C2S_Auth p_auth)
+{
+	// auth test here
+
+	// if auth OK
+	if(true)
+	{
+		// client is now authed
+		p_client->setState(ClientState::AUTHED); 
+	
+		// send him a response
+		{
+			sf::Packet packet;
+			S2C_Auth s2c_auth(AuthResponse::AR_INVALID_IDS);
+			packet << s2c_auth;
+			this->sendPacket(packet, p_client);
+		}
+
+		// broadcast to all authed user that the user joined
+		{
+			sf::Packet packet;
+			S2C_Command s2c_command(ServerCommand::S_JOIN, p_client->getName());
+			packet << s2c_command;
+
+			BroadcastCondition bc;
+			bc.ignoreClientID = p_client->getUniqueID();
+			bc.clientState = ClientState::AUTHED;
+
+			this->broadcast(packet, bc);
+		}
+	}
+	else
+	{
+		sf::Packet packet;
+		S2C_Auth s2c_auth(AuthResponse::AR_INVALID_IDS);
+
+		packet << s2c_auth;
+		this->sendPacket(packet, p_client);
+	}
+}
+
 
 /*
 	remove client from selector & from vector (if in it)
 */
 void ChatServer::dropClient(std::shared_ptr<Client> p_client)
 {
+
+	// broadcast disconnexion to all clients
+	{
+		sf::Packet packet;
+		S2C_Command s2c_command(ServerCommand::S_QUIT, p_client->getName());
+		packet << s2c_command;
+
+		BroadcastCondition bc;
+		bc.ignoreClientID = p_client->getUniqueID();
+		bc.clientState = ClientState::AUTHED;
+
+		this->broadcast(packet, bc);
+	}
+
+	// disconnect
 	p_client->setState(ClientState::DROPPED); // this might seems useless since it will be delete later. it's just a security.
 
 	{ std::ostringstream msg; msg << "Client disconnected - " << p_client->getSocket().getRemoteAddress().toString() << "";	Debug::msg(msg); }
@@ -332,7 +388,18 @@ void ChatServer::handlePacket(sf::Packet& p_packet, std::shared_ptr<Client> p_cl
 	{
 	case ClientState::TCP_CONNECTED:
 		{
-			// Should auth something around there
+			if(packetType == PacketType::AUTHENTICATION)
+			{
+				C2S_Auth c2s_auth;
+				if(p_packet >> c2s_auth)
+				{
+					this->authenticate(p_client, c2s_auth);
+				}
+				else
+				{
+					{ std::ostringstream msg; msg << "Malformed chat packet" << "";	Debug::msg(msg); }
+				}
+			}
 			
 		}
 		break;
@@ -382,7 +449,7 @@ void ChatServer::handlePacket(sf::Packet& p_packet, std::shared_ptr<Client> p_cl
 			// --------------------------------------------------
 			// --------------------- COMMAND --------------------
 			// --------------------------------------------------
-			if(packetType == PacketType::COMMAND)
+			else if(packetType == PacketType::COMMAND)
 			{
 				C2S_Command c2s_command;
 				// If we can read the message

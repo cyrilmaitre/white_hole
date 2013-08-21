@@ -48,6 +48,9 @@
     <ClCompile Include="ChatClient.cpp">
       <Filter>Source Files\chat\client</Filter>
     </ClCompile>
+    <ClCompile Include="Chat.cpp">
+      <Filter>Source Files\chat</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Debug.h">

@@ -8,18 +8,18 @@
 // -- Chat
 sf::Packet& operator << (sf::Packet& packet, const C2S_Chat c2s_chat)
 {
-	return packet << (sf::Uint16) PacketType::CHAT << c2s_chat.message << c2s_chat.to << c2s_chat.dstType;
+	return packet << c2s_chat.packetType << c2s_chat.message << c2s_chat.to << c2s_chat.dstType;
 }
 // -- Commad
 sf::Packet& operator << (sf::Packet& packet, const C2S_Command c2s_command)
 {
-	return packet << (sf::Uint16) PacketType::COMMAND << c2s_command.command << c2s_command.argument;
+	return packet << c2s_command.packetType << c2s_command.command << c2s_command.argument;
 }
 
 // -- Auth
 sf::Packet& operator << (sf::Packet& packet, const C2S_Auth c2s_auth)
 {
-	return packet << (sf::Uint16) PacketType::AUTHENTICATION << c2s_auth.user << c2s_auth.sha1password;
+	return packet << c2s_auth.packetType << c2s_auth.user << c2s_auth.sha1password;
 }
 
 
@@ -89,10 +89,10 @@ void ChatClient::clearOutputBuffer()
 	mOutputBuffer.shrink_to_fit();
 }
 
-void ChatClient::pushOutputBuffer(S2C_Chat& s2c_chat)
+void ChatClient::pushOutputBuffer(std::shared_ptr<Message> p_message)
 {
 	sf::Lock lock(mMutex);
-	mOutputBuffer.push_back(s2c_chat);
+	mOutputBuffer.push_back(p_message);
 }
 
 // int
@@ -102,10 +102,10 @@ const InputBuffer& ChatClient::getInputBuffer()
 	return this->mInputBuffer;
 }
 
-void ChatClient::pushInputBuffer(C2S_Chat& c2s_chat)
+void ChatClient::pushInputBuffer(std::shared_ptr<Message> p_message)
 {
 	sf::Lock lock(mMutex);
-	mInputBuffer.push_back(c2s_chat);
+	mInputBuffer.push_back(p_message);
 }
 
 void ChatClient::clearInputBuffer()
@@ -168,23 +168,31 @@ void ChatClient::handlePacket(sf::Packet& p_packet)
 		// Chat
 		if(packetType == PacketType::CHAT)
 		{
-			S2C_Chat s2c_chat;
-			if(p_packet >> s2c_chat)
+			std::shared_ptr<S2C_Chat> s2c_chat(new S2C_Chat);
+			if(p_packet >> *s2c_chat)
 			{
 				this->pushOutputBuffer(s2c_chat);
-				{ std::ostringstream msg; msg << "[CHAT] FROM <" << s2c_chat.from << "> TO <" << s2c_chat.to << "("<< s2c_chat.dstType <<")> : " << s2c_chat.message << ""; Debug::msg(msg); }
+				{ std::ostringstream msg; msg << "[CHAT] FROM <" << s2c_chat->from << "> TO <" << s2c_chat->to << "("<< s2c_chat->dstType <<")> : " << s2c_chat->message << ""; Debug::msg(msg); }
 			}
 		}
 		else if(packetType == PacketType::COMMAND)
 		{
-			S2C_Command s2c_command;
-			if(p_packet >> s2c_command)
+			std::shared_ptr<S2C_Command> s2c_command(new S2C_Command);
+			if(p_packet >> *s2c_command)
 			{
-				{ std::ostringstream msg; msg << "[CMD] #" << s2c_command.command << ":" << s2c_command.argument << ""; Debug::msg(msg); }
+				this->pushOutputBuffer(s2c_command);
+				{ std::ostringstream msg; msg << "[CMD] #" << s2c_command->command << ":" << s2c_command->argument << ""; Debug::msg(msg); }
 			}
 		}
 		else if(packetType == PacketType::AUTHENTICATION)
 		{
+
+			std::shared_ptr<S2C_Auth> s2c_auth(new S2C_Auth);
+			if(p_packet >> *s2c_auth)
+			{
+				this->pushOutputBuffer(s2c_auth);
+				{ std::ostringstream msg; msg << "[AUTH] #" << s2c_auth->authResponse << ""; Debug::msg(msg); }
+			}
 		}
 	}
 	else
@@ -202,16 +210,15 @@ void ChatClient::mRunClient(void)
 	{
 		{ std::ostringstream msg; msg << "Connection OK !" << ""; Debug::msg(msg); }
 
-		// adding some messages to the buffer
-		C2S_Chat c2s_chat;
-		c2s_chat.dstType = ChatDstType::CHANNEL;
-		c2s_chat.message = "Coucou";
-		c2s_chat.to = "trololo";
-		this->pushInputBuffer(c2s_chat);
-		c2s_chat.message = "wésh";
-		this->pushInputBuffer(c2s_chat);
-		c2s_chat.message = "message 3";
-		this->pushInputBuffer(c2s_chat);
+		// TEST : adding some messages to the buffer
+		std::shared_ptr<C2S_Auth> auth(new C2S_Auth("username", "password"));
+		this->pushInputBuffer(auth);
+		std::shared_ptr<C2S_Chat> msg1(new C2S_Chat("Message 1", "ok", ChatDstType::CHANNEL));
+		std::shared_ptr<C2S_Chat> msg2(new C2S_Chat("Message 2", "babouche", ChatDstType::USER));
+		std::shared_ptr<C2S_Chat> msg3(new C2S_Chat("Message 3", "mazouteman", ChatDstType::CHANNEL));
+		this->pushInputBuffer(msg1);
+		this->pushInputBuffer(msg2);
+		this->pushInputBuffer(msg3);
 		
 
 		sf::Packet packet;
@@ -228,10 +235,10 @@ void ChatClient::mRunClient(void)
 				{
 					for(auto it = chatbuffer.begin(); it != chatbuffer.end(); ++it)
 					{
-						C2S_Chat c2s_chat = *it;
 						sf::Packet packet;
-						packet << c2s_chat;
+						(*it)->insertIntoPacket(packet);
 						this->sendPacket(packet);
+
 					}
 				}
 
