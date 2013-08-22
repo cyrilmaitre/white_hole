@@ -1,3 +1,4 @@
+#define	NOMINMAX 
 #include "Option.h"
 #include "Resource.h"
 #include "Game.h"
