@@ -20,10 +20,15 @@ WindowChat::WindowChat(void)
 
 	this->setPositionMiddleScreen();
 
+	// txtfield
+	this->txtfield.setPosition(getContentX(), getContentY());
+	this->txtbox.setWidth(getContentWidth());
+	this->txtfield.setType(TextField::TextFieldType::TypeText);
+	this->txtfield.setEnable(true);
 	
 	// txtbox
 	this->txtbox.setFontColor(sf::Color(255, 255, 255));
-	this->txtbox.setPosition(getContentX(), getContentY());
+	this->txtbox.setPosition(getContentX(), getContentY()+txtfield.getHeight());
 	this->txtbox.setWidth(getContentWidth());
 	this->txtbox.setAutoResizeHeight(false);
 	this->txtbox.setAutoResizeWidth(false);
@@ -38,10 +43,29 @@ WindowChat::~WindowChat(void)
 //*************************************************************
 // Methods
 //*************************************************************
+
+void WindowChat::update(sf::Event p_event)
+{
+	if(p_event.type == sf::Event::KeyPressed && p_event.key.code == sf::Keyboard::Return)
+	{
+		if(txtfield.getValue().length() > 0)
+		{
+			std::shared_ptr<C2S_Chat> c2s_chat(new C2S_Chat(txtfield.getValue(), "INTERNATIONAL", ChatDstType::CHANNEL));
+			Resource::resource->getChatClient()->pushInputBuffer(c2s_chat);
+			txtfield.setValue("");
+		}
+	}
+
+	this->txtfield.update(p_event);
+	Window::update(p_event);
+}
+
 void WindowChat::drawContent()
 {
+	// txtfield
+	txtfield.draw();
 
-	std::string chat = txtbox.getText();
+	// txtbox
 	{
 		sf::Lock lock(Resource::resource->getChatClient()->getMutex());
 		OutputBuffer outputbuffer(Resource::resource->getChatClient()->getOutputBuffer());
@@ -58,14 +82,12 @@ void WindowChat::drawContent()
 				// Si c'est un message chat
 				if(message->packetType == PacketType::CHAT) {
 					S2C_Chat* s2c_chat = dynamic_cast<S2C_Chat *>(message.get());
-					chat += "<"+s2c_chat->from+"> "+s2c_chat->message+"<br/>";
+					this->pushChat("<"+s2c_chat->from+"> "+s2c_chat->message);
 				}
 				// Si c'est une commande
 				else if(message->packetType == PacketType::COMMAND) {
 					S2C_Command* s2c_command = dynamic_cast<S2C_Command *>(message.get());
-					chat += "<SERVER CMD> ";
-					chat += Chat::serverCmdToString(s2c_command->command);
-					chat += " -> "+s2c_command->argument+"<br/>";
+					this->pushChat("<SERVER CMD> " + Chat::serverCmdToString(s2c_command->command) + " -> " + s2c_command->argument);
 				}
 			}
 		}
@@ -73,12 +95,35 @@ void WindowChat::drawContent()
 		
 		Resource::resource->getChatClient()->clearOutputBuffer();
 	}
-	txtbox.setText(chat);
 	txtbox.draw();
 }
 
 void WindowChat::notifyPositionChanged()
 {
 	Window::notifyPositionChanged();
-	this->txtbox.setPosition(getContentX(), getContentY());
+	this->txtfield.setPosition(getContentX(), getContentY());
+	this->txtbox.setPosition(getContentX(), getContentY()+txtfield.getHeight());
+}
+
+void WindowChat::pushChat(std::string p_string)
+{
+	if(this->chatLines.size() >= 100) {
+		this->chatLines.pop_front();
+	}
+
+	this->chatLines.push_back(p_string);
+
+	std::string content = "";
+	for(unsigned int i = 0; i < chatLines.size(); i++)
+	{
+		content += chatLines[i]+"<br/>";
+	}
+
+	this->txtbox.setText(content);
+}
+
+void WindowChat::clearChat()
+{
+	this->chatLines.clear();
+	this->txtbox.setText("");
 }

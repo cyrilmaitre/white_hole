@@ -204,9 +204,21 @@ void ChatClient::handlePacket(sf::Packet& p_packet)
 void ChatClient::mRunClient(void)
 {
 	{ std::ostringstream msg; msg << "Connecting to " << mServerIP.toString() << ":" << mServerPort << ""; Debug::msg(msg); }
-	sf::Socket::Status status = mSocket.connect(mServerIP, mServerPort);
 
-	if(status == sf::Socket::Status::Done)
+	// WORKAROUND
+	// bug avec socket non bloquantes : https://github.com/LaurentGomila/SFML/issues/194
+	mSocket.setBlocking(false);
+	sf::Socket::Status status = sf::Socket::Error;
+
+	if (status == sf::Socket::Disconnected || status == sf::Socket::Error)
+	{
+			mSocket.disconnect();
+			mSocket.setBlocking(false);
+			status = mSocket.connect(mServerIP, mServerPort);
+			sf::IpAddress remoteAddr = mSocket.getRemoteAddress();
+
+	}
+	if(status == sf::Socket::Status::Done || status == sf::Socket::Status::NotReady)
 	{
 		{ std::ostringstream msg; msg << "Connection OK !" << ""; Debug::msg(msg); }
 
@@ -227,6 +239,7 @@ void ChatClient::mRunClient(void)
 			// ------------------- Envoi --------------------------------------------------------------------------------
 			// <Thread safe>
 			{
+
 				sf::Lock lock(mMutex);
 				InputBuffer chatbuffer(this->getInputBuffer());
 
@@ -262,7 +275,7 @@ void ChatClient::mRunClient(void)
 			}
 			else if(status == sf::Socket::Status::NotReady)
 			{
-				{ std::ostringstream msg; msg << "Packet received with code: Status::NotReady ("<< status << ")"; Debug::msg(msg); }
+				//{ std::ostringstream msg; msg << "Packet received with code: Status::NotReady ("<< status << ")"; Debug::msg(msg); }
 			}
 			else if(status == sf::Socket::Status::Error)
 			{
@@ -274,7 +287,7 @@ void ChatClient::mRunClient(void)
 			}
 			// ----------------------------------------------------------------------------------------------------------
 			packet.clear();						// important
-			sf::sleep(sf::milliseconds(10));	// for CPU
+			sf::sleep(sf::milliseconds(100));	// for CPU
 			// ----------------------------------------------------------------------------------------------------------
 		}
 	}
@@ -292,6 +305,9 @@ void ChatClient::terminate(void)
 
 	if(this->isRunning())
 	{
+		this->clearOutputBuffer();
+		this->clearInputBuffer();
+
 		C2S_Command c2s_command(ClientCommand::C_QUIT, "Closed by user");
 		sf::Packet packet;
 		packet << c2s_command;
