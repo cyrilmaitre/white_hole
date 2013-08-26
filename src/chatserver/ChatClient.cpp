@@ -193,7 +193,7 @@ void ChatClient::handlePacket(sf::Packet& p_packet)
 						C2S_Command c2s_pong(ClientCommand::C_PONG);
 						sf::Packet pongPacket;
 						pongPacket << c2s_pong;
-						//this->sendPacket(pongPacket);
+						this->sendPacket(pongPacket);
 					}
 					break;
 				}
