@@ -18,7 +18,6 @@ public:
 	// Methods
 	void update();
 	void notifyModelChanged();
-	void notifySizeChanged();
 	void loadSprite();
 
 

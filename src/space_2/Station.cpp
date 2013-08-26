@@ -47,7 +47,7 @@ void Station::setModel( StationModel* p_model )
 void Station::update()
 {
 	Entity::update();
-	//Npc::update();	// Not necessary (cannot attak)
+	Npc::update();
 }
 
 void Station::notifyModelChanged()
@@ -57,17 +57,10 @@ void Station::notifyModelChanged()
 		DestructableData::loadFromDestructableData(this->getModel());
 		NpcData::loadNpcDataFromNpcData(this->getModel());
 
-		this->setWidth(this->getModel()->getWidth());
-		this->setHeight(this->getModel()->getHeight());
+		this->setScale(this->getModel()->getRandomScale());
+		this->setSize(this->getModel()->getHitBoxWidth(), this->getModel()->getHitBoxHeight());
 		this->loadSprite();
 	}
-}
-
-void Station::notifySizeChanged()
-{
-	Entity::notifySizeChanged();
-	if(this->mObjectSprite != NULL)
-		ToolsImage::resizeSprite(this->mObjectSprite, this->Object::getWidth(), this->Object::getHeight());
 }
 
 void Station::loadSprite()
@@ -76,9 +69,10 @@ void Station::loadSprite()
 	if(this->getModel() != NULL)
 	{
 		this->mObjectSprite = new sf::Sprite(*Resource::resource->getTexture(this->getModel()->getSprite()));
-		this->mObjectSprite->setOrigin(this->mObjectSprite->getLocalBounds().width / 2, this->mObjectSprite->getLocalBounds().height / 2);
-		ToolsImage::resizeSprite(this->mObjectSprite, this->Object::getWidth(), this->Object::getHeight());
+		ToolsImage::setSpriteOriginCenter(this->mObjectSprite);
+		this->mObjectSprite->setScale(this->mScale, this->mScale);
 		this->mObjectSprite->setRotation(this->getRotation());
+
 		this->updateSprite();
 	}
 }
