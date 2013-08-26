@@ -44,7 +44,8 @@ enum ServerCommand
 	S_KICK,
 	S_MOTD,
 	S_SAY,
-	S_MUTE
+	S_MUTE,
+	S_PING,
 };
 
 // Commands sent by the client (ex: quit)
@@ -55,6 +56,7 @@ enum ClientCommand
 	C_AFK,
 	C_BUSY,
 	C_LOOKING_FOR_TRADE,
+	C_PONG,
 };
 
 
@@ -105,7 +107,7 @@ struct S2C_Auth : public Message
 
 	sf::Uint16 authResponse;
 	std::string optionnalMessage;
-	virtual sf::Packet& toPacket(sf::Packet& packet) const { return packet << this->packetType << this->authResponse << this->optionnalMessage; }
+	virtual sf::Packet& insertIntoPacket(sf::Packet& packet) const { return packet << this->packetType << this->authResponse << this->optionnalMessage; }
 };
 
 

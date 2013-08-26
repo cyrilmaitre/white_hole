@@ -5,8 +5,11 @@
 
 #define SERVER_NAME				"Makaki"
 #define SERVER_MOTD				"Sisi la famille"
-#define MAX_CLIENTS				3
-#define MAX_S_PACKETSEND_RETRY	5
+#define MAX_CLIENTS				15					// max client allowed on server
+#define MAX_S_PACKETSEND_RETRY	5					// if 5+ packets are not received by the client, then drop it
+#define PING_IDLE_TIME			120					// if nothing received for 120s from the client, then ping it.
+#define PING_TIMEOUT			100					// client must PONG within 100s
+#define AUTH_TIMEOUT			30					// 30s to authenticate
 
 // -------------
 // --- CLASS ---
