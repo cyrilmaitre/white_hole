@@ -5,9 +5,7 @@
 #include "MovableData.h"
 #include "DestructableData.h"
 #include "ContainerableData.h"
-#include "StuffableData.h"
-#include "UpgradableData.h"
-#include "WeaponableData.h"
+#include "EquipableData.h"
 #include "Item.h"
 #include "RotableData.h"
 #include "MapObjectModel.h"
@@ -15,8 +13,8 @@
 #include "EntityData.h"
 
 
-class ShipModel :	public Item, public MovableData, public DestructableData, public ContainerableData, public StuffableData, 
-					public UpgradableData, public WeaponableData, public RotableData, public MapObjectModel, public EntityMovableData, public EntityData
+class ShipModel :	public Item, public MovableData, public DestructableData, public ContainerableData, public EquipableData, 
+					public RotableData, public MapObjectModel, public EntityMovableData, public EntityData
 {
 public:
 	// Constructor - Destructor

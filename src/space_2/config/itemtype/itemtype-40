@@ -1,0 +1,5 @@
+id = 40
+name = itemTypeWeaponTurretLauncherName
+description = itemTypeWeaponTurretLauncherDescription
+itemtype_parent = 37
+itemtype_leaf = true

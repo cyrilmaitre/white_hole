@@ -1,0 +1,5 @@
+id = 38
+name = itemTypeWeaponTurretKineticName
+description = itemTypeWeaponTurretKineticDescription
+itemtype_parent = 37
+itemtype_leaf = true

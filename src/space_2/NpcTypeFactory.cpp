@@ -2,6 +2,12 @@
 
 
 //*************************************************************
+// Define
+//*************************************************************
+#define NPCTYPE_COUNT	9
+
+
+//*************************************************************
 // Init static
 //*************************************************************
 NpcTypeFactory * NpcTypeFactory::mInstance;
@@ -47,4 +53,14 @@ NpcType * NpcTypeFactory::getNpcType( std::string p_configName, bool p_useLoaded
 NpcType * NpcTypeFactory::getNpcType( long p_jobId, bool p_useLoaded )
 {
 	return this->getNpcType(NPCTYPE_CONFIG + Tools::buildStringWithLong(p_jobId), p_useLoaded);
+}
+
+int NpcTypeFactory::getNpcTypeCount()
+{
+	return NPCTYPE_COUNT;
+}
+
+NpcType* NpcTypeFactory::getRandomNpcType()
+{
+	return this->getNpcType(Tools::random(1, this->getNpcTypeCount()));
 }

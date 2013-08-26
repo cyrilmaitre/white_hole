@@ -16,6 +16,9 @@ public:
 	NpcType *getNpcType(std::string p_configName, bool p_useLoaded = true);
 	NpcType *getNpcType(long p_jobId, bool p_useLoaded = true);
 
+	int getNpcTypeCount();
+	NpcType* getRandomNpcType();
+
 	// Static
 	static NpcTypeFactory *mInstance;
 };

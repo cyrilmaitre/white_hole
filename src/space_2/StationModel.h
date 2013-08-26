@@ -5,9 +5,11 @@
 #include "MapObjectdata.h"
 #include "NpcData.h"
 #include "MapObjectModel.h"
+#include "EntityData.h"
+#include "EquipableData.h"
 
 
-class StationModel : public DestructableData, public NpcData, public MapObjectModel
+class StationModel : public DestructableData, public NpcData, public MapObjectModel, public EntityData, public EquipableData
 {
 public:
 	// Constructor - Destructor

@@ -1,5 +1,6 @@
 #include "StationManager.h"
 #include "FactoryGet.h"
+#include "FactoryGet.h"
 
 
 //*************************************************************
@@ -55,7 +56,8 @@ void StationManager::uninit()
 
 StationModel* StationManager::getRandomModel()
 {
-	return FactoryGet::getStationModelFactory()->getStationModel(Tools::random(1, this->getStationModelCount()));
+	//return FactoryGet::getStationModelFactory()->getStationModel(Tools::random(1, this->getStationModelCount()));
+	return FactoryGet::getStationModelFactory()->getStationModel(1);
 }
 
 Station* StationManager::generateStation( Sector* p_sector )
@@ -63,6 +65,8 @@ Station* StationManager::generateStation( Sector* p_sector )
 	Station* generatedStation = new Station();
 
 	generatedStation->setModel(this->getRandomModel());
+	//generatedStation->setNpcType(FactoryGet::getNpcTypeFactory()->getRandomNpcType());
+	generatedStation->setNpcType(FactoryGet::getNpcTypeFactory()->getNpcType(7));
 
 	return generatedStation;
 }

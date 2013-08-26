@@ -1,0 +1,5 @@
+id = 37
+name = itemTypeWeaponTurretName
+description = itemTypeWeaponTurretDescription
+itemtype_parent = 23
+itemtype_leaf = false

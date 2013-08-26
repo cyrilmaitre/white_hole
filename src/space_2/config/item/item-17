@@ -1,0 +1,8 @@
+id = 17
+name = weaponModelLightAutoCannonName
+description = weaponModelLightAutoCannonDescription
+price = 500
+stackmax = 1
+sprite = 0-0
+itemtype = 38
+itemtier = 1

@@ -54,8 +54,10 @@ void Station::notifyModelChanged()
 {
 	if(this->getModel() != NULL)
 	{
+		WeaponableData::loadFromWeaponableData(this->getModel());
 		DestructableData::loadFromDestructableData(this->getModel());
-		NpcData::loadNpcDataFromNpcData(this->getModel());
+		EntityData::loadFromEntityData(this->getModel());
+		this->loadNpcDataFromNpcData(this->getModel());
 
 		this->setScale(this->getModel()->getRandomScale());
 		this->setSize(this->getModel()->getHitBoxWidth(), this->getModel()->getHitBoxHeight());

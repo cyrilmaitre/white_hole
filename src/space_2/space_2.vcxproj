@@ -104,6 +104,7 @@
     <ClCompile Include="EntityMovableData.cpp" />
     <ClCompile Include="EntityMovableEffect.cpp" />
     <ClCompile Include="EntityTarget.cpp" />
+    <ClCompile Include="EquipableData.cpp" />
     <ClCompile Include="ExperienceBar.cpp" />
     <ClCompile Include="FlashingLightEffect.cpp" />
     <ClCompile Include="IdValueDouble.cpp" />
@@ -350,6 +351,7 @@
     <ClInclude Include="EntityMovableData.h" />
     <ClInclude Include="EntityMovableEffect.h" />
     <ClInclude Include="EntityTarget.h" />
+    <ClInclude Include="EquipableData.h" />
     <ClInclude Include="ExperienceBar.h" />
     <ClInclude Include="FlashingLightEffect.h" />
     <ClInclude Include="IdValueDouble.h" />

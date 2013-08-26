@@ -2,6 +2,7 @@
 #include "Entity.h"
 #include "StationModel.h"
 #include "Npc.h"
+#include "EntityData.h"
 
 
 class Station : public Entity, public Npc

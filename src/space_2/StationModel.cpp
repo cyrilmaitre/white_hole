@@ -21,5 +21,7 @@ StationModel::~StationModel(void)
 void StationModel::loadFromConfig( KeyValueFile* p_config )
 {
 	DestructableData::loadFromConfig(p_config);
-	this->loadNpcDataFromConfig(p_config);
+	EquipableData::loadFromConfig(p_config);
+	EntityData::loadFromConfig(p_config);
+	NpcData::loadNpcDataFromConfig(p_config);
 }
