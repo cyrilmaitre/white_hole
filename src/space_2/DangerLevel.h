@@ -5,18 +5,6 @@
 #include "NpcShipModel.h"
 
 // Define
-#define DANGERLEVEL_CONFIG_ID						"id"
-#define DANGERLEVEL_CONFIG_DANGERLEVEL				"dangerlevel"
-#define DANGERLEVEL_CONFIG_DANGERLEVEL_COLOR		"dangerlevelcolor"
-#define DANGERLEVEL_CONFIG_SHIPTYPE_SPAWN_COUNT		"shiptypespawncount"
-#define DANGERLEVEL_CONFIG_SHIPTYPE_SPAWN_CHANCE	"shipmodelspawnchance"
-#define DANGERLEVEL_CONFIG_PLANETCOUNT_MIN			"planetcountmin"
-#define DANGERLEVEL_CONFIG_PLANETCOUNT_MAX			"planetcountmax"
-#define DANGERLEVEL_CONFIG_CLOUDGAZCOUNT_MIN		"cloudgazcountmin"
-#define DANGERLEVEL_CONFIG_CLOUDGAZCOUNT_MAX		"cloudgazcountmax"
-#define DANGERLEVEL_CONFIG_CLOUDWRECKCOUNT_MIN		"cloudwreckcountmin"
-#define DANGERLEVEL_CONFIG_CLOUDWRECKCOUNT_MAX		"cloudwreckcountmax"
-
 #define DANGERLEVEL_TEXTURE_MAPMINI_WIDTH			64
 #define DANGERLEVEL_TEXTURE_MAPMINI_HEIGHT			64
 
@@ -67,10 +55,16 @@ public:
 	int getCloudWreckCountMax();
 	void setCloudWreckCountMax(int p_max);
 
+	int getStationCountMin();
+	void setStationCountMin(int p_min);
+	int getStationCountMax();
+	void setStationCountMax(int p_max);
+
 	// Methods
 	int generatePlanetCount();
 	int generateCloudGazCount();
 	int generateCloudWreckCount();
+	int generateStationCount();
 	void loadFromConfig(KeyValueFile *p_config);
 
 
@@ -98,5 +92,9 @@ private:
 	// Cloud
 	int mCloudWreckCountMin;
 	int mCloudWreckCountMax;
+
+	// Station
+	int mStationCountMin;
+	int mStationCountMax;
 };
 

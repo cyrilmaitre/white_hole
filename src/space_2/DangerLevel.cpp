@@ -5,6 +5,24 @@
 
 
 //*************************************************************
+// Define
+//*************************************************************
+#define DANGERLEVEL_CONFIG_ID						"id"
+#define DANGERLEVEL_CONFIG_DANGERLEVEL				"dangerlevel"
+#define DANGERLEVEL_CONFIG_DANGERLEVEL_COLOR		"dangerlevelcolor"
+#define DANGERLEVEL_CONFIG_SHIPTYPE_SPAWN_COUNT		"shiptypespawncount"
+#define DANGERLEVEL_CONFIG_SHIPTYPE_SPAWN_CHANCE	"shipmodelspawnchance"
+#define DANGERLEVEL_CONFIG_PLANETCOUNT_MIN			"planetcountmin"
+#define DANGERLEVEL_CONFIG_PLANETCOUNT_MAX			"planetcountmax"
+#define DANGERLEVEL_CONFIG_CLOUDGAZCOUNT_MIN		"cloudgazcountmin"
+#define DANGERLEVEL_CONFIG_CLOUDGAZCOUNT_MAX		"cloudgazcountmax"
+#define DANGERLEVEL_CONFIG_CLOUDWRECKCOUNT_MIN		"cloudwreckcountmin"
+#define DANGERLEVEL_CONFIG_CLOUDWRECKCOUNT_MAX		"cloudwreckcountmax"
+#define CONFIG_STATIONCOUNT_MIN						"stationcountmin"
+#define CONFIG_STATIONCOUNT_MAX						"stationcountmax"
+
+
+//*************************************************************
 // Constructor - Destructor
 //*************************************************************
 DangerLevel::DangerLevel( KeyValueFile *p_config )
@@ -233,6 +251,26 @@ sf::RectangleShape* DangerLevel::getShapeMapMini()
 	return &this->mShapeMapMini;
 }
 
+int DangerLevel::getStationCountMin()
+{
+	return this->mStationCountMin;
+}
+
+void DangerLevel::setStationCountMin( int p_min )
+{
+	this->mStationCountMin = p_min;
+}
+
+int DangerLevel::getStationCountMax()
+{
+	return this->mStationCountMax;
+}
+
+void DangerLevel::setStationCountMax( int p_max )
+{
+	this->mStationCountMax = p_max;
+}
+
 
 //*************************************************************
 // Methods
@@ -250,6 +288,11 @@ int DangerLevel::generateCloudGazCount()
 int DangerLevel::generateCloudWreckCount()
 {
 	return Tools::random(this->getCloudWreckCountMin(), this->getCloudWreckCountMax());
+}
+
+int DangerLevel::generateStationCount()
+{
+	return Tools::random(this->getStationCountMin(), this->getStationCountMax());
 }
 
 void DangerLevel::loadFromConfig( KeyValueFile *p_config )
@@ -283,11 +326,9 @@ void DangerLevel::loadFromConfig( KeyValueFile *p_config )
 	this->setCloudGazCountMax(p_config->getInt(DANGERLEVEL_CONFIG_CLOUDGAZCOUNT_MAX));
 	this->setCloudWreckCountMin(p_config->getInt(DANGERLEVEL_CONFIG_CLOUDWRECKCOUNT_MIN));
 	this->setCloudWreckCountMax(p_config->getInt(DANGERLEVEL_CONFIG_CLOUDWRECKCOUNT_MAX));
+	this->setStationCountMin(p_config->getInt(CONFIG_STATIONCOUNT_MIN));
+	this->setStationCountMax(p_config->getInt(CONFIG_STATIONCOUNT_MAX));
 }
-
-
-
-
 
 
 

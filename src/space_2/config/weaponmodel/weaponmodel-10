@@ -6,6 +6,6 @@ ammomax = 100
 range = 1000
 rangeangle = 50
 reloadingspeed = 2
-firerate = 0.12
+firerate = 0.05
 weapontype = 1
 soundreload = weapon_kinetic_reload.wav

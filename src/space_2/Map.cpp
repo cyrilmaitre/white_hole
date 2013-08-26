@@ -245,7 +245,7 @@ Sector* Map::generateSector(sf::Vector2i p_idSector)
 	}
 
 	// Npc Station
-	int stationCount = 10;
+	int stationCount = tmpSector->getDangerLevel()->generateStationCount();
 	if(stationCount > 0)
 	{
 		for(int i = 0; i < stationCount; i++)

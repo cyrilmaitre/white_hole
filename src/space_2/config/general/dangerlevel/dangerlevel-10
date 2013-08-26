@@ -9,3 +9,5 @@ cloudgazcountmin = 8
 cloudgazcountmax = 16
 cloudwreckcountmin = 20
 cloudwreckcountmax = 30
+stationcountmin = 5
+stationcountmax = 15
