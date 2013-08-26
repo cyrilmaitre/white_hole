@@ -107,7 +107,7 @@ void WindowChat::notifyPositionChanged()
 
 void WindowChat::pushChat(std::string p_string)
 {
-	if(this->chatLines.size() >= 100) {
+	if(this->chatLines.size() >= 10) {
 		this->chatLines.pop_front();
 	}
 

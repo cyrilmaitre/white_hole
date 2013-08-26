@@ -67,14 +67,29 @@ public:
 	sf::Uint64	getNbDroppedPackets();
 	void		notifyDroppedPacket();
 
+	// last activity time
+	sf::Uint64	getLastActivityTime();
+	void		notifyLastActivityTime();
 
+	// connection time
+	sf::Uint64	getConnectionTime();
+
+	// waiting for pong
+	bool isPongRequested();	// do the client have to pong the server ?
+	void requestPong();		// we want a PONG !
+	void notifyPong();		// has answered to ping
+
+	
 
 private:
-	sf::Uint64 mUniqueID;
-	ClientState mState;
-	sf::Uint16 mAttributes;
-	std::unique_ptr<sf::TcpSocket> mSocket;
-	std::string mName;
-	sf::Uint64 mNbDroppedPackets;
+	sf::Uint64						mUniqueID;
+	ClientState						mState;
+	sf::Uint16						mAttributes;
+	std::unique_ptr<sf::TcpSocket>	mSocket;
+	std::string						mName;
+	sf::Uint64						mNbDroppedPackets;
+	sf::Uint64						mConnectionTime;
+	sf::Uint64						mLastActivityTime;	// in ms (milliseconds)
+	bool							mPongRequested;
 };
 

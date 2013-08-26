@@ -1,4 +1,5 @@
 #include "Client.h"
+#include <time.h>
 
 // ----------------------------------------------------------------------
 // (con/de)structor
@@ -8,7 +9,10 @@ Client::Client(void) :
 	mState(ClientState::UNKNOWN_CS),
 	mName(UNNAMED_PLAYER),
 	mAttributes(ClientAttributes::ATTR_NONE),
-	mNbDroppedPackets(0)
+	mNbDroppedPackets(0),
+	mLastActivityTime(0),
+	mPongRequested(false),
+	mConnectionTime((sf::Uint64)time(NULL))
 {
 	this->mUniqueID = (sf::Uint64) mSocket.get();
 }
@@ -80,6 +84,27 @@ sf::Uint64	Client::getNbDroppedPackets()
 // </mNbDroppedPackets>
 
 
+// <lastActivityTime>
+sf::Uint64 Client::getLastActivityTime()
+{
+	return this->mLastActivityTime;
+}
+// </lastActivityTime>
+
+// <pingRequested>
+bool Client::isPongRequested()
+{
+	return this->mPongRequested;
+}
+// </pingRequested>
+
+
+// <connectionTime>
+sf::Uint64 Client::getConnectionTime()
+{
+	return this->mConnectionTime;
+}
+// </connectionTime>
 
 // ----------------------------------------------------------------------
 // methods
@@ -121,3 +146,24 @@ void Client::notifyDroppedPacket()
 	++(this->mNbDroppedPackets);
 }
 // </mNbDroppedPackets>
+
+
+// <lastActivityTime>
+void Client::notifyLastActivityTime()
+{
+	this->mLastActivityTime = (sf::Uint64)time(NULL);
+}
+// </lastActivityTime>
+
+
+// <pingRequested>
+void Client::notifyPong()
+{
+	this->mPongRequested = false;
+}
+
+void Client::requestPong()
+{
+	this->mPongRequested = true;
+}
+// </pingRequested>

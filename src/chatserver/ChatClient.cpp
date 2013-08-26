@@ -8,18 +8,18 @@
 // -- Chat
 sf::Packet& operator << (sf::Packet& packet, const C2S_Chat c2s_chat)
 {
-	return packet << c2s_chat.packetType << c2s_chat.message << c2s_chat.to << c2s_chat.dstType;
+	return c2s_chat.insertIntoPacket(packet);
 }
 // -- Commad
 sf::Packet& operator << (sf::Packet& packet, const C2S_Command c2s_command)
 {
-	return packet << c2s_command.packetType << c2s_command.command << c2s_command.argument;
+	return c2s_command.insertIntoPacket(packet);
 }
 
 // -- Auth
 sf::Packet& operator << (sf::Packet& packet, const C2S_Auth c2s_auth)
 {
-	return packet << c2s_auth.packetType << c2s_auth.user << c2s_auth.sha1password;
+	return c2s_auth.insertIntoPacket(packet);
 }
 
 
@@ -175,6 +175,7 @@ void ChatClient::handlePacket(sf::Packet& p_packet)
 				{ std::ostringstream msg; msg << "[CHAT] FROM <" << s2c_chat->from << "> TO <" << s2c_chat->to << "("<< s2c_chat->dstType <<")> : " << s2c_chat->message << ""; Debug::msg(msg); }
 			}
 		}
+		// Command
 		else if(packetType == PacketType::COMMAND)
 		{
 			std::shared_ptr<S2C_Command> s2c_command(new S2C_Command);
@@ -182,8 +183,23 @@ void ChatClient::handlePacket(sf::Packet& p_packet)
 			{
 				this->pushOutputBuffer(s2c_command);
 				{ std::ostringstream msg; msg << "[CMD] #" << s2c_command->command << ":" << s2c_command->argument << ""; Debug::msg(msg); }
+
+				// switch command ID
+				switch(s2c_command->command)
+				{
+					// PING request
+				case ServerCommand::S_PING:
+					{
+						C2S_Command c2s_pong(ClientCommand::C_PONG);
+						sf::Packet pongPacket;
+						pongPacket << c2s_pong;
+						//this->sendPacket(pongPacket);
+					}
+					break;
+				}
 			}
 		}
+		// Auth
 		else if(packetType == PacketType::AUTHENTICATION)
 		{
 
@@ -207,18 +223,30 @@ void ChatClient::mRunClient(void)
 
 	// WORKAROUND
 	// bug avec socket non bloquantes : https://github.com/LaurentGomila/SFML/issues/194
-	mSocket.setBlocking(false);
 	sf::Socket::Status status = sf::Socket::Error;
 
 	if (status == sf::Socket::Disconnected || status == sf::Socket::Error)
 	{
 			mSocket.disconnect();
 			mSocket.setBlocking(false);
-			status = mSocket.connect(mServerIP, mServerPort);
-			sf::IpAddress remoteAddr = mSocket.getRemoteAddress();
+			unsigned int max_retry = 50;
+			unsigned int attempt = 0;
+			while(true) {
+				{ std::ostringstream msg; msg << "Attempt " << attempt << "/" << max_retry << ""; Debug::msg(msg); }
+				status = mSocket.connect(mServerIP, mServerPort);
+				if(status == sf::Socket::Status::Done)
+					break;
+				
+				if(++attempt >= 50) {
+					{ std::ostringstream msg; msg << "Connection FAILED !" << ""; Debug::msg(msg); }
+					break;
+				}
+
+				sf::sleep(sf::milliseconds(100));	// for CPU
+			}
 
 	}
-	if(status == sf::Socket::Status::Done || status == sf::Socket::Status::NotReady)
+	if(status == sf::Socket::Status::Done)
 	{
 		{ std::ostringstream msg; msg << "Connection OK !" << ""; Debug::msg(msg); }
 

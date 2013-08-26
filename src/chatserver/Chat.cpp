@@ -31,6 +31,10 @@ std::string Chat::serverCmdToString(sf::Uint16 p_command)
 	case ServerCommand::S_MUTE:
 		return "MUTE";
 		break;
+
+	case ServerCommand::S_PING:
+		return "PING";
+		break;
 	}
 
 	return "UNKNOWN";

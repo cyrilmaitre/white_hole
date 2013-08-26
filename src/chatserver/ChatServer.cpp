@@ -13,13 +13,13 @@ sf::Packet& operator << (sf::Packet& packet, const S2C_Chat s2c_chat)
 // -- Command
 sf::Packet& operator << (sf::Packet& packet, const S2C_Command s2c_command)
 {
-	return packet << s2c_command.packetType << s2c_command.command << s2c_command.argument;
+	return s2c_command.insertIntoPacket(packet);
 }
 
 // -- Auth
 sf::Packet& operator << (sf::Packet& packet, const S2C_Auth s2c_auth)
 {
-	return packet << s2c_auth.packetType << s2c_auth.authResponse << s2c_auth.optionnalMessage;
+	return s2c_auth.insertIntoPacket(packet);
 }
 
 
@@ -90,7 +90,7 @@ void ChatServer::mRunServer(void)
 	while(mRunning)
 	{		
 		//Make the selector wait for data on any socket
-		if(selector.wait())
+		if(selector.wait(sf::Time(sf::microseconds(50))))
 		{
 			//If there are available slots test the listener
 			if(selector.isReady(listener))
@@ -99,7 +99,9 @@ void ChatServer::mRunServer(void)
 
 				//The listener is ready: there is a pending connection
 				std::shared_ptr<Client> client = std::shared_ptr<Client>(new Client);
-				client->getSocket().setBlocking(false);
+
+				// non-blocking = big packets won't block server
+				client->getSocket().setBlocking(false);		
 
 				if(listener.accept(client->getSocket()) == sf::Socket::Done)
 				{
@@ -179,7 +181,44 @@ void ChatServer::mRunServer(void)
 
 			} // -- end of clients loop
 
-		} 
+		}  // -- end of selector.wait
+
+
+		// Checks
+		for(unsigned int i = 0; i < clients.size(); i++)
+		{
+			std::shared_ptr<Client> client = clients[i];
+			sf::Uint64 now = (sf::Uint64)time(NULL);
+
+			// check auth timeot
+			if(client->getState() == ClientState::TCP_CONNECTED && client->getConnectionTime()+AUTH_TIMEOUT < now){
+				{ std::ostringstream msg; msg << "Client #" << i << " AUTH timeout (" << client->getSocket().getRemoteAddress() << ")"; Debug::msg(msg); }
+				this->dropClient(client);
+			}
+
+			// check ping timeout
+			if(client->isPongRequested())
+			{
+				if(client->getLastActivityTime()+PING_IDLE_TIME+PING_TIMEOUT < now) {
+					{ std::ostringstream msg; msg << "Client #" << i << " PING timeout (" << client->getSocket().getRemoteAddress() << ")"; Debug::msg(msg); }
+					this->dropClient(client);
+				}
+			}
+			else
+			{
+				// if no ping requested, then request one if client is idling
+				if(client->getLastActivityTime() != 0 && client->getLastActivityTime()+PING_IDLE_TIME < now)
+				{
+					client->requestPong();
+
+					sf::Packet pingPacket;
+					S2C_Command s2c_ping(ServerCommand::S_PING);
+					pingPacket << s2c_ping;
+					this->sendPacket(pingPacket, client);
+				}
+			}
+
+		} // -- end of clients loop
 
 
 	} // -- end of server main loop
@@ -367,8 +406,6 @@ void ChatServer::broadcast(sf::Packet& p_packet, BroadcastCondition& p_broadcast
 void ChatServer::handlePacket(sf::Packet& p_packet, std::shared_ptr<Client> p_client)
 {	
 	
-
-
 	sf::Uint16 packetType;
 	// Message type ? (command, chat?)
 	if(!(p_packet >> packetType))
@@ -397,7 +434,7 @@ void ChatServer::handlePacket(sf::Packet& p_packet, std::shared_ptr<Client> p_cl
 				}
 				else
 				{
-					{ std::ostringstream msg; msg << "Malformed chat packet" << "";	Debug::msg(msg); }
+					{ std::ostringstream msg; msg << "Malformed auth packet" << "";	Debug::msg(msg); }
 				}
 			}
 			
@@ -406,6 +443,9 @@ void ChatServer::handlePacket(sf::Packet& p_packet, std::shared_ptr<Client> p_cl
 
 	case ClientState::AUTHED:
 		{
+			// Update activity time
+			p_client->notifyLastActivityTime();
+
 			// --------------------------------------------------
 			// ---------------------- CHAT ----------------------
 			// --------------------------------------------------
@@ -458,6 +498,14 @@ void ChatServer::handlePacket(sf::Packet& p_packet, std::shared_ptr<Client> p_cl
 					// switch on command ID
 					switch(c2s_command.command)
 					{
+						// PONG
+					case ClientCommand::C_PONG:
+						{
+							if(p_client->isPongRequested())
+								p_client->notifyPong();
+						}
+						break;
+
 						// QUIT
 					case ClientCommand::C_QUIT:
 						{
