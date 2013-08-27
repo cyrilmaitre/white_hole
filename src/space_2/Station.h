@@ -3,6 +3,7 @@
 #include "StationModel.h"
 #include "Npc.h"
 #include "EntityData.h"
+#include "Clock.h"
 
 
 class Station : public Entity, public Npc
@@ -18,12 +19,19 @@ public:
 
 	// Methods
 	void update();
+	void updateSpinner();
+	void updateSprite();
+	void draw();
 	void notifyModelChanged();
 	void loadSprite();
+	void unloadSprite();
 
 
 private:
 	// Attributs
 	StationModel* mModel;
+	sf::Sprite* mSpinnerSprite;
+	Rotable mSpinnerRotation;
+	mks::Clock mSpinnerClock;
 };
 

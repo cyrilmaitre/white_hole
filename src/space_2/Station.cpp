@@ -13,6 +13,7 @@
 //*************************************************************
 Station::Station(void) : Npc(this)
 {
+	this->mSpinnerSprite = NULL;
 	this->mModel = NULL;
 	this->setPlane(STATION_PLANE);
 	this->setObjectType(MapObject::MapObjectType::TypeStation);
@@ -20,6 +21,8 @@ Station::Station(void) : Npc(this)
 
 Station::~Station(void)
 {
+	if(this->mSpinnerSprite != NULL)
+		delete this->mSpinnerSprite;
 }
 
 
@@ -48,6 +51,34 @@ void Station::update()
 {
 	Entity::update();
 	Npc::update();
+
+	this->updateSpinner();
+}
+
+void Station::updateSpinner()
+{
+	if(this->mSpinnerSprite != NULL)
+	{
+		this->mSpinnerRotation.update();
+		this->mSpinnerSprite->setRotation(this->mSpinnerRotation.getRotation());
+	}
+}
+
+void Station::updateSprite()
+{
+	Entity::updateSprite();
+
+	sf::Vector2f objectPositionScreen = this->getScreenPosition();
+	if(this->mSpinnerSprite != NULL)
+		this->mSpinnerSprite->setPosition(objectPositionScreen.x, objectPositionScreen.y + this->getRocking());
+}
+
+void Station::draw()
+{
+	if(this->mSpinnerSprite != NULL)
+		Resource::resource->getApp()->draw(*this->mSpinnerSprite);
+
+	Entity::draw();
 }
 
 void Station::notifyModelChanged()
@@ -59,6 +90,10 @@ void Station::notifyModelChanged()
 		EntityData::loadFromEntityData(this->getModel());
 		this->loadNpcDataFromNpcData(this->getModel());
 
+		this->mSpinnerRotation.setRotationVelocity(this->getModel()->getSpinnerVelocity());
+		this->mSpinnerRotation.setRotationInfinite(true);
+		this->mSpinnerRotation.setRotationInfiniteRight(Tools::randomBool());
+
 		this->setScale(this->getModel()->getRandomScale());
 		this->setSize(this->getModel()->getHitBoxWidth(), this->getModel()->getHitBoxHeight());
 		this->loadSprite();
@@ -68,6 +103,7 @@ void Station::notifyModelChanged()
 void Station::loadSprite()
 {
 	Entity::loadSprite();
+
 	if(this->getModel() != NULL)
 	{
 		this->mObjectSprite = new sf::Sprite(*Resource::resource->getTexture(this->getModel()->getSprite()));
@@ -75,6 +111,26 @@ void Station::loadSprite()
 		this->mObjectSprite->setScale(this->mScale, this->mScale);
 		this->mObjectSprite->setRotation(this->getRotation());
 
+		if(this->getModel()->getSpinnerSprite() != "")
+		{
+			this->mSpinnerSprite = new sf::Sprite(*Resource::resource->getTexture(this->getModel()->getSpinnerSprite()));
+			ToolsImage::setSpriteOriginCenter(this->mSpinnerSprite);
+			this->mSpinnerSprite->setScale(this->mScale, this->mScale);
+			this->mSpinnerSprite->setRotation(this->getRotation());
+		}
+
 		this->updateSprite();
 	}
 }
+
+void Station::unloadSprite()
+{
+	Entity::unloadSprite();
+
+	if(this->mSpinnerSprite != NULL)
+	{
+		delete this->mSpinnerSprite;
+		this->mSpinnerSprite = NULL;
+	}
+}
+
