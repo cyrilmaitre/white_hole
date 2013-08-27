@@ -1,5 +1,6 @@
 id = 9
 name = npcTypeEvilPassive
 color = #FF0000
+lightcolor = 4
 alignment = 2
 aggro = 2

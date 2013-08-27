@@ -143,6 +143,11 @@ void Npc::loadNpcDataFromNpcData( NpcData* p_object )
 	this->loadWeaponsToEntity(this->getEntity());
 }
 
+void Npc::notifyNpcTypeChanged()
+{
+	this->getEntity()->notifyNpcTypeChanged(this->getNpcType());
+}
+
 
 
 

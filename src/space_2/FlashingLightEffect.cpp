@@ -25,14 +25,12 @@
 FlashingLightEffect::FlashingLightEffect( Entity* p_entity, Json::Value p_lightJson ) : EntityEffect(p_entity, p_lightJson)
 {
 	this->mLightColor = (LightColor)p_lightJson.get(JSON_COLOR, 0).asInt();
+	this->notifyLightColorChanged();
+
 	this->mFlashTickMin = p_lightJson.get(JSON_FLASHTICKMIN, 0).asFloat();
 	this->mFlashTickMax = p_lightJson.get(JSON_FLASHTICKMAX, 0).asFloat();
 	this->computeFlashTick();
 	this->mFlashDraw = false;
-
-	this->mLightSprite.setTexture(*Resource::resource->getTexture(this->getLightSprite()));
-	ToolsImage::setSpriteOriginCenter(&this->mLightSprite);	
-	ToolsImage::resizeSprite(&this->mLightSprite, this->getSize(), this->getSize());
 
 	this->mFlashSprite.setTexture(*Resource::resource->getTexture(IMG_FLASHLIGHT));
 	ToolsImage::setSpriteOriginCenter(&this->mFlashSprite);	
@@ -70,6 +68,20 @@ std::string FlashingLightEffect::getLightSprite()
 	case LightColor::Red:
 		return IMG_LIGHT_RED;
 		break;
+	}
+}
+
+FlashingLightEffect::LightColor FlashingLightEffect::getLightColor()
+{
+	return this->mLightColor;
+}
+
+void FlashingLightEffect::setLightColor( LightColor p_color )
+{
+	if(this->mLightColor != p_color)
+	{
+		this->mLightColor = p_color;
+		this->notifyLightColorChanged();
 	}
 }
 
@@ -125,4 +137,12 @@ void FlashingLightEffect::computeFlashTick()
 {
 	this->mFlashTick = Tools::random(this->mFlashTickMin, this->mFlashTickMax);
 }
+
+void FlashingLightEffect::notifyLightColorChanged()
+{
+	this->mLightSprite.setTexture(*Resource::resource->getTexture(this->getLightSprite()));
+	ToolsImage::setSpriteOriginCenter(&this->mLightSprite);	
+	ToolsImage::resizeSprite(&this->mLightSprite, this->getSize(), this->getSize());
+}
+
 

@@ -27,4 +27,6 @@ lootitem = 4(0.8)
 weapons = 17(1)
 aggrorange = 500
 sprite_spinner = spinner_3.png
-spinner_velocity = 25
+spinner_velocity = 5
+flashinglights = [{"x":-112,"y":-312,"color":0,"size":64,"tickmin":1000,"tickmax":2500},{"x":102,"y":-312,"color":0,"size":64,"tickmin":1000,"tickmax":2500},{"x":331,"y":56,"color":0,"size":64,"tickmin":1000,"tickmax":2500},{"x":223,"y":241,"color":0,"size":64,"tickmin":1000,"tickmax":2500},{"x":-215,"y":247,"color":0,"size":64,"tickmin":1000,"tickmax":2500},{"x":-321,"y":62,"color":0,"size":64,"tickmin":1000,"tickmax":2500}]
+radars = [{"x":-3,"y":-264,"size":32,"type":0,"rotationvelocity":180,"sprite":"radar_1.png"},{"x":-228,"y":126,"size":32,"type":1,"rotationvelocity":90,"sprite":"radar_2.png"},{"x":227,"y":125,"size":32,"type":0,"rotationvelocity":180,"sprite":"radar_1.png"}]

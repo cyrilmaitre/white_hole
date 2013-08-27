@@ -52,6 +52,8 @@ public:
 	std::vector<LootItemModel*> generateLootItem();
 	void loadWeaponsToEntity(Entity* p_entity);
 
+	virtual void notifyNpcTypeChanged();
+
 	virtual void loadNpcDataFromConfig(KeyValueFile *p_config);
 	virtual void loadNpcDataFromNpcData(NpcData* p_object);
 

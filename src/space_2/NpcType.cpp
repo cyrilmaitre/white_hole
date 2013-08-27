@@ -3,6 +3,17 @@
 
 
 //*************************************************************
+// Define			
+//*************************************************************
+#define NPCTYPE_CONFIG_ID				"id"
+#define NPCTYPE_CONFIG_NAME				"name"
+#define NPCTYPE_CONFIG_COLOR			"color"
+#define CONFIG_LIGHTCOLOR				"lightcolor"
+#define NPCTYPE_CONFIG_ALIGNMENT		"alignment"
+#define NPCTYPE_CONFIG_AGGRO			"aggro"
+
+
+//*************************************************************
 // Constructor - Destructor
 //*************************************************************
 NpcType::NpcType( KeyValueFile *p_config )
@@ -57,6 +68,16 @@ void NpcType::setColorString( std::string p_color )
 {
 	this->mColorString = p_color;
 	this->setColor(ToolsImage::hexaToColor(this->mColorString));
+}
+
+FlashingLightEffect::LightColor NpcType::getLightColor()
+{
+	return this->mLightColor;
+}
+
+void NpcType::setLightColor( FlashingLightEffect::LightColor p_color )
+{
+	this->mLightColor = p_color;
 }
 
 NpcType::NpcTypeAlignment NpcType::getAlignment()
@@ -116,9 +137,12 @@ void NpcType::loadFromConfig( KeyValueFile *p_config )
 	this->setId(p_config->getLong(NPCTYPE_CONFIG_ID));
 	this->setName(Resource::resource->getBundle()->getString(p_config->getString(NPCTYPE_CONFIG_NAME)));
 	this->setColorString(p_config->getString(NPCTYPE_CONFIG_COLOR));
+	this->setLightColor((FlashingLightEffect::LightColor)p_config->getInt(CONFIG_LIGHTCOLOR));
 	this->setAlignment(NpcTypeAlignment(p_config->getInt(NPCTYPE_CONFIG_ALIGNMENT)));
 	this->setAggro(NpcTypeAggro(p_config->getInt(NPCTYPE_CONFIG_AGGRO)));
 }
+
+
 
 
 

@@ -22,6 +22,7 @@ public:
 
 	// Methods
 	void update();
+	void notifyNpcTypeChanged();
 	void loadNpcDataFromConfig(KeyValueFile *p_config);
 	void loadNpcDataFromNpcData(NpcData* p_object);
 

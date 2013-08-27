@@ -39,6 +39,7 @@ NpcData::NpcData(void)
 	this->mAggroRange = 0;
 	this->mLootItemString = "";
 	this->mWeaponsString = "";
+	this->mNpcType = NULL;
 }
 
 NpcData::~NpcData(void)
@@ -157,7 +158,11 @@ NpcType * NpcData::getNpcType()
 
 void NpcData::setNpcType( NpcType *p_type )
 {
-	this->mNpcType = p_type;
+	if(this->mNpcType != p_type)
+	{
+		this->mNpcType = p_type;
+		this->notifyNpcTypeChanged();
+	}
 }
 
 std::string NpcData::getWeaponsString()
@@ -204,6 +209,11 @@ std::vector<LootItemModel*> NpcData::generateLootItem()
 	}
 
 	return listItem;
+}
+
+void NpcData::notifyNpcTypeChanged()
+{
+
 }
 
 void NpcData::loadNpcDataFromConfig( KeyValueFile *p_config )

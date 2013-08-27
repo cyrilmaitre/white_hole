@@ -10,6 +10,8 @@
 #include "TurretEffect.h"
 #include "WeaponEffect.h"
 
+class NpcType;
+
 // Define
 #define ENTITY_BORDER_FOCUS_SIZE			1
 #define ENTITY_BORDER_FOCUS_COLOR			sf::Color(200, 200, 200, 50)
@@ -43,6 +45,7 @@ public:
 	void destroy();
 	void shieldImpact();
 	void selectNextWeapon();
+	void notifyNpcTypeChanged(NpcType* p_type);
 	void notifyRotationChanged();
 	void notifyFlashingLightJsonChanged();
 	void notifyRadarJsonChanged();

@@ -6,6 +6,7 @@
 #include "AutoManager.h"
 #include "ExplosionEffect.h"
 #include "FlashingLightEffect.h"
+#include "NpcType.h"
 
 
 //*************************************************************
@@ -319,6 +320,17 @@ void Entity::selectNextWeapon()
 void Entity::addWeaponEffect( WeaponEffect* p_weapon )
 {
 	this->mWeaponEffects.push_back(p_weapon);
+}
+
+void Entity::notifyNpcTypeChanged( NpcType* p_type )
+{
+	if(p_type != NULL)
+	{
+		for(int i = 0; i < this->mFlashingLightEffects.size(); i++)
+		{
+			this->mFlashingLightEffects[i]->setLightColor(p_type->getLightColor());
+		}
+	}
 }
 
 

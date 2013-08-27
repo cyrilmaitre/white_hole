@@ -22,12 +22,16 @@ public:
 
 	// Getters - Setters
 	std::string getLightSprite();
+	
+	LightColor getLightColor();
+	void setLightColor(LightColor p_color);
 
 	// Methods
 	void update();
 	void updatePosition();
 	void updateFlash();
 	void draw();
+	void notifyLightColorChanged();
 
 
 private:

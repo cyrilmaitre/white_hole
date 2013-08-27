@@ -1,5 +1,6 @@
 id = 4
 name = npcTypeNeutralAgressive
 color = #FFFF00
+lightcolor = 2
 alignment = 1
 aggro = 0

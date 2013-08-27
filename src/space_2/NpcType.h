@@ -1,13 +1,8 @@
 #pragma once
 #include "Resource.h"
 #include "KeyValueFile.h"
+#include "FlashingLightEffect.h"
 
-// Define			
-#define NPCTYPE_CONFIG_ID				"id"
-#define NPCTYPE_CONFIG_NAME				"name"
-#define NPCTYPE_CONFIG_COLOR			"color"
-#define NPCTYPE_CONFIG_ALIGNMENT		"alignment"
-#define NPCTYPE_CONFIG_AGGRO			"aggro"
 
 class NpcType
 {
@@ -44,6 +39,9 @@ public:
 	std::string getColorString();
 	void setColorString(std::string p_color);
 
+	FlashingLightEffect::LightColor getLightColor();
+	void setLightColor(FlashingLightEffect::LightColor p_color);
+
 	NpcTypeAlignment getAlignment();
 	void setAlignment(NpcTypeAlignment p_alignment);
 
@@ -65,6 +63,7 @@ private:
 	std::string mName;
 	sf::Color mColor;
 	std::string mColorString;
+	FlashingLightEffect::LightColor mLightColor;
 
 	NpcTypeAlignment mAlignment;
 	NpcTypeAggro mAggro;
