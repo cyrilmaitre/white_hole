@@ -10,6 +10,9 @@
 #define PING_IDLE_TIME			120					// if nothing received for 120s from the client, then ping it.
 #define PING_TIMEOUT			100					// client must PONG within 100s
 #define AUTH_TIMEOUT			30					// 30s to authenticate
+#define FLOOD_INTERVAL			1					// control flood on X seconds
+#define FLOOD_MAX_PACKETS		20					// max packets allowed in FLOOD_INTERVAL
+#define FLOOD_BUFFER			30					// max packets put in buffer
 
 // -------------
 // --- CLASS ---

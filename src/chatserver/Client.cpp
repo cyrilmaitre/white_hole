@@ -1,4 +1,5 @@
 #include "Client.h"
+#include "ChatServer.h"
 #include <time.h>
 
 // ----------------------------------------------------------------------
@@ -12,7 +13,9 @@ Client::Client(void) :
 	mNbDroppedPackets(0),
 	mLastActivityTime(0),
 	mPongRequested(false),
-	mConnectionTime((sf::Uint64)time(NULL))
+	mConnectionTime((sf::Uint64)time(NULL)),
+	mFloodControlTime((sf::Uint64)time(NULL) + FLOOD_INTERVAL),
+	mNbSentPackets(0)
 {
 	this->mUniqueID = (sf::Uint64) mSocket.get();
 }
@@ -106,6 +109,23 @@ sf::Uint64 Client::getConnectionTime()
 }
 // </connectionTime>
 
+
+
+
+// <floodControlTime>
+sf::Uint64	Client::getFloodControlTime()
+{
+	return this->mFloodControlTime;
+}
+// <floodControlTime>
+
+// <nbSentPackets>
+sf::Uint64 Client::getNbSentPackets()
+{
+	return this->mNbSentPackets;
+}
+// </nbSentPackets>
+
 // ----------------------------------------------------------------------
 // methods
 // ----------------------------------------------------------------------
@@ -167,3 +187,24 @@ void Client::requestPong()
 	this->mPongRequested = true;
 }
 // </pingRequested>
+
+
+// <floodControlTime>
+void Client::updateFloodControlTime()
+{
+	this->mFloodControlTime = (sf::Uint64)time(NULL) + FLOOD_INTERVAL;
+}
+// </floodControlTime>
+
+
+// <nbSentPackets>
+void Client::notifySentPacket()
+{
+	++this->mNbSentPackets;
+}
+
+void Client::resetNbSentPackets()
+{
+	this->mNbSentPackets = 0;
+}
+// </nbSentPackets>
