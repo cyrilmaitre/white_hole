@@ -184,15 +184,21 @@ void ChatServer::mRunServer(void)
 		}  // -- end of selector.wait
 
 
-		// Checks
+		// CHECK / UPDATES (ie: ping, auth, flood) -> "asynchronous jobs"
 		for(unsigned int i = 0; i < clients.size(); i++)
 		{
 			std::shared_ptr<Client> client = clients[i];
 			sf::Uint64 now = (sf::Uint64)time(NULL);
 
+			// update flood control -> reset next control time. see handlePacket() for "counter-flood" actions
+			if(client->getFloodControlTime() < now) {
+				client->resetNbSentPackets();
+				client->updateFloodControlTime();
+			}
+
 			// check auth timeot
 			if(client->getState() == ClientState::TCP_CONNECTED && client->getConnectionTime()+AUTH_TIMEOUT < now){
-				{ std::ostringstream msg; msg << "Client #" << i << " AUTH timeout (" << client->getSocket().getRemoteAddress() << ")"; Debug::msg(msg); }
+				{ std::ostringstream msg; msg << "Client #" << client->getUniqueID() << " AUTH timeout (" << client->getSocket().getRemoteAddress() << ")"; Debug::msg(msg); }
 				this->dropClient(client);
 			}
 
@@ -200,7 +206,7 @@ void ChatServer::mRunServer(void)
 			if(client->isPongRequested())
 			{
 				if(client->getLastActivityTime()+PING_IDLE_TIME+PING_TIMEOUT < now) {
-					{ std::ostringstream msg; msg << "Client #" << i << " PING timeout (" << client->getSocket().getRemoteAddress() << ")"; Debug::msg(msg); }
+					{ std::ostringstream msg; msg << "Client #" << client->getUniqueID() << " PING timeout (" << client->getSocket().getRemoteAddress() << ")"; Debug::msg(msg); }
 					this->dropClient(client);
 				}
 			}
@@ -242,7 +248,7 @@ void ChatServer::addClient(std::shared_ptr<Client> p_client)
 	//be notified when he sends something
 	selector.add(p_client->getSocket());
 
-	{ std::ostringstream msg; msg << "Client " << clients.size() << "added in clientlist: " << p_client->getSocket().getRemoteAddress() << ""; Debug::msg(msg); }
+	{ std::ostringstream msg; msg << "Client #" << p_client->getUniqueID() << "added in clientlist: " << p_client->getSocket().getRemoteAddress() << ""; Debug::msg(msg); }
 }
 
 /*
@@ -312,7 +318,7 @@ void ChatServer::dropClient(std::shared_ptr<Client> p_client)
 	// disconnect
 	p_client->setState(ClientState::DROPPED); // this might seems useless since it will be delete later. it's just a security.
 
-	{ std::ostringstream msg; msg << "Client disconnected - " << p_client->getSocket().getRemoteAddress().toString() << "";	Debug::msg(msg); }
+	{ std::ostringstream msg; msg << "Client #" <<  p_client->getUniqueID() << " disconnected - " << p_client->getSocket().getRemoteAddress().toString() << "";	Debug::msg(msg); }
 
 	selector.remove(p_client->getSocket());
 
@@ -406,8 +412,20 @@ void ChatServer::broadcast(sf::Packet& p_packet, BroadcastCondition& p_broadcast
 void ChatServer::handlePacket(sf::Packet& p_packet, std::shared_ptr<Client> p_client)
 {	
 	
-	sf::Uint16 packetType;
+	// Flood control
+	// -- if client is not flooding
+	if(p_client->getNbSentPackets() < FLOOD_MAX_PACKETS) {
+		p_client->notifySentPacket();
+	}
+	else {
+		{ std::ostringstream msg; msg << "Client #" << p_client->getUniqueID() << " excess FLOOD (" << p_client->getSocket().getRemoteAddress() << ")"; Debug::msg(msg); }
+		this->dropClient(p_client);
+		return;
+	}
+
 	// Message type ? (command, chat?)
+	sf::Uint16 packetType;
+
 	if(!(p_packet >> packetType))
 	{
 		{ std::ostringstream msg; msg << "Error, can't retrieve packetType" << ""; Debug::msg(msg); }

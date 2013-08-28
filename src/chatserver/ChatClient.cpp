@@ -1,5 +1,4 @@
 #include "ChatClient.h"
-#include "signal.h"
 
 // ----------------------------------------------------------------------
 // operator overloads for sf::Packet
@@ -47,7 +46,7 @@ sf::Packet& operator >> (sf::Packet& packet, S2C_Auth& s2c_auth)
 // ----------------------------------------------------------------------
 // (con/de)structor
 // ----------------------------------------------------------------------
-ChatClient::ChatClient(void) : mServerPort(CHAT_SERVER_PORT), mServerIP(CHAT_SERVER_HOST), mRunning(false)
+ChatClient::ChatClient(void) : mServerPort(CHAT_SERVER_PORT), mServerIP(CHAT_SERVER_HOST), mRunning(false), lastSentStatus(sf::Socket::Status::Error)
 {
 }
 
@@ -139,7 +138,8 @@ bool ChatClient::sendPacket(sf::Packet& p_packet)
 	for(int i = 0; i < MAX_C_PACKETSEND_RETRY; i++)
     {
         // Si le packet a été envoyé
-		if(mSocket.send(p_packet) == sf::Socket::Status::Done)
+		this->lastSentStatus = mSocket.send(p_packet);
+		if(this->lastSentStatus == sf::Socket::Status::Done)
         {
             packetSent = true;
 			{ std::ostringstream msg; msg << "[SEND] Packet sent - size=" << p_packet.getDataSize() << ""; Debug::msg(msg); }
@@ -149,8 +149,8 @@ bool ChatClient::sendPacket(sf::Packet& p_packet)
     
     // Si on n'arrive à pas envoyer, on drop le client
     if(!packetSent) {
-		{ std::ostringstream msg; msg << "[SEND] Error: Packet NOT sent ! - size=" << p_packet.getDataSize() << ""; Debug::msg(msg); }
-    }
+		{ std::ostringstream msg; msg << "[SEND] Error: Packet NOT sent ! - size=" << p_packet.getDataSize() << " after " << MAX_C_PACKETSEND_RETRY << " attemps"; Debug::msg(msg); }
+	}
 
 	return packetSent;
 }
@@ -258,7 +258,11 @@ void ChatClient::mRunClient(void)
 		std::shared_ptr<C2S_Chat> msg3(new C2S_Chat("Message 3", "mazouteman", ChatDstType::CHANNEL));
 		this->pushInputBuffer(msg1);
 		this->pushInputBuffer(msg2);
-		this->pushInputBuffer(msg3);
+
+		// Flood testing
+		for(unsigned int i = 0; i < 300; i++) {
+			this->pushInputBuffer(msg3);
+		}
 		
 
 		sf::Packet packet;
@@ -278,7 +282,11 @@ void ChatClient::mRunClient(void)
 					{
 						sf::Packet packet;
 						(*it)->insertIntoPacket(packet);
-						this->sendPacket(packet);
+						// if packet not sent && status = disconnected, then stop sending
+						if(!this->sendPacket(packet) && this->lastSentStatus == sf::Socket::Status::Disconnected) {
+							this->disconnect();
+							break;
+						}
 
 					}
 				}

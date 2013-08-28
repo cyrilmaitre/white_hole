@@ -40,6 +40,7 @@ private:
 	unsigned short		mServerPort;
 	sf::IpAddress		mServerIP;
 	bool				mRunning;
+	sf::Socket::Status	lastSentStatus;
 
 	// buffers
 	OutputBuffer		mOutputBuffer;
