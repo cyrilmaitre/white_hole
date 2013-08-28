@@ -26,6 +26,6 @@ lootexperience = 100
 lootitem = 4(0.8)
 weapons = 17(1)
 aggrorange = 500
-flashinglights = [{"x":-61,"y":-148,"color":0,"size":32,"tickmin":1000,"tickmax":2500},{"x":101,"y":165,"color":0,"size":32,"tickmin":1000,"tickmax":2500},{"x":51,"y":-210,"color":0,"size":16,"tickmin":1000,"tickmax":2500},{"x":85,"y":-218,"color":0,"size":16,"tickmin":1000,"tickmax":2500},{"x":86,"y":-189,"color":0,"size":16,"tickmin":1000,"tickmax":2500}]
+flashinglights = [{"x":-61,"y":-148,"color":0,"size":32,"tickmin":2500,"tickmax":5000},{"x":101,"y":165,"color":0,"size":32,"tickmin":2500,"tickmax":5000},{"x":51,"y":-210,"color":0,"size":16,"tickmin":1000,"tickmax":2500},{"x":85,"y":-218,"color":0,"size":16,"tickmin":1000,"tickmax":2500},{"x":86,"y":-189,"color":0,"size":16,"tickmin":1000,"tickmax":2500}]
 radars = [{"x":-107,"y":120,"size":32,"rotationvelocity":180,"type":0,"sprite":"radar_1.png"},{"x":-30,"y":-40,"size":32,"rotationvelocity":90,"type":1,"sprite":"radar_2.png"}]
 turrets = [{"x":2,"y":-121,"size":44,"rotationvelocity":180,"turret_model":3,"weapon_sprite":"cannon_rapid.png"}]

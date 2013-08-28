@@ -28,6 +28,6 @@ weapons = 17(1)
 aggrorange = 500
 sprite_spinner = spinner_3.png
 spinner_velocity = 5
-flashinglights = [{"x":-157,"y":-157,"color":0,"size":64,"tickmin":1000,"tickmax":2500},{"x":166,"y":-20,"color":0,"size":64,"tickmin":1000,"tickmax":2500},{"x":158,"y":158,"color":0,"size":64,"tickmin":1000,"tickmax":2500}]
+flashinglights = [{"x":-157,"y":-157,"color":0,"size":64,"tickmin":2500,"tickmax":5000},{"x":166,"y":-20,"color":0,"size":64,"tickmin":2500,"tickmax":5000},{"x":158,"y":158,"color":0,"size":64,"tickmin":2500,"tickmax":5000}]
 radars = [{"x":-210,"y":3,"size":32,"type":0,"rotationvelocity":180,"sprite":"radar_1.png"}]
 turrets = [{"x":3,"y":3,"size":64,"turret_model":2,"rotationvelocity":180,"weapon_sprite":"cannon_rapid.png"}]

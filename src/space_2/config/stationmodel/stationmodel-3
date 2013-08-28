@@ -27,5 +27,5 @@ lootitem = 4(0.8)
 aggrorange = 500
 sprite_spinner = spinner_4.png
 spinner_velocity = 5
-flashinglights = [{"x":42,"y":-287,"color":0,"size":64,"tickmin":2500,"tickmin":5000},{"x":235,"y":-171,"color":0,"size":64,"tickmin":2500,"tickmin":5000},{"x":286,"y":46,"color":0,"size":64,"tickmin":2500,"tickmin":5000},{"x":171,"y":237,"color":0,"size":64,"tickmin":2500,"tickmin":5000},{"x":-46,"y":290,"color":0,"size":64,"tickmin":2500,"tickmin":5000},{"x":-236,"y":175,"color":0,"size":64,"tickmin":2500,"tickmin":5000},{"x":-291,"y":-42,"color":0,"size":64,"tickmin":2500,"tickmin":5000},{"x":-175,"y":-234,"color":0,"size":64,"tickmin":2500,"tickmin":5000}]
+flashinglights = [{"x":42,"y":-287,"color":0,"size":64,"tickmin":2500,"tickmax":5000},{"x":235,"y":-171,"color":0,"size":64,"tickmin":2500,"tickmax":5000},{"x":286,"y":46,"color":0,"size":64,"tickmin":2500,"tickmax":5000},{"x":171,"y":237,"color":0,"size":64,"tickmin":2500,"tickmax":5000},{"x":-46,"y":290,"color":0,"size":64,"tickmin":2500,"tickmax":5000},{"x":-236,"y":175,"color":0,"size":64,"tickmin":2500,"tickmax":5000},{"x":-291,"y":-42,"color":0,"size":64,"tickmin":2500,"tickmax":5000},{"x":-175,"y":-234,"color":0,"size":64,"tickmin":2500,"tickmax":5000}]
 radars = [{"x":-223,"y":-138,"size":32,"type":0,"rotationvelocity":180,"sprite":"radar_1.png"}]
