@@ -14,17 +14,12 @@ public:
 
 	/// Getters - Setters
 	bool isFlashPhase();
-	float getFlashPhaseDuration();
-	float getFlashPhaseProgress();
-
 	bool isShockWavePhase();
-	float getShockWaveDuration();
-	float getShockWaveprogress();
-
 
 	// Methods
 	void update();
 	void updateFlash();
+	void updateShockWave();
 	void updateSprite();
 	void draw();
 
@@ -34,6 +29,10 @@ private:
 	sf::Sprite mFlashSprite;
 	int mFlashSize;
 
+	sf::Sprite mShockWaveSprite;
+	int mShockWaveSize;
+
 	mks::Clock mEffectClock;
+	mks::Clock mShockWaveClock;
 };
 

@@ -2,10 +2,10 @@
 id = 15
 # WEAPON MODEL
 damagemultiplier = 10
-ammomax = 5
+ammomax = 50
 range = 3000
 rangeangle = 45
-reloadingspeed = 10
-firerate = 5
+reloadingspeed = 1
+firerate = 0.1
 weapontype = 3
 soundreload = weapon_kinetic_reload.wav
