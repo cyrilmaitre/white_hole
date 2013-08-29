@@ -177,6 +177,7 @@ public:
 	void notifyVisibleChanged();
 	void notifyScreenPositionChanged();
 	void notifySizeChanged();
+	virtual void notifyRotationChanged();
 	virtual void notifyScaleChanged();
 
 	void activateSelectable();

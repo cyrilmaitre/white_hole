@@ -29,7 +29,6 @@ public:
 	void draw();
 	void update();
 	void update(sf::Event p_event);
-	void notifyRotationChanged();
 	void loadSprite();
 	virtual void loadFromShipModel();
 

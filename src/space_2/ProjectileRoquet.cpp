@@ -38,12 +38,6 @@ void ProjectileRoquet::notifyScaleChanged()
 		this->mObjectSprite->setScale(this->getScale(), this->getScale());
 }
 
-void ProjectileRoquet::notifyRotationChanged()
-{
-	if(this->mObjectSprite != NULL)
-		this->mObjectSprite->setRotation(this->getRotation());
-}
-
 void ProjectileRoquet::notifyColorChanged()
 {
 	if(this->mObjectSprite != NULL)

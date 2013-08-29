@@ -400,6 +400,15 @@ void MapObject::notifySizeChanged()
 	this->updateHitBox();
 }
 
+void MapObject::notifyRotationChanged()
+{
+	if(this->mObjectSprite != NULL)
+		this->mObjectSprite->setRotation(this->getRotation());
+
+	if(this->mObjectSpriteParameter != NULL)
+		this->mObjectSpriteParameter->getSprite().setRotation(this->getRotation());
+}
+
 void MapObject::notifyScaleChanged()
 {
 
@@ -700,6 +709,8 @@ void MapObject::init()
 	MapObject::mPlaneRatio[MAPOBJECT_PLANE_20]		= (float)MAPOBJECT_PLANE_20_RATIO;
 	MapObject::mPlaneRatio[MAPOBJECT_PLANE_21]		= (float)MAPOBJECT_PLANE_21_RATIO;
 }
+
+
 
 
 

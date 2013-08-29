@@ -324,6 +324,7 @@
     <ClCompile Include="WeaponView.cpp" />
     <ClCompile Include="Wreck.cpp" />
     <ClCompile Include="WreckManager.cpp" />
+    <ClCompile Include="WreckMini.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AmmoModel.h" />
@@ -576,6 +577,7 @@
     <ClInclude Include="WeaponView.h" />
     <ClInclude Include="Wreck.h" />
     <ClInclude Include="WreckManager.h" />
+    <ClInclude Include="WreckMini.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

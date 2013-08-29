@@ -16,7 +16,6 @@ public:
 	// Methods
 	void update();
 	void notifyCloudModelChanged();
-	void notifyRotationChanged();
 	void loadSprite();
 
 

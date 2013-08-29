@@ -169,6 +169,8 @@ void Entity::unloadSprite()
 
 void Entity::notifyRotationChanged()
 {
+	MapObject::notifyRotationChanged();
+
 	if(this->mShieldSprite != NULL)
 		this->mShieldSprite->setRotation(this->getRotation());
 }

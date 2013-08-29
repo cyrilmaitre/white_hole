@@ -4,6 +4,8 @@
 #include "Station.h"
 #include "Containerable.h"
 
+class WreckMini;
+
 // Define
 #define WRECK_OUTOFTIME			3600	// Hour
 #define WRECK_SHIELD			0
@@ -30,6 +32,10 @@ public:
 	bool isOutOfDate();
 
 	// Methods
+	void update();
+	void update(sf::Event p_event);
+	void updateWreckMini();
+	void draw();
 	void loadSprite();
 	void loadFromNpc(Npc* p_npc);
 	void loadFromEntity(Entity* p_entity);
@@ -40,5 +46,7 @@ private:
 	// Attributs
 	std::string mName;
 	long mCredit;
+
+	std::vector<WreckMini*> mWreckMini;
 };
 

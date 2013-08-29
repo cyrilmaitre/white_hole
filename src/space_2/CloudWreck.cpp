@@ -69,12 +69,6 @@ void CloudWreck::notifyCloudModelChanged()
 	}
 }
 
-void CloudWreck::notifyRotationChanged()
-{
-	if(this->mObjectSprite != NULL)
-		this->mObjectSprite->setRotation(this->getRotation());
-}
-
 void CloudWreck::loadSprite()
 {
 	MapObject::loadSprite();

@@ -37,12 +37,6 @@ void ProjectileBullet::notifyScaleChanged()
 		this->mObjectSprite->setScale(this->getScale(), this->getScale());
 }
 
-void ProjectileBullet::notifyRotationChanged()
-{
-	if(this->mObjectSprite != NULL)
-		this->mObjectSprite->setRotation(this->getRotation());
-}
-
 void ProjectileBullet::notifyColorChanged()
 {
 	if(this->mObjectSprite != NULL)

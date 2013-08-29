@@ -2,6 +2,16 @@
 #include "ToolsImage.h"
 #include "Game.h"
 #include "ToolsMap.h"
+#include "WreckMini.h"
+#include "Tools.h"
+
+
+//*************************************************************
+// Constructor - Destructor
+//*************************************************************
+#define WRECKMINI_DENSITY_REF		64	// px²
+#define WRECKMINI_DENSITY_MIN		2	// Per 64px²
+#define WRECKMINI_DENSITY_MAX		3	// Per 64 px²
 
 
 //*************************************************************
@@ -17,6 +27,11 @@ Wreck::Wreck( Entity* p_entity )
 		this->loadFromStation((Station*)p_entity);
 	else if(p_entity->getObjectType() != MapObjectType::TypeWreck)
 		this->loadFromEntity(p_entity);
+
+	int area = ceil((float)this->getRadius() / WRECKMINI_DENSITY_REF);
+	int numberOfWreckMini = Tools::random(area * WRECKMINI_DENSITY_MIN, area * WRECKMINI_DENSITY_MAX);
+	for(int i = 0; i < numberOfWreckMini; i++)
+		this->mWreckMini.push_back(new WreckMini(this));
 }
 
 void Wreck::init()
@@ -37,6 +52,9 @@ Wreck::~Wreck(void)
 		Game::game->getUserInterface()->getWindowCargoLoot()->setWreck(NULL);
 		Game::game->getUserInterface()->getWindowCargoLoot()->setOpen(false);
 	}
+
+	for(int i = 0; i < this->mWreckMini.size(); i++)
+		delete this->mWreckMini[i];
 }
 
 
@@ -72,6 +90,32 @@ bool Wreck::isOutOfDate()
 //*************************************************************
 // Methods
 //*************************************************************
+void Wreck::update()
+{
+	Entity::update();
+
+	this->updateWreckMini();
+}
+
+void Wreck::update( sf::Event p_event )
+{
+	Entity::update(p_event);
+}
+
+void Wreck::updateWreckMini()
+{
+	for(int i = 0; i < this->mWreckMini.size(); i++)
+		this->mWreckMini[i]->update();
+}
+
+void Wreck::draw()
+{
+	Entity::draw();
+
+	for(int i = 0; i < this->mWreckMini.size(); i++)
+		this->mWreckMini[i]->draw();
+}
+
 void Wreck::loadSprite()
 {
 	MapObject::loadSprite();
@@ -119,6 +163,8 @@ void Wreck::loadFromStation( Station* p_station )
 	this->loadFromNpc(p_station);
 	this->loadFromEntity(p_station);
 }
+
+
 
 
 

@@ -12,7 +12,6 @@ public:
 	// Methods
 	void loadSprite();
 	void notifyScaleChanged();
-	void notifyRotationChanged();
 	void notifyColorChanged();
 };
 

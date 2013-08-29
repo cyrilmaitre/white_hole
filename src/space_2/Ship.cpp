@@ -59,13 +59,6 @@ void Ship::update(sf::Event p_event)
 	EntityMovable::update(p_event);	
 }
 
-void Ship::notifyRotationChanged()
-{
-	EntityMovable::notifyRotationChanged();
-	if(this->mObjectSprite != NULL)
-		this->mObjectSprite->setRotation(this->getRotation());
-}
-
 void Ship::loadSprite()
 {
 	EntityMovable::loadSprite();

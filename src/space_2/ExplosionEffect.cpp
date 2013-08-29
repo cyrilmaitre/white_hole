@@ -1,6 +1,7 @@
 #include "ExplosionEffect.h"
 #include "ImageGIFFactory.h"
 #include "ToolsImage.h"
+#include "WreckMini.h"
 
 
 //*************************************************************
@@ -13,7 +14,7 @@
 #define FLASH_PHASE_OFFSETSCALE			0.f		// sec
 #define FLASH_PHASE_END					0.4		// sec
 #define SHOCKWAVE_SPRITE				"explosion_shockwave.png"
-#define SHOCKWAVE_SPEED					1000	// px per sec
+#define SHOCKWAVE_SPEED					1500	// px per sec
 #define SHOCKWAVE_PHASE_BEGIN			0.3		// sec
 #define SHOCKWAVE_PHASE_OFFSETALPHA		0.8		// sec
 #define SHOCKWAVE_PHASE_DURATION		2.5		// sec
