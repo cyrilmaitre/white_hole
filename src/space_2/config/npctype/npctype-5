@@ -1,6 +1,6 @@
 id = 5
 name = npcTypeNeutralNeutral
-color = #FFFF00
+color = #9D9D9D
 lightcolor = 2
 alignment = 1
 aggro = 1

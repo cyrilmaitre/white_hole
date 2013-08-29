@@ -3,6 +3,8 @@
 #include "Entity.h"
 #include "CharacterShip.h"
 #include "Sector.h"
+#include "NpcShip.h"
+#include "Station.h"
 
 class ToolsMap
 {
@@ -18,6 +20,8 @@ public:
 	static bool isEntity(MapObject* p_target);
 	static bool isNpc(Entity* p_target);
 	static bool isStar(MapObject* p_object);
+	static bool isNpcShip(Entity* p_target);
+	static bool isStation(Entity* p_target);
 
 	static int getRadius(MapObject* p_object);
 	static int getRadius(MapObject* p_object, int p_plane);

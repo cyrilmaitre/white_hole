@@ -87,6 +87,18 @@ bool ToolsMap::isStar( MapObject* p_object )
 	return v != 0;
 }
 
+bool ToolsMap::isNpcShip( Entity* p_target )
+{
+	NpcShip* v = dynamic_cast<NpcShip*>(p_target);
+	return v != 0;
+}
+
+bool ToolsMap::isStation( Entity* p_target )
+{
+	Station* v = dynamic_cast<Station*>(p_target);
+	return v != 0;
+}
+
 int ToolsMap::getRadius( MapObject* p_object )
 {
 	return ToolsMap::getRadius(p_object, p_object->getPlane());
@@ -145,6 +157,7 @@ sf::Color ToolsMap::convertSectorColor( Sector::SectorColor p_color )
 		break;
 	}
 }
+
 
 
 

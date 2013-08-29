@@ -1,6 +1,7 @@
 #pragma once
 #include "Entity.h"
 #include "NpcShip.h"
+#include "Station.h"
 #include "Containerable.h"
 
 // Define
@@ -15,7 +16,7 @@ class Wreck : public Entity, public Containerable
 {
 public:
 	// Constructor - Destructor
-	Wreck(NpcShip* p_npcShip);
+	Wreck(Entity* p_entity);
 	void init();
 	~Wreck(void);
 
@@ -31,9 +32,9 @@ public:
 	// Methods
 	void loadSprite();
 	void loadFromNpc(Npc* p_npc);
-	void loadFromNpcShip(NpcShip* p_npcShip);
 	void loadFromEntity(Entity* p_entity);
-
+	void loadFromNpcShip(NpcShip* p_npcShip);
+	void loadFromStation(Station* p_station);
 
 private:
 	// Attributs

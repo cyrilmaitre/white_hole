@@ -7,6 +7,7 @@
 #include "ExplosionEffect.h"
 #include "FlashingLightEffect.h"
 #include "NpcType.h"
+#include "WreckManager.h"
 
 
 //*************************************************************
@@ -299,6 +300,7 @@ void Entity::draw()
 void Entity::destroy()
 {
 	AutoManager::add(new ExplosionEffect(this));
+	WreckManager::add(new Wreck(this));
 }
 
 void Entity::shieldImpact()

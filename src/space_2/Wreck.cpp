@@ -1,15 +1,22 @@
 #include "Wreck.h"
 #include "ToolsImage.h"
 #include "Game.h"
+#include "ToolsMap.h"
 
 
 //*************************************************************
 // Constructor - Destructor
 //*************************************************************
-Wreck::Wreck( NpcShip* p_npcShip )
+Wreck::Wreck( Entity* p_entity )
 {
 	this->init();
-	this->loadFromNpcShip(p_npcShip);
+
+	if(p_entity->getObjectType() == MapObjectType::TypeNpcShip)
+		this->loadFromNpcShip((NpcShip*)p_entity);
+	else if(p_entity->getObjectType() == MapObjectType::TypeStation)
+		this->loadFromStation((Station*)p_entity);
+	else if(p_entity->getObjectType() != MapObjectType::TypeWreck)
+		this->loadFromEntity(p_entity);
 }
 
 void Wreck::init()
@@ -84,14 +91,6 @@ void Wreck::loadFromNpc( Npc* p_npc )
 	}
 }
 
-void Wreck::loadFromNpcShip( NpcShip* p_npcShip )
-{
-	this->setName(p_npcShip->getNpcShipModel()->getName());
-
-	this->loadFromNpc(p_npcShip);
-	this->loadFromEntity(p_npcShip);
-}
-
 void Wreck::loadFromEntity( Entity* p_entity )
 {
 	this->setX(p_entity->Object::getX());
@@ -104,6 +103,24 @@ void Wreck::loadFromEntity( Entity* p_entity )
 
 	this->loadSprite();
 }
+
+void Wreck::loadFromNpcShip( NpcShip* p_npcShip )
+{
+	this->setName(p_npcShip->getNpcShipModel()->getName());
+
+	this->loadFromNpc(p_npcShip);
+	this->loadFromEntity(p_npcShip);
+}
+
+void Wreck::loadFromStation( Station* p_station )
+{
+	this->setName(p_station->getObjectTypeName() + " " + Resource::resource->getBundle()->getString("wreck"));
+
+	this->loadFromNpc(p_station);
+	this->loadFromEntity(p_station);
+}
+
+
 
 
 

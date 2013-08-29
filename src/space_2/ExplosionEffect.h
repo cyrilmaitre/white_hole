@@ -2,6 +2,8 @@
 #include "EffectMap.h"
 #include "ImageGIF.h"
 #include "Entity.h"
+#include "Clock.h"
+
 
 class ExplosionEffect : public EffectMap
 {
@@ -10,17 +12,28 @@ public:
 	ExplosionEffect(Entity* p_entity);
 	~ExplosionEffect(void);
 
+	/// Getters - Setters
+	bool isFlashPhase();
+	float getFlashPhaseDuration();
+	float getFlashPhaseProgress();
+
+	bool isShockWavePhase();
+	float getShockWaveDuration();
+	float getShockWaveprogress();
+
+
 	// Methods
 	void update();
-	void updatePosition();
+	void updateFlash();
+	void updateSprite();
 	void draw();
 
 
 private:
 	// Attributs
-	ImageGIF *mExplosionGif;
+	sf::Sprite mFlashSprite;
+	int mFlashSize;
 
-	// Methods
-	void configureExplosion(Entity* p_entity);
+	mks::Clock mEffectClock;
 };
 

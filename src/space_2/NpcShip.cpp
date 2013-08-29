@@ -1,7 +1,6 @@
 #include "NpcShip.h"
 #include "Camera.h"
 #include "Wreck.h"
-#include "WreckManager.h"
 #include "Game.h"
 
 //*************************************************************
@@ -93,7 +92,6 @@ void NpcShip::loadFromNpcShipModel()
 void NpcShip::destroy()
 {
 	Entity::destroy();
-	WreckManager::add(new Wreck(this));
 	Game::game->getCharacter()->incExperience(this->generateLootExperience());
 }
 
