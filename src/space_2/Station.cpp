@@ -5,7 +5,9 @@
 //*************************************************************
 // Define
 //*************************************************************
-#define STATION_PLANE	MAPOBJECT_PLANE_1
+#define STATION_PLANE				MAPOBJECT_PLANE_1
+#define ROTATION_VELOCITY_MIN		0.1
+#define ROTATION_VELOCITY_MAX		0.5
 
 
 //*************************************************************
@@ -17,6 +19,11 @@ Station::Station(void) : Npc(this)
 	this->mModel = NULL;
 	this->setPlane(STATION_PLANE);
 	this->setObjectType(MapObject::MapObjectType::TypeStation);
+
+	this->setRotation(Tools::random(0, 360));
+	this->setRotationInfinite(true);
+	this->setRotationInfiniteRight(Tools::randomBool());
+	this->setRotationVelocity(Tools::random((float)ROTATION_VELOCITY_MIN, (float)ROTATION_VELOCITY_MAX));
 }
 
 Station::~Station(void)

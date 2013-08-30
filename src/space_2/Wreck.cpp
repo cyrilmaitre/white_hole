@@ -14,6 +14,8 @@
 #define WRECKMINI_DENSITY_MIN		2	// Per 64px²
 #define WRECKMINI_DENSITY_MAX		4	// Per 64 px²
 #define WRECKMINI_TRIGGER			
+#define ROTATION_VELOCITY_MIN		0.1
+#define ROTATION_VELOCITY_MAX		0.5
 
 
 //*************************************************************
@@ -35,6 +37,10 @@ Wreck::Wreck( Entity* p_entity )
 
 void Wreck::init()
 {
+	this->setRotationInfinite(true);
+	this->setRotationInfiniteRight(Tools::randomBool());
+	this->setRotationVelocity(Tools::random((float)ROTATION_VELOCITY_MIN, (float)ROTATION_VELOCITY_MAX));
+
 	this->setShieldMax(WRECK_SHIELD);
 	this->setArmorMax(WRECK_ARMOR);
 	this->setStructureMax(WRECK_STRUCTURE);

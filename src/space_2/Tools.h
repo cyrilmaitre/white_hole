@@ -38,7 +38,7 @@ public:
 
 	// Random
 	static int random(int p_min, int p_max);
-	static float random(float p_min, float p_max, int p_precision);
+	static float random(float p_min, float p_max, int p_precision = 2);
 	static float randomPercentage(int p_min, int p_max);
 	static int randomZeroToHundred();
 	static float randomZeroToOne();
