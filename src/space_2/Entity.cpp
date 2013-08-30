@@ -301,7 +301,11 @@ void Entity::draw()
 
 void Entity::destroy()
 {
-	AutoManager::add(new ExplosionEffect(this));
+	if(this->getObjectType() != MapObjectType::TypeWreck && this->getObjectType() != MapObjectType::TypeWreckMini)
+		AutoManager::add(new ExplosionEffect(this));
+	else
+		AutoManager::add(new ExplosionEffect(this, false));
+
 	if(this->getObjectType() != MapObjectType::TypeWreck && this->getObjectType() != MapObjectType::TypeWreckMini)
 		WreckManager::add(new Wreck(this));
 }

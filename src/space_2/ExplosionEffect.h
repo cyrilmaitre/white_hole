@@ -11,7 +11,7 @@ class ExplosionEffect : public EffectMap
 {
 public:
 	// Constructor - Destructor
-	ExplosionEffect(Entity* p_entity);
+	ExplosionEffect(Entity* p_entity, bool p_shockWave = true, bool p_flash = true);
 	~ExplosionEffect(void);
 
 	/// Getters - Setters
@@ -30,9 +30,11 @@ private:
 	// Attributs
 	sf::Sprite mFlashSprite;
 	int mFlashSize;
+	bool mFlash;
 
 	sf::Sprite mShockWaveSprite;
 	int mShockWaveSize;
+	bool mShockWave;
 
 	mks::Clock mEffectClock;
 	mks::Clock mShockWaveClock;

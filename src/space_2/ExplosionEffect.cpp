@@ -23,19 +23,27 @@
 //*************************************************************
 // Constructor - Destructor
 //*************************************************************
-ExplosionEffect::ExplosionEffect(Entity* p_entity)
+ExplosionEffect::ExplosionEffect(Entity* p_entity, bool p_shockWave, bool p_flash)
 {
 	this->mLiveTime = 0;
+	this->mFlash = p_flash;
+	this->mShockWave = p_shockWave;
 	
-	this->mFlashSize = p_entity->getRadius() * FLASH_SCALE;
-	this->mFlashSprite.setTexture(*Resource::resource->getTexture(FLASH_SPRITE));
-	ToolsImage::setSpriteOriginCenter(&this->mFlashSprite);
-	ToolsImage::resizeSprite(&this->mFlashSprite, this->mFlashSize, this->mFlashSize);
+	if(this->mFlash)
+	{
+		this->mFlashSize = p_entity->getRadius() * FLASH_SCALE;
+		this->mFlashSprite.setTexture(*Resource::resource->getTexture(FLASH_SPRITE));
+		ToolsImage::setSpriteOriginCenter(&this->mFlashSprite);
+		ToolsImage::resizeSprite(&this->mFlashSprite, this->mFlashSize, this->mFlashSize);
+	}
 
-	this->mShockWaveSize = 0;
-	this->mShockWaveSprite.setTexture(*Resource::resource->getTexture(SHOCKWAVE_SPRITE));
-	ToolsImage::setSpriteOriginCenter(&this->mShockWaveSprite);
-	ToolsImage::resizeSprite(&this->mShockWaveSprite, this->mShockWaveSize, this->mShockWaveSize);
+	if(this->mShockWave)
+	{
+		this->mShockWaveSize = 0;
+		this->mShockWaveSprite.setTexture(*Resource::resource->getTexture(SHOCKWAVE_SPRITE));
+		ToolsImage::setSpriteOriginCenter(&this->mShockWaveSprite);
+		ToolsImage::resizeSprite(&this->mShockWaveSprite, this->mShockWaveSize, this->mShockWaveSize);
+	}
 
 	this->setLiveTime(EXPLOSION_LIFETIME);
 	this->setSize(p_entity->Object::getWidth(), p_entity->Object::getHeight());
@@ -52,12 +60,12 @@ ExplosionEffect::~ExplosionEffect(void)
 //*************************************************************
 bool ExplosionEffect::isFlashPhase()
 {
-	return this->mEffectClock.getElapsedTimeAsSeconds() > FLASH_PHASE_BEGIN && this->mEffectClock.getElapsedTimeAsSeconds() < FLASH_PHASE_END;
+	return this->mEffectClock.getElapsedTimeAsSeconds() > FLASH_PHASE_BEGIN && this->mEffectClock.getElapsedTimeAsSeconds() < FLASH_PHASE_END && this->mFlash;
 }
 
 bool ExplosionEffect::isShockWavePhase()
 {
-	return this->mEffectClock.getElapsedTimeAsSeconds() > SHOCKWAVE_PHASE_BEGIN && this->mEffectClock.getElapsedTimeAsSeconds() < (SHOCKWAVE_PHASE_BEGIN + SHOCKWAVE_PHASE_DURATION);
+	return this->mEffectClock.getElapsedTimeAsSeconds() > SHOCKWAVE_PHASE_BEGIN && this->mEffectClock.getElapsedTimeAsSeconds() < (SHOCKWAVE_PHASE_BEGIN + SHOCKWAVE_PHASE_DURATION) && this->mShockWave;
 }
 
 

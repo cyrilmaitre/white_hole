@@ -406,6 +406,7 @@ mapObjectTypePlanet = Planet
 mapObjectTypeCloudGaz = Cloud Gaz
 mapObjectTypeCloudWreck = Cloud Wreck
 mapObjectTypeWreck = Wreck
+mapObjectTypeWreckMini = Debris
 mapObjectTypeStart = Star
 mapObjectTypeStation = Station
 #

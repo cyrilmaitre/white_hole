@@ -196,6 +196,10 @@ std::string MapObject::getObjectTypeName()
 		return Resource::resource->getBundle()->getString("mapObjectTypeWreck");
 		break;
 
+	case MapObjectType::TypeWreckMini:
+		return Resource::resource->getBundle()->getString("mapObjectTypeWreckMini");
+		break;
+
 	case MapObjectType::TypeStar:
 		return Resource::resource->getBundle()->getString("mapObjectTypeStart");
 		break;
