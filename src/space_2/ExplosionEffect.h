@@ -4,6 +4,8 @@
 #include "Entity.h"
 #include "Clock.h"
 
+// Define
+#define SHOCKWAVE_PHASE_BEGIN		0.3		// sec
 
 class ExplosionEffect : public EffectMap
 {

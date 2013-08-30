@@ -15,7 +15,6 @@
 #define FLASH_PHASE_END					0.4		// sec
 #define SHOCKWAVE_SPRITE				"explosion_shockwave.png"
 #define SHOCKWAVE_SPEED					1500	// px per sec
-#define SHOCKWAVE_PHASE_BEGIN			0.3		// sec
 #define SHOCKWAVE_PHASE_OFFSETALPHA		0.8		// sec
 #define SHOCKWAVE_PHASE_DURATION		2.5		// sec
 #define EXPLOSION_LIFETIME				(SHOCKWAVE_PHASE_BEGIN + SHOCKWAVE_PHASE_DURATION) * 1000	// millisec

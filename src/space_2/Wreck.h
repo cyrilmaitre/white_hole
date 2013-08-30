@@ -48,5 +48,7 @@ private:
 	long mCredit;
 
 	std::vector<WreckMini*> mWreckMini;
+	mks::Clock mWreckMiniClock;
+	bool mWreckMiniTriggered;
 };
 

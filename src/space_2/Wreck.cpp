@@ -4,6 +4,7 @@
 #include "ToolsMap.h"
 #include "WreckMini.h"
 #include "Tools.h"
+#include "ExplosionEffect.h"
 
 
 //*************************************************************
@@ -11,7 +12,8 @@
 //*************************************************************
 #define WRECKMINI_DENSITY_REF		64	// px²
 #define WRECKMINI_DENSITY_MIN		2	// Per 64px²
-#define WRECKMINI_DENSITY_MAX		3	// Per 64 px²
+#define WRECKMINI_DENSITY_MAX		4	// Per 64 px²
+#define WRECKMINI_TRIGGER			
 
 
 //*************************************************************
@@ -28,10 +30,7 @@ Wreck::Wreck( Entity* p_entity )
 	else if(p_entity->getObjectType() != MapObjectType::TypeWreck)
 		this->loadFromEntity(p_entity);
 
-	int area = ceil((float)this->getRadius() / WRECKMINI_DENSITY_REF);
-	int numberOfWreckMini = Tools::random(area * WRECKMINI_DENSITY_MIN, area * WRECKMINI_DENSITY_MAX);
-	for(int i = 0; i < numberOfWreckMini; i++)
-		this->mWreckMini.push_back(new WreckMini(this));
+	this->mWreckMiniTriggered = false;
 }
 
 void Wreck::init()
@@ -94,6 +93,14 @@ void Wreck::update()
 {
 	Entity::update();
 
+	if(this->mWreckMiniClock.getElapsedTimeAsSeconds() > SHOCKWAVE_PHASE_BEGIN && !this->mWreckMiniTriggered)
+	{
+		int area = ceil((float)this->getRadius() / WRECKMINI_DENSITY_REF);
+		int numberOfWreckMini = Tools::random(area * WRECKMINI_DENSITY_MIN, area * WRECKMINI_DENSITY_MAX);
+		for(int i = 0; i < numberOfWreckMini; i++)
+			this->mWreckMini.push_back(new WreckMini(this));
+		this->mWreckMiniTriggered = true;
+	}
 	this->updateWreckMini();
 }
 
