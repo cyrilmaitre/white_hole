@@ -7,7 +7,7 @@
 //*************************************************************
 Rotable::Rotable()
 {
-	this->mRotation = 0;
+	this->mRotation = -1;
 	this->mRotationTarget = this->mRotation;
 }
 
