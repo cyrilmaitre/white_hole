@@ -18,7 +18,7 @@ Rockable::~Rockable(void)
 //*************************************************************
 // Getters - Setters
 //*************************************************************
-int Rockable::getRocking()
+float Rockable::getRocking()
 {
 	return this->mRocking;
 }

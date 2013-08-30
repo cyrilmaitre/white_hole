@@ -17,7 +17,7 @@ public:
 	~Rockable(void);
 
 	// Getters - Setters
-	int getRocking();
+	float getRocking();
 
 	bool isRockingActived();
 	void setRockingActived(bool p_actived);
@@ -30,7 +30,7 @@ public:
 private:
 	// Attributs
 	mks::Clock mRockingClock;
-	int mRocking;
+	float mRocking;
 	bool mRockingActived;
 };
 
