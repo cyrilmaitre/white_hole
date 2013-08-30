@@ -2,7 +2,8 @@
 #include "ToolsImage.h"
 #include "Wreck.h"
 #include "Tools.h"
-
+#include "EntityManager.h"
+#include "Game.h"
 
 //*************************************************************
 // Define
@@ -19,6 +20,9 @@
 #define SIZE						32
 #define ROTATION_VELOCITY_MIN		5
 #define ROTATION_VELOCITY_MAX		10
+#define SHIELD						0
+#define ARMOR						0
+#define STRUCTURE					100
 
 
 //*************************************************************
@@ -26,6 +30,13 @@
 //*************************************************************
 WreckMini::WreckMini( Wreck* p_parent )
 {
+	EntityManager::add(this);
+	Game::game->getMap()->getMapObjectSelector()->addMapObject(this);
+
+	this->setShieldMax(SHIELD);
+	this->setArmorMax(ARMOR);
+	this->setStructureMax(STRUCTURE);
+
 	this->setVelocityMax(VELOCITY_MAX);
 	int vectorDirection = Tools::random(0, 7);
 	if(vectorDirection == 0)	/// North

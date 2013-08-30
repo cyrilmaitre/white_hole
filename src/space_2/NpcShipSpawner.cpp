@@ -79,7 +79,10 @@ void NpcShipSpawner::update()
 
 		// Dead
 		if(this->mSpawnedNpcShip[i]->isDestroy())
+		{
 			this->removeNpcShip(this->mSpawnedNpcShip[i]);
+			i--;	// Stay on the same index
+		}
 	}
 }
 

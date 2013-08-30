@@ -594,7 +594,10 @@ void Sector::updateEntities()
 		this->mEntities[i]->update();	
 
 		if(this->mEntities[i]->isDestroy())
-			this->removeEntity(i);
+		{
+			this->removeEntity(i);	// Remove
+			i--;					// Stay on the same index
+		}
 	}
 }
 

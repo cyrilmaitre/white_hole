@@ -5,6 +5,7 @@
 #include "WreckMini.h"
 #include "Tools.h"
 #include "ExplosionEffect.h"
+#include "EntityManager.h"
 
 
 //*************************************************************
@@ -118,7 +119,22 @@ void Wreck::update( sf::Event p_event )
 void Wreck::updateWreckMini()
 {
 	for(int i = 0; i < this->mWreckMini.size(); i++)
+	{
 		this->mWreckMini[i]->update();
+
+		if(this->mWreckMini[i]->isDestroy())
+		{
+			// Remove from other managers
+			Game::game->getMap()->getMapObjectSelector()->removeMapObject(this->mWreckMini[i]);
+			EntityManager::remove(this->mWreckMini[i]->getId());
+
+			// Remove from this
+			this->mWreckMini.erase(this->mWreckMini.begin() + i);
+
+			// Stay on the same index
+			i--;
+		}
+	}
 }
 
 void Wreck::draw()
