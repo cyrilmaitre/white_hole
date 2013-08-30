@@ -30,6 +30,8 @@ void ProjectileLaser::loadSprite()
 	this->mObjectSprite->setScale(this->getScale(), this->getScale());
 	this->mObjectSprite->setRotation(this->getRotation());
 	this->mObjectSprite->setColor(this->getColor());
+
+	this->updateSprite();
 }
 
 void ProjectileLaser::notifyScaleChanged()

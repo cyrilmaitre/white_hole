@@ -41,6 +41,7 @@ Projectile::Projectile( Entity* p_source, Entity* p_target, Weapon* p_weapon, fl
 
 	this->EntityMovable::updateRotation();
 	this->Rotable::updateRotation();
+	this->update();
 }
 
 Projectile::~Projectile(void)
