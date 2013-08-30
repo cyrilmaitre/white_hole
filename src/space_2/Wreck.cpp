@@ -53,14 +53,17 @@ void Wreck::init()
 
 Wreck::~Wreck(void)
 {
+	for(int i = 0; i < this->mWreckMini.size(); i++)
+	{
+		Game::game->getMap()->getMapObjectSelector()->removeMapObject(this->mWreckMini[i]);
+		EntityManager::remove(this->mWreckMini[i]->getId());
+	}
+
 	if(Game::game->getUserInterface()->getWindowCargoLoot()->getWreck() == this)
 	{
 		Game::game->getUserInterface()->getWindowCargoLoot()->setWreck(NULL);
 		Game::game->getUserInterface()->getWindowCargoLoot()->setOpen(false);
 	}
-
-	for(int i = 0; i < this->mWreckMini.size(); i++)
-		delete this->mWreckMini[i];
 }
 
 
@@ -113,6 +116,7 @@ void Wreck::update()
 
 void Wreck::update( sf::Event p_event )
 {
+	this->updateWreckMini(p_event);
 	Entity::update(p_event);
 }
 
@@ -135,6 +139,14 @@ void Wreck::updateWreckMini()
 			i--;
 		}
 	}
+}
+
+void Wreck::updateWreckMini( sf::Event p_event )
+{
+	for(int i = 0; i < this->mWreckMini.size(); i++)
+	{
+		this->mWreckMini[i]->update(p_event);
+	}	
 }
 
 void Wreck::draw()

@@ -94,6 +94,7 @@ public:
 		TypeCloudGaz,
 		TypeCloudWreck,
 		TypeWreck,
+		TypeWreckMini,
 		TypeStar,
 		TypeStation
 	};

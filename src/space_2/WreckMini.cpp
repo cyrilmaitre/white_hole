@@ -30,6 +30,7 @@
 //*************************************************************
 WreckMini::WreckMini( Wreck* p_parent )
 {
+	this->setObjectType(MapObjectType::TypeWreckMini);
 	EntityManager::add(this);
 	Game::game->getMap()->getMapObjectSelector()->addMapObject(this);
 
@@ -110,6 +111,11 @@ WreckMini::~WreckMini(void)
 void WreckMini::update()
 {
 	EntityMovable::update();
+}
+
+void WreckMini::update( sf::Event p_event )
+{
+	EntityMovable::update(p_event);
 }
 
 void WreckMini::updateSprite()

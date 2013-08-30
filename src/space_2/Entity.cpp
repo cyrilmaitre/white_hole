@@ -302,7 +302,8 @@ void Entity::draw()
 void Entity::destroy()
 {
 	AutoManager::add(new ExplosionEffect(this));
-	WreckManager::add(new Wreck(this));
+	if(this->getObjectType() != MapObjectType::TypeWreck && this->getObjectType() != MapObjectType::TypeWreckMini)
+		WreckManager::add(new Wreck(this));
 }
 
 void Entity::shieldImpact()

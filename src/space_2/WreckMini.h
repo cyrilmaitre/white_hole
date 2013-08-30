@@ -15,6 +15,7 @@ public:
 
 	// Methods 
 	void update();
+	void update(sf::Event p_event);
 	void updateSprite();
 	void loadSprite();
 	void draw();

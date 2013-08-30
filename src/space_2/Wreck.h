@@ -35,6 +35,7 @@ public:
 	void update();
 	void update(sf::Event p_event);
 	void updateWreckMini();
+	void updateWreckMini(sf::Event p_event);
 	void draw();
 	void loadSprite();
 	void loadFromNpc(Npc* p_npc);
