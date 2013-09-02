@@ -332,7 +332,7 @@ void ChatClient::mRunClient(void)
 	{
 		{ std::ostringstream msg; msg << "(!) Couldn't connect to chat server, status : ("<< status << ")"; Debug::msg(msg); }
 	}
-	
+
 	{ std::ostringstream msg; msg << "Thread ended" << ""; Debug::msg(msg); }
 }
 
