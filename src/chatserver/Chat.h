@@ -83,7 +83,8 @@ enum AuthResponse
 	AR_INVALID_IDS,		// invalid IDs
 	AR_ERROR,			// error sent from the server (ex: if cannot contact database)
 	AR_MAINTENANCE,		// maintenance mode, can't connect
-	AR_BANNED			// should receive "BANNED" only if IDs are valids
+	AR_BANNED,			// should receive "BANNED" only if IDs are valids
+	AR_ALREADY_ONLINE,
 };
 
 // --------------

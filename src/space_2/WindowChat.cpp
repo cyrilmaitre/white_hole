@@ -78,6 +78,27 @@ void WindowChat::update(sf::Event p_event)
 					}
 					// /w
 					else if(result[0].compare("w") == 0) {
+						if(result.size() >= 3)
+						{
+							// get message content from vector
+							std::string message;
+							for(std::vector<std::string>::size_type i = 2; i != result.size(); i++) {
+								if (!message.empty()) {
+									message.append(" ");
+								}
+								message.append(result[i]);
+							}
+
+							// create & send message
+							std::shared_ptr<C2S_Chat> c2s_chat(new C2S_Chat("", result[1], ChatDstType::USER));
+							Resource::resource->getChatClient()->pushInputBuffer(c2s_chat);
+
+							std::string pushChat = "(PM) -> "+result[1]+" : "+message;
+							this->pushChat(pushChat);
+						}
+						else {
+							this->pushChat("> Usage: /w <user> <message>");
+						}
 					}
 					// /f+
 					else if(result[0].compare("f+") == 0) {
@@ -129,7 +150,11 @@ void WindowChat::drawContent()
 				// Si c'est un message chat
 				if(message->packetType == PacketType::CHAT) {
 					S2C_Chat* s2c_chat = dynamic_cast<S2C_Chat *>(message.get());
-					this->pushChat("<"+s2c_chat->from+"> "+s2c_chat->message);
+
+					if(s2c_chat->dstType == ChatDstType::CHANNEL)
+						this->pushChat("<"+s2c_chat->from+"> "+s2c_chat->message);
+					else if(s2c_chat->dstType == ChatDstType::USER)
+						this->pushChat("(MP) from "+s2c_chat->from+" : "+s2c_chat->message);
 				}
 				// Si c'est une commande
 				else if(message->packetType == PacketType::COMMAND) {

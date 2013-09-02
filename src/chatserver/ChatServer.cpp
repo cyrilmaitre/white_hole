@@ -248,7 +248,7 @@ void ChatServer::addClient(std::shared_ptr<Client> p_client)
 	//be notified when he sends something
 	selector.add(p_client->getSocket());
 
-	{ std::ostringstream msg; msg << "Client #" << p_client->getUniqueID() << "added in clientlist: " << p_client->getSocket().getRemoteAddress() << ""; Debug::msg(msg); }
+	{ std::ostringstream msg; msg << "Client #" << p_client->getUniqueID() << " added in clientlist: " << p_client->getSocket().getRemoteAddress() << ""; Debug::msg(msg); }
 }
 
 /*
@@ -257,8 +257,26 @@ void ChatServer::addClient(std::shared_ptr<Client> p_client)
 void ChatServer::authenticate(std::shared_ptr<Client> p_client, C2S_Auth p_auth)
 {
 	// auth test here
+	// set name after
+	p_client->setName(p_auth.user);
 
-	// if auth OK
+	// if auth IDs OK...
+	// already online ?
+	std::shared_ptr<Client> dstClient = this->findClientByName(p_client->getName());
+
+	// if client is already connected ..., kill the other
+	if(dstClient.get() != 0)
+	{
+		S2C_Command s2c_cmd(ServerCommand::S_SAY, "Connection closed. Reason: Ghost kill");
+		sf::Packet packet;
+		packet << s2c_cmd;
+		this->sendPacket(packet, dstClient);
+		this->dropClient(dstClient);
+	}
+	
+
+
+	// if tests above are OK
 	if(true)
 	{
 		// client is now authed
@@ -303,6 +321,7 @@ void ChatServer::dropClient(std::shared_ptr<Client> p_client)
 {
 
 	// broadcast disconnexion to all clients
+	if(p_client->getState() == ClientState::AUTHED)
 	{
 		sf::Packet packet;
 		S2C_Command s2c_command(ServerCommand::S_QUIT, p_client->getName());
@@ -563,12 +582,9 @@ void ChatServer::handlePacket(sf::Packet& p_packet, std::shared_ptr<Client> p_cl
 						// AFK
 					case ClientCommand::C_AFK:
 						{
-							{ std::ostringstream msg; msg << "WUT WUT 1111111111 >> " << p_client->getAttributes();	Debug::msg(msg); }
-
 							// if already afk, disable AFK mode
 							if(p_client->hasAttribute(ClientAttributes::ATTR_AFK)) {
 
-								{ std::ostringstream msg; msg << "WUT WUT 33333 >> " << p_client->getAttributes();	Debug::msg(msg); }
 								p_client->removeAttribute(ClientAttributes::ATTR_AFK);
 
 								S2C_Command s2_command(ServerCommand::S_AFK_OFF);
@@ -579,7 +595,6 @@ void ChatServer::handlePacket(sf::Packet& p_packet, std::shared_ptr<Client> p_cl
 							}
 							// else, enable AFK mode
 							else {
-								{ std::ostringstream msg; msg << "WUT 4444  >> " << p_client->getAttributes();	Debug::msg(msg); }
 								p_client->addAttribute(ClientAttributes::ATTR_AFK);
 								
 								S2C_Command s2c_command(ServerCommand::S_AFK_ON);
@@ -589,7 +604,6 @@ void ChatServer::handlePacket(sf::Packet& p_packet, std::shared_ptr<Client> p_cl
 								this->sendPacket(packet, p_client);
 							}
 
-							{ std::ostringstream msg; msg << "WUT WUT 222222222 >> " << p_client->getAttributes();	Debug::msg(msg); }
 						}
 						break;
 
