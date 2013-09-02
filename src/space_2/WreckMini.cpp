@@ -13,10 +13,9 @@
 #define SPRITE_EMBER_PRE			"debris_"
 #define SPRITE_EMBER_SUF			"_ember.png"
 #define SPRITE_COUNT				6
-#define QUICKENING_MIN				75
-#define QUICKENING_MAX				125
-#define VELOCITY_MIN				100
-#define VELOCITY_MAX				200
+#define QUICKENING					100
+#define VELOCITY_FACTOR_MIN			1
+#define VELOCITY_FACTOR_MAX			1
 #define SIZE						32
 #define ROTATION_VELOCITY_MIN		5
 #define ROTATION_VELOCITY_MAX		10
@@ -28,7 +27,7 @@
 //*************************************************************
 // Constructor - Destructor
 //*************************************************************
-WreckMini::WreckMini( Wreck* p_parent, float p_velocityFactor )
+WreckMini::WreckMini( Wreck* p_parent, float p_velocity )
 {
 	this->setObjectType(MapObjectType::TypeWreckMini);
 	EntityManager::add(this);
@@ -38,8 +37,8 @@ WreckMini::WreckMini( Wreck* p_parent, float p_velocityFactor )
 	this->setArmorMax(ARMOR);
 	this->setStructureMax(STRUCTURE);
 
-	int velocityMin = VELOCITY_MIN * p_velocityFactor;
-	int velocityMax = VELOCITY_MAX * p_velocityFactor;
+	int velocityMin = VELOCITY_FACTOR_MIN * p_velocity;
+	int velocityMax = VELOCITY_FACTOR_MAX * p_velocity;
 	this->setVelocityMax(velocityMax);
 	int vectorDirection = Tools::random(0, 7);
 	if(vectorDirection == 0)	/// North
@@ -92,7 +91,7 @@ WreckMini::WreckMini( Wreck* p_parent, float p_velocityFactor )
 	}
 
 	this->setRockingActived(false);
-	this->setQuickening(Tools::random(QUICKENING_MIN, QUICKENING_MAX));
+	this->setQuickening(QUICKENING);
 	this->setSize(SIZE, SIZE);
 	this->setPosition(p_parent->Object::getX(), p_parent->Object::getY());
 	this->setRotationInfinite(true);
@@ -104,6 +103,15 @@ WreckMini::WreckMini( Wreck* p_parent, float p_velocityFactor )
 
 WreckMini::~WreckMini(void)
 {
+}
+
+
+//*************************************************************
+// Getters - Setters
+//*************************************************************
+float WreckMini::getQuickening()
+{
+	return QUICKENING;
 }
 
 

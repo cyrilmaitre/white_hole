@@ -14,7 +14,6 @@
 #define WRECKMINI_DENSITY_REF		64	// px²
 #define WRECKMINI_DENSITY_MIN		2	// Per 64px²
 #define WRECKMINI_DENSITY_MAX		4	// Per 64 px²
-#define WRECKMINI_RADIUS_REF		512		
 #define ROTATION_VELOCITY_MIN		0.1
 #define ROTATION_VELOCITY_MAX		0.5
 #define EMBER_ALPHA_MIN				100
@@ -126,9 +125,8 @@ void Wreck::update()
 	{
 		int area = ceil((float)this->getRadius() / WRECKMINI_DENSITY_REF);
 		int numberOfWreckMini = Tools::random(area * WRECKMINI_DENSITY_MIN, area * WRECKMINI_DENSITY_MAX);
-		float velocityFactor = (float)this->getObjectSpriteRadius() / (float)WRECKMINI_RADIUS_REF;
 		for(int i = 0; i < numberOfWreckMini; i++)
-			this->mWreckMini.push_back(new WreckMini(this, velocityFactor));
+			this->mWreckMini.push_back(new WreckMini(this, sqrt((float)(this->getObjectSpriteRadius() * WreckMini::getQuickening()))));
 		this->mWreckMiniTriggered = true;
 	}
 	this->updateEmber();

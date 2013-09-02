@@ -9,9 +9,11 @@ class WreckMini : public EntityMovable
 {
 public:
 	// Constructor - Destructor
-	WreckMini(Wreck* p_parent, float p_velocityFactor = 1.f);
+	WreckMini(Wreck* p_parent, float p_velocity);
 	~WreckMini(void);
 
+	// Getters - Setters
+	static float getQuickening();
 
 	// Methods 
 	void update();
