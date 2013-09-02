@@ -273,20 +273,20 @@ void Entity::draw()
 
 	MapObject::draw();
 
-	for(int i = 0; i < this->mRadarEffects.size(); i++)
-		this->mRadarEffects[i]->draw();
-
-	for(int i = 0; i < this->mTurretEffects.size(); i++)
-		this->mTurretEffects[i]->draw();
-
-	for(int i = 0; i < this->mWeaponEffects.size(); i++)
-		this->mWeaponEffects[i]->draw();
-
-	for(int i = 0; i < this->mFlashingLightEffects.size(); i++)
-		this->mFlashingLightEffects[i]->draw();
-
 	if(this->isVisible())
 	{
+		for(int i = 0; i < this->mRadarEffects.size(); i++)
+			this->mRadarEffects[i]->draw();
+
+		for(int i = 0; i < this->mTurretEffects.size(); i++)
+			this->mTurretEffects[i]->draw();
+
+		for(int i = 0; i < this->mWeaponEffects.size(); i++)
+			this->mWeaponEffects[i]->draw();
+
+		for(int i = 0; i < this->mFlashingLightEffects.size(); i++)
+			this->mFlashingLightEffects[i]->draw();
+
 		if(this->isSelected())
 		{
 			ToolsImage::drawBorderCircle(this, ENTITY_BORDER_SELECTED_COLOR, ENTITY_BORDER_SELECTED_SIZE, CIRCLE_SELECTED_SIZE);

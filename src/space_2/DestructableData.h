@@ -16,6 +16,9 @@ public:
 	std::string getWreckSprite();
 	void setWreckSprite(std::string p_sprite);
 
+	std::string getWreckEmberSprite();
+	void setWreckEmberSprite(std::string p_sprite);
+
 	std::string getShieldSprite();
 	void setShieldSprite(std::string p_sprite);
 
@@ -62,6 +65,7 @@ protected:
 	// Attributs
 	int mExplosionSize;
 	std::string mWreckSprite;
+	std::string mWreckEmberSprite;
 	std::string mShieldSprite;
 
 	double mShieldMax;

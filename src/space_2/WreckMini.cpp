@@ -10,8 +10,8 @@
 //*************************************************************
 #define SPRITE_BASE_PRE				"debris_"
 #define SPRITE_BASE_SUF				".png"
-#define SPRITE_EMBER_PRE			"debris_ember_"
-#define SPRITE_EMBER_SUF			".png"
+#define SPRITE_EMBER_PRE			"debris_"
+#define SPRITE_EMBER_SUF			"_ember.png"
 #define SPRITE_COUNT				6
 #define QUICKENING_MIN				75
 #define QUICKENING_MAX				125
@@ -23,6 +23,11 @@
 #define SHIELD						0
 #define ARMOR						0
 #define STRUCTURE					100
+#define EMBER_ALPHA_MIN				100
+#define EMBER_ALPHA_MAX				255
+#define EMBER_ALPHA_PROC_MIN		0.f		// sec
+#define EMBER_ALPHA_PROC_MAX		4.f		// sec
+#define EMBER_ALPHA_SPEED			60		// alpha per sec
 
 
 //*************************************************************
@@ -30,6 +35,8 @@
 //*************************************************************
 WreckMini::WreckMini( Wreck* p_parent )
 {
+	this->mEmberSprite = NULL;
+
 	this->setObjectType(MapObjectType::TypeWreckMini);
 	EntityManager::add(this);
 	Game::game->getMap()->getMapObjectSelector()->addMapObject(this);
@@ -96,12 +103,14 @@ WreckMini::WreckMini( Wreck* p_parent )
 	this->setRotationInfinite(true);
 	this->setRotationInfiniteRight(Tools::randomBool());
 	this->setRotationVelocity(Tools::random(ROTATION_VELOCITY_MIN, ROTATION_VELOCITY_MAX));
-	
+
 	this->mSpriteId = Tools::random(1, SPRITE_COUNT);
 }
 
 WreckMini::~WreckMini(void)
 {
+	if(this->mEmberSprite != NULL)
+		delete this->mEmberSprite;
 }
 
 
@@ -111,6 +120,7 @@ WreckMini::~WreckMini(void)
 void WreckMini::update()
 {
 	EntityMovable::update();
+	this->updateEmber();
 }
 
 void WreckMini::update( sf::Event p_event )
@@ -121,6 +131,41 @@ void WreckMini::update( sf::Event p_event )
 void WreckMini::updateSprite()
 {
 	EntityMovable::updateSprite();
+
+	sf::Vector2f objectPositionScreen = this->getScreenPosition();
+	if(this->mEmberSprite != NULL)
+		this->mEmberSprite->setPosition(objectPositionScreen.x, objectPositionScreen.y + this->getRocking());
+}
+
+void WreckMini::updateEmber()
+{
+	if(this->mEmberAlphaState == EmberAlphaState::Stopped && this->mEmberAlphaTickClock.getElapsedTimeAsSeconds() > this->mEmberAlphaNextTick)
+		this->mEmberAlphaState = EmberAlphaState::Down;
+
+	if(this->mEmberAlphaState == EmberAlphaState::Up)
+	{
+		this->mEmberAlpha += this->mEmberAlphaClock.getElapsedTimeAsSeconds() * EMBER_ALPHA_SPEED;
+		if(this->mEmberAlpha > EMBER_ALPHA_MAX)
+		{
+			this->mEmberAlpha = EMBER_ALPHA_MAX;
+			this->mEmberAlphaState = EmberAlphaState::Stopped;
+			this->mEmberAlphaTickClock.restart();
+			this->computeEmberAlphaNextTick();
+		}
+	}
+	else if(this->mEmberAlphaState == EmberAlphaState::Down)
+	{
+		this->mEmberAlpha -= this->mEmberAlphaClock.getElapsedTimeAsSeconds() * EMBER_ALPHA_SPEED;
+		if(this->mEmberAlpha < EMBER_ALPHA_MIN)
+		{
+			this->mEmberAlpha = EMBER_ALPHA_MIN;
+			this->mEmberAlphaState = EmberAlphaState::Up;
+		}
+	}
+
+	if(this->mEmberSprite != NULL)
+		this->mEmberSprite->setColor(sf::Color(255,255,255,this->mEmberAlpha));
+	this->mEmberAlphaClock.restart();
 }
 
 void WreckMini::loadSprite()
@@ -132,9 +177,50 @@ void WreckMini::loadSprite()
 		this->mObjectSprite = new sf::Sprite(*Resource::resource->getTexture(SPRITE_BASE_PRE + Tools::buildStringWithInt(this->mSpriteId) + SPRITE_BASE_SUF));
 		ToolsImage::setSpriteOriginCenter(this->mObjectSprite);
 	}
+
+	if(this->mEmberSprite == NULL)
+	{
+		this->mEmberSprite = new sf::Sprite(*Resource::resource->getTexture(SPRITE_EMBER_PRE + Tools::buildStringWithInt(this->mSpriteId) + SPRITE_EMBER_SUF));
+		ToolsImage::setSpriteOriginCenter(this->mEmberSprite);
+		
+		this->computeEmberAlphaNextTick();
+		this->mEmberAlpha = EMBER_ALPHA_MAX;
+		this->mEmberAlphaState = EmberAlphaState::Stopped;
+		this->mEmberSprite->setColor(sf::Color(255,255,255,this->mEmberAlpha));
+	}
+}
+
+void WreckMini::unloadSprite()
+{
+	EntityMovable::unloadSprite();
+
+	if(this->mEmberSprite != NULL)
+	{
+		delete this->mEmberSprite;
+		this->mEmberSprite = NULL;
+	}
+}
+
+void WreckMini::notifyRotationChanged()
+{
+	EntityMovable::notifyRotationChanged();
+	
+	if(this->mEmberSprite != NULL)
+		this->mEmberSprite->setRotation(this->getRotation());
 }
 
 void WreckMini::draw()
 {
 	EntityMovable::draw();
+
+	if(this->isVisible())
+	{
+		//if(this->mEmberSprite != NULL)
+		//	Resource::resource->getApp()->draw(*this->mEmberSprite);
+	}
+}
+
+void WreckMini::computeEmberAlphaNextTick()
+{
+	this->mEmberAlphaNextTick = Tools::random((float)EMBER_ALPHA_PROC_MIN, (float)EMBER_ALPHA_PROC_MAX);
 }

@@ -6,6 +6,7 @@
 //*************************************************************
 #define DESTRUCTABLEDATA_CONFIG_EXPLOSIONSIZE		"explosion_size"
 #define DESTRUCTABLEDATA_CONFIG_WRECKSPRITE			"sprite_wreck"
+#define CONFIG_WRECKEMBERSPRITE						"sprite_wreckember"
 #define CONFIG_SHIELDSPRITE							"sprite_shield"
 #define DESTRUCTABLEDATA_CONFIG_SHIELD				"shield"
 #define DESTRUCTABLEDATA_CONFIG_SHIELDREGEN			"shield_regen"
@@ -25,6 +26,7 @@ DestructableData::DestructableData(void)
 {
 	this->mExplosionSize = 1;
 	this->mWreckSprite = "";
+	this->mWreckEmberSprite = "";
 	this->mShieldSprite = "";
 	this->mShieldMax = 0;
 	this->mShieldRegen = 0;
@@ -66,6 +68,16 @@ std::string DestructableData::getWreckSprite()
 void DestructableData::setWreckSprite( std::string p_sprite )
 {
 	this->mWreckSprite = p_sprite;
+}
+
+std::string DestructableData::getWreckEmberSprite()
+{
+	return this->mWreckEmberSprite;
+}
+
+void DestructableData::setWreckEmberSprite( std::string p_sprite )
+{
+	this->mWreckEmberSprite = p_sprite;
 }
 
 std::string DestructableData::getShieldSprite()
@@ -219,6 +231,9 @@ void DestructableData::loadFromConfig( KeyValueFile* p_config )
 	if(p_config->has(DESTRUCTABLEDATA_CONFIG_WRECKSPRITE))
 		this->setWreckSprite(p_config->getString(DESTRUCTABLEDATA_CONFIG_WRECKSPRITE));
 
+	if(p_config->has(CONFIG_WRECKEMBERSPRITE))
+		this->setWreckEmberSprite(p_config->getString(CONFIG_WRECKEMBERSPRITE));
+
 	if(p_config->has(CONFIG_SHIELDSPRITE))
 		this->setShieldSprite(p_config->getString(CONFIG_SHIELDSPRITE));
 
@@ -255,6 +270,7 @@ void DestructableData::loadFromDestructableData( DestructableData* p_object )
 	this->setExplosionSize(p_object->getExplosionSize());
 	this->setShieldSprite(p_object->getShieldSprite());
 	this->setWreckSprite(p_object->getWreckSprite());
+	this->setWreckEmberSprite(p_object->getWreckEmberSprite());
 	this->setShieldMax(p_object->getShieldMax());
 	this->setShieldRegen(p_object->getShieldRegen());
 	this->setShieldResist(p_object->getShieldResist());
@@ -265,6 +281,7 @@ void DestructableData::loadFromDestructableData( DestructableData* p_object )
 	this->setStructureRegen(p_object->getStructureRegen());
 	this->setStructureResist(p_object->getStructureResist());
 }
+
 
 
 

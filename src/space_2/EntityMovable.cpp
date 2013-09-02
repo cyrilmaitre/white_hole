@@ -164,8 +164,11 @@ void EntityMovable::update( sf::Event p_event )
 
 void EntityMovable::draw()
 {
-	for(int i = 0; i < this->mReactors.size(); i++)
-		this->mReactors[i]->draw();
+	if(this->isVisible())
+	{
+		for(int i = 0; i < this->mReactors.size(); i++)
+			this->mReactors[i]->draw();
+	}
 
 	Entity::draw();
 }

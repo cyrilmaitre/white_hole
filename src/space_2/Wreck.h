@@ -17,6 +17,14 @@ class WreckMini;
 class Wreck : public Entity, public Containerable
 {
 public:
+	// Enum
+	enum EmberAlphaState
+	{
+		Stopped,
+		Up,
+		Down
+	};
+
 	// Constructor - Destructor
 	Wreck(Entity* p_entity);
 	void init();
@@ -34,22 +42,37 @@ public:
 	// Methods
 	void update();
 	void update(sf::Event p_event);
+	void updateEmber();
+	void updateSprite();
 	void updateWreckMini();
 	void updateWreckMini(sf::Event p_event);
 	void draw();
 	void loadSprite();
+	void unloadSprite();
 	void loadFromNpc(Npc* p_npc);
 	void loadFromEntity(Entity* p_entity);
 	void loadFromNpcShip(NpcShip* p_npcShip);
 	void loadFromStation(Station* p_station);
+	void notifyRotationChanged();
+
 
 private:
 	// Attributs
 	std::string mName;
 	long mCredit;
 
+	sf::Sprite* mEmberSprite;
+	float mEmberAlpha;
+	float mEmberAlphaNextTick;
+	EmberAlphaState mEmberAlphaState;
+	mks::Clock mEmberAlphaClock;
+	mks::Clock mEmberAlphaTickClock;
+
 	std::vector<WreckMini*> mWreckMini;
 	mks::Clock mWreckMiniClock;
 	bool mWreckMiniTriggered;
+
+	// Methods
+	void computeEmberAlphaNextTick();
 };
 
