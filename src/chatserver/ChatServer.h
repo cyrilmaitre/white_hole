@@ -48,6 +48,9 @@ public:
 	bool sendPacket(sf::Packet& p_packet, std::shared_ptr<Client> p_client, bool dropClientIfFailed = false);
 	void broadcast(sf::Packet& p_packet, BroadcastCondition& p_broadcastCond);
 	void disconnect(void);
+	
+	std::shared_ptr<Client> findClientByName(std::string p_name);
+	std::shared_ptr<Client> findClientByUID(sf::Uint64 p_uid);
 
 private:
 	sf::SocketSelector selector;

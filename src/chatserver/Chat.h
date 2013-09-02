@@ -46,6 +46,11 @@ enum ServerCommand
 	S_SAY,
 	S_MUTE,
 	S_PING,
+	S_CHAT_PEER_OFFLINE,
+	S_CHAT_PEER_AFK,
+	S_FRIEND_ADD,
+	S_AFK_ON,
+	S_AFK_OFF
 };
 
 // Commands sent by the client (ex: quit)
@@ -57,6 +62,8 @@ enum ClientCommand
 	C_BUSY,
 	C_LOOKING_FOR_TRADE,
 	C_PONG,
+	C_FRIEND_ADD,
+	C_FRIEND_DEL
 };
 
 

@@ -232,7 +232,7 @@ void ChatClient::mRunClient(void)
 			unsigned int max_retry = 50;
 			unsigned int attempt = 0;
 			while(true) {
-				{ std::ostringstream msg; msg << "Attempt " << attempt << "/" << max_retry << ""; Debug::msg(msg); }
+				{ std::ostringstream msg; msg << "Attempt " << attempt+1 << "/" << max_retry << ""; Debug::msg(msg); }
 				status = mSocket.connect(mServerIP, mServerPort);
 				if(status == sf::Socket::Status::Done)
 					break;
@@ -242,7 +242,7 @@ void ChatClient::mRunClient(void)
 					break;
 				}
 
-				sf::sleep(sf::milliseconds(100));	// for CPU
+				sf::sleep(sf::seconds(5));	// for CPU
 			}
 
 	}
@@ -260,10 +260,11 @@ void ChatClient::mRunClient(void)
 		this->pushInputBuffer(msg2);
 
 		// Flood testing
+		/*
 		for(unsigned int i = 0; i < 300; i++) {
 			this->pushInputBuffer(msg3);
 		}
-		
+		*/
 
 		sf::Packet packet;
 		while(this->isRunning())

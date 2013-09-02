@@ -35,6 +35,27 @@ std::string Chat::serverCmdToString(sf::Uint16 p_command)
 	case ServerCommand::S_PING:
 		return "PING";
 		break;
+
+	case ServerCommand::S_CHAT_PEER_OFFLINE:
+		return "RECIPIENT OFFLINE";
+		break;
+
+	case ServerCommand::S_CHAT_PEER_AFK:
+		return "RECIPIENT AFK";
+		break;
+
+	case ServerCommand::S_FRIEND_ADD:
+		return "FRIEND INVITATION RECEIVED";
+		break;
+
+	case ServerCommand::S_AFK_ON:
+		return "AFK MODE ENABLED";
+		break;
+
+	case ServerCommand::S_AFK_OFF:
+		return "AFK MODE DISABLED";
+		break;
+
 	}
 
 	return "UNKNOWN";

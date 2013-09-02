@@ -134,7 +134,7 @@ sf::Uint64 Client::getNbSentPackets()
 // - test if client has an attribute
 bool Client::hasAttribute(ClientAttributes p_attribute)
 {
-	return false;
+	return (this->getAttributes() & p_attribute);
 }
 
 // - add an attribute to the client
@@ -146,7 +146,7 @@ void Client::addAttribute(ClientAttributes p_attribute)
 // - remove an attr to the client
 void Client::removeAttribute(ClientAttributes p_attribute)
 {
-	this->setAttributes(this->getAttributes() & ~ p_attribute);
+	this->setAttributes(this->getAttributes() ^ p_attribute);
 }
 // </attributes>
 
