@@ -20,8 +20,13 @@
 #define EMBER_ALPHA_MIN				100
 #define EMBER_ALPHA_MAX				255
 #define EMBER_ALPHA_PROC_MIN		0.f		// sec
-#define EMBER_ALPHA_PROC_MAX		4.f		// sec
+#define EMBER_ALPHA_PROC_MAX		7.5		// sec
 #define EMBER_ALPHA_SPEED			60		// alpha per sec
+#define ELEC_ALPHA_MIN				0
+#define ELEC_ALPHA_MAX				255
+#define ELEC_ALPHA_PROC_MIN			0.f		// sec
+#define ELEC_ALPHA_PROC_MAX			8.f		// sec
+#define ELEC_ALPHA_SPEED			1750	// alpha per sec
 
 
 //*************************************************************
@@ -44,6 +49,7 @@ Wreck::Wreck( Entity* p_entity )
 void Wreck::init()
 {
 	this->mEmberSprite = NULL;
+	this->mElecSprite = NULL;
 
 	this->setRotationInfinite(true);
 	this->setRotationInfiniteRight(Tools::randomBool());
@@ -74,6 +80,9 @@ Wreck::~Wreck(void)
 
 	if(this->mEmberSprite != NULL)
 		delete this->mEmberSprite;
+
+	if(this->mElecSprite != NULL)
+		delete this->mElecSprite;
 }
 
 
@@ -122,32 +131,64 @@ void Wreck::update()
 		this->mWreckMiniTriggered = true;
 	}
 	this->updateEmber();
+	this->updateElec();
 	this->updateWreckMini();
+}
+
+void Wreck::updateElec()
+{
+	if(this->mElecAlphaState == AlphaState::Stopped && this->mElecAlphaTickClock.getElapsedTimeAsSeconds() > this->mElecAlphaNextTick)
+		this->mElecAlphaState = AlphaState::Up;
+
+	if(this->mElecAlphaState == AlphaState::Up)
+	{
+		this->mElecAlpha += this->mElecAlphaClock.getElapsedTimeAsSeconds() * ELEC_ALPHA_SPEED;
+		if(this->mElecAlpha > ELEC_ALPHA_MAX)
+		{
+			this->mElecAlpha = ELEC_ALPHA_MAX;
+			this->mElecAlphaState = AlphaState::Down;
+		}
+	}
+	else if(this->mElecAlphaState == AlphaState::Down)
+	{
+		this->mElecAlpha -= this->mElecAlphaClock.getElapsedTimeAsSeconds() * ELEC_ALPHA_SPEED;
+		if(this->mElecAlpha < ELEC_ALPHA_MIN)
+		{
+			this->mElecAlpha = ELEC_ALPHA_MIN;
+			this->mElecAlphaState = AlphaState::Stopped;
+			this->mElecAlphaTickClock.restart();
+			this->computeElecAlphaNextTick();
+		}
+	}
+
+	if(this->mElecSprite != NULL)
+		this->mElecSprite->setColor(sf::Color(255,255,255,this->mElecAlpha));
+	this->mElecAlphaClock.restart();
 }
 
 void Wreck::updateEmber()
 {
-	if(this->mEmberAlphaState == EmberAlphaState::Stopped && this->mEmberAlphaTickClock.getElapsedTimeAsSeconds() > this->mEmberAlphaNextTick)
-		this->mEmberAlphaState = EmberAlphaState::Down;
+	if(this->mEmberAlphaState == AlphaState::Stopped && this->mEmberAlphaTickClock.getElapsedTimeAsSeconds() > this->mEmberAlphaNextTick)
+		this->mEmberAlphaState = AlphaState::Down;
 
-	if(this->mEmberAlphaState == EmberAlphaState::Up)
+	if(this->mEmberAlphaState == AlphaState::Up)
 	{
 		this->mEmberAlpha += this->mEmberAlphaClock.getElapsedTimeAsSeconds() * EMBER_ALPHA_SPEED;
 		if(this->mEmberAlpha > EMBER_ALPHA_MAX)
 		{
 			this->mEmberAlpha = EMBER_ALPHA_MAX;
-			this->mEmberAlphaState = EmberAlphaState::Stopped;
+			this->mEmberAlphaState = AlphaState::Stopped;
 			this->mEmberAlphaTickClock.restart();
 			this->computeEmberAlphaNextTick();
 		}
 	}
-	else if(this->mEmberAlphaState == EmberAlphaState::Down)
+	else if(this->mEmberAlphaState == AlphaState::Down)
 	{
 		this->mEmberAlpha -= this->mEmberAlphaClock.getElapsedTimeAsSeconds() * EMBER_ALPHA_SPEED;
 		if(this->mEmberAlpha < EMBER_ALPHA_MIN)
 		{
 			this->mEmberAlpha = EMBER_ALPHA_MIN;
-			this->mEmberAlphaState = EmberAlphaState::Up;
+			this->mEmberAlphaState = AlphaState::Up;
 		}
 	}
 
@@ -163,6 +204,9 @@ void Wreck::updateSprite()
 	sf::Vector2f objectPositionScreen = this->getScreenPosition();
 	if(this->mEmberSprite != NULL)
 		this->mEmberSprite->setPosition(objectPositionScreen.x, objectPositionScreen.y + this->getRocking());
+
+	if(this->mElecSprite != NULL)
+		this->mElecSprite->setPosition(objectPositionScreen.x, objectPositionScreen.y + this->getRocking());
 }
 
 void Wreck::update( sf::Event p_event )
@@ -208,6 +252,9 @@ void Wreck::draw()
 	{
 		if(this->mEmberSprite != NULL)
 			Resource::resource->getApp()->draw(*this->mEmberSprite);
+
+		if(this->mElecSprite != NULL)
+			Resource::resource->getApp()->draw(*this->mElecSprite);
 	}
 
 	for(int i = 0; i < this->mWreckMini.size(); i++)
@@ -228,8 +275,19 @@ void Wreck::loadSprite()
 
 		this->computeEmberAlphaNextTick();
 		this->mEmberAlpha = EMBER_ALPHA_MAX;
-		this->mEmberAlphaState = EmberAlphaState::Stopped;
+		this->mEmberAlphaState = AlphaState::Stopped;
 		this->mEmberSprite->setColor(sf::Color(255,255,255,this->mEmberAlpha));
+	}
+
+	if(this->mElecSprite == NULL)
+	{
+		this->mElecSprite = new sf::Sprite(*Resource::resource->getTexture(this->getWreckElecSprite()));
+		ToolsImage::setSpriteOriginCenter(this->mElecSprite);
+
+		this->computeElecAlphaNextTick();
+		this->mElecAlpha = ELEC_ALPHA_MIN;
+		this->mElecAlphaState = AlphaState::Stopped;
+		this->mElecSprite->setColor(sf::Color(255,255,255,this->mElecAlpha));
 	}
 
 	this->updateSprite();
@@ -243,6 +301,12 @@ void Wreck::unloadSprite()
 	{
 		delete this->mEmberSprite;
 		this->mEmberSprite = NULL;
+	}
+
+	if(this->mElecSprite != NULL)
+	{
+		delete this->mElecSprite;
+		this->mElecSprite = NULL;
 	}
 }
 
@@ -267,6 +331,7 @@ void Wreck::loadFromEntity( Entity* p_entity )
 	this->setRotation(p_entity->getRotation());
 	this->setWreckSprite(p_entity->getWreckSprite());
 	this->setWreckEmberSprite(p_entity->getWreckEmberSprite());
+	this->setWreckElecSprite(p_entity->getWreckElecSprite());
 
 	this->loadSprite();
 }
@@ -292,12 +357,20 @@ void Wreck::computeEmberAlphaNextTick()
 	this->mEmberAlphaNextTick = Tools::random((float)EMBER_ALPHA_PROC_MIN, (float)EMBER_ALPHA_PROC_MAX);
 }
 
+void Wreck::computeElecAlphaNextTick()
+{
+	this->mElecAlphaNextTick = Tools::random((float)ELEC_ALPHA_PROC_MIN, (float)ELEC_ALPHA_PROC_MAX);
+}
+
 void Wreck::notifyRotationChanged()
 {
 	Entity::notifyRotationChanged();
 
 	if(this->mEmberSprite != NULL)
 		this->mEmberSprite->setRotation(this->getRotation());
+
+	if(this->mElecSprite != NULL)
+		this->mElecSprite->setRotation(this->getRotation());
 }
 
 

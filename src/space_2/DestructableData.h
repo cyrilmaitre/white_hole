@@ -10,14 +10,14 @@ public:
 	~DestructableData(void);
 
 	// Getters - Setters
-	int getExplosionSize();
-	void setExplosionSize(int p_size);
-
 	std::string getWreckSprite();
 	void setWreckSprite(std::string p_sprite);
 
 	std::string getWreckEmberSprite();
 	void setWreckEmberSprite(std::string p_sprite);
+
+	std::string getWreckElecSprite();
+	void setWreckElecSprite(std::string p_sprite);
 
 	std::string getShieldSprite();
 	void setShieldSprite(std::string p_sprite);
@@ -63,9 +63,9 @@ public:
 
 protected:
 	// Attributs
-	int mExplosionSize;
 	std::string mWreckSprite;
 	std::string mWreckEmberSprite;
+	std::string mWreckElecSprite;
 	std::string mShieldSprite;
 
 	double mShieldMax;

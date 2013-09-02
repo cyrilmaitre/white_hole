@@ -5,7 +5,6 @@ scale_min = 1
 scale_max = 1
 sprite = station_17.png
 sprite_wreck = shipWreck_clockwork_01.png
-explosion_size = 2
 shield = 0
 shield_regen = 0
 shield_resist = 0

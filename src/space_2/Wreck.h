@@ -18,7 +18,7 @@ class Wreck : public Entity, public Containerable
 {
 public:
 	// Enum
-	enum EmberAlphaState
+	enum AlphaState
 	{
 		Stopped,
 		Up,
@@ -43,6 +43,7 @@ public:
 	void update();
 	void update(sf::Event p_event);
 	void updateEmber();
+	void updateElec();
 	void updateSprite();
 	void updateWreckMini();
 	void updateWreckMini(sf::Event p_event);
@@ -64,9 +65,16 @@ private:
 	sf::Sprite* mEmberSprite;
 	float mEmberAlpha;
 	float mEmberAlphaNextTick;
-	EmberAlphaState mEmberAlphaState;
+	AlphaState mEmberAlphaState;
 	mks::Clock mEmberAlphaClock;
 	mks::Clock mEmberAlphaTickClock;
+
+	sf::Sprite* mElecSprite;
+	float mElecAlpha;
+	float mElecAlphaNextTick;
+	AlphaState mElecAlphaState;
+	mks::Clock mElecAlphaClock;
+	mks::Clock mElecAlphaTickClock;
 
 	std::vector<WreckMini*> mWreckMini;
 	mks::Clock mWreckMiniClock;
@@ -74,5 +82,6 @@ private:
 
 	// Methods
 	void computeEmberAlphaNextTick();
+	void computeElecAlphaNextTick();
 };
 
