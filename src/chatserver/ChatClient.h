@@ -6,6 +6,24 @@
 typedef std::vector<std::shared_ptr<Message>> InputBuffer;
 typedef std::vector<std::shared_ptr<Message>> OutputBuffer;
 
+enum ChatEventCode {
+	CE_NONE,
+	CE_CONNECTION_OK,
+	CE_CONNECTION_FAILED,
+	CE_RECONNECTION,
+	CE_RECONNECTION_FAILED,
+	CE_DISCONNECTED,
+};
+
+struct ChatEvent {
+	ChatEvent(ChatEventCode code = ChatEventCode::CE_NONE, std::string optionalString = "")
+	: code(code), optionalString(optionalString)
+	{}
+
+	sf::Uint16	code;
+	std::string optionalString;
+};
+
 class ChatClient
 {
 public:

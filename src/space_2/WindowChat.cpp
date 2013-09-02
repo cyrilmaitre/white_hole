@@ -48,10 +48,57 @@ void WindowChat::update(sf::Event p_event)
 {
 	if(p_event.type == sf::Event::KeyPressed && p_event.key.code == sf::Keyboard::Return)
 	{
-		if(txtfield.getValue().length() > 0)
+		if(txtfield.getValue().size() > 0)
 		{
-			std::shared_ptr<C2S_Chat> c2s_chat(new C2S_Chat(txtfield.getValue(), "INTERNATIONAL", ChatDstType::CHANNEL));
-			Resource::resource->getChatClient()->pushInputBuffer(c2s_chat);
+			std::string userInput(txtfield.getValue());
+
+			// if this is a command
+			if(userInput[0] == '/')
+			{
+				if(userInput.size() > 1)
+				{
+					// get all arguments
+					std::vector<std::string> result;
+					std::istringstream iss(userInput.substr(1)); // userInput without first character
+
+					for (std::string token; std::getline(iss, token, ' '); )
+					{
+						result.push_back(std::move(token));
+					}
+
+					// the first one is the command
+					// /help
+					if(result[0].compare("help") == 0) {
+						this->pushChat("> Available commands: /help, /afk, /w <user> <message>, /f+ <user>, /f- <user>");
+					}
+					// /afk
+					else if(result[0].compare("afk") == 0) {
+						std::shared_ptr<C2S_Command> c2s_command(new C2S_Command(ClientCommand::C_AFK));
+						Resource::resource->getChatClient()->pushInputBuffer(c2s_command);
+					}
+					// /w
+					else if(result[0].compare("w") == 0) {
+					}
+					// /f+
+					else if(result[0].compare("f+") == 0) {
+					}
+					// f-
+					else if(result[0].compare("f-") == 0) {
+					}
+					// unknow command
+					else {
+						this->pushChat("> Unknow command. Use /help for more informations");
+					}
+				}
+			}
+			// else, this is a chat message
+			else
+			{
+				this->pushChat("<ME> "+userInput);
+				std::shared_ptr<C2S_Chat> c2s_chat(new C2S_Chat(userInput, "INTERNATIONAL", ChatDstType::CHANNEL));
+				Resource::resource->getChatClient()->pushInputBuffer(c2s_chat);
+			}
+
 			txtfield.setValue("");
 		}
 	}

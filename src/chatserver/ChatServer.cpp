@@ -490,12 +490,48 @@ void ChatServer::handlePacket(sf::Packet& p_packet, std::shared_ptr<Client> p_cl
 
 					packet << s2c_chat;
 
+					// CHANNEL message
 					// Let's broadcast the message to all authed users
-					BroadcastCondition bc;
-					bc.ignoreClientID = p_client->getUniqueID();
-					bc.clientState = ClientState::AUTHED;
+					if(s2c_chat.dstType == ChatDstType::CHANNEL)
+					{
+						BroadcastCondition bc;
+						bc.ignoreClientID = p_client->getUniqueID();
+						bc.clientState = ClientState::AUTHED;
 
-					this->broadcast(packet, bc);
+						this->broadcast(packet, bc);
+					}
+					// PRIVATE message
+					else if(s2c_chat.dstType == ChatDstType::USER)
+					{
+						// if sender != receiver (you can't send a msg to yourself !)
+						if(p_client->getName().compare(s2c_chat.to) != 0)
+						{
+							std::shared_ptr<Client> dstClient = this->findClientByName(s2c_chat.to);
+
+							// if client has been found
+							if(dstClient.get() != 0)
+							{
+								// if client is not AFK
+								if(!dstClient->hasAttribute(ClientAttributes::ATTR_AFK))
+								{
+									this->sendPacket(packet, dstClient);
+								}
+								else {
+									S2C_Command s2c_command(ServerCommand::S_CHAT_PEER_AFK, s2c_chat.to);
+									sf::Packet peerAFKPacket;
+									peerAFKPacket << s2c_command;
+									this->sendPacket(peerAFKPacket, p_client);
+								}
+							}
+							else
+							{
+								S2C_Command s2c_command(ServerCommand::S_CHAT_PEER_OFFLINE, s2c_chat.to);
+								sf::Packet peerOfflinePacket;
+								peerOfflinePacket << s2c_command;
+								this->sendPacket(peerOfflinePacket, p_client);
+							}
+						}
+					}
 				}
 				else
 				{
@@ -524,29 +560,45 @@ void ChatServer::handlePacket(sf::Packet& p_packet, std::shared_ptr<Client> p_cl
 						}
 						break;
 
+						// AFK
+					case ClientCommand::C_AFK:
+						{
+							{ std::ostringstream msg; msg << "WUT WUT 1111111111 >> " << p_client->getAttributes();	Debug::msg(msg); }
+
+							// if already afk, disable AFK mode
+							if(p_client->hasAttribute(ClientAttributes::ATTR_AFK)) {
+
+								{ std::ostringstream msg; msg << "WUT WUT 33333 >> " << p_client->getAttributes();	Debug::msg(msg); }
+								p_client->removeAttribute(ClientAttributes::ATTR_AFK);
+
+								S2C_Command s2_command(ServerCommand::S_AFK_OFF);
+								sf::Packet packet;
+								packet << s2_command;
+
+								this->sendPacket(packet, p_client);
+							}
+							// else, enable AFK mode
+							else {
+								{ std::ostringstream msg; msg << "WUT 4444  >> " << p_client->getAttributes();	Debug::msg(msg); }
+								p_client->addAttribute(ClientAttributes::ATTR_AFK);
+								
+								S2C_Command s2c_command(ServerCommand::S_AFK_ON);
+								sf::Packet packet;
+								packet << s2c_command;
+
+								this->sendPacket(packet, p_client);
+							}
+
+							{ std::ostringstream msg; msg << "WUT WUT 222222222 >> " << p_client->getAttributes();	Debug::msg(msg); }
+						}
+						break;
+
 						// QUIT
 					case ClientCommand::C_QUIT:
 						{
 							// drop the client since he wants to leave
-							// this->dropClient(p_client);
+							this->dropClient(p_client);
 
-							// argument of the cmd (basically the nickname of the leaver)
-							std::string argument;
-							argument += p_client->getName();
-							argument += "@";
-							argument += p_client->getSocket().getRemoteAddress().toString();
-							S2C_Command s2c_command(ServerCommand::S_QUIT, argument);
-
-							// packet to broadcast
-							sf::Packet packet;
-							packet << s2c_command;
-
-							// lets notify all cflients that this one has left
-							BroadcastCondition bc;
-							bc.ignoreClientID = p_client->getUniqueID();
-							bc.clientState = ClientState::AUTHED;
-
-							this->broadcast(packet, bc);
 						}
 						break;
 
@@ -579,4 +631,39 @@ void ChatServer::handlePacket(sf::Packet& p_packet, std::shared_ptr<Client> p_cl
 		}		
 		break;
 	}
+}
+
+
+std::shared_ptr<Client> ChatServer::findClientByName(std::string p_name)
+{
+	std::shared_ptr<Client> foundClient;
+	for(auto it = clients.begin(); it != clients.end(); ++it)
+	{
+		// CLIENT
+		std::shared_ptr<Client> currentClient = *it;
+		if(currentClient->getState() == ClientState::AUTHED && currentClient->getName().compare(p_name) == 0)
+		{
+			foundClient = currentClient;
+			break;
+		}
+	}
+
+	return foundClient;
+}
+
+std::shared_ptr<Client> ChatServer::findClientByUID(sf::Uint64 p_uid)
+{
+	std::shared_ptr<Client> foundClient;
+	for(auto it = clients.begin(); it != clients.end(); ++it)
+	{
+		// CLIENT
+		std::shared_ptr<Client> currentClient = *it;
+		if(currentClient->getState() == ClientState::AUTHED && currentClient->getUniqueID() == p_uid)
+		{
+			foundClient = currentClient;
+			break;
+		}
+	}
+
+	return foundClient;
 }
