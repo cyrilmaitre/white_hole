@@ -28,7 +28,7 @@
 //*************************************************************
 // Constructor - Destructor
 //*************************************************************
-WreckMini::WreckMini( Wreck* p_parent )
+WreckMini::WreckMini( Wreck* p_parent, float p_velocityFactor )
 {
 	this->setObjectType(MapObjectType::TypeWreckMini);
 	EntityManager::add(this);
@@ -38,55 +38,57 @@ WreckMini::WreckMini( Wreck* p_parent )
 	this->setArmorMax(ARMOR);
 	this->setStructureMax(STRUCTURE);
 
-	this->setVelocityMax(VELOCITY_MAX);
+	int velocityMin = VELOCITY_MIN * p_velocityFactor;
+	int velocityMax = VELOCITY_MAX * p_velocityFactor;
+	this->setVelocityMax(velocityMax);
 	int vectorDirection = Tools::random(0, 7);
 	if(vectorDirection == 0)	/// North
 	{
-		this->setVelocityAt(Movable::MovableCardinality::NorthWest, Tools::random(VELOCITY_MIN, VELOCITY_MAX));
-		this->setVelocityAt(Movable::MovableCardinality::North, Tools::random(VELOCITY_MIN, VELOCITY_MAX));
-		this->setVelocityAt(Movable::MovableCardinality::NorthEast, Tools::random(VELOCITY_MIN, VELOCITY_MAX));
+		this->setVelocityAt(Movable::MovableCardinality::NorthWest, Tools::random(0, velocityMax));
+		this->setVelocityAt(Movable::MovableCardinality::North, Tools::random(velocityMin, velocityMax));
+		this->setVelocityAt(Movable::MovableCardinality::NorthEast, Tools::random(0, velocityMax));
 	}
 	else if(vectorDirection == 1)	// North-East
 	{
-		this->setVelocityAt(Movable::MovableCardinality::North, Tools::random(VELOCITY_MIN, VELOCITY_MAX));
-		this->setVelocityAt(Movable::MovableCardinality::NorthEast, Tools::random(VELOCITY_MIN, VELOCITY_MAX));
-		this->setVelocityAt(Movable::MovableCardinality::East, Tools::random(VELOCITY_MIN, VELOCITY_MAX));
+		this->setVelocityAt(Movable::MovableCardinality::North, Tools::random(0, velocityMax));
+		this->setVelocityAt(Movable::MovableCardinality::NorthEast, Tools::random(velocityMin, velocityMax));
+		this->setVelocityAt(Movable::MovableCardinality::East, Tools::random(0, velocityMax));
 	}
 	else if(vectorDirection == 2)	// East
 	{
-		this->setVelocityAt(Movable::MovableCardinality::NorthEast, Tools::random(VELOCITY_MIN, VELOCITY_MAX));
-		this->setVelocityAt(Movable::MovableCardinality::East, Tools::random(VELOCITY_MIN, VELOCITY_MAX));
-		this->setVelocityAt(Movable::MovableCardinality::SouthEast, Tools::random(VELOCITY_MIN, VELOCITY_MAX));
+		this->setVelocityAt(Movable::MovableCardinality::NorthEast, Tools::random(0, velocityMax));
+		this->setVelocityAt(Movable::MovableCardinality::East, Tools::random(velocityMin, velocityMax));
+		this->setVelocityAt(Movable::MovableCardinality::SouthEast, Tools::random(0, velocityMax));
 	}
 	else if(vectorDirection == 3)	// South-East
 	{
-		this->setVelocityAt(Movable::MovableCardinality::East, Tools::random(VELOCITY_MIN, VELOCITY_MAX));
-		this->setVelocityAt(Movable::MovableCardinality::SouthEast, Tools::random(VELOCITY_MIN, VELOCITY_MAX));
-		this->setVelocityAt(Movable::MovableCardinality::South, Tools::random(VELOCITY_MIN, VELOCITY_MAX));
+		this->setVelocityAt(Movable::MovableCardinality::East, Tools::random(0, velocityMax));
+		this->setVelocityAt(Movable::MovableCardinality::SouthEast, Tools::random(velocityMin, velocityMax));
+		this->setVelocityAt(Movable::MovableCardinality::South, Tools::random(0, velocityMax));
 	}
 	else if(vectorDirection == 4)	// South
 	{
-		this->setVelocityAt(Movable::MovableCardinality::SouthEast, Tools::random(VELOCITY_MIN, VELOCITY_MAX));
-		this->setVelocityAt(Movable::MovableCardinality::South, Tools::random(VELOCITY_MIN, VELOCITY_MAX));
-		this->setVelocityAt(Movable::MovableCardinality::SouthWest, Tools::random(VELOCITY_MIN, VELOCITY_MAX));
+		this->setVelocityAt(Movable::MovableCardinality::SouthEast, Tools::random(0, velocityMax));
+		this->setVelocityAt(Movable::MovableCardinality::South, Tools::random(velocityMin, velocityMax));
+		this->setVelocityAt(Movable::MovableCardinality::SouthWest, Tools::random(0, velocityMax));
 	}
 	else if(vectorDirection == 5)	// South-West
 	{
-		this->setVelocityAt(Movable::MovableCardinality::South, Tools::random(VELOCITY_MIN, VELOCITY_MAX));
-		this->setVelocityAt(Movable::MovableCardinality::SouthWest, Tools::random(VELOCITY_MIN, VELOCITY_MAX));
-		this->setVelocityAt(Movable::MovableCardinality::West, Tools::random(VELOCITY_MIN, VELOCITY_MAX));
+		this->setVelocityAt(Movable::MovableCardinality::South, Tools::random(0, velocityMax));
+		this->setVelocityAt(Movable::MovableCardinality::SouthWest, Tools::random(velocityMin, velocityMax));
+		this->setVelocityAt(Movable::MovableCardinality::West, Tools::random(0, velocityMax));
 	}
 	else if(vectorDirection == 6)	// West
 	{
-		this->setVelocityAt(Movable::MovableCardinality::SouthWest, Tools::random(VELOCITY_MIN, VELOCITY_MAX));
-		this->setVelocityAt(Movable::MovableCardinality::West, Tools::random(VELOCITY_MIN, VELOCITY_MAX));
-		this->setVelocityAt(Movable::MovableCardinality::NorthWest, Tools::random(VELOCITY_MIN, VELOCITY_MAX));
+		this->setVelocityAt(Movable::MovableCardinality::SouthWest, Tools::random(0, velocityMax));
+		this->setVelocityAt(Movable::MovableCardinality::West, Tools::random(velocityMin, velocityMax));
+		this->setVelocityAt(Movable::MovableCardinality::NorthWest, Tools::random(0, velocityMax));
 	}
 	else	// North-West
 	{
-		this->setVelocityAt(Movable::MovableCardinality::West, Tools::random(VELOCITY_MIN, VELOCITY_MAX));
-		this->setVelocityAt(Movable::MovableCardinality::NorthWest, Tools::random(VELOCITY_MIN, VELOCITY_MAX));
-		this->setVelocityAt(Movable::MovableCardinality::North, Tools::random(VELOCITY_MIN, VELOCITY_MAX));
+		this->setVelocityAt(Movable::MovableCardinality::West, Tools::random(0, velocityMax));
+		this->setVelocityAt(Movable::MovableCardinality::NorthWest, Tools::random(velocityMin, velocityMax));
+		this->setVelocityAt(Movable::MovableCardinality::North, Tools::random(0, velocityMax));
 	}
 
 	this->setRockingActived(false);

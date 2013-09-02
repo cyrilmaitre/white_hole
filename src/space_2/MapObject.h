@@ -164,6 +164,9 @@ public:
 	bool isSpriteLoaded();
 	sf::Sprite* getObjectSprite();
 	bool hasObjectSprite();
+	int getObjectSpriteWidth();
+	int getObjectSpriteHeight();
+	int getObjectSpriteRadius();
 	SpriteParameter* getObjectSpriteParameter();
 	bool hasObjectSpriteParameter();
 

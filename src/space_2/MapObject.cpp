@@ -273,6 +273,27 @@ bool MapObject::hasObjectSprite()
 	return this->mObjectSprite != NULL;
 }
 
+int MapObject::getObjectSpriteWidth()
+{
+	if(this->mObjectSprite != NULL)
+		return this->mObjectSprite->getLocalBounds().width;
+	else 
+		return 0;
+}
+
+int MapObject::getObjectSpriteHeight()
+{
+	if(this->mObjectSprite != NULL)
+		return this->mObjectSprite->getLocalBounds().height;
+	else 
+		return 0;
+}
+
+int MapObject::getObjectSpriteRadius()
+{
+	return this->getObjectSpriteWidth() > this->getObjectSpriteHeight() ? this->getObjectSpriteWidth() : this->getObjectSpriteHeight();
+}
+
 SpriteParameter* MapObject::getObjectSpriteParameter()
 {
 	return this->mObjectSpriteParameter;
@@ -713,6 +734,8 @@ void MapObject::init()
 	MapObject::mPlaneRatio[MAPOBJECT_PLANE_20]		= (float)MAPOBJECT_PLANE_20_RATIO;
 	MapObject::mPlaneRatio[MAPOBJECT_PLANE_21]		= (float)MAPOBJECT_PLANE_21_RATIO;
 }
+
+
 
 
 

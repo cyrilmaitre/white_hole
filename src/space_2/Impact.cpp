@@ -19,8 +19,8 @@ Impact::Impact( Entity* p_target, float p_scale )
 	this->mScale = 1;
 	this->setScale(p_scale);
 	this->mLiveTime = 0;
-	this->mOffsetX = Tools::random(-p_target->getHitBox().width / 2, p_target->getHitBox().width / 2);
-	this->mOffsetY = Tools::random(-p_target->getHitBox().height / 2, p_target->getHitBox().height / 2);
+	this->mOffsetX = Tools::random(0, (int)p_target->getHitBox().width) - (p_target->getHitBox().width / 2);
+	this->mOffsetY = Tools::random(0, (int)p_target->getHitBox().height) - (p_target->getHitBox().height / 2);
 }
 
 Impact::~Impact(void)
