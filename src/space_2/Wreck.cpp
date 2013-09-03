@@ -11,9 +11,10 @@
 //*************************************************************
 // Constructor - Destructor
 //*************************************************************
-#define WRECKMINI_DENSITY_REF		64	// px²
-#define WRECKMINI_DENSITY_MIN		2	// Per 64px²
-#define WRECKMINI_DENSITY_MAX		4	// Per 64 px²
+#define WRECKMINI_DENSITY_REF		10000	// px²
+#define WRECKMINI_DENSITY_MIN		1		// Per 10000 px²
+#define WRECKMINI_DENSITY_MAX		2		// Per 10000 px²
+#define WRECKMINI_COUNT_MAX			25		
 #define ROTATION_VELOCITY_MIN		0.1
 #define ROTATION_VELOCITY_MAX		0.5
 #define EMBER_ALPHA_MIN				100
@@ -123,8 +124,10 @@ void Wreck::update()
 
 	if(this->mWreckMiniClock.getElapsedTimeAsSeconds() > SHOCKWAVE_PHASE_BEGIN && !this->mWreckMiniTriggered)
 	{
-		int area = ceil((float)this->getRadius() / WRECKMINI_DENSITY_REF);
+		int area = ceil((float)(this->getHitBox().width * this->getHitBox().height) / (float)WRECKMINI_DENSITY_REF);
 		int numberOfWreckMini = Tools::random(area * WRECKMINI_DENSITY_MIN, area * WRECKMINI_DENSITY_MAX);
+		if(numberOfWreckMini > WRECKMINI_COUNT_MAX)
+			numberOfWreckMini = WRECKMINI_COUNT_MAX;
 		for(int i = 0; i < numberOfWreckMini; i++)
 			this->mWreckMini.push_back(new WreckMini(this, sqrt((float)(this->getObjectSpriteRadius() * WreckMini::getQuickening()))));
 		this->mWreckMiniTriggered = true;
