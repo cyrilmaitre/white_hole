@@ -9,6 +9,7 @@
 #include "WindowSelectedNpcShip.h"
 #include "WindowCargo.h"
 #include "WindowSelectedWreck.h"
+#include "WindowSelectedWreckMini.h"
 #include "WindowCargoLoot.h"
 #include "ExperienceBar.h"
 #include "WindowMap.h"
@@ -32,6 +33,7 @@ public:
 	WindowSelectedCharacterShip* getWindowSelectedCharacterShip();
 	WindowSelectedNpcShip* getWindowSelectedNpcShip();
 	WindowSelectedWreck* getWindowSelectedWreck();
+	WindowSelectedWreckMini* getWindowSelectedWreckMini();
 	WindowSelectedEntity* getWindowSelectedEntity();
 	WindowCargo* getWindowCargo();
 	WindowCargoLoot* getWindowCargoLoot();
@@ -65,6 +67,7 @@ private:
 	WindowSelectedCharacterShip *mWindowSelectedCharacterShip;
 	WindowSelectedNpcShip *mWindowsSelectedNpcShip;
 	WindowSelectedWreck* mWindowsSelectedWreck;
+	WindowSelectedWreckMini* mWindowSelectedWreckMini;
 	WindowSelectedEntity* mWindowSelectedEntity;
 
 	std::vector<Window*> mWindowDynamics;

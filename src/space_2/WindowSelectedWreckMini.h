@@ -1,27 +1,26 @@
 #pragma once
 #include "WindowSelected.h"
-#include "Wreck.h"
+#include "WreckMini.h"
 #include "Button.h"
 
 // Define
 #define LIFEBAR_COUNT			3
 
-class WindowSelectedWreck : public WindowSelected
+class WindowSelectedWreckMini : public WindowSelected
 {
 public:
 	// Constructor - Destructor
-	WindowSelectedWreck(Wreck* p_wreck);
-	~WindowSelectedWreck(void);
+	WindowSelectedWreckMini(WreckMini* p_wreck);
+	~WindowSelectedWreckMini(void);
 
 	// Getters - Setters
-	Wreck* getWreck();
-	void setWreck(Wreck* p_wreck);
+	WreckMini* getWreckMini();
+	void setWreckMini(WreckMini* p_wreck);
 
 	// Methods
-	void openWreck();
-	void notifyOpenChanged();
+	void recycleWreckMini();
 	void notifyPositionChanged();
-	void notifyWreckChanged();
+	void notifyWreckMiniChanged();
 	void update();
 	void update(sf::Event p_event);
 	void updatePosition();
@@ -30,14 +29,14 @@ public:
 
 private:
 	// Attributs
-	Wreck* mWreck;
+	WreckMini* mWreckMini;
 
 	TextBox mTBName;
 	TextBox mTBNameValue;
 	TextBox mTBShield;
 	TextBox mTBArmor;
 	TextBox mTBStructure;
-	Button mButtonOpen;
+	Button mButtonRecycle;
 	LifeBar *mLifeBars[LIFEBAR_COUNT];
 };
 

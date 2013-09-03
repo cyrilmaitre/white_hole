@@ -288,6 +288,7 @@ uigShipSmallStructureLabel = Structure:
 uigObjectSelectedTitleCharacterShip = Ship
 uigObjectSelectedTitleNpcShip = Ship
 uigObjectSelectedTitleWreck = Wreck
+uigObjectSelectedTitleWreckMini = Debris
 uigObjectSelectedObjectNameLabel = Name:
 uigObjectSelectedObjectLevelLabel = level:
 #

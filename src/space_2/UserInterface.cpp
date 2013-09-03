@@ -31,6 +31,7 @@ UserInterface::UserInterface(void)
 	this->mWindowSelectedCharacterShip = new WindowSelectedCharacterShip(NULL);
 	this->mWindowsSelectedNpcShip = new WindowSelectedNpcShip(NULL);
 	this->mWindowsSelectedWreck = new WindowSelectedWreck(NULL);
+	this->mWindowSelectedWreckMini = new WindowSelectedWreckMini(NULL);
 	this->mWindowSelectedEntity = new WindowSelectedEntity(NULL);
 	this->mWindowSelected = NULL;
 
@@ -61,6 +62,7 @@ UserInterface::~UserInterface(void)
 	delete this->mWindowSelectedCharacterShip;
 	delete this->mWindowsSelectedNpcShip;
 	delete this->mWindowsSelectedWreck;
+	delete this->mWindowSelectedWreckMini;
 	delete this->mWindowSelectedEntity;
 
 	delete this->mWindowCharacter;
@@ -102,6 +104,11 @@ WindowSelectedCharacterShip* UserInterface::getWindowSelectedCharacterShip()
 WindowSelectedWreck* UserInterface::getWindowSelectedWreck()
 {
 	return this->mWindowsSelectedWreck;
+}
+
+WindowSelectedWreckMini* UserInterface::getWindowSelectedWreckMini()
+{
+	return this->mWindowSelectedWreckMini;
 }
 
 WindowSelectedEntity* UserInterface::getWindowSelectedEntity()

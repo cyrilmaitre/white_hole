@@ -1,6 +1,4 @@
-#include "WindowSelectedWreck.h"
-#include "Game.h"
-
+#include "WindowSelectedWreckMini.h"
 
 //*************************************************************
 // Define
@@ -20,8 +18,9 @@
 //*************************************************************
 // Constructreur - Destructeur
 //*************************************************************
-WindowSelectedWreck::WindowSelectedWreck(Wreck* p_wreck)
+WindowSelectedWreckMini::WindowSelectedWreckMini(WreckMini* p_wreck)
 {
+	this->mWreckMini = NULL;
 	this->setContentWidth(WINDOW_WIDTH);
 	this->setContentHeight(WINDOW_HEIGHT);
 
@@ -47,9 +46,9 @@ WindowSelectedWreck::WindowSelectedWreck(Wreck* p_wreck)
 	this->mTBStructure.setFontSize(TB_LABEL_FONTSIZE);
 	this->mTBStructure.setText(Resource::resource->getBundle()->getString("uigShipSmallStructureLabel"));
 
-	this->mButtonOpen.setWidth(BUTTON_WIDTH);
-	this->mButtonOpen.setHeight(BUTTON_HEIGHT);
-	this->mButtonOpen.setTitle(Resource::resource->getBundle()->getString("open"));
+	this->mButtonRecycle.setWidth(BUTTON_WIDTH);
+	this->mButtonRecycle.setHeight(BUTTON_HEIGHT);
+	this->mButtonRecycle.setTitle(Resource::resource->getBundle()->getString("recycle"));
 
 	this->mLifeBars[0] = new LifeBar(NULL, LifeBar::LifeBarType::TypeShield);
 	this->mLifeBars[0]->setSize(LIFEBAR_WIDTH, LIFEBAR_HEIGHT);
@@ -59,11 +58,11 @@ WindowSelectedWreck::WindowSelectedWreck(Wreck* p_wreck)
 	this->mLifeBars[2]->setSize(LIFEBAR_WIDTH, LIFEBAR_HEIGHT);
 
 	this->setWindowIcon(SpriteParameterFactory::getSpriteParameterIcon16X16()->getSprite(IC_16X16_PARAMETER));
-	this->setWreck(p_wreck);
+	this->setWreckMini(p_wreck);
 	this->notifyPositionChanged();
 }
 
-WindowSelectedWreck::~WindowSelectedWreck(void)
+WindowSelectedWreckMini::~WindowSelectedWreckMini(void)
 {
 	for(int i = 0; i < LIFEBAR_COUNT; i++)
 		if(this->mLifeBars[i] != NULL)
@@ -74,87 +73,70 @@ WindowSelectedWreck::~WindowSelectedWreck(void)
 //*************************************************************
 // Getters - Setters
 //*************************************************************
-Wreck* WindowSelectedWreck::getWreck()
+WreckMini* WindowSelectedWreckMini::getWreckMini()
 {
-	return this->mWreck;
+	return this->mWreckMini;
 }
 
-void WindowSelectedWreck::setWreck( Wreck* p_wreck )
+void WindowSelectedWreckMini::setWreckMini( WreckMini* p_wreck )
 {
-	this->mWreck = p_wreck;
-	this->notifyWreckChanged();
+	if(this->mWreckMini != p_wreck)
+	{
+		this->mWreckMini = p_wreck;
+		this->notifyWreckMiniChanged();
+	}
 }
 
 
 //*************************************************************
 // Methods
 //*************************************************************
-void WindowSelectedWreck::notifyPositionChanged()
+void WindowSelectedWreckMini::notifyPositionChanged()
 {
 	WindowSelected::notifyPositionChanged();
 	this->updatePosition();
 }
 
-void WindowSelectedWreck::notifyWreckChanged()
+void WindowSelectedWreckMini::notifyWreckMiniChanged()
 {
-	if(this->getWreck() != NULL)
+	if(this->getWreckMini() != NULL)
 	{
-		this->setWindowTitle(Resource::resource->getBundle()->getString("uigObjectSelectedTitleWreck"));
-		this->mTBNameValue.setText(this->getWreck()->getName());
+		this->setWindowTitle(Resource::resource->getBundle()->getString("uigObjectSelectedTitleWreckMini"));
+		this->mTBNameValue.setText(Resource::resource->getBundle()->getString("uigObjectSelectedTitleWreckMini"));
 
 		for(int i = 0; i < LIFEBAR_COUNT; i++)
-			this->mLifeBars[i]->setDestructable(this->getWreck());
-
-		Game::game->getUserInterface()->getWindowCargoLoot()->setOpen(false);
+			this->mLifeBars[i]->setDestructable(this->getWreckMini());
 	}
 }
 
-void WindowSelectedWreck::notifyOpenChanged()
-{
-	Window::notifyOpenChanged();
-	if(Game::game->getUserInterface()->getWindowCargoLoot()->getWreck() == this->getWreck())
-		Game::game->getUserInterface()->getWindowCargoLoot()->setOpen(false);
-}
-
-void WindowSelectedWreck::update()
+void WindowSelectedWreckMini::update()
 {
 	if(this->isOpen() && !this->isReduce())
 	{
-		if(this->getWreck() != NULL)
+		if(this->getWreckMini() != NULL)
 		{
 			for(int i = 0; i < LIFEBAR_COUNT; i++)
 				this->mLifeBars[i]->update();	
-
-			if(Game::game->getMap()->getMapObjectSelector()->getObjectSelectedDistance() < WRECK_OPEN_DISTANCE)
-			{
-				this->mButtonOpen.setEnable(true);
-			}
-			else
-			{
-				this->mButtonOpen.setEnable(false);
-				if(Game::game->getUserInterface()->getWindowCargoLoot()->getWreck() == this->getWreck())
-					Game::game->getUserInterface()->getWindowCargoLoot()->setOpen(false);
-			}
 		}
 	}
 }
 
-void WindowSelectedWreck::update( sf::Event p_event )
+void WindowSelectedWreckMini::update( sf::Event p_event )
 {
 	if(this->isOpen() && !this->isReduce())
 	{
 		for(int i = 0; i < LIFEBAR_COUNT; i++)
 			this->mLifeBars[i]->update(p_event);
 
-		this->mButtonOpen.update(p_event);
-		if(this->mButtonOpen.isClicked())
-			this->openWreck();
+		this->mButtonRecycle.update(p_event);
+		if(this->mButtonRecycle.isClicked())
+			this->recycleWreckMini();
 	}
 
 	WindowSelected::update(p_event);	
 }
 
-void WindowSelectedWreck::updatePosition()
+void WindowSelectedWreckMini::updatePosition()
 {
 	this->mTBName.setX(this->getContentX());
 	this->mTBName.setY(this->getContentY());	
@@ -171,8 +153,8 @@ void WindowSelectedWreck::updatePosition()
 	this->mTBStructure.setX(this->getContentX());
 	this->mTBStructure.setY(this->mTBArmor.getBottomY() + TB_LABEL_OFFSETY);	
 
-	this->mButtonOpen.setX(this->getContentX());
-	this->mButtonOpen.setY(this->mTBStructure.getBottomY() + BUTTON_OFFSETY);
+	this->mButtonRecycle.setX(this->getContentX());
+	this->mButtonRecycle.setY(this->mTBStructure.getBottomY() + BUTTON_OFFSETY);
 
 	for(int i = 0; i < LIFEBAR_COUNT; i++)
 		this->mLifeBars[i]->setX(this->getContentX() + LIFEBAR_OFFSETX);
@@ -181,7 +163,7 @@ void WindowSelectedWreck::updatePosition()
 	this->mLifeBars[2]->setY(this->mTBStructure.getY());
 }
 
-void WindowSelectedWreck::drawContent()
+void WindowSelectedWreckMini::drawContent()
 {
 	if(this->isOpen() && !this->isReduce())
 	{
@@ -190,18 +172,14 @@ void WindowSelectedWreck::drawContent()
 		this->mTBShield.draw();
 		this->mTBArmor.draw();
 		this->mTBStructure.draw();
-		this->mButtonOpen.draw();
+		this->mButtonRecycle.draw();
 
 		for(int i = 0; i < LIFEBAR_COUNT; i++)
 			this->mLifeBars[i]->draw();
 	}
 }
 
-void WindowSelectedWreck::openWreck()
+void WindowSelectedWreckMini::recycleWreckMini()
 {
-	if(this->getWreck() != NULL)
-	{
-		Game::game->getUserInterface()->getWindowCargoLoot()->setWreck(this->getWreck());
-		Game::game->getUserInterface()->getWindowCargoLoot()->setOpen(true);
-	}
+
 }
