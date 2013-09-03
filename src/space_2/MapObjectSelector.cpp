@@ -104,6 +104,12 @@ void MapObjectSelector::update()
 				Game::game->getUserInterface()->setWindowSelected(Game::game->getUserInterface()->getWindowSelectedWreckMini());
 				windowEntity = false;
 				break;
+
+			case MapObject::MapObjectType::TypeStation:
+				Game::game->getUserInterface()->getWindowSelectedStation()->setStation((Station*)selectedObject);
+				Game::game->getUserInterface()->setWindowSelected(Game::game->getUserInterface()->getWindowSelectedStation());
+				windowEntity = false;
+				break;
 			}
 
 			if(selectedEntity != 0)

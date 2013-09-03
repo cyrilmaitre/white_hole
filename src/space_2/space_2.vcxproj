@@ -282,6 +282,7 @@
     <ClCompile Include="WindowSelectedCharacterShip.cpp" />
     <ClCompile Include="WindowSelectedEntity.cpp" />
     <ClCompile Include="WindowSelectedNpcShip.cpp" />
+    <ClCompile Include="WindowSelectedStation.cpp" />
     <ClCompile Include="WindowSelectedWreck.cpp" />
     <ClCompile Include="WindowSelectedWreckMini.cpp" />
     <ClCompile Include="WindowShipSmall.cpp" />
@@ -537,6 +538,7 @@
     <ClInclude Include="WindowSelectedCharacterShip.h" />
     <ClInclude Include="WindowSelectedEntity.h" />
     <ClInclude Include="WindowSelectedNpcShip.h" />
+    <ClInclude Include="WindowSelectedStation.h" />
     <ClInclude Include="WindowSelectedWreck.h" />
     <ClInclude Include="WindowSelectedWreckMini.h" />
     <ClInclude Include="WindowShipSmall.h" />

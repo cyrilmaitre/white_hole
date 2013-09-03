@@ -1077,6 +1077,9 @@
     <ClCompile Include="WindowSelectedWreckMini.cpp">
       <Filter>Fichiers sources\game\ui\window</Filter>
     </ClCompile>
+    <ClCompile Include="WindowSelectedStation.cpp">
+      <Filter>Fichiers sources\game\ui\window</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h">
@@ -1833,6 +1836,9 @@
       <Filter>Fichiers d%27en-tête\game\mapObject\entity\wreck</Filter>
     </ClInclude>
     <ClInclude Include="WindowSelectedWreckMini.h">
+      <Filter>Fichiers d%27en-tête\game\ui\window</Filter>
+    </ClInclude>
+    <ClInclude Include="WindowSelectedStation.h">
       <Filter>Fichiers d%27en-tête\game\ui\window</Filter>
     </ClInclude>
   </ItemGroup>
