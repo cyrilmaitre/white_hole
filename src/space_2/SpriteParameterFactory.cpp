@@ -105,21 +105,6 @@ SpriteParameter* SpriteParameterFactory::getSpriteParameterImpactExplosion( bool
 	return SpriteParameterFactory::getSpriteParameter(SP_ID_IMPACT_EXPLOSION, 12, 1, useLoaded);
 }
 
-SpriteParameter* SpriteParameterFactory::getSpriteParameterExplosionSmall( bool useLoaded )
-{
-	return SpriteParameterFactory::getSpriteParameter(SP_ID_EXPLOSION_SMALL, 28, 1, useLoaded);
-}
-
-SpriteParameter* SpriteParameterFactory::getSpriteParameterExplosionMedium( bool useLoaded )
-{
-	return SpriteParameterFactory::getSpriteParameter(SP_ID_EXPLOSION_MEDIUM, 28, 1, useLoaded);
-}
-
-SpriteParameter* SpriteParameterFactory::getSpriteParameterExplosionLarge( bool useLoaded )
-{
-	return SpriteParameterFactory::getSpriteParameter(SP_ID_EXPLOSION_LARGE, 28, 1, useLoaded);
-}
-
 SpriteParameter* SpriteParameterFactory::getSpriteParameter( std::string id, int spriteColumn, int spriteLine, bool useLoaded )
 {
 	SpriteParameter* tmpSpriteParameter = NULL;

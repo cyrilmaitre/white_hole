@@ -19,9 +19,6 @@
 #define SP_ID_IMPACT_LASER				IMG_IMPACT_LASER
 #define SP_ID_IMPACT_EXPLOSION			IMG_IMPACT_EXPLOSION
 #define SP_ID_LOADING_SQUARE_CIRCLE		IMG_LOADING_SQUARE_CIRCLE
-#define SP_ID_EXPLOSION_SMALL			IMG_EXPLOSION_SMALL
-#define SP_ID_EXPLOSION_MEDIUM			IMG_EXPLOSION_MEDIUM
-#define SP_ID_EXPLOSION_LARGE			IMG_EXPLOSION_LARGE
 
 class SpriteParameterFactory
 {
@@ -43,9 +40,6 @@ public:
 	static SpriteParameter* getSpriteParameterImpactLaser(bool useLoaded = true);
 	static SpriteParameter* getSpriteParameterImpactExplosion(bool useLoaded = true);
 	static SpriteParameter* getSpriteParameterLoadingSquareCircle(bool useLoaded = true);
-	static SpriteParameter* getSpriteParameterExplosionSmall(bool useLoaded = true);
-	static SpriteParameter* getSpriteParameterExplosionMedium(bool useLoaded = true);
-	static SpriteParameter* getSpriteParameterExplosionLarge(bool useLoaded = true);
 	static SpriteParameter* getSpriteParameter(std::string id, int spriteColumn, int spriteLine, bool useLoaded = true);
 	static void uninit();
 

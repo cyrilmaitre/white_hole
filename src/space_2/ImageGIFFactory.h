@@ -10,9 +10,6 @@ public:
 	static ImageGIF* getGifLoadingSquareCircle();
 	static ImageGIF* getImpactLaser();
 	static ImageGIF* getImpactExplosion();
-	static ImageGIF* getExplosionSmall();
-	static ImageGIF* getExplosionMedium();
-	static ImageGIF* getExplosionLarge();
 
 
 private:

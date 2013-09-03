@@ -31,18 +31,3 @@ ImageGIF* ImageGIFFactory::getImpactExplosion()
 {
 	return new ImageGIF(SpriteParameterFactory::getSpriteParameterImpactExplosion(false), 0.05, true);
 }
-
-ImageGIF* ImageGIFFactory::getExplosionSmall()
-{
-	return new ImageGIF(SpriteParameterFactory::getSpriteParameterExplosionSmall(false), 0.05, true);
-}
-
-ImageGIF* ImageGIFFactory::getExplosionMedium()
-{
-	return new ImageGIF(SpriteParameterFactory::getSpriteParameterExplosionMedium(false), 0.05, true);
-}
-
-ImageGIF* ImageGIFFactory::getExplosionLarge()
-{
-	return new ImageGIF(SpriteParameterFactory::getSpriteParameterExplosionLarge(false), 0.05, true);
-}
