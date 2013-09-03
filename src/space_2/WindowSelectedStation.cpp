@@ -1,4 +1,5 @@
 #include "WindowSelectedStation.h"
+#include "Game.h"
 
 
 //*************************************************************
@@ -14,6 +15,7 @@
 #define BUTTON_HEIGHT			18
 #define BUTTON_OFFSETX			10
 #define BUTTON_OFFSETY			15
+#define STATION_DOCK_DISTANCE	250
 
 
 //*************************************************************
@@ -124,6 +126,18 @@ void WindowSelectedStation::update()
 		{
 			for(int i = 0; i < LIFEBAR_COUNT; i++)
 				this->mLifeBars[i]->update();	
+
+			if(this->getStation()->getNpcType()->getAlignment() != NpcType::NpcTypeAlignment::AlignmenEvil)
+			{
+				if(Game::game->getMap()->getMapObjectSelector()->getObjectSelectedDistance() < STATION_DOCK_DISTANCE)
+					this->mButtoDock.setEnable(true);
+				else
+					this->mButtoDock.setEnable(false);
+			}
+			else
+			{
+				this->mButtoDock.setEnable(false);
+			}
 		}
 	}
 }
