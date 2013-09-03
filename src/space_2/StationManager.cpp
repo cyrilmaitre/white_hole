@@ -56,8 +56,7 @@ void StationManager::uninit()
 
 StationModel* StationManager::getRandomModel()
 {
-	//return FactoryGet::getStationModelFactory()->getStationModel(Tools::random(1, this->getStationModelCount()));
-	return FactoryGet::getStationModelFactory()->getStationModel(9);
+	return FactoryGet::getStationModelFactory()->getStationModel(Tools::random(1, this->getStationModelCount()));
 }
 
 Station* StationManager::generateStation( Sector* p_sector )
