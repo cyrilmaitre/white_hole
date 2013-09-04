@@ -5,6 +5,8 @@
 #include "EntityData.h"
 #include "Clock.h"
 
+// Define
+#define STATION_PLANE		MAPOBJECT_PLANE_1
 
 class Station : public Entity, public Npc
 {

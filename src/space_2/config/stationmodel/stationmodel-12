@@ -7,6 +7,7 @@ sprite = station_12.png
 sprite_wreck = wreck_station_12.png
 sprite_wreckember = wreck_station_12_ember.png
 sprite_wreckelec = wreck_station_12_elec.png
+sprite_screen = station_background_2.jpg
 shield = 0
 shield_regen = 0
 shield_resist = 0

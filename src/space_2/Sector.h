@@ -104,7 +104,7 @@ public:
 
 	bool contain(int p_x, int p_y);
 	void addMapObject(MapObject* p_object, bool p_deleteIfMissPositioned = false);
-	void addEntity(Entity* p_entity);
+	void addEntity(Entity* p_entity, bool p_definePosition = true);
 	void removeEntity(Entity* p_entity);
 	void removeEntity(int p_index);
 	bool validateMapObject(MapObject* p_object, bool p_checkAdj = true);

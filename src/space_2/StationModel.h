@@ -20,6 +20,9 @@ public:
 	std::string getSpinnerSprite();
 	void setSpinnerSprite(std::string p_sprite);
 
+	std::string getScreenSprite();
+	void setScreenSprite(std::string p_sprite);
+
 	float getSpinnerVelocity();
 	void setSpinnerVelocity(float p_velocity);
 
@@ -30,6 +33,7 @@ public:
 private:
 	// Attributs
 	std::string mSpinnerSprite;
+	std::string mScreenSprite;
 	float mSpinnerVelocity;
 };
 

@@ -5,7 +5,6 @@
 //*************************************************************
 // Define
 //*************************************************************
-#define STATION_PLANE				MAPOBJECT_PLANE_1
 #define ROTATION_VELOCITY_MIN		0.1
 #define ROTATION_VELOCITY_MAX		0.5
 

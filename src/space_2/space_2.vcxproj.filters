@@ -337,6 +337,12 @@
     <Filter Include="Fichiers sources\game\mapObject\entity\effect\turret">
       <UniqueIdentifier>{7e41cc5b-db33-431e-b96e-d99f51041160}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Fichiers d%27en-tête\game\ui\stationscreen">
+      <UniqueIdentifier>{c245df55-2f88-4656-aa48-59d5c80f0930}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fichiers sources\game\ui\stationscreen">
+      <UniqueIdentifier>{0f4e977c-6eba-4891-944b-5125d5b62d93}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Game.cpp">
@@ -1079,6 +1085,9 @@
     </ClCompile>
     <ClCompile Include="WindowSelectedStation.cpp">
       <Filter>Fichiers sources\game\ui\window</Filter>
+    </ClCompile>
+    <ClCompile Include="StationScreen.cpp">
+      <Filter>Fichiers sources\game\ui\stationscreen</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1840,6 +1849,9 @@
     </ClInclude>
     <ClInclude Include="WindowSelectedStation.h">
       <Filter>Fichiers d%27en-tête\game\ui\window</Filter>
+    </ClInclude>
+    <ClInclude Include="StationScreen.h">
+      <Filter>Fichiers d%27en-tête\game\ui\stationscreen</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

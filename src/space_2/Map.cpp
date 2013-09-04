@@ -11,6 +11,8 @@
 #include "WreckManager.h"
 #include "StarManager.h"
 #include "StationManager.h"
+#include "FactoryGet.h"
+#include "MapObject.h"
 
 using namespace std;
 using namespace sf;
@@ -254,6 +256,14 @@ Sector* Map::generateSector(sf::Vector2i p_idSector)
 			if(currenStation != NULL)
 				tmpSector->addEntity(currenStation);
 		}
+	}
+	if(tmpSector->getIdSectorX() == 0 && tmpSector->getIdSectorY() == 0)
+	{
+		Station* goodStation = StationManager::getInstance()->generateStation(tmpSector);
+		goodStation->setNpcType(FactoryGet::getNpcTypeFactory()->getNpcType(1));
+		Vector2f goodStationPosition = MapObject::convertPosition(sf::Vector2f((float)(SECTOR_WIDTH / 2), (float)(SECTOR_HEIGHT / 2)), SECTOR_PLANE, STATION_PLANE);
+		goodStation->setPosition(goodStationPosition.x, goodStationPosition.y);
+		tmpSector->addEntity(goodStation, false);
 	}
 
 	this->addSector(tmpSector);

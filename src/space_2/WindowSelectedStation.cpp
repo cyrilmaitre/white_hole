@@ -210,5 +210,5 @@ void WindowSelectedStation::drawContent()
 
 void WindowSelectedStation::dock()
 {
-
+	Game::game->getUserInterface()->getStationScreen()->launch(this->getStation());
 }

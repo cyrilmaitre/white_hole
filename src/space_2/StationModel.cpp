@@ -7,6 +7,7 @@
 //*************************************************************
 #define CONFIG_SPINNERSPRITE		"sprite_spinner"
 #define CONFIG_SPINNERVELOCITY		"spinner_velocity"
+#define CONFIG_SCREENSPRITE			"sprite_screen"
 
 
 //*************************************************************
@@ -37,6 +38,16 @@ void StationModel::setSpinnerSprite( std::string p_sprite )
 	this->mSpinnerSprite = p_sprite;
 }
 
+std::string StationModel::getScreenSprite()
+{
+	return this->mScreenSprite;
+}
+
+void StationModel::setScreenSprite( std::string p_sprite )
+{
+	this->mScreenSprite = p_sprite;
+}
+
 float StationModel::getSpinnerVelocity()
 {
 	return this->mSpinnerVelocity;
@@ -63,7 +74,12 @@ void StationModel::loadFromConfig( KeyValueFile* p_config )
 
 	if(p_config->has(CONFIG_SPINNERVELOCITY))
 		this->setSpinnerVelocity(p_config->getFloat(CONFIG_SPINNERVELOCITY));
+
+	if(p_config->has(CONFIG_SCREENSPRITE))
+		this->setScreenSprite(p_config->getString(CONFIG_SCREENSPRITE));
 }
+
+
 
 
 

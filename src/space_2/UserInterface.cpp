@@ -154,6 +154,11 @@ void UserInterface::setWindowSelected( WindowSelected* p_window )
 		this->mWindowSelected->setOpen(true);
 }
 
+StationScreen* UserInterface::getStationScreen()
+{
+	return &this->mStationScreen;
+}
+
 ExperienceBar* UserInterface::getXpBarCharacter()
 {
 	return &this->mXpBarCharacter;

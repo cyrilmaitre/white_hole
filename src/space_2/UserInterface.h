@@ -15,6 +15,7 @@
 #include "ExperienceBar.h"
 #include "WindowMap.h"
 #include "WindowSelectedEntity.h"
+#include "StationScreen.h"
 
 // Define
 #define INTERFACEBOTTOM_WIDTH				775
@@ -43,6 +44,8 @@ public:
 
 	WindowSelected* getWindowSelected();
 	void setWindowSelected(WindowSelected* p_window);
+
+	StationScreen* getStationScreen();
 
 	ExperienceBar* getXpBarCharacter();
 	sf::Vector2i getInterfaceBottom();
@@ -79,6 +82,8 @@ private:
 	WindowCargoLoot *mWindowCargoLoot;
 	WindowMap *mWindowMap;
 	WindowJukebox *mWindowJukebox;
+
+	StationScreen mStationScreen;
 
 	// Interface bottom
 	MenuQuick mMenuQuick;

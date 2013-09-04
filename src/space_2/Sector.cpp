@@ -495,23 +495,26 @@ void Sector::addMapObject( MapObject* p_object, bool p_deleteIfMissPositioned )
 	}
 }	
 
-void Sector::addEntity( Entity* p_entity )
+void Sector::addEntity( Entity* p_entity, bool p_definePosition )
 {
 	// Add to this
 	p_entity->setSector(this);
 
-	int validateCount = 0;
-	sf::Vector2i sectorPosition = this->getPosition();
-
-	do 
+	if(p_definePosition)
 	{
-		double objectX = sectorPosition.x + Tools::random(0, SECTOR_WIDTH);
-		double objectY = sectorPosition.y + Tools::random(0, SECTOR_HEIGHT);
-		sf::Vector2f objectPosition(objectX, objectY);
-		objectPosition = MapObject::convertPosition(objectPosition, MAPOBJECT_PLANE_21, p_entity->getPlane());
-		p_entity->setPosition(objectPosition.x, objectPosition.y);
-		validateCount++;
-	} while (!this->validateMapObject(p_entity) && validateCount < VALIDATECOUNT_MAX); 
+		int validateCount = 0;
+		sf::Vector2i sectorPosition = this->getPosition();
+
+		do 
+		{
+			double objectX = sectorPosition.x + Tools::random(0, SECTOR_WIDTH);
+			double objectY = sectorPosition.y + Tools::random(0, SECTOR_HEIGHT);
+			sf::Vector2f objectPosition(objectX, objectY);
+			objectPosition = MapObject::convertPosition(objectPosition, MAPOBJECT_PLANE_21, p_entity->getPlane());
+			p_entity->setPosition(objectPosition.x, objectPosition.y);
+			validateCount++;
+		} while (!this->validateMapObject(p_entity) && validateCount < VALIDATECOUNT_MAX); 
+	}
 
 	std::vector<Entity*>::iterator it = this->mEntities.begin();
 	int insertPosition = 0;
