@@ -19,9 +19,11 @@ public:
 	void launch(Station* p_station);
 	void update();
 	void updatePosition();
+	void updateBackgroundScale();
 	void update(sf::Event p_event);
 	void draw();
 	void notifyAppSizeChanged();
+	void notifyStationChanged();
 
 
 private:
@@ -29,6 +31,7 @@ private:
 	Station* mStation;
 	sf::Event mEvent;
 
+	sf::Sprite mBackground;
 	Button mButtonUndock;
 };
 

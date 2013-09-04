@@ -14,8 +14,12 @@
 //*************************************************************
 StationScreen::StationScreen(void)
 {
+	this->mStation = NULL;
+
 	this->mButtonUndock.setSize(BUTTON_WIDTH, BUTTON_HEIGHT);
 	this->mButtonUndock.setTitle(Resource::resource->getBundle()->getString("undock"));
+
+	this->notifyAppSizeChanged();
 }
 
 StationScreen::~StationScreen(void)
@@ -33,7 +37,11 @@ Station* StationScreen::getStation()
 
 void StationScreen::setStation( Station* p_station )
 {
-	this->mStation = p_station;
+	if(this->mStation != p_station)
+	{
+		this->mStation = p_station;
+		this->notifyStationChanged();
+	}
 }
 
 
@@ -78,7 +86,17 @@ void StationScreen::update()
 
 void StationScreen::updatePosition()
 {
+	this->mBackground.setPosition(0, 0);
 	this->mButtonUndock.setPosition(10, 10);
+}
+
+void StationScreen::updateBackgroundScale()
+{
+	float scaleWidth = Resource::resource->getViewUi()->getSize().x / this->mBackground.getLocalBounds().width;
+	float scaleHeight = Resource::resource->getViewUi()->getSize().y / this->mBackground.getLocalBounds().height;
+	float scale = scaleWidth > scaleHeight ? scaleWidth : scaleHeight;
+	this->mBackground.setScale(scale, scale);
+	this->updatePosition();
 }
 
 void StationScreen::update( sf::Event p_event )
@@ -90,12 +108,23 @@ void StationScreen::update( sf::Event p_event )
 
 void StationScreen::draw()
 {
+	Resource::resource->getApp()->draw(this->mBackground);
 	this->mButtonUndock.draw();
 }
 
 void StationScreen::notifyAppSizeChanged()
 {
 	this->updatePosition();
+	this->updateBackgroundScale();
+}
+
+void StationScreen::notifyStationChanged()
+{
+	if(this->getStation() != NULL)
+	{
+		this->mBackground.setTexture(*Resource::resource->getTexture(this->getStation()->getModel()->getScreenSprite()));
+		this->updateBackgroundScale();
+	}
 }
 
 

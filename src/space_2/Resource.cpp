@@ -438,6 +438,7 @@ void Resource::loadImages()
 	this->loadImages(FOLDER_IMAGE_SPACE_PROJECTILE);
 	this->loadImages(FOLDER_IMAGE_UIGAME);
 	this->loadImages(FOLDER_IMAGE_UIGAME_WINDOW);
+	this->loadImages(FOLDER_IMAGE_UIGAME_SCREENSTATION);
 	this->loadImages(FOLDER_IMAGE_MISC);
 }
 

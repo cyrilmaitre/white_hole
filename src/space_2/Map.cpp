@@ -257,7 +257,7 @@ Sector* Map::generateSector(sf::Vector2i p_idSector)
 				tmpSector->addEntity(currenStation);
 		}
 	}
-	if(tmpSector->getIdSectorX() == 0 && tmpSector->getIdSectorY() == 0)
+	if(tmpSector->getIdSectorX() == 0 && tmpSector->getIdSectorY() == 0)	// Spawn station good agressive at charactership's start position
 	{
 		Station* goodStation = StationManager::getInstance()->generateStation(tmpSector);
 		goodStation->setNpcType(FactoryGet::getNpcTypeFactory()->getNpcType(1));
