@@ -1,12 +1,22 @@
 #include "StationScreen.h"
 #include "ClockManager.h"
+#include "UserInterface.h"
+#include "ContainerStackViewManager.h"
 
 
 //*************************************************************
 // Define
 //*************************************************************
-#define BUTTON_WIDTH			80
-#define BUTTON_HEIGHT			18
+#define LEFTMENU_BUTTON_WIDTH				150
+#define LEFTMENU_BUTTON_HEIGHT				25
+#define LEFTMENU_BUTTON_MARGIN				10
+#define LEFTMENU_BUTTON_CARGO_MARGINTOP		75
+#define LEFTMENU_MARGIN						25
+#define LEFTMENU_PADDING					10
+#define LEFTMENU_WIDTH						LEFTMENU_PADDING * 2 + LEFTMENU_BUTTON_WIDTH
+#define LEFTMENU_BACKCOLOR					sf::Color(128, 128, 128, 200)
+#define LEFTMENU_BORDCOLOR					sf::Color(128, 128, 128, 250)
+#define LEFTMENU_BORDSIZE					2
 
 
 //*************************************************************
@@ -16,7 +26,24 @@ StationScreen::StationScreen(void)
 {
 	this->mStation = NULL;
 
-	this->mButtonUndock.setSize(BUTTON_WIDTH, BUTTON_HEIGHT);
+	this->mFieldsetLeftMenu.setBorderSize(LEFTMENU_BORDSIZE);
+	this->mFieldsetLeftMenu.setBorderColor(LEFTMENU_BORDCOLOR, true);
+	this->mFieldsetLeftMenu.setBackgroundColor(LEFTMENU_BACKCOLOR);
+	this->mFieldsetLeftMenu.setDisplayTitle(false);
+
+	this->mButtonHangar.setSize(LEFTMENU_BUTTON_WIDTH, LEFTMENU_BUTTON_HEIGHT);
+	this->mButtonHangar.setTitle(Resource::resource->getBundle()->getString("hangar"));
+
+	this->mButtonMarket.setSize(LEFTMENU_BUTTON_WIDTH, LEFTMENU_BUTTON_HEIGHT);
+	this->mButtonMarket.setTitle(Resource::resource->getBundle()->getString("market"));
+
+	this->mButtonCraft.setSize(LEFTMENU_BUTTON_WIDTH, LEFTMENU_BUTTON_HEIGHT);
+	this->mButtonCraft.setTitle(Resource::resource->getBundle()->getString("craft"));
+	
+	this->mButtonShipCargo.setSize(LEFTMENU_BUTTON_WIDTH, LEFTMENU_BUTTON_HEIGHT);
+	this->mButtonShipCargo.setTitle(Resource::resource->getBundle()->getString("shipCargo"));
+
+	this->mButtonUndock.setSize(LEFTMENU_BUTTON_WIDTH, LEFTMENU_BUTTON_HEIGHT);
 	this->mButtonUndock.setTitle(Resource::resource->getBundle()->getString("undock"));
 
 	this->notifyAppSizeChanged();
@@ -48,8 +75,20 @@ void StationScreen::setStation( Station* p_station )
 //*************************************************************
 // Methods
 //*************************************************************
+void StationScreen::launchBegin()
+{
+	UserInterface::mUserInterface->getWindowStationShipCargo()->getContainerView()->notifyContainerableChanged();
+}
+
+void StationScreen::launchEnd()
+{
+	UserInterface::mUserInterface->getWindowCargo()->getContainerView()->notifyContainerableChanged();
+}
+
 void StationScreen::launch( Station* p_station )
 {
+	this->launchBegin();
+	this->notifyAppSizeChanged();
 	this->setStation(p_station);
 	while(Resource::resource->getApp()->isOpen() && Resource::resource->isAppRunning() && this->getStation() != NULL)
 	{
@@ -76,18 +115,29 @@ void StationScreen::launch( Station* p_station )
 		PopupBubble::drawAll();
 		Resource::resource->getApp()->display();		
 	}
+	this->launchEnd();
 }
 
 void StationScreen::update()
 {
-	EventManager::eventManager->reset();
+	// Update Clock 
 	ClockManager::update();
+
+	// Update windows
+	UserInterface::mUserInterface->updateWindowDynamicsStation();
 }
 
 void StationScreen::updatePosition()
 {
 	this->mBackground.setPosition(0, 0);
-	this->mButtonUndock.setPosition(10, 10);
+	this->mFieldsetLeftMenu.setPosition(LEFTMENU_MARGIN, LEFTMENU_MARGIN);
+	
+	this->mButtonHangar.setPosition(this->mFieldsetLeftMenu.getLeftX() + LEFTMENU_PADDING, this->mFieldsetLeftMenu.getTopY() + LEFTMENU_PADDING);
+	this->mButtonMarket.setPosition(this->mButtonHangar.getLeftX(), this->mButtonHangar.getBottomY() + LEFTMENU_BUTTON_MARGIN);
+	this->mButtonCraft.setPosition(this->mButtonMarket.getLeftX(), this->mButtonMarket.getBottomY() + LEFTMENU_BUTTON_MARGIN);
+	this->mButtonShipCargo.setPosition(this->mButtonCraft.getLeftX(), this->mButtonCraft.getBottomY() + LEFTMENU_BUTTON_CARGO_MARGINTOP);
+	
+	this->mButtonUndock.setPosition(this->mFieldsetLeftMenu.getLeftX() + LEFTMENU_BUTTON_MARGIN, this->mFieldsetLeftMenu.getBottomY() - LEFTMENU_BUTTON_MARGIN - this->mButtonUndock.getHeight());
 }
 
 void StationScreen::updateBackgroundScale()
@@ -101,6 +151,22 @@ void StationScreen::updateBackgroundScale()
 
 void StationScreen::update( sf::Event p_event )
 {
+	// Update drag'n'drop stack view
+	if(p_event.type == sf::Event::MouseButtonReleased && p_event.mouseButton.button == sf::Mouse::Button::Left)
+		ContainerStackViewManager::getInstance()->releaseDrag();
+
+	// Update windows
+	UserInterface::mUserInterface->updateWindowDynamicsStation(p_event);
+
+	// Update button
+	this->mButtonHangar.update(p_event);
+	this->mButtonMarket.update(p_event);
+	this->mButtonCraft.update(p_event);
+
+	this->mButtonShipCargo.update(p_event);
+	if(this->mButtonShipCargo.isClicked())
+		UserInterface::mUserInterface->getWindowStationShipCargo()->setOpen(!UserInterface::mUserInterface->getWindowStationShipCargo()->isOpen());
+
 	this->mButtonUndock.update(p_event);
 	if(this->mButtonUndock.isClicked())
 		this->setStation(NULL);
@@ -109,13 +175,23 @@ void StationScreen::update( sf::Event p_event )
 void StationScreen::draw()
 {
 	Resource::resource->getApp()->draw(this->mBackground);
+	this->mFieldsetLeftMenu.draw();
+	this->mButtonHangar.draw();
+	this->mButtonMarket.draw();
+	this->mButtonCraft.draw();
+	this->mButtonShipCargo.draw();
 	this->mButtonUndock.draw();
+
+	UserInterface::mUserInterface->drawWindowDynamicsStation();
+	ContainerStackViewManager::getInstance()->draw();
 }
 
 void StationScreen::notifyAppSizeChanged()
 {
 	this->updatePosition();
 	this->updateBackgroundScale();
+
+	this->mFieldsetLeftMenu.setSize(LEFTMENU_WIDTH, Resource::resource->getViewUi()->getSize().y - LEFTMENU_MARGIN * 2);
 }
 
 void StationScreen::notifyStationChanged()
@@ -126,6 +202,7 @@ void StationScreen::notifyStationChanged()
 		this->updateBackgroundScale();
 	}
 }
+
 
 
 

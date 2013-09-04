@@ -14,6 +14,9 @@ public:
 	std::string getTitle();
 	void setTitle(std::string p_title);
 
+	bool isDisplayTitle();
+	void setDisplayTitle(bool p_display);
+
 	int getPadding();
 	void setPadding(int p_padding);
 
@@ -41,6 +44,7 @@ protected:
 private:
 	// Attributs
 	TextBox mTitle;
+	bool mDisplayTitle;
 	int mPadding;
 
 	// Methods

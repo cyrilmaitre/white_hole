@@ -42,13 +42,17 @@ UserInterface::UserInterface(void)
 	this->mWindowCargoLoot = new WindowCargoLoot();
 	this->mWindowMap = new WindowMap();
 	this->mWindowJukebox = new WindowJukebox();
-
+	
 	this->mWindowDynamics.push_back(this->mWindowCharacter);
 	this->mWindowDynamics.push_back(this->mWindowCargo);
 	this->mWindowDynamics.push_back(this->mWindowCargoLoot);
 	this->mWindowDynamics.push_back(this->mWindowMap);
 	this->mWindowDynamics.push_back(this->mWindowJukebox);
 
+	this->mWindowStationShipCargo = new WindowCargoStation(Resource::resource->getBundle()->getString("shipCargo"));
+
+	this->mWindowDynamicsStation.push_back(this->mWindowStationShipCargo);
+	
 	// Other stuffs
 	this->mXpBarCharacter.setSize(XPBAR_CHARACTER_WIDTH - this->mXpBarCharacter.getBorderSize() * 2, XPBAR_CHARACTER_HEIGHT);
 	this->mInterfaceBottom.setTexture(*Resource::resource->getTexture(IMG_INTERFACE_BOTTOM));
@@ -143,6 +147,11 @@ WindowMap* UserInterface::getWindowMap()
 	return this->mWindowMap;
 }
 
+WindowCargoStation* UserInterface::getWindowStationShipCargo()
+{
+	return this->mWindowStationShipCargo;
+}
+
 void UserInterface::setWindowSelected( WindowSelected* p_window )
 {
 	if(this->mWindowSelected != NULL)
@@ -181,14 +190,10 @@ void UserInterface::handleScreenAppResized()
 void UserInterface::update(sf::Event p_event)
 {
 	// Window dynamics
-	for(int i = 0; i < this->mWindowDynamics.size(); i++)
-		this->mWindowDynamics[i]->update(p_event);
-	this->updateWindowDynamics();
+	this->updateWindowDynamics(p_event);
 
 	// Window statics
-	this->mWindowShipSmall->update(p_event);
-	if(this->mWindowSelected != NULL)
-		this->mWindowSelected->update(p_event);
+	this->updateWindowStatics(p_event);
 
 	// Update others
 	this->mMenuQuick.update(p_event);
@@ -197,22 +202,75 @@ void UserInterface::update(sf::Event p_event)
 		this->mWeaponViews[i]->update(p_event);
 }
 
+void UserInterface::updateWindowStatics( sf::Event p_event )
+{
+	this->mWindowShipSmall->update(p_event);
+	if(this->mWindowSelected != NULL)
+		this->mWindowSelected->update(p_event);
+}
+
+void UserInterface::updateWindowDynamics(sf::Event p_event)
+{
+	for(int i = 0; i < this->mWindowDynamics.size(); i++)
+		this->mWindowDynamics[i]->update(p_event);
+
+	for(int i = 0; i < this->mWindowDynamics.size(); i++)
+	{
+		if(this->mWindowDynamics[i]->hasFocus())
+		{
+			this->moveWindowDynamicToBegin(i);
+			break;
+		}
+	}
+}
+
+void UserInterface::updateWindowDynamicsStation( sf::Event p_event )
+{
+	for(int i = 0; i < this->mWindowDynamicsStation.size(); i++)
+		this->mWindowDynamicsStation[i]->update(p_event);
+
+	for(int i = 0; i < this->mWindowDynamicsStation.size(); i++)
+	{
+		if(this->mWindowDynamicsStation[i]->hasFocus())
+		{
+			this->moveWindowDynamicStationToBegin(i);
+			break;
+		}
+	}
+}
+
 void UserInterface::update()
 {
 	// Window dynamics
-	for(int i = 0; i < this->mWindowDynamics.size(); i++)
-		this->mWindowDynamics[i]->update();
+	this->updateWindowDynamics();
 
 	// Window statics
-	this->mWindowShipSmall->update();
-	if(this->mWindowSelected != NULL)
-		this->mWindowSelected->update();
+	this->updateWindowStatics();
 	
 	// Update others
 	this->mMenuQuick.update();
 	this->mXpBarCharacter.update();
 	for(int i = 0; i < this->mWeaponViews.size(); i++)
 		this->mWeaponViews[i]->update();
+}
+
+void UserInterface::updateWindowStatics()
+{
+	this->mWindowShipSmall->update();
+	if(this->mWindowSelected != NULL)
+		this->mWindowSelected->update();
+}
+
+void UserInterface::updateWindowDynamics()
+{
+	for(int i = 0; i < this->mWindowDynamics.size(); i++)
+		this->mWindowDynamics[i]->update();
+}
+
+void UserInterface::updateWindowDynamicsStation()
+{
+	for(int i = 0; i < this->mWindowDynamicsStation.size(); i++)
+		this->mWindowDynamicsStation[i]->update();
 }
 
 void UserInterface::draw()
@@ -225,16 +283,32 @@ void UserInterface::draw()
 		this->mWeaponViews[i]->draw();
 
 	// Draw window statics
-	this->mWindowShipSmall->draw();
-	if(this->mWindowSelected != NULL)
-		this->mWindowSelected->draw();
-
+	this->drawWindowStatics();
+	
 	// Draw window dynamics
-	for(int i = this->mWindowDynamics.size() - 1; i >= 0; i--)
-		this->mWindowDynamics[i]->draw();
+	this->drawWindowDynamics();
 
 	// Draw dragged item (if exist)
 	ContainerStackViewManager::getInstance()->draw();
+}
+
+void UserInterface::drawWindowStatics()
+{
+	this->mWindowShipSmall->draw();
+	if(this->mWindowSelected != NULL)
+		this->mWindowSelected->draw();
+}
+
+void UserInterface::drawWindowDynamics()
+{
+	for(int i = this->mWindowDynamics.size() - 1; i >= 0; i--)
+		this->mWindowDynamics[i]->draw();
+}
+
+void UserInterface::drawWindowDynamicsStation()
+{
+	for(int i = this->mWindowDynamicsStation.size() - 1; i >= 0; i--)
+		this->mWindowDynamicsStation[i]->draw();
 }
 
 void UserInterface::notifyWeaponViewChanged()
@@ -281,24 +355,21 @@ void UserInterface::updateWeaponPosition()
 	}
 }
 
-void UserInterface::updateWindowDynamics()
-{
-	for(int i = 0; i < this->mWindowDynamics.size(); i++)
-	{
-		if(this->mWindowDynamics[i]->hasFocus())
-		{
-			this->moveWindowDynamicToBegin(i);
-			break;
-		}
-	}
-}
-
 void UserInterface::moveWindowDynamicToBegin( int p_index )
 {
 	Window* tmpWindow = this->mWindowDynamics[p_index];
 	this->mWindowDynamics.erase(this->mWindowDynamics.begin() + p_index);
 	this->mWindowDynamics.insert(this->mWindowDynamics.begin(), tmpWindow);
 }
+
+void UserInterface::moveWindowDynamicStationToBegin( int p_index )
+{
+	Window* tmpWindow = this->mWindowDynamicsStation[p_index];
+	this->mWindowDynamicsStation.erase(this->mWindowDynamicsStation.begin() + p_index);
+	this->mWindowDynamicsStation.insert(this->mWindowDynamicsStation.begin(), tmpWindow);
+}
+
+
 
 
 

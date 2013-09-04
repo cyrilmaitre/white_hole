@@ -30,6 +30,7 @@ FieldSet::FieldSet()
 	this->setBorderSize(DEFAULT_BORDERSIZE, true);
 	this->setPadding(DEFAULT_PADDING);
 	this->setTitle(DEFAULT_TITLE);
+	this->setDisplayTitle(true);
 }
 
 FieldSet::~FieldSet(void)
@@ -57,6 +58,16 @@ void FieldSet::setTitle( std::string p_title )
 		this->mTitle.setText(p_title);
 		this->notifyTitleChanged();
 	}
+}
+
+bool FieldSet::isDisplayTitle()
+{
+	return this->mDisplayTitle;
+}
+
+void FieldSet::setDisplayTitle( bool p_display )
+{
+	this->mDisplayTitle = p_display;
 }
 
 int FieldSet::getPadding()
@@ -104,7 +115,8 @@ void FieldSet::draw()
 	if(this->isVisible())
 	{
 		Block::draw();
-		this->mTitle.draw();
+		if(this->isDisplayTitle())
+			this->mTitle.draw();
 	}
 }
 
@@ -164,6 +176,8 @@ void FieldSet::updateTitlePosition()
 {
 	this->mTitle.setPosition((float)(this->getX() + (this->getWidth() - this->mTitle.getWidth()) / 2), (float)(this->getY() + TITLE_MARGINTOP));
 }
+
+
 
 
 

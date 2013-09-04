@@ -1089,6 +1089,9 @@
     <ClCompile Include="StationScreen.cpp">
       <Filter>Fichiers sources\game\ui\stationscreen</Filter>
     </ClCompile>
+    <ClCompile Include="WindowCargoStation.cpp">
+      <Filter>Fichiers sources\game\ui\window</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h">
@@ -1852,6 +1855,9 @@
     </ClInclude>
     <ClInclude Include="StationScreen.h">
       <Filter>Fichiers d%27en-tête\game\ui\stationscreen</Filter>
+    </ClInclude>
+    <ClInclude Include="WindowCargoStation.h">
+      <Filter>Fichiers d%27en-tête\game\ui\window</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

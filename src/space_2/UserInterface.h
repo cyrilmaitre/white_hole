@@ -16,6 +16,7 @@
 #include "WindowMap.h"
 #include "WindowSelectedEntity.h"
 #include "StationScreen.h"
+#include "WindowCargoStation.h"
 
 // Define
 #define INTERFACEBOTTOM_WIDTH				775
@@ -41,22 +42,30 @@ public:
 	WindowCargo* getWindowCargo();
 	WindowCargoLoot* getWindowCargoLoot();
 	WindowMap* getWindowMap();
+	WindowCargoStation* getWindowStationShipCargo();
 
 	WindowSelected* getWindowSelected();
 	void setWindowSelected(WindowSelected* p_window);
 
 	StationScreen* getStationScreen();
-
 	ExperienceBar* getXpBarCharacter();
 	sf::Vector2i getInterfaceBottom();
 
 	// Methode	
 	void update(sf::Event p_event);
+	void updateWindowStatics(sf::Event p_event);
+	void updateWindowDynamics(sf::Event p_event);
+	void updateWindowDynamicsStation(sf::Event p_event);
 	void update();
+	void updateWindowStatics();
+	void updateWindowDynamics();
+	void updateWindowDynamicsStation();
 	void updatePosition();
 	void updateWeaponPosition();
-	void updateWindowDynamics();
 	void draw();
+	void drawWindowStatics();
+	void drawWindowDynamics();
+	void drawWindowDynamicsStation();
 
 	void handleScreenAppResized();
 	void notifyWeaponViewChanged();
@@ -83,6 +92,8 @@ private:
 	WindowMap *mWindowMap;
 	WindowJukebox *mWindowJukebox;
 
+	std::vector<Window*> mWindowDynamicsStation;
+	WindowCargoStation* mWindowStationShipCargo;
 	StationScreen mStationScreen;
 
 	// Interface bottom
@@ -93,5 +104,6 @@ private:
 
 	// Methods 
 	void moveWindowDynamicToBegin(int p_index);
+	void moveWindowDynamicStationToBegin(int p_index);
 };
 

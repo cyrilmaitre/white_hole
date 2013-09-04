@@ -37,6 +37,10 @@ wreck = Wreck
 dock = Dock
 undock = Undock
 station = Space Station
+hangar = Hangar
+market = Market
+craft = Craft
+shipCargo = Ship's Cargo
 #
 #
 # Running stats

@@ -276,6 +276,7 @@
     <ClCompile Include="WeaponEffect.cpp" />
     <ClCompile Include="WindowCargo.cpp" />
     <ClCompile Include="WindowCargoLoot.cpp" />
+    <ClCompile Include="WindowCargoStation.cpp" />
     <ClCompile Include="WindowJukebox.cpp" />
     <ClCompile Include="WindowMap.cpp" />
     <ClCompile Include="WindowSelected.cpp" />
@@ -533,6 +534,7 @@
     <ClInclude Include="WeaponEffect.h" />
     <ClInclude Include="WindowCargo.h" />
     <ClInclude Include="WindowCargoLoot.h" />
+    <ClInclude Include="WindowCargoStation.h" />
     <ClInclude Include="WindowJukebox.h" />
     <ClInclude Include="WindowMap.h" />
     <ClInclude Include="WindowSelected.h" />

@@ -2,6 +2,7 @@
 #include "Resource.h"
 #include "Station.h"
 #include "Button.h"
+#include "FieldSet.h"
 
 
 class StationScreen
@@ -16,6 +17,8 @@ public:
 	void setStation(Station* p_station);
 
 	// Methods
+	void launchBegin();
+	void launchEnd();
 	void launch(Station* p_station);
 	void update();
 	void updatePosition();
@@ -32,6 +35,12 @@ private:
 	sf::Event mEvent;
 
 	sf::Sprite mBackground;
+	FieldSet mFieldsetLeftMenu;
+
+	Button mButtonHangar;
+	Button mButtonMarket;
+	Button mButtonCraft;
+	Button mButtonShipCargo;
 	Button mButtonUndock;
 };
 
