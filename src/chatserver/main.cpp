@@ -1,6 +1,9 @@
 #include <iostream>
 #include "ChatServer.h"
-#include "ChatClient.h"
+#include "ChatClient.h"		
+#ifdef  _DEBUG
+#include <vld.h>
+#endif
 
 int main(int argc, char** argv)
 {
@@ -22,7 +25,7 @@ int main(int argc, char** argv)
 	{
 		ChatClient chatClient;
 
-		chatClient.connect();
+		chatClient.connect("testcli", "testcli");
 	}
 
 
@@ -31,5 +34,5 @@ int main(int argc, char** argv)
 	std::cout << "Ctrl + C to exit." << std::endl;
 	while(1);
 
-	return 0;
+	exit(EXIT_SUCCESS);
 }

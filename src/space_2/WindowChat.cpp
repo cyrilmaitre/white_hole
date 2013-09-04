@@ -149,7 +149,7 @@ void WindowChat::drawContent()
 				std::shared_ptr<Message> message = *it;
 				// Si c'est un message chat
 				if(message->packetType == PacketType::CHAT) {
-					S2C_Chat* s2c_chat = dynamic_cast<S2C_Chat *>(message.get());
+					std::shared_ptr<S2C_Chat> s2c_chat = std::dynamic_pointer_cast<S2C_Chat>(message);
 
 					if(s2c_chat->dstType == ChatDstType::CHANNEL)
 						this->pushChat("<"+s2c_chat->from+"> "+s2c_chat->message);
@@ -158,7 +158,8 @@ void WindowChat::drawContent()
 				}
 				// Si c'est une commande
 				else if(message->packetType == PacketType::COMMAND) {
-					S2C_Command* s2c_command = dynamic_cast<S2C_Command *>(message.get());
+					std::shared_ptr<S2C_Command> s2c_command = std::dynamic_pointer_cast<S2C_Command>(message);
+
 					this->pushChat("<SERVER CMD> " + Chat::serverCmdToString(s2c_command->command) + " -> " + s2c_command->argument);
 				}
 			}

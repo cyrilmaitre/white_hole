@@ -6,6 +6,7 @@
 #define SERVER_NAME				"Makaki"
 #define SERVER_MOTD				"Sisi la famille"
 #define MAX_CLIENTS				15					// max client allowed on server
+#define MAX_IP_TOGETHER			3					// nd de connexion max par IP
 #define MAX_S_PACKETSEND_RETRY	5					// if 5+ packets are not received by the client, then drop it
 #define PING_IDLE_TIME			120					// if nothing received for 120s from the client, then ping it.
 #define PING_TIMEOUT			100					// client must PONG within 100s
@@ -51,6 +52,8 @@ public:
 	
 	std::shared_ptr<Client> findClientByName(std::string p_name);
 	std::shared_ptr<Client> findClientByUID(sf::Uint64 p_uid);
+
+	sf::Uint32 connectionCountByIP(sf::IpAddress compareIP);
 
 private:
 	sf::SocketSelector selector;

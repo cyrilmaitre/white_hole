@@ -117,8 +117,11 @@ void ChatClient::clearInputBuffer()
 
 
 // Launch the thread connecting to the chat server
-void ChatClient::connect(void)
+void ChatClient::connect(std::string p_username, std::string p_sha1password)
 {
+	mUsername = p_username;
+	mSha1password = p_sha1password;
+
 	if(!mRunning)
 	{
 		mThread = std::unique_ptr<sf::Thread>(new sf::Thread(&ChatClient::mRunClient, this));
@@ -168,7 +171,7 @@ void ChatClient::handlePacket(sf::Packet& p_packet)
 		// Chat
 		if(packetType == PacketType::CHAT)
 		{
-			std::shared_ptr<S2C_Chat> s2c_chat(new S2C_Chat);
+			std::shared_ptr<S2C_Chat> s2c_chat = std::make_shared<S2C_Chat>();
 			if(p_packet >> *s2c_chat)
 			{
 				this->pushOutputBuffer(s2c_chat);
@@ -178,7 +181,7 @@ void ChatClient::handlePacket(sf::Packet& p_packet)
 		// Command
 		else if(packetType == PacketType::COMMAND)
 		{
-			std::shared_ptr<S2C_Command> s2c_command(new S2C_Command);
+			std::shared_ptr<S2C_Command> s2c_command = std::make_shared<S2C_Command>();
 			if(p_packet >> *s2c_command)
 			{
 				this->pushOutputBuffer(s2c_command);
@@ -250,14 +253,14 @@ void ChatClient::mRunClient(void)
 	{
 		{ std::ostringstream msg; msg << "Connection OK !" << ""; Debug::msg(msg); }
 
-		// TEST : adding some messages to the buffer
-		std::shared_ptr<C2S_Auth> auth(new C2S_Auth("username", "password"));
+		std::shared_ptr<C2S_Auth> auth = std::make_shared<C2S_Auth>(this->mUsername, this->mSha1password);
 		this->pushInputBuffer(auth);
-		std::shared_ptr<C2S_Chat> msg1(new C2S_Chat("Message 1", "ok", ChatDstType::CHANNEL));
-		std::shared_ptr<C2S_Chat> msg2(new C2S_Chat("Message 2", "babouche", ChatDstType::USER));
-		std::shared_ptr<C2S_Chat> msg3(new C2S_Chat("Message 3", "mazouteman", ChatDstType::CHANNEL));
-		this->pushInputBuffer(msg1);
-		this->pushInputBuffer(msg2);
+
+		//std::shared_ptr<C2S_Chat> msg1 = std::make_shared<C2S_Chat>("123456789ABCDEFG", "ok", ChatDstType::CHANNEL);
+		//std::shared_ptr<C2S_Chat> msg2 = std::make_shared<C2S_Chat>("Message 2", "babouche", ChatDstType::USER);
+		//std::shared_ptr<C2S_Chat> msg3 = std::make_shared<C2S_Chat>("Message 3", "mazouteman", ChatDstType::CHANNEL);
+		//this->pushInputBuffer(msg1);
+		//this->pushInputBuffer(msg2);
 
 		// Flood testing
 		/*

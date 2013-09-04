@@ -88,17 +88,19 @@ void ChatServer::mRunServer(void)
 
 	// Enter loop to handle new connection and updating of server / clients
 	while(mRunning)
-	{		
+	{
+
 		//Make the selector wait for data on any socket
 		if(selector.wait(sf::Time(sf::microseconds(50))))
 		{
+
 			//If there are available slots test the listener
 			if(selector.isReady(listener))
 			{
 				{ std::ostringstream msg; msg << "Selector is ready" << ""; Debug::msg(msg); }
 
 				//The listener is ready: there is a pending connection
-				std::shared_ptr<Client> client = std::shared_ptr<Client>(new Client);
+				std::shared_ptr<Client> client = std::make_shared<Client>();
 
 				// non-blocking = big packets won't block server
 				client->getSocket().setBlocking(false);		
@@ -107,17 +109,34 @@ void ChatServer::mRunServer(void)
 				{
 
 					sf::Packet packet;
+					// if server is not full
 					if(clients.size() < MAX_CLIENTS)
 					{
-						//adding new client (not authenticated at the moment, just tcp connected)
-						this->addClient(client);
 
-						//send motd to new client
-						S2C_Command s2c_cmd(ServerCommand::S_MOTD, SERVER_MOTD);
+						// if max connections by ip not reached
+						if(this->connectionCountByIP(client->getSocket().getRemoteAddress()) < MAX_IP_TOGETHER)
 						{
-							packet << s2c_cmd;
+							// client allowed
+							this->addClient(client);
+
+							//send motd to new client
+							S2C_Command s2c_cmd(ServerCommand::S_MOTD, SERVER_MOTD);
+							{
+								packet << s2c_cmd;
+							}
+
+							this->sendPacket(packet, client);
 						}
-						this->sendPacket(packet, client);
+						else
+						{
+							//send rejection message because too many connections from same IP
+							S2C_Command s2c_cmd(ServerCommand::S_SAY, "Connection refused. Reason: Too many connections from same IP.");
+							{
+								packet << s2c_cmd;
+							}
+							this->sendPacket(packet, client);
+							this->dropClient(client);
+						}
 					}
 					else
 					{
@@ -138,7 +157,6 @@ void ChatServer::mRunServer(void)
 				}
 
 			} // -- end of server listener ready
-
 
 			//The listener socket is not ready, test all other sockets (the clients)
 			for(unsigned int i = 0; i < clients.size(); i++)
@@ -256,6 +274,7 @@ void ChatServer::addClient(std::shared_ptr<Client> p_client)
 */
 void ChatServer::authenticate(std::shared_ptr<Client> p_client, C2S_Auth p_auth)
 {
+	{ std::ostringstream msg; msg << "[AUTH] user:" << p_auth.user << "- pass:" << p_auth.sha1password;	Debug::msg(msg); }
 	// auth test here
 	// set name after
 	p_client->setName(p_auth.user);
@@ -285,7 +304,7 @@ void ChatServer::authenticate(std::shared_ptr<Client> p_client, C2S_Auth p_auth)
 		// send him a response
 		{
 			sf::Packet packet;
-			S2C_Auth s2c_auth(AuthResponse::AR_INVALID_IDS);
+			S2C_Auth s2c_auth(AuthResponse::AR_OK);
 			packet << s2c_auth;
 			this->sendPacket(packet, p_client);
 		}
@@ -341,8 +360,7 @@ void ChatServer::dropClient(std::shared_ptr<Client> p_client)
 
 	selector.remove(p_client->getSocket());
 
-	std::vector<std::shared_ptr<Client>>::iterator it;
-    for (it = clients.begin(); it != clients.end();) {
+    for (auto it = clients.begin(); it != clients.end();) {
         if (*it == p_client) {
             it = clients.erase(it);
 			{ std::ostringstream msg; msg << "Clients size is now " << clients.size() << ""; Debug::msg(msg); }
@@ -430,7 +448,6 @@ void ChatServer::broadcast(sf::Packet& p_packet, BroadcastCondition& p_broadcast
 */
 void ChatServer::handlePacket(sf::Packet& p_packet, std::shared_ptr<Client> p_client)
 {	
-	
 	// Flood control
 	// -- if client is not flooding
 	if(p_client->getNbSentPackets() < FLOOD_MAX_PACKETS) {
@@ -650,7 +667,7 @@ void ChatServer::handlePacket(sf::Packet& p_packet, std::shared_ptr<Client> p_cl
 
 std::shared_ptr<Client> ChatServer::findClientByName(std::string p_name)
 {
-	std::shared_ptr<Client> foundClient;
+	std::shared_ptr<Client> foundClient(nullptr);
 	for(auto it = clients.begin(); it != clients.end(); ++it)
 	{
 		// CLIENT
@@ -667,7 +684,7 @@ std::shared_ptr<Client> ChatServer::findClientByName(std::string p_name)
 
 std::shared_ptr<Client> ChatServer::findClientByUID(sf::Uint64 p_uid)
 {
-	std::shared_ptr<Client> foundClient;
+	std::shared_ptr<Client> foundClient(nullptr);
 	for(auto it = clients.begin(); it != clients.end(); ++it)
 	{
 		// CLIENT
@@ -680,4 +697,20 @@ std::shared_ptr<Client> ChatServer::findClientByUID(sf::Uint64 p_uid)
 	}
 
 	return foundClient;
+}
+
+
+sf::Uint32 ChatServer::connectionCountByIP(sf::IpAddress compareIP)
+{
+	sf::Uint32 count = 0;
+
+	for(auto it = clients.begin(); it != clients.end(); ++it)
+	{
+		// CLIENT
+		std::shared_ptr<Client> currentClient = *it;
+		if(currentClient->getSocket().getRemoteAddress() == compareIP)
+			count++;
+	}
+
+	return count;
 }

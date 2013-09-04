@@ -44,7 +44,7 @@ public:
 	void clearOutputBuffer(void);					// clear received messages buffer (public)
 
 	// others methods
-	void connect(void);
+	void connect(std::string p_username, std::string p_sha1password);
 	void handlePacket(sf::Packet& p_packet);
 	bool sendPacket(sf::Packet& p_packet);
 	void disconnect(void);
@@ -71,6 +71,10 @@ private:
 	sf::Mutex					mMutex;
 	std::unique_ptr<sf::Thread> mThread;
 	void						mRunClient(void);	// threaded function
+
+	// auth stuff
+	std::string mUsername;
+	std::string mSha1password;
 
 	
 };
