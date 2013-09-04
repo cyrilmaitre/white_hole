@@ -261,7 +261,7 @@ void TitleScreen::authenticateRequest()
 			Session::setUserJson(jsonResponse);
 
 			//klm
-			Resource::resource->getChatClient()->connect(); //chat connect
+			Resource::resource->getChatClient()->connect(this->mTextFieldUsername.getValue(), Tools::sha1(this->mTextFieldPassword.getValue())); //chat connect
 		}
 		else
 		{
