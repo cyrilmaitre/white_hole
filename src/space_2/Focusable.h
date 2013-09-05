@@ -19,6 +19,9 @@ public:
 	void setUpdateFocus(bool p_param);
 	bool isFocusChanged();
 
+	// Methods
+	void update(sf::Event p_event);
+
 
 protected:
 	// Attributs
@@ -31,7 +34,6 @@ protected:
 	bool mUpdateFocus;
 
 	// Methods
-	void update(sf::Event p_event);
 	virtual void notifyFocusChanged();
 
 

@@ -9,9 +9,8 @@
 //*************************************************************
 #define ICON_OFFSETX								3
 #define ICON_OFFSETY								3
-#define BUTTON_REDUCE_OFFSETX						-83		
-#define BUTTON_CLOSE_OFFSETX						-56
-#define BUTTON_MOVE_OFFSETX							-29
+#define BUTTON_REDUCE_OFFSETX						-56		
+#define BUTTON_CLOSE_OFFSETX						-29
 #define BUTTON_OFFSETY								1
 #define BUTTON_WIDTH								28
 #define BUTTON_HEIGHT								20
@@ -56,13 +55,6 @@ Window::Window(void)
 	this->mButtonClose.setBackgroundImage(SpriteParameterFactory::getSpriteParameterWindowButton()->getSpritePtr(1, 0));
 	this->mButtonClose.setBackgroundImageOver(SpriteParameterFactory::getSpriteParameterWindowButton()->getSpritePtr(1, 1));
 	this->mButtonClose.setBackgroundImageFocus(SpriteParameterFactory::getSpriteParameterWindowButton()->getSpritePtr(1, 2));
-
-	this->mButtonMove.setWidth(BUTTON_WIDTH);
-	this->mButtonMove.setHeight(BUTTON_HEIGHT);
-	this->mButtonMove.setBorderSize(0, true);
-	this->mButtonMove.setBackgroundImage(SpriteParameterFactory::getSpriteParameterWindowButton()->getSpritePtr(2, 0));
-	this->mButtonMove.setBackgroundImageOver(SpriteParameterFactory::getSpriteParameterWindowButton()->getSpritePtr(2, 1));
-	this->mButtonMove.setBackgroundImageFocus(SpriteParameterFactory::getSpriteParameterWindowButton()->getSpritePtr(2, 2));
 
 	this->mTitle.setFontSize(TITLE_FONTSIZE);
 	this->mTitle.setFontColor(TITLE_FONTCOLOR);
@@ -210,6 +202,7 @@ void Window::notifySizeChanged()
 	if(this->getWidth() > 0 && this->getHeight() > 0)
 	{
 		this->generateWindowTexture();
+		this->mMovableBar.setSize(this->getWidth(), TOP_HEIGHT);
 		this->updatePosition();
 	}
 }
@@ -241,19 +234,18 @@ void Window::updateButton()
 	{
 		this->mButtonReduce.setVisible(true);
 		this->mButtonClose.setVisible(true);
-		this->mButtonMove.setVisible(true);
 	}
 	else
 	{
 		this->mButtonReduce.setVisible(false);
-		this->mButtonClose.setVisible(false);
-		this->mButtonMove.setVisible(false);	
+		this->mButtonClose.setVisible(false);	
 	}
 }
 
 void Window::updatePosition()
 {
 	this->mWindow.setPosition(this->getX(), this->getY());
+	this->mMovableBar.setPosition(this->getX(), this->getY());
 
 	this->mIcon.setPosition(this->getX() + ICON_OFFSETX, this->getY() + ICON_OFFSETY);
 
@@ -262,9 +254,6 @@ void Window::updatePosition()
 
 	this->mButtonClose.setX(this->getX() + this->getWidth() + BUTTON_CLOSE_OFFSETX);
 	this->mButtonClose.setY(this->getY() + BUTTON_OFFSETY);
-
-	this->mButtonMove.setX(this->getX() + this->getWidth() + BUTTON_MOVE_OFFSETX);
-	this->mButtonMove.setY(this->getY() + BUTTON_OFFSETY);
 
 	this->mTitle.setX(this->getX() + TITLE_OFFSETX);
 	this->mTitle.setY(this->getY() + TITLE_OFFSETY);
@@ -285,14 +274,14 @@ void Window::update(sf::Event p_event)
 		if(this->isOpen())
 		{
 			this->mButtonClose.update(p_event);
-			this->mButtonMove.update(p_event);
 			this->mButtonReduce.update(p_event);
 
-			if(this->mButtonMove.hasFocus())
+			this->mMovableBar.update(p_event);
+			if(this->mMovableBar.hasFocus())
 			{
 				sf::Vector2i mousePosition = EventManager::eventManager->getMousePositionUiLocal();
-				this->setX(mousePosition.x - this->getWidth() - BUTTON_MOVE_OFFSETX - this->mButtonMove.getFocusOriginLocalX());
-				this->setY(mousePosition.y + BUTTON_OFFSETY - this->mButtonMove.getFocusOriginLocalY());
+				this->setX(mousePosition.x - this->mMovableBar.getFocusOriginLocalX());
+				this->setY(mousePosition.y - this->mMovableBar.getFocusOriginLocalY());
 			}
 
 			if(this->mButtonClose.isClicked())
@@ -321,7 +310,6 @@ void Window::draw()
 		this->mTitle.draw();
 		this->mButtonReduce.draw();
 		this->mButtonClose.draw();
-		this->mButtonMove.draw();
 
 		if(!this->isReduce())
 			this->drawContent();		

@@ -74,9 +74,9 @@ private:
 	sf::RenderTexture mWindowTexture;
 	sf::Sprite mWindow;
 
+	Focusable mMovableBar;
 	Button mButtonReduce;
 	Button mButtonClose;
-	Button mButtonMove;
 
 	// Methods
 	void generateWindowTexture();
