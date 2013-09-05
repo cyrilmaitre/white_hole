@@ -41,6 +41,9 @@ hangar = Hangar
 market = Market
 craft = Craft
 shipCargo = Ship's Cargo
+bankCargo = Bank #
+locked = Locked
+unload = Unlock
 #
 #
 # Running stats

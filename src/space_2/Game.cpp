@@ -84,12 +84,12 @@ CharacterShip* Game::getCharacterShip()
 void Game::launchInit( Character* p_character )
 {
 	// Init basic
+	this->mCharacter		= p_character;
 	this->mMap				= new Map();
 	this->mCamera			= new Camera();
-	this->mUserInterface	= new UserInterface();
+	this->mUserInterface	= new UserInterface(this->mCharacter);
 
 	// Init
-	this->mCharacter = p_character;
 	sf::Vector2i characterShipPosition = MapObject::convertPosition(sf::Vector2i(SECTOR_WIDTH / 2, SECTOR_HEIGHT / 2), SECTOR_PLANE, SHIP_PLANE);
 	this->getCharacterShip()->setPosition(characterShipPosition.x, characterShipPosition.y);
 	this->getUserInterface()->getXpBarCharacter()->setLevelable(this->getCharacter());
@@ -225,6 +225,6 @@ void Game::notifyPilotedShipChanged()
 	this->mUserInterface->notifyWeaponViewChanged();
 	this->mUserInterface->getWindowShipSmall()->setCharacterShip(this->getCharacter()->getShipPiloted());
 	this->mUserInterface->getWindowCargo()->getContainerView()->setContainerable(this->getCharacter()->getShipPiloted());
-	this->mUserInterface->getWindowStationShipCargo()->getContainerView()->setContainerable(this->getCharacter()->getShipPiloted());
+	this->mUserInterface->getWindowCargoStationShip()->getContainerView()->setContainerable(this->getCharacter()->getShipPiloted());
 	EntityManager::add(this->getCharacter()->getShipPiloted());
 }

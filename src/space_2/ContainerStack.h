@@ -9,6 +9,7 @@ public:
 	enum ContainerStackType 
 	{
 		TypeCharacterShip = 0,
+		TypeCharacterBank,
 		TypeNone
 	};
 

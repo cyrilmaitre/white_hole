@@ -1,6 +1,7 @@
 #include "UserInterface.h"
 #include "Game.h"
 #include "ContainerStackViewManager.h"
+#include "CharacterBank.h"
 
 
 //*************************************************************
@@ -22,9 +23,12 @@ UserInterface * UserInterface::mUserInterface;
 //*************************************************************
 // Constructor - Destructor
 //*************************************************************
-UserInterface::UserInterface(void)
+UserInterface::UserInterface( Character* p_character )
 {
 	this->mUserInterface = this;
+	this->mStationScreen = NULL;
+	this->mCharacter = NULL;
+	this->setCharacter(p_character);
 
 	// Window statics
 	this->mWindowShipSmall = new WindowShipSmall();
@@ -49,11 +53,12 @@ UserInterface::UserInterface(void)
 	this->mWindowDynamics.push_back(this->mWindowMap);
 	this->mWindowDynamics.push_back(this->mWindowJukebox);
 
-	this->mWindowStationShipCargo = new WindowCargoStation(Resource::resource->getBundle()->getString("shipCargo"));
+	this->mWindowCargoStationShip = new WindowCargoStation(Resource::resource->getBundle()->getString("shipCargo"));
 
-	this->mWindowDynamicsStation.push_back(this->mWindowStationShipCargo);
+	this->mWindowDynamicsStation.push_back(this->mWindowCargoStationShip);
 	
 	// Other stuffs
+	this->mStationScreen = new StationScreen(this->getCharacter());
 	this->mXpBarCharacter.setSize(XPBAR_CHARACTER_WIDTH - this->mXpBarCharacter.getBorderSize() * 2, XPBAR_CHARACTER_HEIGHT);
 	this->mInterfaceBottom.setTexture(*Resource::resource->getTexture(IMG_INTERFACE_BOTTOM));
 
@@ -76,12 +81,35 @@ UserInterface::~UserInterface(void)
 	delete this->mWindowCargoLoot;
 	delete this->mWindowMap;
 	delete this->mWindowJukebox;
+
+	delete this->mWindowCargoStationShip;
+	for(int i = 0; i < this->mWindowCargoStationBanks.size(); i++)
+	{
+		if(this->mWindowCargoStationBanks[i] != NULL)
+			delete this->mWindowCargoStationBanks[i];
+	}
+
+	delete this->mStationScreen;
 }
 
 
 //*************************************************************
 // Getters - Setters
 //*************************************************************
+Character* UserInterface::getCharacter()
+{
+	return this->mCharacter;
+}
+
+void UserInterface::setCharacter( Character* p_character )
+{
+	if(this->mCharacter != p_character)
+	{
+		this->mCharacter = p_character;
+		this->notifyCharacterChanged();
+	}
+}
+
 WindowCharacter* UserInterface::getWindowCharacter()
 {
 	return this->mWindowCharacter;
@@ -147,9 +175,24 @@ WindowMap* UserInterface::getWindowMap()
 	return this->mWindowMap;
 }
 
-WindowCargoStation* UserInterface::getWindowStationShipCargo()
+WindowCargoStation* UserInterface::getWindowCargoStationShip()
 {
-	return this->mWindowStationShipCargo;
+	return this->mWindowCargoStationShip;
+}
+
+int UserInterface::getWindowCargoStationBankCount()
+{
+	return this->mWindowCargoStationBanks.size();
+}
+
+WindowCargoStation* UserInterface::getWindowCargoStationBank( int p_index )
+{
+	if(p_index < 0)
+		p_index = 0;
+	else if(p_index >= this->getWindowCargoStationBankCount())
+		p_index = this->getWindowCargoStationBankCount() - 1;
+
+	return this->mWindowCargoStationBanks[p_index];
 }
 
 void UserInterface::setWindowSelected( WindowSelected* p_window )
@@ -165,7 +208,7 @@ void UserInterface::setWindowSelected( WindowSelected* p_window )
 
 StationScreen* UserInterface::getStationScreen()
 {
-	return &this->mStationScreen;
+	return this->mStationScreen;
 }
 
 ExperienceBar* UserInterface::getXpBarCharacter()
@@ -326,6 +369,32 @@ void UserInterface::notifyWeaponViewChanged()
 	this->updateWeaponPosition();
 }
 
+void UserInterface::notifyCharacterChanged()
+{
+	// Update station screen
+	if(this->mStationScreen != NULL)
+		this->mStationScreen->setCharacter(this->getCharacter());
+
+	// Clear bank
+	for(int i = 0; i < this->mWindowCargoStationBanks.size(); i++)
+	{
+		if(this->mWindowCargoStationBanks[i] != NULL)
+			delete this->mWindowCargoStationBanks[i];
+	}
+	this->mWindowCargoStationBanks.clear();
+
+	if(this->getCharacter() != NULL)
+	{
+		for(int i = 0; i < this->getCharacter()->getBankCount(); i++)
+		{
+			CharacterBank* currentBank = this->getCharacter()->getBank(i);
+			WindowCargoStation* currentWindowBank = new WindowCargoStation(Resource::resource->getBundle()->getString("bankCargo") + Tools::buildStringWithInt(currentBank->getNumber()));
+			currentWindowBank->getContainerView()->setContainerable(currentBank);
+			this->mWindowCargoStationBanks.push_back(currentWindowBank);
+		}
+	}
+}
+
 void UserInterface::updatePosition()
 {
 	// Update interfaceBottom
@@ -368,6 +437,8 @@ void UserInterface::moveWindowDynamicStationToBegin( int p_index )
 	this->mWindowDynamicsStation.erase(this->mWindowDynamicsStation.begin() + p_index);
 	this->mWindowDynamicsStation.insert(this->mWindowDynamicsStation.begin(), tmpWindow);
 }
+
+
 
 
 

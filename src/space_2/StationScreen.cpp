@@ -5,61 +5,55 @@
 #include "NetworkJobManager.h"
 #include "RunningStats.h"
 #include "Juckebox.h"
+#include "CharacterBank.h"
+#include "Tools.h"
 
 
 //*************************************************************
 // Define
 //*************************************************************
-#define LEFTMENU_BUTTON_WIDTH				150
-#define LEFTMENU_BUTTON_HEIGHT				25
-#define LEFTMENU_BUTTON_MARGIN				10
-#define LEFTMENU_BUTTON_CARGO_MARGINTOP		75
 #define LEFTMENU_MARGIN						25
-#define LEFTMENU_PADDING					10
-#define LEFTMENU_WIDTH						LEFTMENU_PADDING * 2 + LEFTMENU_BUTTON_WIDTH
-#define LEFTMENU_BACKCOLOR					sf::Color(128, 128, 128, 200)
-#define LEFTMENU_BORDCOLOR					sf::Color(128, 128, 128, 250)
-#define LEFTMENU_BORDSIZE					2
 
 
 //*************************************************************
 // Constructreur - Destructeur
 //*************************************************************
-StationScreen::StationScreen(void)
+StationScreen::StationScreen(Character* p_character)
 {
 	this->mStation = NULL;
+	this->mCharacter = NULL;
+	this->mLeftMenu = NULL;
 
-	this->mFieldsetLeftMenu.setBorderSize(LEFTMENU_BORDSIZE);
-	this->mFieldsetLeftMenu.setBorderColor(LEFTMENU_BORDCOLOR, true);
-	this->mFieldsetLeftMenu.setBackgroundColor(LEFTMENU_BACKCOLOR);
-	this->mFieldsetLeftMenu.setDisplayTitle(false);
-
-	this->mButtonHangar.setSize(LEFTMENU_BUTTON_WIDTH, LEFTMENU_BUTTON_HEIGHT);
-	this->mButtonHangar.setTitle(Resource::resource->getBundle()->getString("hangar"));
-
-	this->mButtonMarket.setSize(LEFTMENU_BUTTON_WIDTH, LEFTMENU_BUTTON_HEIGHT);
-	this->mButtonMarket.setTitle(Resource::resource->getBundle()->getString("market"));
-
-	this->mButtonCraft.setSize(LEFTMENU_BUTTON_WIDTH, LEFTMENU_BUTTON_HEIGHT);
-	this->mButtonCraft.setTitle(Resource::resource->getBundle()->getString("craft"));
-	
-	this->mButtonShipCargo.setSize(LEFTMENU_BUTTON_WIDTH, LEFTMENU_BUTTON_HEIGHT);
-	this->mButtonShipCargo.setTitle(Resource::resource->getBundle()->getString("shipCargo"));
-
-	this->mButtonUndock.setSize(LEFTMENU_BUTTON_WIDTH, LEFTMENU_BUTTON_HEIGHT);
-	this->mButtonUndock.setTitle(Resource::resource->getBundle()->getString("undock"));
+	this->setCharacter(p_character);
+	this->mLeftMenu = new StationScreenLeftMenu(p_character, this);
 
 	this->notifyAppSizeChanged();
 }
 
 StationScreen::~StationScreen(void)
 {
+	if(this->mLeftMenu != NULL)
+		delete this->mLeftMenu;
 }
 
 
 //*************************************************************
 // Getters - Setters
 //*************************************************************
+Character* StationScreen::getCharacter()
+{
+	return this->mCharacter;
+}
+
+void StationScreen::setCharacter( Character* p_character )
+{
+	if(this->mCharacter != p_character)
+	{
+		this->mCharacter = p_character;
+		this->notifyCharacterChanged();
+	}
+}
+
 Station* StationScreen::getStation()
 {
 	return this->mStation;
@@ -80,19 +74,21 @@ void StationScreen::setStation( Station* p_station )
 //*************************************************************
 void StationScreen::launchBegin()
 {
-	UserInterface::mUserInterface->getWindowStationShipCargo()->getContainerView()->notifyContainerableChanged();
+	// Ship Cargo refresh
+	UserInterface::mUserInterface->getWindowCargoStationShip()->getContainerView()->notifyContainerableChanged();
 }
 
 void StationScreen::launchEnd()
 {
+	// Ship Cargo refresh
 	UserInterface::mUserInterface->getWindowCargo()->getContainerView()->notifyContainerableChanged();
 }
 
 void StationScreen::launch( Station* p_station )
 {
 	this->launchBegin();
-	this->notifyAppSizeChanged();
 	this->setStation(p_station);
+	this->notifyAppSizeChanged();
 	while(Resource::resource->getApp()->isOpen() && Resource::resource->isAppRunning() && this->getStation() != NULL)
 	{
 		// Update
@@ -137,19 +133,15 @@ void StationScreen::update()
 
 	// Update Windows
 	UserInterface::mUserInterface->updateWindowDynamicsStation();
+
+	// Update Left menu
+	this->mLeftMenu->update();
 }
 
 void StationScreen::updatePosition()
 {
 	this->mBackground.setPosition(0, 0);
-	this->mFieldsetLeftMenu.setPosition(LEFTMENU_MARGIN, LEFTMENU_MARGIN);
-	
-	this->mButtonHangar.setPosition(this->mFieldsetLeftMenu.getLeftX() + LEFTMENU_PADDING, this->mFieldsetLeftMenu.getTopY() + LEFTMENU_PADDING);
-	this->mButtonMarket.setPosition(this->mButtonHangar.getLeftX(), this->mButtonHangar.getBottomY() + LEFTMENU_BUTTON_MARGIN);
-	this->mButtonCraft.setPosition(this->mButtonMarket.getLeftX(), this->mButtonMarket.getBottomY() + LEFTMENU_BUTTON_MARGIN);
-	this->mButtonShipCargo.setPosition(this->mButtonCraft.getLeftX(), this->mButtonCraft.getBottomY() + LEFTMENU_BUTTON_CARGO_MARGINTOP);
-	
-	this->mButtonUndock.setPosition(this->mFieldsetLeftMenu.getLeftX() + LEFTMENU_BUTTON_MARGIN, this->mFieldsetLeftMenu.getBottomY() - LEFTMENU_BUTTON_MARGIN - this->mButtonUndock.getHeight());
+	this->mLeftMenu->setPosition(LEFTMENU_MARGIN, LEFTMENU_MARGIN);
 }
 
 void StationScreen::updateBackgroundScale()
@@ -173,29 +165,14 @@ void StationScreen::update( sf::Event p_event )
 	// Update windows
 	UserInterface::mUserInterface->updateWindowDynamicsStation(p_event);
 
-	// Update button
-	this->mButtonHangar.update(p_event);
-	this->mButtonMarket.update(p_event);
-	this->mButtonCraft.update(p_event);
-
-	this->mButtonShipCargo.update(p_event);
-	if(this->mButtonShipCargo.isClicked())
-		UserInterface::mUserInterface->getWindowStationShipCargo()->setOpen(!UserInterface::mUserInterface->getWindowStationShipCargo()->isOpen());
-
-	this->mButtonUndock.update(p_event);
-	if(this->mButtonUndock.isClicked())
-		this->setStation(NULL);
+	// Update left menu
+	this->mLeftMenu->update(p_event);	
 }
 
 void StationScreen::draw()
 {
 	Resource::resource->getApp()->draw(this->mBackground);
-	this->mFieldsetLeftMenu.draw();
-	this->mButtonHangar.draw();
-	this->mButtonMarket.draw();
-	this->mButtonCraft.draw();
-	this->mButtonShipCargo.draw();
-	this->mButtonUndock.draw();
+	this->mLeftMenu->draw();
 
 	UserInterface::mUserInterface->drawWindowDynamicsStation();
 	ContainerStackViewManager::getInstance()->draw();
@@ -208,7 +185,7 @@ void StationScreen::notifyAppSizeChanged()
 	this->updatePosition();
 	this->updateBackgroundScale();
 
-	this->mFieldsetLeftMenu.setSize(LEFTMENU_WIDTH, Resource::resource->getViewUi()->getSize().y - LEFTMENU_MARGIN * 2);
+	this->mLeftMenu->setSize(StationScreenLeftMenu::getWidth(), Resource::resource->getViewUi()->getSize().y - LEFTMENU_MARGIN * 2);
 }
 
 void StationScreen::notifyStationChanged()
@@ -219,6 +196,13 @@ void StationScreen::notifyStationChanged()
 		this->updateBackgroundScale();
 	}
 }
+
+void StationScreen::notifyCharacterChanged()
+{
+	if(this->mLeftMenu != NULL)
+		this->mLeftMenu->setCharacter(this->getCharacter());
+}
+
 
 
 

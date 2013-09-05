@@ -3,16 +3,20 @@
 #include "Station.h"
 #include "Button.h"
 #include "FieldSet.h"
+#include "StationScreenLeftMenu.h"
 
 
 class StationScreen
 {
 public:
 	// Constructor - Destructor
-	StationScreen(void);
+	StationScreen(Character* p_character);
 	~StationScreen(void);
 
 	// Getters - Setters
+	Character* getCharacter();
+	void setCharacter(Character* p_character);
+
 	Station* getStation();
 	void setStation(Station* p_station);
 
@@ -27,20 +31,16 @@ public:
 	void draw();
 	void notifyAppSizeChanged();
 	void notifyStationChanged();
+	void notifyCharacterChanged();
 
 
 private:
 	// Attributs
+	Character* mCharacter;
 	Station* mStation;
 	sf::Event mEvent;
 
 	sf::Sprite mBackground;
-	FieldSet mFieldsetLeftMenu;
-
-	Button mButtonHangar;
-	Button mButtonMarket;
-	Button mButtonCraft;
-	Button mButtonShipCargo;
-	Button mButtonUndock;
+	StationScreenLeftMenu* mLeftMenu;
 };
 

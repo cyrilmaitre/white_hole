@@ -1101,6 +1101,9 @@
     <ClCompile Include="CharacterBank.cpp">
       <Filter>Fichiers sources\game\user\character\bank</Filter>
     </ClCompile>
+    <ClCompile Include="StationScreenLeftMenu.cpp">
+      <Filter>Fichiers sources\game\ui\stationscreen</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h">
@@ -1870,6 +1873,9 @@
     </ClInclude>
     <ClInclude Include="CharacterBank.h">
       <Filter>Fichiers d%27en-tête\game\user\character\bank</Filter>
+    </ClInclude>
+    <ClInclude Include="StationScreenLeftMenu.h">
+      <Filter>Fichiers d%27en-tête\game\ui\stationscreen</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

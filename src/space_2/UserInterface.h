@@ -26,10 +26,13 @@ class UserInterface
 {
 public:
 	// Constructor - Destructor 
-	UserInterface(void);
+	UserInterface(Character* p_character);
 	~UserInterface(void);
 
 	// Getters - Setters
+	Character* getCharacter();
+	void setCharacter(Character* p_character);
+
 	WindowShipSmall* getWindowShipSmall();
 	WindowCharacter* getWindowCharacter();
 	WindowJukebox* getWindowJukebox();
@@ -42,7 +45,10 @@ public:
 	WindowCargo* getWindowCargo();
 	WindowCargoLoot* getWindowCargoLoot();
 	WindowMap* getWindowMap();
-	WindowCargoStation* getWindowStationShipCargo();
+
+	WindowCargoStation* getWindowCargoStationShip();
+	int getWindowCargoStationBankCount();
+	WindowCargoStation* getWindowCargoStationBank(int p_index);
 
 	WindowSelected* getWindowSelected();
 	void setWindowSelected(WindowSelected* p_window);
@@ -69,6 +75,7 @@ public:
 
 	void handleScreenAppResized();
 	void notifyWeaponViewChanged();
+	void notifyCharacterChanged();
 
 	// Static
 	static UserInterface* mUserInterface;
@@ -76,6 +83,8 @@ public:
 
 private:
 	// Attributs
+	Character* mCharacter;
+
 	WindowShipSmall *mWindowShipSmall;
 	WindowSelected *mWindowSelected;
 	WindowSelectedCharacterShip *mWindowSelectedCharacterShip;
@@ -93,8 +102,9 @@ private:
 	WindowJukebox *mWindowJukebox;
 
 	std::vector<Window*> mWindowDynamicsStation;
-	WindowCargoStation* mWindowStationShipCargo;
-	StationScreen mStationScreen;
+	WindowCargoStation* mWindowCargoStationShip;
+	std::vector<WindowCargoStation*> mWindowCargoStationBanks;
+	StationScreen* mStationScreen;
 
 	// Interface bottom
 	MenuQuick mMenuQuick;

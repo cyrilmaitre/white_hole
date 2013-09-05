@@ -30,6 +30,7 @@ public:
 	std::string getAvatarId();
 	void setAvatarId(std::string p_id);
 
+	bool hasEnoughCredit(long p_credit);
 	long getCredit();
 	void setCredit(long p_credit);
 
@@ -62,6 +63,7 @@ public:
 
 	int getBankCount();
 	CharacterBank* getBank(int p_index);
+	CharacterBank* getBankByNumber(int p_number);
 
 	int getShipCount();
 	CharacterShip *getShip(int p_index);

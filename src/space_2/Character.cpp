@@ -121,6 +121,11 @@ void Character::setAvatarId( std::string p_id )
 	this->mAvatarId = p_id;
 }
 
+bool Character::hasEnoughCredit( long p_credit )
+{
+	return this->getCredit() >= p_credit;
+}
+
 long Character::getCredit()
 {
 	return this->mCredit;
@@ -249,6 +254,21 @@ CharacterBank* Character::getBank( int p_index )
 	return this->mBanks[p_index];
 }
 
+CharacterBank* Character::getBankByNumber( int p_number )
+{
+	CharacterBank* currentBank = this->getBank(p_number - 1);
+	if(currentBank != NULL && currentBank->getNumber() == p_number)
+		return currentBank;
+
+	for(int i = 0; i < this->getBankCount(); i++)
+	{
+		if(this->mBanks[i]->getNumber() == p_number)
+			return this->mBanks[i];
+	}
+
+	return NULL;
+}
+
 int Character::getShipCount()
 {
 	return this->mShips.size();
@@ -346,11 +366,19 @@ Json::Value Character::saveToJson()
 	json[CHARACTER_JSON_IDJOB] = this->getJob()->getId();
 	json[CHARACTER_JSON_IDUSER] = this->getUser()->getId();
 	
+	// Skills
 	Json::Value jsonSkills;
 	for(int i = 0; i < CHARACTER_SKILL_COUNT; i++)
 		jsonSkills[i] = this->mSkillCharacters[i]->saveToJson();
 	json[CHARACTER_JSON_CHARACTERSKILLS] = jsonSkills;
 
+	// Banks
+	Json::Value jsonBanks;
+	for(int i = 0; i < this->mBanks.size(); i++)
+		jsonBanks[i] = this->mBanks[i]->saveToJson();
+	json[JSON_CHARACTERBANKS] = jsonBanks;
+
+	// Ships
 	json[CHARACTER_JSON_CHARACTERSHIPCOUNT] = this->getShipCount();
 	Json::Value jsonShip;
 	for(int i = 0; i < this->getShipCount(); i++)

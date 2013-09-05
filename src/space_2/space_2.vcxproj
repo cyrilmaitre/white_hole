@@ -251,6 +251,7 @@
     <ClCompile Include="StationModel.cpp" />
     <ClCompile Include="StationModelFactory.cpp" />
     <ClCompile Include="StationScreen.cpp" />
+    <ClCompile Include="StationScreenLeftMenu.cpp" />
     <ClCompile Include="Stuffable.cpp" />
     <ClCompile Include="StuffableData.cpp" />
     <ClCompile Include="TitleScreen.cpp" />
@@ -509,6 +510,7 @@
     <ClInclude Include="StationModel.h" />
     <ClInclude Include="StationModelFactory.h" />
     <ClInclude Include="StationScreen.h" />
+    <ClInclude Include="StationScreenLeftMenu.h" />
     <ClInclude Include="Stuffable.h" />
     <ClInclude Include="StuffableData.h" />
     <ClInclude Include="TitleScreen.h" />

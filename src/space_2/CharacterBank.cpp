@@ -22,7 +22,7 @@
 //*************************************************************
 // Constructor - Destructor
 //*************************************************************
-CharacterBank::CharacterBank( Json::Value json, Character *p_character )
+CharacterBank::CharacterBank( Json::Value json, Character *p_character ) : Containerable(ContainerStack::ContainerStackType::TypeCharacterBank)
 {
 	this->mCharacter = NULL;
 	this->mId = -1;
@@ -132,12 +132,13 @@ void CharacterBank::setPrice( long p_price )
 //*************************************************************
 bool CharacterBank::canBeUnlock()
 {
-	return this->getCharacter() != NULL && this->getCharacter()->getCredit() > this->getPrice();
+	return	this->getCharacter() != NULL && 
+			this->getNumber() > 1 && this->getCharacter()->getBankByNumber(this->getNumber() - 1)->isUnlock();
 }
 
 void CharacterBank::unlock()
 {
-	if(this->canBeUnlock())
+	if(this->canBeUnlock() && this->getCharacter()->hasEnoughCredit(this->getPrice()))
 	{
 		this->getCharacter()->decCredit(this->getPrice());
 		this->setUnlock(true);
