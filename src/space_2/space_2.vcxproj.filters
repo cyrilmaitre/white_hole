@@ -343,6 +343,12 @@
     <Filter Include="Fichiers sources\game\ui\stationscreen">
       <UniqueIdentifier>{0f4e977c-6eba-4891-944b-5125d5b62d93}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Fichiers d%27en-tête\game\user\character\bank">
+      <UniqueIdentifier>{9174a5ae-b334-4f4b-a528-eed3da6f02a5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fichiers sources\game\user\character\bank">
+      <UniqueIdentifier>{3a5e88af-6e35-48cd-8425-c56a1bb3ced5}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Game.cpp">
@@ -1091,6 +1097,9 @@
     </ClCompile>
     <ClCompile Include="WindowCargoStation.cpp">
       <Filter>Fichiers sources\game\ui\window</Filter>
+    </ClCompile>
+    <ClCompile Include="CharacterBank.cpp">
+      <Filter>Fichiers sources\game\user\character\bank</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1858,6 +1867,9 @@
     </ClInclude>
     <ClInclude Include="WindowCargoStation.h">
       <Filter>Fichiers d%27en-tête\game\ui\window</Filter>
+    </ClInclude>
+    <ClInclude Include="CharacterBank.h">
+      <Filter>Fichiers d%27en-tête\game\user\character\bank</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

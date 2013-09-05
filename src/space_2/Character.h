@@ -6,26 +6,11 @@
 #include "Levelable.h"
 
 class CharacterShip;
+class CharacterBank;
 class SkillCharacter;
 
 // Define
 #define CHARACTER_SKILL_COUNT				9
-#define CHARACTER_JSON_IDCHARACTER			"idCharacter"
-#define CHARACTER_JSON_NAME					"name"
-#define CHARACTER_JSON_AVATARID				"avatarId"
-#define CHARACTER_JSON_SKILLPOINTS			"skillPoints"
-#define CHARACTER_JSON_LEVEL				"level"
-#define CHARACTER_JSON_EXPERIENCE			"experience"
-#define CHARACTER_JSON_CREDIT				"credit"
-#define CHARACTER_JSON_DATECREATION			"dateCreation"
-#define CHARACTER_JSON_TIMEPLAYED			"timePlayed"
-#define CHARACTER_JSON_ALIVE				"alive"
-#define CHARACTER_JSON_IDRACE				"idRace"
-#define CHARACTER_JSON_IDJOB				"idJob"
-#define CHARACTER_JSON_IDUSER				"idUser"
-#define CHARACTER_JSON_CHARACTERSKILLS		"skills"
-#define CHARACTER_JSON_CHARACTERSHIP		"ships"
-#define CHARACTER_JSON_CHARACTERSHIPCOUNT	"shipsCount"
 
 class Character : public Levelable
 {
@@ -75,6 +60,9 @@ public:
 	SkillCharacter *getSkillCharacter(int p_skillId);
 	SkillCharacter *getSkillCharacterByIndex(int index);
 
+	int getBankCount();
+	CharacterBank* getBank(int p_index);
+
 	int getShipCount();
 	CharacterShip *getShip(int p_index);
 
@@ -82,7 +70,8 @@ public:
 	void setShipPiloted(CharacterShip *p_ship);
 
 	// Methods
-	void addShip(CharacterShip* p_ship);
+	void addShip(CharacterShip* p_ship); 
+	void addBank(CharacterBank* p_bank);
 
 	void incCredit(long p_inc);
 	void decCredit(long p_dec);
@@ -113,6 +102,7 @@ private:
 	User* mUser; // Memory not managed here so dont need to delete this ptr
 	SkillCharacter* mSkillCharacters[CHARACTER_SKILL_COUNT];
 
+	std::vector<CharacterBank*> mBanks;
 	std::vector<CharacterShip*> mShips;
 	CharacterShip *mShipPiloted;
 };

@@ -4,6 +4,29 @@
 #include "Game.h"
 #include "CharacterUpdate.h"
 #include "SkillCharacter.h"
+#include "CharacterBank.h"
+
+
+//*************************************************************
+// Define
+//*************************************************************
+#define CHARACTER_JSON_IDCHARACTER			"idCharacter"
+#define CHARACTER_JSON_NAME					"name"
+#define CHARACTER_JSON_AVATARID				"avatarId"
+#define CHARACTER_JSON_SKILLPOINTS			"skillPoints"
+#define CHARACTER_JSON_LEVEL				"level"
+#define CHARACTER_JSON_EXPERIENCE			"experience"
+#define CHARACTER_JSON_CREDIT				"credit"
+#define CHARACTER_JSON_DATECREATION			"dateCreation"
+#define CHARACTER_JSON_TIMEPLAYED			"timePlayed"
+#define CHARACTER_JSON_ALIVE				"alive"
+#define CHARACTER_JSON_IDRACE				"idRace"
+#define CHARACTER_JSON_IDJOB				"idJob"
+#define CHARACTER_JSON_IDUSER				"idUser"
+#define CHARACTER_JSON_CHARACTERSKILLS		"skills"
+#define CHARACTER_JSON_CHARACTERSHIP		"ships"
+#define JSON_CHARACTERBANKS					"banks"
+#define CHARACTER_JSON_CHARACTERSHIPCOUNT	"shipsCount"
 
 
 //*************************************************************
@@ -42,6 +65,13 @@ Character::~Character(void)
 	for(int i = 0; i < CHARACTER_SKILL_COUNT; i++)
 		if(this->mSkillCharacters[i] != NULL)
 			delete this->mSkillCharacters[i];
+
+	for(int i = 0; i < this->mBanks.size(); i++)
+	{
+		if(this->mBanks[i] != NULL)
+			delete this->mBanks[i];
+	}
+	this->mBanks.clear();
 
 	this->destroyShips();
 }
@@ -204,6 +234,21 @@ SkillCharacter * Character::getSkillCharacterByIndex( int index )
 		return NULL;
 }
 
+int Character::getBankCount()
+{
+	return this->mBanks.size();
+}
+
+CharacterBank* Character::getBank( int p_index )
+{
+	if(p_index < 0)
+		p_index = 0;
+	else if(p_index >= this->getBankCount())
+		p_index = this->getBankCount() - 1;
+
+	return this->mBanks[p_index];
+}
+
 int Character::getShipCount()
 {
 	return this->mShips.size();
@@ -249,6 +294,7 @@ void Character::loadFromJson( Json::Value json )
 	this->setRace(FactoryGet::getRaceFactory()->getRace(json.get(CHARACTER_JSON_IDRACE, 0).asInt()));
 	this->setJob(FactoryGet::getJobFactory()->getJob(json.get(CHARACTER_JSON_IDJOB, 0).asInt()));
 	
+	// Skills
 	Json::Value jsonSkills = json.get(CHARACTER_JSON_CHARACTERSKILLS, NULL);
 	if(jsonSkills != NULL)
 	{
@@ -256,6 +302,18 @@ void Character::loadFromJson( Json::Value json )
 			this->mSkillCharacters[i] = new SkillCharacter(jsonSkills[i], this);
 	}
 
+	// Banks
+	Json::Value jsonBanks = json.get(JSON_CHARACTERBANKS, NULL);
+	if(jsonBanks != NULL)
+	{
+		for(int i = 0; i < jsonBanks.size(); i++)
+		{
+			CharacterBank* currentBank = new CharacterBank(jsonBanks.get(i, NULL), this);
+			this->addBank(currentBank);
+		}
+	}
+	
+	// Ships
 	this->destroyShips();
 	int shipCount = json.get(CHARACTER_JSON_CHARACTERSHIPCOUNT, 0).asInt();
 	Json::Value jsonShips = json.get(CHARACTER_JSON_CHARACTERSHIP, NULL);
@@ -305,6 +363,11 @@ Json::Value Character::saveToJson()
 void Character::addShip(CharacterShip* p_ship)
 {
 	this->mShips.push_back(p_ship);
+}
+
+void Character::addBank( CharacterBank* p_bank )
+{
+	this->mBanks.push_back(p_bank);
 }
 
 void Character::incCredit( long p_inc )
@@ -359,6 +422,8 @@ void Character::createBase()
 	this->mSkillCharacters[7] = new SkillCharacter(FactoryGet::getSkillFactory()->getSkillSalvaging(), this);
 	this->mSkillCharacters[8] = new SkillCharacter(FactoryGet::getSkillFactory()->getSkillConstruction(), this);
 }
+
+
 
 
 

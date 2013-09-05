@@ -2,6 +2,9 @@
 #include "ClockManager.h"
 #include "UserInterface.h"
 #include "ContainerStackViewManager.h"
+#include "NetworkJobManager.h"
+#include "RunningStats.h"
+#include "Juckebox.h"
 
 
 //*************************************************************
@@ -123,7 +126,16 @@ void StationScreen::update()
 	// Update Clock 
 	ClockManager::update();
 
-	// Update windows
+	// Update Juckbox
+	Resource::resource->getJuckebox()->update();
+
+	// Update Network Manager
+	NetworkJobManager::getInstance()->update();
+
+	// Update runningstats
+	RunningStats::update();
+
+	// Update Windows
 	UserInterface::mUserInterface->updateWindowDynamicsStation();
 }
 
@@ -155,6 +167,9 @@ void StationScreen::update( sf::Event p_event )
 	if(p_event.type == sf::Event::MouseButtonReleased && p_event.mouseButton.button == sf::Mouse::Button::Left)
 		ContainerStackViewManager::getInstance()->releaseDrag();
 
+	// Update show Stats
+	RunningStats::update(p_event);
+
 	// Update windows
 	UserInterface::mUserInterface->updateWindowDynamicsStation(p_event);
 
@@ -184,6 +199,8 @@ void StationScreen::draw()
 
 	UserInterface::mUserInterface->drawWindowDynamicsStation();
 	ContainerStackViewManager::getInstance()->draw();
+
+	RunningStats::draw();
 }
 
 void StationScreen::notifyAppSizeChanged()
