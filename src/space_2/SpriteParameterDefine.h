@@ -55,6 +55,9 @@
 #define IC_16X16_MAP				"2-5"
 #define IC_16X16_PLANET				"0-6"
 #define IC_16X16_STATION			"1-6"
+#define IC_16X16_INFO				"0-7"
+#define IC_16X16_ERROR				"1-7"
+#define IC_16X16_WARNING			"2-7"
 
 
 // ICON 32X32
@@ -70,6 +73,9 @@
 #define IC_32X32_MAP				"7-1"
 #define IC_32X32_PANET				"0-2"
 #define IC_32X32_STATION			"1-2"
+#define IC_32X32_INFO				"0-3"
+#define IC_32X32_ERROR				"1-3"
+#define IC_32X32_WARNING			"2-3"
 
 
 // ICON 48X48
@@ -78,6 +84,9 @@
 #define IC_48X48_MAP				"2-0"
 #define IC_48X48_PLANET				"0-1"
 #define IC_48X48_STATION			"1-1"
+#define IC_48X48_INFO				"0-2"
+#define IC_48X48_ERROR				"1-2"
+#define IC_48X48_WARNING			"2-2"
 
 
 // ICON 64X64
@@ -88,6 +97,9 @@
 #define IC_64X64_MAP				"4-0"
 #define IC_64X64_PLANET				"0-1"
 #define IC_64X64_STATION			"1-1"
+#define IC_64X64_INFO				"0-2"
+#define IC_64X64_ERROR				"1-2"
+#define IC_64X64_WARNING			"2-2"
 
 
 #endif
