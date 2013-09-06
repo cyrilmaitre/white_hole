@@ -225,6 +225,39 @@ sf::Vector2i UserInterface::getInterfaceBottom()
 //*************************************************************
 // Method
 //*************************************************************
+void UserInterface::addWindowPopup( WindowPopup* p_window )
+{
+	this->mWindowPopups.push_back(p_window);
+	this->mWindowDynamics.push_back(p_window);
+	this->mWindowDynamicsStation.push_back(p_window);
+}
+
+void UserInterface::removeWindowPopup( WindowPopup* p_window )
+{
+	// Remove from dynamics 
+	for(int i = 0; i < this->mWindowDynamics.size(); i++)
+	{
+		if(this->mWindowDynamics[i]->getObjectId() == p_window->getObjectId())
+			this->mWindowDynamics.erase(this->mWindowDynamics.begin() + i);
+	}
+
+	for(int i = 0; i < this->mWindowDynamicsStation.size(); i++)
+	{
+		if(this->mWindowDynamicsStation[i]->getObjectId() == p_window->getObjectId())
+			this->mWindowDynamicsStation.erase(this->mWindowDynamicsStation.begin() + i);
+	}
+
+	// Remove from pop up
+	for(int i = 0; i < this->mWindowPopups.size(); i++)
+	{
+		if(this->mWindowPopups[i]->getObjectId() == p_window->getObjectId())
+		{
+			delete this->mWindowPopups[i];
+			this->mWindowPopups.erase(this->mWindowPopups.begin() + i);
+		}
+	}
+}
+
 void UserInterface::handleScreenAppResized()
 {
 	this->updatePosition();
@@ -297,6 +330,18 @@ void UserInterface::update()
 		this->mWeaponViews[i]->update();
 }
 
+void UserInterface::updateWindowPopups()
+{
+	for(int i = 0; i < this->mWindowPopups.size(); i++)
+	{
+		if(!this->mWindowPopups[i]->isOpen())
+		{
+			this->removeWindowPopup(this->mWindowPopups[i]);
+			i--;
+		}
+	}
+}
+
 void UserInterface::updateWindowStatics()
 {
 	this->mWindowShipSmall->update();
@@ -306,14 +351,22 @@ void UserInterface::updateWindowStatics()
 
 void UserInterface::updateWindowDynamics()
 {
+	// Dynamics
 	for(int i = 0; i < this->mWindowDynamics.size(); i++)
 		this->mWindowDynamics[i]->update();
+
+	// Popups
+	this->updateWindowPopups();
 }
 
 void UserInterface::updateWindowDynamicsStation()
 {
+	// Dynamics
 	for(int i = 0; i < this->mWindowDynamicsStation.size(); i++)
 		this->mWindowDynamicsStation[i]->update();
+
+	// Popups
+	this->updateWindowPopups();
 }
 
 void UserInterface::draw()
@@ -437,6 +490,8 @@ void UserInterface::moveWindowDynamicStationToBegin( int p_index )
 	this->mWindowDynamicsStation.erase(this->mWindowDynamicsStation.begin() + p_index);
 	this->mWindowDynamicsStation.insert(this->mWindowDynamicsStation.begin(), tmpWindow);
 }
+
+
 
 
 

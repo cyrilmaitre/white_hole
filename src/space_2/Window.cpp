@@ -29,10 +29,10 @@
 #define BOTTOM_WIDTH								32
 #define BOTTOM_HEIGHT								4
 #define DEFAULT_PADDING								10
-#define PADDING_LEFT								LEFT_WIDTH + DEFAULT_PADDING
-#define PADDING_RIGHT								RIGHT_WIDTH + DEFAULT_PADDING
-#define PADDING_TOP									TOP_HEIGHT + DEFAULT_PADDING
-#define PADDING_BOTTOM								BOTTOM_HEIGHT + DEFAULT_PADDING
+#define PADDING_LEFT								(LEFT_WIDTH + DEFAULT_PADDING)
+#define PADDING_RIGHT								(RIGHT_WIDTH + DEFAULT_PADDING)
+#define PADDING_TOP									(TOP_HEIGHT + DEFAULT_PADDING)
+#define PADDING_BOTTOM								(BOTTOM_HEIGHT + DEFAULT_PADDING)
 
 
 //*************************************************************

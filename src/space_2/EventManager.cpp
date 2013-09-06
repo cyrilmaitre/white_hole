@@ -4,6 +4,10 @@
 #include "ToolsMap.h"
 #include "ContainerStackViewManager.h"
 #include "FactoryGet.h"
+#include "UserInterface.h"
+#include "WindowInfo.h"
+#include "WindowError.h"
+#include "WindowWarning.h"
 
 using namespace sf;
 
@@ -84,6 +88,17 @@ void EventManager::handlePlayerAction( sf::Event p_event )
 			delta--;
 		}
 	}
+
+
+	if( p_event.type == sf::Event::KeyPressed && p_event.key.code == sf::Keyboard::Q)
+		UserInterface::mUserInterface->addWindowPopup(new WindowInfo("INFO", "There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything embarrassing hidden in the middle of text. All the Lorem Ipsum generators on the Internet tend to repeat predefined chunks as necessary, making this the first true generator on the Internet. It uses a dictionary of over 200 Latin words, combined with a handful of model sentence structures, to generate Lorem Ipsum which looks reasonable. The generated Lorem Ipsum is therefore always free from repetition, injected humour, or non-characteristic words etc."));
+
+	if( p_event.type == sf::Event::KeyPressed && p_event.key.code == sf::Keyboard::S)
+		UserInterface::mUserInterface->addWindowPopup(new WindowWarning("WARNING", "Azy fait pas ieche"));
+
+	if( p_event.type == sf::Event::KeyPressed && p_event.key.code == sf::Keyboard::D)
+		UserInterface::mUserInterface->addWindowPopup(new WindowError("ERROR", "Manouche !"));
+
 
 	// CharacterShip reload
 	if( p_event.type == sf::Event::KeyPressed && p_event.key.code == Option::option->getAppControl(OPTION_APP_CONTROL_RELOAD_KEY))

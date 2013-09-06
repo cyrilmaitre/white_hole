@@ -17,6 +17,7 @@
 #include "WindowSelectedEntity.h"
 #include "StationScreen.h"
 #include "WindowCargoStation.h"
+#include "WindowPopup.h"
 
 // Define
 #define INTERFACEBOTTOM_WIDTH				775
@@ -58,6 +59,8 @@ public:
 	sf::Vector2i getInterfaceBottom();
 
 	// Methode	
+	void addWindowPopup(WindowPopup* p_window);
+	void removeWindowPopup(WindowPopup* p_window);
 	void update(sf::Event p_event);
 	void updateWindowStatics(sf::Event p_event);
 	void updateWindowDynamics(sf::Event p_event);
@@ -68,6 +71,7 @@ public:
 	void updateWindowDynamicsStation();
 	void updatePosition();
 	void updateWeaponPosition();
+	void updateWindowPopups();
 	void draw();
 	void drawWindowStatics();
 	void drawWindowDynamics();
@@ -105,6 +109,8 @@ private:
 	WindowCargoStation* mWindowCargoStationShip;
 	std::vector<WindowCargoStation*> mWindowCargoStationBanks;
 	StationScreen* mStationScreen;
+
+	std::vector<WindowPopup*> mWindowPopups;
 
 	// Interface bottom
 	MenuQuick mMenuQuick;

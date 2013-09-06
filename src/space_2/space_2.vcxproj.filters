@@ -1104,6 +1104,24 @@
     <ClCompile Include="StationScreenLeftMenu.cpp">
       <Filter>Fichiers sources\game\ui\stationscreen</Filter>
     </ClCompile>
+    <ClCompile Include="WindowWarning.cpp">
+      <Filter>Fichiers sources\game\ui\window</Filter>
+    </ClCompile>
+    <ClCompile Include="WindowChoice.cpp">
+      <Filter>Fichiers sources\game\ui\window</Filter>
+    </ClCompile>
+    <ClCompile Include="WindowError.cpp">
+      <Filter>Fichiers sources\game\ui\window</Filter>
+    </ClCompile>
+    <ClCompile Include="WindowInfo.cpp">
+      <Filter>Fichiers sources\game\ui\window</Filter>
+    </ClCompile>
+    <ClCompile Include="WindowMessage.cpp">
+      <Filter>Fichiers sources\game\ui\window</Filter>
+    </ClCompile>
+    <ClCompile Include="WindowPopup.cpp">
+      <Filter>Fichiers sources\game\ui\window</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h">
@@ -1876,6 +1894,24 @@
     </ClInclude>
     <ClInclude Include="StationScreenLeftMenu.h">
       <Filter>Fichiers d%27en-tête\game\ui\stationscreen</Filter>
+    </ClInclude>
+    <ClInclude Include="WindowWarning.h">
+      <Filter>Fichiers d%27en-tête\game\ui\window</Filter>
+    </ClInclude>
+    <ClInclude Include="WindowChoice.h">
+      <Filter>Fichiers d%27en-tête\game\ui\window</Filter>
+    </ClInclude>
+    <ClInclude Include="WindowError.h">
+      <Filter>Fichiers d%27en-tête\game\ui\window</Filter>
+    </ClInclude>
+    <ClInclude Include="WindowInfo.h">
+      <Filter>Fichiers d%27en-tête\game\ui\window</Filter>
+    </ClInclude>
+    <ClInclude Include="WindowMessage.h">
+      <Filter>Fichiers d%27en-tête\game\ui\window</Filter>
+    </ClInclude>
+    <ClInclude Include="WindowPopup.h">
+      <Filter>Fichiers d%27en-tête\game\ui\window</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -279,8 +279,13 @@
     <ClCompile Include="WindowCargo.cpp" />
     <ClCompile Include="WindowCargoLoot.cpp" />
     <ClCompile Include="WindowCargoStation.cpp" />
+    <ClCompile Include="WindowChoice.cpp" />
+    <ClCompile Include="WindowError.cpp" />
+    <ClCompile Include="WindowInfo.cpp" />
     <ClCompile Include="WindowJukebox.cpp" />
     <ClCompile Include="WindowMap.cpp" />
+    <ClCompile Include="WindowMessage.cpp" />
+    <ClCompile Include="WindowPopup.cpp" />
     <ClCompile Include="WindowSelected.cpp" />
     <ClCompile Include="WindowCharacter.cpp" />
     <ClCompile Include="WindowSelectedCharacterShip.cpp" />
@@ -328,6 +333,7 @@
     <ClCompile Include="WeaponType.cpp" />
     <ClCompile Include="WeaponTypeFactory.cpp" />
     <ClCompile Include="WeaponView.cpp" />
+    <ClCompile Include="WindowWarning.cpp" />
     <ClCompile Include="Wreck.cpp" />
     <ClCompile Include="WreckManager.cpp" />
     <ClCompile Include="WreckMini.cpp" />
@@ -539,8 +545,13 @@
     <ClInclude Include="WindowCargo.h" />
     <ClInclude Include="WindowCargoLoot.h" />
     <ClInclude Include="WindowCargoStation.h" />
+    <ClInclude Include="WindowChoice.h" />
+    <ClInclude Include="WindowError.h" />
+    <ClInclude Include="WindowInfo.h" />
     <ClInclude Include="WindowJukebox.h" />
     <ClInclude Include="WindowMap.h" />
+    <ClInclude Include="WindowMessage.h" />
+    <ClInclude Include="WindowPopup.h" />
     <ClInclude Include="WindowSelected.h" />
     <ClInclude Include="WindowCharacter.h" />
     <ClInclude Include="WindowSelectedCharacterShip.h" />
@@ -587,6 +598,7 @@
     <ClInclude Include="WeaponType.h" />
     <ClInclude Include="WeaponTypeFactory.h" />
     <ClInclude Include="WeaponView.h" />
+    <ClInclude Include="WindowWarning.h" />
     <ClInclude Include="Wreck.h" />
     <ClInclude Include="WreckManager.h" />
     <ClInclude Include="WreckMini.h" />
