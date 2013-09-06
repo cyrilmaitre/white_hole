@@ -123,6 +123,11 @@ void Window::setContentWidth( double p_width )
 	this->setWidth(p_width + PADDING_LEFT + PADDING_RIGHT);
 }
 
+void Window::setContentSize( double p_width, double p_height )
+{
+	this->setSize(p_width + PADDING_LEFT + PADDING_RIGHT, p_height + PADDING_TOP + PADDING_BOTTOM);
+}
+
 double Window::getContentX()
 {
 	return this->getX() + PADDING_LEFT;

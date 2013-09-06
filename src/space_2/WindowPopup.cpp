@@ -19,15 +19,14 @@ WindowPopup::WindowPopup( std::string p_title, std::string p_message, SpritePara
 	this->mMessageTextBox.setAutoResizeHeight(false);
 	this->mMessageTextBox.setAutoResizeWidth(false);
 
-	this->setWindowTitle(p_title);
-	this->setMessage(p_message);
-	this->setMessageIconIndex(p_spriteIndex);
-
-	this->setContentWidth(CONTENT_WIDTH);
-	this->setContentHeight(CONTENT_HEIGHT);
+	this->setContentSize(CONTENT_WIDTH, CONTENT_HEIGHT);
 	this->setType(Window::WindowType::TypeDynamic);
 	this->setOpen(true);
 	this->setWindowIcon(SpriteParameterFactory::getSpriteParameterIcon16X16()->getSprite(IC_16X16_MAIL));
+
+	this->setMessageIconIndex(p_spriteIndex);
+	this->setWindowTitle(p_title);
+	this->setMessage(p_message);
 
 	this->setPositionMiddleScreen();
 }
@@ -109,7 +108,7 @@ void WindowPopup::updatePosition()
 		int plop = this->getContentHeight();
 		this->mMessageIconSprite->getSprite().setPosition(	this->getContentX(), 
 															this->getContentY() + (this->getContentHeight() - this->mMessageIconSprite->getSprite().getLocalBounds().height) / 2);
-		this->mMessageTextBox.setPosition(	this->mMessageIconSprite->getSprite().getPosition().x + this->mMessageIconSprite->getSprite().getGlobalBounds().width + WINDOWPOPUP_MARGIN_MESSAGEICON,
+		this->mMessageTextBox.setPosition(	this->mMessageIconSprite->getSprite().getPosition().x + this->mMessageIconSprite->getSprite().getLocalBounds().width + WINDOWPOPUP_MARGIN_MESSAGEICON,
 											this->getContentY());
 	}
 	else
@@ -122,7 +121,7 @@ void WindowPopup::updateMessageTextBox()
 {
 	if(this->mMessageIconSprite != NULL)
 	{
-		this->mMessageTextBox.setSize(	this->getContentWidth() - this->mMessageIconSprite->getSprite().getGlobalBounds().width - WINDOWPOPUP_MARGIN_MESSAGEICON,
+		this->mMessageTextBox.setSize(	this->getContentWidth() - this->mMessageIconSprite->getSprite().getLocalBounds().width - WINDOWPOPUP_MARGIN_MESSAGEICON,
 										this->getContentHeight());
 	}
 	else

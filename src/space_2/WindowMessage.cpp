@@ -42,7 +42,7 @@ void WindowMessage::updateMessageTextBox()
 {
 	if(this->mMessageIconSprite != NULL)
 	{
-		this->mMessageTextBox.setSize(	this->getContentWidth() - this->mMessageIconSprite->getSprite().getGlobalBounds().width - WINDOWPOPUP_MARGIN_MESSAGEICON,
+		this->mMessageTextBox.setSize(	this->getContentWidth() - this->mMessageIconSprite->getSprite().getLocalBounds().width - WINDOWPOPUP_MARGIN_MESSAGEICON,
 										this->getContentHeight() - BUTTON_MARGIN * 2 - this->mButtonOk.getHeight());
 	}	
 	else

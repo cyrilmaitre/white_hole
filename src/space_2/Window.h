@@ -28,6 +28,7 @@ public:
 
 	void setContentWidth(double p_width);
 	void setContentHeight(double p_height);
+	void setContentSize(double p_width, double p_height);
 
 	double getContentX();
 	double getContentY();
