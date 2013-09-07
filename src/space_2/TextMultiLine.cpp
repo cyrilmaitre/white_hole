@@ -131,8 +131,12 @@ void TextMultiLine::addLine( std::string p_text, bool p_notify )
 				buffer = buffer.substr(0, buffer.find_last_of(' '));
 
 				lastReziseIndex += buffer.length();
-				textResized = true;
+				textResized = true;				
 			}
+
+			// Remove first space (if exist)
+			if(buffer.substr(0, 1) == " ")
+				buffer = buffer.substr(1, buffer.size() - 1);
 
 			// Add as TextBox
 			if(buffer != "")
