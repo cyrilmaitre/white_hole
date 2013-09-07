@@ -10,17 +10,22 @@ public:
 	~ScrollbarThumb();
 
 	// Getters - Setters
-	void setX(double p_x, bool p_notify = true);
-	void setY(double p_y, bool p_notify = true);
+	void setX(double p_x, bool p_notify = true, bool p_updateOffset = true);
+	void setY(double p_y, bool p_notify = true, bool p_updateOffset = true);
 
 	Scrollbar::ScrollBarOrientation getOrientation();
 	void setOrientation(Scrollbar::ScrollBarOrientation p_orientation);
 
-	int getPositionMin();
-	void setPositionMin(int p_min);
+	double getPositionMin();
+	void setPositionMin(double p_min);
+	bool isPositionMin();
 
-	int getPositionMax();
-	void setPositionMax(int p_max);
+	double getPositionMax();
+	void setPositionMax(double p_max);
+	bool isPositionMax();
+
+	double getPositionOffset();
+	void setPositionOffset(double p_offset, bool p_notify = true);
 
 	// Methods
 	void draw();
@@ -30,8 +35,9 @@ public:
 private:
 	// Attributs
 	Scrollbar::ScrollBarOrientation mOrientation;
-	int mPositionMin;
-	int mPositionMax;
+	double mPositionMin;
+	double mPositionMax;
+	double mPositionOffset;
 	SpriteParameter *mScrollBarSprite;
 
 	sf::Sprite mThumbTop;
@@ -41,6 +47,7 @@ private:
 	// Methods
 	void notifyOrientationChanged();
 	void notifyPositionChanged();
+	void notifySizeChanged();
 	void notifyMouseOverChanged();
 	void notifyFocusChanged();
 

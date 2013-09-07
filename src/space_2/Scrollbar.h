@@ -52,6 +52,11 @@ public:
 	void scrollUp();
 	void scrollDown();
 
+	void updateSpritePosition();
+	void updateButtonPosition();
+	void updateThumbPosition();
+	void updateThumbPositionRange();
+
 	void update(sf::Event myEvent);
 	void draw();
 
@@ -84,8 +89,11 @@ private:
 	int getThumbHeightMax();
 	int getThumbHeightRange();
 			
-	int getThumbPosition();
-	void setThumbPosition(int p_position, bool p_notify = true);
+	double getThumbPosition();
+	void setThumbPosition(double p_position, bool p_notify = true);
+
+	double getThumbOffset();
+	void setThumbOffset(double p_offset, bool p_notify = true);
 
 	float getAreaDisplayedPercent();
 	bool hasThumbFocus();
@@ -93,11 +101,7 @@ private:
 	// Methods
 	void drawTrack();
 	void updateSprite();
-	void updateSpritePosition();
-	void updateButtonPosition();
 	void updateThumbSize();
-	void updateThumbPosition();
-	void updateThumbPositionRange();
 };
 
 // Define

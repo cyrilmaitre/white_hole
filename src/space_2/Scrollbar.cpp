@@ -115,7 +115,7 @@ float Scrollbar::getScrollOffsetInPercent()
 
 void Scrollbar::setScrollOffsetInPercent( float p_percent, bool p_notify )
 {
-	this->setThumbPosition((float)this->getThumbHeightRange() * p_percent, p_notify);
+	this->setThumbOffset((float)this->getThumbHeightRange() * p_percent, p_notify);
 }
 
 float Scrollbar::getAreaDisplayedPercent()
@@ -156,7 +156,7 @@ int Scrollbar::getThumbHeightRange()
 	return this->getThumbHeightMax() - this->getThumbHeight();
 }
 
-int Scrollbar::getThumbPosition()
+double Scrollbar::getThumbPosition()
 {
 	if(this->mOrientation == ScrollBarOrientation::Vertical)
 		return this->mScrollBarThumb->getY() - this->getY() - SPRITE_SIZE;
@@ -164,12 +164,22 @@ int Scrollbar::getThumbPosition()
 		return this->mScrollBarThumb->getX() - this->getX() - SPRITE_SIZE;
 }
 
-void Scrollbar::setThumbPosition( int p_position, bool p_notify )
+void Scrollbar::setThumbPosition( double p_position, bool p_notify )
 {
 	if(this->mOrientation == ScrollBarOrientation::Vertical)
 		this->mScrollBarThumb->setY(this->getY() + SPRITE_SIZE + p_position, p_notify);
 	else
 		this->mScrollBarThumb->setX(this->getX() + SPRITE_SIZE + p_position, p_notify);
+}
+
+double Scrollbar::getThumbOffset()
+{
+	return this->mScrollBarThumb->getPositionOffset();
+}
+
+void Scrollbar::setThumbOffset( double p_offset, bool p_notify )
+{
+	this->mScrollBarThumb->setPositionOffset(p_offset, p_notify);
 }
 
 void Scrollbar::setScrollBarHeight( int p_size )
@@ -338,11 +348,11 @@ void Scrollbar::updateThumbPosition()
 	if(this->mOrientation == ScrollBarOrientation::Vertical)
 	{
 		thumbPositionX = this->getX();
-		thumbPositionY = this->getY() + SPRITE_SIZE;
+		thumbPositionY = this->getY() + this->mScrollBarThumb->getPositionOffset() + SPRITE_SIZE;
 	}
 	else
 	{
-		thumbPositionX = this->getX() + SPRITE_SIZE;
+		thumbPositionX = this->getX() + this->mScrollBarThumb->getPositionOffset() + SPRITE_SIZE;
 		thumbPositionY = this->getY();
 	}
 
@@ -433,6 +443,7 @@ void Scrollbar::updateSpritePosition()
 		this->mTrackBottom.setPosition(this->getX() + this->getWidth() - SPRITE_SIZE, this->getY());
 	}
 }
+
 
 
 

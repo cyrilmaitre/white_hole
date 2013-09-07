@@ -236,6 +236,11 @@ void List::updateScrollbar()
 		
 	this->mScrollBar->setScrollAreaHeight(areaHeight);
 	this->updateScrollbarVisibility();
+
+	this->mScrollBar->updateButtonPosition();
+	this->mScrollBar->updateSpritePosition();
+	this->mScrollBar->updateThumbPosition();
+	this->mScrollBar->updateThumbPositionRange();
 }
 
 void List::updateScrollbarSize()

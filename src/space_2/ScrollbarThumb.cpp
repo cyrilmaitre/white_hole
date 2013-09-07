@@ -17,6 +17,7 @@ ScrollbarThumb::ScrollbarThumb()
 	this->mOrientation = Scrollbar::ScrollBarOrientation::Vertical;
 	this->mPositionMin = 0;
 	this->mPositionMax = 0;
+	this->mPositionOffset = 0;
 	
 	this->notifyOrientationChanged();
 }
@@ -31,7 +32,7 @@ ScrollbarThumb::~ScrollbarThumb(void)
 //*************************************************************
 // Getters - Setters
 //*************************************************************
-void ScrollbarThumb::setX( double p_x, bool p_notify )
+void ScrollbarThumb::setX( double p_x, bool p_notify, bool p_updateOffset )
 {
 	if(this->mOrientation == Scrollbar::ScrollBarOrientation::Horizontal)
 	{
@@ -44,9 +45,12 @@ void ScrollbarThumb::setX( double p_x, bool p_notify )
 
 	if(!p_notify)
 		this->updateSpritePosition();
+
+	if(p_updateOffset && this->mOrientation == Scrollbar::ScrollBarOrientation::Horizontal)
+		this->mPositionOffset = this->getX() - this->mPositionMin;	
 }
 
-void ScrollbarThumb::setY( double p_y, bool p_notify )
+void ScrollbarThumb::setY( double p_y, bool p_notify, bool p_updateOffset )
 {
 	if(this->mOrientation == Scrollbar::ScrollBarOrientation::Vertical)
 	{
@@ -59,6 +63,9 @@ void ScrollbarThumb::setY( double p_y, bool p_notify )
 
 	if(!p_notify)
 		this->updateSpritePosition();
+
+	if(p_updateOffset && this->mOrientation == Scrollbar::ScrollBarOrientation::Vertical)
+		this->mPositionOffset = this->getY() - this->mPositionMin;
 }
 
 Scrollbar::ScrollBarOrientation ScrollbarThumb::getOrientation()
@@ -75,24 +82,57 @@ void ScrollbarThumb::setOrientation( Scrollbar::ScrollBarOrientation p_orientati
 	}
 }
 
-int ScrollbarThumb::getPositionMin()
+double ScrollbarThumb::getPositionMin()
 {
 	return this->mPositionMin;
 }
 
-void ScrollbarThumb::setPositionMin( int p_min )
+void ScrollbarThumb::setPositionMin( double p_min )
 {
 	this->mPositionMin = p_min;
 }
 
-int ScrollbarThumb::getPositionMax()
+bool ScrollbarThumb::isPositionMin()
+{
+	if(this->mOrientation == Scrollbar::ScrollBarOrientation::Horizontal)
+		return this->getX() == this->mPositionMin;
+	else
+		return this->getY() == this->mPositionMin;
+}
+
+double ScrollbarThumb::getPositionMax()
 {
 	return this->mPositionMax;
 }
 
-void ScrollbarThumb::setPositionMax( int p_max )
+void ScrollbarThumb::setPositionMax( double p_max )
 {
 	this->mPositionMax = p_max;
+}
+
+bool ScrollbarThumb::isPositionMax()
+{
+	if(this->mOrientation == Scrollbar::ScrollBarOrientation::Horizontal)
+		return this->getX() == mPositionMax;
+	else
+		return this->getY() == mPositionMax;
+}
+
+double ScrollbarThumb::getPositionOffset()
+{
+	return this->mPositionOffset;
+}
+
+void ScrollbarThumb::setPositionOffset( double p_offset, bool p_notify )
+{
+	if(this->mPositionOffset != p_offset)
+	{
+		this->mPositionOffset = p_offset;
+		if(this->mOrientation == Scrollbar::ScrollBarOrientation::Horizontal)
+			this->setX(this->getPositionMin() + this->getPositionOffset(), p_notify, false);
+		else
+			this->setY(this->getPositionMin() + this->getPositionOffset(), p_notify, false);
+	}
 }
 
 
@@ -151,6 +191,12 @@ void ScrollbarThumb::notifyPositionChanged()
 {
 	Focusable::notifyPositionChanged();
 	this->updateSpritePosition();
+}
+
+void ScrollbarThumb::notifySizeChanged()
+{
+	Focusable::notifySizeChanged();
+	this->updateSprite();
 }
 
 void ScrollbarThumb::notifyMouseOverChanged()
@@ -221,3 +267,5 @@ void ScrollbarThumb::updateSpritePosition()
 	else
 		this->mThumbBottom.setPosition(this->getX()+ this->getWidth() - SPRITE_SIZE, this->getY());
 }
+
+
