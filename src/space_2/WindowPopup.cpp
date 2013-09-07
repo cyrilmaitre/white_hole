@@ -105,10 +105,10 @@ void WindowPopup::updatePosition()
 {
 	if(this->mMessageIconSprite != NULL)
 	{
-		this->mMessageIconSprite->getSprite().setPosition(	this->getContentX(), 
-															this->getContentY() + (this->getContentHeight() - this->mMessageIconSprite->getSprite().getLocalBounds().height) / 2);
 		this->mMessageTextBox.setPosition(	this->mMessageIconSprite->getSprite().getPosition().x + this->mMessageIconSprite->getSprite().getLocalBounds().width + WINDOWPOPUP_MARGIN_MESSAGEICON,
 											this->getContentY());
+		this->mMessageIconSprite->getSprite().setPosition(	this->getContentX(), 
+															this->mMessageTextBox.getY() + (this->mMessageTextBox.getHeight() / 2) - (this->mMessageIconSprite->getSprite().getLocalBounds().height / 2));
 	}
 	else
 	{
@@ -122,6 +122,7 @@ void WindowPopup::updateMessageTextBox()
 	{
 		this->mMessageTextBox.setSize(	this->getContentWidth() - this->mMessageIconSprite->getSprite().getLocalBounds().width - WINDOWPOPUP_MARGIN_MESSAGEICON,
 										this->getContentHeight());
+		this->updatePosition();
 	}
 	else
 	{
