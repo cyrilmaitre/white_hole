@@ -5,16 +5,16 @@
 // Define
 //*************************************************************
 #define CONTENT_WIDTH				400
-#define CONTENT_HEIGHT				250
+#define CONTENT_HEIGHT				175
 
 
 //*************************************************************
 // Constructor - Destructor
 //*************************************************************
-WindowPopup::WindowPopup( std::string p_title, std::string p_message, SpriteParameter* p_spriteSheet, std::string p_spriteIndex )
+WindowPopup::WindowPopup( std::string p_title, std::string p_message, SpriteParameter* p_spriteIconSheet, std::string p_spriteIconIndex, std::string p_windowIconIdex )
 {
 	this->mMessageIconSprite = NULL;
-	this->mMessageIconSprite = p_spriteSheet;
+	this->mMessageIconSprite = p_spriteIconSheet;
 
 	this->mMessageTextBox.setAutoResizeHeight(false);
 	this->mMessageTextBox.setAutoResizeWidth(false);
@@ -22,9 +22,9 @@ WindowPopup::WindowPopup( std::string p_title, std::string p_message, SpritePara
 	this->setContentSize(CONTENT_WIDTH, CONTENT_HEIGHT);
 	this->setType(Window::WindowType::TypeDynamic);
 	this->setOpen(true);
-	this->setWindowIcon(SpriteParameterFactory::getSpriteParameterIcon16X16()->getSprite(IC_16X16_MAIL));
+	this->setWindowIcon(SpriteParameterFactory::getSpriteParameterIcon16X16()->getSprite(p_windowIconIdex));
 
-	this->setMessageIconIndex(p_spriteIndex);
+	this->setMessageIconIndex(p_spriteIconIndex);
 	this->setWindowTitle(p_title);
 	this->setMessage(p_message);
 
@@ -66,7 +66,7 @@ void WindowPopup::setMessageIconIndex( std::string p_icon )
 	if(this->mMessageIconIndex != p_icon)
 	{
 		this->mMessageIconIndex = p_icon;
-		this->notifyMessageIconChanged();
+		this->notifyMessageIconIndexChanged();
 	}
 }
 
@@ -79,7 +79,7 @@ void WindowPopup::notifyMessageChanged()
 	this->mMessageTextBox.setText(this->getMessage());		
 }
 
-void WindowPopup::notifyMessageIconChanged()
+void WindowPopup::notifyMessageIconIndexChanged()
 {
 	if(this->mMessageIconIndex != "" && this->mMessageIconSprite != NULL)
 	{
@@ -105,7 +105,6 @@ void WindowPopup::updatePosition()
 {
 	if(this->mMessageIconSprite != NULL)
 	{
-		int plop = this->getContentHeight();
 		this->mMessageIconSprite->getSprite().setPosition(	this->getContentX(), 
 															this->getContentY() + (this->getContentHeight() - this->mMessageIconSprite->getSprite().getLocalBounds().height) / 2);
 		this->mMessageTextBox.setPosition(	this->mMessageIconSprite->getSprite().getPosition().x + this->mMessageIconSprite->getSprite().getLocalBounds().width + WINDOWPOPUP_MARGIN_MESSAGEICON,

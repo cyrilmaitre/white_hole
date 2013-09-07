@@ -7,7 +7,7 @@ class WindowMessage : public WindowPopup
 {
 public:
 	// Constructor - Destructor
-	WindowMessage(std::string p_title, std::string p_message, SpriteParameter* p_spriteSheet, std::string p_spriteIndex);
+	WindowMessage(std::string p_title, std::string p_message, SpriteParameter* p_spriteSheet, std::string p_spriteIndex, std::string p_windowIconIdex);
 	~WindowMessage(void);
 
 	// Methods

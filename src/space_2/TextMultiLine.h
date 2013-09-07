@@ -24,10 +24,12 @@ public:
 
 	void draw();
 	void update(sf::Event p_event);
-
+	
 
 protected:
 	// Methods
+	void updateLine();
+	void notifySizeChanged();
 	void notifyTextChanged();
 
 

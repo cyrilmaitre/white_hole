@@ -227,9 +227,9 @@ sf::Vector2i UserInterface::getInterfaceBottom()
 //*************************************************************
 void UserInterface::addWindowPopup( WindowPopup* p_window )
 {
-	this->mWindowPopups.push_back(p_window);
-	this->mWindowDynamics.push_back(p_window);
-	this->mWindowDynamicsStation.push_back(p_window);
+	this->mWindowPopups.insert(this->mWindowPopups.begin(), p_window);
+	this->mWindowDynamics.insert(this->mWindowDynamics.begin(), p_window);
+	this->mWindowDynamicsStation.insert(this->mWindowDynamicsStation.begin(), p_window);
 }
 
 void UserInterface::removeWindowPopup( WindowPopup* p_window )

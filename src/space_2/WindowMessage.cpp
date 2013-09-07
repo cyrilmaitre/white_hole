@@ -12,10 +12,12 @@
 //*************************************************************
 // Constructor - Destructor
 //*************************************************************
-WindowMessage::WindowMessage( std::string p_title, std::string p_message, SpriteParameter* p_spriteSheet, std::string p_spriteIndex ) : WindowPopup(p_title, p_message, p_spriteSheet, p_spriteIndex)
+WindowMessage::WindowMessage( std::string p_title, std::string p_message, SpriteParameter* p_spriteSheet, std::string p_spriteIndex, std::string p_windowIconIdex ) : WindowPopup(p_title, p_message, p_spriteSheet, p_spriteIndex, p_windowIconIdex)
 {
 	this->mButtonOk.setSize(BUTTON_WIDTH, BUTTON_HEIGHT);
 	this->mButtonOk.setTitle(Resource::resource->getBundle()->getString("ok"));
+	this->updatePosition();
+	this->updateMessageTextBox();
 } 
 
 WindowMessage::~WindowMessage(void)
@@ -54,7 +56,7 @@ void WindowMessage::updateMessageTextBox()
 
 void WindowMessage::updatePosition()
 {
-	this->mButtonOk.setPosition(this->getContentX() + (this->getContentWidth() + this->mButtonOk.getWidth()) / 2,
+	this->mButtonOk.setPosition(this->getContentX() + (this->getContentWidth() - this->mButtonOk.getWidth()) / 2,
 								this->getContentY() + this->getContentHeight() - this->mButtonOk.getHeight() - BUTTON_MARGIN);
 }
 

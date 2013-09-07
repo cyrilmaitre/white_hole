@@ -7,6 +7,7 @@
 // Define
 //*************************************************************
 #define DEFAULT_WIDTH						200	
+#define WIDTH_MIN_FORADDLINE				20
 #define DEFAULT_HEIGHT						0		
 #define DEFAULT_DELIMETER					"<br/>"
 #define DEFAULT_INTERLINE_SIZE				2
@@ -84,55 +85,54 @@ void TextMultiLine::setInterlineSize( int p_size )
 //******************************
 void TextMultiLine::addLine( std::string p_text, bool p_notify )
 {
+	int contentWidth = this->getContentWidth(!this->isAutoResizeHeight());
 	if(this->isAutoResizeWidth())
 	{
 		// Add text (auto resize)
 		this->addLineTextBox(p_text, p_notify);
 	}
-	else
+	else if(contentWidth > WIDTH_MIN_FORADDLINE)
 	{
 		// Resize text
 		bool textResized = false;
 		int lastReziseIndex = 0;
+		sf::Text tmpText;
+		tmpText.setPosition(0, 0);
+		tmpText.setFont(*this->mFont);
+		tmpText.setCharacterSize(this->mFontSize);
+		int tmpTextWidth = 0;
 
 		do
 		{
 			// Init
-			sf::Text tmpText;
-			tmpText.setPosition(0, 0);
-			int tmpTextWidth = 0;
+			textResized = false;		
 			std::string buffer = p_text.substr(lastReziseIndex, p_text.length() - lastReziseIndex);
-			textResized = false;
-
-			// Define parameter
-			tmpText.setFont(*this->mFont);
-			tmpText.setCharacterSize(this->mFontSize);
-
-			// Resize string if too long
+			std::string bufferCopy = buffer;
 			tmpText.setString(buffer);
-			tmpTextWidth = tmpText.findCharacterPos(tmpText.getString().getSize()).x;
-			while(tmpTextWidth > this->getContentWidth(!this->isAutoResizeHeight()) && buffer != "")
+			tmpTextWidth = tmpText.getLocalBounds().width;
+
+			// If too long
+			if(tmpTextWidth > contentWidth)
 			{
-				buffer = buffer.substr(0, buffer.length() - 1);
-				tmpText.setString(buffer);
-				tmpTextWidth = tmpText.findCharacterPos(tmpText.getString().getSize()).x;
+				// First resize
+				buffer = buffer.substr(0, ((float)contentWidth / (float)tmpTextWidth) * buffer.size());
+				
+				// Ajust (too long)
+				tmpTextWidth = tmpText.getLocalBounds().width;
+				while(tmpTextWidth > contentWidth && buffer != "")
+				{
+					buffer = buffer.substr(0, buffer.length() - 1);
+					tmpText.setString(buffer);
+					tmpTextWidth = tmpText.getLocalBounds().width,
+					textResized = true;
+				}
+
+				// Check if last word doesnt truncat
+				buffer = buffer.substr(0, buffer.find_last_of(' '));
+
+				lastReziseIndex += buffer.length();
 				textResized = true;
 			}
-
-			// Check if last word doesnt truncat
-			if(textResized)
-			{
-				if(p_text.substr(buffer.size() - 1, 1) != " ")
-				{
-					while(*buffer.rbegin() != ' ')
-						buffer = buffer.substr(0, buffer.length() - 1);
-				}
-			}
-			lastReziseIndex += buffer.length();
-
-			// Remove last space (if exist)
-			if(buffer.substr(0, 1) == " ")
-				buffer = buffer.substr(1, buffer.size() - 1);
 
 			// Add as TextBox
 			if(buffer != "")
@@ -156,7 +156,7 @@ void TextMultiLine::addLineTextBox( std::string p_text, bool p_notify )
 	this->addItem(tmpTextBox, p_notify);
 }
 
-void TextMultiLine::notifyTextChanged()
+void TextMultiLine::updateLine()
 {
 	this->clear();
 	if(this->getText() != "")
@@ -168,6 +168,18 @@ void TextMultiLine::notifyTextChanged()
 		}
 	}
 	this->notifyDataSetChanged();
+}
+
+void TextMultiLine::notifyTextChanged()
+{
+	this->updateLine();
+}
+
+void TextMultiLine::notifySizeChanged()
+{
+	List::notifySizeChanged();
+	if(!this->isAutoResizeHeight() && !this->isAutoResizeWidth())
+		this->updateLine();
 }
 
 void TextMultiLine::draw()
@@ -185,4 +197,6 @@ void TextMultiLine::update( sf::Event p_event )
 		List::update(p_event);
 	}
 }
+
+
 

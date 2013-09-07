@@ -9,7 +9,7 @@ class WindowPopup : public Window
 {
 public:
 	// Constructor - Destructor
-	WindowPopup(std::string p_title, std::string p_message, SpriteParameter* p_spriteSheet, std::string p_spriteIndex);
+	WindowPopup(std::string p_title, std::string p_message, SpriteParameter* p_spriteIconSheet, std::string p_spriteIconIndex, std::string p_windowIconIdex);
 	~WindowPopup(void);
 
 	// Getters - Setters
@@ -23,7 +23,7 @@ public:
 	void notifyPositionChanged();
 	void notifySizeChanged();
 	void notifyMessageChanged();
-	void notifyMessageIconChanged();
+	void notifyMessageIconIndexChanged();
 	virtual void updateMessageTextBox();
 	void updatePosition();
 	void update(sf::Event p_event);
