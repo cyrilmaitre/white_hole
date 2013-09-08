@@ -9,7 +9,7 @@ public:
 	~WindowChoiceAction(void);
 
 	// Methods
-	virtual void onButtonYesClicked() = 0;
-	virtual void onButtonNoClicked() = 0;
+	virtual void onButtonTrueClicked() = 0;
+	virtual void onButtonFalseClicked() = 0;
 };
 
