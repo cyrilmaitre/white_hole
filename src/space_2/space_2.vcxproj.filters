@@ -349,6 +349,12 @@
     <Filter Include="Fichiers sources\game\user\character\bank">
       <UniqueIdentifier>{3a5e88af-6e35-48cd-8425-c56a1bb3ced5}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Fichiers sources\game\ui\window\popup">
+      <UniqueIdentifier>{70fcad4e-a627-4c30-ba5a-e3bc3e48ff23}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fichiers d%27en-tête\game\ui\window\popup">
+      <UniqueIdentifier>{72f3d731-baea-4da8-8176-faa85fb52bf7}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Game.cpp">
@@ -1104,23 +1110,32 @@
     <ClCompile Include="StationScreenLeftMenu.cpp">
       <Filter>Fichiers sources\game\ui\stationscreen</Filter>
     </ClCompile>
-    <ClCompile Include="WindowWarning.cpp">
-      <Filter>Fichiers sources\game\ui\window</Filter>
+    <ClCompile Include="WindowPopup.cpp">
+      <Filter>Fichiers sources\game\ui\window\popup</Filter>
     </ClCompile>
-    <ClCompile Include="WindowChoice.cpp">
-      <Filter>Fichiers sources\game\ui\window</Filter>
+    <ClCompile Include="WindowMessageWarning.cpp">
+      <Filter>Fichiers sources\game\ui\window\popup</Filter>
     </ClCompile>
-    <ClCompile Include="WindowError.cpp">
-      <Filter>Fichiers sources\game\ui\window</Filter>
+    <ClCompile Include="WindowMessageInfo.cpp">
+      <Filter>Fichiers sources\game\ui\window\popup</Filter>
     </ClCompile>
-    <ClCompile Include="WindowInfo.cpp">
-      <Filter>Fichiers sources\game\ui\window</Filter>
+    <ClCompile Include="WindowMessageError.cpp">
+      <Filter>Fichiers sources\game\ui\window\popup</Filter>
     </ClCompile>
     <ClCompile Include="WindowMessage.cpp">
-      <Filter>Fichiers sources\game\ui\window</Filter>
+      <Filter>Fichiers sources\game\ui\window\popup</Filter>
     </ClCompile>
-    <ClCompile Include="WindowPopup.cpp">
-      <Filter>Fichiers sources\game\ui\window</Filter>
+    <ClCompile Include="WindowChoice.cpp">
+      <Filter>Fichiers sources\game\ui\window\popup</Filter>
+    </ClCompile>
+    <ClCompile Include="WindowMessageSuccess.cpp">
+      <Filter>Fichiers sources\game\ui\window\popup</Filter>
+    </ClCompile>
+    <ClCompile Include="WindowChoiceAsk.cpp">
+      <Filter>Fichiers sources\game\ui\window\popup</Filter>
+    </ClCompile>
+    <ClCompile Include="WindowChoiceAction.cpp">
+      <Filter>Fichiers sources\game\ui\window\popup</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1895,23 +1910,32 @@
     <ClInclude Include="StationScreenLeftMenu.h">
       <Filter>Fichiers d%27en-tête\game\ui\stationscreen</Filter>
     </ClInclude>
-    <ClInclude Include="WindowWarning.h">
-      <Filter>Fichiers d%27en-tête\game\ui\window</Filter>
-    </ClInclude>
     <ClInclude Include="WindowChoice.h">
-      <Filter>Fichiers d%27en-tête\game\ui\window</Filter>
+      <Filter>Fichiers d%27en-tête\game\ui\window\popup</Filter>
     </ClInclude>
-    <ClInclude Include="WindowError.h">
-      <Filter>Fichiers d%27en-tête\game\ui\window</Filter>
+    <ClInclude Include="WindowMessageError.h">
+      <Filter>Fichiers d%27en-tête\game\ui\window\popup</Filter>
     </ClInclude>
-    <ClInclude Include="WindowInfo.h">
-      <Filter>Fichiers d%27en-tête\game\ui\window</Filter>
+    <ClInclude Include="WindowMessageInfo.h">
+      <Filter>Fichiers d%27en-tête\game\ui\window\popup</Filter>
     </ClInclude>
     <ClInclude Include="WindowMessage.h">
-      <Filter>Fichiers d%27en-tête\game\ui\window</Filter>
+      <Filter>Fichiers d%27en-tête\game\ui\window\popup</Filter>
+    </ClInclude>
+    <ClInclude Include="WindowMessageWarning.h">
+      <Filter>Fichiers d%27en-tête\game\ui\window\popup</Filter>
     </ClInclude>
     <ClInclude Include="WindowPopup.h">
-      <Filter>Fichiers d%27en-tête\game\ui\window</Filter>
+      <Filter>Fichiers d%27en-tête\game\ui\window\popup</Filter>
+    </ClInclude>
+    <ClInclude Include="WindowMessageSuccess.h">
+      <Filter>Fichiers d%27en-tête\game\ui\window\popup</Filter>
+    </ClInclude>
+    <ClInclude Include="WindowChoiceAction.h">
+      <Filter>Fichiers d%27en-tête\game\ui\window\popup</Filter>
+    </ClInclude>
+    <ClInclude Include="WindowChoiceAsk.h">
+      <Filter>Fichiers d%27en-tête\game\ui\window\popup</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
