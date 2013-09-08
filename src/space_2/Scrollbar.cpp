@@ -110,7 +110,7 @@ void Scrollbar::setScrollOffsetInPx( int p_offset, bool p_notify )
 
 float Scrollbar::getScrollOffsetInPercent()
 {
-	return (float)this->getThumbPosition() / (float)(this->getThumbHeightMax() - this->getThumbHeight());
+	return this->mScrollBarThumb->getPositionOffsetPercent();
 }
 
 void Scrollbar::setScrollOffsetInPercent( float p_percent, bool p_notify )
@@ -443,6 +443,8 @@ void Scrollbar::updateSpritePosition()
 		this->mTrackBottom.setPosition(this->getX() + this->getWidth() - SPRITE_SIZE, this->getY());
 	}
 }
+
+
 
 
 

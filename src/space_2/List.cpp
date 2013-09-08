@@ -304,6 +304,8 @@ void List::updateItemIndexFirst()
 		else
 		{
 			scrollOffset = 0;
+			if(this->mItemIndexFirst > 0)
+				this->mItemIndexFirst++;
 		}
 	}
 

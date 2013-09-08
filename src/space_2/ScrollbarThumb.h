@@ -25,6 +25,7 @@ public:
 	bool isPositionMax();
 
 	double getPositionOffset();
+	double getPositionOffsetPercent();
 	void setPositionOffset(double p_offset, bool p_notify = true);
 
 	// Methods

@@ -123,6 +123,11 @@ double ScrollbarThumb::getPositionOffset()
 	return this->mPositionOffset;
 }
 
+double ScrollbarThumb::getPositionOffsetPercent()
+{
+	return this->getPositionOffset() / (this->getPositionMax() - this->getPositionMin());
+}
+
 void ScrollbarThumb::setPositionOffset( double p_offset, bool p_notify )
 {
 	if(this->mPositionOffset != p_offset)
