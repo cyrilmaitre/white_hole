@@ -1,8 +1,12 @@
 #pragma once
-class WindowChoiceAsk
+#include "WindowChoice.h"
+
+
+class WindowChoiceAsk : public WindowChoice
 {
 public:
-	WindowChoiceAsk(void);
+	// Constructor - Destructor
+	WindowChoiceAsk(std::string p_title, std::string p_message, WindowChoiceAction* p_actions);
 	~WindowChoiceAsk(void);
 };
 

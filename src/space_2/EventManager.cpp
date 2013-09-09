@@ -9,6 +9,7 @@
 #include "WindowMessageError.h"
 #include "WindowMessageWarning.h"
 #include "WindowMessageSuccess.h"
+#include "WindowChoiceAsk.h"
 
 using namespace sf;
 
@@ -89,20 +90,6 @@ void EventManager::handlePlayerAction( sf::Event p_event )
 			delta--;
 		}
 	}
-
-
-	if( p_event.type == sf::Event::KeyPressed && p_event.key.code == sf::Keyboard::Q)
-		UserInterface::mUserInterface->addWindowPopup(new WindowMessageInfo("INFO", "Plop Il a été au XVIe siècle rendu célèbre par Michel de Montaigne ; dans ses Essais, il aborde de nombreux sujets d'étude du point de vue strictement personnel. On a souvent fait remarquer qu'il accordait une telle importance à cet angle d'approche qu'il y décrit par le détail ses propres sensations, perceptions et, parfois, ses maladies. Mais ce mode de travail lui permet de fonder une réflexion philosophique féconde. Il lance ce genre qui inspirera le philosophe et homme politique anglais Francis Bacon des Essais de morale et de politique (1597)."));
-
-	if( p_event.type == sf::Event::KeyPressed && p_event.key.code == sf::Keyboard::S)
-		UserInterface::mUserInterface->addWindowPopup(new WindowMessageWarning("WARNING", "Contrairement à l’étude, l’essai peut être polémique ou partisan. C’est un texte littéraire qui se prête bien à la réflexion philosophique, mais aussi à d'autres domaines : essais historiques, essais scientifiques, essais politiques, etc."));
-
-	if( p_event.type == sf::Event::KeyPressed && p_event.key.code == sf::Keyboard::D)
-		UserInterface::mUserInterface->addWindowPopup(new WindowMessageError("ERROR", "une expérience, une naissance, en philosophie : une phénoménologie (conscience au monde individuelle qui vise à rejoindre un savoir plus vaste)"));
-
-	if( p_event.type == sf::Event::KeyPressed && p_event.key.code == sf::Keyboard::F)
-		UserInterface::mUserInterface->addWindowPopup(new WindowMessageSuccess("SUCCESS", "une expérience, une naissance, en philosophie : une phénoménologie (conscience au monde individuelle qui vise à rejoindre un savoir plus vaste)"));
-
 
 	// CharacterShip reload
 	if( p_event.type == sf::Event::KeyPressed && p_event.key.code == Option::option->getAppControl(OPTION_APP_CONTROL_RELOAD_KEY))

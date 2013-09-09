@@ -16,6 +16,7 @@ WindowChoice::WindowChoice( std::string p_title, std::string p_message, SpritePa
 	 : WindowPopup(p_title, p_message, p_spriteSheet, p_spriteIndex, p_windowIconIdex)
 {
 	this->mAction = NULL;
+	this->setAction(p_actions);
 
 	this->mButtonTrue.setSize(BUTTON_WIDTH, BUTTON_HEIGHT);
 	this->setButtonTrueTitle(p_buttonTrueTitle);
