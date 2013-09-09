@@ -6,6 +6,13 @@
 #define CHAT_SERVER_HOST "localhost"
 #define CHAT_SERVER_PORT 30035
 
+// security measures
+#define MAX_SIZE_USERNAME		20					// max username length
+#define MAX_SIZE_PASSWORD		20					// max (sha1) password length
+#define MAX_SIZE_CHANNEL		20					// max channel length
+#define MAX_SIZE_CHATMSG		200					// max message length
+#define MAX_SIZE_CMDARG			200					// max cm dargument length
+#define CHAT_REPOST_TIME		2					// interval between 2 identical messages
 
 // ------------
 // --- ENUM ---
