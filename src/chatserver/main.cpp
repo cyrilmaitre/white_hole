@@ -23,16 +23,20 @@ int main(int argc, char** argv)
 	// client
 	else if(str == "c")
 	{
+		
 		ChatClient chatClient;
+		bool started = false;
 
-		chatClient.connect("testcli", "testcli");
+		// simulate game loop & mandatory for thread to live forever
+		while(1)
+		{
+			if(!started) {
+				started = true;
+				chatClient.connect("testcli", "testcli");
+			}
+		}
+	
 	}
-
-
-
-	//wait for input to quit
-	std::cout << "Ctrl + C to exit." << std::endl;
-	while(1);
 
 	exit(EXIT_SUCCESS);
 }

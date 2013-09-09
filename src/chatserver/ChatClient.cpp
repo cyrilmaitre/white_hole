@@ -7,17 +7,50 @@
 // -- Chat
 sf::Packet& operator << (sf::Packet& packet, const C2S_Chat c2s_chat)
 {
+	// properties size veritifcation
+	// msg
+	if(c2s_chat.message.length() > MAX_SIZE_USERNAME) {
+		c2s_chat.message.substr(0,MAX_SIZE_USERNAME);
+	}
+
+	// username OR channel
+	if(c2s_chat.dstType == ChatDstType::USER) {
+		if(c2s_chat.to.length() > MAX_SIZE_USERNAME)
+			c2s_chat.to.substr(0,MAX_SIZE_USERNAME);
+	}
+	else if(c2s_chat.dstType == ChatDstType::CHANNEL) {
+		if(c2s_chat.to.length() > MAX_SIZE_CHANNEL)
+			c2s_chat.to.substr(0,MAX_SIZE_CHANNEL);
+	}
+
 	return c2s_chat.insertIntoPacket(packet);
 }
 // -- Commad
 sf::Packet& operator << (sf::Packet& packet, const C2S_Command c2s_command)
 {
+	// properties size veritifcation
+	// msg
+	if(c2s_command.argument.length() > MAX_SIZE_CMDARG) {
+		c2s_command.argument.substr(0,MAX_SIZE_CMDARG);
+	}
+
 	return c2s_command.insertIntoPacket(packet);
 }
 
 // -- Auth
 sf::Packet& operator << (sf::Packet& packet, const C2S_Auth c2s_auth)
 {
+	// properties size veritifcation
+	// username
+	if(c2s_auth.user.length() > MAX_SIZE_USERNAME) {
+		c2s_auth.user.substr(0,MAX_SIZE_USERNAME);
+	}
+
+	// sha1password
+	if(c2s_auth.sha1password.length() > MAX_SIZE_PASSWORD) {
+		c2s_auth.sha1password.substr(0,MAX_SIZE_PASSWORD);
+	}
+
 	return c2s_auth.insertIntoPacket(packet);
 }
 
@@ -119,9 +152,14 @@ void ChatClient::clearInputBuffer()
 // Launch the thread connecting to the chat server
 void ChatClient::connect(std::string p_username, std::string p_sha1password)
 {
-	mUsername = p_username;
-	mSha1password = p_sha1password;
+	{
+		sf::Lock lock(mMutex);
+		mUsername = p_username;
+		mSha1password = p_sha1password;
 
+	}
+
+	{ std::ostringstream msg; msg << mUsername << " / " << mSha1password; Debug::msg(msg); }
 	if(!mRunning)
 	{
 		mThread = std::unique_ptr<sf::Thread>(new sf::Thread(&ChatClient::mRunClient, this));
@@ -131,92 +169,6 @@ void ChatClient::connect(std::string p_username, std::string p_sha1password)
 	else
 	{
 		{ std::ostringstream msg; msg << "[ERR] Thread already running !" << ""; Debug::msg(msg); }
-	}
-}
-
-bool ChatClient::sendPacket(sf::Packet& p_packet)
-{
-    bool packetSent = false;
-
-	for(int i = 0; i < MAX_C_PACKETSEND_RETRY; i++)
-    {
-        // Si le packet a été envoyé
-		this->lastSentStatus = mSocket.send(p_packet);
-		if(this->lastSentStatus == sf::Socket::Status::Done)
-        {
-            packetSent = true;
-			{ std::ostringstream msg; msg << "[SEND] Packet sent - size=" << p_packet.getDataSize() << ""; Debug::msg(msg); }
-            break;
-        }
-    }
-    
-    // Si on n'arrive à pas envoyer, on drop le client
-    if(!packetSent) {
-		{ std::ostringstream msg; msg << "[SEND] Error: Packet NOT sent ! - size=" << p_packet.getDataSize() << " after " << MAX_C_PACKETSEND_RETRY << " attemps"; Debug::msg(msg); }
-	}
-
-	return packetSent;
-}
-
-
-void ChatClient::handlePacket(sf::Packet& p_packet)
-{	
-
-	sf::Uint16 packetType;
-	// Message type ? (command, chat?)
-	if(p_packet >> packetType)
-	{
-		{ std::ostringstream msg; msg << "[RECV] Received data - ptype:" << packetType << " size:" << p_packet.getDataSize() << ""; Debug::msg(msg); }
-
-		// Chat
-		if(packetType == PacketType::CHAT)
-		{
-			std::shared_ptr<S2C_Chat> s2c_chat = std::make_shared<S2C_Chat>();
-			if(p_packet >> *s2c_chat)
-			{
-				this->pushOutputBuffer(s2c_chat);
-				{ std::ostringstream msg; msg << "[CHAT] FROM <" << s2c_chat->from << "> TO <" << s2c_chat->to << "("<< s2c_chat->dstType <<")> : " << s2c_chat->message << ""; Debug::msg(msg); }
-			}
-		}
-		// Command
-		else if(packetType == PacketType::COMMAND)
-		{
-			std::shared_ptr<S2C_Command> s2c_command = std::make_shared<S2C_Command>();
-			if(p_packet >> *s2c_command)
-			{
-				this->pushOutputBuffer(s2c_command);
-				{ std::ostringstream msg; msg << "[CMD] #" << s2c_command->command << ":" << s2c_command->argument << ""; Debug::msg(msg); }
-
-				// switch command ID
-				switch(s2c_command->command)
-				{
-					// PING request
-				case ServerCommand::S_PING:
-					{
-						C2S_Command c2s_pong(ClientCommand::C_PONG);
-						sf::Packet pongPacket;
-						pongPacket << c2s_pong;
-						this->sendPacket(pongPacket);
-					}
-					break;
-				}
-			}
-		}
-		// Auth
-		else if(packetType == PacketType::AUTHENTICATION)
-		{
-
-			std::shared_ptr<S2C_Auth> s2c_auth(new S2C_Auth);
-			if(p_packet >> *s2c_auth)
-			{
-				this->pushOutputBuffer(s2c_auth);
-				{ std::ostringstream msg; msg << "[AUTH] #" << s2c_auth->authResponse << ""; Debug::msg(msg); }
-			}
-		}
-	}
-	else
-	{
-		{ std::ostringstream msg; msg << "Error, can't retrieve packetType" << ""; Debug::msg(msg); }
 	}
 }
 
@@ -245,7 +197,7 @@ void ChatClient::mRunClient(void)
 					break;
 				}
 
-				sf::sleep(sf::seconds(5));	// for CPU
+				sf::sleep(sf::microseconds(500));	// for CPU
 			}
 
 	}
@@ -337,6 +289,93 @@ void ChatClient::mRunClient(void)
 	}
 
 	{ std::ostringstream msg; msg << "Thread ended" << ""; Debug::msg(msg); }
+}
+
+
+bool ChatClient::sendPacket(sf::Packet& p_packet)
+{
+    bool packetSent = false;
+
+	for(int i = 0; i < MAX_C_PACKETSEND_RETRY; i++)
+    {
+        // Si le packet a été envoyé
+		this->lastSentStatus = mSocket.send(p_packet);
+		if(this->lastSentStatus == sf::Socket::Status::Done)
+        {
+            packetSent = true;
+			{ std::ostringstream msg; msg << "[SEND] Packet sent - size=" << p_packet.getDataSize() << ""; Debug::msg(msg); }
+            break;
+        }
+    }
+    
+    // Si on n'arrive à pas envoyer, on drop le client
+    if(!packetSent) {
+		{ std::ostringstream msg; msg << "[SEND] Error: Packet NOT sent ! - size=" << p_packet.getDataSize() << " after " << MAX_C_PACKETSEND_RETRY << " attemps"; Debug::msg(msg); }
+	}
+
+	return packetSent;
+}
+
+
+void ChatClient::handlePacket(sf::Packet& p_packet)
+{	
+
+	sf::Uint16 packetType;
+	// Message type ? (command, chat?)
+	if(p_packet >> packetType)
+	{
+		{ std::ostringstream msg; msg << "[RECV] Received data - ptype:" << packetType << " size:" << p_packet.getDataSize() << ""; Debug::msg(msg); }
+
+		// Chat
+		if(packetType == PacketType::CHAT)
+		{
+			std::shared_ptr<S2C_Chat> s2c_chat = std::make_shared<S2C_Chat>();
+			if(p_packet >> *s2c_chat)
+			{
+				this->pushOutputBuffer(s2c_chat);
+				{ std::ostringstream msg; msg << "[CHAT] FROM <" << s2c_chat->from << "> TO <" << s2c_chat->to << "("<< s2c_chat->dstType <<")> : " << s2c_chat->message << ""; Debug::msg(msg); }
+			}
+		}
+		// Command
+		else if(packetType == PacketType::COMMAND)
+		{
+			std::shared_ptr<S2C_Command> s2c_command = std::make_shared<S2C_Command>();
+			if(p_packet >> *s2c_command)
+			{
+				this->pushOutputBuffer(s2c_command);
+				{ std::ostringstream msg; msg << "[CMD] #" << s2c_command->command << ":" << s2c_command->argument << ""; Debug::msg(msg); }
+
+				// switch command ID
+				switch(s2c_command->command)
+				{
+					// PING request
+				case ServerCommand::S_PING:
+					{
+						C2S_Command c2s_pong(ClientCommand::C_PONG);
+						sf::Packet pongPacket;
+						pongPacket << c2s_pong;
+						this->sendPacket(pongPacket);
+					}
+					break;
+				}
+			}
+		}
+		// Auth
+		else if(packetType == PacketType::AUTHENTICATION)
+		{
+
+			std::shared_ptr<S2C_Auth> s2c_auth(new S2C_Auth);
+			if(p_packet >> *s2c_auth)
+			{
+				this->pushOutputBuffer(s2c_auth);
+				{ std::ostringstream msg; msg << "[AUTH] #" << s2c_auth->authResponse << ""; Debug::msg(msg); }
+			}
+		}
+	}
+	else
+	{
+		{ std::ostringstream msg; msg << "Error, can't retrieve packetType" << ""; Debug::msg(msg); }
+	}
 }
 
 void ChatClient::terminate(void)

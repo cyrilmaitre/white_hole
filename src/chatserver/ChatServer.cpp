@@ -27,18 +27,51 @@ sf::Packet& operator << (sf::Packet& packet, const S2C_Auth s2c_auth)
 // -- Chat
 sf::Packet& operator >> (sf::Packet& packet, C2S_Chat& c2s_chat)
 {
+	// properties size veritifcation
+	// msg
+	if(c2s_chat.message.length() > MAX_SIZE_USERNAME) {
+		c2s_chat.message.substr(0,MAX_SIZE_USERNAME);
+	}
+
+	// username OR channel
+	if(c2s_chat.dstType == ChatDstType::USER) {
+		if(c2s_chat.to.length() > MAX_SIZE_USERNAME)
+			c2s_chat.to.substr(0,MAX_SIZE_USERNAME);
+	}
+	else if(c2s_chat.dstType == ChatDstType::CHANNEL) {
+		if(c2s_chat.to.length() > MAX_SIZE_CHANNEL)
+			c2s_chat.to.substr(0,MAX_SIZE_CHANNEL);
+	}
+
 	return packet >> c2s_chat.message >> c2s_chat.to >> c2s_chat.dstType;
 }
 
 // -- Command
 sf::Packet& operator >> (sf::Packet& packet, C2S_Command& c2s_command)
 {
+	// properties size veritifcation
+	// msg
+	if(c2s_command.argument.length() > MAX_SIZE_CMDARG) {
+		c2s_command.argument.substr(0,MAX_SIZE_CMDARG);
+	}
+
 	return packet >> c2s_command.command >> c2s_command.argument;
 }
 
 // -- Auth
 sf::Packet& operator >> (sf::Packet& packet, C2S_Auth& c2s_auth)
 {
+	// properties size veritifcation
+	// username
+	if(c2s_auth.user.length() > MAX_SIZE_USERNAME) {
+		c2s_auth.user.substr(0,MAX_SIZE_USERNAME);
+	}
+
+	// sha1password
+	if(c2s_auth.sha1password.length() > MAX_SIZE_PASSWORD) {
+		c2s_auth.sha1password.substr(0,MAX_SIZE_PASSWORD);
+	}
+
 	return packet >> c2s_auth.user >> c2s_auth.sha1password;
 }
 
