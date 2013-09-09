@@ -2,6 +2,8 @@
 #include "ItemStack.h"
 #include "ContainerStackView.h"
 
+class ContainerRow;
+
 class ContainerStack
 {
 public:
@@ -14,10 +16,12 @@ public:
 	};
 
 	// Constructor - Destructor
-	ContainerStack(ItemStack* p_stack, int p_position, ContainerStackType p_type = ContainerStack::ContainerStackType::TypeNone);
+	ContainerStack(ContainerRow* p_parent, ItemStack* p_stack, int p_position, ContainerStackType p_type = ContainerStack::ContainerStackType::TypeNone);
 	~ContainerStack(void);
 
 	// Getters - Setters
+	ContainerRow* getContainerRow();
+
 	ItemStack* getItemStack();
 	void setItemStack(ItemStack *p_stack, bool p_removePrec = false);
 	bool hasItemStack();
@@ -42,6 +46,7 @@ public:
 
 private:
 	// Attributs
+	ContainerRow* mContainerRow;
 	ItemStack* mItemStack;
 	ContainerStackType mType;
 	int mPosition;

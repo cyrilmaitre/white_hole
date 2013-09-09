@@ -97,6 +97,7 @@
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="Character.cpp" />
     <ClCompile Include="CharacterBank.cpp" />
+    <ClCompile Include="CharacterBankItemStackUpdate.cpp" />
     <ClCompile Include="CharacterShipItemStackUpdate.cpp" />
     <ClCompile Include="CharacterUpdate.cpp" />
     <ClCompile Include="DebugScreen.cpp" />
@@ -360,6 +361,7 @@
     <ClInclude Include="Camera.h" />
     <ClInclude Include="Character.h" />
     <ClInclude Include="CharacterBank.h" />
+    <ClInclude Include="CharacterBankItemStackUpdate.h" />
     <ClInclude Include="CharacterShipItemStackUpdate.h" />
     <ClInclude Include="CharacterUpdate.h" />
     <ClInclude Include="DebugScreen.h" />

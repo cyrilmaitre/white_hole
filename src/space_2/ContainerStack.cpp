@@ -1,18 +1,20 @@
 #include "ContainerStack.h"
 #include "CharacterShipItemStackUpdate.h"
+#include "CharacterBankItemStackUpdate.h"
 #include "Game.h"
 
 
 //*************************************************************
 // Constructor - Destructor
 //*************************************************************
-ContainerStack::ContainerStack( ItemStack* p_stack, int p_position, ContainerStackType p_type ) : mItemStack(NULL)
+ContainerStack::ContainerStack( ContainerRow* p_parent, ItemStack* p_stack, int p_position, ContainerStackType p_type ) : mItemStack(NULL)
 {
+	this->mContainerRow = p_parent;
 	this->mItemStack = NULL;
 	this->mType = p_type;
 	this->mPosition = p_position;
 	this->mItemStackChanged = false;
-	this->setItemStack(p_stack);
+	this->mItemStack = p_stack;
 }
 
 ContainerStack::~ContainerStack(void)
@@ -25,6 +27,11 @@ ContainerStack::~ContainerStack(void)
 //*************************************************************
 // Getters - Setters
 //*************************************************************
+ContainerRow* ContainerStack::getContainerRow()
+{
+	return this->mContainerRow;
+}
+
 ItemStack* ContainerStack::getItemStack()
 {
 	return this->mItemStack;
@@ -100,6 +107,12 @@ void ContainerStack::notifyItemStackChanged()
 		if(Game::game != NULL && Game::game->getCharacterShip() != NULL)
 			new CharacterShipItemStackUpdate(this->getItemStack(), this->getPosition());
 		break;
+
+	case ContainerStack::ContainerStackType::TypeCharacterBank:
+		CharacterBank* bank = dynamic_cast<CharacterBank*>(this->getContainerRow()->getContainerable());
+		if(bank != 0)
+			new CharacterBankItemStackUpdate(bank, this->getItemStack(), this->getPosition());
+		break;
 	}
 }
 
@@ -136,4 +149,5 @@ void ContainerStack::setStackSize( int p_size )
 		this->notifyItemStackChanged();
 	}
 }
+
 

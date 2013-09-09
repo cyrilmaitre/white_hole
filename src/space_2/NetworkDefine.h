@@ -8,5 +8,6 @@
 #define NETWORK_HTTP_URI_CHARACTER_UPDATE					"/SpaceUMad/resources/character/update"
 #define NETWORK_HTTP_URI_CHARACTER_LIST						"/SpaceUMad/resources/character/list"
 #define NETWORK_HTTP_URI_ITEMSTACK_CHARACTERSHIP_UPDATE		"/SpaceUMad/resources/itemstack/charactership/update"
+#define NETWORK_HTTP_URI_ITEMSTACK_CHARACTERBANK_UPDATE		"/SpaceUMad/resources/itemstack/characterbank/update"
 
 #endif

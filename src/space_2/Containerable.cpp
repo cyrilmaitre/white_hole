@@ -102,11 +102,11 @@ void Containerable::notifyContainerRowCountChanged()
 	{
 		this->mContainerRows = new ContainerRow*[this->getContainerRowCount()];
 		for(int i = 0; i < this->getContainerRowCount() - 1; i++)
-			this->mContainerRows[i] = new ContainerRow(CONTAINER_ROW_SIZE, i, this->mType);
+			this->mContainerRows[i] = new ContainerRow(this, CONTAINER_ROW_SIZE, i, this->mType);
 
 		int rowItems = this->getCargoMax() % CONTAINER_ROW_SIZE;
 		if(rowItems == 0) rowItems = CONTAINER_ROW_SIZE; 
-		this->mContainerRows[this->getContainerRowCount() - 1] = new ContainerRow(rowItems, this->getContainerRowCount() - 1, this->mType);
+		this->mContainerRows[this->getContainerRowCount() - 1] = new ContainerRow(this, rowItems, this->getContainerRowCount() - 1, this->mType);
 	}
 }
 

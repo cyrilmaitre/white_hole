@@ -1,11 +1,13 @@
 #include "ContainerRow.h"
+#include "Containerable.h"
 
 
 //*************************************************************
 // Constructor - Destructor
 //*************************************************************
-ContainerRow::ContainerRow(int p_containerStackCount, int p_position, ContainerStack::ContainerStackType p_type)
+ContainerRow::ContainerRow(Containerable* p_parent, int p_containerStackCount, int p_position, ContainerStack::ContainerStackType p_type)
 {
+	this->mContainerable = p_parent;
 	this->mType = p_type;
 	this->mPosition = p_position;
 	this->setContainerStacksCount(p_containerStackCount);
@@ -13,7 +15,7 @@ ContainerRow::ContainerRow(int p_containerStackCount, int p_position, ContainerS
 	for(int i = 0; i < CONTAINER_ROW_SIZE; i++)
 	{
 		if(p_containerStackCount > 0)
-			this->mContainerStacks[i] = new ContainerStack(NULL, this->mPosition * CONTAINER_ROW_SIZE + i, this->mType);
+			this->mContainerStacks[i] = new ContainerStack(this, NULL, this->mPosition * CONTAINER_ROW_SIZE + i, this->mType);
 		else
 			this->mContainerStacks[i] = NULL;
 
@@ -34,6 +36,11 @@ ContainerRow::~ContainerRow(void)
 //*************************************************************
 // Getters - Setter
 //*************************************************************
+Containerable* ContainerRow::getContainerable()
+{
+	return this->mContainerable;
+}
+
 ContainerStack* ContainerRow::getContainerStack( int p_index )
 {
 	if(p_index < 0)
@@ -73,6 +80,7 @@ void ContainerRow::setPosition( int p_position )
 {
 	this->mPosition = p_position;
 }
+
 
 
 

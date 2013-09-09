@@ -444,6 +444,7 @@ void UserInterface::notifyCharacterChanged()
 			WindowCargoStation* currentWindowBank = new WindowCargoStation(Resource::resource->getBundle()->getString("bankCargo") + Tools::buildStringWithInt(currentBank->getNumber()));
 			currentWindowBank->getContainerView()->setContainerable(currentBank);
 			this->mWindowCargoStationBanks.push_back(currentWindowBank);
+			this->mWindowDynamicsStation.push_back(currentWindowBank);
 		}
 	}
 }

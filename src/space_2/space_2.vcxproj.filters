@@ -1140,6 +1140,9 @@
     <ClCompile Include="WindowChoiceActionObject.cpp">
       <Filter>Fichiers sources\game\ui\window\popup</Filter>
     </ClCompile>
+    <ClCompile Include="CharacterBankItemStackUpdate.cpp">
+      <Filter>Fichiers sources\resource\network</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h">
@@ -1942,6 +1945,9 @@
     </ClInclude>
     <ClInclude Include="WindowChoiceActionObject.h">
       <Filter>Fichiers d%27en-tête\game\ui\window\popup</Filter>
+    </ClInclude>
+    <ClInclude Include="CharacterBankItemStackUpdate.h">
+      <Filter>Fichiers d%27en-tête\resource\network</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
