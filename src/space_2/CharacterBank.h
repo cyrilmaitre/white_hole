@@ -1,9 +1,10 @@
 #pragma once
 #include "Containerable.h"
 #include "Character.h"
+#include "WindowChoiceActionObject.h"
 
 
-class CharacterBank : public Containerable
+class CharacterBank : public Containerable, public WindowChoiceActionObject
 {
 public:
 	// Constructor - Destructor

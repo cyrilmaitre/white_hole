@@ -2,6 +2,10 @@
 #include "CharacterBank.h"
 #include "UserInterface.h"
 #include "StationScreen.h"
+#include "WindowMessageError.h"
+#include "WindowChoiceAsk.h"
+#include "CharacterUpdate.h"
+#include "WindowMessageSuccess.h"
 
 
 //*************************************************************
@@ -16,6 +20,7 @@
 #define LEFTMENU_BACKCOLOR					sf::Color(128, 128, 128, 200)
 #define LEFTMENU_BORDCOLOR					sf::Color(128, 128, 128, 250)
 #define LEFTMENU_BORDSIZE					2
+#define ACTIONCOMMAND_UNLOCKBANK			"unlockbank"
 
 
 //*************************************************************
@@ -155,7 +160,11 @@ void StationScreenLeftMenu::update( sf::Event p_event )
 		UserInterface::mUserInterface->getWindowCargoStationShip()->setOpen(!UserInterface::mUserInterface->getWindowCargoStationShip()->isOpen());
 
 	for(int i = 0; i < this->mButtonBanks.size(); i++)
+	{
 		this->mButtonBanks[i]->update(p_event);
+		if(this->mButtonBanks[i]->isClicked())
+			this->buttonBankClicked(i);
+	}
 
 	this->mButtonUndock.update(p_event);
 	if(this->mButtonUndock.isClicked())
@@ -205,5 +214,53 @@ void StationScreenLeftMenu::notifySizeChanged()
 {
 	FieldSet::notifySizeChanged();
 	this->updatePosition();
+}
+
+void StationScreenLeftMenu::buttonBankClicked( int p_index )
+{
+	CharacterBank* currentBank = this->getCharacter()->getBank(p_index);
+
+	if(currentBank->isUnlock())
+	{
+		// If unlock
+	}
+	else
+	{
+		if(this->getCharacter()->hasEnoughCredit(currentBank->getPrice()))
+		{
+			// Ask if user want to unlock
+			UserInterface::mUserInterface->addWindowPopup(new WindowChoiceAsk(	Resource::resource->getBundle()->getString("windowAskBankTitle"), 
+																				Resource::resource->getBundle()->getString("windowAskBankMessage") + " " + Tools::formatNumber(currentBank->getPrice()) + " " + Resource::resource->getBundle()->getString("creditAb") + "?", 
+																				this, currentBank, ACTIONCOMMAND_UNLOCKBANK));
+		}
+		else
+		{
+			// Error: not enough money
+			UserInterface::mUserInterface->addWindowPopup(new WindowMessageError(	Resource::resource->getBundle()->getString("error"), 
+																					Resource::resource->getBundle()->getString("windowErrorBank")));
+		}
+	}
+}
+
+void StationScreenLeftMenu::onButtonTrueClicked( WindowChoiceActionObject* p_object, std::string p_actionCommand )
+{
+	if(p_actionCommand == ACTIONCOMMAND_UNLOCKBANK)
+	{
+		if(p_object != NULL)
+		{
+			// Unlock selected bank
+			CharacterBank* currentBank = (CharacterBank*) p_object;
+			currentBank->unlock();
+			new CharacterUpdate(currentBank->getCharacter());
+			this->updateButtonBank();
+			UserInterface::mUserInterface->addWindowPopup(new WindowMessageSuccess(	Resource::resource->getBundle()->getString("success"), 
+																					Resource::resource->getBundle()->getString("windowSuccessBank")));
+		}
+	}
+}
+
+void StationScreenLeftMenu::onButtonFalseClicked( WindowChoiceActionObject* p_object, std::string p_actionCommand )
+{
+
 }
 

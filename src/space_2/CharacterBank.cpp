@@ -41,7 +41,7 @@ CharacterBank::~CharacterBank(void)
 
 
 //*************************************************************
-// Constructor - Destructor
+// Getters - Setters
 //*************************************************************
 Character* CharacterBank::getCharacter()
 {

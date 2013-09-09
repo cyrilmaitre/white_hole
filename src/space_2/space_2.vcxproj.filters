@@ -1137,6 +1137,9 @@
     <ClCompile Include="WindowChoiceAction.cpp">
       <Filter>Fichiers sources\game\ui\window\popup</Filter>
     </ClCompile>
+    <ClCompile Include="WindowChoiceActionObject.cpp">
+      <Filter>Fichiers sources\game\ui\window\popup</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h">
@@ -1935,6 +1938,9 @@
       <Filter>Fichiers d%27en-tête\game\ui\window\popup</Filter>
     </ClInclude>
     <ClInclude Include="WindowChoiceAsk.h">
+      <Filter>Fichiers d%27en-tête\game\ui\window\popup</Filter>
+    </ClInclude>
+    <ClInclude Include="WindowChoiceActionObject.h">
       <Filter>Fichiers d%27en-tête\game\ui\window\popup</Filter>
     </ClInclude>
   </ItemGroup>

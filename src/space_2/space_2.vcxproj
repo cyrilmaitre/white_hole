@@ -281,6 +281,7 @@
     <ClCompile Include="WindowCargoStation.cpp" />
     <ClCompile Include="WindowChoice.cpp" />
     <ClCompile Include="WindowChoiceAction.cpp" />
+    <ClCompile Include="WindowChoiceActionObject.cpp" />
     <ClCompile Include="WindowChoiceAsk.cpp" />
     <ClCompile Include="WindowMessageSuccess.cpp" />
     <ClCompile Include="WindowMessageError.cpp" />
@@ -550,6 +551,7 @@
     <ClInclude Include="WindowCargoStation.h" />
     <ClInclude Include="WindowChoice.h" />
     <ClInclude Include="WindowChoiceAction.h" />
+    <ClInclude Include="WindowChoiceActionObject.h" />
     <ClInclude Include="WindowChoiceAsk.h" />
     <ClInclude Include="WindowMessageSuccess.h" />
     <ClInclude Include="WindowMessageError.h" />

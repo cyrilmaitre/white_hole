@@ -2,10 +2,12 @@
 #include "FieldSet.h"
 #include "Button.h"
 #include "Character.h"
+#include "WindowChoiceAction.h"
+#include "WindowChoiceActionObject.h"
 
 class StationScreen;
 
-class StationScreenLeftMenu : public FieldSet
+class StationScreenLeftMenu : public FieldSet, public WindowChoiceAction
 {
 public:
 	// Constructor - Destructor
@@ -31,6 +33,9 @@ public:
 	void notifyPositionChanged();
 	void notifySizeChanged();
 
+	void onButtonTrueClicked(WindowChoiceActionObject* p_object, std::string p_actionCommand);
+	void onButtonFalseClicked(WindowChoiceActionObject* p_object, std::string p_actionCommand);
+
 
 private:
 	// Attributs
@@ -43,5 +48,8 @@ private:
 	Button mButtonShipCargo;
 	std::vector<Button*> mButtonBanks;
 	Button mButtonUndock;
+
+	// Methods 
+	void buttonBankClicked(int p_index);
 };
 

@@ -45,6 +45,8 @@ shipCargo = Ship's Cargo
 bankCargo = Bank #
 locked = Locked
 unload = Unlock
+error = Error
+success = Success
 #
 #
 # Running stats
@@ -434,3 +436,10 @@ npcTypeNeutralPassive = Neutral Passive
 npcTypeEvilAgressive = Evil Agressive
 npcTypeEvilNeutral = Evil Neutral
 npcTypeEvilPassive = Evil Passive
+#
+#
+# Window texts
+windowAskBankTitle = Unlock bank
+windowAskBankMessage = Do you want to unlock this bank for
+windowErrorBank = You don't have enough money to unlock this bank
+windowSuccessBank = You successfully unlock the bank

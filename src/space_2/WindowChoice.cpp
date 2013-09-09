@@ -12,11 +12,13 @@
 //*************************************************************
 // Constructor - Destructor
 //*************************************************************
-WindowChoice::WindowChoice( std::string p_title, std::string p_message, SpriteParameter* p_spriteSheet, std::string p_spriteIndex, std::string p_windowIconIdex, std::string p_buttonTrueTitle, std::string p_buttonFalseTitle, WindowChoiceAction* p_actions, std::string p_actionCommand )
+WindowChoice::WindowChoice( std::string p_title, std::string p_message, SpriteParameter* p_spriteSheet, std::string p_spriteIndex, std::string p_windowIconIdex, std::string p_buttonTrueTitle, std::string p_buttonFalseTitle, WindowChoiceAction* p_actions, WindowChoiceActionObject* pactionObject, std::string p_actionCommand )
 	 : WindowPopup(p_title, p_message, p_spriteSheet, p_spriteIndex, p_windowIconIdex)
 {
 	this->mAction = NULL;
+	this->mActionObject = NULL;
 	this->setAction(p_actions);
+	this->setActionObject(pactionObject);
 	this->setActionCommand(p_actionCommand);
 
 	this->mButtonTrue.setSize(BUTTON_WIDTH, BUTTON_HEIGHT);
@@ -75,6 +77,16 @@ void WindowChoice::setAction( WindowChoiceAction* p_action )
 		this->deleteAction();
 		this->mAction = p_action;
 	}
+}
+
+WindowChoiceActionObject* WindowChoice::getActionObject()
+{
+	return this->mActionObject;
+}
+
+void WindowChoice::setActionObject( WindowChoiceActionObject* p_object )
+{
+	this->mActionObject = p_object;
 }
 
 std::string WindowChoice::getActionCommand()
@@ -136,14 +148,14 @@ void WindowChoice::update( sf::Event p_event )
 		if(this->mButtonTrue.isClicked())
 		{
 			if(this->hasAction())
-				this->getAction()->onButtonTrueClicked(this->getActionCommand());
+				this->getAction()->onButtonTrueClicked(this->getActionObject(), this->getActionCommand());
 			this->setOpen(false);
 		}
 
 		if(this->mButtonFalse.isClicked())
 		{
 			if(this->hasAction())
-				this->getAction()->onButtonFalseClicked(this->getActionCommand());
+				this->getAction()->onButtonFalseClicked(this->getActionObject(),this->getActionCommand());
 			this->setOpen(false);
 		}
 	}
