@@ -4,7 +4,7 @@
 //*************************************************************
 // Define
 //*************************************************************
-#define CARGO_MAX				36
+#define CARGO_MAX				64
 #define BANK_1_PRICE			0
 #define BANK_2_PRICE			10000
 #define BANK_3_PRICE			50000

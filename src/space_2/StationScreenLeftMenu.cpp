@@ -223,7 +223,7 @@ void StationScreenLeftMenu::buttonBankClicked( int p_index )
 	if(currentBank->isUnlock())
 	{
 		// If Unlock
-		UserInterface::mUserInterface->getWindowCargoStationBank(p_index)->setOpen(true);
+		UserInterface::mUserInterface->getWindowCargoStationBank(p_index)->setOpen(!UserInterface::mUserInterface->getWindowCargoStationBank(p_index)->isOpen());
 	}
 	else
 	{
