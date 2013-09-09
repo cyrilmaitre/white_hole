@@ -9,7 +9,7 @@ class WindowChoice : public WindowPopup
 public:
 	// Constructor - Destructor
 	WindowChoice(	std::string p_title, std::string p_message, SpriteParameter* p_spriteSheet, std::string p_spriteIndex, std::string p_windowIconIdex, 
-					std::string p_buttonTrueTitle, std::string p_buttonFalseTitle, WindowChoiceAction* p_actions);
+					std::string p_buttonTrueTitle, std::string p_buttonFalseTitle, WindowChoiceAction* p_actions, std::string p_actionCommand = "");
 	~WindowChoice(void);
 	void deleteAction();
 
@@ -20,6 +20,9 @@ public:
 	bool hasAction();
 	WindowChoiceAction* getAction();
 	void setAction(WindowChoiceAction* p_action);
+
+	std::string getActionCommand();
+	void setActionCommand(std::string p_command);
 
 	// Methods
 	void notifyPositionChanged();
@@ -35,5 +38,6 @@ private:
 	Button mButtonTrue;
 	Button mButtonFalse;
 	WindowChoiceAction* mAction;
+	std::string mActionCommand;
 };
 

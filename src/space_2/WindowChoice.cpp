@@ -12,11 +12,12 @@
 //*************************************************************
 // Constructor - Destructor
 //*************************************************************
-WindowChoice::WindowChoice( std::string p_title, std::string p_message, SpriteParameter* p_spriteSheet, std::string p_spriteIndex, std::string p_windowIconIdex, std::string p_buttonTrueTitle, std::string p_buttonFalseTitle, WindowChoiceAction* p_actions )
+WindowChoice::WindowChoice( std::string p_title, std::string p_message, SpriteParameter* p_spriteSheet, std::string p_spriteIndex, std::string p_windowIconIdex, std::string p_buttonTrueTitle, std::string p_buttonFalseTitle, WindowChoiceAction* p_actions, std::string p_actionCommand )
 	 : WindowPopup(p_title, p_message, p_spriteSheet, p_spriteIndex, p_windowIconIdex)
 {
 	this->mAction = NULL;
 	this->setAction(p_actions);
+	this->setActionCommand(p_actionCommand);
 
 	this->mButtonTrue.setSize(BUTTON_WIDTH, BUTTON_HEIGHT);
 	this->setButtonTrueTitle(p_buttonTrueTitle);
@@ -76,6 +77,16 @@ void WindowChoice::setAction( WindowChoiceAction* p_action )
 	}
 }
 
+std::string WindowChoice::getActionCommand()
+{
+	return this->mActionCommand;
+}
+
+void WindowChoice::setActionCommand( std::string p_command )
+{
+	this->mActionCommand = p_command;
+}
+
 
 //*************************************************************
 // Methods
@@ -125,14 +136,14 @@ void WindowChoice::update( sf::Event p_event )
 		if(this->mButtonTrue.isClicked())
 		{
 			if(this->hasAction())
-				this->getAction()->onButtonTrueClicked();
+				this->getAction()->onButtonTrueClicked(this->getActionCommand());
 			this->setOpen(false);
 		}
 
 		if(this->mButtonFalse.isClicked())
 		{
 			if(this->hasAction())
-				this->getAction()->onButtonFalseClicked();
+				this->getAction()->onButtonFalseClicked(this->getActionCommand());
 			this->setOpen(false);
 		}
 	}
@@ -148,5 +159,6 @@ void WindowChoice::drawContent()
 		this->mButtonFalse.draw();
 	}
 }
+
 
 

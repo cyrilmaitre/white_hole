@@ -1,4 +1,5 @@
 #pragma once
+#include "Resource.h"
 
 
 class WindowChoiceAction
@@ -9,7 +10,7 @@ public:
 	~WindowChoiceAction(void);
 
 	// Methods
-	virtual void onButtonTrueClicked() = 0;
-	virtual void onButtonFalseClicked() = 0;
+	virtual void onButtonTrueClicked(std::string p_actionCommand) = 0;
+	virtual void onButtonFalseClicked(std::string p_actionCommand) = 0;
 };
 
