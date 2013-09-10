@@ -114,11 +114,52 @@ DebugScreen::DebugScreen(void)
 	this->mLabelDefaultProgressBar.setFontSize(ManagerConfig::FontSize::Large);
 	this->mLabelDefaultProgressBar.setFontColor(sf::Color(255, 106, 0));
 
+	// Tree
+	NodeData* root1 = new NodeData();
+	NodeData* root1Child1 = new NodeData();
+	NodeData* root1Child1Child1 = new NodeData();
+	NodeData* root1Child1Child2 = new NodeData();
+	NodeData* root1Child1Child3 = new NodeData();
+	NodeData* root1Child1Child4 = new NodeData();
+	NodeData* root1Child2 = new NodeData();
+	NodeData* root1Child3 = new NodeData();
+	root1Child1->addChild(root1Child1Child1);
+	root1Child1->addChild(root1Child1Child2);
+	root1Child1->addChild(root1Child1Child3);
+	root1Child1->addChild(root1Child1Child4);
+	root1->addChild(root1Child1);
+	root1->addChild(root1Child2);
+	root1->addChild(root1Child3);
+
+	NodeData* root2 = new NodeData();
+	NodeData* root2Child1 = new NodeData();
+	NodeData* root2Child2 = new NodeData();
+	NodeData* root2Child3 = new NodeData();
+	root2->addChild(root2Child1);
+	root2->addChild(root2Child2);
+	root2->addChild(root2Child3);
+
+	NodeData* root3 = new NodeData();
+	NodeData* root4 = new NodeData();
+	NodeData* root5 = new NodeData();
+
+	this->mTree.addRoot(root1);
+	this->mTree.addRoot(root2);
+	this->mTree.addRoot(root3);
+	this->mTree.addRoot(root4);
+	this->mTree.addRoot(root5);
+
+	this->mTreeView.setSize(200, 400);
+	this->mTreeView.setBackgroundColor(sf::Color(255, 255, 255, 0), true);
+	this->mTreeView.setBorderColor(sf::Color(200, 200, 200), true);
+	this->mTreeView.setBorderSize(2, true);
+
 	this->updatePosition();
 }
 
 DebugScreen::~DebugScreen(void)
 {
+	this->mTree.destroyRoots();
 }
 
 
@@ -208,6 +249,8 @@ void DebugScreen::update( sf::Event p_event )
 
 	this->mTextboxMultiline.update(p_event);
 	this->mTextboxMultilineAutoResizeHeight.update(p_event);
+
+	this->mTreeView.update(p_event);
 }
 
 void DebugScreen::updatePosition()
@@ -230,6 +273,8 @@ void DebugScreen::updatePosition()
 	this->mFontSizeMedium.setPosition(this->mFontSizeTiny.getX(), this->mFontSizeSmall.getBottomY() + 10);
 	this->mFontSizeLarge.setPosition(this->mFontSizeTiny.getX(), this->mFontSizeMedium.getBottomY() + 10);
 	this->mFontSizeHuge.setPosition(this->mFontSizeTiny.getX(), this->mFontSizeLarge.getBottomY() + 10);
+
+	this->mTreeView.setPosition(this->mFontSizeHuge.getRightX() + 50, 10);
 
 	this->mTextboxAutoResize.setPosition(10, this->mFieldset.getBottomY() + 25);
 	this->mTextbox.setPosition(10, this->mTextboxAutoResize.getBottomY() + 10);
@@ -298,6 +343,8 @@ void DebugScreen::draw()
 
 	this->mLabelDefaultProgressBar.draw();
 	this->mDefaultProgressBar.draw();
+
+	this->mTreeView.draw();
 
 	Resource::resource->getApp()->display();
 }

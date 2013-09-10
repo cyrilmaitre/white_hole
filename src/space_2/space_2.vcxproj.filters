@@ -355,6 +355,12 @@
     <Filter Include="Fichiers d%27en-tête\game\ui\window\popup">
       <UniqueIdentifier>{72f3d731-baea-4da8-8176-faa85fb52bf7}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Fichiers d%27en-tête\mks\ui\tree">
+      <UniqueIdentifier>{b24d9b9a-4b92-4dbb-9d4a-426f6877fe60}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fichiers sources\mks\ui\tree">
+      <UniqueIdentifier>{1578a7fd-7c74-41d3-98f2-e447cda8954c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Game.cpp">
@@ -1142,6 +1148,18 @@
     </ClCompile>
     <ClCompile Include="CharacterBankItemStackUpdate.cpp">
       <Filter>Fichiers sources\resource\network</Filter>
+    </ClCompile>
+    <ClCompile Include="Node.cpp">
+      <Filter>Fichiers sources\mks\ui\tree</Filter>
+    </ClCompile>
+    <ClCompile Include="Tree.cpp">
+      <Filter>Fichiers sources\mks\ui\tree</Filter>
+    </ClCompile>
+    <ClCompile Include="TreeData.cpp">
+      <Filter>Fichiers sources\mks\ui\tree</Filter>
+    </ClCompile>
+    <ClCompile Include="NodeData.cpp">
+      <Filter>Fichiers sources\mks\ui\tree</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1948,6 +1966,18 @@
     </ClInclude>
     <ClInclude Include="CharacterBankItemStackUpdate.h">
       <Filter>Fichiers d%27en-tête\resource\network</Filter>
+    </ClInclude>
+    <ClInclude Include="Node.h">
+      <Filter>Fichiers d%27en-tête\mks\ui\tree</Filter>
+    </ClInclude>
+    <ClInclude Include="Tree.h">
+      <Filter>Fichiers d%27en-tête\mks\ui\tree</Filter>
+    </ClInclude>
+    <ClInclude Include="NodeData.h">
+      <Filter>Fichiers d%27en-tête\mks\ui\tree</Filter>
+    </ClInclude>
+    <ClInclude Include="TreeData.h">
+      <Filter>Fichiers d%27en-tête\mks\ui\tree</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

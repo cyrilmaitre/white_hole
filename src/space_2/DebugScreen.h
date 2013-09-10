@@ -8,6 +8,9 @@
 #include "TextBox.h"
 #include "TextBoxMultiLine.h"
 #include "TextField.h"
+#include "TreeData.h"
+#include "NodeData.h"
+#include "Tree.h"
 
 
 class DebugScreen : public BaseScreen
@@ -68,5 +71,8 @@ private:
 	TextBox mFontSizeMedium;
 	TextBox mFontSizeLarge;
 	TextBox mFontSizeHuge;
+
+	TreeData mTree;
+	Tree mTreeView;
 };
 
