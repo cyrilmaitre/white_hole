@@ -3,25 +3,25 @@
 
 #define MAX_C_PACKETSEND_RETRY	5
 
-typedef std::vector<std::shared_ptr<Message>> InputBuffer;
-typedef std::vector<std::shared_ptr<Message>> OutputBuffer;
+typedef std::vector<std::shared_ptr<Message>> MessageBuffer;
 
-enum ChatEventCode {
-	CE_NONE,
-	CE_CONNECTION_OK,
-	CE_CONNECTION_FAILED,
-	CE_RECONNECTION,
-	CE_RECONNECTION_FAILED,
-	CE_DISCONNECTED,
+enum NetworkStateCode {
+	NS_NONE,
+	NS_CONNECTING,
+	NS_CONNECTION_OK,
+	NS_CONNECTION_FAILED,
+	NS_DISCONNECTED,
 };
 
-struct ChatEvent {
-	ChatEvent(ChatEventCode code = ChatEventCode::CE_NONE, std::string optionalString = "")
-	: code(code), optionalString(optionalString)
+struct NetworkState {
+	NetworkState(NetworkStateCode code = NetworkStateCode::NS_NONE, std::string optionalString = "")
+	: code(code), optionalString(optionalString), timestamp((sf::Uint64)time(NULL)), newState(true)
 	{}
 
 	sf::Uint16	code;
 	std::string optionalString;
+	sf::Uint64	timestamp;
+	bool		newState;
 };
 
 class ChatClient
@@ -36,12 +36,16 @@ public:
 	bool isRunning(void);
 
 	// chat input buffer (send)
-	const InputBuffer& getInputBuffer(void);
+	const MessageBuffer& getInputBuffer(void);
 	void pushInputBuffer(std::shared_ptr<Message> p_message);		// add a chat message to the buffer (public)
 
 	// chat output buffer (received)
-	const OutputBuffer& getOutputBuffer(void);
+	const MessageBuffer& getOutputBuffer(void);
 	void clearOutputBuffer(void);					// clear received messages buffer (public)
+
+	// network state
+	const NetworkState& getNetworkState();
+	void				notifyNetworkState();	// called after reading the network state
 
 	// others methods
 	void connect(std::string p_username, std::string p_sha1password);
@@ -61,11 +65,12 @@ private:
 	sf::Socket::Status	lastSentStatus;
 
 	// buffers
-	OutputBuffer		mOutputBuffer;
-	void				pushOutputBuffer(std::shared_ptr<Message> p_message);	// store received messages (private)
-	InputBuffer			mInputBuffer;
-	void				clearInputBuffer();										// clear sent messages (private)
-
+	// -- received packets
+	MessageBuffer			mOutputBuffer;
+	void					pushOutputBuffer(std::shared_ptr<Message> p_message);	// store received messages (private)
+	// -- packets being sent
+	MessageBuffer			mInputBuffer;
+	void					clearInputBuffer(void);										// clear sent messages (private)
 
 	// thread
 	sf::Mutex					mMutex;
@@ -76,6 +81,9 @@ private:
 	std::string mUsername;
 	std::string mSha1password;
 
+	// network state
+	NetworkState	mNetworkState;
+	void			updateNetworkState(NetworkStateCode p_networkStateCode, std::string p_optionalString = "");
 	
 };
 
