@@ -586,6 +586,7 @@ void ChatServer::handlePacket(sf::Packet& p_packet, std::shared_ptr<Client> p_cl
 									this->sendPacket(packet, dstClient);
 								}
 								else {
+									// notify sender that the receiver is AFK
 									S2C_Command s2c_command(ServerCommand::S_CHAT_PEER_AFK, s2c_chat.to);
 									sf::Packet peerAFKPacket;
 									peerAFKPacket << s2c_command;
@@ -594,6 +595,7 @@ void ChatServer::handlePacket(sf::Packet& p_packet, std::shared_ptr<Client> p_cl
 							}
 							else
 							{
+								// notify sender that the receiver is OFFLINE
 								S2C_Command s2c_command(ServerCommand::S_CHAT_PEER_OFFLINE, s2c_chat.to);
 								sf::Packet peerOfflinePacket;
 								peerOfflinePacket << s2c_command;
@@ -621,15 +623,31 @@ void ChatServer::handlePacket(sf::Packet& p_packet, std::shared_ptr<Client> p_cl
 					// switch on command ID
 					switch(c2s_command.command)
 					{
-						// PONG
-					case ClientCommand::C_PONG:
+						// ...........................................
+						// UNKNOWN CMD
+						// ...........................................
+					case ClientCommand::C_UNKNOWN_CMD:
 						{
-							if(p_client->isPongRequested())
-								p_client->notifyPong();
+							// [WARNING] Log -> Client shouldn't send this cmd code = Hacking attempt
+							this->dropClient(p_client);
 						}
 						break;
 
+						// ...........................................
+						// QUIT
+						// ...........................................
+					case ClientCommand::C_QUIT:
+						{
+							// drop the client since he wants to leave
+							this->dropClient(p_client);
+
+						}
+						break;
+
+
+						// ...........................................
 						// AFK
+						// ...........................................
 					case ClientCommand::C_AFK:
 						{
 							// if already afk, disable AFK mode
@@ -657,17 +675,62 @@ void ChatServer::handlePacket(sf::Packet& p_packet, std::shared_ptr<Client> p_cl
 						}
 						break;
 
-						// QUIT
-					case ClientCommand::C_QUIT:
-						{
-							// drop the client since he wants to leave
-							this->dropClient(p_client);
 
+						// ...........................................
+						// LOOKING FOR TRADE
+						// ...........................................
+					case ClientCommand::C_LOOKING_FOR_TRADE:
+						{
 						}
 						break;
 
+
+						// ...........................................
+						// PONG
+						// ...........................................
+					case ClientCommand::C_PONG:
+						{
+							if(p_client->isPongRequested())
+								p_client->notifyPong();
+						}
+						break;
+
+
+						// ...........................................
+						// FRIEND ADD
+						// ...........................................
+					case ClientCommand::C_FRIEND_ADD:
+						{
+						}
+						break;
+
+
+						// ...........................................
+						// FRIEND DELETE
+						// ...........................................
+					case ClientCommand::C_FRIEND_DEL:
+						{
+						}
+						break;
+
+
+						// ...........................................
+						// FRIEND DELETE
+						// ...........................................
+					case ClientCommand::C_FRIEND_IGNORE:
+						{
+						}
+						break;
+
+
+						// ...........................................
 						// NOTHING
+						// ...........................................
 					default:
+						{
+							// [WARNING] Log -> Cmd not handled by server = Hacking attempt
+							this->dropClient(p_client);
+						}
 						break;
 					}
 				}
@@ -683,6 +746,7 @@ void ChatServer::handlePacket(sf::Packet& p_packet, std::shared_ptr<Client> p_cl
 	case ClientState::DROPPED:
 	case ClientState::UNKNOWN_CS:
 		{
+			// [WARNING] Log
 			// holy shit, this case shouldn't happen
 			
 		}
@@ -690,8 +754,8 @@ void ChatServer::handlePacket(sf::Packet& p_packet, std::shared_ptr<Client> p_cl
 
 	default:
 		{
+			// [WARNING] Log
 			// holy shit, this case shouldn't happen
-			
 		}		
 		break;
 	}

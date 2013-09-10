@@ -108,7 +108,7 @@ sf::Mutex& ChatClient::getMutex()
 
 // <chatbuffer>
 // out
-const OutputBuffer& ChatClient::getOutputBuffer()
+const MessageBuffer& ChatClient::getOutputBuffer()
 {
 	sf::Lock lock(mMutex);
 	return this->mOutputBuffer;
@@ -128,7 +128,7 @@ void ChatClient::pushOutputBuffer(std::shared_ptr<Message> p_message)
 }
 
 // int
-const InputBuffer& ChatClient::getInputBuffer()
+const MessageBuffer& ChatClient::getInputBuffer()
 {
 	sf::Lock lock(mMutex);
 	return this->mInputBuffer;
@@ -147,6 +147,32 @@ void ChatClient::clearInputBuffer()
 	mInputBuffer.shrink_to_fit();
 }
 // </chatbuffer>
+
+// <networkstate>
+const NetworkState& ChatClient::getNetworkState()
+{
+	sf::Lock lock(mMutex);
+	return this->mNetworkState;
+}
+
+void ChatClient::updateNetworkState(NetworkStateCode p_networkStateCode, std::string p_optionalString)
+{
+	sf::Lock lock(mMutex);
+	if(p_networkStateCode != this->mNetworkState.code) {
+		this->mNetworkState.code = p_networkStateCode;
+		this->mNetworkState.newState = true;
+		this->mNetworkState.optionalString = p_optionalString;
+		this->mNetworkState.timestamp = (sf::Uint64)time(NULL);
+	}
+
+}
+
+void ChatClient::notifyNetworkState()
+{
+	sf::Lock lock(mMutex);
+	this->mNetworkState.newState = false;
+}
+// </networkstate>
 
 
 // Launch the thread connecting to the chat server
@@ -184,6 +210,9 @@ void ChatClient::mRunClient(void)
 	{
 			mSocket.disconnect();
 			mSocket.setBlocking(false);
+
+			this->updateNetworkState(NetworkStateCode::NS_CONNECTING);
+
 			unsigned int max_retry = 50;
 			unsigned int attempt = 0;
 			while(true) {
@@ -201,8 +230,10 @@ void ChatClient::mRunClient(void)
 			}
 
 	}
+
 	if(status == sf::Socket::Status::Done)
 	{
+		this->updateNetworkState(NetworkStateCode::NS_CONNECTION_OK);
 		{ std::ostringstream msg; msg << "Connection OK !" << ""; Debug::msg(msg); }
 
 		std::shared_ptr<C2S_Auth> auth = std::make_shared<C2S_Auth>(this->mUsername, this->mSha1password);
@@ -229,7 +260,7 @@ void ChatClient::mRunClient(void)
 			{
 
 				sf::Lock lock(mMutex);
-				InputBuffer chatbuffer(this->getInputBuffer());
+				MessageBuffer chatbuffer(this->getInputBuffer()); // we get a copy of the buffer
 
 				// si packet buffer non vide, on envoie tout son contenu
 				if(!chatbuffer.empty())
@@ -285,6 +316,7 @@ void ChatClient::mRunClient(void)
 	}
 	else
 	{
+		this->updateNetworkState(NetworkStateCode::NS_CONNECTION_FAILED);
 		{ std::ostringstream msg; msg << "(!) Couldn't connect to chat server, status : ("<< status << ")"; Debug::msg(msg); }
 	}
 
@@ -401,5 +433,7 @@ void ChatClient::disconnect(void)
 	sf::Lock lock(mMutex);
 	mRunning = false;
 	mSocket.disconnect();
+
+	this->updateNetworkState(NetworkStateCode::NS_DISCONNECTED);
 	{ std::ostringstream msg; msg << "Disconnected" << ""; Debug::msg(msg); }
 }

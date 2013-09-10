@@ -70,6 +70,7 @@ enum ClientCommand
 	C_LOOKING_FOR_TRADE,
 	C_PONG,
 	C_FRIEND_ADD,
+	C_FRIEND_IGNORE,
 	C_FRIEND_DEL
 };
 
