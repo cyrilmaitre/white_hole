@@ -73,6 +73,6 @@ private:
 	TextBox mFontSizeHuge;
 
 	TreeData mTree;
-	Tree mTreeView;
+	Tree* mTreeView;
 };
 

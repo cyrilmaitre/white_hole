@@ -149,10 +149,14 @@ DebugScreen::DebugScreen(void)
 	this->mTree.addRoot(root4);
 	this->mTree.addRoot(root5);
 
-	this->mTreeView.setSize(200, 400);
-	this->mTreeView.setBackgroundColor(sf::Color(255, 255, 255, 0), true);
-	this->mTreeView.setBorderColor(sf::Color(200, 200, 200), true);
-	this->mTreeView.setBorderSize(2, true);
+	this->mTreeView = new Tree();
+	this->mTreeView->setSize(200, 400);
+	this->mTreeView->setBackgroundColor(sf::Color(255, 255, 255, 0), true);
+	this->mTreeView->setBorderColor(sf::Color(200, 200, 200), true);
+	this->mTreeView->setBorderSize(2, true);
+	this->mTreeView->setPadding(10);
+	this->mTreeView->setSeparatorHeight(2);
+	this->mTreeView->setTreeData(&this->mTree);
 
 	this->updatePosition();
 }
@@ -160,6 +164,7 @@ DebugScreen::DebugScreen(void)
 DebugScreen::~DebugScreen(void)
 {
 	this->mTree.destroyRoots();
+	delete this->mTreeView;
 }
 
 
@@ -250,7 +255,7 @@ void DebugScreen::update( sf::Event p_event )
 	this->mTextboxMultiline.update(p_event);
 	this->mTextboxMultilineAutoResizeHeight.update(p_event);
 
-	this->mTreeView.update(p_event);
+	this->mTreeView->update(p_event);
 }
 
 void DebugScreen::updatePosition()
@@ -274,7 +279,7 @@ void DebugScreen::updatePosition()
 	this->mFontSizeLarge.setPosition(this->mFontSizeTiny.getX(), this->mFontSizeMedium.getBottomY() + 10);
 	this->mFontSizeHuge.setPosition(this->mFontSizeTiny.getX(), this->mFontSizeLarge.getBottomY() + 10);
 
-	this->mTreeView.setPosition(this->mFontSizeHuge.getRightX() + 50, 10);
+	this->mTreeView->setPosition(this->mFontSizeHuge.getRightX() + 50, 10);
 
 	this->mTextboxAutoResize.setPosition(10, this->mFieldset.getBottomY() + 25);
 	this->mTextbox.setPosition(10, this->mTextboxAutoResize.getBottomY() + 10);
@@ -344,7 +349,7 @@ void DebugScreen::draw()
 	this->mLabelDefaultProgressBar.draw();
 	this->mDefaultProgressBar.draw();
 
-	this->mTreeView.draw();
+	this->mTreeView->draw();
 
 	Resource::resource->getApp()->display();
 }

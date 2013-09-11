@@ -36,6 +36,8 @@ void NodeData::destroyChilds()
 		}
 	}
 	this->mChilds.clear();
+	if(this->hasTree())
+		this->getTree()->notifyDataChanged();
 }
 
 
@@ -129,6 +131,7 @@ std::string NodeData::getText()
 void NodeData::addChild( NodeData* p_child )
 {
 	p_child->setParent(this);
+	p_child->setTree(this->getTree());
 	this->mChilds.push_back(p_child);
 	
 	if(this->hasTree())

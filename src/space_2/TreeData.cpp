@@ -26,6 +26,7 @@ void TreeData::destroyRoots()
 		}
 	}
 	this->mRoots.clear();
+	this->notifyDataChanged();
 }
 
 
