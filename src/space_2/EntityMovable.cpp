@@ -19,6 +19,8 @@ EntityMovable::EntityMovable( double p_x, double p_y, int p_plane ) : Entity(p_p
 {
 	this->mTargetX = 0;
 	this->mTargetY = 0;
+	this->mTargetOffsetX = 0;
+	this->mTargetOffsetY = 0;
 	this->mTargetPositionDefined = false;
 	this->mSourceX = p_x;
 	this->mSourceY = p_y;
@@ -95,6 +97,26 @@ void EntityMovable::setTargetPositionDefined( bool p_value )
 	this->mTargetPositionDefined = p_value;
 }
 
+double EntityMovable::getTargetOffsetX()
+{
+	return this->mTargetOffsetX;
+}
+
+void EntityMovable::setTargetOffsetX( double p_x )
+{
+	this->mTargetOffsetX = p_x;
+}
+
+double EntityMovable::getTargetOffsetY()
+{
+	return this->mTargetOffsetY;
+}
+
+void EntityMovable::setTargetOffsetY( double p_y )
+{
+	this->mTargetOffsetY = p_y;
+}
+
 double EntityMovable::getTargetGenRange()
 {
 	return this->mTargetGenRange;
@@ -114,7 +136,8 @@ void EntityMovable::update()
 	Entity::update();
 
 	if(this->getTarget()->isEntityValid())
-		this->setTargetPosition(this->getTarget()->getEntity()->getX(this->getPlane()), this->getTarget()->getEntity()->getY(this->getPlane()));	
+		this->setTargetPosition(this->getTarget()->getEntity()->getX(this->getPlane()) + this->getTargetOffsetX(), 
+								this->getTarget()->getEntity()->getY(this->getPlane()) + this->getTargetOffsetY());	
 
 	if(this->isTargetReached())
 		this->setTargetPositionDefined(false);
@@ -301,6 +324,8 @@ void EntityMovable::notifyReactorJsonChanged()
 		}
 	}
 }
+
+
 
 
 

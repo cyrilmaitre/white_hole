@@ -6,7 +6,7 @@
 //*************************************************************
 // Constructor - Destructor
 //*************************************************************
-ImpactExplosion::ImpactExplosion( Entity* p_target, float p_scale ) : Impact(p_target)
+ImpactExplosion::ImpactExplosion( Entity* p_target, int p_offsetX, int p_offsetY, float p_scale ) : Impact(p_target, p_offsetX, p_offsetY)
 {
 	this->mImpactGif = ImageGIFFactory::getImpactExplosion();
 	ToolsImage::setSpriteOriginCenter(&this->mImpactGif->getSprite());

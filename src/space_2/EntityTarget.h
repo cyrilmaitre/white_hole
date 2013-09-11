@@ -16,11 +16,16 @@ public:
 	void setEntity(Entity* p_target);
 
 	bool isEntityValid();
+	bool isEntityChanged();
+
+	// Method
+	void notifyEntityChanged();
 
 
 private:
 	// Attributs
 	long mEntitytId;
 	Entity* mEntity;
+	bool mEntityChanged;
 };
 

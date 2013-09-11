@@ -24,6 +24,12 @@ public:
 	bool isTargetPositionDefined();
 	void setTargetPositionDefined(bool p_value);
 
+	double getTargetOffsetX();
+	void setTargetOffsetX(double p_x);
+
+	double getTargetOffsetY();
+	void setTargetOffsetY(double p_y);
+
 	double getSourceX();
 	void setSourceX(double p_x);
 
@@ -54,6 +60,8 @@ protected:
 	// Attributs
 	double mTargetX;
 	double mTargetY;
+	double mTargetOffsetX;
+	double mTargetOffsetY;
 	bool mTargetPositionDefined;
 	int mTargetDistanceMax;
 	double mSourceX;

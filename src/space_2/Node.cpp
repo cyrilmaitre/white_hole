@@ -221,7 +221,3 @@ void Node::updateSize()
 		this->setSize(this->mTree->getContentWidth(true), this->mNodeTextBox->getHeight() + PADDING * 2);
 }
 
-
-
-
-

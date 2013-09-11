@@ -30,8 +30,15 @@ public:
 
 	// Getters - Setters
 	EntityTarget* getTarget();
+	
+	double getTargetOffsetX();
+	void setTargetOffsetX(double p_x);
+
+	double getTargetOffsetY();
+	void setTargetOffsetY(double p_y);
+
 	bool isDestroy();
-	sf::Vector2f getWeaponOffset();
+	WeaponEffect* getWeaponToFire();
 
 	// Methods
 	void addWeaponEffect(WeaponEffect* p_weapon);
@@ -51,11 +58,14 @@ public:
 	void notifyRadarJsonChanged();
 	void notifyTurretJsonChanged();
 	void notifyWeaponJsonChanged();
+	void notifyTargetChanged();
 
 
 private:
 	// Attributs
 	EntityTarget mTarget;
+	double mTargetOffsetX;
+	double mTargetOffsetY;
 	sf::Sprite *mShieldSprite;
 	mks::Clock mShieldClock;
 	TextBox mTBDistance;

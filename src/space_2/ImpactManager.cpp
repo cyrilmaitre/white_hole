@@ -19,20 +19,20 @@ ImpactManager::~ImpactManager(void)
 //*************************************************************
 // Methods
 //*************************************************************
-Impact* ImpactManager::getImpact( Impact::ImpactType p_type, Entity* p_target, float p_scale )
+Impact* ImpactManager::getImpact( Impact::ImpactType p_type, Entity* p_target, int p_offsetX, int p_offsetY, float p_scale )
 {
 	switch(p_type)
 	{
 	case Impact::ImpactType::Bullet:
-		return new ImpactBullet(p_target, p_scale);
+		return new ImpactBullet(p_target, p_offsetX, p_offsetY, p_scale);
 		break;
 
 	case Impact::ImpactType::Laser:
-		return new ImpactLaser(p_target, p_scale);
+		return new ImpactLaser(p_target, p_offsetX, p_offsetY, p_scale);
 		break;
 
 	case Impact::ImpactType::Explosion:
-		return new ImpactExplosion(p_target, p_scale);
+		return new ImpactExplosion(p_target, p_offsetX, p_offsetY, p_scale);
 		break;
 	}
 }

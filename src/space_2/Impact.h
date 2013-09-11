@@ -20,7 +20,7 @@ public:
 	};
 
 	// Constructor - Destructor
-	Impact(Entity* p_target, float p_scale = 1);
+	Impact(Entity* p_target, int p_offsetX, int p_offsetY, float p_scale = 1);
 	~Impact(void);
 
 	// Getters - Setters

@@ -292,7 +292,7 @@ void Weapon::notifyAngleOkChanged()
 	this->mAngleOkChanged = true;
 }
 
-void Weapon::fire( Entity *p_target, Entity* p_source )
+void Weapon::fire( Entity* p_target, Entity* p_source )
 {
 	if(	!this->isActif() || this->isFiring() || this->isReloading() || !this->isRangeOk() || !this->isAngleOk())
 		return;

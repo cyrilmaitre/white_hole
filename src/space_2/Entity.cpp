@@ -15,7 +15,8 @@
 //*************************************************************
 #define CIRCLE_SELECTED_SIZE			100
 #define SHIELDIMPACT_ALPHA				100
-#define SHIELDIMPACT_ALPHARECOVER		50 // per sec
+#define SHIELDIMPACT_ALPHARECOVER		50		// per sec
+#define TARGET_HITBOX_OFFSET			0.6		// per one
 
 
 //*************************************************************
@@ -23,6 +24,9 @@
 //*************************************************************
 Entity::Entity( int p_plane ) : MapObject(p_plane)
 {
+	this->mTargetOffsetX = 0;
+	this->mTargetOffsetY = 0;
+
 	this->mShieldSprite = NULL;
 	this->mWeaponEffectCurrent = 0;
 	this->mTBDistance.setFontColor(ENTITY_DISTANCE_FONT_COLOR);
@@ -61,22 +65,40 @@ EntityTarget* Entity::getTarget()
 	return &this->mTarget;
 }
 
+double Entity::getTargetOffsetX()
+{
+	return this->mTargetOffsetX;
+}
+
+void Entity::setTargetOffsetX( double p_x )
+{
+	this->mTargetOffsetX = p_x;
+}
+
+double Entity::getTargetOffsetY()
+{
+	return this->mTargetOffsetY;
+}
+
+void Entity::setTargetOffsetY( double p_y )
+{
+	this->mTargetOffsetY = p_y;
+}
+
 bool Entity::isDestroy()
 {
 	return !this->hasStructure();
 }
 
-sf::Vector2f Entity::getWeaponOffset()
+WeaponEffect* Entity::getWeaponToFire()
 {
-	sf::Vector2f offset(0, 0);
 	if(this->mWeaponEffects.size() > 0)
 	{
-		offset.x = this->mWeaponEffects[this->mWeaponEffectCurrent]->getOffsetAmmoX();
-		offset.y = this->mWeaponEffects[this->mWeaponEffectCurrent]->getOffsetAmmoY();
-		this->mWeaponEffects[this->mWeaponEffectCurrent]->setFiring(true);
+		WeaponEffect* returnValue = this->mWeaponEffects[this->mWeaponEffectCurrent];
 		this->selectNextWeapon();
+		return returnValue;
 	}
-	return offset;
+	return NULL;
 }
 
 
@@ -85,6 +107,9 @@ sf::Vector2f Entity::getWeaponOffset()
 //*************************************************************
 void Entity::update()
 {
+	if(this->getTarget() != NULL && this->getTarget()->isEntityChanged())
+		this->notifyTargetChanged();
+
 	MapObject::update();
 	Destructable::update();
 	Rockable::update();
@@ -342,10 +367,14 @@ void Entity::notifyNpcTypeChanged( NpcType* p_type )
 	}
 }
 
-
-
-
-
-
-
+void Entity::notifyTargetChanged()
+{
+	if(this->getTarget() != NULL && this->getTarget()->isEntityValid())
+	{
+		int hitBoxWidth = (int)((float)this->getTarget()->getEntity()->getHitBox().width * TARGET_HITBOX_OFFSET);
+		int hitBoxHeight = (int)((float)this->getTarget()->getEntity()->getHitBox().height * TARGET_HITBOX_OFFSET);
+		this->setTargetOffsetX(Tools::random(0, hitBoxWidth) - (hitBoxWidth / 2));
+		this->setTargetOffsetY(Tools::random(0, hitBoxHeight) - (hitBoxHeight / 2));
+	}
+}
 

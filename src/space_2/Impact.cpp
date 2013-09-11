@@ -10,7 +10,7 @@
 //*************************************************************
 // Constructor - Destructor
 //*************************************************************
-Impact::Impact( Entity* p_target, float p_scale )
+Impact::Impact( Entity* p_target, int p_offsetX, int p_offsetY, float p_scale )
 {
 	this->mImpactGif = NULL;
 	this->mImpactSprite = NULL;
@@ -19,8 +19,8 @@ Impact::Impact( Entity* p_target, float p_scale )
 	this->mScale = 1;
 	this->setScale(p_scale);
 	this->mLiveTime = 0;
-	this->mOffsetX = Tools::random(0, (int)p_target->getHitBox().width) - (p_target->getHitBox().width / 2);
-	this->mOffsetY = Tools::random(0, (int)p_target->getHitBox().height) - (p_target->getHitBox().height / 2);
+	this->mOffsetX = p_offsetX;
+	this->mOffsetY = p_offsetY;
 }
 
 Impact::~Impact(void)

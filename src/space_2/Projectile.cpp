@@ -9,6 +9,7 @@
 // Define
 //*************************************************************
 #define TARGET_DISTANCE_MAX		5
+#define TARGET_HITBOX_OFFSET	0.1
 
 
 //*************************************************************
@@ -25,11 +26,17 @@ Projectile::Projectile( Entity* p_source, Entity* p_target, Weapon* p_weapon, fl
 	this->setQuickening(p_weapon->getAmmo()->getQuickening());
 	this->setRotationVelocityInstant(true);
 
-	sf::Vector2f sourceOffset = p_source->getWeaponOffset();
-	this->setX(p_source->Object::getX() + sourceOffset.x);
-	this->setY(p_source->Object::getY() + sourceOffset.y);
+	WeaponEffect* weaponFire = p_source->getWeaponToFire();
+	this->setX(p_source->Object::getX() + weaponFire->getOffsetAmmoX());
+	this->setY(p_source->Object::getY() + weaponFire->getOffsetAmmoY());
 	this->setSourceX(p_source->Object::getX());
 	this->setSourceY(p_source->Object::getY());
+	weaponFire->setFiring(true);
+
+	int hitBoxWidth = (int)((float)p_target->getHitBox().width * TARGET_HITBOX_OFFSET);
+	int hitBoxHeight = (int)((float)p_target->getHitBox().height * TARGET_HITBOX_OFFSET);
+	this->setTargetOffsetX(p_source->getTargetOffsetX() + (Tools::random(0, hitBoxWidth) - (hitBoxWidth / 2)));
+	this->setTargetOffsetY(p_source->getTargetOffsetY() + (Tools::random(0, hitBoxHeight) - (hitBoxHeight / 2)));
 
 	this->getSource()->setEntity(p_source);
 	this->getTarget()->setEntity(p_target);
@@ -114,18 +121,18 @@ void Projectile::updatePosition()
 	{
 		double newPositionX = this->Object::getX() + this->getMoveX();
 		double newPositionY = this->Object::getY() + this->getMoveY();
-		bool betweenX = Tools::isBetween(this->getTarget()->getEntity()->Object::getX(), this->Object::getX(), newPositionX);
-		bool betweenY = Tools::isBetween(this->getTarget()->getEntity()->Object::getY(), this->Object::getY(), newPositionY);
+		bool betweenX = Tools::isBetween(this->getTargetX(), this->Object::getX(), newPositionX);
+		bool betweenY = Tools::isBetween(this->getTargetY(), this->Object::getY(), newPositionY);
 
 		if(betweenX || betweenY)
 		{
 			if(betweenX)
-				this->setX(this->getTarget()->getEntity()->Object::getX());
+				this->setX(this->getTargetX());
 			else
 				this->setX(newPositionX);
 
 			if(betweenY)
-				this->setY(this->getTarget()->getEntity()->Object::getY());
+				this->setY(this->getTargetY());
 			else
 				this->setY(newPositionY);
 		}
@@ -149,7 +156,7 @@ void Projectile::notifyFinished()
 		if(this->getTarget()->getEntity()->hasShield())
 			this->getTarget()->getEntity()->shieldImpact();
 		else
-			AutoManager::add(ImpactManager::getImpact(this->getImpactType(), this->getTarget()->getEntity(), this->getScale()));
+			AutoManager::add(ImpactManager::getImpact(this->getImpactType(), this->getTarget()->getEntity(), this->getTargetOffsetX(), this->getTargetOffsetY(), this->getScale()));
 
 		this->getTarget()->getEntity()->setAttacked(true);
 		this->getTarget()->getEntity()->takeDamage(this->mWeapon);

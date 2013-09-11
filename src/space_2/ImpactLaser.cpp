@@ -6,7 +6,7 @@
 //*************************************************************
 // Constructor - Destructor
 //*************************************************************
-ImpactLaser::ImpactLaser( Entity* p_target, float p_scale ) : Impact(p_target, p_scale)
+ImpactLaser::ImpactLaser( Entity* p_target, int p_offsetX, int p_offsetY, float p_scale ) : Impact(p_target, p_offsetX, p_offsetY)
 {
 	this->mImpactGif = ImageGIFFactory::getImpactLaser();
 	ToolsImage::setSpriteOriginCenter(&this->mImpactGif->getSprite());
