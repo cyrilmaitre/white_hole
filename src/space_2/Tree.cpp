@@ -12,6 +12,7 @@ Tree::Tree(void)
 	this->setBorderColor(sf::Color(194, 194, 194), true);
 	this->setBorderSize(2, true);
 	this->setPadding(0);
+	this->setForceScrollBar(true);
 	this->setSeparatorHeight(1);
 	this->setSeparatorColor(sf::Color(86, 87, 89));
 }
