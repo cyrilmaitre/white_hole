@@ -26,6 +26,7 @@ public:
 	void updatePosition();
 	void updateTextBox();
 	void updateIcon();
+	void updateSize();
 	void update(sf::Event p_event);
 	void draw();
 	void notifyExpandChanged();

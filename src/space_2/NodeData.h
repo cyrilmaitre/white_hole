@@ -36,6 +36,9 @@ public:
 	bool isExpand();
 	void setExpand(bool p_expand);
 
+	int getLevel();
+	void setLevel(int p_level);
+
 	virtual std::string getText();
 	virtual std::string getIcon();
 
@@ -44,6 +47,8 @@ public:
 	void collapse();
 	void addChild(NodeData* p_child);
 	void removeChild(NodeData* p_child);
+	void notifyParentChanged();
+	void notifyLevelChanged();
 
 
 private:
@@ -53,6 +58,7 @@ private:
 	NodeData* mParent;
 	std::vector<NodeData*> mChilds;
 	bool mExpand;
+	int mLevel;
 
 	static IdGenerator mIdgenerator;
 };

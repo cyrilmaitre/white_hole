@@ -16,6 +16,7 @@ NodeData::NodeData( TreeData* p_tree, NodeData* p_parent )
 	this->mTree = NULL;
 	this->mParent = NULL;
 	this->mExpand = false;
+	this->mLevel = 0;
 
 	this->setId(NodeData::mIdgenerator.getNextId());
 	this->setTree(p_tree);
@@ -85,7 +86,11 @@ NodeData* NodeData::getParent()
 
 void NodeData::setParent( NodeData* p_parent )
 {
-	this->mParent = p_parent;
+	if(this->mParent != p_parent)
+	{
+		this->mParent = p_parent;
+		this->notifyParentChanged();
+	}
 }
 
 bool NodeData::hasChilds()
@@ -141,6 +146,20 @@ void NodeData::setExpand( bool p_expand )
 	this->mExpand = p_expand;
 }
 
+int NodeData::getLevel()
+{
+	return this->mLevel;
+}
+
+void NodeData::setLevel( int p_level )
+{
+	if(this->mLevel != p_level)
+	{
+		this->mLevel = p_level;
+		this;notifyLevelChanged();
+	}
+}
+
 std::string NodeData::getText()
 {
 	return "Node #" + Tools::buildStringWithInt(this->getId());
@@ -188,5 +207,23 @@ void NodeData::collapse()
 {
 	this->setExpand(false);
 }
+
+void NodeData::notifyParentChanged()
+{
+	if(this->mParent != NULL)
+	{
+		this->setLevel(this->mParent->getLevel() + 1);
+	}
+}
+
+void NodeData::notifyLevelChanged()
+{
+	for(int i = 0; i < this->mChilds.size(); i++)
+	{
+		this->mChilds[i]->setLevel(this->getLevel() + 1);
+	}
+}
+
+
 
 

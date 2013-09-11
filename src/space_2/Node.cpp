@@ -11,6 +11,7 @@
 #define TB_BACKGROUNDCOLOR		sf::Color(255, 255, 255, 0)
 #define TB_FONTCOLOR			sf::Color(192, 192, 192)
 #define TB_MARGINLEFT			PADDING * 2
+#define LEVEL_OFFSET			16
 
 
 //*************************************************************
@@ -90,14 +91,15 @@ TextBox* Node::getNodeTextBox()
 //*************************************************************
 void Node::updatePosition()
 {
+	float levelOffset = this->mNodeData->getLevel() * LEVEL_OFFSET;
 	if(this->mIcon != NULL)
 	{
-		this->mIcon->setPosition(this->getX() + PADDING, this->getY() + PADDING);
+		this->mIcon->setPosition(this->getX() + levelOffset + PADDING, this->getY() + PADDING);
 		this->mNodeTextBox->setPosition(this->mIcon->getPosition().x + this->mIcon->getGlobalBounds().width + TB_MARGINLEFT, this->getY() + PADDING);
 	}
 	else
 	{
-		this->mNodeTextBox->setPosition(this->getX() + PADDING, this->getY() + PADDING);
+		this->mNodeTextBox->setPosition(this->getX() + levelOffset + PADDING, this->getY() + PADDING);
 	}
 
 	if(this->mIconExpand != NULL)
@@ -106,13 +108,18 @@ void Node::updatePosition()
 
 void Node::updateTextBox()
 {
-	if(this->mIcon != NULL && this->mIconExpand != NULL)
-		this->mNodeTextBox->setWidth(this->getWidth() - this->mIconExpand->getGlobalBounds().width - (this->mIcon->getGlobalBounds().width + TB_MARGINLEFT - PADDING * 2));
-	else if(this->mIconExpand != NULL)
-		this->mNodeTextBox->setWidth(this->getWidth() - this->mIconExpand->getGlobalBounds().width - PADDING * 2);
-	else
-		this->mNodeTextBox->setWidth(this->getWidth() - PADDING * 2);
+	// TB Width
+	int tbWidth = this->getWidth() - PADDING * 2 - this->mNodeData->getLevel() * LEVEL_OFFSET;
 
+	if(this->mIconExpand != NULL)
+		tbWidth -= this->mIconExpand->getGlobalBounds().width;
+
+	if(this->mIcon != NULL)
+		tbWidth -= this->mIcon->getGlobalBounds().width + TB_MARGINLEFT - PADDING * 2;
+
+	this->mNodeTextBox->setWidth(tbWidth);
+
+	// Text
 	if(this->mNodeData != NULL)
 		this->mNodeTextBox->setText(this->mNodeData->getText());
 }
@@ -186,6 +193,7 @@ void Node::notifyExpandChanged()
 
 void Node::notifyNodeDataChanged()
 {
+	this->updateSize();
 	if(this->mNodeData != NULL)
 		this->updateIcon();
 }
@@ -204,10 +212,13 @@ void Node::notifySizeChanged()
 
 void Node::notifyTreeChanged()
 {
-	if(this->mTree != NULL)
-	{
+	this->updateSize();
+}
+
+void Node::updateSize()
+{
+	if(this->mTree != NULL && this->mNodeData != NULL)
 		this->setSize(this->mTree->getContentWidth(), this->mNodeTextBox->getHeight() + PADDING * 2);
-	}
 }
 
 
