@@ -150,7 +150,7 @@ DebugScreen::DebugScreen(void)
 	this->mTree.addRoot(root5);
 
 	this->mTreeView = new Tree();
-	this->mTreeView->setSize(200, 400);
+	this->mTreeView->setSize(200, 200);
 	this->mTreeView->setTreeData(&this->mTree);
 
 	this->updatePosition();

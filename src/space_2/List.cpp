@@ -354,7 +354,7 @@ void List::draw()
 	if(this->isVisible())
 	{
 		// Draw Scrollable
-		Scrollable::draw();
+		Scrollable::draw(false);
 
 		// Draw Items
 		if(this->getItemCount() > 0)
@@ -367,6 +367,9 @@ void List::draw()
 				Resource::resource->getApp()->draw(this->mSeparatorShape);
 			}
 		}
+
+		// Draw Scrollbar
+		this->mScrollBar->draw();
 	}	
 }
 

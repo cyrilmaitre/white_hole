@@ -18,7 +18,7 @@ public:
 
 	// Methods
 	void update(sf::Event p_event);
-	void draw();
+	void draw(bool p_drawScrollBar = true);
 
 
 protected:

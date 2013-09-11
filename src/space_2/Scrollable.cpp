@@ -95,12 +95,13 @@ void Scrollable::notifyScrollOccured( bool p_up )
 		this->mScrollBar->scrollDown();
 }
 
-void Scrollable::draw()
+void Scrollable::draw(bool p_drawScrollBar)
 {
 	if(this->isVisible())
 	{
 		Block::draw();
-		this->mScrollBar->draw();
+		if(p_drawScrollBar)
+			this->mScrollBar->draw();
 	}
 }
 

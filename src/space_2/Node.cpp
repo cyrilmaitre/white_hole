@@ -218,7 +218,7 @@ void Node::notifyTreeChanged()
 void Node::updateSize()
 {
 	if(this->mTree != NULL && this->mNodeData != NULL)
-		this->setSize(this->mTree->getContentWidth(), this->mNodeTextBox->getHeight() + PADDING * 2);
+		this->setSize(this->mTree->getContentWidth(true), this->mNodeTextBox->getHeight() + PADDING * 2);
 }
 
 
