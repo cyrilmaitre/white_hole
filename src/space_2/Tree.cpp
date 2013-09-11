@@ -7,6 +7,13 @@
 Tree::Tree(void)
 {
 	this->mTreeData = NULL;
+
+	this->setBackgroundColor(sf::Color(25, 26, 28), true);
+	this->setBorderColor(sf::Color(194, 194, 194), true);
+	this->setBorderSize(2, true);
+	this->setPadding(0);
+	this->setSeparatorHeight(1);
+	this->setSeparatorColor(sf::Color(86, 87, 89));
 }
 
 Tree::~Tree(void)
@@ -37,15 +44,15 @@ void Tree::setTreeData( TreeData* p_data )
 //*************************************************************
 void Tree::notifyNodesChanged()
 {
-	this->updateList();
+	this->updateNodes();
 }
 
 void Tree::notifyTreeDataChanged()
 {
-	this->updateList();
+	this->updateNodes();
 }
 
-void Tree::updateList()
+void Tree::updateNodes()
 {
 	this->clear(true);
 	if(this->mTreeData != NULL)

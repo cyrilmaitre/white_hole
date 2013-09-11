@@ -17,7 +17,7 @@ public:
 
 	// Methods
 	void addNode(NodeData* p_data);
-	void updateList();
+	void updateNodes();
 	void notifyNodesChanged();
 	void notifyTreeDataChanged();
 
@@ -25,6 +25,5 @@ public:
 private:
 	// Attributs
 	TreeData* mTreeData;
-
 };
 

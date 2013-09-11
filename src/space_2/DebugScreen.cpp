@@ -151,11 +151,6 @@ DebugScreen::DebugScreen(void)
 
 	this->mTreeView = new Tree();
 	this->mTreeView->setSize(200, 400);
-	this->mTreeView->setBackgroundColor(sf::Color(255, 255, 255, 0), true);
-	this->mTreeView->setBorderColor(sf::Color(200, 200, 200), true);
-	this->mTreeView->setBorderSize(2, true);
-	this->mTreeView->setPadding(10);
-	this->mTreeView->setSeparatorHeight(2);
 	this->mTreeView->setTreeData(&this->mTree);
 
 	this->updatePosition();

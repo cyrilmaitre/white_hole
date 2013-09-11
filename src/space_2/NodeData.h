@@ -36,6 +36,7 @@ public:
 	void setExpand(bool p_expand);
 
 	virtual std::string getText();
+	virtual std::string getIcon();
 
 	// Methods
 	void expand();

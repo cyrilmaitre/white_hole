@@ -2,6 +2,7 @@
 #include "Listable.h"
 #include "TextBox.h"
 #include "NodeData.h"
+#include "SpriteParameter.h"
 
 class Tree;
 
@@ -19,9 +20,12 @@ public:
 	NodeData* getNodeData();
 	void setNodeData(NodeData* p_data);
 
+	virtual TextBox* getNodeTextBox();
+
 	// Methods
 	void updatePosition();
 	void updateTextBox();
+	void updateIcon();
 	void update(sf::Event p_event);
 	void draw();
 	void notifyExpandChanged();
@@ -36,6 +40,8 @@ private:
 	Tree* mTree;
 
 	NodeData* mNodeData;
-	TextBox mNodeTextBox;
+	TextBox* mNodeTextBox;
+	SpriteParameter* mIconSprite;
+	sf::Sprite* mIcon;
 };
 

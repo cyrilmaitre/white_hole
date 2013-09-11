@@ -1,4 +1,5 @@
 #include "NodeData.h"
+#include "SpriteParameterFactory.h"
 
 
 //*************************************************************
@@ -138,6 +139,11 @@ void NodeData::setExpand( bool p_expand )
 std::string NodeData::getText()
 {
 	return "Node #" + Tools::buildStringWithInt(this->getId());
+}
+
+std::string NodeData::getIcon()
+{
+	return IC_16X16_INFO;
 }
 
 

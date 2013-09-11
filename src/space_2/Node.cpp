@@ -1,11 +1,16 @@
 #include "Node.h"
 #include "Tree.h"
+#include "SpriteParameterFactory.h"
 
 
 //*************************************************************
 // Define
 //*************************************************************
-
+#define BACKGROUNDCOLOR			sf::Color(255, 255, 255, 0)
+#define PADDING					3
+#define TB_BACKGROUNDCOLOR		sf::Color(255, 255, 255, 0)
+#define TB_FONTCOLOR			sf::Color(192, 192, 192)
+#define TB_MARGINLEFT			PADDING * 2
 
 
 //*************************************************************
@@ -15,15 +20,26 @@ Node::Node( NodeData* p_data, Tree* p_tree )
 {
 	this->mTree = NULL;
 	this->mNodeData = NULL;
+	this->mNodeTextBox = NULL;
+	this->mIconSprite = NULL;
+	this->mIcon = NULL;
 
-	this->mNodeTextBox.setAutoResize(false);
+	this->mNodeTextBox = this->getNodeTextBox();
+	this->mNodeTextBox->setAutoResize(false);
+	this->mIconSprite = SpriteParameterFactory::getSpriteParameterIcon16X16();
 
 	this->setTree(p_tree);
 	this->setNodeData(p_data);
+
+	this->setBackgroundColor(BACKGROUNDCOLOR, true);
 }
 
 Node::~Node(void)
 {
+	delete this->mNodeTextBox;
+
+	if(this->mIcon != NULL)
+		delete this->mIcon;
 }
 
 
@@ -58,18 +74,55 @@ void Node::setNodeData( NodeData* p_data )
 	}
 }
 
+TextBox* Node::getNodeTextBox()
+{
+	TextBox* returnTB = new TextBox();
+	returnTB->setBackgroundColor(TB_BACKGROUNDCOLOR, true);
+	returnTB->setFontColor(TB_FONTCOLOR);
+	return returnTB;
+}
+
 
 //*************************************************************
 // Methods
 //*************************************************************
 void Node::updatePosition()
 {
-	this->mNodeTextBox.setPosition(this->getX(), this->getY());
+	if(this->mIcon != NULL)
+	{
+		this->mIcon->setPosition(this->getX() + PADDING, this->getY() + PADDING);
+		this->mNodeTextBox->setPosition(this->mIcon->getPosition().x + this->mIcon->getGlobalBounds().width + TB_MARGINLEFT, this->getY() + PADDING);
+	}
+	else
+	{
+		this->mNodeTextBox->setPosition(this->getX() + PADDING, this->getY() + PADDING);
+	}
 }
 
 void Node::updateTextBox()
 {
-	this->mNodeTextBox.setWidth(this->getWidth());
+	if(this->mIcon != NULL)
+		this->mNodeTextBox->setWidth(this->getWidth() - (this->mIcon->getGlobalBounds().width + TB_MARGINLEFT));
+	else
+		this->mNodeTextBox->setWidth(this->getWidth());
+
+	if(this->mNodeData != NULL)
+		this->mNodeTextBox->setText(this->mNodeData->getText());
+}
+
+void Node::updateIcon()
+{
+	if(this->mIcon != NULL)
+	{
+		delete this->mIcon;
+		this->mIcon = NULL;
+	}
+	
+	if(this->mNodeData != NULL && this->mNodeData->getIcon() != "")
+		this->mIcon = this->mIconSprite->getSpritePtr(this->mNodeData->getIcon(), this->getHeight() - PADDING * 2, this->getHeight() - PADDING * 2);;
+
+	this->updateTextBox();
+	this->updatePosition();
 }
 
 void Node::update( sf::Event p_event )
@@ -90,7 +143,9 @@ void Node::draw()
 	Listable::draw();
 	if(this->isVisible())
 	{
-		this->mNodeTextBox.draw();
+		if(this->mIcon != NULL)
+			Resource::resource->getApp()->draw(*this->mIcon);
+		this->mNodeTextBox->draw();
 	}
 }
 
@@ -103,9 +158,7 @@ void Node::notifyExpandChanged()
 void Node::notifyNodeDataChanged()
 {
 	if(this->mNodeData != NULL)
-	{
-		this->mNodeTextBox.setText(this->mNodeData->getText());
-	}
+		this->updateIcon();
 }
 
 void Node::notifyPositionChanged()
@@ -117,14 +170,14 @@ void Node::notifyPositionChanged()
 void Node::notifySizeChanged()
 {
 	Listable::notifySizeChanged();
-	this->updateTextBox();
+	this->updateIcon();
 }
 
 void Node::notifyTreeChanged()
 {
 	if(this->mTree != NULL)
 	{
-		this->setSize(this->mTree->getContentWidth(), this->mNodeTextBox.getHeight());
+		this->setSize(this->mTree->getContentWidth() + PADDING * 2, this->mNodeTextBox->getHeight() + PADDING * 2);
 	}
 }
 
