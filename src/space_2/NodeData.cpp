@@ -126,6 +126,11 @@ bool NodeData::isLeaf()
 	return !this->hasChilds();
 }
 
+bool NodeData::canExpand()
+{
+	return this->getChildCount() > 0;
+}
+
 bool NodeData::isExpand()
 {
 	return this->mExpand;

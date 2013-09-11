@@ -21,12 +21,11 @@ Node::Node( NodeData* p_data, Tree* p_tree )
 	this->mTree = NULL;
 	this->mNodeData = NULL;
 	this->mNodeTextBox = NULL;
-	this->mIconSprite = NULL;
 	this->mIcon = NULL;
+	this->mIconExpand = NULL;
 
 	this->mNodeTextBox = this->getNodeTextBox();
 	this->mNodeTextBox->setAutoResize(false);
-	this->mIconSprite = SpriteParameterFactory::getSpriteParameterIcon16X16();
 
 	this->setTree(p_tree);
 	this->setNodeData(p_data);
@@ -40,6 +39,9 @@ Node::~Node(void)
 
 	if(this->mIcon != NULL)
 		delete this->mIcon;
+
+	if(this->mIconExpand != NULL)
+		delete this->mIconExpand;
 }
 
 
@@ -97,14 +99,19 @@ void Node::updatePosition()
 	{
 		this->mNodeTextBox->setPosition(this->getX() + PADDING, this->getY() + PADDING);
 	}
+
+	if(this->mIconExpand != NULL)
+		this->mIconExpand->setPosition(this->getRightX() - this->mIconExpand->getGlobalBounds().width - PADDING, this->getY() + PADDING);
 }
 
 void Node::updateTextBox()
 {
-	if(this->mIcon != NULL)
-		this->mNodeTextBox->setWidth(this->getWidth() - (this->mIcon->getGlobalBounds().width + TB_MARGINLEFT));
+	if(this->mIcon != NULL && this->mIconExpand != NULL)
+		this->mNodeTextBox->setWidth(this->getWidth() - this->mIconExpand->getGlobalBounds().width - (this->mIcon->getGlobalBounds().width + TB_MARGINLEFT - PADDING * 2));
+	else if(this->mIconExpand != NULL)
+		this->mNodeTextBox->setWidth(this->getWidth() - this->mIconExpand->getGlobalBounds().width - PADDING * 2);
 	else
-		this->mNodeTextBox->setWidth(this->getWidth());
+		this->mNodeTextBox->setWidth(this->getWidth() - PADDING * 2);
 
 	if(this->mNodeData != NULL)
 		this->mNodeTextBox->setText(this->mNodeData->getText());
@@ -112,6 +119,7 @@ void Node::updateTextBox()
 
 void Node::updateIcon()
 {
+	// Icon
 	if(this->mIcon != NULL)
 	{
 		delete this->mIcon;
@@ -119,8 +127,24 @@ void Node::updateIcon()
 	}
 	
 	if(this->mNodeData != NULL && this->mNodeData->getIcon() != "")
-		this->mIcon = this->mIconSprite->getSpritePtr(this->mNodeData->getIcon(), this->getHeight() - PADDING * 2, this->getHeight() - PADDING * 2);;
+		this->mIcon = SpriteParameterFactory::getSpriteParameterIcon16X16()->getSpritePtr(this->mNodeData->getIcon(), this->getHeight() - PADDING * 2, this->getHeight() - PADDING * 2);
 
+	// Icon Expand
+	if(this->mIconExpand != NULL)
+	{
+		delete this->mIconExpand;
+		this->mIconExpand= NULL;
+	}
+
+	if(this->mNodeData != NULL && this->mNodeData->canExpand())
+	{
+		if(this->mNodeData->isExpand())
+			this->mIconExpand = SpriteParameterFactory::getSpriteParameterIcon16X16()->getSpritePtr(IC_16X16_COLLAPSE, this->getHeight() - PADDING * 2, this->getHeight() - PADDING * 2);
+		else
+			this->mIconExpand = SpriteParameterFactory::getSpriteParameterIcon16X16()->getSpritePtr(IC_16X16_EXPAND, this->getHeight() - PADDING * 2, this->getHeight() - PADDING * 2);
+	}
+
+	// TextBox & Position
 	this->updateTextBox();
 	this->updatePosition();
 }
@@ -132,8 +156,11 @@ void Node::update( sf::Event p_event )
 	{
 		if(this->isClicked())
 		{
-			this->mNodeData->setExpand(!this->mNodeData->isExpand());
-			this->notifyExpandChanged();
+			if(this->mNodeData != NULL && this->mNodeData->canExpand())
+			{
+				this->mNodeData->setExpand(!this->mNodeData->isExpand());
+				this->notifyExpandChanged();
+			}
 		}
 	}
 }
@@ -145,6 +172,8 @@ void Node::draw()
 	{
 		if(this->mIcon != NULL)
 			Resource::resource->getApp()->draw(*this->mIcon);
+		if(this->mIconExpand != NULL)
+			Resource::resource->getApp()->draw(*this->mIconExpand);
 		this->mNodeTextBox->draw();
 	}
 }
@@ -177,7 +206,7 @@ void Node::notifyTreeChanged()
 {
 	if(this->mTree != NULL)
 	{
-		this->setSize(this->mTree->getContentWidth() + PADDING * 2, this->mNodeTextBox->getHeight() + PADDING * 2);
+		this->setSize(this->mTree->getContentWidth(), this->mNodeTextBox->getHeight() + PADDING * 2);
 	}
 }
 

@@ -50,6 +50,8 @@
 #define IC_16X16_ADD				"0-4"
 #define IC_16X16_SUB				"1-4"
 #define IC_16X16_SHIP				"2-4"
+#define IC_16X16_EXPAND				"3-4"
+#define IC_16X16_COLLAPSE			"4-4"
 #define IC_16X16_ARROW				"0-5"
 #define IC_16X16_CREDIT				"1-5"
 #define IC_16X16_MAP				"2-5"

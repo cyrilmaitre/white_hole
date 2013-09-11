@@ -32,6 +32,7 @@ public:
 	bool isRoot();
 	bool isLeaf();
 
+	bool canExpand();
 	bool isExpand();
 	void setExpand(bool p_expand);
 

@@ -41,7 +41,7 @@ private:
 
 	NodeData* mNodeData;
 	TextBox* mNodeTextBox;
-	SpriteParameter* mIconSprite;
 	sf::Sprite* mIcon;
+	sf::Sprite* mIconExpand;
 };
 
