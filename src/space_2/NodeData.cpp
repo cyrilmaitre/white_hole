@@ -14,6 +14,7 @@ NodeData::NodeData( TreeData* p_tree, NodeData* p_parent )
 {
 	this->mTree = NULL;
 	this->mParent = NULL;
+	this->mExpand = false;
 
 	this->setId(NodeData::mIdgenerator.getNextId());
 	this->setTree(p_tree);
@@ -93,6 +94,11 @@ bool NodeData::hasChilds()
 
 int NodeData::getChildCount()
 {
+	return this->mChilds.size();
+}
+
+int NodeData::getChildCountSum()
+{
 	int childsCount = 0;
 	for(int i = 0; i < this->mChilds.size(); i++)
 		childsCount += 1 + this->mChilds[i]->getChildCount();
@@ -117,6 +123,16 @@ bool NodeData::isRoot()
 bool NodeData::isLeaf()
 {
 	return !this->hasChilds();
+}
+
+bool NodeData::isExpand()
+{
+	return this->mExpand;
+}
+
+void NodeData::setExpand( bool p_expand )
+{
+	this->mExpand = p_expand;
 }
 
 std::string NodeData::getText()
@@ -150,6 +166,16 @@ void NodeData::removeChild( NodeData* p_child )
 			break;
 		}
 	}
+}
+
+void NodeData::expand()
+{
+	this->setExpand(true);
+}
+
+void NodeData::collapse()
+{
+	this->setExpand(false);
 }
 
 

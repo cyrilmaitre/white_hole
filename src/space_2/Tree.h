@@ -16,6 +16,7 @@ public:
 	void setTreeData(TreeData* p_data);
 
 	// Methods
+	void addNode(NodeData* p_data);
 	void updateList();
 	void notifyNodesChanged();
 	void notifyTreeDataChanged();

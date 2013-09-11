@@ -19,12 +19,7 @@ public:
 	NodeData* getNodeData();
 	void setNodeData(NodeData* p_data);
 
-	bool isExpand();
-	void setExpand(bool p_expand);
-
 	// Methods
-	void expand();
-	void collapse();
 	void updatePosition();
 	void updateTextBox();
 	void update(sf::Event p_event);
@@ -40,7 +35,6 @@ private:
 	// Attributs
 	Tree* mTree;
 
-	bool mExpand;
 	NodeData* mNodeData;
 	TextBox mNodeTextBox;
 };

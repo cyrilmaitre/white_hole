@@ -26,14 +26,20 @@ public:
 
 	bool hasChilds();
 	int getChildCount();
+	int getChildCountSum();
 	NodeData* getChild(int p_index);
 
 	bool isRoot();
 	bool isLeaf();
 
+	bool isExpand();
+	void setExpand(bool p_expand);
+
 	virtual std::string getText();
 
 	// Methods
+	void expand();
+	void collapse();
 	void addChild(NodeData* p_child);
 	void removeChild(NodeData* p_child);
 
@@ -44,6 +50,7 @@ private:
 	TreeData* mTree;
 	NodeData* mParent;
 	std::vector<NodeData*> mChilds;
+	bool mExpand;
 
 	static IdGenerator mIdgenerator;
 };

@@ -52,10 +52,23 @@ void Tree::updateList()
 	{
 		for(int i = 0; i < this->mTreeData->getRootCount(); i++)
 		{
-			NodeData* currentRoot = this->mTreeData->getRoot(i);
-			Node* currentRootView = new Node(currentRoot, this);
-			this->addItem(currentRootView, false);
+			this->addNode(this->mTreeData->getRoot(i));
 		}
 		this->notifyDataSetChanged();
+	}
+}
+
+void Tree::addNode(NodeData* p_data)
+{
+	Node* currentView = new Node(p_data, this);
+	this->addItem(currentView, false);
+
+	if(p_data->isExpand())
+	{
+		for(int i = 0; i < p_data->getChildCount(); i++)
+		{
+			NodeData* currentChild = p_data->getChild(i);
+			this->addNode(currentChild);
+		}
 	}
 }

@@ -15,7 +15,6 @@ Node::Node( NodeData* p_data, Tree* p_tree )
 {
 	this->mTree = NULL;
 	this->mNodeData = NULL;
-	this->mExpand = false;
 
 	this->mNodeTextBox.setAutoResize(false);
 
@@ -31,20 +30,6 @@ Node::~Node(void)
 //*************************************************************
 // Getters - Setters
 //*************************************************************
-bool Node::isExpand()
-{
-	return this->mExpand;
-}
-
-void Node::setExpand( bool p_expand )
-{
-	if(this->mExpand != p_expand)
-	{
-		this->mExpand = p_expand;
-		this->notifyExpandChanged();
-	}
-}
-
 Tree* Node::getTree()
 {
 	return this->mTree;
@@ -77,16 +62,6 @@ void Node::setNodeData( NodeData* p_data )
 //*************************************************************
 // Methods
 //*************************************************************
-void Node::expand()
-{
-	this->setExpand(true);
-}
-
-void Node::collapse()
-{
-	this->setExpand(false);
-}
-
 void Node::updatePosition()
 {
 	this->mNodeTextBox.setPosition(this->getX(), this->getY());
@@ -103,7 +78,10 @@ void Node::update( sf::Event p_event )
 	if(this->isVisible())
 	{
 		if(this->isClicked())
-			this->setExpand(!this->isExpand());
+		{
+			this->mNodeData->setExpand(!this->mNodeData->isExpand());
+			this->notifyExpandChanged();
+		}
 	}
 }
 
