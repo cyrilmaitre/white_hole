@@ -15,6 +15,7 @@ public:
 
 	// Constructor - Destructor
 	ReactorEffect(EntityMovable* p_entity, Json::Value p_reactorJson);
+	ReactorEffect(EntityMovable* p_entity, float p_offsetX, float p_offsetY, int p_size, int p_type, float p_alphaReactorSpeed);
 	~ReactorEffect(void);
 
 	// Getters - Setters

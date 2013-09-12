@@ -10,6 +10,11 @@ EntityMovableEffect::EntityMovableEffect( EntityMovable* p_entity, Json::Value p
 	this->setEntityMovable(p_entity);
 }
 
+EntityMovableEffect::EntityMovableEffect( EntityMovable* p_entity, float p_offsetX, float p_offsetY, int p_size ) : EntityEffect(p_entity, p_offsetX, p_offsetY, p_size)
+{
+	this->setEntityMovable(p_entity);
+}	
+
 EntityMovableEffect::~EntityMovableEffect(void)
 {
 }

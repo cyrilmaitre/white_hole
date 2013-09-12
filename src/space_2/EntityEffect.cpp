@@ -25,6 +25,15 @@ EntityEffect::EntityEffect( Entity* p_entity, Json::Value p_json )
 	}
 }
 
+EntityEffect::EntityEffect( Entity* p_entity, float p_offsetX, float p_offsetY, int p_size )
+{
+	this->setEntity(p_entity);
+	this->setOffsetX(p_offsetX);
+	this->setOffsetY(p_offsetY);
+	this->setSize(p_size);
+	this->updateOffsetRotate();
+}
+
 EntityEffect::~EntityEffect(void)
 {
 }

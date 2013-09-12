@@ -8,6 +8,7 @@ class EntityEffect
 public:
 	// Constructor - Destructor
 	EntityEffect(Entity* p_entity, Json::Value p_json);
+	EntityEffect(Entity* p_entity, float p_offsetX, float p_offsetY, int p_size);
 	~EntityEffect(void);
 
 	// Getters - Setters

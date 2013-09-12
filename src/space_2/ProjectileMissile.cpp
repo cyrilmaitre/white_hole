@@ -9,15 +9,7 @@ ProjectileMissile::ProjectileMissile( Entity* p_source, Entity* p_target, Weapon
 {
 	this->mSpriteMissileGlow = NULL;
 
-	// Configure reactor
-	Json::Value jsonReactor;
-	jsonReactor["x"] = 0;
-	jsonReactor["y"] = 32;
-	jsonReactor["type"] = 0;
-	jsonReactor["size"] = 20;
-	jsonReactor["reactoralphaspeed"] = 300;
-	this->addReactorEffect(new ReactorEffect(this, jsonReactor));
-
+	this->addReactorEffect(new ReactorEffect(this, 0, 32, 20, 0, 300));
 	this->setImpactType(Impact::ImpactType::Explosion);
 	this->setVisible(true);
 	this->loadSprite();

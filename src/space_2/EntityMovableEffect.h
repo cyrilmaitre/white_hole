@@ -8,6 +8,7 @@ class EntityMovableEffect : public EntityEffect
 public:
 	// Constructor - Destructor
 	EntityMovableEffect(EntityMovable* p_entity, Json::Value p_json);
+	EntityMovableEffect(EntityMovable* p_entity, float p_offsetX, float p_offsetY, int p_size);
 	~EntityMovableEffect(void);
 
 	// Getters - Setters

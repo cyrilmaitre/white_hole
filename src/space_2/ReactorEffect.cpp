@@ -33,6 +33,21 @@ ReactorEffect::ReactorEffect( EntityMovable* p_entity, Json::Value p_reactorJson
 	ToolsImage::resizeSprite(this->mReactor, this->getSize(), this->getSize());
 }
 
+ReactorEffect::ReactorEffect( EntityMovable* p_entity, float p_offsetX, float p_offsetY, int p_size, int p_type, float p_alphaReactorSpeed ) : EntityMovableEffect(p_entity, p_offsetX, p_offsetY, p_size)
+{
+	this->mReactor = NULL;
+	this->mActive = false;
+	this->mReactorAlpha = 0;
+	this->mReactorAlphaSpeed = p_alphaReactorSpeed;
+
+	this->setType((ReactorEffectType)p_type);
+	this->computeReactorDustTick();
+
+	this->mReactor = new sf::Sprite(*Resource::resource->getTexture(REACTOR_SPRITE));
+	ToolsImage::setSpriteOriginCenter(this->mReactor);
+	ToolsImage::resizeSprite(this->mReactor, this->getSize(), this->getSize());
+}
+
 ReactorEffect::~ReactorEffect(void)
 {
 	if(this->mReactor != NULL)
