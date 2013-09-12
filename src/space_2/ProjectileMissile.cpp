@@ -9,7 +9,7 @@ ProjectileMissile::ProjectileMissile( Entity* p_source, Entity* p_target, Weapon
 {
 	this->mSpriteMissileGlow = NULL;
 
-	this->addReactorEffect(new ReactorEffect(this, 0, 32, 20, 0, 300));
+	this->addReactorEffect(new ReactorEffect(this, 0 * this->getScale(), 32 * this->getScale(), 20 * this->getScale(), 0, 300));
 	this->setImpactType(Impact::ImpactType::Explosion);
 	this->setVisible(true);
 	this->loadSprite();
