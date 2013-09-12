@@ -131,6 +131,11 @@ void EntityMovable::setTargetGenRange( double p_range )
 //*************************************************************
 // Methods
 //*************************************************************
+void EntityMovable::addReactorEffect( ReactorEffect* p_reactor )
+{
+	this->mReactors.push_back(p_reactor);
+}
+
 void EntityMovable::update()
 {
 	Entity::update();

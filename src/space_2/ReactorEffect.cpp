@@ -95,7 +95,8 @@ void ReactorEffect::updateActive()
 		this->getEntityMovable()->isQuickeningActiveAt(Movable::MovableCardinality::NorthWest) ||
 		this->getEntityMovable()->isQuickeningActiveAt(Movable::MovableCardinality::SouthEast) ||
 		this->getEntityMovable()->isQuickeningActiveAt(Movable::MovableCardinality::South) ||
-		this->getEntityMovable()->isQuickeningActiveAt(Movable::MovableCardinality::SouthWest))
+		this->getEntityMovable()->isQuickeningActiveAt(Movable::MovableCardinality::SouthWest) ||
+		this->getEntityMovable()->isQuickeningActiveAt(Movable::MovableCardinality::Normal))
 		this->mActive = true;
 	else if(this->getType() == ReactorEffectType::Right)
 		this->mActive =	this->getEntityMovable()->isQuickeningActiveAt(Movable::MovableCardinality::West);
@@ -122,7 +123,8 @@ void ReactorEffect::updateReactorDust()
 {
 	if(	this->getEntityMovable()->isQuickeningActiveAt(Movable::MovableCardinality::NorthEast) ||
 		this->getEntityMovable()->isQuickeningActiveAt(Movable::MovableCardinality::North) ||
-		this->getEntityMovable()->isQuickeningActiveAt(Movable::MovableCardinality::NorthWest))
+		this->getEntityMovable()->isQuickeningActiveAt(Movable::MovableCardinality::NorthWest) ||
+		this->getEntityMovable()->isQuickeningActiveAt(Movable::MovableCardinality::Normal))
 	{
 		if(this->mReactorDustClock.getElapsedTimeAsMilliseconds() > this->mReactorDustTick)
 		{

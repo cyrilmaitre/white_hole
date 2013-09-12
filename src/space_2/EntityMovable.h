@@ -42,6 +42,7 @@ public:
 	bool isTargetReached();
 
 	// Methods
+	void addReactorEffect(ReactorEffect* p_reactor);
 	void update();
 	void updateMove();
 	void updateRocking();
