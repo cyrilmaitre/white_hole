@@ -10,5 +10,5 @@ velocity = 2000
 quickening = 99999
 projectile_type = 1
 projectile_color = #BE1414
-projectile_scale = 1
+projectile_scale = 0.5
 sound_fire = weapon_laser_1.wav
