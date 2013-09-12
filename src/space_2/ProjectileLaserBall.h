@@ -15,6 +15,7 @@ public:
 	void unloadSprite();
 	void notifyScaleChanged();
 	void notifyColorChanged();
+	void notifyRotationChanged();
 	void draw();
 
 

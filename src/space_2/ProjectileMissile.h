@@ -10,8 +10,17 @@ public:
 	~ProjectileMissile(void);
 
 	// Methods
+	void updateSprite();
 	void loadSprite();
+	void unloadSprite();
 	void notifyScaleChanged();
 	void notifyColorChanged();
+	void notifyRotationChanged();
+	void draw();
+
+
+private:
+	// Attributs
+	sf::Sprite* mSpriteMissileGlow;
 };
 

@@ -67,12 +67,23 @@ void ProjectileLaser::notifyScaleChanged()
 {
 	if(this->mObjectSprite != NULL)
 		this->mObjectSprite->setScale(this->getScale(), this->getScale());
+
+	if(this->mSpriteLaser != NULL)
+		this->mSpriteLaser->setScale(this->getScale(), this->getScale());
 }
 
 void ProjectileLaser::notifyColorChanged()
 {
-	if(this->mObjectSprite != NULL)
-		this->mObjectSprite->setColor(this->getColor());
+	if(this->mSpriteLaser != NULL)
+		this->mSpriteLaser->setColor(this->getColor());
+}
+
+void ProjectileLaser::notifyRotationChanged()
+{
+	Projectile::notifyRotationChanged();
+
+	if(this->mSpriteLaser != NULL)
+		this->mSpriteLaser->setRotation(this->getRotation());
 }
 
 void ProjectileLaser::draw()
