@@ -1,7 +1,9 @@
 #pragma once
 #include "Chat.h"
 
-#define MAX_C_PACKETSEND_RETRY	5
+#define MAX_C_PACKETSEND_RETRY		5
+#define	RECONNECTION_INTERVAL		30 // time before reconnecting (seconds)
+#define	SOCKET_CONNECTION_ATTEMPTS	15 // max connection attempt
 
 typedef std::vector<std::shared_ptr<Message>> MessageBuffer;
 
@@ -34,6 +36,7 @@ public:
 	
 	// running
 	bool isRunning(void);
+	void setRunning(bool p_running);
 
 	// chat input buffer (send)
 	const MessageBuffer& getInputBuffer(void);
@@ -51,17 +54,22 @@ public:
 	void connect(std::string p_username, std::string p_sha1password);
 	void handlePacket(sf::Packet& p_packet);
 	bool sendPacket(sf::Packet& p_packet);
-	void disconnect(void);
+	void disconnect(bool p_reconnect = true);
 	void terminate(void);
 
 	// tread
 	sf::Mutex& getMutex(void);
+
+	// auto reconnect
+	bool isAutoReconnectEnabled(void);
+	void setAutoReconnect(bool p_autoreconnect);
 
 private:
 	sf::TcpSocket		mSocket;
 	unsigned short		mServerPort;
 	sf::IpAddress		mServerIP;
 	bool				mRunning;
+	bool				mAutoReconnect;
 	sf::Socket::Status	lastSentStatus;
 
 	// buffers

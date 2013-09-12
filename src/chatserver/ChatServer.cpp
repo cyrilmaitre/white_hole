@@ -163,7 +163,7 @@ void ChatServer::mRunServer(void)
 						else
 						{
 							//send rejection message because too many connections from same IP
-							S2C_Command s2c_cmd(ServerCommand::S_SAY, "Connection refused. Reason: Too many connections from same IP.");
+							S2C_Command s2c_cmd(ServerCommand::S_DROPPED_NORC, "Too many connections from same IP");
 							{
 								packet << s2c_cmd;
 							}
@@ -174,7 +174,7 @@ void ChatServer::mRunServer(void)
 					else
 					{
 						//send rejection message because server is full and tidy up
-						S2C_Command s2c_cmd(ServerCommand::S_SAY, "Connection refused. Reason: Server full.");
+						S2C_Command s2c_cmd(ServerCommand::S_DROPPED_NORC, "Chat server is full");
 						{
 							packet << s2c_cmd;
 						}
@@ -319,7 +319,7 @@ void ChatServer::authenticate(std::shared_ptr<Client> p_client, C2S_Auth p_auth)
 	// if client is already connected ..., kill the other
 	if(dstClient.get() != 0)
 	{
-		S2C_Command s2c_cmd(ServerCommand::S_SAY, "Connection closed. Reason: Ghost kill");
+		S2C_Command s2c_cmd(ServerCommand::S_DROPPED_NORC, "Ghost kill (by "+p_client->getSocket().getRemoteAddress().toString()+")");
 		sf::Packet packet;
 		packet << s2c_cmd;
 		this->sendPacket(packet, dstClient);
@@ -564,7 +564,7 @@ void ChatServer::handlePacket(sf::Packet& p_packet, std::shared_ptr<Client> p_cl
 					if(s2c_chat.dstType == ChatDstType::CHANNEL)
 					{
 						BroadcastCondition bc;
-						bc.ignoreClientID = p_client->getUniqueID();
+						//bc.ignoreClientID = p_client->getUniqueID();
 						bc.clientState = ClientState::AUTHED;
 
 						this->broadcast(packet, bc);
@@ -578,11 +578,12 @@ void ChatServer::handlePacket(sf::Packet& p_packet, std::shared_ptr<Client> p_cl
 							std::shared_ptr<Client> dstClient = this->findClientByName(s2c_chat.to);
 
 							// if client has been found
-							if(dstClient.get() != 0)
+							if(dstClient.get() != 0 && dstClient->getState() == ClientState::AUTHED)
 							{
 								// if client is not AFK
 								if(!dstClient->hasAttribute(ClientAttributes::ATTR_AFK))
 								{
+									this->sendPacket(packet, p_client);
 									this->sendPacket(packet, dstClient);
 								}
 								else {
@@ -701,6 +702,43 @@ void ChatServer::handlePacket(sf::Packet& p_packet, std::shared_ptr<Client> p_cl
 						// ...........................................
 					case ClientCommand::C_FRIEND_ADD:
 						{
+							// can't send it to yourself!
+							if(p_client->getName().compare(c2s_command.argument) == 0)
+								break;
+
+							// check is username exists, contact DB? WebService?
+							// AND
+							// check if invitation inserted into DB correclty
+							// if everything OK...
+
+							if(true)
+							{
+								// send confirmation to the sender
+								{
+									sf::Packet packet;
+									S2C_Command s2c_cmd(ServerCommand::S_CONFIRM_FRIEND_ADD, c2s_command.argument);
+									packet << s2c_cmd;
+									this->sendPacket(packet, p_client);
+								}
+
+								// send invitation to the receiver IF it's ONLINE
+								std::shared_ptr<Client> dstClient = this->findClientByName(c2s_command.argument);
+								if(dstClient.get() != 0 && dstClient->getState() == ClientState::AUTHED)
+								{
+									sf::Packet packet;
+									S2C_Command s2c_cmd(ServerCommand::S_FRIEND_ADD, p_client->getName());
+									packet << s2c_cmd;
+									this->sendPacket(packet, p_client);
+								}
+							}
+							// if NOT
+							else
+							{
+								sf::Packet packet;
+								S2C_Command s2c_cmd(ServerCommand::S_PEER_NOTEXIST, c2s_command.argument);
+								packet << s2c_cmd;
+								this->sendPacket(packet, p_client);
+							}
 						}
 						break;
 
@@ -710,6 +748,11 @@ void ChatServer::handlePacket(sf::Packet& p_packet, std::shared_ptr<Client> p_cl
 						// ...........................................
 					case ClientCommand::C_FRIEND_DEL:
 						{
+							// can't send it to yourself!
+							if(p_client->getName().compare(c2s_command.argument) == 0)
+								break;
+
+
 						}
 						break;
 
@@ -719,6 +762,11 @@ void ChatServer::handlePacket(sf::Packet& p_packet, std::shared_ptr<Client> p_cl
 						// ...........................................
 					case ClientCommand::C_FRIEND_IGNORE:
 						{
+							// can't send it to yourself!
+							if(p_client->getName().compare(c2s_command.argument) == 0)
+								break;
+
+
 						}
 						break;
 

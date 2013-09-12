@@ -37,11 +37,11 @@ std::string Chat::serverCmdToString(sf::Uint16 p_command)
 		break;
 
 	case ServerCommand::S_CHAT_PEER_OFFLINE:
-		return "RECIPIENT OFFLINE";
+		return "USER OFFLINE";
 		break;
 
 	case ServerCommand::S_CHAT_PEER_AFK:
-		return "RECIPIENT AFK";
+		return "USER AFK";
 		break;
 
 	case ServerCommand::S_FRIEND_ADD:
@@ -56,6 +56,21 @@ std::string Chat::serverCmdToString(sf::Uint16 p_command)
 		return "AFK MODE DISABLED";
 		break;
 
+	case ServerCommand::S_PEER_NOTEXIST:
+		return "USER DOES NOT EXIST";
+		break;
+
+	case ServerCommand::S_CONFIRM_FRIEND_ADD:
+		return "FRIEND INVITATION SENT";
+		break;
+
+	case ServerCommand::S_CONFIRM_FRIEND_IGNORE:
+		return "USER BLOCKED";
+		break;
+
+	case ServerCommand::S_CONFIRM_FRIEND_DEL:
+		return "USER DELETED FROM FRIENDLIST";
+		break;
 	}
 
 	return "UNKNOWN";

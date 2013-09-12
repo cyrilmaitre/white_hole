@@ -79,7 +79,7 @@ sf::Packet& operator >> (sf::Packet& packet, S2C_Auth& s2c_auth)
 // ----------------------------------------------------------------------
 // (con/de)structor
 // ----------------------------------------------------------------------
-ChatClient::ChatClient(void) : mServerPort(CHAT_SERVER_PORT), mServerIP(CHAT_SERVER_HOST), mRunning(false), lastSentStatus(sf::Socket::Status::Error)
+ChatClient::ChatClient(void) : mServerPort(CHAT_SERVER_PORT), mServerIP(CHAT_SERVER_HOST), mRunning(false), lastSentStatus(sf::Socket::Status::Error), mAutoReconnect(true)
 {
 }
 
@@ -97,7 +97,29 @@ bool ChatClient::isRunning(void)
 	sf::Lock lock(mMutex);
 	return this->mRunning;
 }
+
+void ChatClient::setRunning(bool p_running)
+{
+	sf::Lock lock(mMutex);
+	{ std::ostringstream msg; msg << "[PROP] mRunning changed to <" << (p_running ? "TRUE" : "FALSE") << ">"; Debug::msg(msg); }
+	this->mRunning = p_running;
+}
 // </running>
+
+//<autoreconnect>
+bool ChatClient::isAutoReconnectEnabled(void)
+{
+	sf::Lock lock(mMutex);
+	return this->mAutoReconnect;
+}
+
+void ChatClient::setAutoReconnect(bool p_autoreconnect)
+{
+	sf::Lock lock(mMutex);
+	{ std::ostringstream msg; msg << "[PROP] mAutoReconnect changed to <" << (p_autoreconnect ? "TRUE" : "FALSE") << ">"; Debug::msg(msg); }
+	this->mAutoReconnect = p_autoreconnect;
+}
+// </autoreconnect>
 
 // <mutex>
 sf::Mutex& ChatClient::getMutex()
@@ -180,17 +202,17 @@ void ChatClient::connect(std::string p_username, std::string p_sha1password)
 {
 	{
 		sf::Lock lock(mMutex);
-		mUsername = p_username;
-		mSha1password = p_sha1password;
+		this->mUsername = p_username;
+		this->mSha1password = p_sha1password;
 
 	}
 
 	{ std::ostringstream msg; msg << mUsername << " / " << mSha1password; Debug::msg(msg); }
 	if(!mRunning)
 	{
-		mThread = std::unique_ptr<sf::Thread>(new sf::Thread(&ChatClient::mRunClient, this));
-		mRunning = true;
-		mThread->launch();
+		this->mThread = std::unique_ptr<sf::Thread>(new sf::Thread(&ChatClient::mRunClient, this));
+		this->setRunning(true);
+		this->mThread->launch();
 	}
 	else
 	{
@@ -200,125 +222,156 @@ void ChatClient::connect(std::string p_username, std::string p_sha1password)
 
 void ChatClient::mRunClient(void)
 {
-	{ std::ostringstream msg; msg << "Connecting to " << mServerIP.toString() << ":" << mServerPort << ""; Debug::msg(msg); }
 
-	// WORKAROUND
-	// bug avec socket non bloquantes : https://github.com/LaurentGomila/SFML/issues/194
-	sf::Socket::Status status = sf::Socket::Error;
+	sf::Uint64 nextConnectionTime = 0;
 
-	if (status == sf::Socket::Disconnected || status == sf::Socket::Error)
+	// Reconnection loop --> break condition at the end of the loop
+	while(this->isRunning()) 
 	{
-			mSocket.disconnect();
-			mSocket.setBlocking(false);
 
-			this->updateNetworkState(NetworkStateCode::NS_CONNECTING);
-
-			unsigned int max_retry = 50;
-			unsigned int attempt = 0;
-			while(true) {
-				{ std::ostringstream msg; msg << "Attempt " << attempt+1 << "/" << max_retry << ""; Debug::msg(msg); }
-				status = mSocket.connect(mServerIP, mServerPort);
-				if(status == sf::Socket::Status::Done)
-					break;
-				
-				if(++attempt >= 50) {
-					{ std::ostringstream msg; msg << "Connection FAILED !" << ""; Debug::msg(msg); }
-					break;
-				}
-
-				sf::sleep(sf::microseconds(500));	// for CPU
-			}
-
-	}
-
-	if(status == sf::Socket::Status::Done)
-	{
-		this->updateNetworkState(NetworkStateCode::NS_CONNECTION_OK);
-		{ std::ostringstream msg; msg << "Connection OK !" << ""; Debug::msg(msg); }
-
-		std::shared_ptr<C2S_Auth> auth = std::make_shared<C2S_Auth>(this->mUsername, this->mSha1password);
-		this->pushInputBuffer(auth);
-
-		//std::shared_ptr<C2S_Chat> msg1 = std::make_shared<C2S_Chat>("123456789ABCDEFG", "ok", ChatDstType::CHANNEL);
-		//std::shared_ptr<C2S_Chat> msg2 = std::make_shared<C2S_Chat>("Message 2", "babouche", ChatDstType::USER);
-		//std::shared_ptr<C2S_Chat> msg3 = std::make_shared<C2S_Chat>("Message 3", "mazouteman", ChatDstType::CHANNEL);
-		//this->pushInputBuffer(msg1);
-		//this->pushInputBuffer(msg2);
-
-		// Flood testing
-		/*
-		for(unsigned int i = 0; i < 300; i++) {
-			this->pushInputBuffer(msg3);
-		}
-		*/
-
-		sf::Packet packet;
-		while(this->isRunning())
+		if((sf::Uint64)time(NULL) > nextConnectionTime)
 		{
-			// ------------------- Envoi --------------------------------------------------------------------------------
-			// <Thread safe>
+			{ std::ostringstream msg; msg << "Connecting to " << mServerIP.toString() << ":" << mServerPort << ""; Debug::msg(msg); }
+
+			// WORKAROUND
+			// bug avec socket non bloquantes : https://github.com/LaurentGomila/SFML/issues/194
+			sf::Socket::Status status = sf::Socket::Error;
+
+			if (status == sf::Socket::Disconnected || status == sf::Socket::Error)
 			{
+					mSocket.setBlocking(false);
 
-				sf::Lock lock(mMutex);
-				MessageBuffer chatbuffer(this->getInputBuffer()); // we get a copy of the buffer
+					this->updateNetworkState(NetworkStateCode::NS_CONNECTING);
 
-				// si packet buffer non vide, on envoie tout son contenu
-				if(!chatbuffer.empty())
-				{
-					for(auto it = chatbuffer.begin(); it != chatbuffer.end(); ++it)
-					{
-						sf::Packet packet;
-						(*it)->insertIntoPacket(packet);
-						// if packet not sent && status = disconnected, then stop sending
-						if(!this->sendPacket(packet) && this->lastSentStatus == sf::Socket::Status::Disconnected) {
-							this->disconnect();
+					unsigned int attempt = 0;
+					while(true) {
+						{ std::ostringstream msg; msg << "Attempt " << attempt+1 << "/" << SOCKET_CONNECTION_ATTEMPTS << ""; Debug::msg(msg); }
+						status = mSocket.connect(mServerIP, mServerPort);
+						if(status == sf::Socket::Status::Done)
+							break;
+				
+						if(++attempt >= SOCKET_CONNECTION_ATTEMPTS) {
+							{ std::ostringstream msg; msg << "Connection FAILED !" << ""; Debug::msg(msg); }
 							break;
 						}
 
+						sf::sleep(sf::milliseconds(500));	// for CPU
 					}
-				}
 
-				this->clearInputBuffer();
 			}
-			// </Thread safe>
 
-			// ------------------- Réception ----------------------------------------------------------------------------
-			sf::Socket::Status status = mSocket.receive(packet);
-
-			// Packet status ?
 			if(status == sf::Socket::Status::Done)
 			{
-				{ std::ostringstream msg; msg << "Packet received successfuly" << ""; Debug::msg(msg); }
-				this->handlePacket(packet);
+				this->updateNetworkState(NetworkStateCode::NS_CONNECTION_OK);
+				{ std::ostringstream msg; msg << "Connection OK !" << ""; Debug::msg(msg); }
+
+				std::shared_ptr<C2S_Auth> auth = std::make_shared<C2S_Auth>(this->mUsername, this->mSha1password);
+				this->pushInputBuffer(auth);
+
+				//std::shared_ptr<C2S_Chat> msg1 = std::make_shared<C2S_Chat>("123456789ABCDEFG", "ok", ChatDstType::CHANNEL);
+				//std::shared_ptr<C2S_Chat> msg2 = std::make_shared<C2S_Chat>("Message 2", "babouche", ChatDstType::USER);
+				//std::shared_ptr<C2S_Chat> msg3 = std::make_shared<C2S_Chat>("Message 3", "mazouteman", ChatDstType::CHANNEL);
+				//this->pushInputBuffer(msg1);
+				//this->pushInputBuffer(msg2);
+
+				// Flood testing
+				/*
+				for(unsigned int i = 0; i < 300; i++) {
+					this->pushInputBuffer(msg3);
+				}
+				*/
+
+				sf::Packet packet;
+				while(this->isRunning() && this->getNetworkState().code == NetworkStateCode::NS_CONNECTION_OK)
+				{
+					// ------------------- Envoi --------------------------------------------------------------------------------
+					// <Thread safe>
+					{
+
+						sf::Lock lock(mMutex);
+						MessageBuffer chatbuffer(this->getInputBuffer()); // we get a copy of the buffer
+
+						// si packet buffer non vide, on envoie tout son contenu
+						if(!chatbuffer.empty())
+						{
+							for(auto it = chatbuffer.begin(); it != chatbuffer.end(); ++it)
+							{
+								sf::Packet packet;
+								(*it)->insertIntoPacket(packet);
+								// if packet not sent && status = disconnected, then stop sending
+								if(!this->sendPacket(packet) && this->lastSentStatus == sf::Socket::Status::Disconnected) {
+									this->disconnect();
+									break;
+								}
+
+							}
+						}
+
+						this->clearInputBuffer();
+					}
+					// </Thread safe>
+
+					// ------------------- Réception ----------------------------------------------------------------------------
+					sf::Socket::Status status = mSocket.receive(packet);
+
+					// Packet status ?
+					if(status == sf::Socket::Status::Done)
+					{
+						{ std::ostringstream msg; msg << "Packet received successfuly" << ""; Debug::msg(msg); }
+						this->handlePacket(packet);
+					}
+					else if(status == sf::Socket::Status::Disconnected)
+					{
+						{ std::ostringstream msg; msg << "Packet received with code: Status::Disconnected ("<< status << ")"; Debug::msg(msg); }
+						this->disconnect();
+					}
+					else if(status == sf::Socket::Status::NotReady)
+					{
+						//{ std::ostringstream msg; msg << "Packet received with code: Status::NotReady ("<< status << ")"; Debug::msg(msg); }
+					}
+					else if(status == sf::Socket::Status::Error)
+					{
+						{ std::ostringstream msg; msg << "Packet received with code: Status::Error ("<< status << ")"; Debug::msg(msg); }
+					}
+					else
+					{
+						{ std::ostringstream msg; msg << "(!) ERROR This code is not handle by SFML 2.0/2.1 : ("<< status << ")"; Debug::msg(msg); }
+					}
+					// ----------------------------------------------------------------------------------------------------------
+					packet.clear();						// important
+					sf::sleep(sf::milliseconds(100));	// for CPU
+					// ----------------------------------------------------------------------------------------------------------
+
+				}  // -- after-connection loop (receiv/send)
+				{ std::ostringstream msg; msg << "(!) RECV/SEND Loop ended" << ""; Debug::msg(msg); }
 			}
-			else if(status == sf::Socket::Status::Disconnected)
-			{
-				{ std::ostringstream msg; msg << "Packet received with code: Status::Disconnected ("<< status << ")"; Debug::msg(msg); }
-				this->disconnect();
-			}
-			else if(status == sf::Socket::Status::NotReady)
-			{
-				//{ std::ostringstream msg; msg << "Packet received with code: Status::NotReady ("<< status << ")"; Debug::msg(msg); }
-			}
-			else if(status == sf::Socket::Status::Error)
-			{
-				{ std::ostringstream msg; msg << "Packet received with code: Status::Error ("<< status << ")"; Debug::msg(msg); }
-			}
+			// else connection failed
 			else
 			{
-				{ std::ostringstream msg; msg << "(!) ERROR This code is not handle by SFML 2.0/2.1 : ("<< status << ")"; Debug::msg(msg); }
+				this->updateNetworkState(NetworkStateCode::NS_CONNECTION_FAILED);
+				{ std::ostringstream msg; msg << "(!) Couldn't connect to chat server, status : ("<< status << ")"; Debug::msg(msg); }
 			}
-			// ----------------------------------------------------------------------------------------------------------
-			packet.clear();						// important
-			sf::sleep(sf::milliseconds(100));	// for CPU
-			// ----------------------------------------------------------------------------------------------------------
-		}
-	}
-	else
-	{
-		this->updateNetworkState(NetworkStateCode::NS_CONNECTION_FAILED);
-		{ std::ostringstream msg; msg << "(!) Couldn't connect to chat server, status : ("<< status << ")"; Debug::msg(msg); }
-	}
+				
+			// ------------------------------------------------------------------------------------------------------------------
+			this->clearInputBuffer();
+			this->clearOutputBuffer();
+
+			// Auto reconnect
+			if(!this->isAutoReconnectEnabled()) {
+				{ std::ostringstream msg; msg << "Stopping chat..." << ""; Debug::msg(msg); }
+				this->setRunning(false);
+				break;
+			}
+			else {
+				nextConnectionTime = (sf::Uint64)time(NULL) + RECONNECTION_INTERVAL;
+			}
+			// ------------------------------------------------------------------------------------------------------------------
+
+
+		} // -- if connection time
+		sf::sleep(sf::milliseconds(250));	// for CPU, since 
+
+	} // -- reconnection loop
 
 	{ std::ostringstream msg; msg << "Thread ended" << ""; Debug::msg(msg); }
 }
@@ -362,7 +415,7 @@ void ChatClient::handlePacket(sf::Packet& p_packet)
 		if(packetType == PacketType::CHAT)
 		{
 			std::shared_ptr<S2C_Chat> s2c_chat = std::make_shared<S2C_Chat>();
-			if(p_packet >> *s2c_chat)
+			if(p_packet >>* s2c_chat)
 			{
 				this->pushOutputBuffer(s2c_chat);
 				{ std::ostringstream msg; msg << "[CHAT] FROM <" << s2c_chat->from << "> TO <" << s2c_chat->to << "("<< s2c_chat->dstType <<")> : " << s2c_chat->message << ""; Debug::msg(msg); }
@@ -389,7 +442,17 @@ void ChatClient::handlePacket(sf::Packet& p_packet)
 						this->sendPacket(pongPacket);
 					}
 					break;
-				}
+				
+
+					// DROPs
+				case ServerCommand::S_DROPPED_NORC:
+					{
+						this->setAutoReconnect(false);
+					}
+					break;
+
+				} // -- end of switch() {}
+
 			}
 		}
 		// Auth
@@ -410,30 +473,41 @@ void ChatClient::handlePacket(sf::Packet& p_packet)
 	}
 }
 
+
+// used to stop "properly" the chat, at the end of the app
+// should be called by UI client
 void ChatClient::terminate(void)
 {
 	sf::Lock lock(mMutex);
 
 	if(this->isRunning())
 	{
-		this->clearOutputBuffer();
-		this->clearInputBuffer();
+		if(this->getNetworkState().code == NetworkStateCode::NS_CONNECTION_OK) {
+			C2S_Command c2s_command(ClientCommand::C_QUIT, "Closed by user");
+			sf::Packet packet;
+			packet << c2s_command;
 
-		C2S_Command c2s_command(ClientCommand::C_QUIT, "Closed by user");
-		sf::Packet packet;
-		packet << c2s_command;
+			this->sendPacket(packet);
+		}
 
-		this->sendPacket(packet);
-		this->disconnect();
+		this->disconnect(false);
 	}
 }
 
-void ChatClient::disconnect(void)
+
+// stop the thread (if p_reconnect=false) or relaunch the connection (if p_reconnect=true)
+// called by the ChatClient itself in case of network errors/disconnections
+void ChatClient::disconnect(bool p_reconnect)
 {
 	sf::Lock lock(mMutex);
-	mRunning = false;
-	mSocket.disconnect();
+	this->updateNetworkState(NetworkStateCode::NS_DISCONNECTED);	// this will make the recv/snd loop stop
+	this->mSocket.disconnect();
 
-	this->updateNetworkState(NetworkStateCode::NS_DISCONNECTED);
+	// if no reconnection
+	if(!p_reconnect) {
+		this->setAutoReconnect(false);		// no auto reconnect, so the main loop will stop
+		this->setRunning(false);			// main loop should have stopped, but here is one more "security"
+	}
+	
 	{ std::ostringstream msg; msg << "Disconnected" << ""; Debug::msg(msg); }
 }

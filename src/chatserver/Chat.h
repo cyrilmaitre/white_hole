@@ -57,7 +57,14 @@ enum ServerCommand
 	S_CHAT_PEER_AFK,
 	S_FRIEND_ADD,
 	S_AFK_ON,
-	S_AFK_OFF
+	S_AFK_OFF,
+	S_PEER_NOTEXIST,
+	S_DROPPED,
+	S_DROPPED_NORC,
+	// confirmations
+	S_CONFIRM_FRIEND_ADD,		// <-> C_FRIEND_ADD
+	S_CONFIRM_FRIEND_IGNORE,	// <-> C_FRIEND_IGNORE
+	S_CONFIRM_FRIEND_DEL,		// <-> C_FRIEND_DEL
 };
 
 // Commands sent by the client (ex: quit)
