@@ -99,8 +99,8 @@ void WindowChat::update(sf::Event p_event)
 								std::shared_ptr<C2S_Chat> c2s_chat(new C2S_Chat("", result[1], ChatDstType::USER));
 								Resource::resource->getChatClient()->pushInputBuffer(c2s_chat);
 
-								std::string pushChat = "(PM) -> "+result[1]+" : "+message;
-								this->pushChat(pushChat);
+								//std::string pushChat = "(PM) -> "+result[1]+" : "+message;
+								//this->pushChat(pushChat);
 							}
 							else {
 								this->pushChat("> Usage: /w <user> <message>");
@@ -114,8 +114,8 @@ void WindowChat::update(sf::Event p_event)
 								std::shared_ptr<C2S_Command> c2s_cmd(new C2S_Command(ClientCommand::C_FRIEND_ADD, result[1]));
 								Resource::resource->getChatClient()->pushInputBuffer(c2s_cmd);
 
-								std::string pushChat = "* Invitation sent to "+result[1];
-								this->pushChat(pushChat);
+								//std::string pushChat = "* Invitation sent to "+result[1];
+								//this->pushChat(pushChat);
 							}
 							else {
 								this->pushChat("> Usage: /f+ <user>");
@@ -129,8 +129,8 @@ void WindowChat::update(sf::Event p_event)
 								std::shared_ptr<C2S_Command> c2s_cmd(new C2S_Command(ClientCommand::C_FRIEND_DEL, result[1]));
 								Resource::resource->getChatClient()->pushInputBuffer(c2s_cmd);
 
-								std::string pushChat = "* Deleted invitation from "+result[1];
-								this->pushChat(pushChat);
+								//std::string pushChat = "* Deleted invitation from "+result[1];
+								//this->pushChat(pushChat);
 							}
 							else {
 								this->pushChat("> Usage: /f- <user>");
@@ -144,8 +144,8 @@ void WindowChat::update(sf::Event p_event)
 								std::shared_ptr<C2S_Command> c2s_cmd(new C2S_Command(ClientCommand::C_FRIEND_IGNORE, result[1]));
 								Resource::resource->getChatClient()->pushInputBuffer(c2s_cmd);
 
-								std::string pushChat = "* You won't receive invitation from "+result[1]+" anymore";
-								this->pushChat(pushChat);
+								//std::string pushChat = "* You won't receive invitation from "+result[1]+" anymore";
+								//this->pushChat(pushChat);
 							}
 							else {
 								this->pushChat("> Usage: /f! <user>");
@@ -162,7 +162,6 @@ void WindowChat::update(sf::Event p_event)
 			// else, this is a chat message
 			else
 			{
-				this->pushChat("<ME> "+userInput);
 				std::shared_ptr<C2S_Chat> c2s_chat(new C2S_Chat(userInput, "INTERNATIONAL", ChatDstType::CHANNEL));
 				Resource::resource->getChatClient()->pushInputBuffer(c2s_chat);
 			}
@@ -206,7 +205,7 @@ void WindowChat::drawContent()
 		case NetworkStateCode::NS_DISCONNECTED:
 			{
 				this->txtfield.setEnable(false);
-				this->pushChat("* You've been disconnected from the chat server.");
+				this->pushChat("* Disconnected.");
 			}
 			break;
 			
@@ -230,20 +229,19 @@ void WindowChat::drawContent()
 		{
 			for(auto it = outputbuffer.begin(); it != outputbuffer.end(); ++it)
 			{
-
-				std::shared_ptr<Message> message = *it;
 				// Si c'est un message chat
-				if(message->packetType == PacketType::CHAT) {
-					std::shared_ptr<S2C_Chat> s2c_chat = std::dynamic_pointer_cast<S2C_Chat>(message);
+				if((*it)->packetType == PacketType::CHAT) {
+					std::shared_ptr<S2C_Chat> s2c_chat = std::dynamic_pointer_cast<S2C_Chat>(*it);
 
 					if(s2c_chat->dstType == ChatDstType::CHANNEL)
 						this->pushChat("<"+s2c_chat->from+"> "+s2c_chat->message);
 					else if(s2c_chat->dstType == ChatDstType::USER)
 						this->pushChat("(MP) from "+s2c_chat->from+" : "+s2c_chat->message);
+
 				}
 				// Si c'est une commande
-				else if(message->packetType == PacketType::COMMAND) {
-					std::shared_ptr<S2C_Command> s2c_command = std::dynamic_pointer_cast<S2C_Command>(message);
+				else if((*it)->packetType == PacketType::COMMAND) {
+					std::shared_ptr<S2C_Command> s2c_command = std::dynamic_pointer_cast<S2C_Command>(*it);
 
 					this->pushChat("<SERVER CMD> " + Chat::serverCmdToString(s2c_command->command) + " -> " + s2c_command->argument);
 				}
