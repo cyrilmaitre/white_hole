@@ -1,6 +1,7 @@
 #pragma once
 #include "Resource.h"
 #include "KeyValueFile.h"
+#include "NodeData.h"
 
 // Define
 #define ITEMTYPE_CONFIG_ID				"id"
@@ -12,7 +13,7 @@
 #define ITEMTYPE_AMMO_MISSILE			33
 #define ITEMTYPE_AMMO_ROQUET			34
 
-class ItemType
+class ItemType : public NodeData
 {
 public:
 	// Constructor - Destructor
@@ -30,10 +31,10 @@ public:
 	void setDescription(std::string p_description);
 
 	ItemType *getParent();
-	void setParent(ItemType *p_parent);
+	long getParentId();
+	void setParentId(long p_id);
 
-	bool isLeaf();
-	void setLeaf(bool p_isleaf);
+	std::string getText();
 
 	// Methode
 	void loadFromConfig(KeyValueFile* p_config);
@@ -44,7 +45,6 @@ private:
 	long mId;
 	std::string mName;
 	std::string mDescription;
-	ItemType *mParent;
-	bool mLeaf;
+	long mParentId;
 };
 

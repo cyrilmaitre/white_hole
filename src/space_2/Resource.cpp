@@ -263,6 +263,22 @@ KeyValueFile* Resource::getConfig( std::string p_name )
 	return NULL;
 }
 
+std::vector<KeyValueFile*> Resource::getConfigs( std::string p_configName )
+{
+	std::vector<KeyValueFile*> returnVector;
+
+	for( std::map<std::string, KeyValueFile>::iterator it = this->mConfig.begin() ; it != this->mConfig.end(); it++ )
+	{
+		std::string currentConfigName = it->first;
+		if (currentConfigName.compare(0, p_configName.length(), p_configName) == 0)
+		{
+			returnVector.push_back(&(it->second));
+		}
+	}
+
+	return returnVector;
+}
+
 bool Resource::isAppRunning()
 {
 	return this->mAppRunning;
@@ -369,6 +385,9 @@ void Resource::initAfterLoad()
 	StarManager::init();
 	StationManager::init();
 	Network::init();
+
+	FactoryGet::getItemTypeFactory()->buildItemTypeList();
+	FactoryGet::getItemTypeFactory()->buildItemTypeTree();
 }
 
 void Resource::uninit()
@@ -718,7 +737,7 @@ void Resource::loadConfigs( std::string path )
 
 			if(file_name[0] != '.' && ent->d_type != DT_DIR)
 			{
-				this->mConfig.insert(pair<string, KeyValueFile>(file_name, KeyValueFile(path+file_name, true)));
+				this->mConfig.insert(pair<string, KeyValueFile>(file_name, KeyValueFile(path+file_name, file_name, true)));
 			}
 		}
 		closedir(dir);

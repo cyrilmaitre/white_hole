@@ -3,7 +3,8 @@
 #include "KeyValueFile.h"
 
 // Define
-#define OPTION_FILE_NAME						"option/option.cfg"
+#define OPTION_FILE_PATHNAME					"option/"
+#define OPTION_FILE_FILENAME					"option.cfg"
 #define OPTION_VERSION_KEY						"option_version"
 #define OPTION_VERSION_VALUE					"1.0.41"
 #define OPTION_APP_SCREEN_WIDTH_KEY				"app_screen_width"

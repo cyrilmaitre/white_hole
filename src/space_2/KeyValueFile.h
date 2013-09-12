@@ -10,13 +10,17 @@ class KeyValueFile
 {
 public:
 	// Constructor - Destructor
-	KeyValueFile(std::string p_fileName, 
+	KeyValueFile(std::string p_pathName,
+				std::string p_fileName,
 				bool p_loadFromFile = false, 
 				bool p_isReadOnly = false,
 				std::string p_delimeter = DEFAULT_KEYVALUEFILE_DELIMETER);
 	~KeyValueFile(void);
 
 	// Getters - Setters
+	std::string getPathName();
+	std::string getFileName();
+
 	std::string getString(std::string p_key);
 	bool setString(std::string p_key, std::string p_value);
 
@@ -40,6 +44,7 @@ public:
 
 
 private:
+	std::string mPathName;
 	std::string mFileName;
 	bool mReadOnly;
 	std::string mDelimeter;

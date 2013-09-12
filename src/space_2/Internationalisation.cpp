@@ -6,7 +6,8 @@
 //*************************************************************
 // Define
 //*************************************************************
-#define FILE_BASE_NAME		"string/string"
+#define FILE_PATH			"string/"
+#define FILE_BASE_NAME		"string"
 
 
 //*************************************************************
@@ -19,9 +20,9 @@ Internationalisation::Internationalisation(void)
 	nameFile.append(Option::option->getAppLanguage());
 
 	if(Tools::isFileExist(nameFile))
-		this->mBundle = new KeyValueFile(nameFile, true);
+		this->mBundle = new KeyValueFile(FILE_PATH + nameFile, nameFile, true);
 	else
-		this->mBundle = new KeyValueFile(FILE_BASE_NAME, true);
+		this->mBundle = new KeyValueFile((FILE_PATH FILE_BASE_NAME), FILE_BASE_NAME, true);
 }
 
 Internationalisation::~Internationalisation(void)

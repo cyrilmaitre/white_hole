@@ -46,6 +46,7 @@ public:
 	sf::SoundBuffer* getBuffer(std::string p_name);
 	sf::Music* getMusic(std::string p_name);
 	KeyValueFile* getConfig(std::string p_name);
+	std::vector<KeyValueFile*> getConfigs(std::string p_configName);
 	Internationalisation* getBundle();
 	Juckebox* getJuckebox();
 

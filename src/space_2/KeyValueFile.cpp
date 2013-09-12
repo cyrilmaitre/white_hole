@@ -6,10 +6,11 @@
 //*************************************************************
 // Constructor - Destructor
 //*************************************************************
-KeyValueFile::KeyValueFile( std::string p_fileName, bool p_loadFromFile, bool p_isReadOnly, std::string p_delimeter )
+KeyValueFile::KeyValueFile( std::string p_pathName, std::string p_fileName, bool p_loadFromFile, bool p_isReadOnly, std::string p_delimeter )
 {
 	// Init with param
-	this->mFileName	= p_fileName;
+	this->mPathName	= p_pathName;
+	this->mFileName = p_fileName;
 	this->mReadOnly	= p_isReadOnly;
 	this->mDelimeter = p_delimeter;
 
@@ -25,6 +26,16 @@ KeyValueFile::~KeyValueFile(void)
 //*************************************************************
 // Getters - Setters
 //*************************************************************
+std::string KeyValueFile::getPathName()
+{
+	return this->mPathName;
+}
+
+std::string KeyValueFile::getFileName()
+{
+	return this->mFileName;
+}
+
 std::string KeyValueFile::getString( std::string p_key )
 {
 	std::map<std::string, std::string>::iterator it;
@@ -148,7 +159,7 @@ bool KeyValueFile::has( std::string p_key )
 
 bool KeyValueFile::loadFromFile()
 {
-	std::ifstream file(this->mFileName);
+	std::ifstream file(this->mPathName);
 
 	if (file.is_open())
 	{
@@ -199,7 +210,7 @@ bool KeyValueFile::loadFromFile()
 
 bool KeyValueFile::saveToFile()
 {
-	std::ofstream file(this->mFileName);
+	std::ofstream file(this->mPathName);
 
 	if (file.is_open())
 	{
@@ -213,6 +224,8 @@ bool KeyValueFile::saveToFile()
 	
 	return false;
 }
+
+
 
 
 

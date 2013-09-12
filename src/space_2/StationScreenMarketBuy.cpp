@@ -1,4 +1,5 @@
 #include "StationScreenMarketBuy.h"
+#include "FactoryGet.h"
 
 
 //*************************************************************
@@ -23,6 +24,7 @@ StationScreenMarketBuy::StationScreenMarketBuy( StationScreenMarket* p_market )
 	this->setDisplayTitle(false);
 
 	this->mTreeItemType.setSize(PANEL_TREEITEMTYPE_WIDTH, this->getContentHeight());
+	this->mTreeItemType.setTreeData(FactoryGet::getItemTypeFactory()->getItemTypeTree());
 }
 
 StationScreenMarketBuy::~StationScreenMarketBuy(void)

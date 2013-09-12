@@ -10,7 +10,7 @@ Option * Option::option;
 //*************************************************************
 // Constructor - Destructor
 //*************************************************************
-Option::Option(void) : mOptionFile(OPTION_FILE_NAME)
+Option::Option(void) : mOptionFile((OPTION_FILE_PATHNAME OPTION_FILE_FILENAME),  OPTION_FILE_FILENAME)
 {
 	bool isOptionFileOpened;
 	bool isOptionFileEmpty;

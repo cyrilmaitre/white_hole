@@ -6,7 +6,7 @@
 //*************************************************************
 // Constructor - Destructor
 //*************************************************************
-ItemType::ItemType( KeyValueFile* p_config ) : mParent(NULL)
+ItemType::ItemType( KeyValueFile* p_config ) 
 {
 	this->loadFromConfig(p_config);
 }
@@ -51,22 +51,22 @@ void ItemType::setDescription( std::string p_description )
 
 ItemType * ItemType::getParent()
 {
-	return this->mParent;
+	return (ItemType*)this->NodeData::getParent();
 }
 
-void ItemType::setParent( ItemType *p_parent )
+long ItemType::getParentId()
 {
-	this->mParent = p_parent;
+	return this->mParentId;
 }
 
-bool ItemType::isLeaf()
+void ItemType::setParentId( long p_id )
 {
-	return this->mLeaf;
+	this->mParentId = p_id;
 }
 
-void ItemType::setLeaf( bool p_isleaf )
+std::string ItemType::getText()
 {
-	this->mLeaf = p_isleaf;
+	return this->getName();
 }
 
 
@@ -78,10 +78,12 @@ void ItemType::loadFromConfig( KeyValueFile* p_config )
 	this->setId(p_config->getLong(ITEMTYPE_CONFIG_ID));
 	this->setName(Resource::resource->getBundle()->getString(p_config->getString(ITEMTYPE_CONFIG_NAME)));
 	this->setDescription(Resource::resource->getBundle()->getString(p_config->getString(ITEMTYPE_CONFIG_DESCRIPTION)));
-	this->setLeaf(p_config->getBool(ITEMTYPE_CONFIG_LEAF));
 
-	if(p_config->getString(ITEMTYPE_CONFIG_PARENT) == "NULL")
-		this->setParent(NULL);
+	if(p_config->getString(ITEMTYPE_CONFIG_PARENT) != "NULL")
+		this->setParentId(p_config->getInt(ITEMTYPE_CONFIG_PARENT));
 	else
-		this->setParent(FactoryGet::getItemTypeFactory()->getItemType(p_config->getInt(ITEMTYPE_CONFIG_PARENT)));
+		this->setParentId(-1);
 }
+
+
+
