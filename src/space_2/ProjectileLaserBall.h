@@ -10,8 +10,16 @@ public:
 	~ProjectileLaserBall(void);
 
 	// Methods
+	void updateSprite();
 	void loadSprite();
+	void unloadSprite();
 	void notifyScaleChanged();
 	void notifyColorChanged();
+	void draw();
+
+
+private:
+	// Attributs
+	sf::Sprite* mSpriteLaserBall;
 };
 
