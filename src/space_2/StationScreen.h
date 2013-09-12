@@ -4,6 +4,8 @@
 #include "Button.h"
 #include "FieldSet.h"
 #include "StationScreenLeftMenu.h"
+#include "StationScreenRightPanel.h"
+#include "StationScreenMarket.h"
 
 
 class StationScreen
@@ -14,24 +16,39 @@ public:
 	~StationScreen(void);
 
 	// Getters - Setters
+	int getWidth();
+	int getHeight();
+
 	Character* getCharacter();
 	void setCharacter(Character* p_character);
 
 	Station* getStation();
 	void setStation(Station* p_station);
 
+	StationScreenRightPanel* getRightPanel();
+	void setRightPanel(StationScreenRightPanel* p_panel);
+
 	// Methods
+	void unloadPanel();
+	void loadPanelHangar();
+	void loadPanelMarket();
+	void loadPanelCraft();
 	void launchBegin();
 	void launchEnd();
 	void launch(Station* p_station);
 	void update();
 	void updatePosition();
 	void updateBackgroundScale();
+	void updateRightPanelPositon();
+	void updateRightPanelSize();
+	void updateRightPanelCharacter();
+	void updateRightPanelStation();
 	void update(sf::Event p_event);
 	void draw();
 	void notifyAppSizeChanged();
 	void notifyStationChanged();
 	void notifyCharacterChanged();
+	void notifyRightPanelChanged();
 
 
 private:
@@ -42,5 +59,8 @@ private:
 
 	sf::Sprite mBackground;
 	StationScreenLeftMenu* mLeftMenu;
+	StationScreenRightPanel* mRightPanel;
+
+	StationScreenMarket* mPanelMarket;
 };
 

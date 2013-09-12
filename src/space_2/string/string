@@ -47,6 +47,8 @@ locked = Locked
 unload = Unlock
 error = Error
 success = Success
+buy = Buy
+sell = Sell
 #
 #
 # Running stats

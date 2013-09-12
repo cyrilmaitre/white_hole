@@ -255,6 +255,10 @@
     <ClCompile Include="StationModelFactory.cpp" />
     <ClCompile Include="StationScreen.cpp" />
     <ClCompile Include="StationScreenLeftMenu.cpp" />
+    <ClCompile Include="StationScreenMarket.cpp" />
+    <ClCompile Include="StationScreenMarketBuy.cpp" />
+    <ClCompile Include="StationScreenMarketSell.cpp" />
+    <ClCompile Include="StationScreenRightPanel.cpp" />
     <ClCompile Include="Stuffable.cpp" />
     <ClCompile Include="StuffableData.cpp" />
     <ClCompile Include="TitleScreen.cpp" />
@@ -529,6 +533,10 @@
     <ClInclude Include="StationModelFactory.h" />
     <ClInclude Include="StationScreen.h" />
     <ClInclude Include="StationScreenLeftMenu.h" />
+    <ClInclude Include="StationScreenMarket.h" />
+    <ClInclude Include="StationScreenMarketBuy.h" />
+    <ClInclude Include="StationScreenMarketSell.h" />
+    <ClInclude Include="StationScreenRightPanel.h" />
     <ClInclude Include="Stuffable.h" />
     <ClInclude Include="StuffableData.h" />
     <ClInclude Include="TitleScreen.h" />

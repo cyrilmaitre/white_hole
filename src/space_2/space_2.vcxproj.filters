@@ -361,6 +361,18 @@
     <Filter Include="Fichiers sources\mks\ui\tree">
       <UniqueIdentifier>{1578a7fd-7c74-41d3-98f2-e447cda8954c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Fichiers d%27en-tête\game\ui\stationscreen\panel">
+      <UniqueIdentifier>{6dc7dbbd-5a1a-4844-8e00-e1ba68742508}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fichiers sources\game\ui\stationscreen\panel">
+      <UniqueIdentifier>{052af0f9-4a90-446f-a7fe-269798b08644}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fichiers d%27en-tête\game\ui\stationscreen\panel\market">
+      <UniqueIdentifier>{803895b6-5d31-4f23-888f-82a6d52f2520}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fichiers sources\game\ui\stationscreen\panel\market">
+      <UniqueIdentifier>{1bc37920-8881-414e-aeb8-c91f75f06e0d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Game.cpp">
@@ -1160,6 +1172,18 @@
     </ClCompile>
     <ClCompile Include="NodeData.cpp">
       <Filter>Fichiers sources\mks\ui\tree</Filter>
+    </ClCompile>
+    <ClCompile Include="StationScreenRightPanel.cpp">
+      <Filter>Fichiers sources\game\ui\stationscreen\panel</Filter>
+    </ClCompile>
+    <ClCompile Include="StationScreenMarket.cpp">
+      <Filter>Fichiers sources\game\ui\stationscreen\panel\market</Filter>
+    </ClCompile>
+    <ClCompile Include="StationScreenMarketSell.cpp">
+      <Filter>Fichiers sources\game\ui\stationscreen\panel\market</Filter>
+    </ClCompile>
+    <ClCompile Include="StationScreenMarketBuy.cpp">
+      <Filter>Fichiers sources\game\ui\stationscreen\panel\market</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1978,6 +2002,18 @@
     </ClInclude>
     <ClInclude Include="TreeData.h">
       <Filter>Fichiers d%27en-tête\mks\ui\tree</Filter>
+    </ClInclude>
+    <ClInclude Include="StationScreenRightPanel.h">
+      <Filter>Fichiers d%27en-tête\game\ui\stationscreen\panel</Filter>
+    </ClInclude>
+    <ClInclude Include="StationScreenMarket.h">
+      <Filter>Fichiers d%27en-tête\game\ui\stationscreen\panel\market</Filter>
+    </ClInclude>
+    <ClInclude Include="StationScreenMarketSell.h">
+      <Filter>Fichiers d%27en-tête\game\ui\stationscreen\panel\market</Filter>
+    </ClInclude>
+    <ClInclude Include="StationScreenMarketBuy.h">
+      <Filter>Fichiers d%27en-tête\game\ui\stationscreen\panel\market</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

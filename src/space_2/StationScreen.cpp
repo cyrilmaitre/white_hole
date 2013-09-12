@@ -16,6 +16,7 @@
 // Define
 //*************************************************************
 #define LEFTMENU_MARGIN						25
+#define RIGHTPANEL_MARGIN					25
 
 
 //*************************************************************
@@ -26,9 +27,12 @@ StationScreen::StationScreen(Character* p_character)
 	this->mStation = NULL;
 	this->mCharacter = NULL;
 	this->mLeftMenu = NULL;
+	this->mRightPanel = NULL;
+	this->mPanelMarket = NULL;
 
 	this->setCharacter(p_character);
 	this->mLeftMenu = new StationScreenLeftMenu(p_character, this);
+	this->mPanelMarket = new StationScreenMarket(p_character, NULL, this);
 
 	this->notifyAppSizeChanged();
 }
@@ -37,12 +41,25 @@ StationScreen::~StationScreen(void)
 {
 	if(this->mLeftMenu != NULL)
 		delete this->mLeftMenu;
+
+	if(this->mPanelMarket != NULL)
+		delete this->mPanelMarket;
 }
 
 
 //*************************************************************
 // Getters - Setters
 //*************************************************************
+int StationScreen::getWidth()
+{
+	return Resource::resource->getViewUi()->getSize().x;
+}
+
+int StationScreen::getHeight()
+{
+	return Resource::resource->getViewUi()->getSize().y;
+}
+
 Character* StationScreen::getCharacter()
 {
 	return this->mCharacter;
@@ -71,10 +88,44 @@ void StationScreen::setStation( Station* p_station )
 	}
 }
 
+StationScreenRightPanel* StationScreen::getRightPanel()
+{
+	return this->mRightPanel;
+}
+
+void StationScreen::setRightPanel( StationScreenRightPanel* p_panel )
+{
+	if(this->mRightPanel != p_panel)
+	{
+		this->mRightPanel = p_panel;
+		this->notifyRightPanelChanged();
+	}
+}
+
 
 //*************************************************************
 // Methods
 //*************************************************************
+void StationScreen::unloadPanel()
+{
+	this->setRightPanel(NULL);
+}
+
+void StationScreen::loadPanelHangar()
+{
+
+}
+
+void StationScreen::loadPanelMarket()
+{
+	this->setRightPanel(this->mPanelMarket);
+}
+
+void StationScreen::loadPanelCraft()
+{
+
+}
+
 void StationScreen::launchBegin()
 {
 	// Ship Cargo refresh
@@ -139,12 +190,41 @@ void StationScreen::update()
 
 	// Update Left menu
 	this->mLeftMenu->update();
+
+	// Update Right panel
+	if(this->mRightPanel != NULL)
+		this->mRightPanel->update();
 }
 
 void StationScreen::updatePosition()
 {
 	this->mBackground.setPosition(0, 0);
 	this->mLeftMenu->setPosition(LEFTMENU_MARGIN, LEFTMENU_MARGIN);
+	this->updateRightPanelPositon();
+}
+
+void StationScreen::updateRightPanelPositon()
+{
+	if(this->mRightPanel != NULL)
+		this->mRightPanel->setPosition(this->mLeftMenu->getRightX() + LEFTMENU_MARGIN, RIGHTPANEL_MARGIN);
+}
+
+void StationScreen::updateRightPanelSize()
+{
+	if(this->mRightPanel != NULL)
+		this->mRightPanel->setSize(this->getWidth() - this->mLeftMenu->getWidth() - 2 * LEFTMENU_MARGIN - RIGHTPANEL_MARGIN, Resource::resource->getViewUi()->getSize().y - RIGHTPANEL_MARGIN * 2);
+}
+
+void StationScreen::updateRightPanelCharacter()
+{
+	if(this->mRightPanel != NULL)
+		this->mRightPanel->setCharacter(this->getCharacter());
+}
+
+void StationScreen::updateRightPanelStation()
+{
+	if(this->mRightPanel != NULL)
+		this->mRightPanel->setStation(this->getStation());
 }
 
 void StationScreen::updateBackgroundScale()
@@ -170,12 +250,18 @@ void StationScreen::update( sf::Event p_event )
 
 	// Update left menu
 	this->mLeftMenu->update(p_event);	
+
+	// Update Right Panel
+	if(this->mRightPanel != NULL)
+		this->mRightPanel->update(p_event);
 }
 
 void StationScreen::draw()
 {
 	Resource::resource->getApp()->draw(this->mBackground);
 	this->mLeftMenu->draw();
+	if(this->mRightPanel != NULL)
+		this->mRightPanel->draw();
 
 	UserInterface::mUserInterface->drawWindowDynamicsStation();
 	ContainerStackViewManager::getInstance()->draw();
@@ -189,6 +275,7 @@ void StationScreen::notifyAppSizeChanged()
 	this->updateBackgroundScale();
 
 	this->mLeftMenu->setSize(StationScreenLeftMenu::getWidth(), Resource::resource->getViewUi()->getSize().y - LEFTMENU_MARGIN * 2);
+	this->updateRightPanelSize();
 }
 
 void StationScreen::notifyStationChanged()
@@ -198,15 +285,27 @@ void StationScreen::notifyStationChanged()
 		this->mBackground.setTexture(*Resource::resource->getTexture(this->getStation()->getModel()->getScreenSprite()));
 		this->updateBackgroundScale();
 	}
+
+	this->updateRightPanelStation();
 }
 
 void StationScreen::notifyCharacterChanged()
 {
 	if(this->mLeftMenu != NULL)
 		this->mLeftMenu->setCharacter(this->getCharacter());
+
+	this->updateRightPanelCharacter();
 }
 
-
-
+void StationScreen::notifyRightPanelChanged()
+{
+	if(this->mRightPanel != NULL)
+	{
+		this->updateRightPanelPositon();
+		this->updateRightPanelSize();
+		this->updateRightPanelCharacter();
+		this->updateRightPanelStation();
+	}
+}
 
 

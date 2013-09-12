@@ -43,7 +43,7 @@ FieldSet::~FieldSet(void)
 //******************************
 bool FieldSet::hasTitle()
 {
-	return this->getTitle() != "";
+	return this->isDisplayTitle() && this->getTitle() != "";
 }
 
 std::string FieldSet::getTitle()
@@ -101,7 +101,7 @@ double FieldSet::getContentX()
 double FieldSet::getContentY()
 {
 	if(this->hasTitle())
-		return this->mTitle.getBottomY() + TITLE_MARGINTOP + this->getPadding();
+		return this->mTitle.getBottomY() + this->getPadding();
 	else
 		return this->getY() + this->getPadding();
 }

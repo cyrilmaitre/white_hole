@@ -33,9 +33,9 @@ StationScreenLeftMenu::StationScreenLeftMenu(Character* p_character, StationScre
 	this->setCharacter(p_character);
 	this->setStationScreen(p_screen);
 
-	this->setBorderSize(LEFTMENU_BORDSIZE);
+	this->setBorderSize(LEFTMENU_BORDSIZE, true);
 	this->setBorderColor(LEFTMENU_BORDCOLOR, true);
-	this->setBackgroundColor(LEFTMENU_BACKCOLOR);
+	this->setBackgroundColor(LEFTMENU_BACKCOLOR, true);
 	this->setDisplayTitle(false);
 
 	this->mButtonHangar.setSize(LEFTMENU_BUTTON_WIDTH, LEFTMENU_BUTTON_HEIGHT);
@@ -152,8 +152,16 @@ void StationScreenLeftMenu::updatePosition()
 void StationScreenLeftMenu::update( sf::Event p_event )
 {
 	this->mButtonHangar.update(p_event);
+	if(this->mButtonHangar.isClicked())
+		this->getStationScreen()->loadPanelHangar();
+
 	this->mButtonMarket.update(p_event);
+	if(this->mButtonMarket.isClicked())
+		this->getStationScreen()->loadPanelMarket();
+
 	this->mButtonCraft.update(p_event);
+	if(this->mButtonCraft.isClicked())
+		this->getStationScreen()->loadPanelCraft();
 
 	this->mButtonShipCargo.update(p_event);
 	if(this->mButtonShipCargo.isClicked())
@@ -168,7 +176,12 @@ void StationScreenLeftMenu::update( sf::Event p_event )
 
 	this->mButtonUndock.update(p_event);
 	if(this->mButtonUndock.isClicked())
+	{
+		this->getStationScreen()->unloadPanel();
 		this->getStationScreen()->setStation(NULL);
+	}
+
+	FieldSet::update(p_event);
 }
 
 void StationScreenLeftMenu::draw()
