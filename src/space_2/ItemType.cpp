@@ -99,10 +99,64 @@ SpriteParameter* ItemType::getIconSprite()
 	return SpriteParameterFactory::getSpriteParameterItemTypes();
 }
 
+int ItemType::getItemCount()
+{
+	return this->mItems.size();
+}
+
+Item* ItemType::getItem( int p_index )
+{
+	if(p_index < 0)
+		p_index = 0;
+	else if(p_index >= this->getItemCount())
+		p_index = this->getItemCount() - 1;
+
+	return this->mItems[p_index];
+}
+
 
 //*************************************************************
 // Getters - Setters
 //*************************************************************
+void ItemType::addItem( Item* p_item, bool p_orderAlphabetically )
+{
+	if(p_orderAlphabetically)
+	{
+		bool inserted = false;
+		for(int i = 0; i < this->mItems.size(); i++)
+		{
+			std::string newItemName = p_item->getName();
+			std::string currentItemName = this->mItems[i]->getName();
+			int compareResult = newItemName.compare(currentItemName); 
+			if( compareResult < 0 || compareResult == 0)
+			{
+				this->mItems.insert(this->mItems.begin() + i, p_item);
+				inserted = true;
+				break;
+			}
+		}
+
+		if(!inserted)
+			this->mItems.push_back(p_item);
+	}
+	else
+	{
+		this->mItems.push_back(p_item);
+	}
+}
+
+void ItemType::removeItem( Item* p_item )
+{
+	for(int i = 0; i < this->mItems.size(); i++)
+	{
+		if(p_item->getId() == this->mItems[i]->getId())
+		{
+			this->mItems.erase(this->mItems.begin() + i);
+			break;
+		}
+	}
+}
+
 void ItemType::loadFromConfig( KeyValueFile* p_config )
 {
 	if(p_config->has(CONFIG_ID))
@@ -122,6 +176,10 @@ void ItemType::loadFromConfig( KeyValueFile* p_config )
 	else
 		this->setParentId(-1);
 }
+
+
+
+
 
 
 

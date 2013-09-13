@@ -3,6 +3,7 @@
 #include "KeyValueFile.h"
 #include "NodeData.h"
 
+class Item;
 
 class ItemType : public NodeData
 {
@@ -32,7 +33,12 @@ public:
 	std::string getIcon();
 	SpriteParameter* getIconSprite();
 
+	int getItemCount();
+	Item* getItem(int p_index);
+
 	// Methode
+	void addItem(Item* p_item, bool p_orderAlphabetically = true);
+	void removeItem(Item* p_tem);
 	void loadFromConfig(KeyValueFile* p_config);
 
 
@@ -43,5 +49,7 @@ private:
 	std::string mDescription;
 	std::string mIconIndex;
 	long mParentId;
+
+	std::vector<Item*> mItems;
 };
 

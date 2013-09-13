@@ -5,7 +5,7 @@
 // Define
 //*************************************************************
 #define PANEL_BACKCOLOR					sf::Color(255, 255, 255, 0)
-#define PANEL_BORDCOLOR					sf::Color(128, 128, 128, 250)
+#define PANEL_BORDCOLOR					sf::Color(194, 194, 194)
 #define PANEL_BORDSIZE					2
 
 

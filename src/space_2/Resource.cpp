@@ -388,6 +388,7 @@ void Resource::initAfterLoad()
 
 	FactoryGet::getItemTypeFactory()->buildItemTypeList();
 	FactoryGet::getItemTypeFactory()->buildItemTypeTree();
+	FactoryGet::getItemFactory()->buildItemList();
 }
 
 void Resource::uninit()

@@ -2,19 +2,30 @@
 
 
 //*************************************************************
+// Define
+//*************************************************************
+#define BACKGROUNDCOLOR			sf::Color(25, 26, 28)
+#define BORDERCOLOR				sf::Color(194, 194, 194)
+#define BORDERSIZE				2
+#define PADDING					0
+#define SEPARATOR_HEIGHT		1
+#define SEPARATOR_COLOR			sf::Color(86, 87, 89)
+
+
+//*************************************************************
 // Constructor - Destructor
 //*************************************************************
 Tree::Tree(void) : ListSelectableGroup(true)
 {
 	this->mTreeData = NULL;
 
-	this->setBackgroundColor(sf::Color(25, 26, 28), true);
-	this->setBorderColor(sf::Color(194, 194, 194), true);
-	this->setBorderSize(2, true);
-	this->setPadding(0);
+	this->setBackgroundColor(BACKGROUNDCOLOR, true);
+	this->setBorderColor(BORDERCOLOR, true);
+	this->setBorderSize(BORDERSIZE, true);
+	this->setPadding(PADDING);
 	this->setForceScrollBar(true);
-	this->setSeparatorHeight(1);
-	this->setSeparatorColor(sf::Color(86, 87, 89));
+	this->setSeparatorHeight(SEPARATOR_HEIGHT);
+	this->setSeparatorColor(SEPARATOR_COLOR);
 }
 
 Tree::~Tree(void)

@@ -6,7 +6,7 @@
 // Define
 //*************************************************************
 #define PANEL_BACKCOLOR					sf::Color(255, 255, 255, 0)
-#define PANEL_BORDCOLOR					sf::Color(128, 128, 128, 250)
+#define PANEL_BORDCOLOR					sf::Color(194, 194, 194)
 #define PANEL_BORDSIZE					2
 #define PANEL_TREEITEMTYPE_WIDTH		250
 
@@ -22,8 +22,11 @@ StationScreenMarketBuy::StationScreenMarketBuy( StationScreenMarket* p_market )
 	this->setBorderColor(PANEL_BORDCOLOR, true);
 	this->setBorderSize(PANEL_BORDSIZE, true);
 	this->setDisplayTitle(false);
+	this->setPadding(0);
 
 	this->mTreeItemType.setSize(PANEL_TREEITEMTYPE_WIDTH, this->getContentHeight());
+	this->mTreeItemType.setBorderColor(sf::Color(255, 255, 255, 0), true);
+	this->mTreeItemType.setBorderSize(0, true);
 	this->mTreeItemType.setTreeData(FactoryGet::getItemTypeFactory()->getItemTypeTree());
 }
 
