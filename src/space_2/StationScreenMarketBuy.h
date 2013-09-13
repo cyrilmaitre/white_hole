@@ -2,6 +2,7 @@
 #include "FieldSet.h"
 #include "StationScreenMarket.h"
 #include "Tree.h"
+#include "MarketItemListView.h"
 
 
 class StationScreenMarketBuy : public FieldSet
@@ -18,11 +19,13 @@ public:
 	void draw();
 	void notifyPositionChanged();
 	void notifySizeChanged();
+	void notifyItemTypeSelectedChanged();
 
 
 private:
 	// Attributs
 	StationScreenMarket* mScreenMarket;
 	Tree mTreeItemType;
+	ListSelectableGroup mItemList;
 };
 

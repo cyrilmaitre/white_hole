@@ -1188,6 +1188,9 @@
     <ClCompile Include="ListSelectableGroup.cpp">
       <Filter>Fichiers sources\mks\ui</Filter>
     </ClCompile>
+    <ClCompile Include="MarketItemListView.cpp">
+      <Filter>Fichiers sources\game\ui\stationscreen\panel\market</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h">
@@ -2020,6 +2023,9 @@
     </ClInclude>
     <ClInclude Include="ListSelectableGroup.h">
       <Filter>Fichiers d%27en-tête\mks\ui</Filter>
+    </ClInclude>
+    <ClInclude Include="MarketItemListView.h">
+      <Filter>Fichiers d%27en-tête\game\ui\stationscreen\panel\market</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
