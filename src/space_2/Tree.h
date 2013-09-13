@@ -1,10 +1,10 @@
 #pragma once
-#include "List.h"
+#include "ListSelectableGroup.h"
 #include "Node.h"
 #include "TreeData.h"
 
 
-class Tree : public List
+class Tree : public ListSelectableGroup
 {
 public:
 	// Constructor - Destructor

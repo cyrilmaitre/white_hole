@@ -160,7 +160,6 @@ CreateCharacterScreen::CreateCharacterScreen(void)
 		this->mViewRace[i]->setSelectable(true);
 	for(int i = 0; i < CREATESCREEN_VIEW_RACE_COUNT; i++)
 		this->mViewRaceGroup.addSelectable(this->mViewRace[i]);
-	this->mViewRaceGroup.init();
 	this->notifyRaceSelectedChange();
 
 	// Job
@@ -175,7 +174,6 @@ CreateCharacterScreen::CreateCharacterScreen(void)
 		this->mViewJob[i]->setSelectable(true);
 	for(int i = 0; i < CREATESCREEN_VIEW_JOB_COUNT; i++)
 		this->mViewJobGroup.addSelectable(this->mViewJob[i]);
-	this->mViewJobGroup.init();
 
 	// Skill
 	this->mTBSkill.setFontSize(CREATESCREEN_TB_FIELD_SIZE);

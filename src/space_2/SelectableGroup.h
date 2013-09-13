@@ -5,7 +5,7 @@ class SelectableGroup
 {
 public:
 	// Constructor - Destructor
-	SelectableGroup(void);
+	SelectableGroup(bool p_selectedCanBeNull = false);
 	~SelectableGroup(void);
 
 	// Getters - Setters
@@ -13,19 +13,24 @@ public:
 	bool isSelectedChanged();
 	bool isEmpty();
 
+	bool isSelectedCanBeNull();
+	void setSelectedCanBeNull(bool p_value);
+
 	// Methods
-	void init(bool p_selectFirst = true);
 	void addSelectable(Selectable* p_selectable);
 	void removeSelectable(Selectable* p_selectable);
 	void removeSelectable(int p_position);
 	void unselectAll();
 	void notifySelectedChange();
+	void notifySelectableChanged();
 
 
 private:
 	// Attributs
-	bool mSelectedChanged;
 	std::vector<Selectable*> mSelectable;
 	Selectable* mSelected;
+	bool mSelectedChanged;
+	bool mSelectedCanBeNull;
 };
+
 

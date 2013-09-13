@@ -124,6 +124,7 @@ void List::addItem( Listable *p_item, bool p_notify )
 {	
 	p_item->setList(this);
 	this->mItems.push_back(p_item);
+	this->notifyItemAdded(p_item);
 
 	if(p_notify)
 		this->notifyDataSetChanged();
@@ -138,6 +139,7 @@ void List::removeItem( Listable *p_item, bool p_notify )
 
 void List::removeItem( int p_index, bool p_notify )
 {
+	this->notifyItemRemoved(this->mItems[p_index]);
 	delete this->mItems[p_index];
 	this->mItems.erase(this->mItems.begin() + p_index);
 
@@ -148,12 +150,24 @@ void List::removeItem( int p_index, bool p_notify )
 void List::clear(bool p_notify)
 {
 	for(int i = 0; i < this->mItems.size(); i++)
+	{
+		this->notifyItemRemoved(this->mItems[i]);
 		delete this->mItems[i];
-
+	}
 	this->mItems.clear();
 
 	if(p_notify)
 		this->notifyDataSetChanged();
+}
+
+void List::notifyItemAdded( Listable *p_item )
+{
+
+}
+
+void List::notifyItemRemoved( Listable *p_item )
+{
+
 }
 
 void List::notifyDataSetChanged()
@@ -396,6 +410,8 @@ void List::resizeWidth()
 	else
 		this->setWidth(maxItemWidth + this->getPadding() * 2);
 }
+
+
 
 
 

@@ -34,6 +34,7 @@ public:
 	void notifyTreeChanged();
 	void notifyPositionChanged();
 	void notifySizeChanged();
+	void notifySelectedChanged();
 
 
 private:

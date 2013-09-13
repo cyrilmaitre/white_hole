@@ -79,10 +79,7 @@ SelectCharacterScreen::SelectCharacterScreen(void)
 	{
 		CharacterViewSelectSmall* tmpView = new CharacterViewSelectSmall(Session::getUser()->getCharacter(i));
 		this->mCharactersList.addItem(tmpView);
-		this->mCharactersListGroup.addSelectable(tmpView);
 	}
-	this->mCharactersListGroup.init();
-
 	this->mCharacterSelectedView = new CharacterViewSelect(NULL);
 
 	this->mFieldsetSelect.setView(this->mScreenView);
@@ -140,8 +137,8 @@ void SelectCharacterScreen::launch()
 		if(this->mButtonPlay.isClicked())
 			this->launchPlay();
 
-		if(this->mCharactersListGroup.isSelectedChanged() && !this->mCharactersListGroup.isEmpty())
-			this->mCharacterSelectedView->setCharacter(((CharacterViewSelectSmall*)this->mCharactersListGroup.getSelected())->getCharacter());
+		if(this->mCharactersList.isSelectedChanged() && !this->mCharactersList.isEmpty())
+			this->mCharacterSelectedView->setCharacter(((CharacterViewSelectSmall*)this->mCharactersList.getSelected())->getCharacter());
 
 		// Draw
 		this->draw();

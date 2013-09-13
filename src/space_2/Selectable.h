@@ -21,6 +21,9 @@ public:
 	SelectableGroup *getGroup();
 	void setGroup(SelectableGroup* p_group);
 
+	// Methods
+	virtual void notifySelectedChanged();
+
 
 protected:
 	// Attributs

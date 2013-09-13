@@ -36,6 +36,8 @@ public:
 	void removeItem(int p_index, bool p_notify = true);
 	void clear(bool p_notify = true);
 
+	virtual void notifyItemAdded(Listable *p_item);
+	virtual void notifyItemRemoved(Listable *p_item);
 	void notifyDataSetChanged();
 
 	void update(sf::Event p_event);

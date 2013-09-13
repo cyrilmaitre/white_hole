@@ -2,7 +2,7 @@
 #include "Resource.h"
 #include "BaseScreen.h"
 #include "CreateCharacterScreen.h"
-#include "List.h"
+#include "ListSelectableGroup.h"
 #include "TextBoxMultiLine.h"
 #include "SelectableGroup.h"
 #include "CharacterViewSelectSmall.h"
@@ -36,8 +36,7 @@ private:
 	Button mButtonCreateNew;
 	Button mButtonPlay;
 	CreateCharacterScreen *mCreateScreen;
-	List mCharactersList;
-	SelectableGroup mCharactersListGroup;
+	ListSelectableGroup mCharactersList;
 	CharacterViewSelect *mCharacterSelectedView;
 };
 

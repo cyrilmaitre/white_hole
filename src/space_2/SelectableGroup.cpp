@@ -3,9 +3,10 @@
 //******************************
 // Constructor - Destructor
 //******************************
-SelectableGroup::SelectableGroup(void)
+SelectableGroup::SelectableGroup(bool p_selectedCanBeNull)
 {
 	this->mSelectedChanged = false;
+	this->mSelectedCanBeNull = p_selectedCanBeNull;
 	this->mSelected = NULL;
 }
 
@@ -34,26 +35,20 @@ bool SelectableGroup::isEmpty()
 	return this->mSelectable.size() == 0;
 }
 
+bool SelectableGroup::isSelectedCanBeNull()
+{
+	return this->mSelectedCanBeNull;
+}
+
+void SelectableGroup::setSelectedCanBeNull( bool p_value )
+{
+	this->mSelectedCanBeNull = p_value;
+}
+
 
 //******************************
 // Methods
 //******************************
-void SelectableGroup::init(bool p_selectFirst)
-{
-	if(this->mSelectable.size() == 0)
-		return;
-
-	for(int i = 0; i < this->mSelectable.size(); i++)
-	{
-		this->mSelectable[i]->setSelected(false);
-	}
-
-	if(p_selectFirst)
-		this->mSelectable[0]->setSelected(true);
-
-	this->notifySelectedChange();
-}
-
 void SelectableGroup::addSelectable( Selectable* p_selectable )
 {
 	// Check if not already in
@@ -73,6 +68,7 @@ void SelectableGroup::addSelectable( Selectable* p_selectable )
 		p_selectable->setSelected(false);
 		this->mSelectable.push_back(p_selectable);
 		p_selectable->setGroup(this);
+		this->notifySelectableChanged();
 	}
 }
 
@@ -94,6 +90,7 @@ void SelectableGroup::removeSelectable( int p_position )
 	this->mSelectable.erase(this->mSelectable.begin() + p_position);
 	if(notify)
 		this->notifySelectedChange();
+	this->notifySelectableChanged();
 }
 
 void SelectableGroup::notifySelectedChange()
@@ -114,6 +111,26 @@ void SelectableGroup::notifySelectedChange()
 	}
 }
 
+void SelectableGroup::notifySelectableChanged()
+{
+	if(this->mSelectable.size() == 0)
+		return;
+
+	if(this->getSelected() == NULL)
+	{
+		// Selecte first
+		for(int i = 0; i < this->mSelectable.size(); i++)
+		{
+			this->mSelectable[i]->setSelected(false);
+		}
+
+		if(!this->isSelectedCanBeNull())
+			this->mSelectable[0]->setSelected(true);
+
+		this->notifySelectedChange();
+	}
+}
+
 void SelectableGroup::unselectAll()
 {
 	Selectable* selected = this->getSelected();
@@ -123,3 +140,5 @@ void SelectableGroup::unselectAll()
 
 	this->notifySelectedChange();
 }
+
+

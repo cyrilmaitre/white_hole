@@ -8,7 +8,7 @@
 //*************************************************************
 MapObjectSelector::MapObjectSelector(void)
 {
-	this->mMapObjectSelectable.init(false);
+	this->mMapObjectSelectable.setSelectedCanBeNull(true);
 	this->mObjectSelectedOutOfScreen = false;
 }
 

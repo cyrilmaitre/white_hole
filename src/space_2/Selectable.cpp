@@ -27,7 +27,11 @@ bool Selectable::isSelected()
 
 void Selectable::setSelected( bool p_selected )
 {
-	this->mSelected = p_selected;
+	if(this->mSelected != p_selected)
+	{
+		this->mSelected = p_selected;
+		this->notifySelectedChanged();
+	}
 }
 
 bool Selectable::isUpdateSelected()
@@ -87,6 +91,11 @@ void Selectable::updateSelected()
 			this->getGroup()->notifySelectedChange();
 		}
 	}
+}
+
+void Selectable::notifySelectedChanged()
+{
+
 }
 
 

@@ -4,7 +4,7 @@
 //*************************************************************
 // Constructor - Destructor
 //*************************************************************
-Tree::Tree(void)
+Tree::Tree(void) : ListSelectableGroup(true)
 {
 	this->mTreeData = NULL;
 

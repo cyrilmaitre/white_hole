@@ -122,6 +122,7 @@
     <ClCompile Include="LevelCharacter.cpp" />
     <ClCompile Include="LevelFactory.cpp" />
     <ClCompile Include="LevelShip.cpp" />
+    <ClCompile Include="ListSelectableGroup.cpp" />
     <ClCompile Include="MapMiniView.cpp" />
     <ClCompile Include="MapObjectModel.cpp" />
     <ClCompile Include="Node.cpp" />
@@ -397,6 +398,7 @@
     <ClInclude Include="LevelCharacter.h" />
     <ClInclude Include="LevelFactory.h" />
     <ClInclude Include="LevelShip.h" />
+    <ClInclude Include="ListSelectableGroup.h" />
     <ClInclude Include="MapMiniView.h" />
     <ClInclude Include="MapObjectModel.h" />
     <ClInclude Include="NetworkDefine.h" />
