@@ -1,4 +1,14 @@
 #include "ItemTier.h"
+#include "ToolsImage.h"
+
+
+//*************************************************************
+// Define
+//*************************************************************
+#define CONFIG_ID				"id"
+#define CONFIG_NAME				"name"
+#define CONFIG_DESCRIPTION		"description"
+#define CONFIG_COLOR			"color"
 
 
 //*************************************************************
@@ -47,13 +57,44 @@ void ItemTier::setDescription( std::string p_description )
 	this->mDescription = p_description;
 }
 
+std::string ItemTier::getColorString()
+{
+	return this->mColorString;
+}
+
+void ItemTier::setColorString( std::string p_color )
+{
+	this->mColorString = p_color;
+	this->setColor(ToolsImage::hexaToColor(this->mColorString));
+}
+
+sf::Color ItemTier::getColor()
+{
+	return this->mColor;
+}
+
+void ItemTier::setColor( sf::Color p_color )
+{
+	this->mColor = p_color;
+}
+
 
 //*************************************************************
 // Methode
 //*************************************************************
 void ItemTier::loadFromConfig( KeyValueFile* p_config )
 {
-	this->setId(p_config->getLong(ITEMTIER_CONFIG_ID));
-	this->setName(Resource::resource->getBundle()->getString(p_config->getString(ITEMTIER_CONFIG_NAME)));
-	this->setDescription(Resource::resource->getBundle()->getString(p_config->getString(ITEMTIER_CONFIG_DESCRIPTION)));
+	if(p_config->has(CONFIG_ID))
+		this->setId(p_config->getLong(CONFIG_ID));
+
+	if(p_config->has(CONFIG_NAME))
+		this->setName(Resource::resource->getBundle()->getString(p_config->getString(CONFIG_NAME)));
+
+	if(p_config->has(CONFIG_DESCRIPTION))
+		this->setDescription(Resource::resource->getBundle()->getString(p_config->getString(CONFIG_DESCRIPTION)));
+
+	if(p_config->has(CONFIG_COLOR))
+		this->setColorString(p_config->getString(CONFIG_COLOR));
 }
+
+

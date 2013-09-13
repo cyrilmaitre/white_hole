@@ -2,11 +2,6 @@
 #include "Resource.h"
 #include "KeyValueFile.h"
 
-// Define
-#define ITEMTIER_CONFIG_ID				"id"
-#define ITEMTIER_CONFIG_NAME			"name"
-#define ITEMTIER_CONFIG_DESCRIPTION		"description"
-
 class ItemTier
 {
 public:
@@ -24,6 +19,12 @@ public:
 	std::string getDescription();
 	void setDescription(std::string p_description);
 
+	std::string getColorString();
+	void setColorString(std::string p_color);
+
+	sf::Color getColor();
+	void setColor(sf::Color p_color);
+
 	// Methode
 	void loadFromConfig(KeyValueFile* p_config);
 
@@ -33,5 +34,7 @@ private:
 	long mId;
 	std::string mName;
 	std::string mDescription;
+	std::string mColorString;
+	sf::Color mColor;
 };
 
