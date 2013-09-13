@@ -133,8 +133,8 @@ void Node::updateIcon()
 		this->mIcon = NULL;
 	}
 	
-	if(this->mNodeData != NULL && this->mNodeData->getIcon() != "")
-		this->mIcon = SpriteParameterFactory::getSpriteParameterIcon16X16()->getSpritePtr(this->mNodeData->getIcon(), this->getHeight() - PADDING * 2, this->getHeight() - PADDING * 2);
+	if(this->mNodeData != NULL && this->mNodeData->getIcon() != "" && this->mNodeData->getIconSprite() != NULL)
+		this->mIcon = this->mNodeData->getIconSprite()->getSpritePtr(this->mNodeData->getIcon(), this->getHeight() - PADDING * 2, this->getHeight() - PADDING * 2);
 
 	// Icon Expand
 	if(this->mIconExpand != NULL)

@@ -19,7 +19,7 @@ public:
 	bool isDataChanged();
 
 	// Methods
-	void addRoot(NodeData* p_root);
+	void addRoot(NodeData* p_root, bool p_orderAlphabetically = true);
 	void removeRoot(NodeData* p_root);
 	void notifyDataChanged();
 

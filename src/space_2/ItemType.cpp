@@ -4,6 +4,16 @@
 
 
 //*************************************************************
+// Define
+//*************************************************************
+#define CONFIG_ID				"id"
+#define CONFIG_NAME				"name"
+#define CONFIG_DESCRIPTION		"description"
+#define CONFIG_ICON				"icon"
+#define CONFIG_PARENT			"itemtype_parent"
+
+
+//*************************************************************
 // Constructor - Destructor
 //*************************************************************
 ItemType::ItemType( KeyValueFile* p_config ) 
@@ -49,6 +59,16 @@ void ItemType::setDescription( std::string p_description )
 	this->mDescription = p_description;
 }
 
+std::string ItemType::getIconIndex()
+{
+	return this->mIconIndex;
+}
+
+void ItemType::setIconIndex( std::string p_index )
+{
+	this->mIconIndex = p_index;
+}
+
 ItemType * ItemType::getParent()
 {
 	return (ItemType*)this->NodeData::getParent();
@@ -69,21 +89,40 @@ std::string ItemType::getText()
 	return this->getName();
 }
 
+std::string ItemType::getIcon()
+{
+	return this->getIconIndex();
+}
+
+SpriteParameter* ItemType::getIconSprite()
+{
+	return SpriteParameterFactory::getSpriteParameterItemTypes();
+}
+
 
 //*************************************************************
 // Getters - Setters
 //*************************************************************
 void ItemType::loadFromConfig( KeyValueFile* p_config )
 {
-	this->setId(p_config->getLong(ITEMTYPE_CONFIG_ID));
-	this->setName(Resource::resource->getBundle()->getString(p_config->getString(ITEMTYPE_CONFIG_NAME)));
-	this->setDescription(Resource::resource->getBundle()->getString(p_config->getString(ITEMTYPE_CONFIG_DESCRIPTION)));
+	if(p_config->has(CONFIG_ID))
+		this->setId(p_config->getLong(CONFIG_ID));
+	
+	if(p_config->has(CONFIG_NAME))
+		this->setName(Resource::resource->getBundle()->getString(p_config->getString(CONFIG_NAME)));
 
-	if(p_config->getString(ITEMTYPE_CONFIG_PARENT) != "NULL")
-		this->setParentId(p_config->getInt(ITEMTYPE_CONFIG_PARENT));
+	if(p_config->has(CONFIG_DESCRIPTION))
+		this->setDescription(Resource::resource->getBundle()->getString(p_config->getString(CONFIG_DESCRIPTION)));
+	
+	if(p_config->has(CONFIG_ICON))
+		this->setIconIndex(p_config->getString(CONFIG_ICON));
+
+	if(p_config->has(CONFIG_PARENT) && p_config->getString(CONFIG_PARENT) != "NULL")
+		this->setParentId(p_config->getInt(CONFIG_PARENT));
 	else
 		this->setParentId(-1);
 }
+
 
 
 

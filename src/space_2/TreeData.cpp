@@ -65,10 +65,34 @@ bool TreeData::isDataChanged()
 //*************************************************************
 // Methods
 //*************************************************************
-void TreeData::addRoot( NodeData* p_root )
+void TreeData::addRoot( NodeData* p_root, bool p_orderAlphabetically )
 {
 	p_root->setTree(this);
-	this->mRoots.push_back(p_root);
+	
+	if(p_orderAlphabetically)
+	{
+		bool inserted = false;
+		for(int i = 0; i < this->mRoots.size(); i++)
+		{
+			std::string newRootText = p_root->getText();
+			std::string currentRootText = this->mRoots[i]->getText();
+			int compareResult = newRootText.compare(currentRootText); 
+			if( compareResult < 0 || compareResult == 0)
+			{
+				this->mRoots.insert(this->mRoots.begin() + i, p_root);
+				inserted = true;
+				break;
+			}
+		}
+
+		if(!inserted)
+			this->mRoots.push_back(p_root);
+	}
+	else
+	{
+		this->mRoots.push_back(p_root);
+	}
+
 	this->notifyDataChanged();
 }
 

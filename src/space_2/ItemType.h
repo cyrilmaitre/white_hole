@@ -3,15 +3,6 @@
 #include "KeyValueFile.h"
 #include "NodeData.h"
 
-// Define
-#define ITEMTYPE_CONFIG_ID				"id"
-#define ITEMTYPE_CONFIG_NAME			"name"
-#define ITEMTYPE_CONFIG_DESCRIPTION		"description"
-#define ITEMTYPE_CONFIG_PARENT			"itemtype_parent"
-#define ITEMTYPE_CONFIG_LEAF			"itemtype_leaf"
-
-#define ITEMTYPE_AMMO_MISSILE			33
-#define ITEMTYPE_AMMO_ROQUET			34
 
 class ItemType : public NodeData
 {
@@ -30,11 +21,16 @@ public:
 	std::string getDescription();
 	void setDescription(std::string p_description);
 
+	std::string getIconIndex();
+	void setIconIndex(std::string p_index);
+
 	ItemType *getParent();
 	long getParentId();
 	void setParentId(long p_id);
 
 	std::string getText();
+	std::string getIcon();
+	SpriteParameter* getIconSprite();
 
 	// Methode
 	void loadFromConfig(KeyValueFile* p_config);
@@ -45,6 +41,7 @@ private:
 	long mId;
 	std::string mName;
 	std::string mDescription;
+	std::string mIconIndex;
 	long mParentId;
 };
 

@@ -2,6 +2,7 @@
 #include "Resource.h"
 #include "TreeData.h"
 #include "IdGenerator.h"
+#include "SpriteParameterFactory.h"
 
 
 class NodeData
@@ -41,11 +42,12 @@ public:
 
 	virtual std::string getText();
 	virtual std::string getIcon();
+	virtual SpriteParameter* getIconSprite();
 
 	// Methods
 	void expand();
 	void collapse();
-	void addChild(NodeData* p_child);
+	void addChild(NodeData* p_child, bool p_orderAlphebetically = true);
 	void removeChild(NodeData* p_child);
 	void notifyParentChanged();
 	void notifyLevelChanged();

@@ -47,6 +47,7 @@
 #define IMG_SKILL							"skill.png"
 #define IMG_POPUP_BUBBLE_ARROW				"popup-bubble-arrow.png"
 #define IMG_ITEMS							"items.png"
+#define IMG_ITEMTYPES						"itemtypes.png"
 #define IMG_INTERFACE_BOTTOM				"interface_bottom.png"
 #define IMG_IMPACT_BULLET					"impact_bullet.png"
 #define IMG_IMPACT_LASER					"impact_laser.png"

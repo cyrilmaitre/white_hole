@@ -1,5 +1,5 @@
 id = 6
-name = itemTypeFeldsparName 
+name = itemTypeFeldsparName
 description = itemTypeFeldsparDescription
 itemtype_parent = 3
 itemtype_leaf = true

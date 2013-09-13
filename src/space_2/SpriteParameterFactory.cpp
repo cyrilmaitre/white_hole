@@ -90,6 +90,11 @@ SpriteParameter* SpriteParameterFactory::getSpriteParameterItems( bool useLoaded
 	return SpriteParameterFactory::getSpriteParameter(SP_ID_ITEMS, 16, 20, useLoaded);
 }
 
+SpriteParameter* SpriteParameterFactory::getSpriteParameterItemTypes( bool useLoaded )
+{
+	return SpriteParameterFactory::getSpriteParameter(SP_ID_ITEMTYPES, 16, 20, useLoaded);
+}
+
 SpriteParameter* SpriteParameterFactory::getSpriteParameterImpactLaser( bool useLoaded )
 {
 	return SpriteParameterFactory::getSpriteParameter(SP_ID_IMPACT_LASER, 12, 1, useLoaded);

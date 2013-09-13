@@ -18,7 +18,7 @@ StationScreenMarketSell::StationScreenMarketSell( StationScreenMarket* p_market 
 	
 	this->setBackgroundColor(PANEL_BACKCOLOR, true);
 	this->setBorderColor(PANEL_BORDCOLOR, true);
-	this->setBorderSize(PANEL_BORDSIZE);
+	this->setBorderSize(PANEL_BORDSIZE, true);
 	this->setDisplayTitle(false);
 }
 

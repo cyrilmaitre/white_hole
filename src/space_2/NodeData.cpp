@@ -170,15 +170,43 @@ std::string NodeData::getIcon()
 	return IC_16X16_INFO;
 }
 
+SpriteParameter* NodeData::getIconSprite()
+{
+	return SpriteParameterFactory::getSpriteParameterIcon16X16();
+}
+
 
 //*************************************************************
 // Methods
 //*************************************************************
-void NodeData::addChild( NodeData* p_child )
+void NodeData::addChild( NodeData* p_child, bool p_orderAlphebetically )
 {
 	p_child->setParent(this);
 	p_child->setTree(this->getTree());
-	this->mChilds.push_back(p_child);
+
+	if(p_orderAlphebetically)
+	{
+		bool inserted = false;
+		for(int i = 0; i < this->mChilds.size(); i++)
+		{
+			std::string newChildText = p_child->getText();
+			std::string currentChildText = this->mChilds[i]->getText();
+			int compareResult = newChildText.compare(currentChildText); 
+			if( compareResult < 0 || compareResult == 0)
+			{
+				this->mChilds.insert(this->mChilds.begin() + i, p_child);
+				inserted = true;
+				break;
+			}
+		}
+
+		if(!inserted)
+			this->mChilds.push_back(p_child);
+	}
+	else
+	{
+		this->mChilds.push_back(p_child);
+	}
 	
 	if(this->hasTree())
 		this->getTree()->notifyDataChanged();

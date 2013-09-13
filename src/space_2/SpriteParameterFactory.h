@@ -16,6 +16,7 @@
 #define SP_ID_JOB						IMG_JOB
 #define SP_ID_SKILL						IMG_SKILL
 #define SP_ID_ITEMS						IMG_ITEMS
+#define SP_ID_ITEMTYPES					IMG_ITEMTYPES
 #define SP_ID_IMPACT_LASER				IMG_IMPACT_LASER
 #define SP_ID_IMPACT_EXPLOSION			IMG_IMPACT_EXPLOSION
 #define SP_ID_LOADING_SQUARE_CIRCLE		IMG_LOADING_SQUARE_CIRCLE
@@ -37,6 +38,7 @@ public:
 	static SpriteParameter* getSpriteParameterJob(bool useLoaded = true);
 	static SpriteParameter* getSpriteParameterSkill(bool useLoaded = true);
 	static SpriteParameter* getSpriteParameterItems(bool useLoaded = true);
+	static SpriteParameter* getSpriteParameterItemTypes(bool useLoaded = true);
 	static SpriteParameter* getSpriteParameterImpactLaser(bool useLoaded = true);
 	static SpriteParameter* getSpriteParameterImpactExplosion(bool useLoaded = true);
 	static SpriteParameter* getSpriteParameterLoadingSquareCircle(bool useLoaded = true);
