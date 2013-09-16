@@ -85,7 +85,7 @@ void TextMultiLine::setInterlineSize( int p_size )
 //******************************
 void TextMultiLine::addLine( std::string p_text, bool p_notify )
 {
-	int contentWidth = this->getContentWidth(!this->isAutoResizeHeight());
+	int contentWidth = this->getContentWidth(true);
 	if(this->isAutoResizeWidth())
 	{
 		// Add text (auto resize)
