@@ -7,7 +7,7 @@
 //*************************************************************
 // Define
 //*************************************************************
-#define CHARACTERVIEW_SELECT_WIDTH							740			
+#define CHARACTERVIEW_SELECT_WIDTH							751			
 #define CHARACTERVIEW_SELECT_HEIGHT							576	
 #define CHARACTERVIEW_SELECT_BACK_COLOR						sf::Color(128, 128, 128, 75)
 #define CHARACTERVIEW_SELECT_BORD_COLOR						sf::Color(128, 128, 128, 125)
