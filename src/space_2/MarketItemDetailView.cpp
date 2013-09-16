@@ -19,7 +19,9 @@
 #define TIER_FONTSIZE				14
 #define TIER_MARGINTOP				5
 #define ARIANE_MARGIN				10
-#define DESCRIPTION_HEIGHTMAX		150
+#define DESCRIPTION_MARGIN			10
+#define DESCRIPTION_HEIGHTMAX		175
+#define LABEL_MARGIN				10
 
 
 //*************************************************************
@@ -48,6 +50,7 @@ MarketItemDetailView::MarketItemDetailView(void)
 	this->mTBDescription.setAutoResizeHeightMax(DESCRIPTION_HEIGHTMAX);
 	this->mTBDescription.setAutoResizeWidth(false);
 
+	this->mTBPriceLabel.setText(Resource::resource->getBundle()->getString("marketBuyPriceRef"));
 	this->mButtonMoreInfo.setTitle(Resource::resource->getBundle()->getString("marketBuyMoreInfo"));
 }
 
@@ -84,7 +87,9 @@ void MarketItemDetailView::updatePosition()
 	this->mTBArianeType.setPosition(this->mTBName.getRightX() + ARIANE_MARGIN, this->mTBName.getBottomY() - this->mTBArianeType.getHeight());
 	this->mTBTier.setPosition(this->mTBName.getX(), this->mTBName.getBottomY() + TIER_MARGINTOP);
 	this->mButtonMoreInfo.setPosition(this->getContentX() + this->getContentWidth() - this->mButtonMoreInfo.getWidth(), this->getContentY());
-	this->mTBDescription.setPosition(this->getContentX(), this->mIcon.getBottomY() + ICON_MARGIN);
+	this->mTBDescription.setPosition(this->getContentX(), this->mIcon.getBottomY() + DESCRIPTION_MARGIN);
+	this->mTBPriceLabel.setPosition(this->getContentX(), this->mTBDescription.getBottomY() + DESCRIPTION_MARGIN);
+	this->mTBPrice.setPosition(this->mTBPriceLabel.getRightX() + LABEL_MARGIN, this->mTBPriceLabel.getY());
 }
 
 void MarketItemDetailView::update( sf::Event p_event )
@@ -108,6 +113,8 @@ void MarketItemDetailView::draw()
 		this->mButtonMoreInfo.draw();
 		this->mTBArianeType.draw();
 		this->mTBDescription.draw();
+		this->mTBPriceLabel.draw();
+		this->mTBPrice.draw();
 	}
 }
 
@@ -137,6 +144,7 @@ void MarketItemDetailView::notifyItemChanged()
 		this->mTBTier.setFontColor(this->getItem()->getItemTier()->getColor());
 		this->mTBArianeType.setText("(" + this->getItem()->getItemType()->getAriane() + ")");
 		this->mTBDescription.setText(this->getItem()->getDescription());
+		this->mTBPrice.setText(Tools::formatNumber((int)this->getItem()->getPrice()) + " " + Resource::resource->getBundle()->getString("credit"));
 
 		this->updatePosition();
 	}

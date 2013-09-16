@@ -36,7 +36,5 @@ private:
 	TextBoxMultiLine mTBDescription;
 	TextBox mTBPriceLabel;
 	TextBox mTBPrice;
-	TextBox mTBStackMaxLabel;
-	TextBox mTBstackMax;
 };
 
