@@ -10,9 +10,7 @@ NetworkJob::NetworkJob(void)
 	this->mJobThread = NULL;
 	this->mRunning = false;
 	this->mLaunched = false;
-
 	this->mJobThread = new sf::Thread(&NetworkJob::job, this);
-	NetworkJobManager::getInstance()->addJob(this);
 }
 
 NetworkJob::~NetworkJob(void)

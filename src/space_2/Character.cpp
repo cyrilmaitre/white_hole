@@ -5,6 +5,7 @@
 #include "CharacterUpdate.h"
 #include "SkillCharacter.h"
 #include "CharacterBank.h"
+#include "NetworkJobManager.h"
 
 
 //*************************************************************
@@ -401,13 +402,13 @@ void Character::addBank( CharacterBank* p_bank )
 void Character::incCredit( long p_inc )
 {
 	this->setCredit(this->getCredit() + p_inc);
-	new CharacterUpdate(this);
+	NetworkJobManager::getInstance()->addJob(new CharacterUpdate(this));
 }
 
 void Character::decCredit( long p_dec )
 {
 	this->setCredit(this->getCredit() - p_dec);
-	new CharacterUpdate(this);
+	NetworkJobManager::getInstance()->addJob(new CharacterUpdate(this));
 }
 
 void Character::incSkillPoints()
@@ -429,13 +430,13 @@ void Character::incLevel()
 {
 	Levelable::incLevel();
 	this->incSkillPoints(((LevelCharacter*)this->getLevelConfig())->getSkillPointsOnLevelUp());
-	new CharacterUpdate(this);
+	NetworkJobManager::getInstance()->addJob(new CharacterUpdate(this));
 }
 
 void Character::incExperience( long p_inc )
 {
 	Levelable::incExperience(p_inc);
-	new CharacterUpdate(this);
+	NetworkJobManager::getInstance()->addJob(new CharacterUpdate(this));
 }
 
 void Character::createBase()

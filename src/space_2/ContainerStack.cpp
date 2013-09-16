@@ -2,6 +2,7 @@
 #include "CharacterShipItemStackUpdate.h"
 #include "CharacterBankItemStackUpdate.h"
 #include "Game.h"
+#include "NetworkJobManager.h"
 
 
 //*************************************************************
@@ -105,13 +106,13 @@ void ContainerStack::notifyItemStackChanged()
 	{
 	case ContainerStack::ContainerStackType::TypeCharacterShip:
 		if(Game::game != NULL && Game::game->getCharacterShip() != NULL)
-			new CharacterShipItemStackUpdate(this->getItemStack(), this->getPosition());
+			NetworkJobManager::getInstance()->addJob(new CharacterShipItemStackUpdate(this->getItemStack(), this->getPosition()));
 		break;
 
 	case ContainerStack::ContainerStackType::TypeCharacterBank:
 		CharacterBank* bank = dynamic_cast<CharacterBank*>(this->getContainerRow()->getContainerable());
-		if(bank != 0)
-			new CharacterBankItemStackUpdate(bank, this->getItemStack(), this->getPosition());
+		if(Game::game != NULL && bank != NULL)
+			NetworkJobManager::getInstance()->addJob(new CharacterBankItemStackUpdate(bank, this->getItemStack(), this->getPosition()));
 		break;
 	}
 }
