@@ -1,4 +1,5 @@
 #include <fstream>
+#include <iomanip>
 #include "Tools.h"
 
 using namespace std;
@@ -101,16 +102,16 @@ std::string Tools::formatNumber( long p_value )
 	return ss.str();
 }
 
-std::string Tools::formatNumber( float p_value )
+std::string Tools::formatNumber( float p_value, int p_precision )
 {
-	return Tools::formatNumber((double)p_value);
+	return Tools::formatNumber((double)p_value, p_precision);
 }
 
-std::string Tools::formatNumber( double p_value )
+std::string Tools::formatNumber( double p_value, int p_precision )
 {
 	std::stringstream ss;
 	ss.imbue(std::locale(""));
-	ss << std::fixed << p_value;
+	ss << std::setprecision(p_precision) << std::fixed << p_value;
 	return ss.str();
 }
 

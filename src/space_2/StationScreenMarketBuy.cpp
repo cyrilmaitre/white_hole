@@ -14,6 +14,7 @@
 #define PANEL_ITEMLIST_SEPARATOR_HEIGHT			1
 #define PANEL_ITEMLIST_SEPARATOR_COLOR			sf::Color(86, 87, 89)
 #define PANEL_SELECTITEM_FONTSIZE				20
+#define PANEL_ITEMSTOCK_MARGIN					10
 
 
 //*************************************************************
@@ -71,6 +72,7 @@ void StationScreenMarketBuy::updatePosition()
 	this->mTBSelectItem.setPosition(this->mItemList.getRightX() + (this->getWidth() - this->mTreeItemType.getWidth() - this->mItemList.getWidth() - this->mTBSelectItem.getWidth()) / 2, 
 									this->getY() + (this->getHeight() - this->mTBSelectItem.getHeight()) / 2);
 	this->mItemDetail.setPosition(this->mItemList.getRightX(), this->getContentY());
+	this->mItemStock.setPosition(this->mItemList.getRightX() + PANEL_ITEMSTOCK_MARGIN, this->mItemDetail.getBottomY());
 }
 
 void StationScreenMarketBuy::update( sf::Event p_event )
@@ -80,6 +82,7 @@ void StationScreenMarketBuy::update( sf::Event p_event )
 		this->mTreeItemType.update(p_event);
 		this->mItemList.update(p_event);
 		this->mItemDetail.update(p_event);
+		this->mItemStock.update(p_event);
 	}
 	FieldSet::update(p_event);
 }
@@ -93,6 +96,7 @@ void StationScreenMarketBuy::draw()
 		this->mTreeItemType.draw();
 		this->mItemList.draw();
 		this->mItemDetail.draw();
+		this->mItemStock.draw();
 	}
 }
 
@@ -108,6 +112,7 @@ void StationScreenMarketBuy::notifySizeChanged()
 	this->mTreeItemType.setHeight(this->getContentHeight());
 	this->mItemList.setHeight(this->getContentHeight());
 	this->mItemDetail.setWidth(this->getContentWidth() - this->mTreeItemType.getWidth() - this->mItemList.getWidth());
+	this->mItemStock.setWidth(this->mItemDetail.getWidth() - PANEL_ITEMSTOCK_MARGIN * 2);
 	this->updatePosition();
 }
 

@@ -24,8 +24,8 @@ public:
 	static std::string buildStringWithDouble(double p_double);
 	static std::string formatNumber(int p_value);
 	static std::string formatNumber(long p_value);
-	static std::string formatNumber(float p_value);
-	static std::string formatNumber(double p_value);
+	static std::string formatNumber(float p_value, int p_precision = 2);
+	static std::string formatNumber(double p_value, int p_precision = 2);
 	static std::string formatDate(long p_value);
 	static std::string getSpaceAfterColon();
 

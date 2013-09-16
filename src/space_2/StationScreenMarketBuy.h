@@ -4,6 +4,7 @@
 #include "Tree.h"
 #include "MarketItemListView.h"
 #include "MarketItemDetailView.h"
+#include "MarketItemStockView.h"
 
 
 class StationScreenMarketBuy : public FieldSet
@@ -31,5 +32,6 @@ private:
 	ListSelectableGroup mItemList;
 	TextBox mTBSelectItem;
 	MarketItemDetailView mItemDetail;
+	MarketItemStockView mItemStock;
 };
 
