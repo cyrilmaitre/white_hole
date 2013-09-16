@@ -21,6 +21,7 @@ public:
 	// Methods
 	void addLine(std::string p_text, bool p_notify = true);
 	void addLineBlank(bool p_notify = true);
+	void updateLine();
 
 	void draw();
 	void update(sf::Event p_event);
@@ -28,7 +29,6 @@ public:
 
 protected:
 	// Methods
-	void updateLine();
 	void notifySizeChanged();
 	void notifyTextChanged();
 

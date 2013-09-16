@@ -17,7 +17,9 @@ List::List()
 	this->mItemIndexFirst = 0;
 	this->mItemIndexLast = 0;
 	this->setAutoResizeHeight(false);
+	this->setAutoResizeHeightMax(-1);
 	this->setAutoResizeWidth(false);
+	this->setAutoResizeWidthMax(-1);
 
 	this->mPadding = -1;
 	this->setPadding(0);
@@ -106,6 +108,16 @@ void List::setAutoResizeHeight( bool p_auto )
 	this->mAutoResizeHeight = p_auto;
 }
 
+int List::getAutoResizeHeightMax()
+{
+	return this->mAutoResizeHeightMax;
+}
+
+void List::setAutoResizeHeightMax( int p_max )
+{
+	this->mAutoResizeHeightMax = p_max;
+}
+
 bool List::isAutoResizeWidth()
 {
 	return this->mAutoResizeWidth;
@@ -114,6 +126,16 @@ bool List::isAutoResizeWidth()
 void List::setAutoResizeWidth( bool p_auto )
 {
 	this->mAutoResizeWidth = p_auto;
+}
+
+int List::getAutoResizeWidthMax()
+{
+	return this->mAutoResizeWidthMax;
+}
+
+void List::setAutoResizeWidthMax( int p_max )
+{
+	this->mAutoResizeWidthMax = p_max;
 }
 
 
@@ -195,6 +217,8 @@ void List::notifySizeChanged()
 	this->updateScrollbarSize();
 	this->updateItemIndexFirst();
 	this->updateSeparatorSize();
+	this->updateScrollbarPosition();
+	this->updateItemsPosition();
 }
 
 void List::notifyScrollbarThumbPositionChanged()
@@ -393,7 +417,20 @@ void List::resizeHeight()
 	for(int i = 0; i < this->getItemCount(); i++)
 		itemsHeight += this->mItems[i]->getHeight();
 
-	this->setHeight(itemsHeight + this->getSeperatorHeight() * this->getItemCount() + this->getPadding() * 2);
+	int newHeight = itemsHeight + this->getSeperatorHeight() * this->getItemCount() + this->getPadding() * 2;
+	if(this->getAutoResizeHeightMax() > 0)
+	{
+		if(newHeight > this->getAutoResizeHeightMax())
+		{
+			this->setAutoResizeHeight(false);
+			newHeight = this->getAutoResizeHeightMax();
+		}
+		else
+		{
+			this->setAutoResizeHeight(true);
+		}
+	}
+	this->setHeight(newHeight);
 }
 
 void List::resizeWidth()
@@ -405,11 +442,31 @@ void List::resizeWidth()
 			maxItemWidth = this->mItems[i]->getWidth();
 	}
 
+	int newWidth = 0;
 	if(this->hasScrollBar())
-		this->setWidth(maxItemWidth + this->getPadding() * 2 + this->mScrollBar->getWidth());
+		newWidth = maxItemWidth + this->getPadding() * 2 + this->mScrollBar->getWidth();
 	else
-		this->setWidth(maxItemWidth + this->getPadding() * 2);
+		newWidth = maxItemWidth + this->getPadding() * 2;
+
+	if(this->getAutoResizeWidthMax() > 0)
+	{
+		if(newWidth > this->getAutoResizeWidthMax())
+		{
+			this->setAutoResizeWidth(false);
+			newWidth = this->getAutoResizeWidthMax();
+		}
+		else
+		{
+			this->setAutoResizeWidth(true);
+		}
+		
+	}
+	this->setWidth(newWidth);
 }
+
+
+
+
 
 
 

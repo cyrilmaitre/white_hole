@@ -27,8 +27,14 @@ public:
 	bool isAutoResizeHeight();
 	void setAutoResizeHeight(bool p_auto);
 
+	int getAutoResizeHeightMax();
+	void setAutoResizeHeightMax(int p_max);
+
 	bool isAutoResizeWidth();
 	void setAutoResizeWidth(bool p_auto);
+
+	int getAutoResizeWidthMax();
+	void setAutoResizeWidthMax(int p_max);
 
 	// Methods
 	void addItem(Listable *p_item, bool p_notify = true);
@@ -58,7 +64,9 @@ private:
 	int mItemIndexFirst;
 	int mItemIndexLast;
 	bool mAutoResizeHeight;
+	int mAutoResizeHeightMax;
 	bool mAutoResizeWidth;
+	int mAutoResizeWidthMax;
 	sf::RectangleShape mSeparatorShape;
 	std::vector<Listable*> mItems;
 
