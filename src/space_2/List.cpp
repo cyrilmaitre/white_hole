@@ -418,18 +418,9 @@ void List::resizeHeight()
 		itemsHeight += this->mItems[i]->getHeight();
 
 	int newHeight = itemsHeight + this->getSeperatorHeight() * this->getItemCount() + this->getPadding() * 2;
-	if(this->getAutoResizeHeightMax() > 0)
-	{
-		if(newHeight > this->getAutoResizeHeightMax())
-		{
-			this->setAutoResizeHeight(false);
-			newHeight = this->getAutoResizeHeightMax();
-		}
-		else
-		{
-			this->setAutoResizeHeight(true);
-		}
-	}
+	if(this->getAutoResizeHeightMax() > 0 && newHeight > this->getAutoResizeHeightMax())
+		newHeight = this->getAutoResizeHeightMax();
+
 	this->setHeight(newHeight);
 }
 
@@ -448,19 +439,9 @@ void List::resizeWidth()
 	else
 		newWidth = maxItemWidth + this->getPadding() * 2;
 
-	if(this->getAutoResizeWidthMax() > 0)
-	{
-		if(newWidth > this->getAutoResizeWidthMax())
-		{
-			this->setAutoResizeWidth(false);
-			newWidth = this->getAutoResizeWidthMax();
-		}
-		else
-		{
-			this->setAutoResizeWidth(true);
-		}
-		
-	}
+	if(this->getAutoResizeWidthMax() > 0 && newWidth > this->getAutoResizeWidthMax())
+		newWidth = this->getAutoResizeWidthMax();
+
 	this->setWidth(newWidth);
 }
 
