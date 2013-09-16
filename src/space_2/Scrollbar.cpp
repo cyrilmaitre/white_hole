@@ -5,13 +5,13 @@
 //*************************************************************
 // Define
 //*************************************************************
-#define THUMB_SIZE_OFFSET			44
+#define THUMB_SIZE_OFFSET			22
 #define SCROLL_PERCENT				0.1
-#define SPRITE_SIZE					22
-#define BUTTON_SIZE					18
-#define BUTTON_OFFSET				2
-#define THUMB_WIDTH					18
-#define THUMB_SIZE_MIN				24
+#define SPRITE_SIZE					11
+#define BUTTON_SIZE					9
+#define BUTTON_OFFSET				1
+#define THUMB_WIDTH					9
+#define THUMB_SIZE_MIN				12
 
 
 //*************************************************************

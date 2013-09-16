@@ -5,7 +5,7 @@
 class ScrollbarThumb;
 
 // Define
-#define SCROLLBAR_WIDTH				22
+#define SCROLLBAR_WIDTH				11
 
 class Scrollbar: public Object
 {
