@@ -125,7 +125,10 @@
     <ClCompile Include="ListSelectableGroup.cpp" />
     <ClCompile Include="MapMiniView.cpp" />
     <ClCompile Include="MapObjectModel.cpp" />
+    <ClCompile Include="MarketItemBuyView.cpp" />
+    <ClCompile Include="MarketItemDetailView.cpp" />
     <ClCompile Include="MarketItemListView.cpp" />
+    <ClCompile Include="MarketItemStockView.cpp" />
     <ClCompile Include="Node.cpp" />
     <ClCompile Include="NodeData.cpp" />
     <ClCompile Include="Npc.cpp" />
@@ -402,7 +405,10 @@
     <ClInclude Include="ListSelectableGroup.h" />
     <ClInclude Include="MapMiniView.h" />
     <ClInclude Include="MapObjectModel.h" />
+    <ClInclude Include="MarketItemBuyView.h" />
+    <ClInclude Include="MarketItemDetailView.h" />
     <ClInclude Include="MarketItemListView.h" />
+    <ClInclude Include="MarketItemStockView.h" />
     <ClInclude Include="NetworkDefine.h" />
     <ClInclude Include="Node.h" />
     <ClInclude Include="NodeData.h" />

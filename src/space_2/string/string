@@ -286,7 +286,7 @@ shipTypeTransportDescription = Ship to Transport
 #
 # Ship Model
 shipModelFXT01Name = FX-T01
-shipModelFXT01Description = FX-T01 description...
+shipModelFXT01Description = Name: Paladin<br/>Hull: Apocalypse Class<br/>Role: Marauder<br/>  <br/>Geared toward versatility and prolonged deployment in hostile environments, Marauders represent the cutting edge in today's warship technology. While especially effective at support suppression and wreckage salvaging, they possess comparatively weak sensor strength and may find themselves at increased risk of sensor jamming. Nevertheless, these thick-skinned, hard-hitting monsters are the perfect ships to take on long trips behind enemy lines.<br/><br/>Developer: Carthum Conglomerate<br/>  <br/>Carthum ships are the very embodiment of the Amarrian warfare philosophy. Possessing sturdy armor and advanced weapon systems, they provide a nice mix of offense and defense.<br/>  <br/>Amarr Battleship Skill Bonus: 5% bonus to capacitor capacity and 10% bonus to the velocity factor of stasis webifiers per level<br/>  <br/>Marauder Skill Bonus: 7.5% bonus to repair amount of armor repair systems and 5% bonus to large energy turret damage per level<br/>  <br/>Role Bonus: 100% bonus to large energy weapon damage, 100% bonus to range and velocity of tractor beams
 shipModelFXT02Name = FX-T02
 shipModelFXT02Description = FX-T02 description...
 shipModelFXT03Name = FX-T03
@@ -445,3 +445,8 @@ windowAskBankTitle = Unlock bank
 windowAskBankMessage = Do you want to unlock this bank for
 windowErrorBank = You don't have enough money to unlock this bank
 windowSuccessBank = You successfully unlock the bank
+#
+#
+# Market
+marketBuySelectItem = Select an item
+marketBuyMoreInfo = More info

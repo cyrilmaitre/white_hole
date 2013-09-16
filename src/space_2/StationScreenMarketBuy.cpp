@@ -5,7 +5,7 @@
 //*************************************************************
 // Define
 //*************************************************************
-#define PANEL_BACKCOLOR							sf::Color(255, 255, 255, 0)
+#define PANEL_BACKCOLOR							sf::Color(25, 26, 28)
 #define PANEL_BORDCOLOR							sf::Color(194, 194, 194)
 #define PANEL_BORDSIZE							2
 #define PANEL_TREEITEMTYPE_WIDTH				250
@@ -13,6 +13,7 @@
 #define PANEL_ITEMLIST_BACKCOLOR				sf::Color(25, 26, 28)
 #define PANEL_ITEMLIST_SEPARATOR_HEIGHT			1
 #define PANEL_ITEMLIST_SEPARATOR_COLOR			sf::Color(86, 87, 89)
+#define PANEL_SELECTITEM_FONTSIZE				20
 
 
 //*************************************************************
@@ -27,6 +28,9 @@ StationScreenMarketBuy::StationScreenMarketBuy( StationScreenMarket* p_market ) 
 	this->setBorderSize(PANEL_BORDSIZE, true);
 	this->setDisplayTitle(false);
 	this->setPadding(0);
+
+	this->mTBSelectItem.setText(Resource::resource->getBundle()->getString("marketBuySelectItem"));
+	this->mTBSelectItem.setFontSize(PANEL_SELECTITEM_FONTSIZE);
 
 	this->mTreeItemType.setSize(PANEL_TREEITEMTYPE_WIDTH, this->getContentHeight());
 	this->mTreeItemType.setBorderColor(sf::Color(255, 255, 255, 0), true);
@@ -55,12 +59,18 @@ void StationScreenMarketBuy::update()
 {
 	if(this->mTreeItemType.isSelectedChanged())
 		this->notifyItemTypeSelectedChanged();
+
+	if(this->mItemList.isSelectedChanged())
+		this->notifyItemSelectedChanged();
 }
 
 void StationScreenMarketBuy::updatePosition()
 {
 	this->mTreeItemType.setPosition(this->getContentX(), this->getContentY());
 	this->mItemList.setPosition(this->mTreeItemType.getRightX(), this->getContentY());
+	this->mTBSelectItem.setPosition(this->mItemList.getRightX() + (this->getWidth() - this->mTreeItemType.getWidth() - this->mItemList.getWidth() - this->mTBSelectItem.getWidth()) / 2, 
+									this->getY() + (this->getHeight() - this->mTBSelectItem.getHeight()) / 2);
+	this->mItemDetail.setPosition(this->mItemList.getRightX(), this->getContentY());
 }
 
 void StationScreenMarketBuy::update( sf::Event p_event )
@@ -69,6 +79,7 @@ void StationScreenMarketBuy::update( sf::Event p_event )
 	{
 		this->mTreeItemType.update(p_event);
 		this->mItemList.update(p_event);
+		this->mItemDetail.update(p_event);
 	}
 	FieldSet::update(p_event);
 }
@@ -78,8 +89,10 @@ void StationScreenMarketBuy::draw()
 	FieldSet::draw();
 	if(this->isVisible())
 	{
+		this->mTBSelectItem.draw();
 		this->mTreeItemType.draw();
 		this->mItemList.draw();
+		this->mItemDetail.draw();
 	}
 }
 
@@ -94,6 +107,8 @@ void StationScreenMarketBuy::notifySizeChanged()
 	FieldSet::notifySizeChanged();
 	this->mTreeItemType.setHeight(this->getContentHeight());
 	this->mItemList.setHeight(this->getContentHeight());
+	this->mItemDetail.setWidth(this->getContentWidth() - this->mTreeItemType.getWidth() - this->mItemList.getWidth());
+	this->updatePosition();
 }
 
 void StationScreenMarketBuy::notifyItemTypeSelectedChanged()
@@ -114,5 +129,15 @@ void StationScreenMarketBuy::notifyItemTypeSelectedChanged()
 			this->mItemList.addItem(newView, false);
 		}
 		this->mItemList.notifyDataSetChanged();
+	}
+}
+
+void StationScreenMarketBuy::notifyItemSelectedChanged()
+{
+	MarketItemListView* selectedItemView = dynamic_cast<MarketItemListView*>(this->mItemList.getSelected());
+	if(selectedItemView != NULL)
+	{
+		this->mItemDetail.setItem(selectedItemView->getItem());
+		this->mTBSelectItem.setVisible(selectedItemView->getItem() == NULL);
 	}
 }

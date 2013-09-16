@@ -3,6 +3,7 @@
 #include "StationScreenMarket.h"
 #include "Tree.h"
 #include "MarketItemListView.h"
+#include "MarketItemDetailView.h"
 
 
 class StationScreenMarketBuy : public FieldSet
@@ -20,6 +21,7 @@ public:
 	void notifyPositionChanged();
 	void notifySizeChanged();
 	void notifyItemTypeSelectedChanged();
+	void notifyItemSelectedChanged();
 
 
 private:
@@ -27,5 +29,7 @@ private:
 	StationScreenMarket* mScreenMarket;
 	Tree mTreeItemType;
 	ListSelectableGroup mItemList;
+	TextBox mTBSelectItem;
+	MarketItemDetailView mItemDetail;
 };
 

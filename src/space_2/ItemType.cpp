@@ -94,6 +94,33 @@ std::string ItemType::getIcon()
 	return this->getIconIndex();
 }
 
+std::string ItemType::getAriane()
+{
+	std::vector<ItemType*> arianeType = this->getArianeType();
+	std::string arianeString = "";
+	
+	for(int i = 0; i < arianeType.size(); i++)
+	{
+		if(i > 0)
+			arianeString += " > ";
+		arianeString += arianeType[i]->getName();
+	}
+
+	return arianeString;
+}
+
+std::vector<ItemType*> ItemType::getArianeType()
+{
+	std::vector<ItemType*> arianeType;
+	arianeType.insert(arianeType.begin(), this);
+
+	ItemType* currentType = this;
+	while((currentType = currentType->getParent()) != NULL)
+		arianeType.insert(arianeType.begin(), currentType);
+
+	return arianeType;
+}
+
 SpriteParameter* ItemType::getIconSprite()
 {
 	return SpriteParameterFactory::getSpriteParameterItemTypes();

@@ -1191,6 +1191,15 @@
     <ClCompile Include="MarketItemListView.cpp">
       <Filter>Fichiers sources\game\ui\stationscreen\panel\market</Filter>
     </ClCompile>
+    <ClCompile Include="MarketItemBuyView.cpp">
+      <Filter>Fichiers sources\game\ui\stationscreen\panel\market</Filter>
+    </ClCompile>
+    <ClCompile Include="MarketItemStockView.cpp">
+      <Filter>Fichiers sources\game\ui\stationscreen\panel\market</Filter>
+    </ClCompile>
+    <ClCompile Include="MarketItemDetailView.cpp">
+      <Filter>Fichiers sources\game\ui\stationscreen\panel\market</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h">
@@ -2025,6 +2034,15 @@
       <Filter>Fichiers d%27en-tête\mks\ui</Filter>
     </ClInclude>
     <ClInclude Include="MarketItemListView.h">
+      <Filter>Fichiers d%27en-tête\game\ui\stationscreen\panel\market</Filter>
+    </ClInclude>
+    <ClInclude Include="MarketItemStockView.h">
+      <Filter>Fichiers d%27en-tête\game\ui\stationscreen\panel\market</Filter>
+    </ClInclude>
+    <ClInclude Include="MarketItemBuyView.h">
+      <Filter>Fichiers d%27en-tête\game\ui\stationscreen\panel\market</Filter>
+    </ClInclude>
+    <ClInclude Include="MarketItemDetailView.h">
       <Filter>Fichiers d%27en-tête\game\ui\stationscreen\panel\market</Filter>
     </ClInclude>
   </ItemGroup>

@@ -1,18 +1,16 @@
 #pragma once
-#include "Listable.h"
-#include "Image.h"
+#include "FieldSet.h"
 #include "Item.h"
+#include "Image.h"
 #include "TextBox.h"
+#include "TextBoxMultiLine.h"
 
-// Define
-#define MARKETITEMLISTVIEW_WIDTH		350
-
-class MarketItemListView : public Listable
+class MarketItemDetailView : public FieldSet
 {
 public:
 	// Constructor - Destructor
-	MarketItemListView(Item* p_item);
-	~MarketItemListView(void);
+	MarketItemDetailView(void);
+	~MarketItemDetailView(void);
 
 	// Getters - Setters
 	Item* getItem();
@@ -22,9 +20,9 @@ public:
 	void updatePosition();
 	void update(sf::Event p_event);
 	void draw();
-	void notifyItemChanged();
 	void notifyPositionChanged();
-	void notifySelectedChanged();
+	void notifySizeChanged();
+	void notifyItemChanged();
 
 
 private:
@@ -33,6 +31,12 @@ private:
 	Image mIcon;
 	TextBox mTBName;
 	TextBox mTBTier;
+	TextBox mTBArianeType;
+	Button mButtonMoreInfo;
+	TextBoxMultiLine mTBDescription;
+	TextBox mTBPriceLabel;
 	TextBox mTBPrice;
+	TextBox mTBStackMaxLabel;
+	TextBox mTBstackMax;
 };
 

@@ -31,6 +31,8 @@ public:
 
 	std::string getText();
 	std::string getIcon();
+	std::string getAriane();
+	std::vector<ItemType*> getArianeType();
 	SpriteParameter* getIconSprite();
 
 	int getItemCount();
