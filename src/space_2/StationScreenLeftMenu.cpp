@@ -6,6 +6,7 @@
 #include "WindowChoiceAsk.h"
 #include "CharacterUpdate.h"
 #include "WindowMessageSuccess.h"
+#include "NetworkJobManager.h"
 
 
 //*************************************************************
@@ -265,7 +266,7 @@ void StationScreenLeftMenu::onButtonTrueClicked( WindowChoiceActionObject* p_obj
 			// Unlock selected bank
 			CharacterBank* currentBank = (CharacterBank*) p_object;
 			currentBank->unlock();
-			new CharacterUpdate(currentBank->getCharacter());
+			NetworkJobManager::getInstance()->addJob(new CharacterUpdate(currentBank->getCharacter()));
 			this->updateButtonBank();
 			UserInterface::mUserInterface->addWindowPopup(new WindowMessageSuccess(	Resource::resource->getBundle()->getString("success"), 
 																					Resource::resource->getBundle()->getString("windowSuccessBank")));
