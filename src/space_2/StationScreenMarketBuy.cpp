@@ -68,6 +68,8 @@ void StationScreenMarketBuy::update()
 
 	if(this->mItemList.isSelectedChanged())
 		this->notifyItemSelectedChanged();
+
+	this->mItemStock.update();
 }
 
 void StationScreenMarketBuy::updatePosition()

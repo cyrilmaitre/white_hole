@@ -17,7 +17,7 @@
 //*************************************************************
 // Constructor - Destructor
 //*************************************************************
-MarketItemStockView::MarketItemStockView()
+MarketItemStockView::MarketItemStockView() : mPUBIndice(&this->mTBIndice)
 {
 	this->mItemStock = NULL;
 	
@@ -59,7 +59,7 @@ void MarketItemStockView::setIndice( float p_indice )
 	if(p_indice == 0)
 	{
 		this->mTBIndice.setFontColor(INDICE_NULL_COLOR);
-		this->mTBIndice.setText("=0");
+		this->mTBIndice.setText("0");
 	}
 	else if(p_indice > 0)
 	{
@@ -79,7 +79,6 @@ void MarketItemStockView::setIndice( float p_indice )
 //*************************************************************
 void MarketItemStockView::updatePosition()
 {
-	this->mFieldsetIndice.setPosition(this->getContentX(), this->getContentY());
 	this->mTBIndiceLabel.setPosition(this->getContentX(), this->getContentY());
 	this->mTBIndice.setPosition(this->mTBIndiceLabel.getRightX() + LABEL_MARGIN, this->mTBIndiceLabel.getY());
 }
@@ -88,9 +87,18 @@ void MarketItemStockView::update( sf::Event p_event )
 {
 	if(this->isVisible())
 	{
-		this->mFieldsetIndice.update(p_event);
+		this->mTBIndice.update(p_event);
+		this->mPUBIndice.update(p_event);
 	}
 	FieldSet::update(p_event);
+}
+
+void MarketItemStockView::update()
+{
+	if(this->isVisible())
+	{
+		this->mPUBIndice.update();
+	}
 }
 
 void MarketItemStockView::draw()
@@ -114,6 +122,10 @@ void MarketItemStockView::notifyItemStockChanged()
 	if(this->mItemStock != NULL)
 	{
 		this->setIndice(this->mItemStock->getIndice());
+		this->mPUBIndice.clear(false);
+		this->mPUBIndice.addLine(Resource::resource->getBundle()->getString("marketBuyIndicePerDay"));
+		this->mPUBIndice.addLine(Resource::resource->getBundle()->getString("marketBuyProduction") + Tools::getSpaceAfterColon() + Tools::formatNumber(this->mItemStock->getProduction()));
+		this->mPUBIndice.addLine(Resource::resource->getBundle()->getString("marketBuyConsumption") + Tools::getSpaceAfterColon() + Tools::formatNumber(this->mItemStock->getConsumption()));
 	}
 	this->setVisible(this->mItemStock != NULL);
 }

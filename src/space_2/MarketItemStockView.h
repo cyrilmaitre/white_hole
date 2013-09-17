@@ -2,6 +2,7 @@
 #include "FieldSet.h"
 #include "TextBox.h"
 #include "ItemStock.h"
+#include "PopupBubble.h"
 
 
 class MarketItemStockView : public FieldSet
@@ -19,6 +20,7 @@ public:
 
 	// Methods
 	void updatePosition();
+	void update();
 	void update(sf::Event p_event);
 	void draw();
 	void notifyPositionChanged();
@@ -28,8 +30,8 @@ public:
 private:
 	// Attributs
 	ItemStock* mItemStock;
-	FieldSet mFieldsetIndice;
 	TextBox mTBIndiceLabel;
 	TextBox mTBIndice;
+	PopupBubble mPUBIndice;
 };
 

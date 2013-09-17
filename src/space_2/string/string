@@ -452,6 +452,9 @@ marketBuySelectItem = Select an item
 marketBuyMoreInfo = More info
 marketBuyPriceRef = Price ref.: 
 marketBuyIndice = Indice: 
+marketBuyIndicePerDay = Per day
+marketBuyProduction = Production:
+marketBuyConsumption = Consumption:
 #
 #
 # Dashboard
