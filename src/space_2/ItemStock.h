@@ -2,6 +2,7 @@
 #include "Item.h"
 #include "Station.h"
 #include "Clock.h"
+#include "IdGenerator.h"
 
 
 class ItemStock
@@ -12,6 +13,8 @@ public:
 	~ItemStock(void);
 
 	// Getters - Setters
+	long getId();
+
 	Item* getItem();
 	void setItem(Item* p_item);
 
@@ -46,6 +49,7 @@ public:
 
 private:
 	// Attributs
+	long mId;
 	Item* mItem;
 	Station* mStation;
 
@@ -57,5 +61,6 @@ private:
 	float mConsumption;
 
 	mks::Clock mClock;
+	static IdGenerator mIdGenerator;
 };
 

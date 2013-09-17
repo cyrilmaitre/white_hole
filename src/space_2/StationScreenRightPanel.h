@@ -27,6 +27,7 @@ public:
 	virtual void update();
 	virtual void update(sf::Event p_event);
 	virtual void draw();
+	virtual void unload();
 	virtual void notifyCharacterChanged();
 	virtual void notifyStationChanged();
 

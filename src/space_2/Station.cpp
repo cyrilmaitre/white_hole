@@ -1,5 +1,7 @@
 #include "Station.h"
 #include "ToolsImage.h"
+#include "FactoryGet.h"
+#include "ItemStock.h"
 
 
 //*************************************************************
@@ -23,6 +25,14 @@ Station::Station(void) : Npc(this)
 	this->setRotationInfinite(true);
 	this->setRotationInfiniteRight(Tools::randomBool());
 	this->setRotationVelocity(Tools::random((float)ROTATION_VELOCITY_MIN, (float)ROTATION_VELOCITY_MAX));
+
+	// Stock
+	std::vector<Item*> itemList = FactoryGet::getItemFactory()->getItemList();
+	for(int i = 0; i < itemList.size(); i++)
+	{
+		if(itemList[i]->isBuyable())
+			this->addItemStock(new ItemStock(itemList[i], this));
+	}
 }
 
 Station::~Station(void)
@@ -47,6 +57,31 @@ void Station::setModel( StationModel* p_model )
 		this->mModel = p_model;
 		this->notifyModelChanged();
 	}
+}
+
+int Station::getItemStockCount()
+{
+	return this->mStocks.size();
+}
+
+ItemStock* Station::getItemStock( int p_index )
+{
+	if(p_index < 0)
+		p_index = 0;
+	else if(p_index >= this->mStocks.size())
+		p_index = this->mStocks.size() - 1;
+
+	return this->mStocks[p_index];
+}
+
+ItemStock* Station::getItemStock( Item* p_item )
+{
+	for(int i = 0; i < this->mStocks.size(); i++)
+	{
+		if(this->mStocks[i]->getItem()->getId() == p_item->getId())
+			return this->mStocks[i];
+	}
+	return NULL;
 }
 
 
@@ -139,4 +174,24 @@ void Station::unloadSprite()
 		this->mSpinnerSprite = NULL;
 	}
 }
+
+void Station::addItemStock( ItemStock* p_stock )
+{
+	this->mStocks.push_back(p_stock);
+}
+
+void Station::removeItemStock( ItemStock* p_stock )
+{
+	for(int i = 0; i < this->mStocks.size(); i++)
+	{
+		if(this->mStocks[i]->getId() == p_stock->getId())
+		{
+			delete this->mStocks[i];
+			this->mStocks.erase(this->mStocks.begin() + i);
+			break;
+		}
+	}
+}
+
+
 

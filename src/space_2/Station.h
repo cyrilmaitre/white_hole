@@ -5,6 +5,8 @@
 #include "EntityData.h"
 #include "Clock.h"
 
+class ItemStock;
+
 // Define
 #define STATION_PLANE		MAPOBJECT_PLANE_1
 
@@ -19,7 +21,14 @@ public:
 	StationModel* getModel();
 	void setModel(StationModel* p_model);
 
+	int getItemStockCount();
+	ItemStock* getItemStock(int p_index);
+	ItemStock* getItemStock(Item* p_item);
+
 	// Methods
+	void addItemStock(ItemStock* p_stock);
+	void removeItemStock(ItemStock* p_stock);
+
 	void update();
 	void updateSpinner();
 	void updateSprite();
@@ -35,5 +44,7 @@ private:
 	sf::Sprite* mSpinnerSprite;
 	Rotable mSpinnerRotation;
 	mks::Clock mSpinnerClock;
+
+	std::vector<ItemStock*> mStocks;
 };
 

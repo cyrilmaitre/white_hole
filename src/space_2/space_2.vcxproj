@@ -117,6 +117,7 @@
     <ClCompile Include="ImpactExplosion.cpp" />
     <ClCompile Include="ImpactLaser.cpp" />
     <ClCompile Include="ImpactManager.cpp" />
+    <ClCompile Include="ItemStock.cpp" />
     <ClCompile Include="Level.cpp" />
     <ClCompile Include="Levelable.cpp" />
     <ClCompile Include="LevelCharacter.cpp" />
@@ -395,6 +396,7 @@
     <ClInclude Include="ImpactExplosion.h" />
     <ClInclude Include="ImpactLaser.h" />
     <ClInclude Include="ImpactManager.h" />
+    <ClInclude Include="ItemStock.h" />
     <ClInclude Include="json-forwards.h" />
     <ClInclude Include="json.h" />
     <ClInclude Include="Level.h" />

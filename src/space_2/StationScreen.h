@@ -29,6 +29,7 @@ public:
 	void setRightPanel(StationScreenRightPanel* p_panel);
 
 	// Methods
+	void undock();
 	void unloadPanel();
 	void loadPanelHangar();
 	void loadPanelMarket();

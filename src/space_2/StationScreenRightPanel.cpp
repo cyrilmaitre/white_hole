@@ -96,6 +96,11 @@ void StationScreenRightPanel::draw()
 	FieldSet::draw();
 }
 
+void StationScreenRightPanel::unload()
+{
+
+}
+
 void StationScreenRightPanel::notifyCharacterChanged()
 {
 

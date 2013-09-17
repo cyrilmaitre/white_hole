@@ -20,6 +20,7 @@ public:
 	// Methods
 	void loadScreenBuy();
 	void loadScreenSell();	
+	void unload();
 	void update();
 	void updatePosition();
 	void update(sf::Event p_event);

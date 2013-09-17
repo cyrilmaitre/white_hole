@@ -177,10 +177,7 @@ void StationScreenLeftMenu::update( sf::Event p_event )
 
 	this->mButtonUndock.update(p_event);
 	if(this->mButtonUndock.isClicked())
-	{
-		this->getStationScreen()->unloadPanel();
-		this->getStationScreen()->setStation(NULL);
-	}
+		this->getStationScreen()->undock();
 
 	FieldSet::update(p_event);
 }

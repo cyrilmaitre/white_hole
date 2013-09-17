@@ -15,6 +15,7 @@ public:
 	~StationScreenMarketBuy(void);
 
 	// Methods
+	void reset();
 	void update();
 	void updatePosition();
 	void update(sf::Event p_event);

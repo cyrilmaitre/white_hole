@@ -106,8 +106,16 @@ void StationScreen::setRightPanel( StationScreenRightPanel* p_panel )
 //*************************************************************
 // Methods
 //*************************************************************
+void StationScreen::undock()
+{
+	this->unloadPanel();
+	this->setStation(NULL);
+}
+
 void StationScreen::unloadPanel()
 {
+	if(this->getRightPanel() != NULL)
+		this->getRightPanel()->unload();
 	this->setRightPanel(NULL);
 }
 

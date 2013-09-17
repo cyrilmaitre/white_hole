@@ -3,6 +3,12 @@
 
 
 //*************************************************************
+// Init static
+//*************************************************************
+IdGenerator ItemStock::mIdGenerator;
+
+
+//*************************************************************
 // Define
 //*************************************************************
 #define UPDATE_TICK				30 // Sec
@@ -14,6 +20,7 @@
 //*************************************************************
 ItemStock::ItemStock( Item* p_item, Station* p_station )
 {
+	this->mId = ItemStock::mIdGenerator.getNextId();
 	this->mStockMin = 0;
 	this->mStockMax = 0;
 	this->mStockCurrent = 0;
@@ -33,6 +40,11 @@ ItemStock::~ItemStock(void)
 //*************************************************************
 // Getters - Setters
 //*************************************************************
+long ItemStock::getId()
+{
+	return this->mId;
+}
+
 Item* ItemStock::getItem()
 {
 	return this->mItem;
@@ -158,6 +170,7 @@ void ItemStock::notifyStockCurrentChanged()
 {
 	this->mStockCurrentChanged = true;
 }
+
 
 
 

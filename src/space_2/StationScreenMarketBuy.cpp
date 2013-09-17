@@ -56,6 +56,11 @@ StationScreenMarketBuy::~StationScreenMarketBuy(void)
 //*************************************************************
 // Getters - Setters
 //*************************************************************
+void StationScreenMarketBuy::reset()
+{
+	this->mItemList.unselectAll();
+}
+
 void StationScreenMarketBuy::update()
 {
 	if(this->mTreeItemType.isSelectedChanged())
@@ -130,8 +135,12 @@ void StationScreenMarketBuy::notifyItemTypeSelectedChanged()
 		this->mItemList.clear();
 		for(int i = 0; i < selectedItemType->getItemCount(); i++)
 		{
-			MarketItemListView* newView = new MarketItemListView(selectedItemType->getItem(i));
-			this->mItemList.addItem(newView, false);
+			Item* currentItem = selectedItemType->getItem(i);
+			if(currentItem->isBuyable())
+			{
+				MarketItemListView* newView = new MarketItemListView(currentItem);
+				this->mItemList.addItem(newView, false);
+			}
 		}
 		this->mItemList.notifyDataSetChanged();
 	}
@@ -142,7 +151,14 @@ void StationScreenMarketBuy::notifyItemSelectedChanged()
 	MarketItemListView* selectedItemView = dynamic_cast<MarketItemListView*>(this->mItemList.getSelected());
 	if(selectedItemView != NULL)
 	{
-		this->mItemDetail.setItem(selectedItemView->getItem());
-		this->mTBSelectItem.setVisible(selectedItemView->getItem() == NULL);
+		Item* selectedItem = selectedItemView->getItem();
+		this->mItemDetail.setItem(selectedItem);
+		this->mItemStock.setItemStock(this->mScreenMarket->getStation()->getItemStock(selectedItem));		
 	}
+	else
+	{
+		this->mItemDetail.setItem(NULL);
+		this->mItemStock.setItemStock(NULL);	
+	}
+	this->mTBSelectItem.setVisible(selectedItemView == NULL);
 }

@@ -17,8 +17,11 @@
 //*************************************************************
 // Constructor - Destructor
 //*************************************************************
-MarketItemStockView::MarketItemStockView(void)
+MarketItemStockView::MarketItemStockView()
 {
+	this->mItemStock = NULL;
+	
+	this->setVisible(false);
 	this->setBackgroundColor(BACKGROUNDCOLOR, true);
 	this->setBorderColor(BORDERCOLOR, true);
 	this->setBorderSize(BORDERSIZE, true);
@@ -27,9 +30,6 @@ MarketItemStockView::MarketItemStockView(void)
 
 	this->mTBIndiceLabel.setText(Resource::resource->getBundle()->getString("marketBuyIndice"));
 	this->setHeight(PADDING * 2 + this->mTBIndiceLabel.getHeight());
-
-	// Debug
-	this->notifyItemStockChanged();
 }
 
 MarketItemStockView::~MarketItemStockView(void)
@@ -40,6 +40,20 @@ MarketItemStockView::~MarketItemStockView(void)
 //*************************************************************
 // Getters - Setters
 //*************************************************************
+ItemStock* MarketItemStockView::getItemStock()
+{
+	return this->mItemStock;
+}
+
+void MarketItemStockView::setItemStock( ItemStock* p_stock )
+{
+	if(this->mItemStock != p_stock)
+	{
+		this->mItemStock = p_stock;
+		this->notifyItemStockChanged();
+	}
+}
+
 void MarketItemStockView::setIndice( float p_indice )
 {
 	if(p_indice == 0)
@@ -97,5 +111,10 @@ void MarketItemStockView::notifyPositionChanged()
 
 void MarketItemStockView::notifyItemStockChanged()
 {
-	this->setIndice(6.48);
+	if(this->mItemStock != NULL)
+	{
+		this->setIndice(this->mItemStock->getIndice());
+	}
+	this->setVisible(this->mItemStock != NULL);
 }
+
