@@ -4,6 +4,7 @@
 #include "Job.h"
 #include "User.h"
 #include "Levelable.h"
+#include "Clock.h"
 
 class CharacterShip;
 class CharacterBank;
@@ -37,6 +38,7 @@ public:
 	long getDateCreation();
 	void setDateCreation(long p_date);
 
+	long getTimePlayedReal();
 	long getTimePlayed();
 	void setTimePlayed(long p_time);
 	
@@ -72,6 +74,10 @@ public:
 	void setShipPiloted(CharacterShip *p_ship);
 
 	// Methods
+	void init();
+	void update();
+	void updateTime();
+
 	void addShip(CharacterShip* p_ship); 
 	void addBank(CharacterBank* p_bank);
 
@@ -83,6 +89,8 @@ public:
 
 	void incLevel();
 	void incExperience(long p_inc);
+
+	void notifyTimePlayedChanged();
 
 	void createBase();
 	void loadFromJson(Json::Value json);
@@ -98,6 +106,8 @@ private:
 	long mCredit;
 	long mDateCreation;
 	long mTimePlayed;
+	float mTimeBuffer;
+	mks::Clock mTimeBufferClock;
 	bool mAlive;
 	Race* mRace;
 	Job* mJob;

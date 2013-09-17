@@ -90,6 +90,7 @@ void Game::launchInit( Character* p_character )
 	this->mUserInterface	= new UserInterface(this->mCharacter);
 
 	// Init
+	this->mCharacter->init();
 	sf::Vector2i characterShipPosition = MapObject::convertPosition(sf::Vector2i(SECTOR_WIDTH / 2, SECTOR_HEIGHT / 2), SECTOR_PLANE, SHIP_PLANE);
 	this->getCharacterShip()->setPosition(characterShipPosition.x, characterShipPosition.y);
 	this->getUserInterface()->getXpBarCharacter()->setLevelable(this->getCharacter());
@@ -182,6 +183,9 @@ void Game::update()
 
 	// Update Animation
 	AnimationManager::update();
+
+	// Update character
+	this->getCharacter()->update();
 
 	// Update ship
 	this->getCharacterShip()->update();

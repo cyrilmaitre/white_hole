@@ -28,6 +28,7 @@
 #define CHARACTER_JSON_CHARACTERSHIP		"ships"
 #define JSON_CHARACTERBANKS					"banks"
 #define CHARACTER_JSON_CHARACTERSHIPCOUNT	"shipsCount"
+#define UPDATE_TIMEPLAYED_TICK				10 // Sec
 
 
 //*************************************************************
@@ -45,6 +46,7 @@ Character::Character(User* p_user, Json::Value json)
 	this->mSkillPoints = 0;
 	this->mDateCreation = 0;
 	this->mTimePlayed = 0;
+	this->mTimeBuffer = 0;
 	this->mCredit = 0;
 	this->mAlive = true;
 	this->mShipPiloted = NULL;
@@ -147,6 +149,11 @@ void Character::setDateCreation( long p_date )
 	this->mDateCreation = p_date;
 }
 
+long Character::getTimePlayedReal()
+{
+	return this->mTimePlayed + this->mTimeBuffer;
+}
+
 long Character::getTimePlayed()
 {
 	return this->mTimePlayed;
@@ -154,7 +161,11 @@ long Character::getTimePlayed()
 
 void Character::setTimePlayed( long p_time )
 {
-	this->mTimePlayed = p_time;
+	if(this->mTimePlayed != p_time)
+	{
+		this->mTimePlayed = p_time;
+		this->notifyTimePlayedChanged();
+	}
 }
 
 bool Character::isAlive()
@@ -299,6 +310,27 @@ void Character::setShipPiloted( CharacterShip *p_ship )
 //*************************************************************
 // Methods
 //*************************************************************
+void Character::init()
+{
+	this->mTimeBufferClock.restart();
+}
+
+void Character::update()
+{
+	this->updateTime();
+}
+
+void Character::updateTime()
+{
+	this->mTimeBuffer += this->mTimeBufferClock.getElapsedTimeAsSeconds();
+	this->mTimeBufferClock.restart();
+	if(this->mTimeBuffer > UPDATE_TIMEPLAYED_TICK)
+	{
+		this->setTimePlayed(this->getTimePlayed() + UPDATE_TIMEPLAYED_TICK);
+		this->mTimeBuffer -= UPDATE_TIMEPLAYED_TICK;
+	}
+}
+
 void Character::loadFromJson( Json::Value json )
 {
 	this->setId(json.get(CHARACTER_JSON_IDCHARACTER, -1).asInt());
@@ -451,6 +483,12 @@ void Character::createBase()
 	this->mSkillCharacters[7] = new SkillCharacter(FactoryGet::getSkillFactory()->getSkillSalvaging(), this);
 	this->mSkillCharacters[8] = new SkillCharacter(FactoryGet::getSkillFactory()->getSkillConstruction(), this);
 }
+
+void Character::notifyTimePlayedChanged()
+{
+	NetworkJobManager::getInstance()->addJob(new CharacterUpdate(this));
+}
+
 
 
 

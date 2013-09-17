@@ -12,6 +12,21 @@
 #define INTERFACEBOTTOM_WEAPON_X			12
 #define INTERFACEBOTTOM_WEAPON_Y			12
 #define INTERFACEBOTTOM_WEAPON_OFFSETX		9
+#define DASHBOARD_X							455
+#define DASHBOARD_Y							108
+#define DASHBOARD_WIDTH						310
+#define DASHBOARD_HEIGHT					52
+#define DASHBOARD_BACKGROUNDCOLOR			sf::Color(39, 39, 39)
+#define DASHBOARD_BORDERCOLOR				sf::Color(24, 24, 24)
+#define DASHBOARD_BORDERSIZE				2
+#define DASHBOARD_PADDING					5
+#define DASHBOARD_FONTSIZE					13
+#define DASHBOARD_LABELMARGINRIGHT			5
+#define DASHBOARD_LABELMARGINTOP			2
+#define DASHBOARD_UPDATETIME_TICK				1		// Sec
+#define TIMEPLAYED_MIN						1		// Sec
+#define TIMEPLAYED_HOUR						60		// Sec
+#define TIMEPLAYED_DAY						1440
 
 
 //*************************************************************
@@ -61,6 +76,24 @@ UserInterface::UserInterface( Character* p_character )
 	this->mStationScreen = new StationScreen(this->getCharacter());
 	this->mXpBarCharacter.setSize(XPBAR_CHARACTER_WIDTH - this->mXpBarCharacter.getBorderSize() * 2, XPBAR_CHARACTER_HEIGHT);
 	this->mInterfaceBottom.setTexture(*Resource::resource->getTexture(IMG_INTERFACE_BOTTOM));
+
+	this->mDashboard.setSize(DASHBOARD_WIDTH, DASHBOARD_HEIGHT);
+	this->mDashboard.setBackgroundColor(DASHBOARD_BACKGROUNDCOLOR, true);
+	this->mDashboard.setBorderColor(DASHBOARD_BORDERCOLOR, true);
+	this->mDashboard.setBorderSize(DASHBOARD_BORDERSIZE, true);
+	this->mDashboard.setPadding(DASHBOARD_PADDING);
+	this->mDashboard.setDisplayTitle(false);
+
+	this->mDashboardDayLabel.setFontSize(DASHBOARD_FONTSIZE);
+	this->mDashboardDay.setFontSize(DASHBOARD_FONTSIZE);
+	this->mDashboardTimeLabel.setFontSize(DASHBOARD_FONTSIZE);
+	this->mDashboardTime.setFontSize(DASHBOARD_FONTSIZE);
+	this->mDashboardPositionLabel.setFontSize(DASHBOARD_FONTSIZE);
+	this->mDashboardPosition.setFontSize(DASHBOARD_FONTSIZE);
+
+	this->mDashboardDayLabel.setText(Resource::resource->getBundle()->getString("dashboardDay"));
+	this->mDashboardTimeLabel.setText(Resource::resource->getBundle()->getString("dashboardTime"));
+	this->mDashboardPositionLabel.setText(Resource::resource->getBundle()->getString("dashboardPosition"));
 
 	// Update
 	this->updatePosition();
@@ -328,6 +361,29 @@ void UserInterface::update()
 	this->mXpBarCharacter.update();
 	for(int i = 0; i < this->mWeaponViews.size(); i++)
 		this->mWeaponViews[i]->update();
+	this->updateDashboard();
+}
+
+void UserInterface::updateDashboard()
+{
+	// Update day & time
+	if(this->mDashboardClock.getElapsedTimeAsSeconds() > DASHBOARD_UPDATETIME_TICK)
+	{
+		this->mDashboardClock.restart();
+		long timePlayed = this->getCharacter()->getTimePlayedReal();
+		long dayPlayed = timePlayed / TIMEPLAYED_DAY;
+		timePlayed = timePlayed % TIMEPLAYED_DAY;
+		long hourPlayed = timePlayed / TIMEPLAYED_HOUR;
+		long minPlayed = timePlayed % TIMEPLAYED_HOUR;
+
+		this->mDashboardDay.setText(Tools::formatNumber(dayPlayed));
+		this->mDashboardTime.setText(Tools::formatHour(hourPlayed, minPlayed));
+	}
+
+	// Update position
+	Sector* currentSector = Game::game->getMap()->getCurrentSector();
+	this->mDashboardPosition.setFontColor(currentSector->getDangerLevel()->getDangerLevelColor());
+	this->mDashboardPosition.setText("[" + Tools::formatNumber((int)Game::game->getCharacterShip()->getX(SECTOR_PLANE)) + ";" + Tools::formatNumber((int)Game::game->getCharacterShip()->getY(SECTOR_PLANE)) + "]");
 }
 
 void UserInterface::updateWindowPopups()
@@ -377,6 +433,13 @@ void UserInterface::draw()
 	this->mXpBarCharacter.draw();
 	for(int i = 0; i < this->mWeaponViews.size(); i++)
 		this->mWeaponViews[i]->draw();
+	this->mDashboard.draw();
+	this->mDashboardDayLabel.draw();
+	this->mDashboardDay.draw();
+	this->mDashboardTimeLabel.draw();
+	this->mDashboardTime.draw();
+	this->mDashboardPositionLabel.draw();
+	this->mDashboardPosition.draw();
 
 	// Draw window statics
 	this->drawWindowStatics();
@@ -457,6 +520,15 @@ void UserInterface::updatePosition()
 
 	// Update weaponView
 	this->updateWeaponPosition();
+
+	// Update Dashboard
+	this->mDashboard.setPosition(this->getInterfaceBottom().x + DASHBOARD_X, this->getInterfaceBottom().y + DASHBOARD_Y);
+	this->mDashboardDayLabel.setPosition(this->mDashboard.getContentX(), this->mDashboard.getContentY());
+	this->mDashboardDay.setPosition(this->mDashboardDayLabel.getRightX() + DASHBOARD_LABELMARGINRIGHT, this->mDashboardDayLabel.getY());
+	this->mDashboardTimeLabel.setPosition(this->mDashboardDayLabel.getX(), this->mDashboardDayLabel.getBottomY() + DASHBOARD_LABELMARGINTOP);
+	this->mDashboardTime.setPosition(this->mDashboardTimeLabel.getRightX() + DASHBOARD_LABELMARGINRIGHT, this->mDashboardTimeLabel.getY());
+	this->mDashboardPositionLabel.setPosition(this->mDashboardTimeLabel.getX(), this->mDashboardTimeLabel.getBottomY() + DASHBOARD_LABELMARGINTOP);
+	this->mDashboardPosition.setPosition(this->mDashboardPositionLabel.getRightX() + DASHBOARD_LABELMARGINRIGHT, this->mDashboardPositionLabel.getY());
 
 	// Update xp bar
 	this->mXpBarCharacter.setPosition(	this->mInterfaceBottom.getPosition().x + this->mXpBarCharacter.getBorderSize(), 

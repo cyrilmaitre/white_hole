@@ -18,6 +18,8 @@
 #include "StationScreen.h"
 #include "WindowCargoStation.h"
 #include "WindowPopup.h"
+#include "FieldSet.h"
+#include "Clock.h"
 
 // Define
 #define INTERFACEBOTTOM_WIDTH				775
@@ -66,6 +68,7 @@ public:
 	void updateWindowDynamics(sf::Event p_event);
 	void updateWindowDynamicsStation(sf::Event p_event);
 	void update();
+	void updateDashboard();
 	void updateWindowStatics();
 	void updateWindowDynamics();
 	void updateWindowDynamicsStation();
@@ -115,6 +118,14 @@ private:
 	// Interface bottom
 	MenuQuick mMenuQuick;
 	sf::Sprite mInterfaceBottom;
+	FieldSet mDashboard;
+	TextBox mDashboardDayLabel;
+	TextBox mDashboardDay;
+	TextBox mDashboardTimeLabel;
+	TextBox mDashboardTime;
+	TextBox mDashboardPositionLabel;
+	TextBox mDashboardPosition;
+	mks::Clock mDashboardClock;
 	std::vector<WeaponView*> mWeaponViews;
 	ExperienceBar mXpBarCharacter;
 

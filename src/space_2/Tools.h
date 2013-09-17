@@ -27,6 +27,7 @@ public:
 	static std::string formatNumber(float p_value, int p_precision = 2);
 	static std::string formatNumber(double p_value, int p_precision = 2);
 	static std::string formatDate(long p_value);
+	static std::string formatHour(long p_hour, long p_min);
 	static std::string getSpaceAfterColon();
 
 	// Misc

@@ -188,6 +188,9 @@ void StationScreen::update()
 	// Update Windows
 	UserInterface::mUserInterface->updateWindowDynamicsStation();
 
+	// Update character
+	this->getCharacter()->update();
+
 	// Update Left menu
 	this->mLeftMenu->update();
 

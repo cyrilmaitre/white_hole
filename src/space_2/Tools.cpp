@@ -120,6 +120,31 @@ std::string Tools::formatDate( long p_value )
 	return "This function must be implemented brawbrawbraw";
 }
 
+std::string Tools::formatHour( long p_hour, long p_min )
+{
+	// Check
+	if(p_hour < 0)
+		p_hour = 0;
+	
+	if(p_min < 0)
+		p_min = 0;
+	else if(p_min > 59)
+		p_min = 59;
+
+	// Build
+	std::stringstream returnValue;
+	if(p_hour < 10)
+		returnValue << "0";
+	returnValue << p_hour;
+	returnValue << ":";
+	
+	if(p_min < 10)
+		returnValue << "0";
+	returnValue << p_min;
+
+	return returnValue.str();
+}
+
 bool Tools::isEqual( std::string p_string_1, std::string p_string_2 )
 {
 	return p_string_1 == p_string_2;

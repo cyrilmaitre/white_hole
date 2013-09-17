@@ -452,3 +452,9 @@ marketBuySelectItem = Select an item
 marketBuyMoreInfo = More info
 marketBuyPriceRef = Price ref.: 
 marketBuyIndice = Indice: 
+#
+#
+# Dashboard
+dashboardDay = Day:
+dashboardTime = Time:
+dashboardPosition = Position:
