@@ -24,7 +24,7 @@ CloudWreck::CloudWreck(void)
 
 	this->setRotationInfinite(true);
 	this->setRotationInfiniteRight(Tools::randomBool());
-	this->setRotationVelocity(Tools::random(ROTATIONSPEED_MIN, ROTATIONSPEED_MAX));
+	this->setRotationVelocity(Tools::random((float)ROTATIONSPEED_MIN, (float)ROTATIONSPEED_MAX));
 }
 
 CloudWreck::~CloudWreck(void)

@@ -116,7 +116,7 @@ void MapObjectModel::loadFromConfig( KeyValueFile* p_config )
 
 float MapObjectModel::getRandomScale()
 {
-	float returnValue = Tools::random(this->getScaleMin(), this->getScaleMax(), 2);
+	float returnValue = Tools::random(this->getScaleMin(), this->getScaleMax());
 	return returnValue;
 }
 

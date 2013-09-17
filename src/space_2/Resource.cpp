@@ -60,6 +60,7 @@ Resource::Resource(): mApp(VideoMode(Option::option->getAppScreenWidth(), Option
 	this->mApp.setFramerateLimit(RESOURCE_APP_FRAME_LIMIT);											// Set frame limit
 	this->setAppRunning(true);																		// App is running
 	srand((unsigned int)time(NULL));																// Initialize random 
+	Tools::init();
 	
 
 	//*************************************************************

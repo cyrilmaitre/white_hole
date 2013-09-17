@@ -1,8 +1,16 @@
 #include <fstream>
 #include <iomanip>
+#include <boost/random/uniform_int_distribution.hpp>
+#include <boost/random/uniform_real_distribution.hpp>
 #include "Tools.h"
 
 using namespace std;
+
+
+//*************************************************************
+// Constructor - Destructor
+//*************************************************************
+boost::random::mt19937 Tools::gen;
 
 
 //*************************************************************
@@ -18,7 +26,16 @@ Tools::~Tools(void)
 
 
 //*************************************************************
-// Methode
+// Init
+//*************************************************************
+void Tools::init()
+{
+	Tools::gen.seed((unsigned int)time(NULL));
+}
+
+
+//*************************************************************
+// File
 //*************************************************************
 bool Tools::isFileExist( std::string p_fileName )
 {
@@ -31,6 +48,10 @@ bool Tools::isFileExist( std::string p_fileName )
 	return false;
 }
 
+
+//*************************************************************
+// Format
+//*************************************************************
 int Tools::getIntFromString( std::string p_string )
 {
 	return (int)Tools::getLongFromString(p_string);
@@ -145,11 +166,34 @@ std::string Tools::formatHour( long p_hour, long p_min )
 	return returnValue.str();
 }
 
+std::string Tools::getSpaceAfterColon()
+{
+	return "  ";
+}
+
+
+//*************************************************************
+// Misc
+//*************************************************************
 bool Tools::isEqual( std::string p_string_1, std::string p_string_2 )
 {
 	return p_string_1 == p_string_2;
 }
 
+bool Tools::isBetween( int p_toTest, int p_a, int p_b )
+{
+	if(p_a < p_b)
+		return p_toTest >= p_a && p_toTest <= p_b;
+	else if(p_b < p_a)
+		return p_toTest >= p_b && p_toTest <= p_a;
+	else
+		return p_toTest == p_a;
+}
+
+
+//*************************************************************
+// Sec
+//*************************************************************
 std::string Tools::sha1( std::string p_string )
 {
 	unsigned char hash[20];
@@ -162,20 +206,44 @@ std::string Tools::sha1( std::string p_string )
 	return std::string(hexstring);
 }
 
+
+//*************************************************************
+// Random
+//*************************************************************
 int Tools::random( int p_min, int p_max )
 {
 	if(p_min == p_max)
 		return p_min;
 
-	return p_min + (rand() % (int)(p_max - p_min + 1));
+	boost::random::uniform_int_distribution<int> dist(p_min, p_max);
+	return dist(gen);
 }
 
-float Tools::random( float p_min, float p_max, int p_precision )
+long Tools::random( long p_min, long p_max )
 {
-	float precisionFinal = pow(10.f, p_precision);
-	int minInterger = (int)(p_min * precisionFinal);
-	int maxInteger = (int)(p_max * precisionFinal);
-	return (float)Tools::random(minInterger, maxInteger) / precisionFinal;
+	if(p_min == p_max)
+		return p_min;
+
+	boost::random::uniform_int_distribution<long> dist(p_min, p_max);
+	return dist(gen);
+}
+
+float Tools::random( float p_min, float p_max )
+{
+	if(p_min == p_max)
+		return p_min;
+
+	boost::random::uniform_real_distribution<float> dist(p_min, p_max);
+	return dist(gen);
+}
+
+double Tools::random( double p_min, double p_max )
+{
+	if(p_min == p_max)
+		return p_min;
+
+	boost::random::uniform_real_distribution<double> dist(p_min, p_max);
+	return dist(gen);
 }
 
 float Tools::randomPercentage( int p_min, int p_max )
@@ -183,21 +251,20 @@ float Tools::randomPercentage( int p_min, int p_max )
 	return ((float)Tools::random(p_min, p_max)) / 100.f;
 }
 
-int Tools::randomZeroToHundred()
-{
-	return Tools::random(0, 100);
-}
-
 float Tools::randomZeroToOne()
 {
-	return Tools::randomPercentage(0, 100);
+	return Tools::random((float)0, (float)1);
 }
 
 bool Tools::randomBool()
 {
-	return 0 == (rand() % 2);
+	return Tools::random(0, 1) == 1;
 }
 
+
+//*************************************************************
+// Trigo / Maths
+//*************************************************************
 float Tools::getAngle( double p_xa, double p_ya, double p_xb, double p_yb )
 {
 	double diffX = p_xb - p_xa;
@@ -239,21 +306,6 @@ long Tools::getAbsolute( long p_num )
 	if(p_num < 0)
 		p_num = -p_num;
 	return p_num;
-}
-
-std::string Tools::getSpaceAfterColon()
-{
-	return "  ";
-}
-
-bool Tools::isBetween( int p_toTest, int p_a, int p_b )
-{
-	if(p_a < p_b)
-		return p_toTest >= p_a && p_toTest <= p_b;
-	else if(p_b < p_a)
-		return p_toTest >= p_b && p_toTest <= p_a;
-	else
-		return p_toTest == p_a;
 }
 
 sf::Vector2f Tools::getCoordinate( float p_angle, float p_hypo )

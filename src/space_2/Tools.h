@@ -1,6 +1,7 @@
 #pragma once
 #include "Resource.h"
 #include "sha1.h"
+#include <boost/random/mersenne_twister.hpp>
 
 // Define
 #define TOOLS_DEGREE_TO_RAD		0.0174532925
@@ -10,6 +11,9 @@
 class Tools
 {
 public:
+	// Init
+	static void init();
+
 	// File
 	static bool isFileExist(std::string p_fileName);
 
@@ -39,9 +43,10 @@ public:
 
 	// Random
 	static int random(int p_min, int p_max);
-	static float random(float p_min, float p_max, int p_precision = 2);
+	static long random(long p_min, long p_max);
+	static float random(float p_min, float p_max);
+	static double random(double p_min, double p_max);
 	static float randomPercentage(int p_min, int p_max);
-	static int randomZeroToHundred();
 	static float randomZeroToOne();
 	static bool randomBool();
 
@@ -62,5 +67,8 @@ private:
 	// Constructor - Destructor
 	Tools(void);
 	~Tools(void);
+
+	// Attributs
+	static boost::random::mt19937 gen;
 };
 
