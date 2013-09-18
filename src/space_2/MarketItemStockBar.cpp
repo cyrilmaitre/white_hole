@@ -103,6 +103,7 @@ void MarketItemStockBar::notifySizeChanged()
 	ProgressBar::notifySizeChanged();
 	this->mStockMiniShape.setSize(sf::Vector2f(STOCKMINISHAPE_SIZE, this->getHeight()));
 	this->mStockMiniShape.setOrigin(this->mStockMiniShape.getSize().x / 2, 0);
+	this->updateStockMiniShapePosition();
 }
 
 void MarketItemStockBar::notifyItemStockChanged()
@@ -110,7 +111,7 @@ void MarketItemStockBar::notifyItemStockChanged()
 	if(this->mItemStock != NULL)
 	{
 		this->setValueMax(this->mItemStock->getStockMax());
-		this->setValue((long)this->mItemStock->getStockCurrent());
+		this->setValue(floor(this->mItemStock->getStockCurrent()));
 		this->updateStockMiniShapePosition();
 	}
 	this->setVisible(this->mItemStock != NULL);
@@ -118,5 +119,5 @@ void MarketItemStockBar::notifyItemStockChanged()
 
 void MarketItemStockBar::notifyItemStockCurrentChanged()
 {
-	this->setValue(this->mItemStock->getStockCurrent());
+	this->setValue(floor(this->mItemStock->getStockCurrent()));
 }

@@ -455,6 +455,10 @@ marketBuyIndice = Indice:
 marketBuyIndicePerDay = Per day
 marketBuyProduction = Production:
 marketBuyConsumption = Consumption:
+marketBuyStock = Stocks
+marketBuyStockMin = Minimum stock:
+marketBuyStockMax = Maximum stock:
+marketBuyStockCurrent = Current stock:
 #
 #
 # Dashboard
