@@ -11,7 +11,6 @@ IdGenerator ItemStock::mIdGenerator;
 //*************************************************************
 // Define
 //*************************************************************
-#define UPDATE_TICK				30 // Sec
 #define DAY_DURATION			1440	
 
 
@@ -91,11 +90,15 @@ void ItemStock::setStockMax( long p_max )
 
 float ItemStock::getStockCurrent()
 {
+	sf::Lock lock(this->mMutex);
+
 	return this->mStockCurrent;
 }
 
 void ItemStock::setStockCurrent( float p_current )
 {
+	sf::Lock lock(this->mMutex);
+
 	if(p_current < 0)
 		p_current = 0;
 	else if(p_current > this->getStockMax())
@@ -122,6 +125,8 @@ void ItemStock::setStockCurrentChanged( bool p_value )
 
 float ItemStock::getProduction()
 {
+	sf::Lock lock(this->mMutex);
+
 	return this->mProduction;
 }
 
@@ -132,6 +137,8 @@ void ItemStock::setProduction( float p_production )
 
 float ItemStock::getConsumption()
 {
+	sf::Lock lock(this->mMutex);
+
 	return this->mConsumption;
 }
 
@@ -161,12 +168,9 @@ void ItemStock::decStockCurrent( float p_dec )
 
 void ItemStock::update()
 {
-	if(this->mClock.getElapsedTimeAsSeconds() > UPDATE_TICK)
-	{
-		float stockVariation = this->getIndice() * (this->mClock.getElapsedTimeAsSeconds() / (float)DAY_DURATION);
-		this->setStockCurrent(this->getStockCurrent() + stockVariation);
-		this->mClock.restart();
-	}
+	float stockVariation = this->getIndice() * (this->mClock.getElapsedTimeAsSeconds() / (float)DAY_DURATION);
+	this->setStockCurrent(this->getStockCurrent() + stockVariation);
+	this->mClock.restart();
 }
 
 void ItemStock::notifyItemChanged()

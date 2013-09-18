@@ -25,11 +25,15 @@ public:
 	ItemStock* getItemStock(int p_index);
 	ItemStock* getItemStock(Item* p_item);
 
+	bool isUpdateStocks();
+	void setUpdateStocks(bool p_value);
+
 	// Methods
 	void addItemStock(ItemStock* p_stock);
 	void removeItemStock(ItemStock* p_stock);
 
 	void update();
+	void updateStocks();
 	void updateSpinner();
 	void updateSprite();
 	void draw();
@@ -46,5 +50,8 @@ private:
 	mks::Clock mSpinnerClock;
 
 	std::vector<ItemStock*> mStocks;
+	bool mUpdateStocks;
+	sf::Mutex mStocksMutex;
+	sf::Thread* mStocksThread;
 };
 

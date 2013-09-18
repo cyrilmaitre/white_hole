@@ -64,6 +64,7 @@ private:
 	float mConsumption;
 
 	mks::Clock mClock;
+	sf::Mutex mMutex;
 	static IdGenerator mIdGenerator;
 };
 
