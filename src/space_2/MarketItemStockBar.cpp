@@ -16,7 +16,7 @@
 //*************************************************************
 // Constructor - Destructor
 //*************************************************************
-MarketItemStockBar::MarketItemStockBar(void)
+MarketItemStockBar::MarketItemStockBar(void) : mPUBStock(this)
 {
 	this->mItemStock = NULL;
 
@@ -60,6 +60,7 @@ void MarketItemStockBar::update()
 {
 	if(this->mItemStock != NULL && this->mItemStock->isStockCurrentChanged())
 		this->notifyItemStockCurrentChanged();
+	this->mPUBStock.update();
 }
 
 void MarketItemStockBar::updateStockMiniShapePosition()
@@ -75,7 +76,7 @@ void MarketItemStockBar::update( sf::Event p_event )
 {
 	if(this->isVisible())
 	{
-
+		this->mPUBStock.update(p_event);
 	}
 	ProgressBar::update(p_event);
 }
@@ -119,5 +120,13 @@ void MarketItemStockBar::notifyItemStockChanged()
 
 void MarketItemStockBar::notifyItemStockCurrentChanged()
 {
+	// Update value
 	this->setValue(floor(this->mItemStock->getStockCurrent()));
+
+	// Update PUB
+	this->mPUBStock.clear(false);
+	this->mPUBStock.addLine(Resource::resource->getBundle()->getString("marketBuyStock"));
+	this->mPUBStock.addLine(Resource::resource->getBundle()->getString("marketBuyStockMin") + Tools::getSpaceAfterColon() + Tools::formatNumber(this->mItemStock->getStockMin()));
+	this->mPUBStock.addLine(Resource::resource->getBundle()->getString("marketBuyStockMax") + Tools::getSpaceAfterColon() + Tools::formatNumber(this->mItemStock->getStockMax()));
+	this->mPUBStock.addLine(Resource::resource->getBundle()->getString("marketBuyStockCurrent") + Tools::getSpaceAfterColon() + Tools::formatNumber(this->mItemStock->getStockCurrent()));
 }

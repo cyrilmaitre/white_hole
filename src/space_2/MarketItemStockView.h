@@ -35,7 +35,6 @@ private:
 	TextBox mTBIndiceLabel;
 	TextBox mTBIndice;
 	PopupBubble mPUBIndice;
-	PopupBubble mPUBStock;
 	MarketItemStockBar mStockBar;
 };
 

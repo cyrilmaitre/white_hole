@@ -9,7 +9,7 @@
 class ItemStock;
 
 // Define
-#define STATION_PLANE		MAPOBJECT_PLANE_1
+#define STATION_PLANE				MAPOBJECT_PLANE_1
 
 class Station : public Entity, public Npc, public Terminable
 {
@@ -30,18 +30,24 @@ public:
 	bool isUpdateStocks();
 	void setUpdateStocks(bool p_value);
 
+	float getUpdateStocksTick();
+	void setUpdateStocksTick(float p_tick);
+
 	// Methods
 	void addItemStock(ItemStock* p_stock);
 	void removeItemStock(ItemStock* p_stock);
+
+	void dock();
+	void undock();
 
 	void update();
 	void updateStocks();
 	void updateSpinner();
 	void updateSprite();
 	void draw();
-	void notifyModelChanged();
 	void loadSprite();
 	void unloadSprite();
+	void notifyModelChanged();
 
 
 private:
@@ -53,6 +59,7 @@ private:
 
 	std::vector<ItemStock*> mStocks;
 	bool mUpdateStocks;
+	float mUpdateStocksTick;
 	sf::Mutex mStocksMutex;
 	sf::Thread* mStocksThread;
 };

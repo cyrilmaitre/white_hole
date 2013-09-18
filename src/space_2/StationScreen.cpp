@@ -83,6 +83,11 @@ void StationScreen::setStation( Station* p_station )
 {
 	if(this->mStation != p_station)
 	{
+		// Undock
+		if(this->mStation != NULL)
+			this->mStation->undock();
+
+		// Set
 		this->mStation = p_station;
 		this->notifyStationChanged();
 	}
@@ -291,9 +296,12 @@ void StationScreen::notifyAppSizeChanged()
 
 void StationScreen::notifyStationChanged()
 {
-	if(this->getStation() != NULL)
+	if(this->mStation != NULL)
 	{
-		this->mBackground.setTexture(*Resource::resource->getTexture(this->getStation()->getModel()->getScreenSprite()));
+		// Dock
+		this->mStation->dock();
+
+		this->mBackground.setTexture(*Resource::resource->getTexture(this->mStation->getModel()->getScreenSprite()));
 		this->updateBackgroundScale();
 	}
 

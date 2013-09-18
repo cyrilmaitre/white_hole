@@ -9,7 +9,8 @@
 //*************************************************************
 #define ROTATION_VELOCITY_MIN			0.1
 #define ROTATION_VELOCITY_MAX			0.5
-#define STOCKS_UPDATE_TICK				1 // Sec
+#define STOCKS_UPDATE_TICK				10 // Sec
+#define STOCKS_UPDATE_TICK_IN			1 // Sec
 
 
 //*************************************************************
@@ -36,6 +37,7 @@ Station::Station(void) : Npc(this)
 	}
 
 	this->mUpdateStocks = true;
+	this->mUpdateStocksTick = STOCKS_UPDATE_TICK;
 	this->mStocksThread = new sf::Thread(&Station::updateStocks, this);
 	this->mStocksThread->launch();
 }
@@ -123,10 +125,34 @@ void Station::setUpdateStocks( bool p_value )
 	this->mUpdateStocks = p_value;
 }
 
+float Station::getUpdateStocksTick()
+{
+	sf::Lock lock(this->mStocksMutex);
+
+	return this->mUpdateStocksTick;
+}
+
+void Station::setUpdateStocksTick( float p_tick )
+{
+	sf::Lock lock(this->mStocksMutex);
+
+	this->mUpdateStocksTick = p_tick;
+}
+
 
 //*************************************************************
 // Methods
 //*************************************************************
+void Station::dock()
+{
+	this->setUpdateStocksTick(STOCKS_UPDATE_TICK_IN);
+}
+
+void Station::undock()
+{
+	this->setUpdateStocksTick(STOCKS_UPDATE_TICK);
+}
+
 void Station::update()
 {
 	Entity::update();
@@ -139,7 +165,7 @@ void Station::updateStocks()
 {
 	while(this->isUpdateStocks())
 	{
-		sf::sleep(sf::seconds(STOCKS_UPDATE_TICK));
+		sf::sleep(sf::seconds(this->getUpdateStocksTick()));
 		for(int i = 0; i < this->getItemStockCount(); i++)
 		{
 			if(this->isUpdateStocks())
@@ -250,6 +276,7 @@ void Station::removeItemStock( ItemStock* p_stock )
 		}
 	}
 }
+
 
 
 

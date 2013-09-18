@@ -1,6 +1,7 @@
 #pragma once
 #include "ProgressBar.h"
 #include "ItemStock.h"
+#include "PopupBubble.h"
 
 class MarketItemStockBar : public ProgressBar
 {
@@ -27,6 +28,7 @@ public:
 private:
 	// Attributs
 	ItemStock* mItemStock;
+	PopupBubble mPUBStock;
 	sf::RectangleShape mStockMiniShape;
 };
 
