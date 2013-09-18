@@ -35,17 +35,17 @@ public:
 	std::string getSpriteId();
 	void setSpriteId(std::string p_sprite);
 
-	float getStockMinimumMin();
-	void setStockMinimumMin(float p_min);
+	long getStockMinimumMin();
+	void setStockMinimumMin(long p_min);
 
-	float getStockMinimumMax();
-	void setStockMinimumMax(float p_max);
+	long getStockMinimumMax();
+	void setStockMinimumMax(long p_max);
 
-	float getStockMaximumMin();
-	void setStockMaximumMin(float p_min);
+	long getStockMaximumMin();
+	void setStockMaximumMin(long p_min);
 
-	float getStockMaximumMax();
-	void setStockMaximumMax(float p_max);
+	long getStockMaximumMax();
+	void setStockMaximumMax(long p_max);
 
 	float getProductionMin();
 	void setProductionMin(float p_min);
@@ -66,8 +66,8 @@ public:
 	void setItemTier(ItemTier *p_itemTier);
 
 	// Methode
-	float generateStockMin();
-	float generateStockMax();
+	long generateStockMin();
+	long generateStockMax();
 	float generateProduction();
 	float generateConsumption();
 	void loadFromConfig(KeyValueFile *p_config);
@@ -83,10 +83,10 @@ private:
 	int mStackMax;
 	std::string mSpriteId;
 	
-	float mStockMinimumMin;
-	float mStockMinimumMax;
-	float mStockMaximumMin;
-	float mStockMaximumMax;
+	long mStockMinimumMin;
+	long mStockMinimumMax;
+	long mStockMaximumMin;
+	long mStockMaximumMax;
 	float mProductionMin;
 	float mProductionMax;
 	float mConsumptionMin;

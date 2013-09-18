@@ -4,14 +4,15 @@
 //*************************************************************
 // Define
 //*************************************************************
-#define BACKGROUNDCOLOR				sf::Color(25, 26, 28)
-#define BORDERCOLOR					sf::Color(125, 125, 125)
-#define BORDERSIZE					1
-#define PADDING						10
-#define LABEL_MARGIN				5
-#define INDICE_POSITIVE_COLOR		sf::Color(0, 136, 0)
-#define INDICE_NULL_COLOR			sf::Color(195,195,195)
-#define INDICE_NEGATIVE_COLOR		sf::Color(238, 0, 0)
+#define BACKGROUNDCOLOR					sf::Color(25, 26, 28)
+#define BORDERCOLOR						sf::Color(125, 125, 125)
+#define BORDERSIZE						1
+#define PADDING							5
+#define LABEL_MARGIN					5
+#define INDICE_POSITIVE_COLOR			sf::Color(0, 136, 0)
+#define INDICE_NULL_COLOR				sf::Color(195, 195, 195)
+#define INDICE_NEGATIVE_COLOR			sf::Color(238, 0, 0)
+#define STOCKBAR_OFFSETX				150
 
 
 //*************************************************************
@@ -81,6 +82,7 @@ void MarketItemStockView::updatePosition()
 {
 	this->mTBIndiceLabel.setPosition(this->getContentX(), this->getContentY());
 	this->mTBIndice.setPosition(this->mTBIndiceLabel.getRightX() + LABEL_MARGIN, this->mTBIndiceLabel.getY());
+	this->mStockBar.setPosition(this->getContentX() + STOCKBAR_OFFSETX, this->getContentY());
 }
 
 void MarketItemStockView::update( sf::Event p_event )
@@ -89,6 +91,7 @@ void MarketItemStockView::update( sf::Event p_event )
 	{
 		this->mTBIndice.update(p_event);
 		this->mPUBIndice.update(p_event);
+		this->mStockBar.update(p_event);
 	}
 	FieldSet::update(p_event);
 }
@@ -98,6 +101,7 @@ void MarketItemStockView::update()
 	if(this->isVisible())
 	{
 		this->mPUBIndice.update();
+		this->mStockBar.update();
 	}
 }
 
@@ -108,6 +112,7 @@ void MarketItemStockView::draw()
 	{
 		this->mTBIndiceLabel.draw();
 		this->mTBIndice.draw();
+		this->mStockBar.draw();
 	}
 }
 
@@ -115,6 +120,12 @@ void MarketItemStockView::notifyPositionChanged()
 {
 	FieldSet::notifyPositionChanged();
 	this->updatePosition();
+}
+
+void MarketItemStockView::notifySizeChanged()
+{
+	FieldSet::notifySizeChanged();
+	this->mStockBar.setSize(this->getContentWidth() - STOCKBAR_OFFSETX, this->getContentHeight());
 }
 
 void MarketItemStockView::notifyItemStockChanged()
@@ -127,6 +138,7 @@ void MarketItemStockView::notifyItemStockChanged()
 		this->mPUBIndice.addLine(Resource::resource->getBundle()->getString("marketBuyProduction") + Tools::getSpaceAfterColon() + Tools::formatNumber(this->mItemStock->getProduction()));
 		this->mPUBIndice.addLine(Resource::resource->getBundle()->getString("marketBuyConsumption") + Tools::getSpaceAfterColon() + Tools::formatNumber(this->mItemStock->getConsumption()));
 	}
+	this->mStockBar.setItemStock(this->mItemStock);
 	this->setVisible(this->mItemStock != NULL);
 }
 

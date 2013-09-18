@@ -129,6 +129,7 @@
     <ClCompile Include="MarketItemBuyView.cpp" />
     <ClCompile Include="MarketItemDetailView.cpp" />
     <ClCompile Include="MarketItemListView.cpp" />
+    <ClCompile Include="MarketItemStockBar.cpp" />
     <ClCompile Include="MarketItemStockView.cpp" />
     <ClCompile Include="Node.cpp" />
     <ClCompile Include="NodeData.cpp" />
@@ -410,6 +411,7 @@
     <ClInclude Include="MarketItemBuyView.h" />
     <ClInclude Include="MarketItemDetailView.h" />
     <ClInclude Include="MarketItemListView.h" />
+    <ClInclude Include="MarketItemStockBar.h" />
     <ClInclude Include="MarketItemStockView.h" />
     <ClInclude Include="NetworkDefine.h" />
     <ClInclude Include="Node.h" />

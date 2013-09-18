@@ -21,11 +21,11 @@ public:
 	Station* getStation();
 	void setStation(Station* p_station);
 
-	float getStockMin();
-	void setStockMin(float p_min);
+	long getStockMin();
+	void setStockMin(long p_min);
 
-	float getStockMax();
-	void setStockMax(float p_max);
+	long getStockMax();
+	void setStockMax(long p_max);
 
 	float getStockCurrent();
 	void setStockCurrent(float p_current);
@@ -42,6 +42,9 @@ public:
 	float getIndice();
 
 	// Methods
+	void incStockCurrent(float p_inc);
+	void decStockCurrent(float p_dec);
+
 	void update();
 	void notifyItemChanged();
 	void notifyStockCurrentChanged();
@@ -53,8 +56,8 @@ private:
 	Item* mItem;
 	Station* mStation;
 
-	float mStockMin;
-	float mStockMax;
+	long mStockMin;
+	long mStockMax;
 	float mStockCurrent;
 	bool mStockCurrentChanged;
 	float mProduction;

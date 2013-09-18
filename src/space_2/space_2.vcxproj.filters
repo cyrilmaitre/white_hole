@@ -1203,6 +1203,9 @@
     <ClCompile Include="ItemStock.cpp">
       <Filter>Fichiers sources\game\item</Filter>
     </ClCompile>
+    <ClCompile Include="MarketItemStockBar.cpp">
+      <Filter>Fichiers sources\game\ui\stationscreen\panel\market</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h">
@@ -2050,6 +2053,9 @@
     </ClInclude>
     <ClInclude Include="ItemStock.h">
       <Filter>Fichiers d%27en-tête\game\item</Filter>
+    </ClInclude>
+    <ClInclude Include="MarketItemStockBar.h">
+      <Filter>Fichiers d%27en-tête\game\ui\stationscreen\panel\market</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

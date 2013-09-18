@@ -6,7 +6,7 @@ class ProgressBar : public Block
 {
 public:
 	// Enum
-	enum UiProgressBarMode 
+	enum ProgressBarMode 
 	{
 		ModeNone = 0,
 		ModeValueMax,
@@ -32,8 +32,8 @@ public:
 	std::string getTitle();
 	void setTitle(std::string p_title);
 
-	UiProgressBarMode getMode();
-	void setMode(UiProgressBarMode p_mode);
+	ProgressBarMode getMode();
+	void setMode(ProgressBarMode p_mode);
 
 	sf::Color getBarColor();
 	void setBarColor(sf::Color p_color);
@@ -48,13 +48,17 @@ public:
 
 
 protected:
+	// Attributs
+	TextBox mText;
+	sf::RectangleShape mBar;
+
 	// Methods
 	void notifyFontChanged();
 	void notifyFontColorChanged();
 	void notifyFontSizeChanged();
 	void notifySizeChanged();
 	void notifyPositionChanged();
-	void notifyValueChanged();
+	virtual void notifyValueChanged();
 
 
 private:
@@ -63,10 +67,6 @@ private:
 	double mValueMin;
 	double mValueMax;
 	std::string mTitle;
-	UiProgressBarMode mMode;
-
-	TextBox mText;
-
-	sf::RectangleShape mBar;
+	ProgressBarMode mMode;
 	sf::Color mBarColor;
 };

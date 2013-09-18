@@ -44,8 +44,8 @@ ProgressBar::ProgressBar(void)
 	this->mValue = -1;
 	this->setValue(DEFAULT_VALUE);
 
-	this->mMode = UiProgressBarMode::ModeNone;
-	this->setMode(UiProgressBarMode::ModeValueMax);
+	this->mMode = ProgressBarMode::ModeNone;
+	this->setMode(ProgressBarMode::ModeValueMax);
 }
 
 ProgressBar::~ProgressBar(void)
@@ -122,12 +122,12 @@ void ProgressBar::setTitle( std::string p_title )
 	}
 }
 
-ProgressBar::UiProgressBarMode ProgressBar::getMode()
+ProgressBar::ProgressBarMode ProgressBar::getMode()
 {
 	return this->mMode;
 }
 
-void ProgressBar::setMode( UiProgressBarMode p_mode )
+void ProgressBar::setMode( ProgressBarMode p_mode )
 {
 	if(this->mMode != p_mode)
 	{
@@ -178,19 +178,19 @@ void ProgressBar::updateText()
 {
 	switch(this->getMode())
 	{
-	case UiProgressBarMode::ModeValueMax:
+	case ProgressBarMode::ModeValueMax:
 		this->mText.setText(Tools::formatNumber((long)this->getValue()) + " / " + Tools::formatNumber((long)this->getValueMax()));
 		break;
 
-	case UiProgressBarMode::ModePercent:
+	case ProgressBarMode::ModePercent:
 		this->mText.setText(Tools::buildStringWithDouble(this->getValuePercent() * 100) + " %");
 		break;
 
-	case UiProgressBarMode::ModeTitle:
+	case ProgressBarMode::ModeTitle:
 		this->mText.setText(this->getTitle());
 		break;
 
-	case UiProgressBarMode::ModeNone:
+	case ProgressBarMode::ModeNone:
 	default:
 		this->mText.setText("");
 		break;
@@ -205,7 +205,7 @@ void ProgressBar::draw()
 		Block::draw();
 
 		Resource::resource->getApp()->draw(this->mBar);
-		if(this->getMode() != UiProgressBarMode::ModeNone)
+		if(this->getMode() != ProgressBarMode::ModeNone)
 			this->mText.draw();
 	}
 }

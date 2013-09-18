@@ -69,22 +69,22 @@ void ItemStock::setStation( Station* p_station )
 	this->mStation = p_station;
 }
 
-float ItemStock::getStockMin()
+long ItemStock::getStockMin()
 {
 	return this->mStockMin;
 }
 
-void ItemStock::setStockMin( float p_min )
+void ItemStock::setStockMin( long p_min )
 {
 	this->mStockMin = p_min;
 }
 
-float ItemStock::getStockMax()
+long ItemStock::getStockMax()
 {
 	return this->mStockMax;
 }
 
-void ItemStock::setStockMax( float p_max )
+void ItemStock::setStockMax( long p_max )
 {
 	this->mStockMax = p_max;
 }
@@ -96,6 +96,11 @@ float ItemStock::getStockCurrent()
 
 void ItemStock::setStockCurrent( float p_current )
 {
+	if(p_current < 0)
+		p_current = 0;
+	else if(p_current > this->getStockMax())
+		p_current = this->getStockMax();
+
 	if(this->mStockCurrent != p_current)
 	{
 		this->mStockCurrent = p_current;
@@ -144,6 +149,16 @@ float ItemStock::getIndice()
 //*************************************************************
 // Methods
 //*************************************************************
+void ItemStock::incStockCurrent( float p_inc )
+{
+	this->setStockCurrent(this->mStockCurrent + p_inc);
+}
+
+void ItemStock::decStockCurrent( float p_dec )
+{
+	this->setStockCurrent(this->mStockCurrent - p_dec);
+}
+
 void ItemStock::update()
 {
 	if(this->mClock.getElapsedTimeAsSeconds() > UPDATE_TICK)
@@ -160,7 +175,7 @@ void ItemStock::notifyItemChanged()
 	{
 		this->setStockMin(this->getItem()->generateStockMin());
 		this->setStockMax(this->getItem()->generateStockMax());
-		this->setStockCurrent(Tools::random(0.f, this->getStockMax()));
+		this->setStockCurrent(Tools::random(0.f, (float)this->getStockMax()));
 		this->setProduction(this->getItem()->generateProduction());
 		this->setConsumption(this->getItem()->generateConsumption());
 	}
@@ -170,6 +185,8 @@ void ItemStock::notifyStockCurrentChanged()
 {
 	this->mStockCurrentChanged = true;
 }
+
+
 
 
 

@@ -26,9 +26,9 @@ DebugScreen::DebugScreen(void)
 	this->mButtonBack.setView(this->mScreenView);
 
 	this->mProgressBarValue = 0;
-	this->mProgressBarPercent.setMode(ProgressBar::UiProgressBarMode::ModePercent);
-	this->mProgressBarTitle.setMode(ProgressBar::UiProgressBarMode::ModeTitle);
-	this->mProgressBarNone.setMode(ProgressBar::UiProgressBarMode::ModeNone);
+	this->mProgressBarPercent.setMode(ProgressBar::ProgressBarMode::ModePercent);
+	this->mProgressBarTitle.setMode(ProgressBar::ProgressBarMode::ModeTitle);
+	this->mProgressBarNone.setMode(ProgressBar::ProgressBarMode::ModeNone);
 
 	this->mFontSizeTiny.setFontColor(sf::Color(255,255,255));
 	this->mFontSizeTiny.setFontSize(Manager::getInstance()->getConfig()->getFontSizeTiny());

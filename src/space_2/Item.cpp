@@ -132,42 +132,42 @@ void Item::setSpriteId( std::string p_sprite )
 	this->mSpriteId = p_sprite;
 }
 
-float Item::getStockMinimumMin()
+long Item::getStockMinimumMin()
 {
 	return this->mStockMinimumMin;
 }
 
-void Item::setStockMinimumMin( float p_min )
+void Item::setStockMinimumMin( long p_min )
 {
 	this->mStockMinimumMin = p_min;
 }
 
-float Item::getStockMinimumMax()
+long Item::getStockMinimumMax()
 {
 	return this->mStockMinimumMax;
 }
 
-void Item::setStockMinimumMax( float p_max )
+void Item::setStockMinimumMax( long p_max )
 {
 	this->mStockMinimumMax = p_max;
 }
 
-float Item::getStockMaximumMin()
+long Item::getStockMaximumMin()
 {
 	return this->mStockMaximumMin;
 }
 
-void Item::setStockMaximumMin( float p_min )
+void Item::setStockMaximumMin( long p_min )
 {
 	this->mStockMaximumMin = p_min;
 }
 
-float Item::getStockMaximumMax()
+long Item::getStockMaximumMax()
 {
 	return this->mStockMaximumMax;
 }
 
-void Item::setStockMaximumMax( float p_max )
+void Item::setStockMaximumMax( long p_max )
 {
 	this->mStockMaximumMax = p_max;
 }
@@ -260,16 +260,16 @@ void Item::loadFromConfig( KeyValueFile *p_config )
 		this->setSpriteId(p_config->getString(CONFIG_SPRITE));
 
 	if(p_config->has(CONFIG_STOCKMINIMUMMIN))
-		this->setStockMinimumMin(p_config->getFloat(CONFIG_STOCKMINIMUMMIN));
+		this->setStockMinimumMin(p_config->getLong(CONFIG_STOCKMINIMUMMIN));
 
 	if(p_config->has(CONFIG_STOCKMINIMUMMAX))
-		this->setStockMinimumMax(p_config->getFloat(CONFIG_STOCKMINIMUMMAX));
+		this->setStockMinimumMax(p_config->getLong(CONFIG_STOCKMINIMUMMAX));
 
 	if(p_config->has(CONFIG_STOCKMAXIMUMMIN))
-		this->setStockMaximumMin(p_config->getFloat(CONFIG_STOCKMAXIMUMMIN));
+		this->setStockMaximumMin(p_config->getLong(CONFIG_STOCKMAXIMUMMIN));
 
 	if(p_config->has(CONFIG_STOCKMAXIMUMMAX))
-		this->setStockMaximumMax(p_config->getFloat(CONFIG_STOCKMAXIMUMMAX));
+		this->setStockMaximumMax(p_config->getLong(CONFIG_STOCKMAXIMUMMAX));
 
 	if(p_config->has(CONFIG_PRODUCTIONMIN))
 		this->setProductionMin(p_config->getFloat(CONFIG_PRODUCTIONMIN));
@@ -290,12 +290,12 @@ void Item::loadFromConfig( KeyValueFile *p_config )
 		this->setItemTier(FactoryGet::getItemTierFactory()->getItemTier(p_config->getLong(CONFIG_ITEMTIER)));
 }
 
-float Item::generateStockMin()
+long Item::generateStockMin()
 {
 	return Tools::random(this->getStockMinimumMin(), this->getStockMinimumMax());
 }
 
-float Item::generateStockMax()
+long Item::generateStockMax()
 {
 	return Tools::random(this->getStockMaximumMin(), this->getStockMaximumMax());
 }

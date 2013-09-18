@@ -21,7 +21,7 @@ ExperienceBar::ExperienceBar(void)
 	this->mPubExperience = new PopupBubble(this);
 
 	this->setFontSize(FONTSIZE);
-	this->setMode(ProgressBar::UiProgressBarMode::ModeValueMax);
+	this->setMode(ProgressBar::ProgressBarMode::ModeValueMax);
 	this->setType(TypeCharacter);
 	this->setValueMin(VALUE_MIN);
 }
@@ -75,12 +75,12 @@ void ExperienceBar::update( sf::Event myEvent )
 
 	if(this->isClicked())
 	{
-		if(this->getMode() == ProgressBar::UiProgressBarMode::ModeNone)
-			this->setMode(ProgressBar::UiProgressBarMode::ModeValueMax);
-		else if(this->getMode() == ProgressBar::UiProgressBarMode::ModeValueMax)
-			this->setMode(ProgressBar::UiProgressBarMode::ModePercent);
-		else if(this->getMode() == ProgressBar::UiProgressBarMode::ModePercent)
-			this->setMode(ProgressBar::UiProgressBarMode::ModeNone);
+		if(this->getMode() == ProgressBar::ProgressBarMode::ModeNone)
+			this->setMode(ProgressBar::ProgressBarMode::ModeValueMax);
+		else if(this->getMode() == ProgressBar::ProgressBarMode::ModeValueMax)
+			this->setMode(ProgressBar::ProgressBarMode::ModePercent);
+		else if(this->getMode() == ProgressBar::ProgressBarMode::ModePercent)
+			this->setMode(ProgressBar::ProgressBarMode::ModeNone);
 	}
 }
 
