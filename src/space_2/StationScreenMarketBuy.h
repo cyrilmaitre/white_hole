@@ -5,6 +5,7 @@
 #include "MarketItemListView.h"
 #include "MarketItemDetailView.h"
 #include "MarketItemStockView.h"
+#include "MarketItemBuyView.h"
 
 
 class StationScreenMarketBuy : public FieldSet
@@ -18,6 +19,7 @@ public:
 	void reset();
 	void update();
 	void updatePosition();
+	void updateSize();
 	void update(sf::Event p_event);
 	void draw();
 	void notifyPositionChanged();
@@ -34,5 +36,6 @@ private:
 	TextBox mTBSelectItem;
 	MarketItemDetailView mItemDetail;
 	MarketItemStockView mItemStock;
+	MarketItemBuyView mItemBuy;
 };
 

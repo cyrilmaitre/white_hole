@@ -92,6 +92,11 @@ void MarketItemDetailView::updatePosition()
 	this->mTBPrice.setPosition(this->mTBPriceLabel.getRightX() + LABEL_MARGIN, this->mTBPriceLabel.getY());
 }
 
+void MarketItemDetailView::updateHeight()
+{
+	this->setHeight(this->mIcon.getHeight() + DESCRIPTION_MARGIN * 2 + this->mTBDescription.getHeight() + this->mTBPrice.getHeight() + PADDING * 2);
+}
+
 void MarketItemDetailView::update( sf::Event p_event )
 {
 	if(this->isVisible())
@@ -130,6 +135,7 @@ void MarketItemDetailView::notifySizeChanged()
 	this->mTBDescription.setWidth(this->getContentWidth());
 	this->mTBDescription.updateLine();
 	this->updatePosition();
+	this->updateHeight();
 }
 
 void MarketItemDetailView::notifyItemChanged()
@@ -147,6 +153,7 @@ void MarketItemDetailView::notifyItemChanged()
 		this->mTBPrice.setText(Tools::formatNumber((int)this->getItem()->getPrice()) + " " + Resource::resource->getBundle()->getString("creditAb"));
 
 		this->updatePosition();
+		this->updateHeight();
 	}
 	else
 	{

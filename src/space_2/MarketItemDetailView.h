@@ -18,6 +18,7 @@ public:
 
 	// Methods
 	void updatePosition();
+	void updateHeight();
 	void update(sf::Event p_event);
 	void draw();
 	void notifyPositionChanged();

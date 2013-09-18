@@ -70,6 +70,7 @@ void StationScreenMarketBuy::update()
 		this->notifyItemSelectedChanged();
 
 	this->mItemStock.update();
+	this->mItemBuy.update();
 }
 
 void StationScreenMarketBuy::updatePosition()
@@ -79,7 +80,17 @@ void StationScreenMarketBuy::updatePosition()
 	this->mTBSelectItem.setPosition(this->mItemList.getRightX() + (this->getWidth() - this->mTreeItemType.getWidth() - this->mItemList.getWidth() - this->mTBSelectItem.getWidth()) / 2, 
 									this->getY() + (this->getHeight() - this->mTBSelectItem.getHeight()) / 2);
 	this->mItemDetail.setPosition(this->mItemList.getRightX(), this->getContentY());
-	this->mItemStock.setPosition(this->mItemList.getRightX() + PANEL_ITEMSTOCK_MARGIN, this->mItemDetail.getBottomY());
+	this->mItemStock.setPosition(this->mItemList.getRightX() + PANEL_ITEMSTOCK_MARGIN, this->mItemDetail.getBottomY() + PANEL_ITEMSTOCK_MARGIN);
+	this->mItemBuy.setPosition(this->mItemList.getRightX(), this->mItemStock.getBottomY() + PANEL_ITEMSTOCK_MARGIN);
+}
+
+void StationScreenMarketBuy::updateSize()
+{
+	this->mTreeItemType.setHeight(this->getContentHeight());
+	this->mItemList.setHeight(this->getContentHeight());
+	this->mItemDetail.setWidth(this->getContentWidth() - this->mTreeItemType.getWidth() - this->mItemList.getWidth());
+	this->mItemStock.setWidth(this->mItemDetail.getWidth() - PANEL_ITEMSTOCK_MARGIN * 2);
+	this->mItemBuy.setSize(this->mItemDetail.getWidth(), this->getContentHeight() - this->mItemDetail.getHeight() - this->mItemStock.getHeight() - PANEL_ITEMSTOCK_MARGIN * 2);
 }
 
 void StationScreenMarketBuy::update( sf::Event p_event )
@@ -90,6 +101,7 @@ void StationScreenMarketBuy::update( sf::Event p_event )
 		this->mItemList.update(p_event);
 		this->mItemDetail.update(p_event);
 		this->mItemStock.update(p_event);
+		this->mItemBuy.update(p_event);
 	}
 	FieldSet::update(p_event);
 }
@@ -104,6 +116,7 @@ void StationScreenMarketBuy::draw()
 		this->mItemList.draw();
 		this->mItemDetail.draw();
 		this->mItemStock.draw();
+		this->mItemBuy.draw();
 	}
 }
 
@@ -116,10 +129,7 @@ void StationScreenMarketBuy::notifyPositionChanged()
 void StationScreenMarketBuy::notifySizeChanged()
 {
 	FieldSet::notifySizeChanged();
-	this->mTreeItemType.setHeight(this->getContentHeight());
-	this->mItemList.setHeight(this->getContentHeight());
-	this->mItemDetail.setWidth(this->getContentWidth() - this->mTreeItemType.getWidth() - this->mItemList.getWidth());
-	this->mItemStock.setWidth(this->mItemDetail.getWidth() - PANEL_ITEMSTOCK_MARGIN * 2);
+	this->updateSize();
 	this->updatePosition();
 }
 
@@ -155,12 +165,18 @@ void StationScreenMarketBuy::notifyItemSelectedChanged()
 	{
 		Item* selectedItem = selectedItemView->getItem();
 		this->mItemDetail.setItem(selectedItem);
-		this->mItemStock.setItemStock(this->mScreenMarket->getStation()->getItemStock(selectedItem));		
+
+		ItemStock* selectedItemStock = this->mScreenMarket->getStation()->getItemStock(selectedItem); 
+		this->mItemStock.setItemStock(selectedItemStock);		
+		this->mItemBuy.setItemStock(selectedItemStock);
 	}
 	else
 	{
 		this->mItemDetail.setItem(NULL);
 		this->mItemStock.setItemStock(NULL);	
+		this->mItemBuy.setItemStock(NULL);
 	}
 	this->mTBSelectItem.setVisible(selectedItemView == NULL);
+	this->updateSize();
+	this->updatePosition();
 }
