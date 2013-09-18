@@ -3,6 +3,7 @@
 #include "Camera.h"
 #include "Npc.h"
 #include "Star.h"
+#include "Terminable.h"
 
 
 //*************************************************************
@@ -96,6 +97,12 @@ bool ToolsMap::isNpcShip( Entity* p_target )
 bool ToolsMap::isStation( Entity* p_target )
 {
 	Station* v = dynamic_cast<Station*>(p_target);
+	return v != 0;
+}
+
+bool ToolsMap::isTerminable( Entity* p_entity )
+{
+	Terminable* v = dynamic_cast<Terminable*>(p_entity);
 	return v != 0;
 }
 

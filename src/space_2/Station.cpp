@@ -9,7 +9,7 @@
 //*************************************************************
 #define ROTATION_VELOCITY_MIN			0.1
 #define ROTATION_VELOCITY_MAX			0.5
-#define STOCKS_UPDATE_TICK				30 // Sec
+#define STOCKS_UPDATE_TICK				1 // Sec
 
 
 //*************************************************************
@@ -42,12 +42,22 @@ Station::Station(void) : Npc(this)
 
 Station::~Station(void)
 {
-	this->setUpdateStocks(false);
 	delete this->mStocksThread;
-	std::cout << "Thread update stocks terminated" << std::endl;
+
+	for(int i = 0; i < this->mStocks.size(); i++)
+		delete this->mStocks[i];
 
 	if(this->mSpinnerSprite != NULL)
 		delete this->mSpinnerSprite;
+}
+
+void Station::terminate( bool p_instant )
+{
+	this->setUpdateStocks(false);
+	if(p_instant)
+		this->mStocksThread->terminate();
+	else
+		this->mStocksThread->wait();
 }
 
 

@@ -22,6 +22,7 @@ public:
 	static bool isStar(MapObject* p_object);
 	static bool isNpcShip(Entity* p_target);
 	static bool isStation(Entity* p_target);
+	static bool isTerminable(Entity* p_entity);
 
 	static int getRadius(MapObject* p_object);
 	static int getRadius(MapObject* p_object, int p_plane);

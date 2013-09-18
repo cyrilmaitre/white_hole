@@ -13,6 +13,7 @@
 #include "Internationalisation.h"
 #include "Tools.h"
 #include "Network.h"
+#include "ThreadTerminator.h"
 
 // Define divers
 #define RESOURCE_APP_FRAME_LIMIT			500
@@ -49,6 +50,7 @@ public:
 	std::vector<KeyValueFile*> getConfigs(std::string p_configName);
 	Internationalisation* getBundle();
 	Juckebox* getJuckebox();
+	ThreadTerminator* getThreadTerminator();
 
 	bool isAppRunning();
 	void setAppRunning(bool p_isAppRunning);
@@ -102,6 +104,7 @@ private:
 	std::map<std::string, KeyValueFile> mConfig;
 	Internationalisation *mBundle;
 	Juckebox *mJuckebox;
+	ThreadTerminator* mThreadterminator;
 	
 	bool mAppRunning;
 };

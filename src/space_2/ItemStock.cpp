@@ -169,8 +169,8 @@ void ItemStock::decStockCurrent( float p_dec )
 void ItemStock::update()
 {
 	float stockVariation = this->getIndice() * (this->mClock.getElapsedTimeAsSeconds() / (float)DAY_DURATION);
-	this->setStockCurrent(this->getStockCurrent() + stockVariation);
 	this->mClock.restart();
+	this->setStockCurrent(this->getStockCurrent() + stockVariation);
 }
 
 void ItemStock::notifyItemChanged()

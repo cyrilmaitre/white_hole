@@ -83,9 +83,10 @@ Resource::Resource(): mApp(VideoMode(Option::option->getAppScreenWidth(), Option
 
 
 	//*************************************************************
-	// Configure Juckebox
+	// Instantiate 
 	//*************************************************************
 	this->mJuckebox	= new Juckebox();
+	this->mThreadterminator = new ThreadTerminator();
 
 
 	//*************************************************************
@@ -245,6 +246,11 @@ Internationalisation* Resource::getBundle()
 Juckebox* Resource::getJuckebox()
 {
 	return this->mJuckebox;
+}
+
+ThreadTerminator* Resource::getThreadTerminator()
+{
+	return this->mThreadterminator;
 }
 
 KeyValueFile* Resource::getConfig( std::string p_name )
