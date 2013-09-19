@@ -8,6 +8,7 @@
 #include "ImageGIFFactory.h"
 #include "NetworkDefine.h"
 #include "ManagerConfig.h"
+#include "PopupManager.h"
 
 using namespace std;
 using namespace sf;
@@ -504,7 +505,7 @@ void CreateCharacterScreen::draw()
 	this->mGIFLoading->draw();
 
 	// Draw PopUp
-	PopupBubble::drawAll();
+	PopupManager::getInstance()->draw();
 
 	Resource::resource->getApp()->display();
 }

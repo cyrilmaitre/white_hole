@@ -9,6 +9,7 @@
 #include "Juckebox.h"
 #include "ClockManager.h"
 #include "EntityManager.h"
+#include "PopupManager.h"
 
 using namespace sf;
 
@@ -131,7 +132,7 @@ void Game::launch(Character* p_character)
 
 		// Draw
 		this->mCamera->draw();
-		PopupBubble::drawAll();
+		PopupManager::getInstance()->draw();
 		Resource::resource->getApp()->display();		
 	}
 }

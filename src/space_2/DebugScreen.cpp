@@ -153,6 +153,8 @@ DebugScreen::DebugScreen(void)
 	this->mTreeView->setSize(200, 200);
 	this->mTreeView->setTreeData(&this->mTree);
 
+	this->mDopDownList.setWidth(200);
+
 	this->updatePosition();
 }
 
@@ -251,6 +253,8 @@ void DebugScreen::update( sf::Event p_event )
 	this->mTextboxMultilineAutoResizeHeight.update(p_event);
 
 	this->mTreeView->update(p_event);
+
+	this->mDopDownList.update(p_event);
 }
 
 void DebugScreen::updatePosition()
@@ -299,6 +303,8 @@ void DebugScreen::updatePosition()
 
 	this->mLabelDefaultProgressBar.setPosition(this->mLabelDefaultTextfield.getX(), this->mLabelDefaultButton.getY());
 	this->mDefaultProgressBar.setPosition(this->mLabelDefaultProgressBar.getX(), this->mLabelDefaultProgressBar.getBottomY() + 10);
+
+	this->mDopDownList.setPosition(this->mTreeView->getRightX() + 50, this->mTreeView->getY());
 }
 
 void DebugScreen::draw()
@@ -345,6 +351,7 @@ void DebugScreen::draw()
 	this->mDefaultProgressBar.draw();
 
 	this->mTreeView->draw();
+	this->mDopDownList.draw();
 
 	Resource::resource->getApp()->display();
 }

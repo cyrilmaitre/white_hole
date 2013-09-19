@@ -64,7 +64,7 @@ public:
 	void setOverlayDisableColor(sf::Color p_color);
 
 	// Methods
-	void draw();
+	virtual void draw();
 	void update(sf::Event p_event);
 
 

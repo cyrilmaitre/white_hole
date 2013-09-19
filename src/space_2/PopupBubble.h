@@ -20,7 +20,6 @@ public:
 	void update();
 	void update(sf::Event p_event);
 	void draw();
-	static void drawAll();
 
 
 protected:
@@ -39,7 +38,4 @@ private:
 
 	// Methods
 	void updateArrowPosition();
-
-	// Statics
-	static std::list<PopupBubble*> mPopupBubbles;
 };

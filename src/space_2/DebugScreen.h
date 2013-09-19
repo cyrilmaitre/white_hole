@@ -11,6 +11,7 @@
 #include "TreeData.h"
 #include "NodeData.h"
 #include "Tree.h"
+#include "DropDownList.h"
 
 
 class DebugScreen : public BaseScreen
@@ -74,5 +75,7 @@ private:
 
 	TreeData mTree;
 	Tree* mTreeView;
+
+	DropDownList mDopDownList;
 };
 

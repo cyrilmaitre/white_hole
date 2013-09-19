@@ -1,5 +1,6 @@
 #include "PopupBubble.h"
 #include "Manager.h"
+#include "PopupManager.h"
 
 //******************************
 // Define
@@ -11,12 +12,6 @@
 #define DEFAULT_BORDERCOLOR				sf::Color(150, 150, 150, 200)
 #define DEFAULT_PADDING					5
 #define DEFAULT_DELAY					400
-
-
-//******************************
-// Statics init
-//******************************
-std::list<PopupBubble*> PopupBubble::mPopupBubbles;
 
 
 //******************************
@@ -34,13 +29,10 @@ PopupBubble::PopupBubble( Object* p_trigger ) : TextMultiLine(true)
 	this->setBorderColor(DEFAULT_BORDERCOLOR, true);
 	this->setBorderSize(DEFAULT_BORDERSIZE);
 	this->setPadding(DEFAULT_PADDING);
-
-	PopupBubble::mPopupBubbles.push_back(this);
 }
 
 PopupBubble::~PopupBubble(void)
 {
-	PopupBubble::mPopupBubbles.remove(this);
 }
 
 
@@ -88,8 +80,13 @@ void PopupBubble::notifyVisibleChanged()
 	TextMultiLine::notifyVisibleChanged();
 	if(this->isVisible())
 	{
+		PopupManager::getInstance()->addPopup(this);
 		this->setArrowPointerX(this->mTrigger->getX() + (this->mTrigger->getWidth() / 2));
 		this->setArrowPointerY(this->mTrigger->getY());
+	}
+	else
+	{
+		PopupManager::getInstance()->removePopup(this);
 	}
 }
 
@@ -127,13 +124,3 @@ void PopupBubble::draw()
 		Resource::resource->getApp()->draw(this->mPopupBubbleArrow);
 	}
 }
-
-void PopupBubble::drawAll()
-{
-	std::list<PopupBubble*>::iterator current;
-	for( current = PopupBubble::mPopupBubbles.begin(); current != PopupBubble::mPopupBubbles.end(); current++ )
-	{
-		(*current)->draw();
-	}
-}
-

@@ -101,6 +101,7 @@
     <ClCompile Include="CharacterShipItemStackUpdate.cpp" />
     <ClCompile Include="CharacterUpdate.cpp" />
     <ClCompile Include="DebugScreen.cpp" />
+    <ClCompile Include="DropDownList.cpp" />
     <ClCompile Include="EntityData.cpp" />
     <ClCompile Include="EntityEffect.cpp" />
     <ClCompile Include="EntityMovableData.cpp" />
@@ -136,6 +137,7 @@
     <ClCompile Include="Npc.cpp" />
     <ClCompile Include="NpcData.cpp" />
     <ClCompile Include="NpcMovable.cpp" />
+    <ClCompile Include="PopupManager.cpp" />
     <ClCompile Include="ProjectileBullet.cpp" />
     <ClCompile Include="ProjectileLaserBall.cpp" />
     <ClCompile Include="ProjectileManager.cpp" />
@@ -383,6 +385,7 @@
     <ClInclude Include="CharacterUpdate.h" />
     <ClInclude Include="DebugScreen.h" />
     <ClInclude Include="DestructableData.h" />
+    <ClInclude Include="DropDownList.h" />
     <ClInclude Include="EntityData.h" />
     <ClInclude Include="EntityEffect.h" />
     <ClInclude Include="EntityMovableData.h" />
@@ -421,6 +424,7 @@
     <ClInclude Include="Npc.h" />
     <ClInclude Include="NpcData.h" />
     <ClInclude Include="NpcMovable.h" />
+    <ClInclude Include="PopupManager.h" />
     <ClInclude Include="ProjectileBullet.h" />
     <ClInclude Include="ProjectileLaserBall.h" />
     <ClInclude Include="ProjectileManager.h" />

@@ -1212,6 +1212,12 @@
     <ClCompile Include="Terminable.cpp">
       <Filter>Fichiers sources\mks\engine</Filter>
     </ClCompile>
+    <ClCompile Include="DropDownList.cpp">
+      <Filter>Fichiers sources\mks\ui</Filter>
+    </ClCompile>
+    <ClCompile Include="PopupManager.cpp">
+      <Filter>Fichiers sources\mks\ui</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h">
@@ -2068,6 +2074,12 @@
     </ClInclude>
     <ClInclude Include="Terminable.h">
       <Filter>Fichiers d%27en-tête\mks\engine</Filter>
+    </ClInclude>
+    <ClInclude Include="DropDownList.h">
+      <Filter>Fichiers d%27en-tête\mks\ui</Filter>
+    </ClInclude>
+    <ClInclude Include="PopupManager.h">
+      <Filter>Fichiers d%27en-tête\mks\ui</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

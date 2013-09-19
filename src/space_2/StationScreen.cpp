@@ -10,6 +10,7 @@
 #include "WindowMessageInfo.h"
 #include "WindowMessageError.h"
 #include "WindowMessageWarning.h"
+#include "PopupManager.h"
 
 
 //*************************************************************
@@ -178,7 +179,7 @@ void StationScreen::launch( Station* p_station )
 		// Draw
 		Resource::resource->getApp()->clear(sf::Color::White);
 		this->draw();
-		PopupBubble::drawAll();
+		PopupManager::getInstance()->draw();
 		Resource::resource->getApp()->display();		
 	}
 	this->launchEnd();
