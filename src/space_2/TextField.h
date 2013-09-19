@@ -40,6 +40,9 @@ public:
 	std::string getValue();
 	void setValue(std::string p_buffer);
 
+	bool isValueChanged();
+	void setValueChanged(bool p_value);
+
 	// Methods
 	void clearValue();
 	void notifyTitleChanged();
@@ -57,6 +60,7 @@ private:
 	// Attributs
 	TextBox mTitle;
 	TextBox mValue;
+	bool mValueChanged;
 	std::string mValueString;
 	sf::RectangleShape mCursor;
 	mks::Clock mClockCursor;

@@ -44,6 +44,7 @@ TextField::TextField( TextFieldType p_type )
 	this->setBorderSize(DEFAULT_BORDERSIZE, true);
 	
 	this->mValueString = DEFAULT_VALUE;
+	this->mValueChanged = false;
 	this->mSelected = false;
 	this->notifyValueChanged();
 }
@@ -140,6 +141,18 @@ void TextField::setValue( std::string p_buffer )
 		this->mValueString = p_buffer;
 		this->notifyValueChanged();
 	}
+}
+
+bool TextField::isValueChanged()
+{
+	bool returnValue = this->mValueChanged;
+	this->mValueChanged = false;
+	return returnValue;
+}
+
+void TextField::setValueChanged( bool p_value )
+{
+	this->mValueChanged = p_value;
 }
 
 
@@ -289,6 +302,8 @@ void TextField::notifySizeChanged()
 
 void TextField::notifyValueChanged()
 {
+	this->mValueChanged = true;
+
 	this->updateValue();
 	this->updateCursorPosition();
 }
@@ -322,4 +337,5 @@ void TextField::updateHeight()
 {
 	this->setHeight(this->getFontSize() + DEFAULT_VALUE_MARGINTOP + DEFAULT_VALUE_MARGINBOTTOM);
 }
+
 
