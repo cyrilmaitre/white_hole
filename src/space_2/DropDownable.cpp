@@ -27,7 +27,6 @@ DropDownable::~DropDownable(void)
 //*************************************************************
 void DropDownable::notifySelectedChanged()
 {
-
 	Selectable::notifySelectedChanged();
 	if(this->isSelected())
 	{

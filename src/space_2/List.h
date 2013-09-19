@@ -21,8 +21,12 @@ public:
 
 	int getContentWidth(bool p_forceScrollBar = false);
 	int getContentHeight();	
+
 	int getItemCount();
 	Listable* getItem(int p_index);
+	bool isFirstItem(int p_index);
+	bool isLastItem(int p_index);
+	int getItemIndex(Listable* p_listable);
 
 	bool isAutoResizeHeight();
 	void setAutoResizeHeight(bool p_auto);
@@ -41,6 +45,9 @@ public:
 	void removeItem(Listable *p_item, bool p_notify = true);
 	void removeItem(int p_index, bool p_notify = true);
 	void clear(bool p_notify = true);
+
+	void incIndexFirstElement();
+	void decIndexFirstElement();
 
 	virtual void notifyItemAdded(Listable *p_item);
 	virtual void notifyItemRemoved(Listable *p_item);
@@ -81,8 +88,7 @@ private:
 	void updateItemIndexFirst();
 	void updateItemIndexLast();
 
-	void incIndexFirstElement();
-	void decIndexFirstElement();
+	
 	void resizeHeight();
 	void resizeWidth();
 };

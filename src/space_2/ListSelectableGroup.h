@@ -11,6 +11,9 @@ public:
 	~ListSelectableGroup(void);
 
 	// Methods
+	void update(sf::Event p_event);
+	void selectNextItem();
+	void selectPreviousItem();
 	void notifyItemAdded(Listable *p_item);
 	void notifyItemRemoved(Listable *p_item);
 };

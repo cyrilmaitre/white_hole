@@ -226,6 +226,7 @@ void Node::updateSize()
 
 void Node::notifySelectedChanged()
 {
+	Listable::notifySelectedChanged();
 	if(this->getNodeData()->isLeaf())
 	{
 		if(this->isSelected())

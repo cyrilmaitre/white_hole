@@ -98,6 +98,26 @@ Listable* List::getItem( int p_index )
 	return this->mItems[p_index];
 }
 
+bool List::isFirstItem( int p_index )
+{
+	return this->mItems.size() > 0 && p_index == 0;
+}
+
+bool List::isLastItem( int p_index )
+{
+	return this->mItems.size() > 0 && p_index == this->mItems.size() - 1;
+}
+
+int List::getItemIndex( Listable* p_listable )
+{
+	for(int i = 0; i < this->mItems.size(); i++)
+	{
+		if(this->mItems[i]->getObjectId() == p_listable->getObjectId())
+			return i;
+	}
+	return -1;
+}
+
 bool List::isAutoResizeHeight()
 {
 	return this->mAutoResizeHeight;
@@ -444,13 +464,5 @@ void List::resizeWidth()
 
 	this->setWidth(newWidth);
 }
-
-
-
-
-
-
-
-
 
 
