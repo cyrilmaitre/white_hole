@@ -82,6 +82,11 @@ double Tools::getDoubleFromString( std::string p_string )
 	return -1;
 }
 
+bool Tools::isNumber( std::string p_string )
+{
+	return !p_string.empty() && p_string.find_first_not_of("0123456789") == std::string::npos;
+}
+
 std::string Tools::buildStringWithInt( int p_int )
 {
 	std::stringstream ss;

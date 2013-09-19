@@ -22,6 +22,7 @@ public:
 	static long getLongFromString(std::string p_string);
 	static float getFloatFromString(std::string p_string);
 	static double getDoubleFromString(std::string p_string);
+	static bool isNumber(std::string p_string);
 	static std::string buildStringWithInt(int p_int);
 	static std::string buildStringWithLong(long p_long);
 	static std::string buildStringWithFloat(float p_float);

@@ -21,6 +21,7 @@ public:
 	void update();
 	void updatePosition();
 	void updateDestinations();
+	void checkQuantityValue();
 	void update(sf::Event p_event);
 	void draw();
 	void notifyItemStockChanged();

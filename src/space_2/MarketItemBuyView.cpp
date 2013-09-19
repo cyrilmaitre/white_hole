@@ -2,6 +2,7 @@
 #include "ContainerDropDown.h"
 #include "Game.h"
 #include "CharacterBank.h"
+#include "Tools.h"
 
 
 //*************************************************************
@@ -31,6 +32,7 @@ MarketItemBuyView::MarketItemBuyView(void)
 	this->setPadding(PADDING);
 
 	this->mTBQuantity.setText(Resource::resource->getBundle()->getString("marketBuyQuantity"));
+	this->mTFQuantity.setValue("0");
 	this->mTBDestination.setText(Resource::resource->getBundle()->getString("marketBuyToBank"));
 	this->mButtonQuantityAll.setTitle(Resource::resource->getBundle()->getString("marketBuyQuantityAll"));
 
@@ -65,6 +67,7 @@ void MarketItemBuyView::setItemStock( ItemStock* p_stock )
 //*************************************************************
 void MarketItemBuyView::update()
 {
+	this->checkQuantityValue();
 	this->mDDLDestination.update();
 }
 
@@ -75,6 +78,12 @@ void MarketItemBuyView::update( sf::Event p_event )
 		this->mTFQuantity.update(p_event);
 		this->mButtonQuantityAll.update(p_event);
 		this->mDDLDestination.update(p_event);
+
+		if(this->mButtonQuantityAll.isClicked())
+		{
+			if(this->mItemStock != NULL)
+				this->mTFQuantity.setValue(Tools::buildStringWithLong(this->mItemStock->getStockCurrent()));
+		}
 	}
 	FieldSet::update(p_event);
 }
@@ -86,6 +95,28 @@ void MarketItemBuyView::updatePosition()
 	this->mButtonQuantityAll.setPosition(this->mTFQuantity.getRightX() + BUTTONQUANTITYALL_MARGINLEFT, this->mTFQuantity.getBottomY() - this->mButtonQuantityAll.getHeight());
 	this->mTBDestination.setPosition(this->mTFQuantity.getX(), this->mTFQuantity.getBottomY() + DESTINATION_MARGINTOP);
 	this->mDDLDestination.setPosition(this->mTBDestination.getX(), this->mTBDestination.getBottomY() + DLLDESTINATION_MARGINTOP);
+}
+
+void MarketItemBuyView::checkQuantityValue()
+{
+	if(this->mItemStock != NULL)
+	{
+		std::string quantityValue = this->mTFQuantity.getValue();
+		if(!Tools::isNumber(quantityValue) && !quantityValue.empty())
+		{
+			this->mTFQuantity.setValue("0");
+		}
+		else
+		{
+			long quantity = Tools::getLongFromString(quantityValue);
+			if(quantity < 0)
+				quantity = 0;
+			else if(quantity > this->mItemStock->getStockCurrent())
+				quantity = this->mItemStock->getStockCurrent();
+
+			this->mTFQuantity.setValue(Tools::buildStringWithLong(quantity));
+		}
+	}
 }
 
 void MarketItemBuyView::draw()
@@ -130,3 +161,5 @@ void MarketItemBuyView::updateDestinations()
 			this->mDDLDestination.addDropDownable(new ContainerDropDown(character->getBank(i)));
 	}
 }
+
+
