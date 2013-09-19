@@ -5,12 +5,13 @@
 //*************************************************************
 // Define
 //*************************************************************
-#define BACKGROUNDCOLOR			sf::Color(25, 26, 28)
-#define BORDERCOLOR				sf::Color(194, 194, 194)
-#define BORDERCOLOR_OVER		sf::Color(215, 215, 215)
-#define BORDERSIZE				1
-#define PADDING					5
-#define AUTORESIZEHEIGHT_MAX	300
+#define BACKGROUNDCOLOR					sf::Color(25, 26, 28)
+#define BORDERCOLOR						sf::Color(194, 194, 194)
+#define BORDERCOLOR_OVER				sf::Color(215, 215, 215)
+#define BORDERSIZE						1
+#define PADDING							5
+#define AUTORESIZEHEIGHT_MAX			300
+#define DEFAULT_WIDTH					200
 
 
 //*************************************************************
@@ -34,7 +35,7 @@ DropDownList::DropDownList(void)
 	this->mDropDown.setAutoResizeWidth(false);
 	this->mDropDown.setForceScrollBar(true);
 
-	this->setHeight(this->mText.getHeight() + PADDING * 2);
+	this->setSize(DEFAULT_WIDTH, this->mText.getHeight() + PADDING * 2);
 }
 
 DropDownList::~DropDownList(void)
@@ -56,6 +57,11 @@ void DropDownList::addDropDownable( DropDownable* p_dropDownable )
 void DropDownList::removeDropDownable( DropDownable* p_dropDownable )
 {
 	this->mDropDown.removeItem(p_dropDownable);
+}
+
+void DropDownList::removeAllDropDownable()
+{
+	this->mDropDown.clear(true);
 }
 
 DropDownable* DropDownList::getSelectedDropDownable()

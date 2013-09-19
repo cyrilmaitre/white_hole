@@ -1224,6 +1224,9 @@
     <ClCompile Include="DropDownable.cpp">
       <Filter>Fichiers sources\mks\ui</Filter>
     </ClCompile>
+    <ClCompile Include="ContainerDropDown.cpp">
+      <Filter>Fichiers sources\game\item\container</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h">
@@ -2092,6 +2095,9 @@
     </ClInclude>
     <ClInclude Include="DropDownable.h">
       <Filter>Fichiers d%27en-tête\mks\ui</Filter>
+    </ClInclude>
+    <ClInclude Include="ContainerDropDown.h">
+      <Filter>Fichiers d%27en-tête\game\item\container</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

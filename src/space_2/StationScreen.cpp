@@ -103,6 +103,9 @@ void StationScreen::setRightPanel( StationScreenRightPanel* p_panel )
 {
 	if(this->mRightPanel != p_panel)
 	{
+		if(this->mRightPanel != NULL)
+			this->mRightPanel->unload();
+
 		this->mRightPanel = p_panel;
 		this->notifyRightPanelChanged();
 	}
@@ -120,8 +123,6 @@ void StationScreen::undock()
 
 void StationScreen::unloadPanel()
 {
-	if(this->getRightPanel() != NULL)
-		this->getRightPanel()->unload();
 	this->setRightPanel(NULL);
 }
 

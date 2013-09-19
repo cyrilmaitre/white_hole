@@ -62,6 +62,7 @@ void StationScreenMarket::loadScreenBuy()
 {
 	this->mScreenSell->setVisible(false);
 	this->mScreenBuy->setVisible(true);
+	this->mScreenBuy->reset();
 }
 
 void StationScreenMarket::loadScreenSell()

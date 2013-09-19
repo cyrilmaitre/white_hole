@@ -15,6 +15,7 @@ public:
 	// Methods
 	void addDropDownable(DropDownable* p_dropDownable);
 	void removeDropDownable(DropDownable* p_dropDownable);
+	void removeAllDropDownable();
 	DropDownable* getSelectedDropDownable();
 
 	void updatePosition();

@@ -59,6 +59,7 @@ StationScreenMarketBuy::~StationScreenMarketBuy(void)
 void StationScreenMarketBuy::reset()
 {
 	this->mItemList.unselectAll();
+	this->mItemBuy.updateDestinations();
 }
 
 void StationScreenMarketBuy::update()

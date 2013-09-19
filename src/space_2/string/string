@@ -459,6 +459,9 @@ marketBuyStock = Stocks
 marketBuyStockMin = Minimum stock:
 marketBuyStockMax = Maximum stock:
 marketBuyStockCurrent = Current stock:
+marketBuyQuantity = Quantity to buy:
+marketBuyQuantityAll = All
+marketBuyToBank = Destination:
 #
 #
 # Dashboard
