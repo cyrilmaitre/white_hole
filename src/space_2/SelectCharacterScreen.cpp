@@ -137,8 +137,8 @@ void SelectCharacterScreen::launch()
 		if(this->mButtonPlay.isClicked())
 			this->launchPlay();
 
-		if(this->mCharactersList.isSelectedChanged() && !this->mCharactersList.isEmpty())
-			this->mCharacterSelectedView->setCharacter(((CharacterViewSelectSmall*)this->mCharactersList.getSelected())->getCharacter());
+		if(this->mCharactersList.isSelectionChanged() && !this->mCharactersList.isEmpty())
+			this->mCharacterSelectedView->setCharacter(((CharacterViewSelectSmall*)this->mCharactersList.getSelection())->getCharacter());
 
 		// Draw
 		this->draw();

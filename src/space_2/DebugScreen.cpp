@@ -1,6 +1,8 @@
 #include "DebugScreen.h"
 #include "ImageGIFFactory.h"
 #include "Manager.h"
+#include "DropDownable.h"
+#include "Tools.h"
 
 //*************************************************************
 // Define
@@ -153,7 +155,13 @@ DebugScreen::DebugScreen(void)
 	this->mTreeView->setSize(200, 200);
 	this->mTreeView->setTreeData(&this->mTree);
 
-	this->mDopDownList.setWidth(200);
+	this->mDropDownList.setWidth(200);
+	for(int i = 0; i < 100; i++)
+	{
+		DropDownable* newDrop = new DropDownable();
+		newDrop->setText("Zoulou #" + Tools::formatNumber(i));
+		this->mDropDownList.addDropDownable(newDrop);
+	}
 
 	this->updatePosition();
 }
@@ -224,6 +232,7 @@ void DebugScreen::update()
 	BaseScreen::update();
 
 	this->mGIFLoading->update();
+	this->mDropDownList.update();
 
 	if(this->mProgressBarClock.getElapsedTimeAsMilliseconds() > PROGRESSBAR_UPDATE_FREQ)
 	{
@@ -254,7 +263,7 @@ void DebugScreen::update( sf::Event p_event )
 
 	this->mTreeView->update(p_event);
 
-	this->mDopDownList.update(p_event);
+	this->mDropDownList.update(p_event);
 }
 
 void DebugScreen::updatePosition()
@@ -304,7 +313,7 @@ void DebugScreen::updatePosition()
 	this->mLabelDefaultProgressBar.setPosition(this->mLabelDefaultTextfield.getX(), this->mLabelDefaultButton.getY());
 	this->mDefaultProgressBar.setPosition(this->mLabelDefaultProgressBar.getX(), this->mLabelDefaultProgressBar.getBottomY() + 10);
 
-	this->mDopDownList.setPosition(this->mTreeView->getRightX() + 50, this->mTreeView->getY());
+	this->mDropDownList.setPosition(this->mTreeView->getRightX() + 50, this->mTreeView->getY());
 }
 
 void DebugScreen::draw()
@@ -351,7 +360,7 @@ void DebugScreen::draw()
 	this->mDefaultProgressBar.draw();
 
 	this->mTreeView->draw();
-	this->mDopDownList.draw();
+	this->mDropDownList.draw();
 
 	Resource::resource->getApp()->display();
 }

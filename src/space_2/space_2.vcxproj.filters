@@ -1218,6 +1218,12 @@
     <ClCompile Include="PopupManager.cpp">
       <Filter>Fichiers sources\mks\ui</Filter>
     </ClCompile>
+    <ClCompile Include="PopupDropDown.cpp">
+      <Filter>Fichiers sources\mks\ui</Filter>
+    </ClCompile>
+    <ClCompile Include="DropDownable.cpp">
+      <Filter>Fichiers sources\mks\ui</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h">
@@ -2079,6 +2085,12 @@
       <Filter>Fichiers d%27en-tête\mks\ui</Filter>
     </ClInclude>
     <ClInclude Include="PopupManager.h">
+      <Filter>Fichiers d%27en-tête\mks\ui</Filter>
+    </ClInclude>
+    <ClInclude Include="PopupDropDown.h">
+      <Filter>Fichiers d%27en-tête\mks\ui</Filter>
+    </ClInclude>
+    <ClInclude Include="DropDownable.h">
       <Filter>Fichiers d%27en-tête\mks\ui</Filter>
     </ClInclude>
   </ItemGroup>

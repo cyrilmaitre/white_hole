@@ -76,6 +76,6 @@ private:
 	TreeData mTree;
 	Tree* mTreeView;
 
-	DropDownList mDopDownList;
+	DropDownList mDropDownList;
 };
 

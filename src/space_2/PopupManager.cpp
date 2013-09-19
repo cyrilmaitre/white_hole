@@ -57,5 +57,8 @@ void PopupManager::removePopup( Block* p_popup )
 void PopupManager::draw()
 {
 	for(int i = 0; i < this->mPopups.size(); i++)
-		this->mPopups[i]->draw();
+	{
+		if(this->mPopups[i] != NULL)
+			this->mPopups[i]->draw();
+	}
 }

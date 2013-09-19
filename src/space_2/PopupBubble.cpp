@@ -33,6 +33,7 @@ PopupBubble::PopupBubble( Object* p_trigger ) : TextMultiLine(true)
 
 PopupBubble::~PopupBubble(void)
 {
+	PopupManager::getInstance()->removePopup(this);
 }
 
 

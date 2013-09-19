@@ -310,10 +310,10 @@ void CreateCharacterScreen::launch()
 		if(this->mButtonAvatarNext.isClicked())
 			this->selectNextAvatar();
 
-		if(this->mViewRaceGroup.isSelectedChanged())
+		if(this->mViewRaceGroup.isSelectionChanged())
 			this->notifyRaceSelectedChange();
 
-		if(this->mViewJobGroup.isSelectedChanged())
+		if(this->mViewJobGroup.isSelectionChanged())
 			this->notifyJobSelectedChange();
 
 		// Draw
@@ -536,7 +536,7 @@ void CreateCharacterScreen::createCharacter()
 	}
 
 	// Set AvatartId, Name...
-	this->mCharacter->setAvatarId(((RaceView*)this->mViewRaceGroup.getSelected())->getRace()->getAvatarIndex(this->getAvatarSelected()));
+	this->mCharacter->setAvatarId(((RaceView*)this->mViewRaceGroup.getSelection())->getRace()->getAvatarIndex(this->getAvatarSelected()));
 	this->mCharacter->setName(this->mTFName.getValue());
 	this->mCharacter->setUser(Session::getUser());
 
@@ -563,14 +563,14 @@ void CreateCharacterScreen::createCharacter()
 
 void CreateCharacterScreen::notifyRaceSelectedChange()
 {
-	this->mCharacter->setRace(((RaceView*)this->mViewRaceGroup.getSelected())->getRace());
+	this->mCharacter->setRace(((RaceView*)this->mViewRaceGroup.getSelection())->getRace());
 
 	this->releaseAvatars();
-	this->mAvatarCount = ((RaceView*)this->mViewRaceGroup.getSelected())->getRace()->getAvatarCount();
+	this->mAvatarCount = ((RaceView*)this->mViewRaceGroup.getSelection())->getRace()->getAvatarCount();
 	this->mAvatars = new sf::Sprite*[this->mAvatarCount];
 	for(int i = 0; i < this->mAvatarCount; i++)
 	{
-		this->mAvatars[i] = SpriteParameterFactory::getSpriteParameterAvatar(true)->getSpritePtr(((RaceView*)this->mViewRaceGroup.getSelected())->getRace()->getAvatarIndex(i), CREATESCREEN_AVATAR_MAIN_WIDTH, CREATESCREEN_AVATAR_MAIN_HEIGHT);
+		this->mAvatars[i] = SpriteParameterFactory::getSpriteParameterAvatar(true)->getSpritePtr(((RaceView*)this->mViewRaceGroup.getSelection())->getRace()->getAvatarIndex(i), CREATESCREEN_AVATAR_MAIN_WIDTH, CREATESCREEN_AVATAR_MAIN_HEIGHT);
 	}
 	this->setAvatarSelected(0);
 
@@ -583,7 +583,7 @@ void CreateCharacterScreen::notifyRaceSelectedChange()
 
 void CreateCharacterScreen::notifyJobSelectedChange()
 {
-	this->mCharacter->setJob(((JobView*)this->mViewJobGroup.getSelected())->getJob());
+	this->mCharacter->setJob(((JobView*)this->mViewJobGroup.getSelection())->getJob());
 
 	for(int i = 0; i < CHARACTER_SKILL_COUNT; i++)
 	{

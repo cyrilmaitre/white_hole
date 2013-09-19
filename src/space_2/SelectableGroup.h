@@ -9,28 +9,28 @@ public:
 	~SelectableGroup(void);
 
 	// Getters - Setters
-	Selectable* getSelected();
-	bool isSelectedChanged();
+	Selectable* getSelection();
+	bool isSelectionChanged();
 	bool isEmpty();
 
-	bool isSelectedCanBeNull();
-	void setSelectedCanBeNull(bool p_value);
+	bool isSelectionCanBeNull();
+	void setSelectionCanBeNull(bool p_value);
 
 	// Methods
 	void addSelectable(Selectable* p_selectable);
 	void removeSelectable(Selectable* p_selectable);
 	void removeSelectable(int p_position);
 	void unselectAll();
-	void notifySelectedChange();
+	virtual void notifySelectionChanged();
 	void notifySelectableChanged();
 
 
 private:
 	// Attributs
 	std::vector<Selectable*> mSelectable;
-	Selectable* mSelected;
-	bool mSelectedChanged;
-	bool mSelectedCanBeNull;
+	Selectable* mSelection;
+	bool mSelectionChanged;
+	bool mSelectionCanBeNull;
 };
 
 

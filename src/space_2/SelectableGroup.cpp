@@ -5,9 +5,9 @@
 //******************************
 SelectableGroup::SelectableGroup(bool p_selectedCanBeNull)
 {
-	this->mSelectedChanged = false;
-	this->mSelectedCanBeNull = p_selectedCanBeNull;
-	this->mSelected = NULL;
+	this->mSelectionChanged = false;
+	this->mSelectionCanBeNull = p_selectedCanBeNull;
+	this->mSelection = NULL;
 }
 
 SelectableGroup::~SelectableGroup(void)
@@ -18,15 +18,15 @@ SelectableGroup::~SelectableGroup(void)
 //******************************
 // Getters - Setters
 //******************************
-Selectable* SelectableGroup::getSelected()
+Selectable* SelectableGroup::getSelection()
 {
-	return this->mSelected;
+	return this->mSelection;
 }
 
-bool SelectableGroup::isSelectedChanged()
+bool SelectableGroup::isSelectionChanged()
 {
-	bool returnValue = this->mSelectedChanged;
-	this->mSelectedChanged = false;
+	bool returnValue = this->mSelectionChanged;
+	this->mSelectionChanged = false;
 	return returnValue;
 }
 
@@ -35,14 +35,14 @@ bool SelectableGroup::isEmpty()
 	return this->mSelectable.size() == 0;
 }
 
-bool SelectableGroup::isSelectedCanBeNull()
+bool SelectableGroup::isSelectionCanBeNull()
 {
-	return this->mSelectedCanBeNull;
+	return this->mSelectionCanBeNull;
 }
 
-void SelectableGroup::setSelectedCanBeNull( bool p_value )
+void SelectableGroup::setSelectionCanBeNull( bool p_value )
 {
-	this->mSelectedCanBeNull = p_value;
+	this->mSelectionCanBeNull = p_value;
 }
 
 
@@ -89,14 +89,14 @@ void SelectableGroup::removeSelectable( int p_position )
 	bool notify = this->mSelectable[p_position]->isSelected();
 	this->mSelectable.erase(this->mSelectable.begin() + p_position);
 	if(notify)
-		this->notifySelectedChange();
+		this->notifySelectionChanged();
 	this->notifySelectableChanged();
 }
 
-void SelectableGroup::notifySelectedChange()
+void SelectableGroup::notifySelectionChanged()
 {
-	this->mSelectedChanged = true;
-	this->mSelected = NULL;
+	this->mSelectionChanged = true;
+	this->mSelection = NULL;
 
 	if(this->mSelectable.size() != 0)
 	{
@@ -104,7 +104,7 @@ void SelectableGroup::notifySelectedChange()
 		{
 			if(this->mSelectable[i]->isSelected())
 			{
-				this->mSelected = this->mSelectable[i];
+				this->mSelection = this->mSelectable[i];
 				break;
 			}
 		}
@@ -116,7 +116,7 @@ void SelectableGroup::notifySelectableChanged()
 	if(this->mSelectable.size() == 0)
 		return;
 
-	if(this->getSelected() == NULL)
+	if(this->getSelection() == NULL)
 	{
 		// Selecte first
 		for(int i = 0; i < this->mSelectable.size(); i++)
@@ -124,21 +124,21 @@ void SelectableGroup::notifySelectableChanged()
 			this->mSelectable[i]->setSelected(false);
 		}
 
-		if(!this->isSelectedCanBeNull())
+		if(!this->isSelectionCanBeNull())
 			this->mSelectable[0]->setSelected(true);
 
-		this->notifySelectedChange();
+		this->notifySelectionChanged();
 	}
 }
 
 void SelectableGroup::unselectAll()
 {
-	Selectable* selected = this->getSelected();
+	Selectable* selected = this->getSelection();
 	
 	if(selected != NULL)
 		selected->setSelected(false);
 
-	this->notifySelectedChange();
+	this->notifySelectionChanged();
 }
 
 

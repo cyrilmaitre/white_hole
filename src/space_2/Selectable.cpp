@@ -84,11 +84,11 @@ void Selectable::updateSelected()
 	{
 		if(this->mClicked && !this->isSelected())
 		{
-			Selectable* selectedCurrent = this->getGroup()->getSelected();
+			Selectable* selectedCurrent = this->getGroup()->getSelection();
 			if(selectedCurrent != NULL)
 				selectedCurrent->setSelected(false);
 			this->setSelected(true);
-			this->getGroup()->notifySelectedChange();
+			this->getGroup()->notifySelectionChanged();
 		}
 	}
 }

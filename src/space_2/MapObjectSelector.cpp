@@ -8,7 +8,7 @@
 //*************************************************************
 MapObjectSelector::MapObjectSelector(void)
 {
-	this->mMapObjectSelectable.setSelectedCanBeNull(true);
+	this->mMapObjectSelectable.setSelectionCanBeNull(true);
 	this->mObjectSelectedOutOfScreen = false;
 }
 
@@ -22,7 +22,7 @@ MapObjectSelector::~MapObjectSelector(void)
 //*************************************************************
 MapObject* MapObjectSelector::getSelectedMapObject()
 {
-	Selectable* selected = this->mMapObjectSelectable.getSelected();
+	Selectable* selected = this->mMapObjectSelectable.getSelection();
 	if(selected != NULL)
 		return (MapObject*)selected;
 	else
@@ -71,11 +71,11 @@ bool MapObjectSelector::hasObjectSelected()
 //*************************************************************
 void MapObjectSelector::update()
 {
-	if(this->mMapObjectSelectable.isSelectedChanged())
+	if(this->mMapObjectSelectable.isSelectionChanged())
 	{
-		if(this->mMapObjectSelectable.getSelected() != NULL)
+		if(this->mMapObjectSelectable.getSelection() != NULL)
 		{
-			MapObject* selectedObject = (MapObject*)this->mMapObjectSelectable.getSelected();
+			MapObject* selectedObject = (MapObject*)this->mMapObjectSelectable.getSelection();
 			Entity* selectedEntity = dynamic_cast<Entity*>(selectedObject);
 			bool windowEntity = true;
 

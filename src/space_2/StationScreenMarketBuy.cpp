@@ -63,10 +63,10 @@ void StationScreenMarketBuy::reset()
 
 void StationScreenMarketBuy::update()
 {
-	if(this->mTreeItemType.isSelectedChanged())
+	if(this->mTreeItemType.isSelectionChanged())
 		this->notifyItemTypeSelectedChanged();
 
-	if(this->mItemList.isSelectedChanged())
+	if(this->mItemList.isSelectionChanged())
 		this->notifyItemSelectedChanged();
 
 	this->mItemStock.update();
@@ -136,7 +136,7 @@ void StationScreenMarketBuy::notifySizeChanged()
 void StationScreenMarketBuy::notifyItemTypeSelectedChanged()
 {
 	// Get ItemType Selected
-	Node* selectedNode = dynamic_cast<Node*>(this->mTreeItemType.getSelected());
+	Node* selectedNode = dynamic_cast<Node*>(this->mTreeItemType.getSelection());
 	ItemType* selectedItemType = NULL;
 	if(selectedNode != NULL)
 		selectedItemType = dynamic_cast<ItemType*>(selectedNode->getNodeData());
@@ -160,7 +160,7 @@ void StationScreenMarketBuy::notifyItemTypeSelectedChanged()
 
 void StationScreenMarketBuy::notifyItemSelectedChanged()
 {
-	MarketItemListView* selectedItemView = dynamic_cast<MarketItemListView*>(this->mItemList.getSelected());
+	MarketItemListView* selectedItemView = dynamic_cast<MarketItemListView*>(this->mItemList.getSelection());
 	if(selectedItemView != NULL)
 	{
 		Item* selectedItem = selectedItemView->getItem();
