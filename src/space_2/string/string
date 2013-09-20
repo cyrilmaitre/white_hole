@@ -49,6 +49,7 @@ error = Error
 success = Success
 buy = Buy
 sell = Sell
+totalMaj = TOTAL
 #
 #
 # Running stats
@@ -462,6 +463,7 @@ marketBuyStockCurrent = Current stock:
 marketBuyQuantity = Quantity to buy:
 marketBuyQuantityAll = All
 marketBuyToBank = Destination:
+marketBuyAverage = Average:
 #
 #
 # Dashboard

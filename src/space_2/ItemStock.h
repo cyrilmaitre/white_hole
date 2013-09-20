@@ -28,6 +28,7 @@ public:
 	void setStockMax(long p_max);
 
 	float getStockCurrent();
+	float getStockSpaceAvailable();
 	void setStockCurrent(float p_current);
 
 	bool isStockCurrentChanged();

@@ -62,12 +62,12 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
-      <PrecompiledHeader>
-      </PrecompiledHeader>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>D:\Projets\white_hole\lib\boost\boost_1_54_0;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -121,6 +121,7 @@
     <ClCompile Include="ImpactLaser.cpp" />
     <ClCompile Include="ImpactManager.cpp" />
     <ClCompile Include="ItemStock.cpp" />
+    <ClCompile Include="ItemStockSimulator.cpp" />
     <ClCompile Include="Level.cpp" />
     <ClCompile Include="Levelable.cpp" />
     <ClCompile Include="LevelCharacter.cpp" />
@@ -408,6 +409,7 @@
     <ClInclude Include="ImpactLaser.h" />
     <ClInclude Include="ImpactManager.h" />
     <ClInclude Include="ItemStock.h" />
+    <ClInclude Include="ItemStockSimulator.h" />
     <ClInclude Include="json-forwards.h" />
     <ClInclude Include="json.h" />
     <ClInclude Include="Level.h" />

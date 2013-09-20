@@ -95,6 +95,13 @@ float ItemStock::getStockCurrent()
 	return this->mStockCurrent;
 }
 
+float ItemStock::getStockSpaceAvailable()
+{
+	sf::Lock lock(this->mMutex);
+
+	return this->mStockMax - this->mStockCurrent;
+}
+
 void ItemStock::setStockCurrent( float p_current )
 {
 	sf::Lock lock(this->mMutex);
@@ -189,10 +196,6 @@ void ItemStock::notifyStockCurrentChanged()
 {
 	this->mStockCurrentChanged = true;
 }
-
-
-
-
 
 
 

@@ -5,6 +5,7 @@
 #include "TextField.h"
 #include "DropDownList.h"
 #include "Button.h"
+#include "ItemStockSimulator.h"
 
 class MarketItemBuyView : public FieldSet
 {
@@ -21,6 +22,9 @@ public:
 	void update();
 	void updatePosition();
 	void updateDestinations();
+	void updateFieldsetTotalPosition();
+	void updateFieldsetTotalSize();
+	void updateFieldsetTotal();
 	void checkQuantityValue();
 	void update(sf::Event p_event);
 	void draw();
@@ -32,10 +36,17 @@ public:
 private:
 	// Attributs
 	ItemStock* mItemStock;
+	ItemStockSimulator mItemStockSimulator;
 	TextBox mTBQuantity;
 	TextField mTFQuantity;
 	Button mButtonQuantityAll;
 	TextBox mTBDestination;
 	DropDownList mDDLDestination;
+	FieldSet mFieldsetTotal;
+	TextBox mTBTotalLabel;
+	TextBox mTBTotal;
+	TextBox mTBTotalAverage;
+
+	mks::Clock mUpdateClock;
 };
 
