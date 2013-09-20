@@ -490,7 +490,6 @@ marketBuySuccessMsg2 = ) successfully added to
 marketBuySuccessMsg3 = Price:
 marketBuySuccessMsg4 = Old balance:
 marketBuySuccessMsg5 = New balance:
-marketBuySuccessMsg6 = (Quantity changed due to stock changes)
 #
 #
 # Dashboard

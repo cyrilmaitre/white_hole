@@ -114,6 +114,9 @@ void MarketItemBuyView::buy()
 	Game::game->getCharacter()->decCredit(price);
 	double newBalance = Game::game->getCharacter()->getCredit();
 
+	// Dec stock
+	this->mItemStock->decStockCurrent(quantity);
+
 	// Add to containerable
 	ContainerDropDown* destinationDropDown = (ContainerDropDown*)this->mDDLDestination.getSelectedDropDownable();
 	Containerable* destination = destinationDropDown->getContainer();
@@ -126,8 +129,6 @@ void MarketItemBuyView::buy()
 	messageSuccess += Resource::resource->getBundle()->getString("marketBuySuccessMsg3") + Tools::getSpaceAfterColon() + Tools::formatNumber(price) + "<br/>";
 	messageSuccess += Resource::resource->getBundle()->getString("marketBuySuccessMsg4") + Tools::getSpaceAfterColon() + Tools::formatNumber(oldBalance) + "<br/>";
 	messageSuccess += Resource::resource->getBundle()->getString("marketBuySuccessMsg5") + Tools::getSpaceAfterColon() + Tools::formatNumber(newBalance);
-	if(quantityChanged)
-		messageSuccess += "<br/>  <br/>" + Resource::resource->getBundle()->getString("marketBuySuccessMsg6");
 	UserInterface::mUserInterface->addWindowPopup(new WindowMessageSuccess(Resource::resource->getBundle()->getString("marketBuySuccessTitle"), messageSuccess));
 }
 

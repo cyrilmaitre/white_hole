@@ -173,7 +173,7 @@ bool Containerable::addItemStack( ItemStack* p_itemStack )
 					}
 					else
 					{
-						if(p_itemStack->getStackSize() > 0 && currentStack->getItemStack()->getItem()->getId() == p_itemStack->getItem()->getId())
+						if(p_itemStack->getStackSize() > 0 && currentStack->getItemStack()->getItem()->getId() == p_itemStack->getItem()->getId() && currentStack->getItemStack()->getStackSizeFree() > 0)
 						{
 							p_itemStack->setStackSize(currentStack->incStackSize(p_itemStack->getStackSize()));
 							this->notifyContentChanged();
