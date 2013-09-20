@@ -3,6 +3,9 @@
 #include "Game.h"
 #include "CharacterBank.h"
 #include "Tools.h"
+#include "UserInterface.h"
+#include "WindowMessageError.h"
+#include "WindowChoiceAsk.h"
 
 
 //*************************************************************
@@ -29,6 +32,7 @@
 #define TBTOTALAVERAGE_FONTSIZE				14
 #define BUTTONBUY_MARGINTOP					40
 #define UPDATE_TICK							500	// ms
+#define ACTIONCOMMAND_BUY					"actionbuy"
 
 
 //*************************************************************
@@ -91,6 +95,43 @@ void MarketItemBuyView::setItemStock( ItemStock* p_stock )
 //*************************************************************
 // Methods
 //*************************************************************
+void MarketItemBuyView::buy()
+{
+
+}
+
+void MarketItemBuyView::buyConfirmation()
+{
+	// Check price
+	if(!Game::game->getCharacter()->hasEnoughCredit(this->mItemStockSimulator.getBuyPrice()))
+	{
+		std::string messageError = Resource::resource->getBundle()->getString("marketBuyErrorMoneyMsg1") + "<br/>";
+		messageError += Resource::resource->getBundle()->getString("marketBuyErrorMoneyMsg2") + Tools::getSpaceAfterColon() + Tools::formatNumber(Game::game->getCharacter()->getCredit()) + " " + Resource::resource->getBundle()->getString("creditAb") + "<br/>";
+		messageError += Resource::resource->getBundle()->getString("marketBuyErrorMoneyMsg3") + Tools::getSpaceAfterColon() + Tools::formatNumber(this->mItemStockSimulator.getBuyPrice()) + " " + Resource::resource->getBundle()->getString("creditAb") + "<br/>";
+		messageError += Resource::resource->getBundle()->getString("marketBuyErrorMoneyMsg4") + Tools::getSpaceAfterColon() + Tools::formatNumber(this->mItemStockSimulator.getBuyPrice() - Game::game->getCharacter()->getCredit()) + " " + Resource::resource->getBundle()->getString("creditAb");
+		UserInterface::mUserInterface->addWindowPopup(new WindowMessageError(Resource::resource->getBundle()->getString("marketBuyErrorMoneyTitle"), messageError));
+		return;
+	}
+
+	// Check space
+	ContainerDropDown* destination = (ContainerDropDown*)this->mDDLDestination.getSelectedDropDownable();
+	int contentFree = destination->getContainer()->getContentFreeFor(this->mItemStock->getItem());
+	if(contentFree < this->mItemStockSimulator.getBuyQuantity())
+	{
+		std::string messageError = Resource::resource->getBundle()->getString("marketBuyErrorSpaceMsg1") + destination->getText() + "<br/>";
+		messageError += Resource::resource->getBundle()->getString("marketBuyErrorSpaceMsg2") + Tools::getSpaceAfterColon() + Tools::formatNumber(contentFree) + "<br/>";
+		messageError += Resource::resource->getBundle()->getString("marketBuyErrorSpaceMsg3") + Tools::getSpaceAfterColon() + Tools::formatNumber(this->mItemStockSimulator.getBuyQuantity()) + "<br/>";
+		messageError += Resource::resource->getBundle()->getString("marketBuyErrorSpaceMsg4") + Tools::getSpaceAfterColon() + Tools::formatNumber(this->mItemStockSimulator.getBuyQuantity() - contentFree);
+		UserInterface::mUserInterface->addWindowPopup(new WindowMessageError(Resource::resource->getBundle()->getString("marketBuyErrorSpaceTitle"), messageError));
+		return;
+	}
+
+	// Confirmation
+	UserInterface::mUserInterface->addWindowPopup(new WindowChoiceAsk(	Resource::resource->getBundle()->getString("windowAskBankTitle"), 
+		Resource::resource->getBundle()->getString("windowAskBankMessage") + " " + Tools::formatNumber(currentBank->getPrice()) + " " + Resource::resource->getBundle()->getString("creditAb") + "?", 
+		this, currentBank, ACTIONCOMMAND_UNLOCKBANK));
+}
+
 void MarketItemBuyView::update()
 {
 	if(this->mUpdateClock.getElapsedTimeAsMilliseconds() > UPDATE_TICK)
@@ -119,6 +160,9 @@ void MarketItemBuyView::update( sf::Event p_event )
 			if(this->mItemStock != NULL)
 				this->mTFQuantity.setValue(Tools::buildStringWithLong(this->mItemStock->getStockCurrent()));
 		}
+
+		if(this->mButtonBuy.isClicked())
+			this->buyConfirmation();
 	}
 	FieldSet::update(p_event);
 }
@@ -161,6 +205,8 @@ void MarketItemBuyView::updateFieldsetTotal()
 		this->mPUBTotalDetail.clear(false);
 		this->mPUBTotalDetail.addLine(Resource::resource->getBundle()->getString("marketBuyPriceMin") + Tools::getSpaceAfterColon() + Tools::formatNumber(this->mItemStockSimulator.getBuyPriceMin()), false);
 		this->mPUBTotalDetail.addLine(Resource::resource->getBundle()->getString("marketBuyPriceMax") + Tools::getSpaceAfterColon() + Tools::formatNumber(this->mItemStockSimulator.getBuyPriceMax()));
+
+		this->mButtonBuy.setEnable(quantity > 0);
 
 		this->updateFieldsetTotalPosition();
 	}
@@ -238,4 +284,14 @@ void MarketItemBuyView::notifySizeChanged()
 	FieldSet::notifySizeChanged();
 	this->updateFieldsetTotalSize();
 	this->updatePosition();
+}
+
+void MarketItemBuyView::onButtonTrueClicked( WindowChoiceActionObject* p_object, std::string p_actionCommand )
+{
+	this->buy();
+}
+
+void MarketItemBuyView::onButtonFalseClicked( WindowChoiceActionObject* p_object, std::string p_actionCommand )
+{
+
 }

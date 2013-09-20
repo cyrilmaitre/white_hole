@@ -90,6 +90,35 @@ void Containerable::setType( ContainerStack::ContainerStackType p_type )
 	this->mType = p_type;
 }
 
+long Containerable::getContentFreeFor( Item* p_item )
+{
+	long contentfree = 0;
+	for(int i = 0; i < this->getContainerRowCount(); i++)
+	{
+		for(int j = 0; j < CONTAINER_ROW_SIZE; j++)
+		{
+			ContainerRow* currentRow = this->getContainerRow(i);
+			if(currentRow != NULL)
+			{
+				ContainerStack* currentStack = currentRow->getContainerStack(j);
+				if(currentStack != NULL)
+				{
+					if(currentStack->hasItemStack())
+					{
+						if(currentStack->getItemStack()->getItem()->getId() == p_item->getId())
+							contentfree += currentStack->getItemStack()->getStackSizeFree();
+					}
+					else
+					{
+						contentfree += p_item->getStackMax();
+					}
+				}
+			}
+		}
+	}
+	return contentfree;
+}
+
 
 //*************************************************************
 // Methods
@@ -155,7 +184,7 @@ bool Containerable::addItemStack( ItemStack* p_itemStack )
 		}
 	}
 
-	if(p_itemStack->getStackSize() > 0)
+	if(p_itemStack->getStackSize() > 0 && freeRowPosition != -1 && freeStackPosition != -1)
 	{
 		ContainerRow* currentRow = this->getContainerRow(freeRowPosition);
 		if(currentRow != NULL)
@@ -202,6 +231,34 @@ bool Containerable::addItemStack( ItemStack* p_itemStack, int p_position )
 		}
 	}
 	return this->addItemStack(p_itemStack);
+}
+
+bool Containerable::addItem( Item* p_item, int p_quantity )
+{
+	if(p_item != NULL)
+	{
+		bool returnValue = true;
+		int numberOfFullStack = p_quantity / p_item->getStackMax();
+		int lastStackSize = p_quantity % p_item->getStackMax();
+
+		if(numberOfFullStack > 0)
+		{
+			for(int i = 0; i < numberOfFullStack; i++)
+			{
+				ItemStack* newItemStack = new ItemStack(p_item, p_item->getStackMax());
+				returnValue = this->addItemStack(newItemStack);
+			}
+		}
+
+		if(lastStackSize > 0)
+		{
+			ItemStack* newItemStack = new ItemStack(p_item, lastStackSize);
+			returnValue = this->addItemStack(newItemStack);
+		}
+
+		return returnValue;
+	}
+	return false;
 }
 
 void Containerable::updateContentEstimation()

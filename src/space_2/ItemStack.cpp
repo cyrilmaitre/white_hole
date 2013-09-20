@@ -12,26 +12,36 @@ ItemStack::ItemStack() : mItem(NULL)
 	this->mStackPrice = 0;
 }
 
-ItemStack::ItemStack(Json::Value json) : mItem(NULL)
+ItemStack::ItemStack(Json::Value p_json) : mItem(NULL)
 {
 	this->mId = -1;
 	this->mStackSize = 0;
 	this->mStackPrice = 0;
 
-	this->loadFromJson(json);
+	this->loadFromJson(p_json);
 }
 
-ItemStack::ItemStack( LootItemModel* lootItem ) : mItem(NULL)
+ItemStack::ItemStack( LootItemModel* p_lootItem ) : mItem(NULL)
 {
 	this->mId = -1;
 	this->mStackSize = 0;
 	this->mStackPrice = 0;
 
-	if(lootItem != NULL)
+	if(p_lootItem != NULL)
 	{
-		this->setStackSize(lootItem->generateQuantity());
-		this->setItem(lootItem->getItem());
+		this->setStackSize(p_lootItem->generateQuantity());
+		this->setItem(p_lootItem->getItem());
 	}
+}
+
+ItemStack::ItemStack( Item* p_item, int p_stackSize )
+{
+	this->mId = -1;
+	this->mStackSize = 0;
+	this->mStackPrice = 0;
+
+	this->setStackSize(p_stackSize);
+	this->setItem(p_item);
 }
 
 ItemStack::~ItemStack(void)

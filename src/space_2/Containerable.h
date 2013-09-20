@@ -23,6 +23,8 @@ public:
 	bool isContentChanged();
 	void setCargoMax(int p_cargoMax);
 
+	long getContentFreeFor(Item* p_item);
+
 	ContainerStack::ContainerStackType getType();
 	void setType(ContainerStack::ContainerStackType p_type);
 
@@ -32,6 +34,7 @@ public:
 	void updateContentEstimation();
 	bool addItemStack(ItemStack* p_itemStack);
 	bool addItemStack(ItemStack* p_itemStack, int p_position);
+	bool addItem(Item* p_item, int p_quantity);
 	
 
 private:

@@ -7,8 +7,9 @@
 #include "Button.h"
 #include "ItemStockSimulator.h"
 #include "PopupBubble.h"
+#include "WindowChoiceAction.h"
 
-class MarketItemBuyView : public FieldSet
+class MarketItemBuyView : public FieldSet, public WindowChoiceAction
 {
 public:
 	// Constructor - Destructor
@@ -20,6 +21,8 @@ public:
 	void setItemStock(ItemStock* p_stock);
 
 	// Methods
+	void buy();
+	void buyConfirmation();
 	void update();
 	void updatePosition();
 	void updateDestinations();
@@ -32,6 +35,8 @@ public:
 	void notifyItemStockChanged();
 	void notifyPositionChanged();
 	void notifySizeChanged();
+	void onButtonTrueClicked(WindowChoiceActionObject* p_object, std::string p_actionCommand);
+	void onButtonFalseClicked(WindowChoiceActionObject* p_object, std::string p_actionCommand);
 		
 
 private:

@@ -12,8 +12,9 @@ class ItemStack
 public:
 	// Constructor - Destructor
 	ItemStack();
-	ItemStack(Json::Value json);
-	ItemStack(LootItemModel* lootItem);
+	ItemStack(Json::Value p_json);
+	ItemStack(LootItemModel* p_lootItem);
+	ItemStack(Item* p_item, int p_stackSize);
 	~ItemStack(void);
 
 	// Getters - Setters

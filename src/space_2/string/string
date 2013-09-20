@@ -466,6 +466,16 @@ marketBuyToBank = Destination:
 marketBuyAverage = Average:
 marketBuyPriceMin = Price min:
 marketBuyPriceMax = Price max: 
+marketBuyErrorMoneyTitle = Not enough money
+marketBuyErrorMoneyMsg1 = You don't have enough money !
+marketBuyErrorMoneyMsg2 = Credit available:
+marketBuyErrorMoneyMsg3 = Credit needed:
+marketBuyErrorMoneyMsg4 = Difference:
+marketBuyErrorSpaceTitle = Not enough space
+marketBuyErrorSpaceMsg1 = You don't have enough space into 
+marketBuyErrorSpaceMsg2 = Space available:
+marketBuyErrorSpaceMsg3 = Space needed:
+marketBuyErrorSpaceMsg4 = Difference:
 #
 #
 # Dashboard
