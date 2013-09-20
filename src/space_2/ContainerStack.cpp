@@ -100,6 +100,7 @@ bool ContainerStack::isItemStackChanged()
 void ContainerStack::notifyItemStackChanged()
 {
 	this->mItemStackChanged = true;
+	this->getContainerRow()->getContainerable()->notifyContentChanged();
 
 	// Update server
 	switch(this->mType)
