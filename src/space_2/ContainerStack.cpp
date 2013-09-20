@@ -38,13 +38,14 @@ ItemStack* ContainerStack::getItemStack()
 	return this->mItemStack;
 }
 
-void ContainerStack::setItemStack( ItemStack *p_stack, bool p_removePrec )
+void ContainerStack::setItemStack( ItemStack *p_stack, bool p_removePrec, bool p_notify )
 {
 	if(p_removePrec && this->mItemStack != NULL && this->mItemStack != p_stack)
 		delete this->mItemStack;
 
 	this->mItemStack = p_stack;
-	this->notifyItemStackChanged();
+	if(p_notify)
+		this->notifyItemStackChanged();
 }
 
 bool ContainerStack::hasItemStack()
@@ -123,32 +124,35 @@ void ContainerStack::addItemTypeAllowed( ItemType* p_type )
 	this->mItemTypesAllowed.push_back(p_type);
 }
 
-int ContainerStack::incStackSize( int p_size )
+int ContainerStack::incStackSize( int p_size, bool p_notify )
 {
 	if(this->mItemStack != NULL)
 	{
 		int returnValue = this->mItemStack->incStackSize(p_size);
-		this->notifyItemStackChanged();
+		if(p_notify)
+			this->notifyItemStackChanged();
 		return returnValue;
 	}
 }
 
-int ContainerStack::decStackSize( int p_size )
+int ContainerStack::decStackSize( int p_size, bool p_notify )
 {
 	if(this->mItemStack != NULL)
 	{
 		int returnValue = this->mItemStack->decStackSize(p_size);
-		this->notifyItemStackChanged();
+		if(p_notify)
+			this->notifyItemStackChanged();
 		return returnValue;
 	}
 }
 
-void ContainerStack::setStackSize( int p_size )
+void ContainerStack::setStackSize( int p_size, bool p_notify )
 {
 	if(this->mItemStack != NULL)
 	{
 		this->mItemStack->setStackSize(p_size);
-		this->notifyItemStackChanged();
+		if(p_notify)
+			this->notifyItemStackChanged();
 	}
 }
 

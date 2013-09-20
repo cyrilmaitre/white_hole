@@ -159,7 +159,7 @@ void CharacterBank::loadFromJson( Json::Value json )
 		{
 			Json::Value currentItemStack = itemStacks.get(i, NULL);
 			ItemStack* currentStack = new ItemStack(currentItemStack.get(JSON_ITEMSTACK, NULL));
-			this->addItemStack(currentStack, currentItemStack.get(JSON_ITEMSTACKPOSITION, 0).asInt());
+			this->addItemStack(currentStack, currentItemStack.get(JSON_ITEMSTACKPOSITION, 0).asInt(), false);
 		}
 	}
 }

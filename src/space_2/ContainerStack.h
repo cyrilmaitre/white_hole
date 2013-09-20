@@ -23,7 +23,7 @@ public:
 	ContainerRow* getContainerRow();
 
 	ItemStack* getItemStack();
-	void setItemStack(ItemStack *p_stack, bool p_removePrec = false);
+	void setItemStack(ItemStack *p_stack, bool p_removePrec = false, bool p_notify = true);
 	bool hasItemStack();
 
 	ContainerStackType getType();
@@ -39,9 +39,9 @@ public:
 	void addItemTypeAllowed(ItemType* p_type);
 	void notifyItemStackChanged();
 
-	int incStackSize(int p_size);
-	int decStackSize(int p_size);
-	void setStackSize(int p_size);
+	int incStackSize(int p_size, bool p_notify = true);
+	int decStackSize(int p_size, bool p_notify = true);
+	void setStackSize(int p_size, bool p_notify = true);
 
 
 private:

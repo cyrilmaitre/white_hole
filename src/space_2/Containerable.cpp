@@ -206,7 +206,7 @@ bool Containerable::addItemStack( ItemStack* p_itemStack )
 	return false;
 }
 
-bool Containerable::addItemStack( ItemStack* p_itemStack, int p_position )
+bool Containerable::addItemStack( ItemStack* p_itemStack, int p_position, bool p_notify )
 {
 	if(this->getContainerRowCount() == 0)
 		return false;
@@ -225,7 +225,7 @@ bool Containerable::addItemStack( ItemStack* p_itemStack, int p_position )
 		ContainerStack* currentStack = currentRow->getContainerStack(stackPosition);
 		if(currentStack != NULL && !currentStack->hasItemStack())
 		{
-			currentStack->setItemStack(p_itemStack);
+			currentStack->setItemStack(p_itemStack, false, p_notify);
 			this->notifyContentChanged();
 			return true;
 		}
