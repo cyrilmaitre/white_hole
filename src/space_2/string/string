@@ -464,6 +464,8 @@ marketBuyQuantity = Quantity to buy:
 marketBuyQuantityAll = All
 marketBuyToBank = Destination:
 marketBuyAverage = Average:
+marketBuyPriceMin = Price min:
+marketBuyPriceMax = Price max: 
 #
 #
 # Dashboard

@@ -6,6 +6,7 @@
 #include "DropDownList.h"
 #include "Button.h"
 #include "ItemStockSimulator.h"
+#include "PopupBubble.h"
 
 class MarketItemBuyView : public FieldSet
 {
@@ -46,6 +47,7 @@ private:
 	TextBox mTBTotalLabel;
 	TextBox mTBTotal;
 	TextBox mTBTotalAverage;
+	PopupBubble mPUBTotalDetail;
 
 	mks::Clock mUpdateClock;
 };

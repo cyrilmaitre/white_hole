@@ -33,7 +33,7 @@
 //*************************************************************
 // Constructor - Destructor
 //*************************************************************
-MarketItemBuyView::MarketItemBuyView(void)
+MarketItemBuyView::MarketItemBuyView(void) : mPUBTotalDetail(&this->mTBTotalAverage)
 {
 	this->mItemStock = NULL;
 
@@ -98,6 +98,7 @@ void MarketItemBuyView::update()
 	}
 
 	this->mDDLDestination.update();
+	this->mPUBTotalDetail.update();
 }
 
 void MarketItemBuyView::update( sf::Event p_event )
@@ -107,6 +108,8 @@ void MarketItemBuyView::update( sf::Event p_event )
 		this->mTFQuantity.update(p_event);
 		this->mButtonQuantityAll.update(p_event);
 		this->mDDLDestination.update(p_event);
+		this->mTBTotalAverage.update(p_event);
+		this->mPUBTotalDetail.update(p_event);
 
 		if(this->mButtonQuantityAll.isClicked())
 		{
@@ -151,6 +154,10 @@ void MarketItemBuyView::updateFieldsetTotal()
 		this->mTBTotal.setText(Tools::formatNumber(this->mItemStockSimulator.getBuyPrice()) + " " + Resource::resource->getBundle()->getString("creditAb"));
 		this->mTBTotalAverage.setText("(" + Resource::resource->getBundle()->getString("marketBuyAverage") + Tools::getSpaceAfterColon() + Tools::formatNumber(this->mItemStockSimulator.getBuyPriceAve()) + " " + Resource::resource->getBundle()->getString("creditAb") + ")");
 		
+		this->mPUBTotalDetail.clear(false);
+		this->mPUBTotalDetail.addLine(Resource::resource->getBundle()->getString("marketBuyPriceMin") + Tools::getSpaceAfterColon() + Tools::formatNumber(this->mItemStockSimulator.getBuyPriceMin()), false);
+		this->mPUBTotalDetail.addLine(Resource::resource->getBundle()->getString("marketBuyPriceMax") + Tools::getSpaceAfterColon() + Tools::formatNumber(this->mItemStockSimulator.getBuyPriceMax()));
+
 		this->updateFieldsetTotalPosition();
 	}
 }	
