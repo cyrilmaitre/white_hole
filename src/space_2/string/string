@@ -476,6 +476,14 @@ marketBuyErrorSpaceMsg1 = You don't have enough space into
 marketBuyErrorSpaceMsg2 = Space available:
 marketBuyErrorSpaceMsg3 = Space needed:
 marketBuyErrorSpaceMsg4 = Difference:
+marketBuyConfirmationTitle = Confirmation
+marketBuyConfirmationMsg1 = Buy
+marketBuyConfirmationMsg2 = (x
+marketBuyConfirmationMsg3 = ) for
+marketBuyConfirmationMsg4 = cred.?
+marketBuyConfirmationMsg5 = You have
+marketBuyConfirmationMsg6 = cred. and after this transaction you will have
+marketBuyConfirmationMsg7 = cred.
 #
 #
 # Dashboard
