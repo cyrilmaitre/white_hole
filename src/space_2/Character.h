@@ -31,9 +31,9 @@ public:
 	std::string getAvatarId();
 	void setAvatarId(std::string p_id);
 
-	bool hasEnoughCredit(long p_credit);
-	long getCredit();
-	void setCredit(long p_credit);
+	bool hasEnoughCredit(double p_credit);
+	double getCredit();
+	void setCredit(double p_credit);
 
 	long getDateCreation();
 	void setDateCreation(long p_date);
@@ -81,8 +81,8 @@ public:
 	void addShip(CharacterShip* p_ship); 
 	void addBank(CharacterBank* p_bank);
 
-	void incCredit(long p_inc);
-	void decCredit(long p_dec);
+	void incCredit(double p_inc);
+	void decCredit(double p_dec);
 	void incSkillPoints();
 	void incSkillPoints(int p_inc);
 	void decSkillPoints();
@@ -103,7 +103,7 @@ private:
 	std::string mName;
 	std::string mAvatarId;
 	int mSkillPoints;
-	long mCredit;
+	double mCredit;
 	long mDateCreation;
 	long mTimePlayed;
 	float mTimeBuffer;

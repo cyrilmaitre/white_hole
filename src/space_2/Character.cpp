@@ -124,17 +124,17 @@ void Character::setAvatarId( std::string p_id )
 	this->mAvatarId = p_id;
 }
 
-bool Character::hasEnoughCredit( long p_credit )
+bool Character::hasEnoughCredit( double p_credit )
 {
 	return this->getCredit() >= p_credit;
 }
 
-long Character::getCredit()
+double Character::getCredit()
 {
 	return this->mCredit;
 }
 
-void Character::setCredit( long p_credit )
+void Character::setCredit( double p_credit )
 {
 	this->mCredit = p_credit;
 }
@@ -340,7 +340,7 @@ void Character::loadFromJson( Json::Value json )
 	this->setLevel(json.get(CHARACTER_JSON_LEVEL, 0).asInt());
 	this->setLevelConfig(FactoryGet::getLevelFactory()->getLevelCharacter());
 	this->setExperience(json.get(CHARACTER_JSON_EXPERIENCE, 0).asInt());
-	this->setCredit(json.get(CHARACTER_JSON_CREDIT, 0).asInt64());
+	this->setCredit(json.get(CHARACTER_JSON_CREDIT, 0).asDouble());
 	this->setDateCreation(json.get(CHARACTER_JSON_DATECREATION, 0).asInt());
 	this->setTimePlayed(json.get(CHARACTER_JSON_TIMEPLAYED, 0).asInt());
 	this->setAlive(json.get(CHARACTER_JSON_ALIVE, 0).asBool());
@@ -431,13 +431,13 @@ void Character::addBank( CharacterBank* p_bank )
 	this->mBanks.push_back(p_bank);
 }
 
-void Character::incCredit( long p_inc )
+void Character::incCredit( double p_inc )
 {
 	this->setCredit(this->getCredit() + p_inc);
 	NetworkJobManager::getInstance()->addJob(new CharacterUpdate(this));
 }
 
-void Character::decCredit( long p_dec )
+void Character::decCredit( double p_dec )
 {
 	this->setCredit(this->getCredit() - p_dec);
 	NetworkJobManager::getInstance()->addJob(new CharacterUpdate(this));
