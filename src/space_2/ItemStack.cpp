@@ -34,7 +34,7 @@ ItemStack::ItemStack( LootItemModel* p_lootItem ) : mItem(NULL)
 	}
 }
 
-ItemStack::ItemStack( Item* p_item, int p_stackSize )
+ItemStack::ItemStack( Item* p_item, int p_stackSize ) : mItem(NULL)
 {
 	this->mId = -1;
 	this->mStackSize = 0;

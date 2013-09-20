@@ -6,6 +6,7 @@
 #include "UserInterface.h"
 #include "WindowMessageError.h"
 #include "WindowChoiceAsk.h"
+#include "WindowMessageSuccess.h"
 
 
 //*************************************************************
@@ -97,7 +98,37 @@ void MarketItemBuyView::setItemStock( ItemStock* p_stock )
 //*************************************************************
 void MarketItemBuyView::buy()
 {
+	// Check quantity & get price
+	int quantity = this->mItemStockSimulator.getBuyQuantity();
+	bool quantityChanged = false;
+	if(quantity > this->mItemStock->getStockCurrent())
+	{
+		quantity = this->mItemStock->getStockCurrent();
+		this->mItemStockSimulator.computeBuyPrice(quantity);
+		quantityChanged = true;
+	}
+	float price = this->mItemStockSimulator.getBuyPrice();
+	
+	// Dec credit
+	double oldBalance = Game::game->getCharacter()->getCredit();
+	Game::game->getCharacter()->decCredit(price);
+	double newBalance = Game::game->getCharacter()->getCredit();
 
+	// Add to containerable
+	ContainerDropDown* destinationDropDown = (ContainerDropDown*)this->mDDLDestination.getSelectedDropDownable();
+	Containerable* destination = destinationDropDown->getContainer();
+	destination->addItem(this->mItemStock->getItem(), quantity);
+
+	// Success message
+	std::string messageSuccess = this->mItemStock->getItem()->getName() + " " + Resource::resource->getBundle()->getString("marketBuySuccessMsg1");
+	messageSuccess += Tools::formatNumber(quantity) + Resource::resource->getBundle()->getString("marketBuySuccessMsg2") + " ";
+	messageSuccess += destinationDropDown->getText() + "<br/>";
+	messageSuccess += Resource::resource->getBundle()->getString("marketBuySuccessMsg3") + Tools::getSpaceAfterColon() + Tools::formatNumber(price) + "<br/>";
+	messageSuccess += Resource::resource->getBundle()->getString("marketBuySuccessMsg4") + Tools::getSpaceAfterColon() + Tools::formatNumber(oldBalance) + "<br/>";
+	messageSuccess += Resource::resource->getBundle()->getString("marketBuySuccessMsg5") + Tools::getSpaceAfterColon() + Tools::formatNumber(newBalance);
+	if(quantityChanged)
+		messageSuccess += "<br/>  <br/>" + Resource::resource->getBundle()->getString("marketBuySuccessMsg6");
+	UserInterface::mUserInterface->addWindowPopup(new WindowMessageSuccess(Resource::resource->getBundle()->getString("marketBuySuccessTitle"), messageSuccess));
 }
 
 void MarketItemBuyView::buyConfirmation()

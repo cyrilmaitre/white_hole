@@ -484,6 +484,13 @@ marketBuyConfirmationMsg4 = cred.?
 marketBuyConfirmationMsg5 = You have
 marketBuyConfirmationMsg6 = cred. and after this transaction you will have
 marketBuyConfirmationMsg7 = cred.
+marketBuySuccessTitle = Transaction success
+marketBuySuccessMsg1 = (x
+marketBuySuccessMsg2 = ) successfully added to
+marketBuySuccessMsg3 = Price:
+marketBuySuccessMsg4 = Old balance:
+marketBuySuccessMsg5 = New balance:
+marketBuySuccessMsg6 = (Quantity changed due to stock changes)
 #
 #
 # Dashboard
