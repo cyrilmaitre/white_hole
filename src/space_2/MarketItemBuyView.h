@@ -48,6 +48,7 @@ private:
 	TextBox mTBTotal;
 	TextBox mTBTotalAverage;
 	PopupBubble mPUBTotalDetail;
+	Button mButtonBuy;
 
 	mks::Clock mUpdateClock;
 };

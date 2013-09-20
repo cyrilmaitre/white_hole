@@ -18,15 +18,16 @@
 #define DESTINATION_MARGINTOP				35
 #define DLLDESTINATION_MARGINTOP			10
 #define FIELDSETTOTAL_BACKGROUNDCOLOR		sf::Color(255, 255, 255, 0)
-#define FIELDSETTOTAL_BORDERCOLOR			sf::Color(125, 125, 125)
-#define FIELDSETTOTAL_BORDERSIZE			1
+#define FIELDSETTOTAL_BORDERCOLOR			sf::Color(125, 125, 125, 0)
+#define FIELDSETTOTAL_BORDERSIZE			0
 #define FIELDSETTOTAL_MARGINLEFT			75
-#define FIELDSETTOTAL_HEIGHT				150
+#define FIELDSETTOTAL_HEIGHT				185
 #define FIELDSETTOTAL_PADDING				20
 #define TBTOTAL_FONTSIZE					22
 #define TBTOTALLABEL_MARGINBOTTOM			10
 #define TBTOTAL_MARGINBOTTOM				10
 #define TBTOTALAVERAGE_FONTSIZE				14
+#define BUTTONBUY_MARGINTOP					40
 #define UPDATE_TICK							500	// ms
 
 
@@ -52,6 +53,7 @@ MarketItemBuyView::MarketItemBuyView(void) : mPUBTotalDetail(&this->mTBTotalAver
 	this->mTBTotalLabel.setFontSize(TBTOTAL_FONTSIZE);
 	this->mTBTotal.setFontSize(TBTOTAL_FONTSIZE);
 	this->mTBTotalAverage.setFontSize(TBTOTALAVERAGE_FONTSIZE);
+	this->mButtonBuy.setTitle(Resource::resource->getBundle()->getString("buy"));
 
 	this->mFieldsetTotal.setDisplayTitle(false);
 	this->mFieldsetTotal.setBackgroundColor(FIELDSETTOTAL_BACKGROUNDCOLOR, true);
@@ -110,6 +112,7 @@ void MarketItemBuyView::update( sf::Event p_event )
 		this->mDDLDestination.update(p_event);
 		this->mTBTotalAverage.update(p_event);
 		this->mPUBTotalDetail.update(p_event);
+		this->mButtonBuy.update(p_event);
 
 		if(this->mButtonQuantityAll.isClicked())
 		{
@@ -136,6 +139,7 @@ void MarketItemBuyView::updateFieldsetTotalPosition()
 	this->mTBTotalLabel.setPosition(this->mFieldsetTotal.getContentX() + (this->mFieldsetTotal.getContentWidth() - this->mTBTotalLabel.getWidth()) / 2, this->mFieldsetTotal.getContentY());
 	this->mTBTotal.setPosition(this->mFieldsetTotal.getContentX() + (this->mFieldsetTotal.getContentWidth() - this->mTBTotal.getWidth()) / 2, this->mTBTotalLabel.getBottomY() + TBTOTALLABEL_MARGINBOTTOM);
 	this->mTBTotalAverage.setPosition(this->mFieldsetTotal.getContentX() + (this->mFieldsetTotal.getContentWidth() - this->mTBTotalAverage.getWidth()) / 2, this->mTBTotal.getBottomY() + TBTOTAL_MARGINBOTTOM);
+	this->mButtonBuy.setPosition(this->mFieldsetTotal.getContentX() + (this->mFieldsetTotal.getContentWidth() - this->mButtonBuy.getWidth()) / 2, this->mTBTotalAverage.getBottomY() + BUTTONBUY_MARGINTOP);
 }
 
 void MarketItemBuyView::updateFieldsetTotalSize()
@@ -211,6 +215,7 @@ void MarketItemBuyView::draw()
 		this->mTBTotalLabel.draw();
 		this->mTBTotal.draw();
 		this->mTBTotalAverage.draw();
+		this->mButtonBuy.draw();
 	}
 }
 
