@@ -10,6 +10,7 @@ typedef std::vector<std::shared_ptr<Message>> MessageBuffer;
 enum NetworkStateCode {
 	NS_NONE,
 	NS_CONNECTING,
+	NS_AUTH_RESPONSE,
 	NS_CONNECTION_OK,
 	NS_CONNECTION_FAILED,
 	NS_DISCONNECTED,
@@ -49,6 +50,9 @@ public:
 	// network state
 	const NetworkState& getNetworkState();
 	void				notifyNetworkState();	// called after reading the network state
+
+	// auth response
+	const AuthResponse	getAuthResponse();
 
 	// others methods
 	void connect(std::string p_username, std::string p_sha1password);
@@ -92,6 +96,10 @@ private:
 	// network state
 	NetworkState	mNetworkState;
 	void			updateNetworkState(NetworkStateCode p_networkStateCode, std::string p_optionalString = "");
+
+	// auth response
+	AuthResponse	mAuthResponse;
+	void			setAuthResponse(AuthResponse p_authResponse);
 	
 };
 

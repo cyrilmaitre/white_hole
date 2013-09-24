@@ -99,7 +99,6 @@ enum AuthResponse
 	AR_ERROR,			// error sent from the server (ex: if cannot contact database)
 	AR_MAINTENANCE,		// maintenance mode, can't connect
 	AR_BANNED,			// should receive "BANNED" only if IDs are valids
-	AR_ALREADY_ONLINE,
 };
 
 // --------------
@@ -205,4 +204,5 @@ struct C2S_Command : public Message
 class Chat {
 public:
 	static std::string serverCmdToString(sf::Uint16 p_command);
+	static std::string authResponseToString(sf::Uint16 p_authResponse);
 };
