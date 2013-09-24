@@ -74,4 +74,38 @@ std::string Chat::serverCmdToString(sf::Uint16 p_command)
 	}
 
 	return "UNKNOWN";
-};
+}
+
+
+std::string Chat::authResponseToString(sf::Uint16 p_authResponse)
+{
+	switch(p_authResponse)
+	{
+	case AuthResponse::AR_NONE:
+		return "No response";
+		break;
+
+	case AuthResponse::AR_OK:
+		return "OK";
+		break;
+
+	case AuthResponse::AR_INVALID_IDS:
+		return "Invalid username/password";
+		break;
+
+	case AuthResponse::AR_ERROR:
+		return "Error";
+		break;
+
+	case AuthResponse::AR_MAINTENANCE:
+		return "Chat server is in maintenance mode";
+		break;
+
+	case AuthResponse::AR_BANNED:
+		return "You are banned";
+		break;
+	}
+
+
+	return "Unknown response";
+}

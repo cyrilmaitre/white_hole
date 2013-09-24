@@ -75,7 +75,10 @@ void WindowChat::update(sf::Event p_event)
 						// the first one is the command
 						// /help
 						if(result[0].compare("help") == 0) {
-							this->pushChat("> Available commands: /help, /afk, /w <user> <message>, /f+ <user>, /f- <user>, /f! <user>");
+							this->pushChat("> Available commands: /help, /afk, /w <user> <message>, /f+ <user>, /f- <user>, /f! <user>, /clear");
+						}
+						if(result[0].compare("clear") == 0) {
+							this->clearChat();
 						}
 						// /afk
 						else if(result[0].compare("afk") == 0) {
@@ -99,8 +102,6 @@ void WindowChat::update(sf::Event p_event)
 								std::shared_ptr<C2S_Chat> c2s_chat(new C2S_Chat("", result[1], ChatDstType::USER));
 								Resource::resource->getChatClient()->pushInputBuffer(c2s_chat);
 
-								//std::string pushChat = "(PM) -> "+result[1]+" : "+message;
-								//this->pushChat(pushChat);
 							}
 							else {
 								this->pushChat("> Usage: /w <user> <message>");
@@ -113,9 +114,6 @@ void WindowChat::update(sf::Event p_event)
 								// create & send message
 								std::shared_ptr<C2S_Command> c2s_cmd(new C2S_Command(ClientCommand::C_FRIEND_ADD, result[1]));
 								Resource::resource->getChatClient()->pushInputBuffer(c2s_cmd);
-
-								//std::string pushChat = "* Invitation sent to "+result[1];
-								//this->pushChat(pushChat);
 							}
 							else {
 								this->pushChat("> Usage: /f+ <user>");
@@ -128,9 +126,6 @@ void WindowChat::update(sf::Event p_event)
 								// create & send message
 								std::shared_ptr<C2S_Command> c2s_cmd(new C2S_Command(ClientCommand::C_FRIEND_DEL, result[1]));
 								Resource::resource->getChatClient()->pushInputBuffer(c2s_cmd);
-
-								//std::string pushChat = "* Deleted invitation from "+result[1];
-								//this->pushChat(pushChat);
 							}
 							else {
 								this->pushChat("> Usage: /f- <user>");
@@ -143,9 +138,6 @@ void WindowChat::update(sf::Event p_event)
 								// create & send message
 								std::shared_ptr<C2S_Command> c2s_cmd(new C2S_Command(ClientCommand::C_FRIEND_IGNORE, result[1]));
 								Resource::resource->getChatClient()->pushInputBuffer(c2s_cmd);
-
-								//std::string pushChat = "* You won't receive invitation from "+result[1]+" anymore";
-								//this->pushChat(pushChat);
 							}
 							else {
 								this->pushChat("> Usage: /f! <user>");
@@ -198,7 +190,7 @@ void WindowChat::drawContent()
 		case NetworkStateCode::NS_CONNECTION_OK:
 			{
 				this->txtfield.setEnable(true);
-				this->pushChat("* Welcome !");
+				this->pushChat("* Welcome on White Hole chat server");
 			}
 			break;
 
@@ -206,6 +198,21 @@ void WindowChat::drawContent()
 			{
 				this->txtfield.setEnable(false);
 				this->pushChat("* Disconnected.");
+			}
+			break;
+
+		case NetworkStateCode::NS_AUTH_RESPONSE:
+			{
+				AuthResponse ar = Resource::resource->getChatClient()->getAuthResponse();
+				if(ar == AuthResponse::AR_OK) {
+					this->pushChat("* Authenticated.");
+					this->txtfield.setEnable(true);
+				}
+				else {
+					this->pushChat("* Authentication failed: "+Chat::authResponseToString(ar));
+					this->txtfield.setEnable(false);
+				}
+				
 			}
 			break;
 			
@@ -281,5 +288,4 @@ void WindowChat::pushChat(std::string p_string)
 void WindowChat::clearChat()
 {
 	this->chatLines.clear();
-	this->txtbox.setText("");
 }

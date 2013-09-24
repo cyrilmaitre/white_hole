@@ -95,7 +95,7 @@ void ChatServer::create()
 void ChatServer::create(unsigned short port)
 {
 
-	mPort = port;
+	this->mPort = port;
 	this->mRunServer();
 }
 

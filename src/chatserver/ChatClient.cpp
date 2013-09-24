@@ -139,14 +139,14 @@ const MessageBuffer& ChatClient::getOutputBuffer()
 void ChatClient::clearOutputBuffer()
 {
 	sf::Lock lock(mMutex);
-	mOutputBuffer.clear();
-	mOutputBuffer.shrink_to_fit();
+	this->mOutputBuffer.clear();
+	this->mOutputBuffer.shrink_to_fit();
 }
 
 void ChatClient::pushOutputBuffer(std::shared_ptr<Message> p_message)
 {
 	sf::Lock lock(mMutex);
-	mOutputBuffer.push_back(p_message);
+	this->mOutputBuffer.push_back(p_message);
 }
 
 // int
@@ -159,14 +159,14 @@ const MessageBuffer& ChatClient::getInputBuffer()
 void ChatClient::pushInputBuffer(std::shared_ptr<Message> p_message)
 {
 	sf::Lock lock(mMutex);
-	mInputBuffer.push_back(p_message);
+	this->mInputBuffer.push_back(p_message);
 }
 
 void ChatClient::clearInputBuffer()
 {
 	sf::Lock lock(mMutex);
-	mInputBuffer.clear();
-	mInputBuffer.shrink_to_fit();
+	this->mInputBuffer.clear();
+	this->mInputBuffer.shrink_to_fit();
 }
 // </chatbuffer>
 
@@ -195,6 +195,22 @@ void ChatClient::notifyNetworkState()
 	this->mNetworkState.newState = false;
 }
 // </networkstate>
+
+
+// <authresponse>
+const AuthResponse ChatClient::getAuthResponse()
+{
+	sf::Lock lock(mMutex);
+	return this->mAuthResponse;
+}
+
+void ChatClient::setAuthResponse(AuthResponse p_authResponse)
+{
+	sf::Lock lock(mMutex);
+	this->mAuthResponse = p_authResponse;
+
+}
+// </authresponse>
 
 
 // Launch the thread connecting to the chat server
@@ -265,23 +281,13 @@ void ChatClient::mRunClient(void)
 				this->updateNetworkState(NetworkStateCode::NS_CONNECTION_OK);
 				{ std::ostringstream msg; msg << "Connection OK !" << ""; Debug::msg(msg); }
 
+				// ------------------- Auth packet ------------------------------------------------------------------------------
 				std::shared_ptr<C2S_Auth> auth = std::make_shared<C2S_Auth>(this->mUsername, this->mSha1password);
 				this->pushInputBuffer(auth);
 
-				//std::shared_ptr<C2S_Chat> msg1 = std::make_shared<C2S_Chat>("123456789ABCDEFG", "ok", ChatDstType::CHANNEL);
-				//std::shared_ptr<C2S_Chat> msg2 = std::make_shared<C2S_Chat>("Message 2", "babouche", ChatDstType::USER);
-				//std::shared_ptr<C2S_Chat> msg3 = std::make_shared<C2S_Chat>("Message 3", "mazouteman", ChatDstType::CHANNEL);
-				//this->pushInputBuffer(msg1);
-				//this->pushInputBuffer(msg2);
-
-				// Flood testing
-				/*
-				for(unsigned int i = 0; i < 300; i++) {
-					this->pushInputBuffer(msg3);
-				}
-				*/
 
 				sf::Packet packet;
+				// ~ RECV / SEND Loop ~
 				while(this->isRunning() && this->getNetworkState().code == NetworkStateCode::NS_CONNECTION_OK)
 				{
 					// ------------------- Envoi --------------------------------------------------------------------------------
@@ -428,7 +434,7 @@ void ChatClient::handlePacket(sf::Packet& p_packet)
 			if(p_packet >> *s2c_command)
 			{
 				this->pushOutputBuffer(s2c_command);
-				{ std::ostringstream msg; msg << "[CMD] #" << s2c_command->command << ":" << s2c_command->argument << ""; Debug::msg(msg); }
+				{ std::ostringstream msg; msg << "[CMD] #" << Chat::serverCmdToString(s2c_command->command) << ":" << s2c_command->argument << ""; Debug::msg(msg); }
 
 				// switch command ID
 				switch(s2c_command->command)
@@ -462,8 +468,24 @@ void ChatClient::handlePacket(sf::Packet& p_packet)
 			std::shared_ptr<S2C_Auth> s2c_auth(new S2C_Auth);
 			if(p_packet >> *s2c_auth)
 			{
+				// update network state && auth response
+				this->updateNetworkState(NetworkStateCode::NS_AUTH_RESPONSE);
+				this->setAuthResponse((AuthResponse) s2c_auth->authResponse);
+
+				// don't reconnect if banned, invalid IDs or maintenance
+				if(s2c_auth->authResponse == AuthResponse::AR_BANNED
+					&& s2c_auth->authResponse != AuthResponse::AR_INVALID_IDS
+					&& s2c_auth->authResponse != AuthResponse::AR_MAINTENANCE)
+				{
+						this->setAutoReconnect(false);
+				}
+
 				this->pushOutputBuffer(s2c_auth);
 				{ std::ostringstream msg; msg << "[AUTH] #" << s2c_auth->authResponse << ""; Debug::msg(msg); }
+
+
+
+
 			}
 		}
 	}
