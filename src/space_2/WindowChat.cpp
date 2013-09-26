@@ -48,9 +48,10 @@ void WindowChat::update(sf::Event p_event)
 {
 	// network state
 	NetworkState ns = Resource::resource->getChatClient()->getNetworkState();
+	AuthResponse ar = Resource::resource->getChatClient()->getAuthResponse();
 
 	// events
-	if(ns.code == NetworkStateCode::NS_CONNECTION_OK && p_event.type == sf::Event::KeyPressed && p_event.key.code == sf::Keyboard::Return)
+	if((ns.code == NetworkStateCode::NS_CONNECTION_OK_AUTHRESPONSE && ar == AuthResponse::AR_OK) && p_event.type == sf::Event::KeyPressed && p_event.key.code == sf::Keyboard::Return)
 	{
 		if(txtfield.getValue().size() > 0)
 		{
@@ -201,7 +202,7 @@ void WindowChat::drawContent()
 			}
 			break;
 
-		case NetworkStateCode::NS_AUTH_RESPONSE:
+		case NetworkStateCode::NS_CONNECTION_OK_AUTHRESPONSE:
 			{
 				AuthResponse ar = Resource::resource->getChatClient()->getAuthResponse();
 				if(ar == AuthResponse::AR_OK) {
@@ -217,6 +218,7 @@ void WindowChat::drawContent()
 			break;
 			
 		default:
+			this->txtfield.setEnable(false);
 			break;
 
 		}

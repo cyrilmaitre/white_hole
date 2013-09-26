@@ -288,7 +288,10 @@ void ChatClient::mRunClient(void)
 
 				sf::Packet packet;
 				// ~ RECV / SEND Loop ~
-				while(this->isRunning() && this->getNetworkState().code == NetworkStateCode::NS_CONNECTION_OK)
+				while(this->isRunning() && 
+					(this->getNetworkState().code == NetworkStateCode::NS_CONNECTION_OK
+					|| this->getNetworkState().code == NetworkStateCode::NS_CONNECTION_OK_AUTHRESPONSE)
+					)
 				{
 					// ------------------- Envoi --------------------------------------------------------------------------------
 					// <Thread safe>
@@ -469,7 +472,7 @@ void ChatClient::handlePacket(sf::Packet& p_packet)
 			if(p_packet >> *s2c_auth)
 			{
 				// update network state && auth response
-				this->updateNetworkState(NetworkStateCode::NS_AUTH_RESPONSE);
+				this->updateNetworkState(NetworkStateCode::NS_CONNECTION_OK_AUTHRESPONSE);
 				this->setAuthResponse((AuthResponse) s2c_auth->authResponse);
 
 				// don't reconnect if banned, invalid IDs or maintenance
@@ -482,9 +485,6 @@ void ChatClient::handlePacket(sf::Packet& p_packet)
 
 				this->pushOutputBuffer(s2c_auth);
 				{ std::ostringstream msg; msg << "[AUTH] #" << s2c_auth->authResponse << ""; Debug::msg(msg); }
-
-
-
 
 			}
 		}
