@@ -20,10 +20,13 @@ public:
 	void setContentEstimation(double p_estimation);
 	
 	ContainerRow* getContainerRow(int p_index);
-	bool isContentChanged();
+	bool isContentChanged(bool p_resetValue = true);
 	void setCargoMax(int p_cargoMax);
 
 	long getContentFreeFor(Item* p_item);
+	std::vector<Item*> getUniqueItems();
+	int getItemCount(Item* p_item);
+	std::map<Item*, int> getItemsCount();
 
 	ContainerStack::ContainerStackType getType();
 	void setType(ContainerStack::ContainerStackType p_type);

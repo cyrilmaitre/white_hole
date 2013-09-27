@@ -1,4 +1,9 @@
 #include "StationScreenMarketSell.h"
+#include "ItemStockSimulator.h"
+#include "UserInterface.h"
+#include "WindowChoiceAsk.h"
+#include "WindowMessageSuccess.h"
+#include "Game.h"
 
 
 //*************************************************************
@@ -16,6 +21,9 @@
 #define DETAIL_WIDTH					400
 #define DETAIL_BORDERSIZE				1
 #define DETAIL_BORDERCOLOR				sf::Color(125, 125, 125)
+#define DETAIL_PADDING					5
+#define UPDATE_TICK						500	// ms
+#define ACTIONCOMMAND_SELL				"actioncommand_sell"
 
 
 //*************************************************************
@@ -44,6 +52,9 @@ StationScreenMarketSell::StationScreenMarketSell( StationScreenMarket* p_market 
 	this->mTBMLDetail.setBorderColor(DETAIL_BORDERCOLOR, true);
 	this->mTBMLDetail.setBorderSize(DETAIL_BORDERSIZE, true);
 	this->mTBMLDetail.setForceScrollBar(true);
+	this->mTBMLDetail.setPadding(DETAIL_PADDING);
+
+	this->updateItemsCount();
 }
 
 StationScreenMarketSell::~StationScreenMarketSell(void)
@@ -54,11 +65,74 @@ StationScreenMarketSell::~StationScreenMarketSell(void)
 //*************************************************************
 // Methods
 //*************************************************************
+void StationScreenMarketSell::sell()
+{
+	// Check price & Inc stock
+	double totalPrice = 0;
+	ItemStockSimulator stockSimulator;
+	std::map<Item*, int>::iterator iter;
+	for (iter = this->mContainerItemsCount.begin(); iter != this->mContainerItemsCount.end(); ++iter)
+	{
+		// Price
+		stockSimulator.setItemStock(this->mScreenMarket->getStation()->getItemStock(iter->first));
+		stockSimulator.computeSellPrice(iter->second);
+		totalPrice += stockSimulator.getSellPrice();
+
+		// Inc stock
+		this->mScreenMarket->getStation()->getItemStock(iter->first)->incStockCurrent(iter->second);
+	}
+
+	// Inc credit
+	double oldBalance = Game::game->getCharacter()->getCredit();
+	Game::game->getCharacter()->incCredit(totalPrice);
+	double newBalance = Game::game->getCharacter()->getCredit();
+
+	// Message success
+	std::string messageSuccess = Resource::resource->getBundle()->getString("marketSellSuccessMsg1") + "<br/>";
+	messageSuccess += Resource::resource->getBundle()->getString("marketSellSuccessMsg2") + Tools::getSpaceAfterColon() + Tools::formatNumber(totalPrice) + "<br/>";
+	messageSuccess += Resource::resource->getBundle()->getString("marketSellSuccessMsg3") + Tools::getSpaceAfterColon() + Tools::formatNumber(oldBalance) + "<br/>";
+	messageSuccess += Resource::resource->getBundle()->getString("marketSellSuccessMsg4") + Tools::getSpaceAfterColon() + Tools::formatNumber(newBalance);
+	UserInterface::mUserInterface->addWindowPopup(new WindowMessageSuccess(Resource::resource->getBundle()->getString("marketSellSuccessTitle"), messageSuccess));
+}
+
+void StationScreenMarketSell::sellConfirmation()
+{
+	std::string messageConfirmation = Resource::resource->getBundle()->getString("marketSellConfirmationMsg1") + "<br/>";
+
+	double totalPrice = 0;
+	ItemStockSimulator stockSimulator;
+	std::map<Item*, int>::iterator iter;
+	for (iter = this->mContainerItemsCount.begin(); iter != this->mContainerItemsCount.end(); ++iter)
+	{
+		stockSimulator.setItemStock(this->mScreenMarket->getStation()->getItemStock(iter->first));
+		stockSimulator.computeSellPrice(iter->second);
+		totalPrice += stockSimulator.getSellPrice();
+
+		messageConfirmation += "- " + iter->first->getName() + " (x" + Tools::formatNumber(iter->second) + ")<br/>";
+	}
+
+	messageConfirmation += "  <br/>" + Resource::resource->getBundle()->getString("marketSellConfirmationMsg2");
+	messageConfirmation += " " + Tools::formatNumber(totalPrice) + " ";
+	messageConfirmation += Resource::resource->getBundle()->getString("marketSellConfirmationMsg3");
+
+	UserInterface::mUserInterface->addWindowPopup(new WindowChoiceAsk(	Resource::resource->getBundle()->getString("marketBuyConfirmationTitle"), 
+																		messageConfirmation, this, NULL, ACTIONCOMMAND_SELL));
+}
+
 void StationScreenMarketSell::update()
 {
 	if(this->isVisible())
 	{
+		if(this->mContainerView.getContainerable()->isContentChanged(false))
+			this->updateItemsCount();
+
 		this->mContainerView.update();
+
+		if(this->mTotalClock.getElapsedTimeAsMilliseconds() > UPDATE_TICK)
+		{
+			this->updateTotal();	
+			this->mTotalClock.restart();
+		}
 	}
 }
 
@@ -66,9 +140,42 @@ void StationScreenMarketSell::updatePosition()
 {
 	this->mContainerView.setPosition(this->getContentX(), this->getContentY());
 	this->mTBTotalLabel.setPosition(this->getContentX() + (this->mContainerView.getWidth() - this->mTBTotalLabel.getWidth()) / 2, this->mContainerView.getBottomY() + CONTAINER_MARGINBOTTOM);
-	this->mTBTotal.setPosition(this->getContentX() + (this->mContainerView.getWidth() - this->mTBTotal.getWidth()) / 2, this->mTBTotalLabel.getBottomY() + TBTOTALLABEL_MARGINBOTTOM);
+	this->updateTotalPosition();
 	this->mButtonSell.setPosition(this->getContentX() + (this->mContainerView.getWidth() - this->mButtonSell.getWidth()) / 2, this->mTBTotal.getBottomY() + BUTTONBUY_MARGINTOP);
 	this->mTBMLDetail.setPosition(this->mContainerView.getRightX() + DETAIL_MARGIN_LEFT, this->getContentY());
+}
+
+void StationScreenMarketSell::updateTotalPosition()
+{
+	this->mTBTotal.setPosition(this->getContentX() + (this->mContainerView.getWidth() - this->mTBTotal.getWidth()) / 2, this->mTBTotalLabel.getBottomY() + TBTOTALLABEL_MARGINBOTTOM);
+}
+
+void StationScreenMarketSell::updateTotal()
+{
+	double totalPrice = 0;
+	ItemStockSimulator stockSimulator;
+
+	std::map<Item*, int>::iterator iter;
+	this->mTBMLDetail.clear(true);
+	for (iter = this->mContainerItemsCount.begin(); iter != this->mContainerItemsCount.end(); ++iter)
+	{
+		stockSimulator.setItemStock(this->mScreenMarket->getStation()->getItemStock(iter->first));
+		stockSimulator.computeSellPrice(iter->second);
+		totalPrice += stockSimulator.getSellPrice();
+
+		this->mTBMLDetail.addLine(iter->first->getName() + " (x" + Tools::formatNumber(iter->second) + "):" + Tools::getSpaceAfterColon() + Tools::formatNumber(stockSimulator.getSellPrice()) + " " + Resource::resource->getBundle()->getString("creditAb"));
+		this->mTBMLDetail.addLine("        " + Resource::resource->getBundle()->getString("marketSellAverage") + Tools::getSpaceAfterColon() + Tools::formatNumber(stockSimulator.getSellPriceAve()) + " " + Resource::resource->getBundle()->getString("creditAb"));
+	}
+	this->mTBTotal.setText(Tools::formatNumber(totalPrice) + " " + Resource::resource->getBundle()->getString("creditAb"));
+	this->updateTotalPosition();
+}
+
+void StationScreenMarketSell::updateItemsCount()
+{
+	this->mContainerItemsCount = this->mContainerView.getContainerable()->getItemsCount();
+	this->mTBMLDetail.setVisible(this->mContainerItemsCount.size() > 0);
+	this->mButtonSell.setEnable(this->mContainerItemsCount.size() > 0);
+	this->updateTotal();
 }
 
 void StationScreenMarketSell::update( sf::Event p_event )
@@ -78,6 +185,9 @@ void StationScreenMarketSell::update( sf::Event p_event )
 		this->mContainerView.update(p_event);
 		this->mButtonSell.update(p_event);
 		this->mTBMLDetail.update(p_event);
+
+		if(this->mButtonSell.isClicked())
+			this->sellConfirmation();
 	}
 	FieldSet::update(p_event);
 }
@@ -100,3 +210,15 @@ void StationScreenMarketSell::notifyPositionChanged()
 	FieldSet::notifyPositionChanged();
 	this->updatePosition();
 }
+
+void StationScreenMarketSell::onButtonTrueClicked( WindowChoiceActionObject* p_object, std::string p_actionCommand )
+{
+	this->sell();
+}
+
+void StationScreenMarketSell::onButtonFalseClicked( WindowChoiceActionObject* p_object, std::string p_actionCommand )
+{
+
+}
+
+

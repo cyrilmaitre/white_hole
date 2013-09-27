@@ -80,11 +80,15 @@ void ItemStock::setStockMin( long p_min )
 
 long ItemStock::getStockMax()
 {
+	sf::Lock lock(this->mMutex);
+
 	return this->mStockMax;
 }
 
 void ItemStock::setStockMax( long p_max )
 {
+	sf::Lock lock(this->mMutex);
+
 	this->mStockMax = p_max;
 }
 
@@ -108,8 +112,6 @@ void ItemStock::setStockCurrent( float p_current )
 
 	if(p_current < 0)
 		p_current = 0;
-	else if(p_current > this->getStockMax())
-		p_current = this->getStockMax();
 
 	if(this->mStockCurrent != p_current)
 	{
@@ -175,9 +177,16 @@ void ItemStock::decStockCurrent( float p_dec )
 
 void ItemStock::update()
 {
-	float stockVariation = this->getIndice() * (this->mClock.getElapsedTimeAsSeconds() / (float)DAY_DURATION);
+	if(this->getStockSpaceAvailable() > 0)
+	{
+		float stockVariation = this->getIndice() * (this->mClock.getElapsedTimeAsSeconds() / (float)DAY_DURATION);
+		float newStockCurrent = this->getStockCurrent() + stockVariation; 
+		if(newStockCurrent > this->getStockMax())
+			newStockCurrent = this->getStockMax();
+		this->setStockCurrent(newStockCurrent);
+	}
+
 	this->mClock.restart();
-	this->setStockCurrent(this->getStockCurrent() + stockVariation);
 }
 
 void ItemStock::notifyItemChanged()

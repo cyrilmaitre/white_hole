@@ -487,6 +487,16 @@ marketBuySuccessMsg2 = ) successfully added to
 marketBuySuccessMsg3 = Price:
 marketBuySuccessMsg4 = Old balance:
 marketBuySuccessMsg5 = New balance:
+marketSellAverage = Average:
+marketSellConfirmationTitle = Confirmation
+marketSellConfirmationMsg1 = Sell:
+marketSellConfirmationMsg2 = For
+marketSellConfirmationMsg3 = cred.?
+marketSellSuccessTitle = Transaction success
+marketSellSuccessMsg1 = Your items has been successfully sold.
+marketSellSuccessMsg2 = Price:
+marketSellSuccessMsg3 = Old balance:
+marketSellSuccessMsg4 = New balance:
 #
 #
 # Dashboard

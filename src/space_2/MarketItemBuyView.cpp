@@ -100,12 +100,10 @@ void MarketItemBuyView::buy()
 {
 	// Check quantity & get price
 	int quantity = this->mItemStockSimulator.getBuyQuantity();
-	bool quantityChanged = false;
 	if(quantity > this->mItemStock->getStockCurrent())
 	{
 		quantity = this->mItemStock->getStockCurrent();
 		this->mItemStockSimulator.computeBuyPrice(quantity);
-		quantityChanged = true;
 	}
 	float price = this->mItemStockSimulator.getBuyPrice();
 	

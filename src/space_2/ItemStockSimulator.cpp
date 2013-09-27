@@ -94,9 +94,23 @@ float ItemStockSimulator::getPriceWithStock( float p_stock )
 	if(this->mItemStock->getStockMin() == p_stock)
 		return this->mItemStock->getItem()->getPrice();
 	else if(this->mItemStock->getStockMin() > p_stock)
-		return this->mItemStock->getItem()->getPrice() * (1 + 1 - (p_stock / this->mItemStock->getStockMin()));
+	{
+		float coeff = 1 + 1 - (p_stock / this->mItemStock->getStockMin());
+		if(coeff < 1)
+			coeff = 1;
+		else if(coeff > 2)
+			coeff = 2;
+		
+		return this->mItemStock->getItem()->getPrice() * coeff;
+	}
 	else
-		return this->mItemStock->getItem()->getPrice() / (1 + ((p_stock - this->mItemStock->getStockMin()) / (this->mItemStock->getStockMax() - this->mItemStock->getStockMin())));
+	{
+		float coeff = 1 + ((p_stock - this->mItemStock->getStockMin()) / (this->mItemStock->getStockMax() - this->mItemStock->getStockMin()));
+		if(coeff < 1)
+			coeff = 1;
+
+		return this->mItemStock->getItem()->getPrice() / coeff;
+	}
 }
 
 
@@ -148,8 +162,6 @@ void ItemStockSimulator::computeSellPrice( int p_quantity )
 	{
 		if(p_quantity < 0)
 			p_quantity = 0;
-		else if(p_quantity > this->mItemStock->getStockSpaceAvailable())
-			p_quantity = this->mItemStock->getStockSpaceAvailable();
 		this->mSellQuantity = p_quantity;
 
 		if(this->mSellQuantity > 0)

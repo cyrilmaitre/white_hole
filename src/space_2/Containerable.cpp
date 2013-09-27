@@ -73,8 +73,11 @@ void Containerable::setCargoMax( int p_cargoMax )
 	this->notifyContainerRowCountChanged();
 }
 
-bool Containerable::isContentChanged()
+bool Containerable::isContentChanged(bool p_resetValue)
 {
+	if(!p_resetValue)
+		return this->mContentChanged;
+
 	bool returnValue = this->mContentChanged;
 	this->mContentChanged = false;
 	return returnValue;
@@ -117,6 +120,77 @@ long Containerable::getContentFreeFor( Item* p_item )
 		}
 	}
 	return contentfree;
+}
+
+std::vector<Item*> Containerable::getUniqueItems()
+{
+	std::vector<Item*> uniqueItems;
+	for(int i = 0; i < this->getContainerRowCount(); i++)
+	{
+		for(int j = 0; j < CONTAINER_ROW_SIZE; j++)
+		{
+			ContainerRow* currentRow = this->getContainerRow(i);
+			if(currentRow != NULL)
+			{
+				ContainerStack* currentStack = currentRow->getContainerStack(j);
+				if(currentStack != NULL)
+				{
+					if(currentStack->hasItemStack())
+					{
+						Item* currentItem = currentStack->getItemStack()->getItem();
+						bool addCurrentItem = true;
+						for(int k = 0; k < uniqueItems.size(); k++)
+						{
+							if(uniqueItems[k]->getId() == currentItem->getId())
+							{
+								addCurrentItem = false;
+								break;
+							}
+						}
+						if(addCurrentItem)
+							uniqueItems.push_back(currentItem);
+					}
+				}
+			}
+		}
+	}
+	return uniqueItems;
+}
+
+int Containerable::getItemCount( Item* p_item )
+{
+	int itemCount = 0;
+	for(int i = 0; i < this->getContainerRowCount(); i++)
+	{
+		for(int j = 0; j < CONTAINER_ROW_SIZE; j++)
+		{
+			ContainerRow* currentRow = this->getContainerRow(i);
+			if(currentRow != NULL)
+			{
+				ContainerStack* currentStack = currentRow->getContainerStack(j);
+				if(currentStack != NULL)
+				{
+					if(currentStack->hasItemStack())
+					{
+						if(currentStack->getItemStack()->getItem()->getId() == p_item->getId())
+							itemCount += currentStack->getItemStack()->getStackSize();
+					}
+				}
+			}
+		}
+	}
+	return itemCount;
+}
+
+std::map<Item*, int> Containerable::getItemsCount()
+{
+	std::vector<Item*> uniqueItems = this->getUniqueItems();
+	std::map<Item*, int> itemsCount;
+
+	for(int i = 0; i < uniqueItems.size(); i++)
+		itemsCount.insert(std::pair<Item*, int>(uniqueItems[i], this->getItemCount(uniqueItems[i])));
+
+	return itemsCount;
 }
 
 
@@ -279,7 +353,4 @@ void Containerable::updateContentEstimation()
 	}
 	this->setContentEstimation(newEstimation);
 }
-
-
-
 
