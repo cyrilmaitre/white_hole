@@ -162,10 +162,7 @@ void MarketItemBuyView::buyConfirmation()
 	std::string messageConfirmation = Resource::resource->getBundle()->getString("marketBuyConfirmationMsg1") + " ";
 	messageConfirmation += this->mItemStock->getItem()->getName() + " " + Resource::resource->getBundle()->getString("marketBuyConfirmationMsg2");
 	messageConfirmation += Tools::formatNumber(this->mItemStockSimulator.getBuyQuantity()) + Resource::resource->getBundle()->getString("marketBuyConfirmationMsg3") + " ";
-	messageConfirmation += Tools::formatNumber(this->mItemStockSimulator.getBuyPrice()) + " " + Resource::resource->getBundle()->getString("marketBuyConfirmationMsg4") + "<br/>  <br/>";
-	messageConfirmation += Resource::resource->getBundle()->getString("marketBuyConfirmationMsg5") + " " + Tools::formatNumber(Game::game->getCharacter()->getCredit()) + " ";
-	messageConfirmation += Resource::resource->getBundle()->getString("marketBuyConfirmationMsg6") + " " + Tools::formatNumber(Game::game->getCharacter()->getCredit() - this->mItemStockSimulator.getBuyPrice()) + " ";
-	messageConfirmation += Resource::resource->getBundle()->getString("marketBuyConfirmationMsg7");
+	messageConfirmation += Tools::formatNumber(this->mItemStockSimulator.getBuyPrice()) + " " + Resource::resource->getBundle()->getString("marketBuyConfirmationMsg4");
 	UserInterface::mUserInterface->addWindowPopup(new WindowChoiceAsk(	Resource::resource->getBundle()->getString("marketBuyConfirmationTitle"), 
 																		messageConfirmation, this, NULL, ACTIONCOMMAND_BUY));
 }
