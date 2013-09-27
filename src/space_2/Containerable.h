@@ -32,6 +32,7 @@ public:
 	void setType(ContainerStack::ContainerStackType p_type);
 
 	// Methods
+	void empty();
 	void notifyContainerRowCountChanged();
 	void notifyContentChanged();
 	void updateContentEstimation();

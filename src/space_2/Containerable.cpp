@@ -197,6 +197,26 @@ std::map<Item*, int> Containerable::getItemsCount()
 //*************************************************************
 // Methods
 //*************************************************************
+void Containerable::empty()
+{
+	for(int i = 0; i < this->getContainerRowCount(); i++)
+	{
+		for(int j = 0; j < CONTAINER_ROW_SIZE; j++)
+		{
+			ContainerRow* currentRow = this->getContainerRow(i);
+			if(currentRow != NULL)
+			{
+				ContainerStack* currentStack = currentRow->getContainerStack(j);
+				if(currentStack != NULL)
+				{
+					if(currentStack->hasItemStack())
+						currentStack->setItemStack(NULL);
+				}
+			}
+		}
+	}
+}
+
 void Containerable::notifyContainerRowCountChanged()
 {
 	this->deleteContainerRows();

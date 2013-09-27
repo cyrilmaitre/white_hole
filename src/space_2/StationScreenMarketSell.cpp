@@ -87,6 +87,9 @@ void StationScreenMarketSell::sell()
 	Game::game->getCharacter()->incCredit(totalPrice);
 	double newBalance = Game::game->getCharacter()->getCredit();
 
+	// Empty container
+	this->mContainerView.getContainerable()->empty();
+
 	// Message success
 	std::string messageSuccess = Resource::resource->getBundle()->getString("marketSellSuccessMsg1") + "<br/>";
 	messageSuccess += Resource::resource->getBundle()->getString("marketSellSuccessMsg2") + Tools::getSpaceAfterColon() + Tools::formatNumber(totalPrice) + "<br/>";
