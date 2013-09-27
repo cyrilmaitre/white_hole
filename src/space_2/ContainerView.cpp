@@ -18,6 +18,7 @@ ContainerView::ContainerView( double p_x, double p_y)
 {
 	this->mContainerable = NULL;
 	this->mContainerableChanged = false;
+	this->mDisplayEstimation = true;
 
 	this->mBottomShape.setSize(sf::Vector2f(CONTAINERVIEW_ROW_WIDTH, CONTAINERVIEW_BOTTOM_HEIGHT));
 	this->mBottomShape.setFillColor(CONTAINERVIEW_BOTTOM_COLOR);
@@ -53,6 +54,20 @@ void ContainerView::setContainerable(Containerable* p_containerable)
 	}
 }
 
+bool ContainerView::isDisplayEstimation()
+{
+	return this->mDisplayEstimation;
+}
+
+void ContainerView::setDisplayEstimation( bool p_estimation )
+{
+	if(this->mDisplayEstimation != p_estimation)
+	{
+		this->mDisplayEstimation = p_estimation;	
+		this->updateHeight();
+	}
+}
+
 bool ContainerView::isContainerableChanged()
 {
 	bool returnValue = this->mContainerableChanged;
@@ -76,12 +91,25 @@ void ContainerView::notifyContainerableChanged()
 		}
 
 		// Set other param
-		this->setHeight(this->getContainerable()->getContainerRowCount() * (CONTAINERVIEW_ROW_HEIGHT + CONTAINERVIEW_ROW_PADDING) + 
-						CONTAINERVIEW_ROW_PADDINGTOP + 
-						CONTAINERVIEW_BOTTOM_HEIGHT);
+		this->updateHeight();
 		this->updateEstimation();
 		this->notifyPositionChanged();
 		this->mContainerableChanged = true;
+	}
+}
+
+void ContainerView::updateHeight()
+{
+	if(this->isDisplayEstimation())
+	{
+		this->setHeight(this->getContainerable()->getContainerRowCount() * (CONTAINERVIEW_ROW_HEIGHT + CONTAINERVIEW_ROW_PADDING) + 
+						CONTAINERVIEW_ROW_PADDINGTOP + 
+						CONTAINERVIEW_BOTTOM_HEIGHT);
+	}
+	else
+	{
+		this->setHeight(this->getContainerable()->getContainerRowCount() * (CONTAINERVIEW_ROW_HEIGHT + CONTAINERVIEW_ROW_PADDING) + 
+						CONTAINERVIEW_ROW_PADDINGTOP);
 	}
 }
 
@@ -151,8 +179,11 @@ void ContainerView::draw()
 		this->mContainerRowViews[i]->draw();
 	}
 
-	Resource::resource->getApp()->draw(this->mBottomShape);
-	this->mTBEstimation.draw();
+	if(this->isDisplayEstimation())
+	{
+		Resource::resource->getApp()->draw(this->mBottomShape);
+		this->mTBEstimation.draw();
+	}
 }
 
 void ContainerView::addContainerRowView( ContainerRowView* p_view )
@@ -170,6 +201,8 @@ void ContainerView::clear()
 
 	this->mContainerRowViews.clear();
 }
+
+
 
 
 

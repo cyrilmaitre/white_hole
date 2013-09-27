@@ -28,6 +28,9 @@ public:
 	Containerable* getContainerable();
 	void setContainerable(Containerable* p_containerable);
 
+	bool isDisplayEstimation();
+	void setDisplayEstimation(bool p_estimation);
+
 	bool isContainerableChanged();
 
 	// Methods
@@ -37,6 +40,7 @@ public:
 	void notifyContainerableChanged();
 	void notifyPositionChanged();
 	void update();
+	void updateHeight();
 	void updateEstimation();
 	void updateEstimationPosition();
 	void update(sf::Event p_event);
@@ -49,6 +53,7 @@ private:
 	std::vector<ContainerRowView*> mContainerRowViews;
 	sf::RectangleShape mBottomShape;
 	TextBox mTBEstimation;
+	bool mDisplayEstimation;
 	bool mContainerableChanged;
 };
 
