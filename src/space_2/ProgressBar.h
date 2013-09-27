@@ -43,7 +43,7 @@ public:
 	void update(sf::Event myEvent);
 	void updatePosition();
 	void updateBar();
-	void updateText();
+	virtual void updateText();
 	void draw();
 
 

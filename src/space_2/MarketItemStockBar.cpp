@@ -63,6 +63,18 @@ void MarketItemStockBar::update()
 	this->mPUBStock.update();
 }
 
+void MarketItemStockBar::updateText()
+{
+	float currentStock = floor(this->mItemStock->getStockCurrent());
+
+	if(currentStock > this->getValue())
+		this->mText.setText(Tools::formatNumber((long)this->getValue()) + " (+" + Tools::formatNumber((long)(currentStock - this->getValue())) + ")" + " / " + Tools::formatNumber((long)this->getValueMax()));
+	else
+		this->mText.setText(Tools::formatNumber((long)this->getValue()) + " / " + Tools::formatNumber((long)this->getValueMax()));
+
+	this->ProgressBar::updatePosition();
+}
+
 void MarketItemStockBar::updateStockMiniShapePosition()
 {
 	if(this->mItemStock != NULL)
@@ -88,8 +100,7 @@ void MarketItemStockBar::draw()
 		Block::draw();
 		Resource::resource->getApp()->draw(this->mBar);
 		Resource::resource->getApp()->draw(this->mStockMiniShape);
-		if(this->getMode() != ProgressBarMode::ModeNone)
-			this->mText.draw();
+		this->mText.draw();
 	}
 }
 
@@ -122,6 +133,9 @@ void MarketItemStockBar::notifyItemStockCurrentChanged()
 {
 	// Update value
 	this->setValue(floor(this->mItemStock->getStockCurrent()));
+
+	// Update text
+	this->updateText();
 
 	// Update PUB
 	this->mPUBStock.clear(false);

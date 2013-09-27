@@ -17,6 +17,7 @@ public:
 	// Methods
 	void update();
 	void updateStockMiniShapePosition();
+	void updateText();
 	void update(sf::Event p_event);
 	void draw();
 	void notifyPositionChanged();
