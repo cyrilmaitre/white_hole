@@ -105,6 +105,7 @@ void ProgressBar::setValueMax( double p_max )
 	{
 		this->mValueMax = p_max;
 		this->setValue(this->mValue);
+		this->notifyValueChanged();
 	}
 }
 
@@ -183,7 +184,7 @@ void ProgressBar::updateText()
 		break;
 
 	case ProgressBarMode::ModePercent:
-		this->mText.setText(Tools::buildStringWithDouble(this->getValuePercent() * 100) + " %");
+		this->mText.setText(Tools::formatNumber(this->getValuePercent() * 100) + " %");
 		break;
 
 	case ProgressBarMode::ModeTitle:

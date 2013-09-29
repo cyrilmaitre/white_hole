@@ -2,8 +2,6 @@
 #include "Resource.h"
 #include "KeyValueFile.h"
 
-// Define
-#define LEVEL_CONFIG_LEVELS		"levels"
 
 class Level
 {
@@ -13,8 +11,14 @@ public:
 	~Level(void);
 
 	// Getters - Setters
-	int getLevelMin();
+	long getLevelCoeff();
+	void setLevelCoeff(long p_coeff);
+	
 	int getLevelMax();
+	void setLevelMax(int p_max);
+
+	int getSkillPointsOnLevelUp();
+	void setSkillPointsOnLevelUp(int p_points);
 
 	long getExperience(int p_level);
 
@@ -24,6 +28,8 @@ public:
 
 private:
 	// Attributs
-	std::map<int, long> mLevels;
+	long mLevelCoeff;
+	int mLevelMax;
+	int mSkillPointsOnLevelup;
 };
 
