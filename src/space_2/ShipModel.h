@@ -11,6 +11,7 @@
 #include "MapObjectModel.h"
 #include "EntityMovableData.h"
 #include "EntityData.h"
+#include "LevelShip.h"
 
 
 class ShipModel :	public Item, public MovableData, public DestructableData, public ContainerableData, public EquipableData, 
@@ -25,6 +26,9 @@ public:
 	ShipType* getShipType();
 	void setShipType(ShipType *p_shipType);
 
+	LevelShip* getLevelShipConfig();
+	void setLevelShipConfig(LevelShip* p_level);
+
 	// Methode
 	void loadFromConfig(KeyValueFile* p_config);
 
@@ -32,5 +36,6 @@ public:
 private:
 	// Attributs
 	ShipType *mShipType;
+	LevelShip* mLevelShipConfig;
 };
 

@@ -3,9 +3,17 @@
 
 
 //*************************************************************
+// Define
+//*************************************************************
+#define CONFIG_ID				"id"	
+#define CONFIG_SHIPTYPE			"ship_type"
+#define CONFIG_LEVELCONFIG		"levelconf"
+
+
+//*************************************************************
 // Constructor - Destructor
 //*************************************************************
-ShipModel::ShipModel( KeyValueFile* p_config ) : mShipType(NULL), MapObjectModel(p_config), Item(p_config->getInt("id"))
+ShipModel::ShipModel( KeyValueFile* p_config ) : mShipType(NULL), MapObjectModel(p_config), Item(p_config->getInt(CONFIG_ID))
 {
 	this->loadFromConfig(p_config);
 }
@@ -28,6 +36,16 @@ void ShipModel::setShipType( ShipType *p_shipType )
 	this->mShipType = p_shipType;
 }
 
+LevelShip* ShipModel::getLevelShipConfig()
+{
+	return this->mLevelShipConfig;
+}
+
+void ShipModel::setLevelShipConfig( LevelShip* p_level )
+{
+	this->mLevelShipConfig = p_level;
+}
+
 
 //*************************************************************
 // Methode
@@ -42,7 +60,13 @@ void ShipModel::loadFromConfig( KeyValueFile* p_config )
 	this->EntityMovableData::loadFromConfig(p_config);
 	this->EntityData::loadFromConfig(p_config);
 
-	this->setShipType(FactoryGet::getShipTypeFactory()->getShipType(p_config->getLong("ship_type")));
+	if(p_config->has(CONFIG_SHIPTYPE))
+		this->setShipType(FactoryGet::getShipTypeFactory()->getShipType(p_config->getLong(CONFIG_SHIPTYPE)));
+
+	if(p_config->has(CONFIG_LEVELCONFIG))
+		this->setLevelShipConfig(FactoryGet::getLevelFactory()->getLevelShip(CONFIG_LEVELCONFIG));
 }
+
+
 
 

@@ -210,6 +210,7 @@ void CharacterShip::loadFromShipModel()
 	if(this->getShipModel() != NULL)
 	{
 		this->setCargoMax(this->mShipModel->getCargoMax());
+		this->setLevelConfig(this->mShipModel->getLevelShipConfig());
 	}
 }
 
