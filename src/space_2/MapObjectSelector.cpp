@@ -119,13 +119,13 @@ void MapObjectSelector::update()
 					Game::game->getUserInterface()->getWindowSelectedEntity()->setEntity(selectedEntity);
 					Game::game->getUserInterface()->setWindowSelected(Game::game->getUserInterface()->getWindowSelectedEntity());
 				}
-				Game::game->getCharacterShip()->getTarget()->setEntity(selectedEntity);
+				Game::game->getShipPiloted()->getTarget()->setEntity(selectedEntity);
 			}
 		}
 		else
 		{
 			Game::game->getUserInterface()->setWindowSelected(NULL);
-			Game::game->getCharacterShip()->getTarget()->setEntity(NULL);
+			Game::game->getShipPiloted()->getTarget()->setEntity(NULL);
 		}
 	}
 
@@ -139,18 +139,18 @@ void MapObjectSelector::update()
 
 void MapObjectSelector::updateDistance()
 {
-	this->setObjectSelectedDistance(ToolsMap::getDistance(Game::game->getCharacterShip(), this->getSelectedMapObject()));
+	this->setObjectSelectedDistance(ToolsMap::getDistance(Game::game->getShipPiloted(), this->getSelectedMapObject()));
 }
 
 void MapObjectSelector::updateAngle()
 {
-	this->setObjectSelectedAngle(ToolsMap::getAngle(Game::game->getCharacterShip(), this->getSelectedMapObject()));
+	this->setObjectSelectedAngle(ToolsMap::getAngle(Game::game->getShipPiloted(), this->getSelectedMapObject()));
 }
 
 void MapObjectSelector::updateOutOfScreen()
 {
-	this->mObjectSelectedOutOfScreen =	Tools::getAbsolute(Game::game->getCharacterShip()->getX(MAPOBJECT_PLANE_1) - this->getSelectedMapObject()->getX(MAPOBJECT_PLANE_1)) > Resource::resource->getViewMap(MAPOBJECT_PLANE_1)->getSize().x / 2 ||
-										Tools::getAbsolute(Game::game->getCharacterShip()->getY(MAPOBJECT_PLANE_1) - this->getSelectedMapObject()->getY(MAPOBJECT_PLANE_1)) > Resource::resource->getViewMap(MAPOBJECT_PLANE_1)->getSize().y / 2;
+	this->mObjectSelectedOutOfScreen =	Tools::getAbsolute(Game::game->getShipPiloted()->getX(MAPOBJECT_PLANE_1) - this->getSelectedMapObject()->getX(MAPOBJECT_PLANE_1)) > Resource::resource->getViewMap(MAPOBJECT_PLANE_1)->getSize().x / 2 ||
+										Tools::getAbsolute(Game::game->getShipPiloted()->getY(MAPOBJECT_PLANE_1) - this->getSelectedMapObject()->getY(MAPOBJECT_PLANE_1)) > Resource::resource->getViewMap(MAPOBJECT_PLANE_1)->getSize().y / 2;
 }
 
 void MapObjectSelector::unselect()

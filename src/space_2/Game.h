@@ -22,7 +22,7 @@ public:
 
 	UserInterface* getUserInterface();
 	Character* getCharacter();
-	CharacterShip* getCharacterShip();
+	CharacterShip* getShipPiloted();
 
 	// Method
 	void update();
@@ -32,8 +32,8 @@ public:
 	void launchUninit();
 	void launchTest();
 
-	void changePilotedShip(CharacterShip* p_newPilotedShip);
-	void notifyPilotedShipChanged();
+	void changedShipPiloted(CharacterShip* p_ship);
+	void notifyShipPilotedChanged();
 
 	// Static
 	static Game *game;

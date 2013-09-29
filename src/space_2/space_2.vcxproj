@@ -99,6 +99,7 @@
     <ClCompile Include="CharacterBank.cpp" />
     <ClCompile Include="CharacterBankItemStackUpdate.cpp" />
     <ClCompile Include="CharacterShipItemStackUpdate.cpp" />
+    <ClCompile Include="CharacterShipUpdate.cpp" />
     <ClCompile Include="CharacterUpdate.cpp" />
     <ClCompile Include="ContainerDropDown.cpp" />
     <ClCompile Include="DebugScreen.cpp" />
@@ -386,6 +387,7 @@
     <ClInclude Include="CharacterBank.h" />
     <ClInclude Include="CharacterBankItemStackUpdate.h" />
     <ClInclude Include="CharacterShipItemStackUpdate.h" />
+    <ClInclude Include="CharacterShipUpdate.h" />
     <ClInclude Include="CharacterUpdate.h" />
     <ClInclude Include="ContainerDropDown.h" />
     <ClInclude Include="DebugScreen.h" />

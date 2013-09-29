@@ -23,10 +23,10 @@ CharacterShipItemStackUpdate::~CharacterShipItemStackUpdate(void)
 //*************************************************************
 void CharacterShipItemStackUpdate::job()
 {
-	if(Game::game != NULL || Game::game->getCharacterShip() != NULL)
+	if(Game::game != NULL || Game::game->getShipPiloted() != NULL)
 	{
 		Json::Value jsonRequest;
-		jsonRequest[CHARACTERSHIP_JSON_IDCHARACTERSHIP] = Game::game->getCharacterShip()->getId();
+		jsonRequest[CHARACTERSHIP_JSON_IDCHARACTERSHIP] = Game::game->getShipPiloted()->getId();
 		jsonRequest[CHARACTERSHIP_JSON_ITEMSTACK] = this->mItemStack != NULL ? this->mItemStack->saveToJson() : "null";
 		jsonRequest[CHARACTERSHIP_JSON_ITEMSTACKPOSITION] = this->mPosition;
 

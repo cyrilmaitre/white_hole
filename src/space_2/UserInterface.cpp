@@ -75,6 +75,8 @@ UserInterface::UserInterface( Character* p_character )
 	// Other stuffs
 	this->mStationScreen = new StationScreen(this->getCharacter());
 	this->mXpBarCharacter.setSize(XPBAR_CHARACTER_WIDTH - this->mXpBarCharacter.getBorderSize() * 2, XPBAR_CHARACTER_HEIGHT);
+	this->mXpBarCharacterShip.setSize(XPBAR_CHARACTER_WIDTH - this->mXpBarCharacter.getBorderSize() * 2, XPBAR_CHARACTER_HEIGHT);
+	this->mXpBarCharacterShip.setType(ExperienceBar::ExperienceBarType::TypeCharacterShip);
 	this->mInterfaceBottom.setTexture(*Resource::resource->getTexture(IMG_INTERFACE_BOTTOM));
 
 	this->mDashboard.setSize(DASHBOARD_WIDTH, DASHBOARD_HEIGHT);
@@ -249,6 +251,11 @@ ExperienceBar* UserInterface::getXpBarCharacter()
 	return &this->mXpBarCharacter;
 }
 
+ExperienceBar* UserInterface::getXpBarCharacterShip()
+{
+	return &this->mXpBarCharacterShip;
+}
+
 sf::Vector2i UserInterface::getInterfaceBottom()
 {
 	return sf::Vector2i(this->mInterfaceBottom.getPosition().x, this->mInterfaceBottom.getPosition().y);
@@ -307,6 +314,7 @@ void UserInterface::update(sf::Event p_event)
 	// Update others
 	this->mMenuQuick.update(p_event);
 	this->mXpBarCharacter.update(p_event);
+	this->mXpBarCharacterShip.update(p_event);
 	for(int i = 0; i < this->mWeaponViews.size(); i++)
 		this->mWeaponViews[i]->update(p_event);
 }
@@ -359,6 +367,7 @@ void UserInterface::update()
 	// Update others
 	this->mMenuQuick.update();
 	this->mXpBarCharacter.update();
+	this->mXpBarCharacterShip.update();
 	for(int i = 0; i < this->mWeaponViews.size(); i++)
 		this->mWeaponViews[i]->update();
 	this->updateDashboard();
@@ -383,7 +392,7 @@ void UserInterface::updateDashboard()
 	// Update position
 	Sector* currentSector = Game::game->getMap()->getCurrentSector();
 	this->mDashboardPosition.setFontColor(currentSector->getDangerLevel()->getDangerLevelColor());
-	this->mDashboardPosition.setText("[" + Tools::formatNumber((int)Game::game->getCharacterShip()->getX(SECTOR_PLANE)) + ";" + Tools::formatNumber((int)Game::game->getCharacterShip()->getY(SECTOR_PLANE)) + "]");
+	this->mDashboardPosition.setText("[" + Tools::formatNumber((int)Game::game->getShipPiloted()->getX(SECTOR_PLANE)) + ";" + Tools::formatNumber((int)Game::game->getShipPiloted()->getY(SECTOR_PLANE)) + "]");
 }
 
 void UserInterface::updateWindowPopups()
@@ -431,6 +440,7 @@ void UserInterface::draw()
 	Resource::resource->getApp()->draw(this->mInterfaceBottom);
 	this->mMenuQuick.draw();
 	this->mXpBarCharacter.draw();
+	this->mXpBarCharacterShip.draw();
 	for(int i = 0; i < this->mWeaponViews.size(); i++)
 		this->mWeaponViews[i]->draw();
 	this->mDashboard.draw();
@@ -478,8 +488,8 @@ void UserInterface::notifyWeaponViewChanged()
 	this->mWeaponViews.clear();
 
 	// Add new weapon
-	for(int i = 0; i < Game::game->getCharacterShip()->getWeaponSlot(); i++)
-		this->mWeaponViews.push_back(new WeaponView(Game::game->getCharacterShip()->getWeapon(i), 0, 0));
+	for(int i = 0; i < Game::game->getShipPiloted()->getWeaponSlot(); i++)
+		this->mWeaponViews.push_back(new WeaponView(Game::game->getShipPiloted()->getWeapon(i), 0, 0));
 
 	// Update
 	this->updateWeaponPosition();
@@ -533,6 +543,7 @@ void UserInterface::updatePosition()
 	// Update xp bar
 	this->mXpBarCharacter.setPosition(	this->mInterfaceBottom.getPosition().x + this->mXpBarCharacter.getBorderSize(), 
 										this->mInterfaceBottom.getPosition().y - this->mXpBarCharacter.getHeight() - this->mXpBarCharacter.getBorderSize());
+	this->mXpBarCharacterShip.setPosition(this->mXpBarCharacter.getX(), this->mXpBarCharacter.getY() - this->mXpBarCharacterShip.getHeight() - this->mXpBarCharacterShip.getBorderSize() * 2);
 
 	// Map
 	this->mWindowMap->setY(Resource::resource->getViewUi()->getSize().y - this->mWindowMap->getHeight());
@@ -563,12 +574,4 @@ void UserInterface::moveWindowDynamicStationToBegin( int p_index )
 	this->mWindowDynamicsStation.erase(this->mWindowDynamicsStation.begin() + p_index);
 	this->mWindowDynamicsStation.insert(this->mWindowDynamicsStation.begin(), tmpWindow);
 }
-
-
-
-
-
-
-
-
 

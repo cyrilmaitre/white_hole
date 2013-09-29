@@ -70,7 +70,7 @@ Character* Game::getCharacter()
 	return this->mCharacter;
 }
 
-CharacterShip* Game::getCharacterShip()
+CharacterShip* Game::getShipPiloted()
 {
 	if(this->mCharacter != NULL)
 		return this->mCharacter->getShipPiloted();
@@ -91,12 +91,13 @@ void Game::launchInit( Character* p_character )
 	this->mUserInterface	= new UserInterface(this->mCharacter);
 
 	// Init
-	this->mCharacter->init();
 	sf::Vector2i characterShipPosition = MapObject::convertPosition(sf::Vector2i(SECTOR_WIDTH / 2, SECTOR_HEIGHT / 2), SECTOR_PLANE, SHIP_PLANE);
-	this->getCharacterShip()->setPosition(characterShipPosition.x, characterShipPosition.y);
+
+	this->mCharacter->init();
+	this->getShipPiloted()->setPosition(characterShipPosition.x, characterShipPosition.y);
 	this->getUserInterface()->getXpBarCharacter()->setLevelable(this->getCharacter());
-	this->getMap()->getMapObjectSelector()->addMapObject(this->getCharacterShip());
-	this->notifyPilotedShipChanged();
+	this->notifyShipPilotedChanged();
+
 	Resource::resource->getJuckebox()->playlistLaunch();
 	Resource::resource->updateViewMap();
 }
@@ -165,7 +166,7 @@ void Game::update( sf::Event p_event )
 	RunningStats::update(p_event);
 
 	// Update ship
-	Game::game->getCharacterShip()->update(p_event);
+	Game::game->getShipPiloted()->update(p_event);
 
 	// Update Map
 	this->getMap()->update(p_event);
@@ -189,7 +190,7 @@ void Game::update()
 	this->getCharacter()->update();
 
 	// Update ship
-	this->getCharacterShip()->update();
+	this->getShipPiloted()->update();
 
 	// Update runningstats
 	RunningStats::update();
@@ -213,23 +214,23 @@ void Game::update()
 	EventManager::eventManager->handlePlayerActionPost();
 }
 
-void Game::changePilotedShip( CharacterShip* p_newPilotedShip )
+void Game::changedShipPiloted( CharacterShip* p_ship )
 {
-	// Remove older
-	EntityManager::remove(this->getCharacter()->getShipPiloted());
+	EntityManager::remove(this->getShipPiloted());
+	this->getMap()->getMapObjectSelector()->removeMapObject(this->getShipPiloted());
 
-	// Set new
-	this->getMap()->getMapObjectSelector()->removeMapObject(this->getCharacterShip());
-	this->getCharacter()->setShipPiloted(p_newPilotedShip);
-	this->getMap()->getMapObjectSelector()->addMapObject(this->getCharacterShip());
-	this->notifyPilotedShipChanged();
+	this->getCharacter()->setShipPiloted(p_ship);
+	this->notifyShipPilotedChanged();
 }
 
-void Game::notifyPilotedShipChanged()
+void Game::notifyShipPilotedChanged()
 {
 	this->mUserInterface->notifyWeaponViewChanged();
+	this->mUserInterface->getXpBarCharacterShip()->setLevelable(this->getShipPiloted());
 	this->mUserInterface->getWindowShipSmall()->setCharacterShip(this->getCharacter()->getShipPiloted());
 	this->mUserInterface->getWindowCargo()->getContainerView()->setContainerable(this->getCharacter()->getShipPiloted());
 	this->mUserInterface->getWindowCargoStationShip()->getContainerView()->setContainerable(this->getCharacter()->getShipPiloted());
-	EntityManager::add(this->getCharacter()->getShipPiloted());
+
+	EntityManager::add(this->getShipPiloted());
+	this->getMap()->getMapObjectSelector()->addMapObject(this->getShipPiloted());
 }

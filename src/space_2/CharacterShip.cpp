@@ -8,11 +8,22 @@
 #include "Game.h"
 #include "ToolsMap.h"
 #include "ToolsImage.h"
+#include "NetworkJobManager.h"
+#include "CharacterShipUpdate.h"
 
 
 //*************************************************************
 // Define
 //*************************************************************
+#define JSON_NAME								"name"
+#define JSON_SKILLPOINTS						"skillPoints"
+#define CHARACTERSHIP_JSON_LEVEL				"level"
+#define CHARACTERSHIP_JSON_EXPERIENCE			"experience"
+#define CHARACTERSHIP_JSON_PILOTED				"piloted"
+#define CHARACTERSHIP_JSON_IDSHIPMODEL			"idShipModel"
+#define CHARACTERSHIP_JSON_IDCHARACTER			"idCharacter"
+#define CHARACTERSHIP_JSON_WEAPONS				"weapons"
+#define CHARACTERSHIP_JSON_ITEMSTACKS			"itemStacks"
 #define NPCTYPE_ID		1
 
 
@@ -41,6 +52,42 @@ CharacterShip::~CharacterShip(void)
 //*************************************************************
 // Getters - Setters
 //*************************************************************
+std::string CharacterShip::getName()
+{
+	return this->mName;
+}
+
+void CharacterShip::setName( std::string p_name )
+{
+	if(this->mName != p_name)
+	{
+		this->mName = p_name;
+		this->notifyNameChanged();
+	}
+}
+
+bool CharacterShip::hasSkillPoints()
+{
+	return this->mSkillPoints > 0;
+}
+
+int CharacterShip::getSkillPoints()
+{
+	return this->mSkillPoints;
+}
+
+void CharacterShip::setSkillPoints( int p_points )
+{
+	if(p_points < 0)
+		p_points = 0;
+
+	if(this->mSkillPoints != p_points)
+	{
+		this->mSkillPoints = p_points;
+		this->notifySkillPointsChanged();
+	}
+}
+
 void CharacterShip::setX( double p_x )
 {
 	Object::setX(p_x);
@@ -60,7 +107,11 @@ bool CharacterShip::isPiloted()
 
 void CharacterShip::setPiloted(bool p_piloted)
 {
-	this->mPiloted = p_piloted;
+	if(this->mPiloted != p_piloted)
+	{
+		this->mPiloted = p_piloted;
+		this->notifyPilotedChanged();
+	}
 }
 
 NpcType* CharacterShip::getNpcType()
@@ -165,6 +216,8 @@ void CharacterShip::updateRotation()
 void CharacterShip::loadFromJson( Json::Value json )
 {
 	this->setId(json.get(CHARACTERSHIP_JSON_IDCHARACTERSHIP, -1).asInt());
+	this->setName(json.get(JSON_NAME, "").asString());
+	this->setSkillPoints(json.get(JSON_SKILLPOINTS, 0).asInt());
 	this->setLevel(json.get(CHARACTERSHIP_JSON_LEVEL, 0).asInt());
 	this->setExperience(json.get(CHARACTERSHIP_JSON_EXPERIENCE, 0).asInt());
 	this->setPiloted(json.get(CHARACTERSHIP_JSON_PILOTED, false).asBool());
@@ -195,6 +248,8 @@ Json::Value CharacterShip::saveToJson()
 {
 	Json::Value json;
 	json[CHARACTERSHIP_JSON_IDCHARACTERSHIP] = this->getId();
+	json[JSON_NAME] = this->getName();
+	json[JSON_SKILLPOINTS] = this->getSkillPoints();
 	json[CHARACTERSHIP_JSON_LEVEL] = this->getLevel();
 	json[CHARACTERSHIP_JSON_EXPERIENCE] = this->getExperience();
 	json[CHARACTERSHIP_JSON_PILOTED] = this->isPiloted();
@@ -214,4 +269,45 @@ void CharacterShip::loadFromShipModel()
 	}
 }
 
+void CharacterShip::incSkillPoints()
+{
+	this->incSkillPoints(1);
+}
 
+void CharacterShip::incSkillPoints( int p_inc )
+{
+	this->setSkillPoints(this->getSkillPoints() + p_inc);
+}
+
+void CharacterShip::decSkillPoints()
+{
+	this->setSkillPoints(this->getSkillPoints() - 1);
+}
+
+void CharacterShip::incLevel()
+{
+	Levelable::incLevel();
+	this->incSkillPoints(this->getLevelConfig()->getSkillPointsOnLevelUp());
+	NetworkJobManager::getInstance()->addJob(new CharacterShipUpdate(this));
+}
+
+void CharacterShip::incExperience( long p_inc )
+{
+	Levelable::incExperience(p_inc);
+	NetworkJobManager::getInstance()->addJob(new CharacterShipUpdate(this));
+}
+
+void CharacterShip::notifySkillPointsChanged()
+{
+	NetworkJobManager::getInstance()->addJob(new CharacterShipUpdate(this));
+}
+
+void CharacterShip::notifyNameChanged()
+{
+	NetworkJobManager::getInstance()->addJob(new CharacterShipUpdate(this));
+}
+
+void CharacterShip::notifyPilotedChanged()
+{
+	NetworkJobManager::getInstance()->addJob(new CharacterShipUpdate(this));
+}

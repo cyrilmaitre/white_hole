@@ -126,8 +126,8 @@ Sector* Map::getSector( int p_idX, int p_idY, bool p_generateIfNull )
 
 Sector* Map::getCurrentSector()
 {
-	double positionX = (int)Game::game->getCharacterShip()->getX(SECTOR_PLANE);
-	double positionY = (int)Game::game->getCharacterShip()->getY(SECTOR_PLANE);
+	double positionX = (int)Game::game->getShipPiloted()->getX(SECTOR_PLANE);
+	double positionY = (int)Game::game->getShipPiloted()->getY(SECTOR_PLANE);
 
 	int positionSectorX = positionX / SECTOR_WIDTH;
 	int positionSectorY = positionY / SECTOR_HEIGHT;
@@ -332,7 +332,7 @@ void Map::draw()
 	this->getNpcShipSpawner()->draw();
 	
 	// Draw Ship
-	Game::game->getCharacterShip()->draw();
+	Game::game->getShipPiloted()->draw();
 
 	// Draw AutoManager
 	AutoManager::draw();

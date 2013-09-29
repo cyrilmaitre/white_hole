@@ -71,8 +71,8 @@ std::vector<Entity*> Npc::getEntityCanAggro()
 	}
 
 	// Player
-	if(this->getNpcType()->canAggro(Game::game->getCharacterShip()->getNpcType()))
-		npcs.push_back(Game::game->getCharacterShip());
+	if(this->getNpcType()->canAggro(Game::game->getShipPiloted()->getNpcType()))
+		npcs.push_back(Game::game->getShipPiloted());
 
 	return npcs;
 }

@@ -64,7 +64,7 @@ void ShipModel::loadFromConfig( KeyValueFile* p_config )
 		this->setShipType(FactoryGet::getShipTypeFactory()->getShipType(p_config->getLong(CONFIG_SHIPTYPE)));
 
 	if(p_config->has(CONFIG_LEVELCONFIG))
-		this->setLevelShipConfig(FactoryGet::getLevelFactory()->getLevelShip(CONFIG_LEVELCONFIG));
+		this->setLevelShipConfig(FactoryGet::getLevelFactory()->getLevelShip(p_config->getString(CONFIG_LEVELCONFIG)));
 }
 
 

@@ -93,7 +93,7 @@ void EventManager::handlePlayerAction( sf::Event p_event )
 
 	// CharacterShip reload
 	if( p_event.type == sf::Event::KeyPressed && p_event.key.code == Option::option->getAppControl(OPTION_APP_CONTROL_RELOAD_KEY))
-		Game::game->getCharacterShip()->reload();
+		Game::game->getShipPiloted()->reload();
 
 	// Drag'n'drop
 	if(p_event.type == sf::Event::MouseButtonReleased && p_event.mouseButton.button == sf::Mouse::Button::Left)
@@ -113,7 +113,7 @@ void EventManager::handlePlayerActionPost()
 	// CharacterShip fire
 	MapObject* selected = Game::game->getMap()->getMapObjectSelector()->getSelectedMapObject();
 	if(sf::Mouse::isButtonPressed(sf::Mouse::Button::Right) && ToolsMap::isEntity(selected))
-		Game::game->getCharacterShip()->fire((Entity*)selected, Game::game->getCharacterShip());
+		Game::game->getShipPiloted()->fire((Entity*)selected, Game::game->getShipPiloted());
 }
 
 void EventManager::raiseMouseOverEvent()

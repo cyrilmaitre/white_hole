@@ -6,13 +6,6 @@
 
 // Define
 #define CHARACTERSHIP_JSON_IDCHARACTERSHIP		"idCharacterShip"
-#define CHARACTERSHIP_JSON_LEVEL				"level"
-#define CHARACTERSHIP_JSON_EXPERIENCE			"experience"
-#define CHARACTERSHIP_JSON_PILOTED				"piloted"
-#define CHARACTERSHIP_JSON_IDSHIPMODEL			"idShipModel"
-#define CHARACTERSHIP_JSON_IDCHARACTER			"idCharacter"
-#define CHARACTERSHIP_JSON_WEAPONS				"weapons"
-#define CHARACTERSHIP_JSON_ITEMSTACKS			"itemStacks"
 #define CHARACTERSHIP_JSON_ITEMSTACK			"itemStack"
 #define CHARACTERSHIP_JSON_ITEMSTACKPOSITION	"position"
 
@@ -24,6 +17,13 @@ public:
 	~CharacterShip(void);
 
 	// Getters - Setters
+	std::string getName();
+	void setName(std::string p_name);
+
+	bool hasSkillPoints();
+	int getSkillPoints();
+	void setSkillPoints(int p_points);
+
 	void setX(double p_x);
 	void setY(double p_y);
 
@@ -49,9 +49,21 @@ public:
 	Json::Value saveToJson();
 	void loadFromShipModel();
 
+	void incSkillPoints();
+	void incSkillPoints(int p_inc);
+	void decSkillPoints();
+	void incLevel();
+	void incExperience(long p_inc);
+
+	void notifyNameChanged();
+	void notifySkillPointsChanged();
+	void notifyPilotedChanged();
+
 
 private:
 	// Attrtributs
+	std::string mName;
+	int mSkillPoints;
 	bool mPiloted;
 	Character *mCharacter;
 	NpcType* mNpcType;

@@ -58,6 +58,7 @@ public:
 
 	StationScreen* getStationScreen();
 	ExperienceBar* getXpBarCharacter();
+	ExperienceBar* getXpBarCharacterShip();
 	sf::Vector2i getInterfaceBottom();
 
 	// Methode	
@@ -128,6 +129,7 @@ private:
 	mks::Clock mDashboardClock;
 	std::vector<WeaponView*> mWeaponViews;
 	ExperienceBar mXpBarCharacter;
+	ExperienceBar mXpBarCharacterShip;
 
 	// Methods 
 	void moveWindowDynamicToBegin(int p_index);

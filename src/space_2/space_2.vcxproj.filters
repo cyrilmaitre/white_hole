@@ -1230,6 +1230,9 @@
     <ClCompile Include="ItemStockSimulator.cpp">
       <Filter>Fichiers sources\game\item</Filter>
     </ClCompile>
+    <ClCompile Include="CharacterShipUpdate.cpp">
+      <Filter>Fichiers sources\resource\network</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h">
@@ -2104,6 +2107,9 @@
     </ClInclude>
     <ClInclude Include="ItemStockSimulator.h">
       <Filter>Fichiers d%27en-tête\game\item</Filter>
+    </ClInclude>
+    <ClInclude Include="CharacterShipUpdate.h">
+      <Filter>Fichiers d%27en-tête\resource\network</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

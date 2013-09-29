@@ -28,7 +28,8 @@
 #define CHARACTER_JSON_CHARACTERSHIP		"ships"
 #define JSON_CHARACTERBANKS					"banks"
 #define CHARACTER_JSON_CHARACTERSHIPCOUNT	"shipsCount"
-#define UPDATE_TIMEPLAYED_TICK				10 // Sec
+#define UPDATE_TIMEPLAYED_TICK				10		// Sec
+#define PERCENTAGE_XP_FOR_SHIP				0.5		// Percent
 
 
 //*************************************************************
@@ -228,7 +229,11 @@ void Character::setSkillPoints( int p_points )
 	if(p_points < 0)
 		p_points = 0;
 
-	this->mSkillPoints = p_points;
+	if(this->mSkillPoints != p_points)
+	{
+		this->mSkillPoints = p_points;
+		this->notifySkillPointsChanged();
+	}
 }
 
 bool Character::hasSkillPoints()
@@ -296,14 +301,22 @@ CharacterShip * Character::getShip( int p_index )
 	return this->mShips[p_index];
 }
 
-CharacterShip * Character::getShipPiloted()
+CharacterShip* Character::getShipPiloted()
 {
 	return this->mShipPiloted;
 }
 
-void Character::setShipPiloted( CharacterShip *p_ship )
+void Character::setShipPiloted( CharacterShip* p_ship )
 {
-	this->mShipPiloted = p_ship;
+	if(this->mShipPiloted != p_ship)
+	{
+		if(this->mShipPiloted != NULL)
+			this->mShipPiloted->setPiloted(false);
+
+		this->mShipPiloted = p_ship;
+		if(this->mShipPiloted != NULL)
+			this->mShipPiloted->setPiloted(true);
+	}
 }
 
 
@@ -461,13 +474,16 @@ void Character::decSkillPoints()
 void Character::incLevel()
 {
 	Levelable::incLevel();
-	this->incSkillPoints(((LevelCharacter*)this->getLevelConfig())->getSkillPointsOnLevelUp());
+	this->incSkillPoints((this->getLevelConfig())->getSkillPointsOnLevelUp());
 	NetworkJobManager::getInstance()->addJob(new CharacterUpdate(this));
 }
 
 void Character::incExperience( long p_inc )
 {
-	Levelable::incExperience(p_inc);
+	long xpForShip = (long)((float)p_inc * PERCENTAGE_XP_FOR_SHIP);
+	long xpForCharacter = p_inc - xpForShip;
+	Levelable::incExperience(xpForCharacter);
+	this->getShipPiloted()->incExperience(xpForShip);
 	NetworkJobManager::getInstance()->addJob(new CharacterUpdate(this));
 }
 
@@ -489,9 +505,8 @@ void Character::notifyTimePlayedChanged()
 	NetworkJobManager::getInstance()->addJob(new CharacterUpdate(this));
 }
 
-
-
-
-
-
+void Character::notifySkillPointsChanged()
+{
+	NetworkJobManager::getInstance()->addJob(new CharacterUpdate(this));
+}
 

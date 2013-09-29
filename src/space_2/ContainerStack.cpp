@@ -107,7 +107,7 @@ void ContainerStack::notifyItemStackChanged()
 	switch(this->mType)
 	{
 	case ContainerStack::ContainerStackType::TypeCharacterShip:
-		if(Game::game != NULL && Game::game->getCharacterShip() != NULL)
+		if(Game::game != NULL && Game::game->getShipPiloted() != NULL)
 			NetworkJobManager::getInstance()->addJob(new CharacterShipItemStackUpdate(this->getItemStack(), this->getPosition()));
 		break;
 

@@ -247,49 +247,49 @@ void RunningStats::draw()
 		sf::Vector2f positionMed = RunningStats::getTextPosition(3, 1);
 		sf::Vector2f positionBottom = RunningStats::getTextPosition(4, 1);
 		
-		ss << (int)Game::game->getCharacterShip()->getVelocityAt(Movable::MovableCardinality::NorthWest);
+		ss << (int)Game::game->getShipPiloted()->getVelocityAt(Movable::MovableCardinality::NorthWest);
 		text.setString(sf::String(ss.str()));
 		text.setPosition(positionTop.x, positionTop.y);
 		Resource::resource->getApp()->draw(text);
 		ss.str("");
 
-		ss << (int)Game::game->getCharacterShip()->getVelocityAt(Movable::MovableCardinality::North);
+		ss << (int)Game::game->getShipPiloted()->getVelocityAt(Movable::MovableCardinality::North);
 		text.setString(sf::String(ss.str()));
 		text.setPosition(positionTop.x + RUNNINGSTATS_VELOCITY_OFFSET, positionTop.y);
 		Resource::resource->getApp()->draw(text);
 		ss.str("");
 
-		ss << (int)Game::game->getCharacterShip()->getVelocityAt(Movable::MovableCardinality::NorthEast);
+		ss << (int)Game::game->getShipPiloted()->getVelocityAt(Movable::MovableCardinality::NorthEast);
 		text.setString(sf::String(ss.str()));
 		text.setPosition(positionTop.x + RUNNINGSTATS_VELOCITY_OFFSET * 2, positionTop.y);
 		Resource::resource->getApp()->draw(text);
 		ss.str("");
 
-		ss << (int)Game::game->getCharacterShip()->getVelocityAt(Movable::MovableCardinality::West);
+		ss << (int)Game::game->getShipPiloted()->getVelocityAt(Movable::MovableCardinality::West);
 		text.setString(sf::String(ss.str()));
 		text.setPosition(positionMed.x, positionMed.y);
 		Resource::resource->getApp()->draw(text);
 		ss.str("");
 
-		ss << (int)Game::game->getCharacterShip()->getVelocityAt(Movable::MovableCardinality::East);
+		ss << (int)Game::game->getShipPiloted()->getVelocityAt(Movable::MovableCardinality::East);
 		text.setString(sf::String(ss.str()));
 		text.setPosition(positionMed.x + RUNNINGSTATS_VELOCITY_OFFSET * 2, positionMed.y);
 		Resource::resource->getApp()->draw(text);
 		ss.str("");
 
-		ss << (int)Game::game->getCharacterShip()->getVelocityAt(Movable::MovableCardinality::SouthWest);
+		ss << (int)Game::game->getShipPiloted()->getVelocityAt(Movable::MovableCardinality::SouthWest);
 		text.setString(sf::String(ss.str()));
 		text.setPosition(positionBottom.x, positionBottom.y);
 		Resource::resource->getApp()->draw(text);
 		ss.str("");
 
-		ss << (int)Game::game->getCharacterShip()->getVelocityAt(Movable::MovableCardinality::South);
+		ss << (int)Game::game->getShipPiloted()->getVelocityAt(Movable::MovableCardinality::South);
 		text.setString(sf::String(ss.str()));
 		text.setPosition(positionBottom.x + RUNNINGSTATS_VELOCITY_OFFSET, positionBottom.y);
 		Resource::resource->getApp()->draw(text);
 		ss.str("");
 
-		ss << (int)Game::game->getCharacterShip()->getVelocityAt(Movable::MovableCardinality::SouthEast);
+		ss << (int)Game::game->getShipPiloted()->getVelocityAt(Movable::MovableCardinality::SouthEast);
 		text.setString(sf::String(ss.str()));
 		text.setPosition(positionBottom.x + RUNNINGSTATS_VELOCITY_OFFSET * 2, positionBottom.y);
 		Resource::resource->getApp()->draw(text);
@@ -299,9 +299,9 @@ void RunningStats::draw()
 		ss	<< Resource::resource->getBundle()->getString("runningStatsPlayerShipPositionP1") 
 			<< Tools::getSpaceAfterColon()
 			<< "x: " 
-			<< Tools::formatNumber((int)Game::game->getCharacterShip()->getX(SHIP_PLANE)) 
+			<< Tools::formatNumber((int)Game::game->getShipPiloted()->getX(SHIP_PLANE)) 
 			<< "  y: " 
-			<< Tools::formatNumber((int)Game::game->getCharacterShip()->getY(SHIP_PLANE));
+			<< Tools::formatNumber((int)Game::game->getShipPiloted()->getY(SHIP_PLANE));
 		text.setString(sf::String(ss.str()));
 		text.setPosition(RunningStats::getTextPosition(5, 1));
 		Resource::resource->getApp()->draw(text);
@@ -311,9 +311,9 @@ void RunningStats::draw()
 		ss	<< Resource::resource->getBundle()->getString("runningStatsPlayerShipPositionP10") 
 			<< Tools::getSpaceAfterColon()
 			<< "x: " 
-			<< Tools::formatNumber((int)Game::game->getCharacterShip()->getX(SECTOR_PLANE)) 
+			<< Tools::formatNumber((int)Game::game->getShipPiloted()->getX(SECTOR_PLANE)) 
 			<< "  y: " 
-			<< Tools::formatNumber((int)Game::game->getCharacterShip()->getY(SECTOR_PLANE));
+			<< Tools::formatNumber((int)Game::game->getShipPiloted()->getY(SECTOR_PLANE));
 		text.setString(sf::String(ss.str()));
 		text.setPosition(RunningStats::getTextPosition(6, 1));
 		Resource::resource->getApp()->draw(text);

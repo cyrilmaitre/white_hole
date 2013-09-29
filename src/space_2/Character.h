@@ -91,6 +91,7 @@ public:
 	void incExperience(long p_inc);
 
 	void notifyTimePlayedChanged();
+	void notifySkillPointsChanged();
 
 	void createBase();
 	void loadFromJson(Json::Value json);
