@@ -21,7 +21,7 @@ IdGenerator Object::mIdGenerator;
 //*************************************************************
 Object::Object()
 {
-	this->mObjectId = Object::mIdGenerator.getNextId();
+	this->mIdObject = Object::mIdGenerator.getNextId();
 	this->mX = -1;
 	this->mY = -1;
 	this->mWidth = -1;
@@ -52,9 +52,9 @@ Object::~Object( void )
 //*************************************************************
 // Getters - Setters
 //*************************************************************
-long Object::getObjectId()
+long Object::getIdObject()
 {
-	return this->mObjectId;
+	return this->mIdObject;
 }
 
 double Object::getX()

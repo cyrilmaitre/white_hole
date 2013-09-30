@@ -14,7 +14,7 @@ public:
 	~Object();
 
 	// Getters - Setters
-	long getObjectId();
+	long getIdObject();
 
 	virtual double getX();
 	virtual double getX(Object *p_parentObject);
@@ -96,7 +96,7 @@ protected:
 
 private:
 	// Attributes
-	long mObjectId;
+	long mIdObject;
 
 	// Methods
 	virtual void updateMouseOver();

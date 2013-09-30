@@ -277,20 +277,20 @@ void UserInterface::removeWindowPopup( WindowPopup* p_window )
 	// Remove from dynamics 
 	for(int i = 0; i < this->mWindowDynamics.size(); i++)
 	{
-		if(this->mWindowDynamics[i]->getObjectId() == p_window->getObjectId())
+		if(this->mWindowDynamics[i]->getIdObject() == p_window->getIdObject())
 			this->mWindowDynamics.erase(this->mWindowDynamics.begin() + i);
 	}
 
 	for(int i = 0; i < this->mWindowDynamicsStation.size(); i++)
 	{
-		if(this->mWindowDynamicsStation[i]->getObjectId() == p_window->getObjectId())
+		if(this->mWindowDynamicsStation[i]->getIdObject() == p_window->getIdObject())
 			this->mWindowDynamicsStation.erase(this->mWindowDynamicsStation.begin() + i);
 	}
 
 	// Remove from pop up
 	for(int i = 0; i < this->mWindowPopups.size(); i++)
 	{
-		if(this->mWindowPopups[i]->getObjectId() == p_window->getObjectId())
+		if(this->mWindowPopups[i]->getIdObject() == p_window->getIdObject())
 		{
 			delete this->mWindowPopups[i];
 			this->mWindowPopups.erase(this->mWindowPopups.begin() + i);

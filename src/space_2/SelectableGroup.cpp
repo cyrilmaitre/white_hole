@@ -55,7 +55,7 @@ void SelectableGroup::addSelectable( Selectable* p_selectable )
 	bool selectableExist = false;
 	for(int i = 0; i < this->mSelectable.size(); i++)
 	{
-		if(this->mSelectable[i]->getObjectId() == p_selectable->getObjectId())
+		if(this->mSelectable[i]->getIdObject() == p_selectable->getIdObject())
 		{
 			selectableExist = true;
 			break;
@@ -76,7 +76,7 @@ void SelectableGroup::removeSelectable( Selectable* p_selectable )
 {
 	for(int i = 0; i < this->mSelectable.size(); i++)
 	{
-		if(this->mSelectable[i]->getObjectId() == p_selectable->getObjectId())
+		if(this->mSelectable[i]->getIdObject() == p_selectable->getIdObject())
 		{
 			this->removeSelectable(i);
 			break;

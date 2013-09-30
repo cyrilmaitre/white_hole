@@ -112,7 +112,7 @@ int List::getItemIndex( Listable* p_listable )
 {
 	for(int i = 0; i < this->mItems.size(); i++)
 	{
-		if(this->mItems[i]->getObjectId() == p_listable->getObjectId())
+		if(this->mItems[i]->getIdObject() == p_listable->getIdObject())
 			return i;
 	}
 	return -1;

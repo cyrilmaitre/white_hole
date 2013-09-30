@@ -45,7 +45,7 @@ void PopupManager::removePopup( Block* p_popup )
 	{
 		for(int i = 0; i < this->mPopups.size(); i++)
 		{
-			if(this->mPopups[i]->getObjectId() == p_popup->getObjectId())
+			if(this->mPopups[i]->getIdObject() == p_popup->getIdObject())
 			{
 				this->mPopups.erase(this->mPopups.begin() + i);
 				break;
