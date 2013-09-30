@@ -13,8 +13,8 @@ public:
 	~ItemType(void);
 
 	// Getters - Setters
-	long getId();
-	void setId(long p_id);
+	long getIdItemType();
+	void setIdItemType(long p_id);
 
 	std::string getName();
 	void setName(std::string p_name);
@@ -46,7 +46,7 @@ public:
 
 private:
 	// Attributs
-	long mId;
+	long mIdItemType;
 	std::string mName;
 	std::string mDescription;
 	std::string mIconIndex;
