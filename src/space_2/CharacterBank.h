@@ -15,8 +15,8 @@ public:
 	Character* getCharacter();
 	void setCharacter(Character* p_character);
 
-	long getId();
-	void setId(long p_id);
+	long getIdCharacterBank();
+	void setIdCharacterBank(long p_id);
 
 	int getNumber();
 	void setNumber(int p_number);
@@ -39,7 +39,7 @@ public:
 private:
 	// Attributs
 	Character *mCharacter;
-	long mId;
+	long mIdCharacterBank;
 	int mNumber;
 	bool mUnlock;
 	long mPrice;

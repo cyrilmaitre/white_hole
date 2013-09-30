@@ -25,7 +25,7 @@
 CharacterBank::CharacterBank( Json::Value json, Character *p_character ) : Containerable(ContainerStack::ContainerStackType::TypeCharacterBank)
 {
 	this->mCharacter = NULL;
-	this->mId = -1;
+	this->mIdCharacterBank = -1;
 	this->mNumber = -1;
 	this->mUnlock = false;
 	this->mPrice = -1;
@@ -53,14 +53,14 @@ void CharacterBank::setCharacter( Character* p_character )
 	this->mCharacter = p_character;
 }
 
-long CharacterBank::getId()
+long CharacterBank::getIdCharacterBank()
 {
-	return this->mId;
+	return this->mIdCharacterBank;
 }
 
-void CharacterBank::setId( long p_id )
+void CharacterBank::setIdCharacterBank( long p_id )
 {
-	this->mId = p_id;
+	this->mIdCharacterBank = p_id;
 }
 
 int CharacterBank::getNumber()
@@ -147,7 +147,7 @@ void CharacterBank::unlock()
 
 void CharacterBank::loadFromJson( Json::Value json )
 {
-	this->setId(json.get(JSON_IDCHARACTERBANK, -1).asInt());
+	this->setIdCharacterBank(json.get(JSON_IDCHARACTERBANK, -1).asInt());
 	this->setNumber(json.get(JSON_NUMBER, -1).asInt());
 	this->setUnlock(json.get(JSON_UNLOCK, false).asBool());
 
@@ -168,7 +168,7 @@ Json::Value CharacterBank::saveToJson()
 {
 	Json::Value json;
 	json[JSON_IDCHARATCER] = this->getCharacter()->getIdCharacter();
-	json[JSON_IDCHARACTERBANK] = this->getId();
+	json[JSON_IDCHARACTERBANK] = this->getIdCharacterBank();
 	json[JSON_NUMBER] = this->getNumber();
 	json[JSON_UNLOCK] = this->isUnlock();
 	return json;

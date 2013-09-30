@@ -34,7 +34,7 @@ void CharacterBankItemStackUpdate::job()
 	if(this->mCharacterBank != NULL)
 	{
 		Json::Value jsonRequest;
-		jsonRequest[JSON_IDCHARACTERBANK] = this->mCharacterBank->getId();
+		jsonRequest[JSON_IDCHARACTERBANK] = this->mCharacterBank->getIdCharacterBank();
 		jsonRequest[JSON_ITEMSTACK] = this->mItemStack != NULL ? this->mItemStack->saveToJson() : "null";
 		jsonRequest[JSON_ITEMSTACKPOSITION] = this->mPosition;
 
