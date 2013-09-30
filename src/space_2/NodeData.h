@@ -14,8 +14,8 @@ public:
 	void destroyChilds();
 
 	// Getters - Setters
-	long getId();
-	void setId(long p_id);
+	long getIdNodeData();
+	void setIdNodeData(long p_id);
 
 	bool hasTree();
 	TreeData* getTree();
@@ -55,7 +55,7 @@ public:
 
 private:
 	// Attributs
-	long mId;
+	long mIdNodeData;
 	TreeData* mTree;
 	NodeData* mParent;
 	std::vector<NodeData*> mChilds;

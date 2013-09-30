@@ -100,7 +100,7 @@ void TreeData::removeRoot( NodeData* p_root )
 {
 	for(int i = 0; i < this->mRoots.size(); i++)
 	{
-		if(p_root->getId() == this->mRoots[i]->getId())
+		if(p_root->getIdNodeData() == this->mRoots[i]->getIdNodeData())
 		{
 			this->mRoots.erase(this->mRoots.begin() + i);
 			this->notifyDataChanged();

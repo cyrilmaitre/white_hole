@@ -18,7 +18,7 @@ NodeData::NodeData( TreeData* p_tree, NodeData* p_parent )
 	this->mExpand = false;
 	this->mLevel = 0;
 
-	this->setId(NodeData::mIdgenerator.getNextId());
+	this->setIdNodeData(NodeData::mIdgenerator.getNextId());
 	this->setTree(p_tree);
 	this->setParent(p_parent);
 }
@@ -47,14 +47,14 @@ void NodeData::destroyChilds()
 //*************************************************************
 // Getters - Setters
 //*************************************************************
-long NodeData::getId()
+long NodeData::getIdNodeData()
 {
-	return this->mId;
+	return this->mIdNodeData;
 }
 
-void NodeData::setId( long p_id )
+void NodeData::setIdNodeData( long p_id )
 {
-	this->mId = p_id;
+	this->mIdNodeData = p_id;
 }
 
 bool NodeData::hasTree()
@@ -162,7 +162,7 @@ void NodeData::setLevel( int p_level )
 
 std::string NodeData::getText()
 {
-	return "Node #" + Tools::buildStringWithInt(this->getId());
+	return "Node #" + Tools::buildStringWithInt(this->getIdNodeData());
 }
 
 std::string NodeData::getIcon()
@@ -216,7 +216,7 @@ void NodeData::removeChild( NodeData* p_child )
 {
 	for(int i = 0; i < this->mChilds.size(); i++)
 	{
-		if(p_child->getId() == this->mChilds[i]->getId())
+		if(p_child->getIdNodeData() == this->mChilds[i]->getIdNodeData())
 		{
 			this->mChilds.erase(this->mChilds.begin() + i);
 			if(this->hasTree())
