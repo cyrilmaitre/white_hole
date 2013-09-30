@@ -119,8 +119,8 @@ public:
 	virtual ~MapObject(void);
 
 	// Getters - Setters
-	long getId();
-	void setId(long p_id);
+	long getIdMapObject();
+	void setIdMapObject(long p_id);
 
 	double getX(int plane);
 	double getSectorX();
@@ -214,7 +214,7 @@ public:
 
 protected:
 	// Attributs
-	long mId;
+	long mIdMapObject;
 	int mPlane;
 	float mScale;
 	sf::FloatRect mHitBox;							// On screen

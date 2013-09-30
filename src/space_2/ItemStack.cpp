@@ -156,7 +156,7 @@ Json::Value ItemStack::saveToJson()
 	Json::Value json;
 	json[ITEMSTACK_JSON_IDITEMSTACK] = this->getId();
 	json[ITEMSTACK_JSON_STACKSIZE] = this->getStackSize();
-	json[ITEMSTACK_JSON_IDITEM] = this->getItem() != NULL ? this->getItem()->getId() : -1;
+	json[ITEMSTACK_JSON_IDITEM] = this->getItem() != NULL ? this->getItem()->getIdItem() : -1;
 	return json;
 }
 

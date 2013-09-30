@@ -108,7 +108,7 @@ long Containerable::getContentFreeFor( Item* p_item )
 				{
 					if(currentStack->hasItemStack())
 					{
-						if(currentStack->getItemStack()->getItem()->getId() == p_item->getId())
+						if(currentStack->getItemStack()->getItem()->getIdItem() == p_item->getIdItem())
 							contentfree += currentStack->getItemStack()->getStackSizeFree();
 					}
 					else
@@ -141,7 +141,7 @@ std::vector<Item*> Containerable::getUniqueItems()
 						bool addCurrentItem = true;
 						for(int k = 0; k < uniqueItems.size(); k++)
 						{
-							if(uniqueItems[k]->getId() == currentItem->getId())
+							if(uniqueItems[k]->getIdItem() == currentItem->getIdItem())
 							{
 								addCurrentItem = false;
 								break;
@@ -172,7 +172,7 @@ int Containerable::getItemCount( Item* p_item )
 				{
 					if(currentStack->hasItemStack())
 					{
-						if(currentStack->getItemStack()->getItem()->getId() == p_item->getId())
+						if(currentStack->getItemStack()->getItem()->getIdItem() == p_item->getIdItem())
 							itemCount += currentStack->getItemStack()->getStackSize();
 					}
 				}
@@ -267,7 +267,7 @@ bool Containerable::addItemStack( ItemStack* p_itemStack )
 					}
 					else
 					{
-						if(p_itemStack->getStackSize() > 0 && currentStack->getItemStack()->getItem()->getId() == p_itemStack->getItem()->getId() && currentStack->getItemStack()->getStackSizeFree() > 0)
+						if(p_itemStack->getStackSize() > 0 && currentStack->getItemStack()->getItem()->getIdItem() == p_itemStack->getItem()->getIdItem() && currentStack->getItemStack()->getStackSizeFree() > 0)
 						{
 							p_itemStack->setStackSize(currentStack->incStackSize(p_itemStack->getStackSize()));
 							this->notifyContentChanged();

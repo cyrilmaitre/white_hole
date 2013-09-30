@@ -69,7 +69,7 @@ Wreck::~Wreck(void)
 	for(int i = 0; i < this->mWreckMini.size(); i++)
 	{
 		Game::game->getMap()->getMapObjectSelector()->removeMapObject(this->mWreckMini[i]);
-		EntityManager::remove(this->mWreckMini[i]->getId());
+		EntityManager::remove(this->mWreckMini[i]->getIdMapObject());
 	}
 
 	if(Game::game->getUserInterface()->getWindowCargoLoot()->getWreck() == this)
@@ -227,7 +227,7 @@ void Wreck::updateWreckMini()
 		{
 			// Remove from other managers
 			Game::game->getMap()->getMapObjectSelector()->removeMapObject(this->mWreckMini[i]);
-			EntityManager::remove(this->mWreckMini[i]->getId());
+			EntityManager::remove(this->mWreckMini[i]->getIdMapObject());
 
 			// Remove from this
 			this->mWreckMini.erase(this->mWreckMini.begin() + i);

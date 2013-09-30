@@ -176,7 +176,7 @@ void ItemType::removeItem( Item* p_item )
 {
 	for(int i = 0; i < this->mItems.size(); i++)
 	{
-		if(p_item->getId() == this->mItems[i]->getId())
+		if(p_item->getIdItem() == this->mItems[i]->getIdItem())
 		{
 			this->mItems.erase(this->mItems.begin() + i);
 			break;

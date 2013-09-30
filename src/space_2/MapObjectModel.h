@@ -11,8 +11,8 @@ public:
 	~MapObjectModel(void);
 
 	// Getters - Setters
-	long getId();
-	void setId(long p_id);
+	long getIdMapObjectModel();
+	void setIdMapObjectModel(long p_id);
 
 	int getHitBoxWidth();
 	void setHitBoxWidth(int p_width);
@@ -36,7 +36,7 @@ public:
 
 private:
 	// Attributs
-	long mId;
+	long mIdMapObjectModel;
 	int mHitBoxWidth;
 	int mHitBoxHeight;
 	float mScaleMin;

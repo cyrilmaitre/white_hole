@@ -62,14 +62,14 @@ Item::~Item(void)
 //*************************************************************
 // Getters - Setter
 //*************************************************************
-long Item::getId()
+long Item::getIdItem()
 {
-	return this->mId;
+	return this->mIdItem;
 }
 
-void Item::setId( long p_id )
+void Item::setIdItem( long p_id )
 {
-	this->mId = p_id;
+	this->mIdItem = p_id;
 }
 
 std::string Item::getName()
@@ -239,7 +239,7 @@ void Item::setItemTier( ItemTier *p_itemTier )
 void Item::loadFromConfig( KeyValueFile *p_config )
 {
 	if(p_config->has(CONFIG_ID))
-		this->setId(p_config->getLong(CONFIG_ID));
+		this->setIdItem(p_config->getLong(CONFIG_ID));
 
 	if(p_config->has(CONFIG_NAME))
 		this->setName(Resource::resource->getBundle()->getString(p_config->getString(CONFIG_NAME)));

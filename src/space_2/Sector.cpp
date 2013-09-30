@@ -545,7 +545,7 @@ void Sector::removeEntity( Entity* p_entity )
 	{
 		for(int i = 0; i < this->mEntities.size(); i++)
 		{
-			if(this->mEntities[i]->getId() == p_entity->getId())
+			if(this->mEntities[i]->getIdMapObject() == p_entity->getIdMapObject())
 				this->removeEntity(i);
 		}
 	}
@@ -555,7 +555,7 @@ void Sector::removeEntity( int p_index )
 {
 	// Remove from other managers
 	Game::game->getMap()->getMapObjectSelector()->removeMapObject(this->mEntities[p_index]);
-	EntityManager::remove(this->mEntities[p_index]->getId());
+	EntityManager::remove(this->mEntities[p_index]->getIdMapObject());
 
 	// Remove from this
 	this->mEntities.erase(this->mEntities.begin() + p_index);
@@ -673,7 +673,7 @@ void Sector::notifyVisibilityChanged()
 		else
 		{
 			Game::game->getMap()->getMapObjectSelector()->removeMapObject(this->mEntities[i]);
-			EntityManager::remove(this->mEntities[i]->getId(), false);
+			EntityManager::remove(this->mEntities[i]->getIdMapObject(), false);
 		}
 	}
 }

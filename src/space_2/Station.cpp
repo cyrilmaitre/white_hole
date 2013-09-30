@@ -105,7 +105,7 @@ ItemStock* Station::getItemStock( Item* p_item )
 
 	for(int i = 0; i < this->mStocks.size(); i++)
 	{
-		if(this->mStocks[i]->getItem()->getId() == p_item->getId())
+		if(this->mStocks[i]->getItem()->getIdItem() == p_item->getIdItem())
 			return this->mStocks[i];
 	}
 	return NULL;

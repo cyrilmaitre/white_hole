@@ -60,14 +60,14 @@ Entity* EntityManager::add( Entity* p_entity )
 	// Check if key exist
 	bool isKeyExist = false;
 	std::map<int, Entity*>::iterator it;
-	it = EntityManager::mEntities.find(p_entity->getId());
+	it = EntityManager::mEntities.find(p_entity->getIdMapObject());
 
 	if(it != EntityManager::mEntities.end())
 		isKeyExist = true;
 
 	// Set
 	if(!isKeyExist)
-		EntityManager::mEntities.insert(std::pair<int, Entity*>(p_entity->getId(), p_entity));
+		EntityManager::mEntities.insert(std::pair<int, Entity*>(p_entity->getIdMapObject(), p_entity));
 
 	return p_entity;
 }
@@ -93,5 +93,5 @@ void EntityManager::remove( int p_id, bool p_delete )
 
 void EntityManager::remove( Entity* p_entity, bool p_delete )
 {
-	EntityManager::remove(p_entity->getId(), p_delete);
+	EntityManager::remove(p_entity->getIdMapObject(), p_delete);
 }

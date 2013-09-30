@@ -18,7 +18,7 @@ MapObject::MapObject( int p_plane )
 {
 	this->mObjectSprite = NULL;
 	this->mObjectSpriteParameter = NULL;
-	this->setId(MapObject::mIdGenerator.getNextId());
+	this->setIdMapObject(MapObject::mIdGenerator.getNextId());
 	this->setPlane(p_plane);
 	this->setRotation(0.f);
 	this->setScale(1.f);
@@ -37,14 +37,14 @@ MapObject::~MapObject(void)
 //*************************************************************
 // Getters - Setters
 //*************************************************************
-long MapObject::getId()
+long MapObject::getIdMapObject()
 {
-	return this->mId;
+	return this->mIdMapObject;
 }
 
-void MapObject::setId( long p_id )
+void MapObject::setIdMapObject( long p_id )
 {
-	this->mId = p_id;
+	this->mIdMapObject = p_id;
 }
 
 double MapObject::getX( int plane )

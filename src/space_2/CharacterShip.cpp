@@ -263,7 +263,7 @@ Json::Value CharacterShip::saveToJson()
 	json[JSON_LEVEL] = this->getLevel();
 	json[JSON_EXPERIENCE] = this->getExperience();
 	json[JSON_PILOTED] = this->isPiloted();
-	json[JSON_IDSHIPMODEL] = this->getShipModel()->MapObjectModel::getId();
+	json[JSON_IDSHIPMODEL] = this->getShipModel()->getIdItem();
 	json[JSON_IDCHARACTER] = this->getCharacter()->getIdCharacter();
 	return json;
 }

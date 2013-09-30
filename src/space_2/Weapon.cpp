@@ -261,13 +261,13 @@ Json::Value Weapon::saveToJson()
 		
 		json[JSON_IDWEAPON] = this->getId();
 		if(this->getAmmo() != NULL)
-			json[JSON_IDAMMO] = this->getAmmo()->getId();
+			json[JSON_IDAMMO] = this->getAmmo()->getIdItem();
 		else
 			json[JSON_IDAMMO] = -1;
 		json[JSON_AMMOCOUNT] = this->getAmmoCount();
 		json[JSON_ACTIF] = this->isActif();
-		json[JSON_IDCHARACTERSHIP] = characterShip->getId();
-		json[JSON_IDWEAPONMODEL] = this->getWeaponModel()->getId();
+		json[JSON_IDCHARACTERSHIP] = characterShip->getIdCharacterShip();
+		json[JSON_IDWEAPONMODEL] = this->getWeaponModel()->getIdItem();
 	}
 	return json;
 }

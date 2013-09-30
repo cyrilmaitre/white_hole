@@ -29,14 +29,14 @@ MapObjectModel::~MapObjectModel(void)
 //*************************************************************
 // Getters - Setters
 //*************************************************************
-long MapObjectModel::getId()
+long MapObjectModel::getIdMapObjectModel()
 {
-	return this->mId;
+	return this->mIdMapObjectModel;
 }
 
-void MapObjectModel::setId( long p_id )
+void MapObjectModel::setIdMapObjectModel( long p_id )
 {
-	this->mId = p_id;
+	this->mIdMapObjectModel = p_id;
 }
 
 int MapObjectModel::getHitBoxWidth()
@@ -96,7 +96,7 @@ void MapObjectModel::setSprite( std::string p_sprite )
 void MapObjectModel::loadFromConfig( KeyValueFile* p_config )
 {
 	if(p_config->has(CONFIG_ID))
-		this->setId(p_config->getLong(CONFIG_ID));
+		this->setIdMapObjectModel(p_config->getLong(CONFIG_ID));
 
 	if(p_config->has(CONFIG_HITBOX_WIDTH))
 		this->setHitBoxWidth(p_config->getInt(CONFIG_HITBOX_WIDTH));

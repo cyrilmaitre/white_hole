@@ -168,14 +168,14 @@ void NpcShipSpawner::addNpcShip( NpcShip* p_ship )
 
 void NpcShipSpawner::removeNpcShip( NpcShip *p_ship )
 {
-	this->removeNpcShip(p_ship->getId());
+	this->removeNpcShip(p_ship->getIdMapObject());
 }
 
 void NpcShipSpawner::removeNpcShip( long p_id )
 {
 	for(int i = 0; i < this->mSpawnedNpcShip.size(); i++)
 	{
-		if(this->mSpawnedNpcShip[i]->getId() == p_id)
+		if(this->mSpawnedNpcShip[i]->getIdMapObject() == p_id)
 		{
 			this->removeNpcShip(i);
 			break;

@@ -41,7 +41,7 @@ void EntityTarget::setEntity( Entity* p_target )
 	}
 
 	if(this->mEntity != NULL)
-		this->mEntitytId = this->mEntity->getId();
+		this->mEntitytId = this->mEntity->getIdMapObject();
 	else
 		this->mEntitytId = -1;
 }

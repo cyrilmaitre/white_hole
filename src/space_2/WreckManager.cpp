@@ -83,7 +83,7 @@ void WreckManager::draw()
 void WreckManager::remove( int p_position )
 {
 	Game::game->getMap()->getMapObjectSelector()->removeMapObject(WreckManager::mWrecks[p_position]);
-	EntityManager::remove(WreckManager::mWrecks[p_position]->getId());
+	EntityManager::remove(WreckManager::mWrecks[p_position]->getIdMapObject());
 	WreckManager::mWrecks.erase(WreckManager::mWrecks.begin() + p_position);
 }
 

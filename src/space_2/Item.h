@@ -14,8 +14,8 @@ public:
 	virtual ~Item(void);
 
 	// Getters - Setters
-	long getId();
-	void setId(long p_id);
+	long getIdItem();
+	void setIdItem(long p_id);
 
 	std::string getName();
 	void setName(std::string p_name);
@@ -75,7 +75,7 @@ public:
 
 private:
 	// Attributes
-	long mId;
+	long mIdItem;
 	std::string mName;
 	std::string mDescription;
 	double mPrice;

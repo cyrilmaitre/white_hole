@@ -136,7 +136,7 @@ void ContainerStackViewManager::releaseDrag()
 		}
 		else
 		{
-			if(destination->getContainerStack()->getItemStack()->getItem()->getId() != source->getContainerStack()->getItemStack()->getItem()->getId())
+			if(destination->getContainerStack()->getItemStack()->getItem()->getIdItem() != source->getContainerStack()->getItemStack()->getItem()->getIdItem())
 			{
 				ItemStack* tmp = destination->getContainerStack()->getItemStack();
 				destination->getContainerStack()->setItemStack(source->getContainerStack()->getItemStack());
