@@ -179,9 +179,19 @@ void Character::setAlive( bool p_alive )
 	this->mAlive = p_alive;
 }
 
-bool Character::hasHangarFreeSpace()
+bool Character::hasHangarSpaceFree()
 {
-	return this->getHangarSpace() > this->getShipCount();
+	return this->getHangarSpaceFree() > 0;
+}
+
+int Character::getHangarSpaceOccuped()
+{
+	return this->getShipCount();
+}
+
+int Character::getHangarSpaceFree()
+{
+	return this->getHangarSpace() - this->getHangarSpaceOccuped();
 }
 
 int Character::getHangarSpace()
@@ -536,5 +546,7 @@ void Character::notifySkillPointsChanged()
 {
 	NetworkJobManager::getInstance()->addJob(new CharacterUpdate(this));
 }
+
+
 
 

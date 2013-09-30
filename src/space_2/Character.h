@@ -45,7 +45,9 @@ public:
 	bool isAlive();
 	void setAlive(bool p_alive);
 
-	bool hasHangarFreeSpace();
+	bool hasHangarSpaceFree();
+	int getHangarSpaceOccuped();
+	int getHangarSpaceFree();
 	int getHangarSpace();
 	void setHangarSpace(int p_space);
 
