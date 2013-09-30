@@ -17,14 +17,14 @@ PlanetType::~PlanetType(void)
 //*************************************************************
 // Getters - Setters
 //*************************************************************
-long PlanetType::getId()
+long PlanetType::getIdPlanetType()
 {
-	return this->mId;
+	return this->mIdPlanetType;
 }
 
-void PlanetType::setId( long p_id )
+void PlanetType::setIdPlanetType( long p_id )
 {
-	this->mId = p_id;
+	this->mIdPlanetType = p_id;
 }
 
 std::string PlanetType::getName()
@@ -53,7 +53,7 @@ void PlanetType::setDescription( std::string p_description )
 //*************************************************************
 void PlanetType::loadFromConfig( KeyValueFile* p_config )
 {
-	this->setId(p_config->getLong(PLANETTYPE_CONFIG_ID));
+	this->setIdPlanetType(p_config->getLong(PLANETTYPE_CONFIG_ID));
 	this->setName(p_config->getString(PLANETTYPE_CONFIG_NAME));
 	this->setDescription(p_config->getString(PLANETTYPE_CONFIG_DESCRIPTION));
 }
