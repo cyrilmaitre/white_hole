@@ -17,8 +17,8 @@ public:
 	~CharacterShip(void);
 
 	// Getters - Setters
-	long getCharacterShipId();
-	void setCharacterShipId(long p_id);
+	long getIdCharacterShip();
+	void setIdCharacterShip(long p_id);
 
 	std::string getName();
 	void setName(std::string p_name);
@@ -65,7 +65,7 @@ public:
 
 private:
 	// Attrtributs
-	long mCharacterShipId;
+	long mIdCharacterShip;
 	std::string mName;
 	int mSkillPoints;
 	bool mPiloted;

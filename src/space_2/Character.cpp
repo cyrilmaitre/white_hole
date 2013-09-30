@@ -468,7 +468,7 @@ void Character::removeShip( CharacterShip* p_ship )
 {
 	for(int i = 0; i < this->mShips.size(); i++)
 	{
-		if(this->mShips[i]->getCharacterShipId() == p_ship->getCharacterShipId())
+		if(this->mShips[i]->getCharacterShipId() == p_ship->getIdCharacterShip())
 		{
 			this->mShips.erase(this->mShips.begin() + i);
 			break;

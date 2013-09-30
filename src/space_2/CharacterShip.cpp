@@ -52,14 +52,14 @@ CharacterShip::~CharacterShip(void)
 //*************************************************************
 // Getters - Setters
 //*************************************************************
-long CharacterShip::getCharacterShipId()
+long CharacterShip::getIdCharacterShip()
 {
-	return this->mCharacterShipId;
+	return this->mIdCharacterShip;
 }
 
-void CharacterShip::setCharacterShipId( long p_id )
+void CharacterShip::setIdCharacterShip( long p_id )
 {
-	this->mCharacterShipId = p_id;
+	this->mIdCharacterShip = p_id;
 }
 
 std::string CharacterShip::getName()
@@ -225,7 +225,7 @@ void CharacterShip::updateRotation()
 
 void CharacterShip::loadFromJson( Json::Value json )
 {
-	this->setCharacterShipId(json.get(CHARACTERSHIP_JSON_IDCHARACTERSHIP, -1).asInt());
+	this->setIdCharacterShip(json.get(CHARACTERSHIP_JSON_IDCHARACTERSHIP, -1).asInt());
 	this->setName(json.get(JSON_NAME, "").asString());
 	this->setSkillPoints(json.get(JSON_SKILLPOINTS, 0).asInt());
 	this->setLevel(json.get(JSON_LEVEL, 0).asInt());
@@ -257,7 +257,7 @@ void CharacterShip::loadFromJson( Json::Value json )
 Json::Value CharacterShip::saveToJson()
 {
 	Json::Value json;
-	json[CHARACTERSHIP_JSON_IDCHARACTERSHIP] = this->getCharacterShipId();
+	json[CHARACTERSHIP_JSON_IDCHARACTERSHIP] = this->getIdCharacterShip();
 	json[JSON_NAME] = this->getName();
 	json[JSON_SKILLPOINTS] = this->getSkillPoints();
 	json[JSON_LEVEL] = this->getLevel();
