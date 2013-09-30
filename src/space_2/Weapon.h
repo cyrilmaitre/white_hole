@@ -23,8 +23,8 @@ public:
 	~Weapon(void);
 
 	// Getters - Setters
-	long getId();
-	void setId(long p_id);
+	long getIdWeapon();
+	void setIdWeapon(long p_id);
 
 	AmmoModel *getAmmo();
 	void setAmmo(AmmoModel *p_ammo);
@@ -76,7 +76,7 @@ public:
 
 private:
 	// Attributs
-	long mId;
+	long mIdWeapon;
 
 	AmmoModel *mAmmo;
 	bool mAmmoChanged;

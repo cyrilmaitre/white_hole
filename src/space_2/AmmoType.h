@@ -21,8 +21,8 @@ public:
 	~AmmoType(void);
 
 	// Getters - Setters
-	long getId();
-	void setId(long p_id);
+	long getIdAmmoType();
+	void setIdAmmoType(long p_id);
 
 	std::string getName();
 	void setName(std::string p_name);
@@ -51,7 +51,7 @@ public:
 
 private:
 	// Attributs
-	long mId;
+	long mIdAmmoType;
 	std::string mName;
 	std::string mDescription;
 	std::string mColor;

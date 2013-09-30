@@ -10,8 +10,8 @@ public:
 	~ItemTier(void);
 
 	// Getters - Setters
-	long getId();
-	void setId(long p_id);
+	long getIdItemTier();
+	void setIdItemTier(long p_id);
 
 	std::string getName();
 	void setName(std::string p_name);
@@ -31,7 +31,7 @@ public:
 
 private:
 	// Attributes
-	long mId;
+	long mIdItemTier;
 	std::string mName;
 	std::string mDescription;
 	std::string mColorString;

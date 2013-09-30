@@ -16,8 +16,8 @@ public:
 	~DangerLevel(void);
 
 	// Getters - Setters
-	long getId();
-	void setId(long p_id);
+	long getIdDangerLevel();
+	void setIdDangerLevel(long p_id);
 
 	int getDangerLevel();
 	void setDangerLevel(int p_level);
@@ -70,7 +70,7 @@ public:
 
 private:
 	// Attibuts
-	long mId;
+	long mIdDangerLevel;
 	int mDangerLevel;
 	sf::Color mColor;
 	sf::RectangleShape mShapeMapMini;

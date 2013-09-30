@@ -268,7 +268,7 @@ void Station::removeItemStock( ItemStock* p_stock )
 
 	for(int i = 0; i < this->mStocks.size(); i++)
 	{
-		if(this->mStocks[i]->getId() == p_stock->getId())
+		if(this->mStocks[i]->getIdItemStock() == p_stock->getIdItemStock())
 		{
 			delete this->mStocks[i];
 			this->mStocks.erase(this->mStocks.begin() + i);

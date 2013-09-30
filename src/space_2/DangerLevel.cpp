@@ -39,14 +39,14 @@ DangerLevel::~DangerLevel(void)
 //*************************************************************
 // Getters - Setters
 //*************************************************************
-long DangerLevel::getId()
+long DangerLevel::getIdDangerLevel()
 {
-	return this->mId;
+	return this->mIdDangerLevel;
 }
 
-void DangerLevel::setId( long p_id )
+void DangerLevel::setIdDangerLevel( long p_id )
 {
-	this->mId = p_id;
+	this->mIdDangerLevel = p_id;
 }
 
 int DangerLevel::getDangerLevel()
@@ -297,7 +297,7 @@ int DangerLevel::generateStationCount()
 
 void DangerLevel::loadFromConfig( KeyValueFile *p_config )
 {
-	this->setId(p_config->getLong(DANGERLEVEL_CONFIG_ID));
+	this->setIdDangerLevel(p_config->getLong(DANGERLEVEL_CONFIG_ID));
 	this->setDangerLevel(p_config->getInt(DANGERLEVEL_CONFIG_DANGERLEVEL));
 	this->setDangerLevelColor(ToolsImage::hexaToColor(p_config->getString(DANGERLEVEL_CONFIG_DANGERLEVEL_COLOR)));
 

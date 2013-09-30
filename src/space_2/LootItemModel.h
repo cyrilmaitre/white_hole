@@ -15,8 +15,8 @@ public:
 	~LootItemModel(void);
 
 	// Getters - Setters
-	long getId();
-	void setId(long p_id);
+	long getIdLootItemModel();
+	void setIdLootItemModel(long p_id);
 
 	Item* getItem();
 	void setItem(Item* p_item);
@@ -34,7 +34,7 @@ public:
 
 private:
 	// Attributs
-	long mId;
+	long mIdLootItemModel;
 	Item* mItem;
 	int mQuantityMin;
 	int mQuantityMax;

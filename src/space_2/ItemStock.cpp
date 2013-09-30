@@ -19,7 +19,7 @@ IdGenerator ItemStock::mIdGenerator;
 //*************************************************************
 ItemStock::ItemStock( Item* p_item, Station* p_station )
 {
-	this->mId = ItemStock::mIdGenerator.getNextId();
+	this->mIdItemStock = ItemStock::mIdGenerator.getNextId();
 	this->mStockMin = 0;
 	this->mStockMax = 0;
 	this->mStockCurrent = 0;
@@ -39,9 +39,9 @@ ItemStock::~ItemStock(void)
 //*************************************************************
 // Getters - Setters
 //*************************************************************
-long ItemStock::getId()
+long ItemStock::getIdItemStock()
 {
-	return this->mId;
+	return this->mIdItemStock;
 }
 
 Item* ItemStock::getItem()

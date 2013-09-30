@@ -7,14 +7,14 @@
 //*************************************************************
 ItemStack::ItemStack() : mItem(NULL)
 {
-	this->mId = -1;
+	this->mIdItemStack = -1;
 	this->mStackSize = 0;
 	this->mStackPrice = 0;
 }
 
 ItemStack::ItemStack(Json::Value p_json) : mItem(NULL)
 {
-	this->mId = -1;
+	this->mIdItemStack = -1;
 	this->mStackSize = 0;
 	this->mStackPrice = 0;
 
@@ -23,7 +23,7 @@ ItemStack::ItemStack(Json::Value p_json) : mItem(NULL)
 
 ItemStack::ItemStack( LootItemModel* p_lootItem ) : mItem(NULL)
 {
-	this->mId = -1;
+	this->mIdItemStack = -1;
 	this->mStackSize = 0;
 	this->mStackPrice = 0;
 
@@ -36,7 +36,7 @@ ItemStack::ItemStack( LootItemModel* p_lootItem ) : mItem(NULL)
 
 ItemStack::ItemStack( Item* p_item, int p_stackSize ) : mItem(NULL)
 {
-	this->mId = -1;
+	this->mIdItemStack = -1;
 	this->mStackSize = 0;
 	this->mStackPrice = 0;
 
@@ -52,14 +52,14 @@ ItemStack::~ItemStack(void)
 //*************************************************************
 // Getters - Setters
 //*************************************************************
-int ItemStack::getId()
+int ItemStack::getIdItemStack()
 {
-	return this->mId;
+	return this->mIdItemStack;
 }
 
-void ItemStack::setId(int p_id)
+void ItemStack::setIdItemStack(int p_id)
 {
-	this->mId = p_id;
+	this->mIdItemStack = p_id;
 }
 
 int ItemStack::getStackSize()
@@ -145,7 +145,7 @@ void ItemStack::loadFromJson( Json::Value json )
 {
 	if(json != NULL)
 	{
-		this->setId(json.get(ITEMSTACK_JSON_IDITEMSTACK, -1).asInt());
+		this->setIdItemStack(json.get(ITEMSTACK_JSON_IDITEMSTACK, -1).asInt());
 		this->setStackSize(json.get(ITEMSTACK_JSON_STACKSIZE, -1).asInt());
 		this->setItem(FactoryGet::getItemFactory()->getItem(json.get(ITEMSTACK_JSON_IDITEM, 0).asInt()));
 	}
@@ -154,7 +154,7 @@ void ItemStack::loadFromJson( Json::Value json )
 Json::Value ItemStack::saveToJson()
 {
 	Json::Value json;
-	json[ITEMSTACK_JSON_IDITEMSTACK] = this->getId();
+	json[ITEMSTACK_JSON_IDITEMSTACK] = this->getIdItemStack();
 	json[ITEMSTACK_JSON_STACKSIZE] = this->getStackSize();
 	json[ITEMSTACK_JSON_IDITEM] = this->getItem() != NULL ? this->getItem()->getIdItem() : -1;
 	return json;

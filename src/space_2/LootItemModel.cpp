@@ -19,14 +19,14 @@ LootItemModel::~LootItemModel(void)
 //*************************************************************
 // Getters - Setters
 //*************************************************************
-long LootItemModel::getId()
+long LootItemModel::getIdLootItemModel()
 {
-	return this->mId;
+	return this->mIdLootItemModel;
 }
 
-void LootItemModel::setId( long p_id )
+void LootItemModel::setIdLootItemModel( long p_id )
 {
-	this->mId = p_id;
+	this->mIdLootItemModel = p_id;
 }
 
 Item* LootItemModel::getItem()
@@ -66,7 +66,7 @@ void LootItemModel::setQuantityMax( int p_max )
 void LootItemModel::loadFromConfig( KeyValueFile* p_config )
 {
 	if(p_config->has(LOOTITEMMODEL_CONFIG_ID))
-		this->setId(p_config->getLong(LOOTITEMMODEL_CONFIG_ID));
+		this->setIdLootItemModel(p_config->getLong(LOOTITEMMODEL_CONFIG_ID));
 
 	if(p_config->has(LOOTITEMMODEL_CONFIG_ITEM))
 		this->setItem(FactoryGet::getItemFactory()->getItem(p_config->getLong(LOOTITEMMODEL_CONFIG_ITEM)));

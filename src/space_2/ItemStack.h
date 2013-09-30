@@ -18,8 +18,8 @@ public:
 	~ItemStack(void);
 
 	// Getters - Setters
-	int getId();
-	void setId(int p_id);
+	int getIdItemStack();
+	void setIdItemStack(int p_id);
 
 	int getStackSize();
 	void setStackSize(int p_size);
@@ -45,7 +45,7 @@ public:
 
 private:
 	// Attributs
-	int mId;
+	int mIdItemStack;
 	int mStackSize;
 	double mStackPrice;
 	Item *mItem;

@@ -18,14 +18,14 @@ AmmoType::~AmmoType(void)
 //*************************************************************
 // Getters - Setters
 //*************************************************************
-long AmmoType::getId()
+long AmmoType::getIdAmmoType()
 {
-	return this->mId;
+	return this->mIdAmmoType;
 }
 
-void AmmoType::setId( long p_id )
+void AmmoType::setIdAmmoType( long p_id )
 {
-	this->mId = p_id;
+	this->mIdAmmoType = p_id;
 }
 
 std::string AmmoType::getName()
@@ -125,7 +125,7 @@ void AmmoType::setDamageMalus( std::string p_malus )
 //*************************************************************
 void AmmoType::loadFromConfig( KeyValueFile* p_config )
 {
-	this->setId(p_config->getLong(AMMOTYPE_CONFIG_ID));
+	this->setIdAmmoType(p_config->getLong(AMMOTYPE_CONFIG_ID));
 	this->setName(Resource::resource->getBundle()->getString(p_config->getString(AMMOTYPE_CONFIG_NAME)));
 	this->setDescription(Resource::resource->getBundle()->getString(p_config->getString(AMMOTYPE_CONFIG_DESCRIPTION)));
 	this->setColor(p_config->getString(AMMOTYPE_CONFIG_COLOR));

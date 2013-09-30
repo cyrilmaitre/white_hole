@@ -19,8 +19,8 @@ public:
 	~WeaponType(void);
 
 	// Getters - Setters
-	long getId();
-	void setId(long p_id);
+	long getIdWeaponType();
+	void setIdWeaponType(long p_id);
 
 	std::string getName();
 	void setName(std::string p_name);
@@ -34,7 +34,7 @@ public:
 
 private:
 	// Attributs
-	long mId;
+	long mIdWeaponType;
 	std::string mName;
 	std::string mDescription;
 };

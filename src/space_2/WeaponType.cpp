@@ -17,14 +17,14 @@ WeaponType::~WeaponType(void)
 //*************************************************************
 // Getters - Setters
 //*************************************************************
-long WeaponType::getId()
+long WeaponType::getIdWeaponType()
 {
-	return this->mId;
+	return this->mIdWeaponType;
 }
 
-void WeaponType::setId( long p_id )
+void WeaponType::setIdWeaponType( long p_id )
 {
-	this->mId = p_id;
+	this->mIdWeaponType = p_id;
 }
 
 std::string WeaponType::getName()
@@ -53,7 +53,7 @@ void WeaponType::setDescription( std::string p_description )
 //*************************************************************
 void WeaponType::loadFromConfig( KeyValueFile* p_config )
 {
-	this->setId(p_config->getLong(WEAPONTYPE_CONFIG_ID));
+	this->setIdWeaponType(p_config->getLong(WEAPONTYPE_CONFIG_ID));
 	this->setName(Resource::resource->getBundle()->getString(p_config->getString(WEAPONTYPE_CONFIG_NAME)));
 	this->setDescription(Resource::resource->getBundle()->getString(p_config->getString(WEAPONTYPE_CONFIG_DESCRIPTION)));
 }

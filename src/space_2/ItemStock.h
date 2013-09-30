@@ -13,7 +13,7 @@ public:
 	~ItemStock(void);
 
 	// Getters - Setters
-	long getId();
+	long getIdItemStock();
 
 	Item* getItem();
 	void setItem(Item* p_item);
@@ -53,7 +53,7 @@ public:
 
 private:
 	// Attributs
-	long mId;
+	long mIdItemStock;
 	Item* mItem;
 	Station* mStation;
 

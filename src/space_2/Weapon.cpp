@@ -32,7 +32,7 @@ void Weapon::init()
 	this->mEntity = NULL;
 	this->mAmmo = NULL;
 
-	this->mId = -1;
+	this->mIdWeapon = -1;
 	this->mAmmoChanged = false;
 	this->mAmmoCount = 0;
 	this->mAmmoCountChanged = false;
@@ -56,14 +56,14 @@ Weapon::~Weapon(void)
 //*************************************************************
 // Getters - Setters
 //*************************************************************
-long Weapon::getId()
+long Weapon::getIdWeapon()
 {
-	return this->mId;
+	return this->mIdWeapon;
 }
 
-void Weapon::setId( long p_id )
+void Weapon::setIdWeapon( long p_id )
 {
-	this->mId = p_id;
+	this->mIdWeapon = p_id;
 }
 
 AmmoModel * Weapon::getAmmo()
@@ -240,7 +240,7 @@ void Weapon::loadFromJson( Json::Value json )
 	{
 		CharacterShip* characterShip = (CharacterShip*)this->getEntity();
 
-		this->setId(json.get(JSON_IDWEAPON, -1).asInt());
+		this->setIdWeapon(json.get(JSON_IDWEAPON, -1).asInt());
 		long ammoId = json.get(JSON_IDAMMO, -1).asInt();
 		if(ammoId != -1)
 			this->setAmmo(FactoryGet::getAmmoFactory()->getAmmo(ammoId));
@@ -259,7 +259,7 @@ Json::Value Weapon::saveToJson()
 	{
 		CharacterShip* characterShip = (CharacterShip*)this->getEntity();
 		
-		json[JSON_IDWEAPON] = this->getId();
+		json[JSON_IDWEAPON] = this->getIdWeapon();
 		if(this->getAmmo() != NULL)
 			json[JSON_IDAMMO] = this->getAmmo()->getIdItem();
 		else

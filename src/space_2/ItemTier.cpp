@@ -27,14 +27,14 @@ ItemTier::~ItemTier(void)
 //*************************************************************
 // Getters - Setters
 //*************************************************************
-long ItemTier::getId()
+long ItemTier::getIdItemTier()
 {
-	return this->mId;
+	return this->mIdItemTier;
 }
 
-void ItemTier::setId(long p_id)
+void ItemTier::setIdItemTier(long p_id)
 {
-	this->mId = p_id;
+	this->mIdItemTier = p_id;
 }
 
 std::string ItemTier::getName()
@@ -85,7 +85,7 @@ void ItemTier::setColor( sf::Color p_color )
 void ItemTier::loadFromConfig( KeyValueFile* p_config )
 {
 	if(p_config->has(CONFIG_ID))
-		this->setId(p_config->getLong(CONFIG_ID));
+		this->setIdItemTier(p_config->getLong(CONFIG_ID));
 
 	if(p_config->has(CONFIG_NAME))
 		this->setName(Resource::resource->getBundle()->getString(p_config->getString(CONFIG_NAME)));
