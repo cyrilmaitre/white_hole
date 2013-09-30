@@ -78,15 +78,38 @@ sf::Packet& operator >> (sf::Packet& packet, C2S_Auth& c2s_auth)
 // ----------------------------------------------------------------------
 // (con/de)structor
 // ----------------------------------------------------------------------
-ChatServer::ChatServer(void)
+ChatServer::ChatServer(void) : mRunning(false)
 {
-	mRunning = false;
 }
 
 
 // ----------------------------------------------------------------------
 // methods
 // ----------------------------------------------------------------------
+// <mutex>
+sf::Mutex& ChatServer::getMutex()
+{
+	return this->mMutex;
+}
+// </mutex>
+
+
+//<running>
+bool ChatServer::isRunning(void)
+{
+	sf::Lock lock(mMutex);
+	return this->mRunning;
+}
+
+void ChatServer::setRunning(bool p_running)
+{
+	sf::Lock lock(mMutex);
+	{ std::ostringstream msg; msg << "[PROP] mRunning changed to <" << (p_running ? "TRUE" : "FALSE") << ">"; Debug::msg(msg); }
+	this->mRunning = p_running;
+}
+// </running>
+
+
 void ChatServer::create()
 {
 	this->create((unsigned short)CHAT_SERVER_PORT);
@@ -96,7 +119,16 @@ void ChatServer::create(unsigned short port)
 {
 
 	this->mPort = port;
-	this->mRunServer();
+
+	if(!this->isRunning())
+	{
+		this->mRunServer();
+	}
+	else
+	{
+		{ std::ostringstream msg; msg << "[ERR] Server already running !" << ""; Debug::msg(msg); }
+	}
+	
 }
 
 /*
@@ -117,10 +149,17 @@ void ChatServer::mRunServer(void)
 	selector.add(listener);
 
 	//
-	mRunning = true;
+	this->setRunning(true);
 
+	// -- ASYNC JOBS --
+	// Async friendlists job
+	this->mThread = std::unique_ptr<sf::Thread>(new sf::Thread(&ChatServer::mAsyncTasks, this));
+	this->mThread->launch();
+
+
+	// -- SERVER MAIN LOOP --
 	// Enter loop to handle new connection and updating of server / clients
-	while(mRunning)
+	while(this->isRunning())
 	{
 
 		//Make the selector wait for data on any socket
@@ -280,9 +319,12 @@ void ChatServer::mRunServer(void)
 
 	} // -- end of server main loop
 
+	// May be useful for all async jobs to stop
+	this->setRunning(false);
+
 	// Clear clients vector
-	clients.clear();
-	clients.shrink_to_fit();
+	this->clients.clear();
+	this->clients.shrink_to_fit();
 }
 
 /*
@@ -353,6 +395,15 @@ void ChatServer::authenticate(std::shared_ptr<Client> p_client, C2S_Auth p_auth)
 			bc.clientState = ClientState::AUTHED;
 
 			this->broadcast(packet, bc);
+		}
+
+		// fetch friend list ... later
+		{
+			sf::Lock lock(mMutex);
+			sf::Packet packet;
+
+			this->mFriendlistFetchQueue.push_back(p_client->getName());
+
 		}
 	}
 	else
@@ -845,7 +896,7 @@ std::shared_ptr<Client> ChatServer::findClientByUID(sf::Uint64 p_uid)
 }
 
 
-sf::Uint32 ChatServer::connectionCountByIP(sf::IpAddress compareIP)
+sf::Uint32 ChatServer::connectionCountByIP(sf::IpAddress p_compareIP)
 {
 	sf::Uint32 count = 0;
 
@@ -853,9 +904,40 @@ sf::Uint32 ChatServer::connectionCountByIP(sf::IpAddress compareIP)
 	{
 		// CLIENT
 		std::shared_ptr<Client> currentClient = *it;
-		if(currentClient->getSocket().getRemoteAddress() == compareIP)
+		if(currentClient->getSocket().getRemoteAddress() == p_compareIP)
 			count++;
 	}
 
 	return count;
+}
+
+
+
+void ChatServer::mAsyncTasks(void)
+{
+	{ std::ostringstream msg; msg << "[THREAD] Async Task thread STARTING" << ""; Debug::msg(msg); }
+	while(this->isRunning())
+	{
+		std::vector<std::string> copyFriendlistFetchQueue;
+
+		// COPY friend list fetching queue
+		{
+			sf::Lock lock(mMutex);
+			copyFriendlistFetchQueue = mFriendlistFetchQueue;
+		}
+
+		// Friend lists
+		for (auto it = copyFriendlistFetchQueue.begin(); it != copyFriendlistFetchQueue.end();)
+		{
+
+		}
+
+		sf::sleep(sf::milliseconds(500));	// for CPU
+	}
+	{ std::ostringstream msg; msg << "[THREAD] Async Task thread FINISHED" << ""; Debug::msg(msg); }
+}
+
+bool ChatServer::stringInVector(std::string& p_testString, std::vector<std::string>& p_testVector)
+{
+	return (std::find(p_testVector.begin(), p_testVector.end(), p_testString) != p_testVector.end());
 }
