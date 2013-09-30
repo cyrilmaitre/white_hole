@@ -15,7 +15,6 @@
 #define FLOOD_MAX_PACKETS		20					// max packets allowed in FLOOD_INTERVAL
 #define FLOOD_BUFFER			30					// max packets put in buffer
 
-
 // -------------
 // --- CLASS ---
 // -------------
@@ -54,7 +53,14 @@ public:
 	std::shared_ptr<Client> findClientByName(std::string p_name);
 	std::shared_ptr<Client> findClientByUID(sf::Uint64 p_uid);
 
-	sf::Uint32 connectionCountByIP(sf::IpAddress compareIP);
+	sf::Uint32 connectionCountByIP(sf::IpAddress p_compareIP);
+
+	// threads
+	sf::Mutex& getMutex(void);
+
+	// running
+	bool isRunning(void);
+	void setRunning(bool p_running);
 
 private:
 	sf::SocketSelector selector;
@@ -63,4 +69,16 @@ private:
 	unsigned short mPort;
 	bool mRunning;
 	void mRunServer(void);
+
+	// friend lists
+	std::vector<std::string>						mFriendlistFetchQueue;
+	std::map<std::string, std::vector<std::string>> mClientFriendlists;
+
+	// threds
+	sf::Mutex					mMutex;
+	std::unique_ptr<sf::Thread> mThread;
+	void						mAsyncTasks(void);
+
+	// TOOLS
+	bool		stringInVector(std::string& p_testString, std::vector<std::string>& p_testVector);
 };

@@ -9,6 +9,7 @@
 // ------------
 // --- ENUM ---
 // ------------
+
 enum ClientState
 {
 	UNKNOWN_CS,
@@ -97,10 +98,12 @@ private:
 	std::string						mName;
 	sf::Uint64						mNbDroppedPackets;
 	sf::Uint64						mConnectionTime;
+	sf::Uint64						mDisconnectionTime;
 	sf::Uint64						mLastActivityTime;	// in ms (milliseconds)
 	bool							mPongRequested;
 
 	sf::Uint64						mFloodControlTime;
 	sf::Uint64						mNbSentPackets;			// used for flood control
+
 };
 

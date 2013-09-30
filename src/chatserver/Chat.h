@@ -46,8 +46,8 @@ enum MessageType
 enum ServerCommand
 {
 	S_UNKNOWN_CMD,
-	S_JOIN,
-	S_QUIT,
+	S_JOIN,						// someone join the chat server
+	S_QUIT,						// someone leave the chat server
 	S_KICK,
 	S_MOTD,
 	S_SAY,
@@ -55,8 +55,10 @@ enum ServerCommand
 	S_PING,
 	S_CHAT_PEER_OFFLINE,
 	S_CHAT_PEER_AFK,
-	S_FRIEND_ADD,
-	S_AFK_ON,
+	S_FRIEND_ADD,				// server transmits a friend request
+	S_FRIEND_ONLINE,			// friend online
+	S_FRIEND_OFFLINE,			// friend offline
+	S_AFK_ON,		
 	S_AFK_OFF,
 	S_PEER_NOTEXIST,
 	S_DROPPED,

@@ -61,7 +61,7 @@ public:
 	void disconnect(bool p_reconnect = true);
 	void terminate(void);
 
-	// tread
+	// thread
 	sf::Mutex& getMutex(void);
 
 	// auto reconnect

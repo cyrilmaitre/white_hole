@@ -71,6 +71,14 @@ std::string Chat::serverCmdToString(sf::Uint16 p_command)
 	case ServerCommand::S_CONFIRM_FRIEND_DEL:
 		return "USER DELETED FROM FRIENDLIST";
 		break;
+		
+	case ServerCommand::S_FRIEND_OFFLINE:
+		return "FRIEND OFFLINE";
+		break;
+
+	case ServerCommand::S_FRIEND_ONLINE:
+		return "FRIEND ONLINE";
+		break;
 	}
 
 	return "UNKNOWN";
