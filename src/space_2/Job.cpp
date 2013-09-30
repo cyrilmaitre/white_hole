@@ -2,6 +2,16 @@
 
 
 //*************************************************************
+// Define
+//*************************************************************
+#define CONFIG_ID				"id"
+#define CONFIG_NAME				"name"
+#define CONFIG_DESCRIPTION		"description"
+#define CONFIG_BONUS			"bonus"
+#define CONFIG_SPRITEID			"spriteId"
+
+
+//*************************************************************
 // Constructor - Destructor
 //*************************************************************
 Job::Job( KeyValueFile *p_config )
@@ -17,14 +27,14 @@ Job::~Job(void)
 //*************************************************************
 // Getters - Setter
 //*************************************************************
-long Job::getId()
+long Job::getIdJob()
 {
-	return this->mId;
+	return this->mIdJob;
 }
 
-void Job::setId( long p_id )
+void Job::setIdJob( long p_id )
 {
-	this->mId = p_id;
+	this->mIdJob = p_id;
 }
 
 std::string Job::getName()
@@ -63,9 +73,9 @@ void Job::setSpriteId( std::string p_id )
 //*************************************************************
 void Job::loadFromConfig( KeyValueFile *p_config )
 {
-	this->setId(p_config->getLong(JOB_CONFIG_ID));
-	this->setName(Resource::resource->getBundle()->getString(p_config->getString(JOB_CONFIG_NAME)));
-	this->setDescription(Resource::resource->getBundle()->getString(p_config->getString(JOB_CONFIG_DESCRIPTION)));
-	this->setSpriteId(p_config->getString(JOB_CONFIG_SPRITEID));
-	this->setBonusSkill(p_config->getString(JOB_CONFIG_BONUS));
+	this->setIdJob(p_config->getLong(CONFIG_ID));
+	this->setName(Resource::resource->getBundle()->getString(p_config->getString(CONFIG_NAME)));
+	this->setDescription(Resource::resource->getBundle()->getString(p_config->getString(CONFIG_DESCRIPTION)));
+	this->setSpriteId(p_config->getString(CONFIG_SPRITEID));
+	this->setBonusSkill(p_config->getString(CONFIG_BONUS));
 }

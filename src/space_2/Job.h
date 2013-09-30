@@ -3,12 +3,6 @@
 #include "KeyValueFile.h"
 #include "BonusSkills.h"
 
-// Define
-#define JOB_CONFIG_ID				"id"
-#define JOB_CONFIG_NAME				"name"
-#define JOB_CONFIG_DESCRIPTION		"description"
-#define JOB_CONFIG_BONUS			"bonus"
-#define JOB_CONFIG_SPRITEID			"spriteId"
 
 class Job : public BonusSkills
 {
@@ -18,8 +12,8 @@ public:
 	~Job(void);
 
 	// Getters - Setters
-	long getId();
-	void setId(long p_id);
+	long getIdJob();
+	void setIdJob(long p_id);
 
 	std::string getName();
 	void setName(std::string p_name);
@@ -36,7 +30,7 @@ public:
 
 private:
 	// Attributs
-	long mId;
+	long mIdJob;
 	std::string mName;
 	std::string mDescription;
 	std::string mSpriteId;
