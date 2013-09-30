@@ -179,6 +179,21 @@ void Character::setAlive( bool p_alive )
 	this->mAlive = p_alive;
 }
 
+bool Character::hasHangarFreeSpace()
+{
+	return this->getHangarSpace() > this->getShipCount();
+}
+
+int Character::getHangarSpace()
+{
+	return this->mHangarSpace;
+}
+
+void Character::setHangarSpace( int p_space )
+{
+	this->mHangarSpace = p_space;
+}
+
 User* Character::getUser()
 {
 	return this->mUser;
@@ -439,6 +454,18 @@ void Character::addShip(CharacterShip* p_ship)
 	this->mShips.push_back(p_ship);
 }
 
+void Character::removeShip( CharacterShip* p_ship )
+{
+	for(int i = 0; i < this->mShips.size(); i++)
+	{
+		if(this->mShips[i]->getCharacterShipId() == p_ship->getCharacterShipId())
+		{
+			this->mShips.erase(this->mShips.begin() + i);
+			break;
+		}
+	}
+}
+
 void Character::addBank( CharacterBank* p_bank )
 {
 	this->mBanks.push_back(p_bank);
@@ -509,4 +536,5 @@ void Character::notifySkillPointsChanged()
 {
 	NetworkJobManager::getInstance()->addJob(new CharacterUpdate(this));
 }
+
 

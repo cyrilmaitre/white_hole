@@ -45,6 +45,10 @@ public:
 	bool isAlive();
 	void setAlive(bool p_alive);
 
+	bool hasHangarFreeSpace();
+	int getHangarSpace();
+	void setHangarSpace(int p_space);
+
 	bool hasRace();
 	Race* getRace();
 	void setRace(Race* p_race);
@@ -79,6 +83,7 @@ public:
 	void updateTime();
 
 	void addShip(CharacterShip* p_ship); 
+	void removeShip(CharacterShip* p_ship);
 	void addBank(CharacterBank* p_bank);
 
 	void incCredit(double p_inc);
@@ -110,6 +115,7 @@ private:
 	float mTimeBuffer;
 	mks::Clock mTimeBufferClock;
 	bool mAlive;
+	int mHangarSpace;
 	Race* mRace;
 	Job* mJob;
 	User* mUser; // Memory not managed here so dont need to delete this ptr

@@ -15,16 +15,16 @@
 //*************************************************************
 // Define
 //*************************************************************
-#define JSON_NAME								"name"
-#define JSON_SKILLPOINTS						"skillPoints"
-#define CHARACTERSHIP_JSON_LEVEL				"level"
-#define CHARACTERSHIP_JSON_EXPERIENCE			"experience"
-#define CHARACTERSHIP_JSON_PILOTED				"piloted"
-#define CHARACTERSHIP_JSON_IDSHIPMODEL			"idShipModel"
-#define CHARACTERSHIP_JSON_IDCHARACTER			"idCharacter"
-#define CHARACTERSHIP_JSON_WEAPONS				"weapons"
-#define CHARACTERSHIP_JSON_ITEMSTACKS			"itemStacks"
-#define NPCTYPE_ID		1
+#define JSON_NAME						"name"
+#define JSON_SKILLPOINTS				"skillPoints"
+#define JSON_LEVEL						"level"
+#define JSON_EXPERIENCE					"experience"
+#define JSON_PILOTED					"piloted"
+#define JSON_IDSHIPMODEL				"idShipModel"
+#define JSON_IDCHARACTER				"idCharacter"
+#define JSON_WEAPONS					"weapons"
+#define JSON_ITEMSTACKS					"itemStacks"
+#define NPCTYPE_ID						1
 
 
 //*************************************************************
@@ -52,6 +52,16 @@ CharacterShip::~CharacterShip(void)
 //*************************************************************
 // Getters - Setters
 //*************************************************************
+long CharacterShip::getCharacterShipId()
+{
+	return this->mCharacterShipId;
+}
+
+void CharacterShip::setCharacterShipId( long p_id )
+{
+	this->mCharacterShipId = p_id;
+}
+
 std::string CharacterShip::getName()
 {
 	return this->mName;
@@ -215,16 +225,16 @@ void CharacterShip::updateRotation()
 
 void CharacterShip::loadFromJson( Json::Value json )
 {
-	this->setId(json.get(CHARACTERSHIP_JSON_IDCHARACTERSHIP, -1).asInt());
+	this->setCharacterShipId(json.get(CHARACTERSHIP_JSON_IDCHARACTERSHIP, -1).asInt());
 	this->setName(json.get(JSON_NAME, "").asString());
 	this->setSkillPoints(json.get(JSON_SKILLPOINTS, 0).asInt());
-	this->setLevel(json.get(CHARACTERSHIP_JSON_LEVEL, 0).asInt());
-	this->setExperience(json.get(CHARACTERSHIP_JSON_EXPERIENCE, 0).asInt());
-	this->setPiloted(json.get(CHARACTERSHIP_JSON_PILOTED, false).asBool());
-	this->setShipModel(FactoryGet::getShipModelFactory()->getShipModel(json.get(CHARACTERSHIP_JSON_IDSHIPMODEL, 0).asInt()));
+	this->setLevel(json.get(JSON_LEVEL, 0).asInt());
+	this->setExperience(json.get(JSON_EXPERIENCE, 0).asInt());
+	this->setPiloted(json.get(JSON_PILOTED, false).asBool());
+	this->setShipModel(FactoryGet::getShipModelFactory()->getShipModel(json.get(JSON_IDSHIPMODEL, 0).asInt()));
 	
 	// Weapons
-	Json::Value weapons = json.get(CHARACTERSHIP_JSON_WEAPONS, NULL);
+	Json::Value weapons = json.get(JSON_WEAPONS, NULL);
 	if(weapons != NULL)
 	{
 		for(int i = 0; i < weapons.size(); i++)
@@ -232,7 +242,7 @@ void CharacterShip::loadFromJson( Json::Value json )
 	}
 
 	// ItemStacks
-	Json::Value itemStacks = json.get(CHARACTERSHIP_JSON_ITEMSTACKS, NULL);
+	Json::Value itemStacks = json.get(JSON_ITEMSTACKS, NULL);
 	if(itemStacks != NULL)
 	{
 		for(int i = 0; i < itemStacks.size(); i++)
@@ -247,14 +257,14 @@ void CharacterShip::loadFromJson( Json::Value json )
 Json::Value CharacterShip::saveToJson()
 {
 	Json::Value json;
-	json[CHARACTERSHIP_JSON_IDCHARACTERSHIP] = this->getId();
+	json[CHARACTERSHIP_JSON_IDCHARACTERSHIP] = this->getCharacterShipId();
 	json[JSON_NAME] = this->getName();
 	json[JSON_SKILLPOINTS] = this->getSkillPoints();
-	json[CHARACTERSHIP_JSON_LEVEL] = this->getLevel();
-	json[CHARACTERSHIP_JSON_EXPERIENCE] = this->getExperience();
-	json[CHARACTERSHIP_JSON_PILOTED] = this->isPiloted();
-	json[CHARACTERSHIP_JSON_IDSHIPMODEL] = this->getShipModel()->MapObjectModel::getId();
-	json[CHARACTERSHIP_JSON_IDCHARACTER] = this->getCharacter()->getId();
+	json[JSON_LEVEL] = this->getLevel();
+	json[JSON_EXPERIENCE] = this->getExperience();
+	json[JSON_PILOTED] = this->isPiloted();
+	json[JSON_IDSHIPMODEL] = this->getShipModel()->MapObjectModel::getId();
+	json[JSON_IDCHARACTER] = this->getCharacter()->getId();
 	return json;
 }
 
@@ -311,3 +321,4 @@ void CharacterShip::notifyPilotedChanged()
 {
 	NetworkJobManager::getInstance()->addJob(new CharacterShipUpdate(this));
 }
+
