@@ -99,6 +99,7 @@ public:
 
 	void notifyTimePlayedChanged();
 	void notifySkillPointsChanged();
+	void notifyHangarSpaceChanged();
 
 	void createBase();
 	void loadFromJson(Json::Value json);
@@ -107,6 +108,7 @@ public:
 
 private:
 	// Attributs
+	bool mLoaded;
 	long mIdCharacter;
 	std::string mName;
 	std::string mAvatarId;

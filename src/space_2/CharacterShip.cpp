@@ -32,6 +32,7 @@
 //*************************************************************
 CharacterShip::CharacterShip( Json::Value json, Character *p_character ): Ship(0, 0), Containerable(ContainerStack::ContainerStackType::TypeCharacterShip)
 {
+	this->mLoaded = false;
 	this->setCharacter(p_character);
 	this->loadFromJson(json);
 	this->setObjectType(MapObjectType::TypeCharacterShip);
@@ -225,6 +226,7 @@ void CharacterShip::updateRotation()
 
 void CharacterShip::loadFromJson( Json::Value json )
 {
+	this->mLoaded = false;
 	this->setIdCharacterShip(json.get(CHARACTERSHIP_JSON_IDCHARACTERSHIP, -1).asInt());
 	this->setName(json.get(JSON_NAME, "").asString());
 	this->setSkillPoints(json.get(JSON_SKILLPOINTS, 0).asInt());
@@ -252,6 +254,7 @@ void CharacterShip::loadFromJson( Json::Value json )
 			this->addItemStack(currentStack, currentItemStack.get(CHARACTERSHIP_JSON_ITEMSTACKPOSITION, 0).asInt());
 		}
 	}
+	this->mLoaded = true;
 }
 
 Json::Value CharacterShip::saveToJson()
@@ -309,16 +312,19 @@ void CharacterShip::incExperience( long p_inc )
 
 void CharacterShip::notifySkillPointsChanged()
 {
-	NetworkJobManager::getInstance()->addJob(new CharacterShipUpdate(this));
+	if(this->mLoaded)
+		NetworkJobManager::getInstance()->addJob(new CharacterShipUpdate(this));
 }
 
 void CharacterShip::notifyNameChanged()
 {
-	NetworkJobManager::getInstance()->addJob(new CharacterShipUpdate(this));
+	if(this->mLoaded)
+		NetworkJobManager::getInstance()->addJob(new CharacterShipUpdate(this));
 }
 
 void CharacterShip::notifyPilotedChanged()
 {
-	NetworkJobManager::getInstance()->addJob(new CharacterShipUpdate(this));
+	if(this->mLoaded)
+		NetworkJobManager::getInstance()->addJob(new CharacterShipUpdate(this));
 }
 

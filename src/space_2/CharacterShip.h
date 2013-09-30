@@ -65,6 +65,7 @@ public:
 
 private:
 	// Attrtributs
+	bool mLoaded;
 	long mIdCharacterShip;
 	std::string mName;
 	int mSkillPoints;

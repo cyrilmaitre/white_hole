@@ -27,6 +27,7 @@
 #define CHARACTER_JSON_CHARACTERSKILLS		"skills"
 #define CHARACTER_JSON_CHARACTERSHIP		"ships"
 #define JSON_CHARACTERBANKS					"banks"
+#define JSON_HANGARSPACE					"hangarSpace"
 #define CHARACTER_JSON_CHARACTERSHIPCOUNT	"shipsCount"
 #define UPDATE_TIMEPLAYED_TICK				10		// Sec
 #define PERCENTAGE_XP_FOR_SHIP				0.5		// Percent
@@ -38,6 +39,7 @@
 Character::Character(User* p_user, Json::Value json)
 {
 	// Init with default values
+	this->mLoaded = false;
 	this->mIdCharacter = -1;
 	this->mAvatarId = "0-0";
 	this->mName = "";
@@ -201,7 +203,11 @@ int Character::getHangarSpace()
 
 void Character::setHangarSpace( int p_space )
 {
-	this->mHangarSpace = p_space;
+	if(this->mHangarSpace != p_space)
+	{
+		this->mHangarSpace = p_space;
+		this->notifyHangarSpaceChanged();
+	}
 }
 
 User* Character::getUser()
@@ -371,6 +377,7 @@ void Character::updateTime()
 
 void Character::loadFromJson( Json::Value json )
 {
+	this->mLoaded = false;
 	this->setIdCharacter(json.get(CHARACTER_JSON_IDCHARACTER, -1).asInt());
 	this->setName(json.get(CHARACTER_JSON_NAME, "").asString());
 	this->setAvatarId(json.get(CHARACTER_JSON_AVATARID, "0-0").asString());
@@ -382,6 +389,7 @@ void Character::loadFromJson( Json::Value json )
 	this->setDateCreation(json.get(CHARACTER_JSON_DATECREATION, 0).asInt());
 	this->setTimePlayed(json.get(CHARACTER_JSON_TIMEPLAYED, 0).asInt());
 	this->setAlive(json.get(CHARACTER_JSON_ALIVE, 0).asBool());
+	this->setHangarSpace(json.get(JSON_HANGARSPACE, 0).asInt());
 	this->setRace(FactoryGet::getRaceFactory()->getRace(json.get(CHARACTER_JSON_IDRACE, 0).asInt()));
 	this->setJob(FactoryGet::getJobFactory()->getJob(json.get(CHARACTER_JSON_IDJOB, 0).asInt()));
 	
@@ -418,6 +426,7 @@ void Character::loadFromJson( Json::Value json )
 				this->setShipPiloted(currentShip);
 		}
 	}
+	this->mLoaded = true;
 }
 
 Json::Value Character::saveToJson()
@@ -433,6 +442,7 @@ Json::Value Character::saveToJson()
 	json[CHARACTER_JSON_DATECREATION] = this->getDateCreation();
 	json[CHARACTER_JSON_TIMEPLAYED] = this->getTimePlayed();
 	json[CHARACTER_JSON_ALIVE] = this->isAlive();
+	json[JSON_HANGARSPACE] = this->getHangarSpace();
 	json[CHARACTER_JSON_IDRACE] = this->getRace()->getIdRace();
 	json[CHARACTER_JSON_IDJOB] = this->getJob()->getIdJob();
 	json[CHARACTER_JSON_IDUSER] = this->getUser()->getIdUser();
@@ -539,12 +549,20 @@ void Character::createBase()
 
 void Character::notifyTimePlayedChanged()
 {
-	NetworkJobManager::getInstance()->addJob(new CharacterUpdate(this));
+	if(this->mLoaded)
+		NetworkJobManager::getInstance()->addJob(new CharacterUpdate(this));
 }
 
 void Character::notifySkillPointsChanged()
 {
-	NetworkJobManager::getInstance()->addJob(new CharacterUpdate(this));
+	if(this->mLoaded)
+		NetworkJobManager::getInstance()->addJob(new CharacterUpdate(this));
+}
+
+void Character::notifyHangarSpaceChanged()
+{
+	if(this->mLoaded)
+		NetworkJobManager::getInstance()->addJob(new CharacterUpdate(this));
 }
 
 
