@@ -234,7 +234,7 @@ void CharacterViewSelect::updateText()
 		this->mTBLevelText.setText(Tools::buildStringWithInt(this->getCharacter()->getLevel()));
 		this->mTBCreditText.setText(Tools::formatNumber(this->getCharacter()->getCredit()));
 		this->mTBShipNameText.setText(this->getCharacter()->getShipPiloted()->getShipModel()->getName());
-		this->mTBShipTypeText.setText(this->getCharacter()->getShipPiloted()->getShipModel()->getShipType()->getName());
+		this->mTBShipTypeText.setText(this->getCharacter()->getShipPiloted()->getShipModel()->getItemType()->getName());
 		this->mTBShipLevelText.setText(Tools::buildStringWithInt(this->getCharacter()->getShipPiloted()->getLevel()));
 	}
 }

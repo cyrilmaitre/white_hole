@@ -1,7 +1,6 @@
 #pragma once
 #include "Resource.h"
 #include "KeyValueFile.h"
-#include "ShipTypeFactory.h"
 #include "MovableData.h"
 #include "DestructableData.h"
 #include "ContainerableData.h"
@@ -23,9 +22,6 @@ public:
 	~ShipModel(void);
 
 	// Getters - Setters
-	ShipType* getShipType();
-	void setShipType(ShipType *p_shipType);
-
 	LevelShip* getLevelShipConfig();
 	void setLevelShipConfig(LevelShip* p_level);
 
@@ -35,7 +31,6 @@ public:
 
 private:
 	// Attributs
-	ShipType *mShipType;
 	LevelShip* mLevelShipConfig;
 };
 
