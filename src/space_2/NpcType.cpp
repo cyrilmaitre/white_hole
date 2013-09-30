@@ -29,14 +29,14 @@ NpcType::~NpcType(void)
 //*************************************************************
 // Getters - Setters
 //*************************************************************
-long NpcType::getId()
+long NpcType::getIdNpcType()
 {
-	return this->mId;
+	return this->mIdNpcType;
 }
 
-void NpcType::setId( long p_id )
+void NpcType::setIdNpcType( long p_id )
 {
-	this->mId = p_id;
+	this->mIdNpcType = p_id;
 }
 
 std::string NpcType::getName()
@@ -134,7 +134,7 @@ bool NpcType::isPassive()
 //*************************************************************
 void NpcType::loadFromConfig( KeyValueFile *p_config )
 {
-	this->setId(p_config->getLong(NPCTYPE_CONFIG_ID));
+	this->setIdNpcType(p_config->getLong(NPCTYPE_CONFIG_ID));
 	this->setName(Resource::resource->getBundle()->getString(p_config->getString(NPCTYPE_CONFIG_NAME)));
 	this->setColorString(p_config->getString(NPCTYPE_CONFIG_COLOR));
 	this->setLightColor((FlashingLightEffect::LightColor)p_config->getInt(CONFIG_LIGHTCOLOR));

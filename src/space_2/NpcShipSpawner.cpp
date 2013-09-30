@@ -39,7 +39,7 @@ int NpcShipSpawner::getNpcShipCountByType(long p_idType)
 	int count = 0;
 	for(int i = 0; i < this->mSpawnedNpcShip.size(); i++)
 	{
-		if(this->mSpawnedNpcShip[i]->getNpcType()->getId() == p_idType)
+		if(this->mSpawnedNpcShip[i]->getNpcType()->getIdNpcType() == p_idType)
 			count++;
 	}
 	return count;

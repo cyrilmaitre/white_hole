@@ -27,8 +27,8 @@ public:
 	~NpcType(void);
 
 	// Getters - Setters
-	long getId();
-	void setId(long p_id);
+	long getIdNpcType();
+	void setIdNpcType(long p_id);
 
 	std::string getName();
 	void setName(std::string p_name);
@@ -59,7 +59,7 @@ public:
 
 private:
 	// Attributs
-	long mId;
+	long mIdNpcType;
 	std::string mName;
 	sf::Color mColor;
 	std::string mColorString;

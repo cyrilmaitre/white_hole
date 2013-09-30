@@ -96,7 +96,7 @@ void DangerLevel::getShipModelSpawnChanceByShipType( std::map<NpcShipModel*, flo
 	for(int i = 0; i < this->getShipModelSpawnCount(); i++)
 	{
 		NpcShipModel* currentModel = FactoryGet::getNpcShipModelFactory()->getNpcShipModel(this->mShipModelSpawn[i]);
-		if(currentModel->getNpcType()->getId() == p_shipTypeId)
+		if(currentModel->getNpcType()->getIdNpcType() == p_shipTypeId)
 		{
 			p_map.insert(std::pair<NpcShipModel*, float>(currentModel, this->getShipModelSpawnChance(currentModel->getId())));
 		}
