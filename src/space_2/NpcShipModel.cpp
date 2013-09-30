@@ -18,14 +18,14 @@ NpcShipModel::~NpcShipModel(void)
 //*************************************************************
 // Getters - Setters
 //*************************************************************
-long NpcShipModel::getId()
+long NpcShipModel::getIdNpcShipModel()
 {
-	return this->mId;
+	return this->mIdNpcShipModel;
 }
 
-void NpcShipModel::setId( long p_id )
+void NpcShipModel::setIdNpcShipModel( long p_id )
 {
-	this->mId = p_id;
+	this->mIdNpcShipModel = p_id;
 }
 
 std::string NpcShipModel::getName()
@@ -57,7 +57,7 @@ void NpcShipModel::loadFromConfig( KeyValueFile *p_config )
 	NpcData::loadNpcDataFromConfig(p_config);
 
 	if(p_config->has(NPCSHIPMODEL_CONFIG_ID))
-		this->setId(p_config->getLong(NPCSHIPMODEL_CONFIG_ID));
+		this->setIdNpcShipModel(p_config->getLong(NPCSHIPMODEL_CONFIG_ID));
 
 	if(p_config->has(NPCSHIPMODEL_CONFIG_NAME))
 		this->setName(p_config->getString(NPCSHIPMODEL_CONFIG_NAME));

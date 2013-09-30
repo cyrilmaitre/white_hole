@@ -15,8 +15,8 @@ public:
 	~NpcShipModel(void);
 
 	// Getters - Setters
-	long getId();
-	void setId(long p_id);
+	long getIdNpcShipModel();
+	void setIdNpcShipModel(long p_id);
 
 	std::string getName();
 	void setName(std::string p_name);
@@ -30,7 +30,7 @@ public:
 
 private:
 	// Attributs
-	long mId;
+	long mIdNpcShipModel;
 	std::string mName;
 	ShipModel *mShipModel;
 };
