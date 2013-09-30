@@ -38,7 +38,7 @@
 Character::Character(User* p_user, Json::Value json)
 {
 	// Init with default values
-	this->mId = -1;
+	this->mIdCharacter = -1;
 	this->mAvatarId = "0-0";
 	this->mName = "";
 	this->mRace = NULL;
@@ -95,14 +95,14 @@ void Character::destroyShips()
 //*************************************************************
 // Getters - Setters
 //*************************************************************
-long Character::getId()
+long Character::getIdCharacter()
 {
-	return this->mId;
+	return this->mIdCharacter;
 }
 
-void Character::setId( long p_id )
+void Character::setIdCharacter( long p_id )
 {
-	this->mId = p_id;
+	this->mIdCharacter = p_id;
 }
 
 std::string Character::getName()
@@ -371,7 +371,7 @@ void Character::updateTime()
 
 void Character::loadFromJson( Json::Value json )
 {
-	this->setId(json.get(CHARACTER_JSON_IDCHARACTER, -1).asInt());
+	this->setIdCharacter(json.get(CHARACTER_JSON_IDCHARACTER, -1).asInt());
 	this->setName(json.get(CHARACTER_JSON_NAME, "").asString());
 	this->setAvatarId(json.get(CHARACTER_JSON_AVATARID, "0-0").asString());
 	this->setSkillPoints(json.get(CHARACTER_JSON_SKILLPOINTS, 0).asInt());
@@ -423,7 +423,7 @@ void Character::loadFromJson( Json::Value json )
 Json::Value Character::saveToJson()
 {
 	Json::Value json;
-	json[CHARACTER_JSON_IDCHARACTER] = this->getId();
+	json[CHARACTER_JSON_IDCHARACTER] = this->getIdCharacter();
 	json[CHARACTER_JSON_NAME] = this->getName();
 	json[CHARACTER_JSON_AVATARID] = this->getAvatarId();
 	json[CHARACTER_JSON_SKILLPOINTS] = this->getSkillPoints();

@@ -22,8 +22,8 @@ public:
 	void destroyShips();
 
 	// Getters - Setters
-	long getId();
-	void setId(long p_id);
+	long getIdCharacter();
+	void setIdCharacter(long p_id);
 
 	std::string getName();
 	void setName(std::string p_name);
@@ -107,7 +107,7 @@ public:
 
 private:
 	// Attributs
-	long mId;
+	long mIdCharacter;
 	std::string mName;
 	std::string mAvatarId;
 	int mSkillPoints;

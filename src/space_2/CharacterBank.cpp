@@ -167,7 +167,7 @@ void CharacterBank::loadFromJson( Json::Value json )
 Json::Value CharacterBank::saveToJson()
 {
 	Json::Value json;
-	json[JSON_IDCHARATCER] = this->getCharacter()->getId();
+	json[JSON_IDCHARATCER] = this->getCharacter()->getIdCharacter();
 	json[JSON_IDCHARACTERBANK] = this->getId();
 	json[JSON_NUMBER] = this->getNumber();
 	json[JSON_UNLOCK] = this->isUnlock();

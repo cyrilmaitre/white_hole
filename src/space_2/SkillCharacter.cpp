@@ -148,7 +148,7 @@ Json::Value SkillCharacter::saveToJson()
 {
 	Json::Value json;
 	json[SKILL_JSON_IDCHARACTERSKILL] = this->getId();
-	json[SKILL_JSON_IDCHARACTER] = this->getCharacter()->getId();
+	json[SKILL_JSON_IDCHARACTER] = this->getCharacter()->getIdCharacter();
 	json[SKILL_JSON_IDSKILL] = this->getSkill()->getId();
 	json[SKILL_JSON_LEVEL] = this->getLevel();
 	return json;
