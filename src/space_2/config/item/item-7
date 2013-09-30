@@ -1,9 +1,9 @@
 id = 7
-name = shipModelFXT01Name
-description = shipModelFXT01Description
+name = shipModelFrigate1Name
+description = shipModelFrigate1Description
 price = 500
 stackmax = 1
-sprite = 0-0
+sprite = 0-6
 itemtype = 35
 itemtier = 1
 buyable = true

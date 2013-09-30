@@ -253,8 +253,6 @@
     <ClCompile Include="ShipFactory.cpp" />
     <ClCompile Include="ShipModel.cpp" />
     <ClCompile Include="ShipModelFactory.cpp" />
-    <ClCompile Include="ShipType.cpp" />
-    <ClCompile Include="ShipTypeFactory.cpp" />
     <ClCompile Include="SkillCharacter.cpp" />
     <ClCompile Include="SkillFactory.cpp" />
     <ClCompile Include="SkillCharacterView.cpp" />
@@ -548,8 +546,6 @@
     <ClInclude Include="ShipFactory.h" />
     <ClInclude Include="ShipModel.h" />
     <ClInclude Include="ShipModelFactory.h" />
-    <ClInclude Include="ShipType.h" />
-    <ClInclude Include="ShipTypeFactory.h" />
     <ClInclude Include="SkillCharacter.h" />
     <ClInclude Include="SkillFactory.h" />
     <ClInclude Include="SkillCharacterView.h" />

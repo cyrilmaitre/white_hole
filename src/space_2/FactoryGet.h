@@ -1,5 +1,4 @@
 #pragma once
-#include "ShipTypeFactory.h"
 #include "ShipModelFactory.h"
 #include "ItemTypeFactory.h"
 #include "ItemTierFactory.h"
@@ -28,7 +27,6 @@ class FactoryGet
 {
 public:
 	// Methods
-	static ShipTypeFactory *getShipTypeFactory();
 	static ShipModelFactory *getShipModelFactory();
 	static ItemTypeFactory *getItemTypeFactory();
 	static ItemTierFactory *getItemTierFactory();

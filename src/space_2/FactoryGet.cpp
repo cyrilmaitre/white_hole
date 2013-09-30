@@ -18,7 +18,6 @@ FactoryGet::~FactoryGet(void)
 //*************************************************************
 void FactoryGet::init()
 {
-	ShipTypeFactory::mInstance = new ShipTypeFactory();
 	ShipModelFactory::mInstance = new ShipModelFactory();
 	ItemTypeFactory::mInstance = new ItemTypeFactory();
 	ItemTierFactory::mInstance = new ItemTierFactory();
@@ -46,9 +45,6 @@ void FactoryGet::init()
 
 void FactoryGet::uninit()
 {
-	ShipTypeFactory::mInstance->uninit();
-	delete ShipTypeFactory::mInstance;
-
 	ShipModelFactory::mInstance->uninit();
 	delete ShipModelFactory::mInstance;
 
@@ -117,11 +113,6 @@ void FactoryGet::uninit()
 
 	TurretEffectModelFactory::mInstance->uninit();
 	delete TurretEffectModelFactory::mInstance;
-}
-
-ShipTypeFactory * FactoryGet::getShipTypeFactory()
-{
-	return ShipTypeFactory::mInstance;
 }
 
 ShipModelFactory * FactoryGet::getShipModelFactory()

@@ -1,5 +1,5 @@
 id = 11
 name = itemTypeShipName
 description = itemTypeShipDescription
+icon = 0-1
 itemtype_parent = NULL
-itemtype_leaf = false

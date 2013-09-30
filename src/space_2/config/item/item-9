@@ -1,9 +1,9 @@
 id = 9
-name = shipModelFXT03Name
-description = shipModelFXT03Description
-price = 500
+name = shipModelFrigate3Name
+description = shipModelFrigate3Description
+price = 2000
 stackmax = 1
-sprite = 0-0
+sprite = 1-6
 itemtype = 35
 itemtier = 1
 buyable = true

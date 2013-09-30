@@ -438,12 +438,6 @@
     <ClCompile Include="BackgroundGeneration.cpp">
       <Filter>Fichiers sources\tools\background</Filter>
     </ClCompile>
-    <ClCompile Include="ShipType.cpp">
-      <Filter>Fichiers sources\game\mapObject\entity\ship</Filter>
-    </ClCompile>
-    <ClCompile Include="ShipTypeFactory.cpp">
-      <Filter>Fichiers sources\game\mapObject\entity\ship</Filter>
-    </ClCompile>
     <ClCompile Include="ItemType.cpp">
       <Filter>Fichiers sources\game\item</Filter>
     </ClCompile>
@@ -1300,12 +1294,6 @@
     </ClInclude>
     <ClInclude Include="BackgroundSpace.h">
       <Filter>Fichiers d%27en-tête\tools\background</Filter>
-    </ClInclude>
-    <ClInclude Include="ShipType.h">
-      <Filter>Fichiers d%27en-tête\game\mapObject\entity\ship</Filter>
-    </ClInclude>
-    <ClInclude Include="ShipTypeFactory.h">
-      <Filter>Fichiers d%27en-tête\game\mapObject\entity\ship</Filter>
     </ClInclude>
     <ClInclude Include="Item.h">
       <Filter>Fichiers d%27en-tête\game\item</Filter>

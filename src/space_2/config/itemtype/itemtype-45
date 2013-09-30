@@ -1,0 +1,5 @@
+id = 45
+name = itemTypeShipBuilderName
+description = itemTypeShipBuilderDescription
+icon = 0-1
+itemtype_parent = 11

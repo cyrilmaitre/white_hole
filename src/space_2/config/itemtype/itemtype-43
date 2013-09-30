@@ -1,0 +1,5 @@
+id = 43
+name = itemTypeShipBattleShipName
+description = itemTypeShipBattleShipDescription
+icon = 0-1
+itemtype_parent = 11

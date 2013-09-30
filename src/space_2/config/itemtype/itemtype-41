@@ -1,0 +1,5 @@
+id = 41
+name = itemTypeShipDestroyerName
+description = itemTypeShipDestroyerDescription
+icon = 0-1
+itemtype_parent = 11
