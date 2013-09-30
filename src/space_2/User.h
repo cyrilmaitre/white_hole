@@ -21,8 +21,8 @@ public:
 	void destroyCharacters();
 
 	// Getters - Setters
-	int getId();
-	void setId(int p_id);
+	long getIdUser();
+	void setIdUser(long p_id);
 
 	std::string getUsername();
 	void setUsername(std::string p_username);
@@ -48,12 +48,12 @@ public:
 
 private:
 	// Attributs
-	int mId;
+	long mIdUser;
 	std::string mUsername;
 	std::string mEmail;
 	long mRegisterDate;
 	bool mAdmin;
-	Character **mCharacters;
+	Character** mCharacters;
 	int mCharactersCount;
 };
 

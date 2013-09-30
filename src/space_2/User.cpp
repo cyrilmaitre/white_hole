@@ -33,14 +33,14 @@ void User::destroyCharacters()
 //*************************************************************
 // Getters - Setters
 //*************************************************************
-int User::getId()
+long User::getIdUser()
 {
-	return this->mId;
+	return this->mIdUser;
 }
 
-void User::setId( int p_id )
+void User::setIdUser( long p_id )
 {
-	this->mId = p_id;
+	this->mIdUser = p_id;
 }
 
 std::string User::getUsername()
@@ -114,7 +114,7 @@ Character* User::getCharacter( int p_index )
 //*************************************************************
 void User::loadFromJson( Json::Value json )
 {
-	this->setId(json.get(USER_JSON_IDUSER, -1).asInt());
+	this->setIdUser(json.get(USER_JSON_IDUSER, -1).asInt());
 	this->setUsername(json.get(USER_JSON_USERNAME, "").asString());
 	this->setEmail(json.get(USER_JSON_EMAIL, "").asString());
 	this->setRegisterDate(json.get(USER_JSON_REGISTERDATE, 0).asInt64());

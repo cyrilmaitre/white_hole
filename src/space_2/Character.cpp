@@ -435,7 +435,7 @@ Json::Value Character::saveToJson()
 	json[CHARACTER_JSON_ALIVE] = this->isAlive();
 	json[CHARACTER_JSON_IDRACE] = this->getRace()->getId();
 	json[CHARACTER_JSON_IDJOB] = this->getJob()->getId();
-	json[CHARACTER_JSON_IDUSER] = this->getUser()->getId();
+	json[CHARACTER_JSON_IDUSER] = this->getUser()->getIdUser();
 	
 	// Skills
 	Json::Value jsonSkills;
