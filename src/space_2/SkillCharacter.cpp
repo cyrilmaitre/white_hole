@@ -15,7 +15,7 @@ SkillCharacter::SkillCharacter( Json::Value p_json, Character* p_character)
 
 SkillCharacter::SkillCharacter( Skill* p_skill, Character* p_character )
 {
-	this->mId = -1;
+	this->mIdSkillCharacter = -1;
 	this->mLevel = 0;
 	this->mLevelPending = 0;
 	this->mCharacter = p_character;
@@ -30,14 +30,14 @@ SkillCharacter::~SkillCharacter(void)
 //*************************************************************
 // Getters - Setters
 //*************************************************************
-long SkillCharacter::getId()
+long SkillCharacter::getIdSkillCharacter()
 {
-	return this->mId;
+	return this->mIdSkillCharacter;
 }
 
-void SkillCharacter::setId( long p_id )
+void SkillCharacter::setIdSkillCharacter( long p_id )
 {
-	this->mId = p_id;
+	this->mIdSkillCharacter = p_id;
 }
 
 int SkillCharacter::getTotalLevel()
@@ -139,7 +139,7 @@ void SkillCharacter::validateLevelPending()
 
 void SkillCharacter::loadFromJson( Json::Value p_json )
 {
-	this->setId(p_json.get(SKILL_JSON_IDCHARACTERSKILL, -1).asInt64());
+	this->setIdSkillCharacter(p_json.get(SKILL_JSON_IDCHARACTERSKILL, -1).asInt64());
 	this->setLevel(p_json.get(SKILL_JSON_LEVEL, 0).asInt());
 	this->setSkill(FactoryGet::getSkillFactory()->getSkill(p_json.get(SKILL_JSON_IDSKILL, -1).asInt()));
 }
@@ -147,7 +147,7 @@ void SkillCharacter::loadFromJson( Json::Value p_json )
 Json::Value SkillCharacter::saveToJson()
 {
 	Json::Value json;
-	json[SKILL_JSON_IDCHARACTERSKILL] = this->getId();
+	json[SKILL_JSON_IDCHARACTERSKILL] = this->getIdSkillCharacter();
 	json[SKILL_JSON_IDCHARACTER] = this->getCharacter()->getIdCharacter();
 	json[SKILL_JSON_IDSKILL] = this->getSkill()->getId();
 	json[SKILL_JSON_LEVEL] = this->getLevel();

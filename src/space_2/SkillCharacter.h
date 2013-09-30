@@ -19,8 +19,8 @@ public:
 	~SkillCharacter(void);
 
 	// Getters - Setters
-	long getId();
-	void setId(long p_id);
+	long getIdSkillCharacter();
+	void setIdSkillCharacter(long p_id);
 
 	int getTotalLevel();
 	int getLevel();
@@ -47,7 +47,7 @@ public:
 
 private:
 	// Attributs
-	long mId;
+	long mIdSkillCharacter;
 	int mLevel;						// This is the base level between 0 and 100 %. The total level equal level + bonus level (job, stuff, race...)
 	int mLevelPending;
 	Skill* mSkill;
