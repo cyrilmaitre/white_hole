@@ -44,10 +44,10 @@ int SkillCharacter::getTotalLevel()
 {
 	int totalLevel = this->getLevel() + this->getLevelPending();
 	if(this->getCharacter()->hasRace())
-		totalLevel += this->getCharacter()->getRace()->getBonusSkill(this->getSkill()->getId());
+		totalLevel += this->getCharacter()->getRace()->getBonusSkill(this->getSkill()->getIdSkill());
 
 	if(this->getCharacter()->hasJob())
-		totalLevel += this->getCharacter()->getJob()->getBonusSkill(this->getSkill()->getId());
+		totalLevel += this->getCharacter()->getJob()->getBonusSkill(this->getSkill()->getIdSkill());
 
 	return totalLevel;
 }
@@ -149,7 +149,7 @@ Json::Value SkillCharacter::saveToJson()
 	Json::Value json;
 	json[SKILL_JSON_IDCHARACTERSKILL] = this->getIdSkillCharacter();
 	json[SKILL_JSON_IDCHARACTER] = this->getCharacter()->getIdCharacter();
-	json[SKILL_JSON_IDSKILL] = this->getSkill()->getId();
+	json[SKILL_JSON_IDSKILL] = this->getSkill()->getIdSkill();
 	json[SKILL_JSON_LEVEL] = this->getLevel();
 	return json;
 }

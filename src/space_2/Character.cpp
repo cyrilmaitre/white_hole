@@ -269,7 +269,7 @@ bool Character::hasSkillPoints()
 SkillCharacter * Character::getSkillCharacter( int p_skillId )
 {
 	for(int i = 0; i < CHARACTER_SKILL_COUNT; i++)
-		if(this->mSkillCharacters[i] != NULL && this->mSkillCharacters[i]->getSkill()->getId() == p_skillId)
+		if(this->mSkillCharacters[i] != NULL && this->mSkillCharacters[i]->getSkill()->getIdSkill() == p_skillId)
 			return this->mSkillCharacters[i];
 }
 

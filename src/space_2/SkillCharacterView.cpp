@@ -204,14 +204,14 @@ void SkillCharacterView::updateLevelDetail()
 
 	if(this->getSkillCharacter()->getCharacter()->hasRace())
 	{
-		int bonusRace = this->getSkillCharacter()->getCharacter()->getRace()->getBonusSkill(this->getSkillCharacter()->getSkill()->getId());
+		int bonusRace = this->getSkillCharacter()->getCharacter()->getRace()->getBonusSkill(this->getSkillCharacter()->getSkill()->getIdSkill());
 		if(bonusRace > 0)
 			detail += "<br/>" + this->getSkillCharacter()->getCharacter()->getRace()->getName() + ":" + Tools::getSpaceAfterColon() + Tools::buildStringWithInt(bonusRace) + "%";
 	}
 
 	if(this->getSkillCharacter()->getCharacter()->hasJob())
 	{
-		int bonusJob = this->getSkillCharacter()->getCharacter()->getJob()->getBonusSkill(this->getSkillCharacter()->getSkill()->getId());
+		int bonusJob = this->getSkillCharacter()->getCharacter()->getJob()->getBonusSkill(this->getSkillCharacter()->getSkill()->getIdSkill());
 		if(bonusJob > 0)
 			detail += "<br/>" + this->getSkillCharacter()->getCharacter()->getJob()->getName() + ":" + Tools::getSpaceAfterColon() + Tools::buildStringWithInt(bonusJob) + "%";
 	};

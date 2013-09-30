@@ -3,6 +3,15 @@
 
 
 //*************************************************************
+// Define
+//*************************************************************
+#define CONFIG_ID				"id"
+#define CONFIG_NAME				"name"
+#define CONFIG_DESCRIPTION		"description"
+#define CONFIG_SPRITEID			"spriteId"
+
+
+//*************************************************************
 // Constructor - Destructor
 //*************************************************************
 Skill::Skill(KeyValueFile *p_config)
@@ -18,14 +27,14 @@ Skill::~Skill(void)
 //*************************************************************
 // Getters - Setter
 //*************************************************************
-long Skill::getId()
+long Skill::getIdSkill()
 {
-	return this->mId;
+	return this->mIdSkill;
 }
 
-void Skill::setId( long p_id )
+void Skill::setIdSkill( long p_id )
 {
-	this->mId = p_id;
+	this->mIdSkill = p_id;
 }
 
 std::string Skill::getName()
@@ -64,9 +73,9 @@ void Skill::setSpriteId( std::string p_id )
 //*************************************************************
 void Skill::loadFromConfig( KeyValueFile *p_config )
 {
-	this->setId(p_config->getInt(SKILL_CONFIG_ID));
-	this->setName(Resource::resource->getBundle()->getString(p_config->getString(SKILL_CONFIG_NAME)));
-	this->setDescription(Resource::resource->getBundle()->getString(p_config->getString(SKILL_CONFIG_DESCRIPTION)));
-	this->setSpriteId(p_config->getString(SKILL_CONFIG_SPRITEID));
+	this->setIdSkill(p_config->getInt(CONFIG_ID));
+	this->setName(Resource::resource->getBundle()->getString(p_config->getString(CONFIG_NAME)));
+	this->setDescription(Resource::resource->getBundle()->getString(p_config->getString(CONFIG_DESCRIPTION)));
+	this->setSpriteId(p_config->getString(CONFIG_SPRITEID));
 }
 

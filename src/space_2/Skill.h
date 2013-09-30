@@ -2,11 +2,6 @@
 #include "Resource.h"
 #include "KeyValueFile.h"
 
-// Define
-#define SKILL_CONFIG_ID					"id"
-#define SKILL_CONFIG_NAME				"name"
-#define SKILL_CONFIG_DESCRIPTION		"description"
-#define SKILL_CONFIG_SPRITEID			"spriteId"
 
 class Skill
 {
@@ -16,8 +11,8 @@ public:
 	~Skill(void);
 
 	// Getters - Setters
-	long getId();
-	void setId(long p_id);
+	long getIdSkill();
+	void setIdSkill(long p_id);
 
 	std::string getName();
 	void setName(std::string p_name);
@@ -34,7 +29,7 @@ public:
 
 private:
 	// Attributs
-	long mId;
+	long mIdSkill;
 	std::string mName;
 	std::string mDescription;
 	std::string mSpriteId;
