@@ -3,6 +3,17 @@
 
 
 //*************************************************************
+// Define
+//*************************************************************
+#define CONFIG_ID				"id"
+#define CONFIG_NAME				"name"
+#define CONFIG_DESCRIPTION		"description"
+#define CONFIG_BONUS			"bonus"
+#define CONFIG_SPRITEID			"spriteId"
+#define CONFIG_AVATARINDEX		"avatarIndex"
+
+
+//*************************************************************
 // Constructor - Destructor
 //*************************************************************
 Race::Race( KeyValueFile *p_config )
@@ -26,14 +37,14 @@ void Race::deleteAvatarIndex()
 //*************************************************************
 // Getters - Setters
 //*************************************************************
-long Race::getId()
+long Race::getIdRace()
 {
-	return this->mId;
+	return this->mIdRace;
 }
 
-void Race::setId( long p_id )
+void Race::setIdRace( long p_id )
 {
-	this->mId = p_id;
+	this->mIdRace = p_id;
 }
 
 std::string Race::getName()
@@ -88,12 +99,12 @@ void Race::setAvatarIndex( std::string p_indexes )
 //*************************************************************
 void Race::loadFromConfig( KeyValueFile *p_config )
 {
-	this->setId(p_config->getLong(RACE_CONFIG_ID));
-	this->setName(Resource::resource->getBundle()->getString(p_config->getString(RACE_CONFIG_NAME)));
-	this->setDescription(Resource::resource->getBundle()->getString(p_config->getString(RACE_CONFIG_DESCRIPTION)));
-	this->setSpriteId(p_config->getString(RACE_CONFIG_SPRITEID));
-	this->setAvatarIndex(p_config->getString(RACE_CONFIG_AVATARINDEX));
-	this->setBonusSkill(p_config->getString(RACE_CONFIG_BONUS));
+	this->setIdRace(p_config->getLong(CONFIG_ID));
+	this->setName(Resource::resource->getBundle()->getString(p_config->getString(CONFIG_NAME)));
+	this->setDescription(Resource::resource->getBundle()->getString(p_config->getString(CONFIG_DESCRIPTION)));
+	this->setSpriteId(p_config->getString(CONFIG_SPRITEID));
+	this->setAvatarIndex(p_config->getString(CONFIG_AVATARINDEX));
+	this->setBonusSkill(p_config->getString(CONFIG_BONUS));
 }
 
 

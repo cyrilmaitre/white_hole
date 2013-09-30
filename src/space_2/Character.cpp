@@ -433,7 +433,7 @@ Json::Value Character::saveToJson()
 	json[CHARACTER_JSON_DATECREATION] = this->getDateCreation();
 	json[CHARACTER_JSON_TIMEPLAYED] = this->getTimePlayed();
 	json[CHARACTER_JSON_ALIVE] = this->isAlive();
-	json[CHARACTER_JSON_IDRACE] = this->getRace()->getId();
+	json[CHARACTER_JSON_IDRACE] = this->getRace()->getIdRace();
 	json[CHARACTER_JSON_IDJOB] = this->getJob()->getId();
 	json[CHARACTER_JSON_IDUSER] = this->getUser()->getIdUser();
 	

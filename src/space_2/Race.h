@@ -4,13 +4,6 @@
 #include "BonusSkills.h"
 #include "SplitString.h"
 
-// Define
-#define RACE_CONFIG_ID				"id"
-#define RACE_CONFIG_NAME			"name"
-#define RACE_CONFIG_DESCRIPTION		"description"
-#define RACE_CONFIG_BONUS			"bonus"
-#define RACE_CONFIG_SPRITEID		"spriteId"
-#define RACE_CONFIG_AVATARINDEX		"avatarIndex"
 
 class Race : public BonusSkills
 {
@@ -20,8 +13,8 @@ public:
 	~Race(void);
 
 	// Getters - Setters
-	long getId();
-	void setId(long p_id);
+	long getIdRace();
+	void setIdRace(long p_id);
 
 	std::string getName();
 	void setName(std::string p_name);
@@ -41,7 +34,7 @@ public:
 
 private:
 	// Attributs
-	long mId;
+	long mIdRace;
 	std::string mName;
 	std::string mDescription;
 	std::string mSpriteId;
