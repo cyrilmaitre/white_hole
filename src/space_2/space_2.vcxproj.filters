@@ -373,6 +373,12 @@
     <Filter Include="Fichiers sources\game\ui\stationscreen\panel\market">
       <UniqueIdentifier>{1bc37920-8881-414e-aeb8-c91f75f06e0d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Fichiers d%27en-tête\game\ui\stationscreen\panel\hangar">
+      <UniqueIdentifier>{7b6db75c-05ff-4454-a1ad-885349f48afa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fichiers sources\game\ui\stationscreen\panel\hangar">
+      <UniqueIdentifier>{97fc00cb-97af-4e47-8554-a4433cd888ec}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Game.cpp">
@@ -1232,6 +1238,12 @@
     </ClCompile>
     <ClCompile Include="CharacterShipUpdate.cpp">
       <Filter>Fichiers sources\resource\network</Filter>
+    </ClCompile>
+    <ClCompile Include="StationScreenHangar.cpp">
+      <Filter>Fichiers sources\game\ui\stationscreen\panel\hangar</Filter>
+    </ClCompile>
+    <ClCompile Include="HangarShipListView.cpp">
+      <Filter>Fichiers sources\game\ui\stationscreen\panel\hangar</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -2110,6 +2122,12 @@
     </ClInclude>
     <ClInclude Include="CharacterShipUpdate.h">
       <Filter>Fichiers d%27en-tête\resource\network</Filter>
+    </ClInclude>
+    <ClInclude Include="StationScreenHangar.h">
+      <Filter>Fichiers d%27en-tête\game\ui\stationscreen\panel\hangar</Filter>
+    </ClInclude>
+    <ClInclude Include="HangarShipListView.h">
+      <Filter>Fichiers d%27en-tête\game\ui\stationscreen\panel\hangar</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

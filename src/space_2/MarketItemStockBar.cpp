@@ -65,13 +65,21 @@ void MarketItemStockBar::update()
 
 void MarketItemStockBar::updateText()
 {
+	//Update Text
 	float currentStock = floor(this->mItemStock->getStockCurrent());
-
 	if(currentStock > this->getValue())
 		this->mText.setText(Tools::formatNumber((long)this->getValue()) + " (+" + Tools::formatNumber((long)(currentStock - this->getValue())) + ")" + " / " + Tools::formatNumber((long)this->getValueMax()));
 	else
 		this->mText.setText(Tools::formatNumber((long)this->getValue()) + " / " + Tools::formatNumber((long)this->getValueMax()));
 
+	// Update PUB
+	this->mPUBStock.clear(false);
+	this->mPUBStock.addLine(Resource::resource->getBundle()->getString("marketBuyStock"));
+	this->mPUBStock.addLine(Resource::resource->getBundle()->getString("marketBuyStockMin") + Tools::getSpaceAfterColon() + Tools::formatNumber(this->mItemStock->getStockMin()));
+	this->mPUBStock.addLine(Resource::resource->getBundle()->getString("marketBuyStockMax") + Tools::getSpaceAfterColon() + Tools::formatNumber(this->mItemStock->getStockMax()));
+	this->mPUBStock.addLine(Resource::resource->getBundle()->getString("marketBuyStockCurrent") + Tools::getSpaceAfterColon() + Tools::formatNumber(this->mItemStock->getStockCurrent()));
+
+	// Update Position
 	this->ProgressBar::updatePosition();
 }
 
@@ -125,22 +133,13 @@ void MarketItemStockBar::notifyItemStockChanged()
 		this->setValueMax(this->mItemStock->getStockMax());
 		this->setValue(floor(this->mItemStock->getStockCurrent()));
 		this->updateStockMiniShapePosition();
+		this->updateText();
 	}
 	this->setVisible(this->mItemStock != NULL);
 }
 
 void MarketItemStockBar::notifyItemStockCurrentChanged()
 {
-	// Update value
 	this->setValue(floor(this->mItemStock->getStockCurrent()));
-
-	// Update text
 	this->updateText();
-
-	// Update PUB
-	this->mPUBStock.clear(false);
-	this->mPUBStock.addLine(Resource::resource->getBundle()->getString("marketBuyStock"));
-	this->mPUBStock.addLine(Resource::resource->getBundle()->getString("marketBuyStockMin") + Tools::getSpaceAfterColon() + Tools::formatNumber(this->mItemStock->getStockMin()));
-	this->mPUBStock.addLine(Resource::resource->getBundle()->getString("marketBuyStockMax") + Tools::getSpaceAfterColon() + Tools::formatNumber(this->mItemStock->getStockMax()));
-	this->mPUBStock.addLine(Resource::resource->getBundle()->getString("marketBuyStockCurrent") + Tools::getSpaceAfterColon() + Tools::formatNumber(this->mItemStock->getStockCurrent()));
 }

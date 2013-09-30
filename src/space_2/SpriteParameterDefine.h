@@ -52,6 +52,7 @@
 #define IC_16X16_SHIP				"2-4"
 #define IC_16X16_EXPAND				"3-4"
 #define IC_16X16_COLLAPSE			"4-4"
+#define IC_16X16_SHIPLIGHT			"5-4"
 #define IC_16X16_ARROW				"0-5"
 #define IC_16X16_CREDIT				"1-5"
 #define IC_16X16_MAP				"2-5"

@@ -96,6 +96,11 @@ void StationScreenRightPanel::draw()
 	FieldSet::draw();
 }
 
+void StationScreenRightPanel::load()
+{
+
+}
+
 void StationScreenRightPanel::unload()
 {
 

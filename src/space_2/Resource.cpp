@@ -28,9 +28,6 @@
 #include "Manager.h"
 #include "ResourceConfig.h"
 
-using namespace std;
-using namespace sf;
-
 
 //*************************************************************
 // Init Static
@@ -41,7 +38,7 @@ Resource * Resource::resource;
 //*************************************************************
 // Constructreur - Destructeur
 //*************************************************************
-Resource::Resource(): mApp(VideoMode(Option::option->getAppScreenWidth(), Option::option->getAppScreenHeight(), APP_SCREEN_COLOR), APP_GAME_NAME, Option::option->getAppScreenMode(), sf::ContextSettings(0, 0, Option::option->getAppAntiAliasingLevel()))
+Resource::Resource(): mApp(sf::VideoMode(Option::option->getAppScreenWidth(), Option::option->getAppScreenHeight(), APP_SCREEN_COLOR), APP_GAME_NAME, Option::option->getAppScreenMode(), sf::ContextSettings(0, 0, Option::option->getAppAntiAliasingLevel()))
 {
 	//*************************************************************
 	// Sauvegarde de l'objet ressource
@@ -137,7 +134,7 @@ sf::View* Resource::getViewMap(int p_plane)
 
 sf::Image* Resource::getImage( std::string p_name )
 {
-	map<string, Image*>::iterator it;
+	std::map<std::string, sf::Image*>::iterator it;
 	it = this->mImage.find(p_name);
 
 	if(it != this->mImage.end())
@@ -146,7 +143,7 @@ sf::Image* Resource::getImage( std::string p_name )
 	}
 	else
 	{
-		cout << "Unable to find loaded image: " << p_name << endl;
+		std::cout << "Unable to find loaded image: " << p_name << std::endl;
 	}
 
 	return NULL;
@@ -154,7 +151,7 @@ sf::Image* Resource::getImage( std::string p_name )
 
 sf::Texture* Resource::getTexture( std::string p_name )
 {
-	map<string, Texture*>::iterator it;
+	std::map<std::string, sf::Texture*>::iterator it;
 	it = this->mTexture.find(p_name);
 
 	if(it != this->mTexture.end())
@@ -163,7 +160,7 @@ sf::Texture* Resource::getTexture( std::string p_name )
 	}
 	else
 	{
-		cout << "Unable to find loaded texture: " << p_name << endl;
+		std::cout << "Unable to find loaded texture: " << p_name << std::endl;
 		it = this->mTexture.find("notfound.png");
 		if(it != this->mTexture.end())
 			return it->second;
@@ -174,7 +171,7 @@ sf::Texture* Resource::getTexture( std::string p_name )
 
 sf::Font* Resource::getFont( std::string p_name )
 {
-	map<string, Font*>::iterator it;
+	std::map<std::string, sf::Font*>::iterator it;
 	it = this->mFont.find(p_name);
 
 	if(it != this->mFont.end())
@@ -183,7 +180,7 @@ sf::Font* Resource::getFont( std::string p_name )
 	}
 	else
 	{
-		cout << "Unable to find loaded font: " << p_name << endl;
+		std::cout << "Unable to find loaded font: " << p_name << std::endl;
 	}
 
 	return NULL;
@@ -206,7 +203,7 @@ sf::Font* Resource::getFontUiTheme()
 
 sf::SoundBuffer* Resource::getBuffer( std::string p_name )
 {
-	map<string, SoundBuffer*>::iterator it;
+	std::map<std::string, sf::SoundBuffer*>::iterator it;
 	it = this->mBuffer.find(p_name);
 
 	if(it != this->mBuffer.end())
@@ -215,7 +212,7 @@ sf::SoundBuffer* Resource::getBuffer( std::string p_name )
 	}
 	else
 	{
-		cout << "Unable to find loaded sound: " << p_name << endl;
+		std::cout << "Unable to find loaded sound: " << p_name << std::endl;
 	}
 
 	return NULL;
@@ -223,7 +220,7 @@ sf::SoundBuffer* Resource::getBuffer( std::string p_name )
 
 sf::Music* Resource::getMusic( std::string p_name )
 {
-	map<string, Music*>::iterator it;
+	std::map<std::string, sf::Music*>::iterator it;
 	it = this->mMusic.find(p_name);
 
 	if(it != this->mMusic.end())
@@ -232,7 +229,7 @@ sf::Music* Resource::getMusic( std::string p_name )
 	}
 	else
 	{
-		cout << "Unable to find loaded music: " << p_name << endl;
+		std::cout << "Unable to find loaded music: " << p_name << std::endl;
 	}
 
 	return NULL;
@@ -255,7 +252,7 @@ ThreadTerminator* Resource::getThreadTerminator()
 
 KeyValueFile* Resource::getConfig( std::string p_name )
 {
-	map<string, KeyValueFile>::iterator it;
+	std::map<std::string, KeyValueFile>::iterator it;
 	it = this->mConfig.find(p_name);
 
 	if(it != this->mConfig.end())
@@ -264,7 +261,7 @@ KeyValueFile* Resource::getConfig( std::string p_name )
 	}
 	else
 	{
-		cout << "Unable to find loaded config: " << p_name << endl;
+		std::cout << "Unable to find loaded config: " << p_name << std::endl;
 	}
 
 	return NULL;
@@ -479,30 +476,30 @@ void Resource::loadImages( std::string path )
 	{
 		while ((ent = readdir (dir)) != NULL)
 		{
-			string file_name = ent->d_name;
+			std::string file_name = ent->d_name;
 
 			if(file_name[0] != '.' && ent->d_type != DT_DIR)
 			{
-				Image *tmpImage = new Image();
+				sf::Image *tmpImage = new sf::Image();
 				if(tmpImage->loadFromFile(path+file_name))
-					tmpImage->createMaskFromColor(Color(0,255,255));
+					tmpImage->createMaskFromColor(sf::Color(0,255,255));
 				else
-					cout << "Error while loading image: " << path+file_name << endl;
+					std::cout << "Error while loading image: " << path+file_name << std::endl;
 
-				this->mImage.insert(pair<string, Image*>(file_name, tmpImage));
+				this->mImage.insert(std::pair<std::string, sf::Image*>(file_name, tmpImage));
 			}
 		}
 		closedir(dir);
 	}
 	else
 	{
-		cout << "Enable to find image folder: " << path << endl;
+		std::cout << "Enable to find image folder: " << path << std::endl;
 	}	
 }
 
 void Resource::unloadImages()
 {
-	for( map<string, Image*>::iterator it = this->mImage.begin() ; it != this->mImage.end(); it++ )
+	for( std::map<std::string, sf::Image*>::iterator it = this->mImage.begin() ; it != this->mImage.end(); it++ )
 	{
 		if((*it).second != NULL)
 		{
@@ -518,18 +515,18 @@ void Resource::unloadImages()
 //*************************************************************
 void Resource::loadTextures()
 {
-	for( map<string, Image*>::iterator it = this->mImage.begin(); it != this->mImage.end(); it++ )
+	for( std::map<std::string, sf::Image*>::iterator it = this->mImage.begin(); it != this->mImage.end(); it++ )
 	{
 		if((*it).second != NULL)
 		{
-			Texture *tmpTexture = new Texture();
+			sf::Texture *tmpTexture = new sf::Texture();
 
 			if((*it).second->getSize().x != 0 && (*it).second->getSize().y != 0)
 			{
 				tmpTexture->loadFromImage(*(*it).second);
 				tmpTexture->setSmooth(false);
 
-				this->mTexture.insert(pair<string, Texture*>((*it).first, tmpTexture));	
+				this->mTexture.insert(std::pair<std::string, sf::Texture*>((*it).first, tmpTexture));	
 			}
 		}
 	}
@@ -537,7 +534,7 @@ void Resource::loadTextures()
 
 void Resource::unloadTextures()
 {
-	for( map<string, Texture*>::iterator it = this->mTexture.begin() ; it != this->mTexture.end(); it++ )
+	for( std::map<std::string, sf::Texture*>::iterator it = this->mTexture.begin() ; it != this->mTexture.end(); it++ )
 	{
 		if((*it).second != NULL)
 		{
@@ -566,28 +563,28 @@ void Resource::loadFonts( std::string path )
 	{
 		while ((ent = readdir (dir)) != NULL)
 		{
-			string file_name = ent->d_name;
+			std::string file_name = ent->d_name;
 
 			if(file_name[0] != '.' && ent->d_type != DT_DIR)
 			{
-				Font *tmpFont = new Font();
+				sf::Font *tmpFont = new sf::Font();
 				if(!tmpFont->loadFromFile(path+file_name))
-					cout << "Error while loading font: " << path+file_name << endl;
+					std::cout << "Error while loading font: " << path+file_name << std::endl;
 
-				this->mFont.insert(pair<string, Font*>(file_name, tmpFont));
+				this->mFont.insert(std::pair<std::string, sf::Font*>(file_name, tmpFont));
 			}
 		}
 		closedir(dir);
 	}
 	else
 	{
-		cout << "Enable to find font folder: " << path << endl;
+		std::cout << "Enable to find font folder: " << path << std::endl;
 	}
 }
 
 void Resource::unloadFonts()
 {
-	for( map<string, Font*>::iterator it = this->mFont.begin() ; it != this->mFont.end(); it++ )
+	for( std::map<std::string, sf::Font*>::iterator it = this->mFont.begin() ; it != this->mFont.end(); it++ )
 	{
 		if((*it).second != NULL)
 		{
@@ -616,28 +613,28 @@ void Resource::loadSoundBuffers( std::string path )
 	{
 		while ((ent = readdir (dir)) != NULL)
 		{
-			string file_name = ent->d_name;
+			std::string file_name = ent->d_name;
 
 			if(file_name[0] != '.' && ent->d_type != DT_DIR)
 			{
-				SoundBuffer *tmpSoundBuffer = new SoundBuffer();
+				sf::SoundBuffer *tmpSoundBuffer = new sf::SoundBuffer();
 				if (!tmpSoundBuffer->loadFromFile(path+file_name))						
-					cout << "Error while loading sound: " << path+file_name << endl;
+					std::cout << "Error while loading sound: " << path+file_name << std::endl;
 
-				this->mBuffer.insert(pair<string, SoundBuffer*>(file_name, tmpSoundBuffer));
+				this->mBuffer.insert(std::pair<std::string, sf::SoundBuffer*>(file_name, tmpSoundBuffer));
 			}
 		}
 		closedir(dir);
 	}
 	else
 	{
-		cout << "Enable to find sound folder: " << path << endl;
+		std::cout << "Enable to find sound folder: " << path << std::endl;
 	}	
 }
 
 void Resource::unloadSoundBuffers()
 {
-	for( map<string, SoundBuffer*>::iterator it = this->mBuffer.begin() ; it != this->mBuffer.end(); it++ )
+	for( std::map<std::string, sf::SoundBuffer*>::iterator it = this->mBuffer.begin() ; it != this->mBuffer.end(); it++ )
 	{
 		if((*it).second != NULL)
 		{
@@ -666,28 +663,28 @@ void Resource::loadMusic( std::string path )
 	{
 		while ((ent = readdir (dir)) != NULL)
 		{
-			string file_name = ent->d_name;
+			std::string file_name = ent->d_name;
 
 			if(file_name[0] != '.' && ent->d_type != DT_DIR)
 			{
-				Music *tmpMusic = new Music();
+				sf::Music *tmpMusic = new sf::Music();
 				if (!tmpMusic->openFromFile(path+file_name))						
-					cout << "Error while loading music: " << path+file_name << endl;
+					std::cout << "Error while loading music: " << path+file_name << std::endl;
 
-				this->mMusic.insert(pair<string, Music*>(file_name, tmpMusic));
+				this->mMusic.insert(std::pair<std::string, sf::Music*>(file_name, tmpMusic));
 			}
 		}
 		closedir(dir);
 	}
 	else
 	{
-		cout << "Enable to find music folder: " << path << endl;
+		std::cout << "Enable to find music folder: " << path << std::endl;
 	}
 }
 
 void Resource::unloadMusic()
 {
-	for( map<string, Music*>::iterator it = this->mMusic.begin() ; it != this->mMusic.end(); it++ )
+	for( std::map<std::string, sf::Music*>::iterator it = this->mMusic.begin() ; it != this->mMusic.end(); it++ )
 	{
 		if((*it).second != NULL)
 		{
@@ -741,18 +738,18 @@ void Resource::loadConfigs( std::string path )
 	{
 		while ((ent = readdir (dir)) != NULL)
 		{
-			string file_name = ent->d_name;
+			std::string file_name = ent->d_name;
 
 			if(file_name[0] != '.' && ent->d_type != DT_DIR)
 			{
-				this->mConfig.insert(pair<string, KeyValueFile>(file_name, KeyValueFile(path+file_name, file_name, true)));
+				this->mConfig.insert(std::pair<std::string, KeyValueFile>(file_name, KeyValueFile(path+file_name, file_name, true)));
 			}
 		}
 		closedir(dir);
 	}
 	else
 	{
-		cout << "Unable to find config folder: " << path << endl;
+		std::cout << "Unable to find config folder: " << path << std::endl;
 	}
 }
 

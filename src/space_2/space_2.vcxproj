@@ -113,6 +113,7 @@
     <ClCompile Include="EquipableData.cpp" />
     <ClCompile Include="ExperienceBar.cpp" />
     <ClCompile Include="FlashingLightEffect.cpp" />
+    <ClCompile Include="HangarShipListView.cpp" />
     <ClCompile Include="IdValueDouble.cpp" />
     <ClCompile Include="IdValueFloat.cpp" />
     <ClCompile Include="IdValueInt.cpp" />
@@ -268,6 +269,7 @@
     <ClCompile Include="StationModel.cpp" />
     <ClCompile Include="StationModelFactory.cpp" />
     <ClCompile Include="StationScreen.cpp" />
+    <ClCompile Include="StationScreenHangar.cpp" />
     <ClCompile Include="StationScreenLeftMenu.cpp" />
     <ClCompile Include="StationScreenMarket.cpp" />
     <ClCompile Include="StationScreenMarketBuy.cpp" />
@@ -402,6 +404,7 @@
     <ClInclude Include="EquipableData.h" />
     <ClInclude Include="ExperienceBar.h" />
     <ClInclude Include="FlashingLightEffect.h" />
+    <ClInclude Include="HangarShipListView.h" />
     <ClInclude Include="IdValueDouble.h" />
     <ClInclude Include="IdValueFloat.h" />
     <ClInclude Include="IdValueInt.h" />
@@ -562,6 +565,7 @@
     <ClInclude Include="StationModel.h" />
     <ClInclude Include="StationModelFactory.h" />
     <ClInclude Include="StationScreen.h" />
+    <ClInclude Include="StationScreenHangar.h" />
     <ClInclude Include="StationScreenLeftMenu.h" />
     <ClInclude Include="StationScreenMarket.h" />
     <ClInclude Include="StationScreenMarketBuy.h" />

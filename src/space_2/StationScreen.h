@@ -6,6 +6,7 @@
 #include "StationScreenLeftMenu.h"
 #include "StationScreenRightPanel.h"
 #include "StationScreenMarket.h"
+#include "StationScreenHangar.h"
 
 
 class StationScreen
@@ -63,5 +64,6 @@ private:
 	StationScreenRightPanel* mRightPanel;
 
 	StationScreenMarket* mPanelMarket;
+	StationScreenHangar* mPanelHangar;
 };
 

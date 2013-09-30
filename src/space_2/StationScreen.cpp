@@ -34,6 +34,7 @@ StationScreen::StationScreen(Character* p_character)
 	this->setCharacter(p_character);
 	this->mLeftMenu = new StationScreenLeftMenu(p_character, this);
 	this->mPanelMarket = new StationScreenMarket(p_character, NULL, this);
+	this->mPanelHangar = new StationScreenHangar(p_character, NULL, this);
 
 	this->notifyAppSizeChanged();
 }
@@ -128,7 +129,7 @@ void StationScreen::unloadPanel()
 
 void StationScreen::loadPanelHangar()
 {
-
+	this->setRightPanel(this->mPanelHangar);
 }
 
 void StationScreen::loadPanelMarket()
@@ -326,6 +327,7 @@ void StationScreen::notifyRightPanelChanged()
 		this->updateRightPanelSize();
 		this->updateRightPanelCharacter();
 		this->updateRightPanelStation();
+		this->mRightPanel->load();
 	}
 }
 
