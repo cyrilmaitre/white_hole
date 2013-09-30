@@ -20,7 +20,7 @@ IdGenerator BackgroundSpace::mIdGenerator;
 //*************************************************************
 BackgroundSpace::BackgroundSpace(int p_width, int p_height, int p_columnsCount, int p_linesCount)
 {
-	this->mId = BackgroundSpace::mIdGenerator.getNextId();
+	this->mIdBackgroundSpace = BackgroundSpace::mIdGenerator.getNextId();
 	this->mWidth = p_width;
 	this->mHeight = p_height;
 	this->mColumnsCount = p_columnsCount;
@@ -52,9 +52,9 @@ BackgroundSpace::~BackgroundSpace(void)
 //*************************************************************
 // Getters - Setters
 //*************************************************************
-int BackgroundSpace::getId()
+long BackgroundSpace::getIdBackgroundSpace()
 {
-	return this->mId;
+	return this->mIdBackgroundSpace;
 }
 
 int BackgroundSpace::getBackgroundTile( int p_column, int p_line )
@@ -141,7 +141,7 @@ void BackgroundSpace::uncacheBackgroundSpace( BackgroundSpace *p_backgroundTextu
 
 	for(int i = 0; i < BackgroundSpace::mBackgroundSpaceCached.size(); i++)
 	{
-		if(BackgroundSpace::mBackgroundSpaceCached[i] != NULL && BackgroundSpace::mBackgroundSpaceCached[i]->getId() == p_backgroundTexture->getId())
+		if(BackgroundSpace::mBackgroundSpaceCached[i] != NULL && BackgroundSpace::mBackgroundSpaceCached[i]->getIdBackgroundSpace() == p_backgroundTexture->getIdBackgroundSpace())
 		{
 			BackgroundSpace::uncacheBackgroundSpace(i);
 			return;

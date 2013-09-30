@@ -10,7 +10,7 @@ public:
 	~BackgroundSpace(void);
 
 	// Getters - Setters
-	int getId();
+	long getIdBackgroundSpace();
 
 	int getBackgroundTile(int p_column, int p_line);
 	void setBackgroundTile(int p_item_id, int p_column, int p_line);
@@ -26,7 +26,7 @@ public:
 
 private:
 	// Attributes
-	int mId;
+	long mIdBackgroundSpace;
 	int **mBackgroundTiles;
 	int mWidth;
 	int mHeight;
