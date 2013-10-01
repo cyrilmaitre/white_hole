@@ -7,7 +7,7 @@
 #define BACKGROUNDCOLOR					sf::Color(25, 26, 28)
 #define BORDERCOLOR						sf::Color(194, 194, 194)
 #define BORDERSIZE						1
-#define PADDING							10
+#define PADDING							15
 #define BUTTONADD_MARGINTOP				20
 
 
