@@ -11,6 +11,8 @@
 #define SHIPLIST_SEPARATORSIZE			1
 #define SHIPLIST_SEPARATORCOLOR			sf::Color(86, 87, 89)
 #define SHIPLIST_PADDING				0
+#define SLOTS_MARGINTOP					10
+#define SHIPADD_MARGINTOP				50
 
 
 //*************************************************************
@@ -28,6 +30,10 @@ StationScreenHangar::StationScreenHangar( Character* p_character, Station* p_sta
 	this->mShipList.setSeparatorColor(SHIPLIST_SEPARATORCOLOR);
 	this->mShipList.setSeparatorHeight(SHIPLIST_SEPARATORSIZE);
 	this->mShipList.setForceScrollBar(true);
+
+	this->mSlotManagementView.setCharacter(p_character);
+	this->mShipAddView.setCharacter(p_character);
+	this->mShipAddView.setWidth(this->mShipList.getWidth());
 }
 
 StationScreenHangar::~StationScreenHangar(void)
@@ -59,7 +65,10 @@ void StationScreenHangar::unload()
 
 void StationScreenHangar::update()
 {
-
+	if(this->isVisible())
+	{
+		this->mShipAddView.update();
+	}
 }
 
 void StationScreenHangar::update( sf::Event p_event )
@@ -67,13 +76,17 @@ void StationScreenHangar::update( sf::Event p_event )
 	if(this->isVisible())
 	{
 		this->mShipList.update(p_event);
+		this->mSlotManagementView.update(p_event);
+		this->mShipAddView.update(p_event);
 	}
-	FieldSet::update(p_event);
+	StationScreenRightPanel::update(p_event);
 }
 
 void StationScreenHangar::updatePosition()
 {
 	this->mShipList.setPosition(this->getContentX(), this->getContentY());
+	this->mSlotManagementView.setPosition(this->mShipList.getX() + (this->mShipList.getWidth() - this->mSlotManagementView.getWidth()) / 2, this->mShipList.getBottomY());
+	this->mShipAddView.setPosition(this->mShipList.getX(), this->mSlotManagementView.getBottomY() + SHIPADD_MARGINTOP);
 }
 
 void StationScreenHangar::draw()
@@ -81,17 +94,26 @@ void StationScreenHangar::draw()
 	FieldSet::draw();
 	if(this->isVisible())
 	{
+		this->mSlotManagementView.draw();
 		this->mShipList.draw();
+		this->mShipAddView.draw();
 	}
 }
 
 void StationScreenHangar::notifySizeChanged()
 {
-	FieldSet::notifySizeChanged();
+	StationScreenRightPanel::notifySizeChanged();
 }
 
 void StationScreenHangar::notifyPositionChanged()
 {
-	FieldSet::notifyPositionChanged();
+	StationScreenRightPanel::notifyPositionChanged();
 	this->updatePosition();
+}
+
+void StationScreenHangar::notifyCharacterChanged()
+{
+	StationScreenRightPanel::notifyCharacterChanged();
+	this->mSlotManagementView.setCharacter(this->getCharacter());
+	this->mShipAddView.setCharacter(this->getCharacter());
 }

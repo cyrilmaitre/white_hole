@@ -30,11 +30,11 @@ int Levelable::getLevel()
 
 void Levelable::setLevel( int p_level )
 {
-	bool notify = this->mLevel != p_level;
-	this->mLevel = p_level;
-
-	if(notify)
+	if(this->mLevel != p_level)
+	{
+		this->mLevel = p_level;
 		this->notifyLevelChanged();
+	}
 }
 
 bool Levelable::isLevelChanged()
@@ -75,11 +75,11 @@ long Levelable::getExperienceBeforeLevel()
 
 void Levelable::setExperience( long p_experience )
 {
-	bool notify = this->mExperience != p_experience;
-	this->mExperience = p_experience;
-	
-	if(notify)
+	if(this->mExperience != p_experience)
+	{
+		this->mExperience = p_experience;
 		this->notifyExperienceChanged();
+	}	
 }
 
 bool Levelable::isExperienceChanged()

@@ -11,11 +11,19 @@
 ContainerStack::ContainerStack( ContainerRow* p_parent, ItemStack* p_stack, int p_position, ContainerStackType p_type ) : mItemStack(NULL)
 {
 	this->mContainerRow = p_parent;
-	this->mItemStack = NULL;
+	this->mItemStack = p_stack;
 	this->mType = p_type;
 	this->mPosition = p_position;
 	this->mItemStackChanged = false;
+}
+
+ContainerStack::ContainerStack( ItemStack* p_stack ) : mItemStack(NULL)
+{
+	this->mContainerRow = NULL;
 	this->mItemStack = p_stack;
+	this->mType = ContainerStack::ContainerStackType::TypeNone;
+	this->mPosition = 0;
+	this->mItemStackChanged = false;
 }
 
 ContainerStack::~ContainerStack(void)
@@ -101,7 +109,8 @@ bool ContainerStack::isItemStackChanged()
 void ContainerStack::notifyItemStackChanged()
 {
 	this->mItemStackChanged = true;
-	this->getContainerRow()->getContainerable()->notifyContentChanged();
+	if(this->mContainerRow != NULL)
+		this->mContainerRow->getContainerable()->notifyContentChanged();
 
 	// Update server
 	switch(this->mType)

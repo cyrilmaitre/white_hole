@@ -433,6 +433,10 @@ windowAskBankTitle = Unlock bank
 windowAskBankMessage = Do you want to unlock this bank for
 windowErrorBank = You don't have enough money to unlock this bank
 windowSuccessBank = You successfully unlock the bank
+windowAskSlotTitle = Buy slot
+windowAskSlotMessage = Do you want to buy new slot for
+windowErrorSlot = You don't have enough money to buy new slot
+windowSuccessSlot = You successfully buy a new slot
 #
 #
 # Market
@@ -484,6 +488,13 @@ marketSellSuccessMsg1 = Your items has been successfully sold.
 marketSellSuccessMsg2 = Price:
 marketSellSuccessMsg3 = Old balance:
 marketSellSuccessMsg4 = New balance:
+#
+#
+# Hangar
+hangarSlots = Slots:
+hangarSlotAdd = Add Slot
+hangarSlotPrice = Price:
+hangarButtonAdd = Add Ship
 #
 #
 # Dashboard

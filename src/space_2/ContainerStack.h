@@ -17,6 +17,7 @@ public:
 
 	// Constructor - Destructor
 	ContainerStack(ContainerRow* p_parent, ItemStack* p_stack, int p_position, ContainerStackType p_type = ContainerStack::ContainerStackType::TypeNone);
+	ContainerStack(ItemStack* p_stack = NULL);
 	~ContainerStack(void);
 
 	// Getters - Setters

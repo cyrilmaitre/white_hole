@@ -494,13 +494,11 @@ void Character::addBank( CharacterBank* p_bank )
 void Character::incCredit( double p_inc )
 {
 	this->setCredit(this->getCredit() + p_inc);
-	NetworkJobManager::getInstance()->addJob(new CharacterUpdate(this));
 }
 
 void Character::decCredit( double p_dec )
 {
 	this->setCredit(this->getCredit() - p_dec);
-	NetworkJobManager::getInstance()->addJob(new CharacterUpdate(this));
 }
 
 void Character::incSkillPoints()
@@ -522,7 +520,6 @@ void Character::incLevel()
 {
 	Levelable::incLevel();
 	this->incSkillPoints((this->getLevelConfig())->getSkillPointsOnLevelUp());
-	NetworkJobManager::getInstance()->addJob(new CharacterUpdate(this));
 }
 
 void Character::incExperience( long p_inc )
@@ -531,7 +528,11 @@ void Character::incExperience( long p_inc )
 	long xpForCharacter = p_inc - xpForShip;
 	Levelable::incExperience(xpForCharacter);
 	this->getShipPiloted()->incExperience(xpForShip);
-	NetworkJobManager::getInstance()->addJob(new CharacterUpdate(this));
+}
+
+void Character::incHangarSpace()
+{
+	this->setHangarSpace(this->getHangarSpace() + 1);
 }
 
 void Character::createBase()
@@ -560,6 +561,24 @@ void Character::notifySkillPointsChanged()
 }
 
 void Character::notifyHangarSpaceChanged()
+{
+	if(this->mLoaded)
+		NetworkJobManager::getInstance()->addJob(new CharacterUpdate(this));
+}
+
+void Character::notifyExperienceChanged()
+{
+	if(this->mLoaded)
+		NetworkJobManager::getInstance()->addJob(new CharacterUpdate(this));
+}
+
+void Character::notifyLevelChanged()
+{
+	if(this->mLoaded)
+		NetworkJobManager::getInstance()->addJob(new CharacterUpdate(this));
+}
+
+void Character::notifyCreditChanged()
 {
 	if(this->mLoaded)
 		NetworkJobManager::getInstance()->addJob(new CharacterUpdate(this));

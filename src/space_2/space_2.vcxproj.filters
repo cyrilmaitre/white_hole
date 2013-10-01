@@ -1245,6 +1245,12 @@
     <ClCompile Include="CharacterShipCreate.cpp">
       <Filter>Fichiers sources\resource\network</Filter>
     </ClCompile>
+    <ClCompile Include="HangarSlotManagementView.cpp">
+      <Filter>Fichiers sources\game\ui\stationscreen\panel\hangar</Filter>
+    </ClCompile>
+    <ClCompile Include="HangarShipAddView.cpp">
+      <Filter>Fichiers sources\game\ui\stationscreen\panel\hangar</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h">
@@ -2128,6 +2134,12 @@
     </ClInclude>
     <ClInclude Include="CharacterShipCreate.h">
       <Filter>Fichiers d%27en-tête\resource\network</Filter>
+    </ClInclude>
+    <ClInclude Include="HangarSlotManagementView.h">
+      <Filter>Fichiers d%27en-tête\game\ui\stationscreen\panel\hangar</Filter>
+    </ClInclude>
+    <ClInclude Include="HangarShipAddView.h">
+      <Filter>Fichiers d%27en-tête\game\ui\stationscreen\panel\hangar</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

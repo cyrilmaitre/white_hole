@@ -157,7 +157,7 @@ void ContainerStackView::notifyItemStackChanged()
 {
 	this->deleteIcon();
 
-	if(this->getContainerStack()->hasItemStack())
+	if(this->getContainerStack() != NULL && this->getContainerStack()->hasItemStack())
 	{
 		this->setEnable(true);
 		this->mIcon = SpriteParameterFactory::getSpriteParameterItems()->getSpritePtr(this->getContainerStack()->getItemStack()->getItem()->getSpriteId(), CONTAINERSTACKVIEW_BACKGROUNDICON_WIDTH, CONTAINERSTACKVIEW_BACKGROUNDICON_HEIGHT);

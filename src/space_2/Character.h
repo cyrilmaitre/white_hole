@@ -93,6 +93,7 @@ public:
 	void incSkillPoints();
 	void incSkillPoints(int p_inc);
 	void decSkillPoints();
+	void incHangarSpace();
 
 	void incLevel();
 	void incExperience(long p_inc);
@@ -100,6 +101,9 @@ public:
 	void notifyTimePlayedChanged();
 	void notifySkillPointsChanged();
 	void notifyHangarSpaceChanged();
+	void notifyExperienceChanged();
+	void notifyLevelChanged();
+	void notifyCreditChanged();
 
 	void createBase();
 	void loadFromJson(Json::Value json);

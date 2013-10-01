@@ -14,7 +14,7 @@ class ContainerStackView : public Focusable
 {
 public:
 	// Constructor
-	ContainerStackView(ContainerStack* p_stack);
+	ContainerStackView(ContainerStack* p_stack = NULL);
 	~ContainerStackView(void);
 	void deleteIcon();
 

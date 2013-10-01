@@ -2,6 +2,8 @@
 #include "StationScreenRightPanel.h"
 #include "ListSelectableGroup.h"
 #include "HangarShipListView.h"
+#include "HangarSlotManagementView.h"
+#include "HangarShipAddView.h"
 
 
 class StationScreenHangar : public StationScreenRightPanel
@@ -20,10 +22,13 @@ public:
 	void draw();
 	void notifySizeChanged();
 	void notifyPositionChanged();
+	void notifyCharacterChanged();
 
 
 private:
 	// Attributs
 	ListSelectableGroup mShipList;
+	HangarSlotManagementView mSlotManagementView;
+	HangarShipAddView mShipAddView;
 };
 
