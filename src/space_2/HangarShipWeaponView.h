@@ -3,6 +3,8 @@
 #include "CharacterShip.h"
 #include "TextBox.h"
 #include "ContainerWeaponStackView.h"
+#include "Image.h"
+#include "PopupBubble.h"
 
 
 class HangarShipWeaponView : public FieldSet
@@ -34,6 +36,8 @@ private:
 	// Attributs
 	CharacterShip* mCharacterShip;
 	TextBox mTBWeapon;
+	Image mIconTypeAllowed;
+	PopupBubble mPUBTypeAllowed;
 	std::vector<ContainerWeaponStackView*> mContainerWeaponStackViews;
 	bool mContainerWeaponsStacksChanged;
 };

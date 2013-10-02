@@ -141,14 +141,18 @@ void WeaponView::update( sf::Event p_event )
 	{
 		// Update ui
 		this->mWeaponIcon.update(p_event);
-		this->mAmmoIcon.update(p_event);
-		this->mRangeIcon.update(p_event);
-		this->mAngleIcon.update(p_event);
-
 		this->mWeaponInfo->update(p_event);
+
 		if(this->mWeapon->getAmmo() != NULL)
+		{
+			this->mAmmoIcon.update(p_event);
 			this->mAmmoInfo->update(p_event);
+		}
+
+		this->mRangeIcon.update(p_event);
 		this->mRangeInfo->update(p_event);
+
+		this->mAngleIcon.update(p_event);
 		this->mAngleInfo->update(p_event);
 
 		// Update block
@@ -194,18 +198,21 @@ void WeaponView::updateAmmoIcon()
 
 void WeaponView::updateAmmoCount()
 {
-	if(this->mWeapon != NULL && this->mWeapon->getAmmo() != NULL)
+	if(this->mWeapon != NULL)
 	{
-		this->mAmmoCount.setText(Tools::buildStringWithInt(this->getWeapon()->getAmmoCount()) + "/" + Tools::buildStringWithInt(this->getWeapon()->getWeaponModel()->getAmmoMax()));
-		if(this->getWeapon()->getAmmoCount() == 0)
-			this->mAmmoCount.setFontColor(WEAPONVIEW_TB_AMMOCOUNTOUT_FONTCOLOR);
+		if(this->mWeapon->getAmmo() != NULL)
+		{
+			this->mAmmoCount.setText(Tools::buildStringWithInt(this->getWeapon()->getAmmoCount()) + "/" + Tools::buildStringWithInt(this->getWeapon()->getWeaponModel()->getAmmoMax()));
+			if(this->mWeapon->getAmmoCount() == 0)
+				this->mAmmoCount.setFontColor(WEAPONVIEW_TB_AMMOCOUNTOUT_FONTCOLOR);
+			else
+				this->mAmmoCount.setFontColor(WEAPONVIEW_TB_AMMOCOUNT_FONTCOLOR);
+		}
 		else
-			this->mAmmoCount.setFontColor(WEAPONVIEW_TB_AMMOCOUNT_FONTCOLOR);
-	}
-	else
-	{
-		this->mAmmoCount.setText("0/0");
-		this->mAmmoCount.setFontColor(WEAPONVIEW_TB_AMMOCOUNTOUT_FONTCOLOR);
+		{
+			this->mAmmoCount.setText("0/" + Tools::buildStringWithInt(this->getWeapon()->getWeaponModel()->getAmmoMax()));
+			this->mAmmoCount.setFontColor(WEAPONVIEW_TB_AMMOCOUNTOUT_FONTCOLOR);
+		}
 	}
 	this->updateAmmoCountPosition();
 }
@@ -265,8 +272,6 @@ void WeaponView::notifyWeaponChanged()
 	{
 		this->mWeaponIcon.setBackgroundImage(SpriteParameterFactory::getSpriteParameterItems()->getSpritePtr(this->mWeapon->getWeaponModel()->getSpriteId()), true);
 
-		
-
 		// Bubble Weapon
 		this->mWeaponInfo->addLine(	Resource::resource->getBundle()->getString("uiWeaponInfoName") + 
 			":" + Tools::getSpaceAfterColon() + this->getWeapon()->getWeaponModel()->getName(), false);
@@ -299,6 +304,11 @@ void WeaponView::notifyWeaponChanged()
 				":" + Tools::getSpaceAfterColon() + (this->getWeapon()->getAmmo()->getSplashRadius() > 0 ? Resource::resource->getBundle()->getString("yes") : Resource::resource->getBundle()->getString("no")), false);
 			this->mAmmoInfo->notifyDataSetChanged();
 		}
+
+		this->updateAmmoCount();
+		this->updateAmmoIcon();
+		this->updateAngle();
+		this->updateRange();
 	}
 	this->setVisible(this->mWeapon != NULL);
 }

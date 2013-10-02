@@ -16,12 +16,17 @@
 #define WEAPON_FONTSIZE					18
 #define WEAPON_MARGINRIGHT				50
 #define WEAPONVIEW_MARGIN_LEFT			20
+#define ICONTYPEALLOWED_WIDTH			16
+#define ICONTYPEALLOWED_HEIGHT			16
+#define ICONTYPEALLOWED_BACKCOLOR		sf::Color(255, 255, 255, 0)
+#define ICONTYPEALLOWED_BORDERSIZE		0
+#define ICONTYPEALLOWED_MARGINLEFT		15
 
 
 //*************************************************************
 // Constructor - Destructor
 //*************************************************************
-HangarShipWeaponView::HangarShipWeaponView(void)
+HangarShipWeaponView::HangarShipWeaponView(void) : mPUBTypeAllowed(&this->mIconTypeAllowed)
 {
 	this->setHeight(HEIGHT);
 	this->setDisplayTitle(false);
@@ -33,6 +38,12 @@ HangarShipWeaponView::HangarShipWeaponView(void)
 	this->mContainerWeaponsStacksChanged = false;
 	this->mTBWeapon.setText(Resource::resource->getBundle()->getString("hangarShipWeapon"));
 	this->mTBWeapon.setFontSize(WEAPON_FONTSIZE);
+
+	this->mIconTypeAllowed.setSize(ICONTYPEALLOWED_WIDTH, ICONTYPEALLOWED_HEIGHT);
+	this->mIconTypeAllowed.setBackgroundColor(ICONTYPEALLOWED_BACKCOLOR, true);
+	this->mIconTypeAllowed.setBorderSize(ICONTYPEALLOWED_BORDERSIZE, true);
+	this->mIconTypeAllowed.setBackgroundImage(SpriteParameterFactory::getSpriteParameterIcon16X16()->getSpritePtr(IC_16X16_INFO), true);
+
 }
 
 HangarShipWeaponView::~HangarShipWeaponView(void)
@@ -85,6 +96,8 @@ void HangarShipWeaponView::update()
 		for(int i = 0; i < this->mContainerWeaponStackViews.size(); i++)
 			this->mContainerWeaponStackViews[i]->update();
 
+		this->mPUBTypeAllowed.update();
+
 		if(this->isContainerWeaponsStacksChanged())
 			this->notifyContainerWeaponsStacksChanged();
 	}
@@ -96,6 +109,9 @@ void HangarShipWeaponView::update( sf::Event p_event )
 	{
 		for(int i = 0; i < this->mContainerWeaponStackViews.size(); i++)
 			this->mContainerWeaponStackViews[i]->update(p_event);
+
+		this->mIconTypeAllowed.update(p_event);
+		this->mPUBTypeAllowed.update(p_event);
 	}
 	FieldSet::update(p_event);
 }
@@ -110,6 +126,8 @@ void HangarShipWeaponView::updatePosition()
 		else
 			this->mContainerWeaponStackViews[i]->setPosition(this->mContainerWeaponStackViews[i-1]->getRightX() + WEAPONVIEW_MARGIN_LEFT, this->getContentY());
 	}
+	if(this->mContainerWeaponStackViews.size() > 0)
+		this->mIconTypeAllowed.setPosition(this->mContainerWeaponStackViews[this->mContainerWeaponStackViews.size() - 1]->getRightX() + ICONTYPEALLOWED_MARGINLEFT, this->getContentY());
 }
 
 void HangarShipWeaponView::draw()
@@ -120,6 +138,7 @@ void HangarShipWeaponView::draw()
 		this->mTBWeapon.draw();
 		for(int i = 0; i < this->mContainerWeaponStackViews.size(); i++)
 			this->mContainerWeaponStackViews[i]->draw();
+		this->mIconTypeAllowed.draw();
 	}
 }
 
@@ -148,16 +167,30 @@ void HangarShipWeaponView::notifyCharacterShipChanged()
 	// Add
 	for(int i = 0; i < this->mCharacterShip->getWeaponSlotMax(); i++)
 	{
+		// Create view
+		ContainerWeaponStackView* newView = NULL;
 		if(i < this->mCharacterShip->getWeaponsCount())
 		{
 			ContainerStack* currentStack = new ContainerStack(new ItemStack(this->mCharacterShip->getWeapon(i)->getWeaponModel(), 1));
-			this->mContainerWeaponStackViews.push_back(new ContainerWeaponStackView(this, currentStack));
+			newView = new ContainerWeaponStackView(this, currentStack);
 		}
 		else
 		{
-			this->mContainerWeaponStackViews.push_back(new ContainerWeaponStackView(this, new ContainerStack()));
-		}			
+			newView = new ContainerWeaponStackView(this, new ContainerStack());
+		}		
+
+		// Add restriction and add to vector
+		for(int j = 0; j < this->mCharacterShip->getShipModel()->getWeaponTypeAllowedCount(); j++)
+			newView->getContainerStack()->addItemTypeAllowed(this->mCharacterShip->getShipModel()->getWeaponTypeAllowed(j));
+		this->mContainerWeaponStackViews.push_back(newView);
 	}
+
+	// Update pub
+	this->mPUBTypeAllowed.clear(false);
+	this->mPUBTypeAllowed.addLine(Resource::resource->getBundle()->getString("hangarShipWeaponAllowed"), false);
+	for(int i = 0; i < this->mCharacterShip->getShipModel()->getWeaponTypeAllowedCount(); i++)
+		this->mPUBTypeAllowed.addLine("- " + this->mCharacterShip->getShipModel()->getWeaponTypeAllowed(i)->getName());
+	this->mPUBTypeAllowed.notifyDataSetChanged();
 
 	// Update position
 	this->updatePosition();

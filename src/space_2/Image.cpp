@@ -5,7 +5,6 @@
 //*************************************************************
 Image::Image( void )
 {
-	this->setUpdateMouseOver(false);
 	this->setUpdateFocus(false);
 	this->setUpdateClicked(false);
 	this->setUpdateSelected(false);

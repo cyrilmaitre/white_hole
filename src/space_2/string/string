@@ -243,45 +243,45 @@ itemTypeWeaponName = Weapon
 itemTypeWeaponDescription = Weapon description...
 itemTypeWeaponKineticName = Kinetic
 itemTypeWeaponKineticDescription = Built to house cannons capable of firing superheated gunshells.
-itemTypeWeaponKineticSmallName = Small
+itemTypeWeaponKineticSmallName = Kinetic Small
 itemTypeWeaponKineticSmallDescription = Small artillery cannons, suitable for frigate use. 
-itemTypeWeaponKineticMediumName = Medium
+itemTypeWeaponKineticMediumName = Kinetic Medium
 itemTypeWeaponKineticMediumDescription = Medium artillery cannons, suitable for cruiser use.
-itemTypeWeaponKineticLargeName = Large
+itemTypeWeaponKineticLargeName = Kinetic Large
 itemTypeWeaponKineticLargeDescription = Large artillery cannons, suitable for battleship use. 
-itemTypeWeaponKineticExtraLargeName = Extra Large
+itemTypeWeaponKineticExtraLargeName = Kinetic Extra Large
 itemTypeWeaponKineticExtraLargeDescription = Extra Large artillery cannons, suitable for mothership use.
 itemTypeWeaponLazerName = Laser
 itemTypeWeaponLazerDescription = Laser turrets are built to house beam and pulse lasers.
-itemTypeWeaponLazerSmallName = Small
+itemTypeWeaponLazerSmallName = Laser Small
 itemTypeWeaponLazerSmallDescription = Small beam lasers, suitable for frigate use.
-itemTypeWeaponLazerMediumName = Medium
+itemTypeWeaponLazerMediumName = Laser Medium
 itemTypeWeaponLazerMediumDescription = Medium beam lasers, suitable for cruiser use. 
-itemTypeWeaponLazerLargeName = Large
+itemTypeWeaponLazerLargeName = Laser Large
 itemTypeWeaponLazerLargeDescription = Large beam lasers, suitable for battleship use.
-itemTypeWeaponLazerExtraLargeName = Extra Large
+itemTypeWeaponLazerExtraLargeName = Laser Extra Large
 itemTypeWeaponLazerExtraLargeDescription = Extra Large beam lasers, suitable for mothership use. 
 itemTypeWeaponLauncherName = Launcher
 itemTypeWeaponLauncherDescription = For the launching of jet-propelled guided missiles.
 itemTypeWeaponMissileLauncherName = Missile Launcher
 itemTypeWeaponMissileLauncherDescription = For the launching of jet-propelled guided missiles.
-itemTypeWeaponMissileLauncherSmallName = Small
+itemTypeWeaponMissileLauncherSmallName = Missile Small
 itemTypeWeaponMissileLauncherSmallDescription = For the launching of small missiles. 
-itemTypeWeaponMissileLauncherMediumName = Medium
+itemTypeWeaponMissileLauncherMediumName = Missile Medium
 itemTypeWeaponMissileLauncherMediumDescription = For the launching of medium missiles. 
-itemTypeWeaponMissileLauncherLargeName = Large
+itemTypeWeaponMissileLauncherLargeName = Missile Large
 itemTypeWeaponMissileLauncherLargeDescription = For the launching of large missiles. 
-itemTypeWeaponMissileLauncherExtraLargeName = Extra Large
+itemTypeWeaponMissileLauncherExtraLargeName = Missile Extra Large
 itemTypeWeaponMissileLauncherExtraLargeDescription = For the launching of extra large missiles.
 itemTypeWeaponRoquetLauncherName = Roquet Launcher
 itemTypeWeaponRoquetLauncherDescription = For the launching of jet-propelled guided roquets. 
-itemTypeWeaponRoquetLauncherSmallName = Small
+itemTypeWeaponRoquetLauncherSmallName = Roquet Small
 itemTypeWeaponRoquetLauncherSmallDescription = For the launching of small roquets. 
-itemTypeWeaponRoquetLauncherMediumName = Medium
+itemTypeWeaponRoquetLauncherMediumName = Roquet Medium
 itemTypeWeaponRoquetLauncherMediumDescription = For the launching of medium roquets. 
-itemTypeWeaponRoquetLauncherLargeName = Large
+itemTypeWeaponRoquetLauncherLargeName = Roquet Large
 itemTypeWeaponRoquetLauncherLargeDescription = For the launching of large roquets. 
-itemTypeWeaponRoquetLauncherExtraLargeName = Extra Large
+itemTypeWeaponRoquetLauncherExtraLargeName = Roquet Extra Large
 itemTypeWeaponRoquetLauncherExtraLargeDescription = For the launching of extra large roquets. 
 itemTypeStationName = Station
 itemTypeStationDescription = Station description...
@@ -343,15 +343,6 @@ ammoTypeAntiArmorName = Anti-armor
 ammoTypeAntiArmorDescription = Bonus damage against armor, but malus damage against shield and structure
 ammoTypeAntiStructureName = Anti-structure
 ammoTypeAntiStructureDescription = Bonus damage against structure, but malus damage against shield and armor
-#
-#
-# Weapon Type
-weaponTypeKineticName = Kinetic
-weaponTypeKineticDescription = Use kinetic ammo. Very fast but deal few damage.
-weaponTypeLaserName = Laser
-weaponTypeLaserDescription = Use laser ammo. Slow but deal high damage.
-weaponTypeLauncherName = Launcher
-weaponTypeLauncherDescription = Use missile or roquet ammo. Very slow but deal high splash damage.
 #
 #
 # Ammo
@@ -417,13 +408,6 @@ menuQuickMap = Open Map
 # Item Stack
 itemStackSize = Stack size
 itemStackPrice = Stack price
-#
-#
-# Planet Type
-planetTypetTelluricName = Telluric
-planetTypetTelluricDescription = Telluric description...
-planetTypetGazName = Gaz
-planetTypetGazName = Gaz description...
 #
 #
 # Window Cargo
@@ -534,6 +518,7 @@ hangarSlotPrice = Price:
 hangarButtonAdd = Add Ship
 hangarButtonOpenShipSheet = Ship's sheet
 hangarShipWeapon = Weapon:
+hangarShipWeaponAllowed = Allowed weapons:
 #
 #
 # Dashboard

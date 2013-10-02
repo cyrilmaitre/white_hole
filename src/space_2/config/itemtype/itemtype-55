@@ -1,5 +1,5 @@
 id = 55
-name = itemTypeWeaponLazerExtraLargeName
-description = itemTypeWeaponLazerExtraLargeDescription
-icon = 4-3
-itemtype_parent = 25
+name = itemTypeWeaponRoquetLauncherExtraLargeName
+description = itemTypeWeaponRoquetLauncherExtraLargeDescription
+icon = 4-4
+itemtype_parent = 61

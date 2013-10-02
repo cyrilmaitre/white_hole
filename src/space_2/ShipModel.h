@@ -25,12 +25,19 @@ public:
 	LevelShip* getLevelShipConfig();
 	void setLevelShipConfig(LevelShip* p_level);
 
+	int getWeaponTypeAllowedCount();
+	ItemType* getWeaponTypeAllowed(int p_index);
+	std::vector<ItemType*> getWeaponTypeAllowed();
+
 	// Methode
+	void addWeaponTypeAllowed(ItemType* p_type);
+	void clearWeaponTypeAllowed();
 	void loadFromConfig(KeyValueFile* p_config);
 
 
 private:
 	// Attributs
 	LevelShip* mLevelShipConfig;
+	std::vector<ItemType*> mWeaponTypeAllowed;
 };
 
