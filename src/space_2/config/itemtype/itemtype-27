@@ -1,5 +1,5 @@
 id = 27
 name = itemTypeStationName
 description = itemTypeStationDescription
+icon = 1-0
 itemtype_parent = NULL
-itemtype_leaf = false

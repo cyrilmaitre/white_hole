@@ -1,5 +1,5 @@
 id = 22
 name = itemTypeWeaponUpgradeName
 description = itemTypeWeaponUpgradeDescription
+icon = 1-0
 itemtype_parent = 16
-itemtype_leaf = true

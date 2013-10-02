@@ -1,5 +1,5 @@
 id = 14
 name = itemTypeDistrubtorName
 description = itemTypeDistrubtorDescription
+icon = 1-0
 itemtype_parent = 12
-itemtype_leaf = true

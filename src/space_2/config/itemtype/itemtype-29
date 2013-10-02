@@ -1,5 +1,5 @@
 id = 29
 name = itemTypeStationOrbitalName
 description = itemTypeStationOrbitalDescription
+icon = 1-0
 itemtype_parent = 27
-itemtype_leaf = true

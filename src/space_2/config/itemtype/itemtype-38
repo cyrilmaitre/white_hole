@@ -1,5 +1,5 @@
 id = 38
 name = itemTypeWeaponTurretKineticName
 description = itemTypeWeaponTurretKineticDescription
+icon = 1-0
 itemtype_parent = 37
-itemtype_leaf = true

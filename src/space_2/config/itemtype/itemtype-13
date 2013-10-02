@@ -1,5 +1,5 @@
 id = 13
 name = itemTypeAsteroidScannerName
 description = itemTypeAsteroidScannerDescription
+icon = 1-0
 itemtype_parent = 12
-itemtype_leaf = true

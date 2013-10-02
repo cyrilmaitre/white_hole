@@ -1,5 +1,5 @@
 id = 20
 name = itemTypeShieldUpgradeName
 description = itemTypeShieldUpgradeDescription
+icon = 1-0
 itemtype_parent = 16
-itemtype_leaf = true

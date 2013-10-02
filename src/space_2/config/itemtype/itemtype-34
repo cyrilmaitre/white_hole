@@ -1,5 +1,5 @@
 id = 34
 name = itemTypeAmmoRoquet
 description = itemTypeAmmoRoquetDescription
+icon = 1-0
 itemtype_parent = 30
-itemtype_leaf = true

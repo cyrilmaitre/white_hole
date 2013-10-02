@@ -1,5 +1,5 @@
 id = 19
 name = itemTypePropulsionUpgradeName
 description = itemTypePropulsionUpgradeDescription
+icon = 1-0
 itemtype_parent = 16
-itemtype_leaf = true

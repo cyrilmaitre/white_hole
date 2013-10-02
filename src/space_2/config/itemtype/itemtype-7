@@ -1,5 +1,5 @@
 id = 7
 name = itemTypeIronName
 description = itemTypeIronDescription
+icon = 1-0
 itemtype_parent = 3
-itemtype_leaf = true

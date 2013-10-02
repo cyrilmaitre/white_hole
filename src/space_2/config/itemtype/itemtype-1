@@ -1,4 +1,5 @@
 id = 1
 name = itemTypeElementName
 description = itemTypeElementDescription
+icon = 1-0
 itemtype_parent = NULL

@@ -1,5 +1,5 @@
 id = 4
 name = itemTypeCalciteName
 description = itemTypeCalciteDescription
+icon = 1-0
 itemtype_parent = 3
-itemtype_leaf = true

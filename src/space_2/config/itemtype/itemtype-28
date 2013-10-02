@@ -1,5 +1,5 @@
 id = 28
 name = itemTypeStationMineralName
 description = itemTypeStationMineralDescription
+icon = 1-0
 itemtype_parent = 27
-itemtype_leaf = true

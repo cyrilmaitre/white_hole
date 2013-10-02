@@ -1,5 +1,5 @@
 id = 9
 name = itemTypeOreOtherName
 description = itemTypeOreOtherDescription
+icon = 1-0
 itemtype_parent = 3
-itemtype_leaf = true
