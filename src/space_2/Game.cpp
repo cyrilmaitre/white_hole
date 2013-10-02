@@ -95,7 +95,7 @@ void Game::launchInit( Character* p_character )
 
 	this->mCharacter->init();
 	this->getShipPiloted()->setPosition(characterShipPosition.x, characterShipPosition.y);
-	this->getUserInterface()->getXpBarCharacter()->setLevelable(this->getCharacter());
+	this->getUserInterface()->getXpBarCharacter()->setLevelable(this->mCharacter);
 	this->notifyShipPilotedChanged();
 
 	Resource::resource->getJuckebox()->playlistLaunch();

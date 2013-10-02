@@ -568,12 +568,14 @@ void Character::notifyHangarSpaceChanged()
 
 void Character::notifyExperienceChanged()
 {
+	Levelable::notifyExperienceChanged();
 	if(this->mLoaded)
 		NetworkJobManager::getInstance()->addJob(new CharacterUpdate(this));
 }
 
 void Character::notifyLevelChanged()
 {
+	Levelable::notifyLevelChanged();
 	if(this->mLoaded)
 		NetworkJobManager::getInstance()->addJob(new CharacterUpdate(this));
 }
