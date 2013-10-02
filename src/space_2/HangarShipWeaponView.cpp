@@ -1,4 +1,7 @@
 #include "HangarShipWeaponView.h"
+#include "ItemStack.h"
+#include "Weapon.h"
+#include "WeaponModel.h"
 
 
 //*************************************************************
@@ -10,6 +13,8 @@
 #define BORDERSIZE						1
 #define PADDING							10
 #define WEAPON_FONTSIZE					18
+#define WEAPON_MARGINRIGHT				50
+#define WEAPONVIEW_MARGIN_LEFT			20
 
 
 //*************************************************************
@@ -24,12 +29,19 @@ HangarShipWeaponView::HangarShipWeaponView(void)
 	this->setBorderSize(BORDERSIZE, true);
 	this->setPadding(PADDING);
 
+	this->mWeaponsChanged = false;
+	this->mIgnoreWeaponsChanged = false;
 	this->mTBWeapon.setText(Resource::resource->getBundle()->getString("hangarShipWeapon"));
 	this->mTBWeapon.setFontSize(WEAPON_FONTSIZE);
 }
 
 HangarShipWeaponView::~HangarShipWeaponView(void)
 {
+	for(int i = 0; i < this->mWeaponsView.size(); i++)
+	{
+		if(this->mWeaponsView[i] != NULL)
+			delete this->mWeaponsView[i];
+	}
 }
 
 
@@ -50,6 +62,18 @@ void HangarShipWeaponView::setCharacterShip( CharacterShip* p_ship )
 	}
 }
 
+bool HangarShipWeaponView::isWeaponsChanged()
+{
+	bool returnValue = this->mWeaponsChanged;
+	this->mWeaponsChanged = false;
+	return returnValue;
+}
+
+void HangarShipWeaponView::setWeaponsChanged( bool p_value )
+{
+	this->mWeaponsChanged = p_value;
+}
+
 
 //*************************************************************
 // Methods
@@ -58,6 +82,11 @@ void HangarShipWeaponView::update()
 {
 	if(this->isVisible())
 	{
+		for(int i = 0; i < this->mWeaponsView.size(); i++)
+			this->mWeaponsView[i]->update();
+
+		if(this->isWeaponsChanged())
+			this->notifyWeaponsChanged();
 	}
 }
 
@@ -65,6 +94,8 @@ void HangarShipWeaponView::update( sf::Event p_event )
 {
 	if(this->isVisible())
 	{
+		for(int i = 0; i < this->mWeaponsView.size(); i++)
+			this->mWeaponsView[i]->update(p_event);
 	}
 	FieldSet::update(p_event);
 }
@@ -72,6 +103,13 @@ void HangarShipWeaponView::update( sf::Event p_event )
 void HangarShipWeaponView::updatePosition()
 {
 	this->mTBWeapon.setPosition(this->getContentX(), this->getContentY());
+	for(int i = 0; i < this->mWeaponsView.size(); i++)
+	{
+		if(i == 0)
+			this->mWeaponsView[i]->setPosition(this->mTBWeapon.getRightX() + WEAPON_MARGINRIGHT, this->getContentY());
+		else
+			this->mWeaponsView[i]->setPosition(this->mWeaponsView[i-1]->getRightX() + WEAPONVIEW_MARGIN_LEFT, this->getContentY());
+	}
 }
 
 void HangarShipWeaponView::draw()
@@ -80,6 +118,8 @@ void HangarShipWeaponView::draw()
 	if(this->isVisible())
 	{
 		this->mTBWeapon.draw();
+		for(int i = 0; i < this->mWeaponsView.size(); i++)
+			this->mWeaponsView[i]->draw();
 	}
 }
 
@@ -97,5 +137,40 @@ void HangarShipWeaponView::notifyPositionChanged()
 
 void HangarShipWeaponView::notifyCharacterShipChanged()
 {
+	// Clear
+	for(int i = 0; i < this->mWeaponsView.size(); i++)
+	{
+		if(this->mWeaponsView[i] != NULL)
+			delete this->mWeaponsView[i];
+	}
+	this->mWeaponsView.clear();
 
+	// Add
+	for(int i = 0; i < this->mCharacterShip->getWeaponSlotMax(); i++)
+	{
+		if(i < this->mCharacterShip->getWeaponsCount())
+		{
+			ContainerStack* currentStack = new ContainerStack(new ItemStack(this->mCharacterShip->getWeapon(i)->getWeaponModel(), 1));
+			this->mWeaponsView.push_back(new ContainerWeaponStackView(this, currentStack));
+		}
+		else
+		{
+			this->mWeaponsView.push_back(new ContainerWeaponStackView(this, new ContainerStack()));
+		}			
+	}
+
+	// Update position
+	this->updatePosition();
 }
+
+void HangarShipWeaponView::notifyWeaponsChanged()
+{
+	if(!this->mIgnoreWeaponsChanged)
+	{
+		this->mIgnoreWeaponsChanged = true;
+
+
+		this->mIgnoreWeaponsChanged = false;
+	}
+}
+

@@ -16,7 +16,7 @@ public:
 	bool isWeaponFull();
 	bool isWeaponEmpty();
 
-	int getWeaponSlot();
+	int getWeaponsCount();
 	Weapon *getWeapon(int p_index);
 
 	// Methods

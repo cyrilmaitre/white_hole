@@ -12,7 +12,7 @@ Weaponable::Weaponable(void)
 
 Weaponable::~Weaponable(void)
 {
-	for(int i = 0; i < this->getWeaponSlot(); i++)
+	for(int i = 0; i < this->getWeaponsCount(); i++)
 		this->removeWeapon(i);
 }
 
@@ -22,12 +22,12 @@ Weaponable::~Weaponable(void)
 //*************************************************************
 bool Weaponable::isWeaponFull()
 {
-	return this->getWeaponSlot() == this->getWeaponSlotMax();
+	return this->getWeaponsCount() == this->getWeaponSlotMax();
 }
 
 bool Weaponable::isWeaponEmpty()
 {
-	return this->getWeaponSlot() == 0;
+	return this->getWeaponsCount() == 0;
 }
 
 Weapon * Weaponable::getWeapon( int p_index )
@@ -35,7 +35,7 @@ Weapon * Weaponable::getWeapon( int p_index )
 	return this->mWeapons[p_index];
 }
 
-int Weaponable::getWeaponSlot()
+int Weaponable::getWeaponsCount()
 {
 	return this->mWeapons.size();
 }
@@ -46,7 +46,7 @@ int Weaponable::getWeaponSlot()
 //*************************************************************
 void Weaponable::addWeapon( Weapon *p_weapon )
 {
-	if(this->getWeaponSlot() < this->getWeaponSlotMax())
+	if(this->getWeaponsCount() < this->getWeaponSlotMax())
 		this->mWeapons.push_back(p_weapon);
 }
 

@@ -488,7 +488,7 @@ void UserInterface::notifyWeaponViewChanged()
 	this->mWeaponViews.clear();
 
 	// Add new weapon
-	for(int i = 0; i < Game::game->getShipPiloted()->getWeaponSlot(); i++)
+	for(int i = 0; i < Game::game->getShipPiloted()->getWeaponsCount(); i++)
 		this->mWeaponViews.push_back(new WeaponView(Game::game->getShipPiloted()->getWeapon(i), 0, 0));
 
 	// Update

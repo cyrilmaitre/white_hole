@@ -26,6 +26,7 @@ HangarShipAddView::HangarShipAddView(void)
 
 	this->mContainerStack.addItemTypeAllowed(FactoryGet::getItemTypeFactory()->getItemType(ITEMTYPE_SHIP_ID));
 	this->mContainerStackView.setContainerStack(&this->mContainerStack);
+	this->mContainerStackView.setDisplayStackSize(false);
 	this->mButtonAdd.setTitle(Resource::resource->getBundle()->getString("hangarButtonAdd"));
 
 	this->setHeight(PADDING * 2 + this->mContainerStackView.getHeight() + this->mButtonAdd.getHeight() + BUTTONADD_MARGINTOP);

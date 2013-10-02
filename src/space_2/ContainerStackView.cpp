@@ -16,13 +16,6 @@
 #define CONTAINERSTACKVIEW_BACKGROUNDICON_HEIGHT		32
 #define CONTAINERSTACKVIEW_BACKGROUNDICON_OFFSETX		2
 #define CONTAINERSTACKVIEW_BACKGROUNDICON_OFFSETY		2
-#define CONTAINERSTACKVIEW_BUTTON_WIDTH					16
-#define CONTAINERSTACKVIEW_BUTTON_HEIGHT				10
-#define CONTAINERSTACKVIEW_BUTTON_FONTSIZE				8
-#define CONTAINERSTACKVIEW_BUTTONINFO_OFFSETX			1
-#define CONTAINERSTACKVIEW_BUTTONINFO_OFFSETY			37
-#define CONTAINERSTACKVIEW_BUTTONTRASH_OFFSETX			19
-#define CONTAINERSTACKVIEW_BUTTONTRASH_OFFSETY			37
 #define CONTAINERSTACKVIEW_OVERLAY_COLOR				sf::Color(0, 0, 0, 175)
 #define CONTAINERSTACKVIEW_OVERLAY_WIDTH				32
 #define CONTAINERSTACKVIEW_OVERLAY_HEIGHT				10
@@ -60,6 +53,7 @@ ContainerStackView::ContainerStackView( ContainerStack* p_stack )
 	this->mStackSize.setCharacterSize(CONTAINERSTACKVIEW_STACKSIZE_FONTSIZE);
 	this->mStackSize.setColor(CONTAINERSTACKVIEW_STACKSIZE_FONTCOLOR);
 	
+	this->mDisplayStackSize = true;
 	this->mPubItemStack = new PopupBubble(this);
 	
 	this->notifyItemStackChanged();
@@ -95,6 +89,16 @@ ContainerStack* ContainerStackView::getContainerStack()
 void ContainerStackView::setContainerStack( ContainerStack* p_stack )
 {
 	this->mContainerStack = p_stack;
+}
+
+bool ContainerStackView::isDisplayStackSize()
+{
+	return this->mDisplayStackSize;
+}
+
+void ContainerStackView::setDisplayStackSize( bool p_value )
+{
+	this->mDisplayStackSize = p_value;
 }
 
 sf::Sprite* ContainerStackView::getIcon()
@@ -166,19 +170,19 @@ void ContainerStackView::notifyItemStackChanged()
 
 		this->mPubItemStack->clear();
 		this->mPubItemStack->addLine(	Resource::resource->getBundle()->getString("name") +
-										":" + Tools::getSpaceAfterColon() + this->getContainerStack()->getItemStack()->getItem()->getName(), false);
+			":" + Tools::getSpaceAfterColon() + this->getContainerStack()->getItemStack()->getItem()->getName(), false);
 		this->mPubItemStack->addLine(	Resource::resource->getBundle()->getString("type") + 
-										":" + Tools::getSpaceAfterColon() + this->getContainerStack()->getItemStack()->getItem()->getItemType()->getName(), false);
+			":" + Tools::getSpaceAfterColon() + this->getContainerStack()->getItemStack()->getItem()->getItemType()->getName(), false);
 		this->mPubItemStack->addLine(Resource::resource->getBundle()->getString("tier") + 
-										":" + Tools::getSpaceAfterColon() + this->getContainerStack()->getItemStack()->getItem()->getItemTier()->getName(), false);
+			":" + Tools::getSpaceAfterColon() + this->getContainerStack()->getItemStack()->getItem()->getItemTier()->getName(), false);
 		this->mPubItemStack->addLine(Resource::resource->getBundle()->getString("price") + 
-										":" + Tools::getSpaceAfterColon() + Tools::buildStringWithDouble(this->getContainerStack()->getItemStack()->getItem()->getPrice()) +
-										" " + Resource::resource->getBundle()->getString("creditAb"), false);
+			":" + Tools::getSpaceAfterColon() + Tools::buildStringWithDouble(this->getContainerStack()->getItemStack()->getItem()->getPrice()) +
+			" " + Resource::resource->getBundle()->getString("creditAb"), false);
 		this->mPubItemStack->addLine(Resource::resource->getBundle()->getString("itemStackSize") + 
-										":" + Tools::getSpaceAfterColon() + Tools::buildStringWithInt(this->getContainerStack()->getItemStack()->getStackSize()), false);
+			":" + Tools::getSpaceAfterColon() + Tools::buildStringWithInt(this->getContainerStack()->getItemStack()->getStackSize()), false);
 		this->mPubItemStack->addLine(Resource::resource->getBundle()->getString("itemStackPrice") + 
-										":" + Tools::getSpaceAfterColon() + Tools::buildStringWithDouble(this->getContainerStack()->getItemStack()->getStackPrice()) + 
-										" " + Resource::resource->getBundle()->getString("creditAb"), false);
+			":" + Tools::getSpaceAfterColon() + Tools::buildStringWithDouble(this->getContainerStack()->getItemStack()->getStackPrice()) + 
+			" " + Resource::resource->getBundle()->getString("creditAb"), false);
 		this->mPubItemStack->notifyDataSetChanged();
 	}
 	else
@@ -197,8 +201,12 @@ void ContainerStackView::draw()
 	if(this->mIcon != NULL)
 	{
 		Resource::resource->getApp()->draw(*this->mIcon);	
-		Resource::resource->getApp()->draw(this->mOverlayStackSize);
-		Resource::resource->getApp()->draw(this->mStackSize);
+
+		if(this->isDisplayStackSize())
+		{
+			Resource::resource->getApp()->draw(this->mOverlayStackSize);
+			Resource::resource->getApp()->draw(this->mStackSize);
+		}
 	}
 }
 
