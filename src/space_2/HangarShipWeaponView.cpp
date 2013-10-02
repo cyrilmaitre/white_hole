@@ -189,7 +189,13 @@ void HangarShipWeaponView::notifyCharacterShipChanged()
 	this->mPUBTypeAllowed.clear(false);
 	this->mPUBTypeAllowed.addLine(Resource::resource->getBundle()->getString("hangarShipWeaponAllowed"), false);
 	for(int i = 0; i < this->mCharacterShip->getShipModel()->getWeaponTypeAllowedCount(); i++)
-		this->mPUBTypeAllowed.addLine("- " + this->mCharacterShip->getShipModel()->getWeaponTypeAllowed(i)->getName());
+	{
+		ItemType* currentType = this->mCharacterShip->getShipModel()->getWeaponTypeAllowed(i);
+		if(currentType->hasParent())
+			this->mPUBTypeAllowed.addLine("- " + currentType->getParent()->getName() + " " + currentType->getName());
+		else
+			this->mPUBTypeAllowed.addLine("- " + currentType->getName());
+	}
 	this->mPUBTypeAllowed.notifyDataSetChanged();
 
 	// Update position

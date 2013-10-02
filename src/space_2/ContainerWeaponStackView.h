@@ -12,6 +12,8 @@ public:
 	~ContainerWeaponStackView(void);
 
 	// Methods
+	void updateIcon();
+	void updatePub();
 	void notifyItemStackChanged();
 
 

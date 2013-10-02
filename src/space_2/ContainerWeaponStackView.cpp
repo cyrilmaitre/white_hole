@@ -24,17 +24,8 @@ ContainerWeaponStackView::ContainerWeaponStackView(HangarShipWeaponView* p_view,
 
 	if(this->getContainerStack() != NULL && this->getContainerStack()->getItemStack() != NULL)
 	{
-		this->mIcon = SpriteParameterFactory::getSpriteParameterItems()->getSpritePtr(this->getContainerStack()->getItemStack()->getItem()->getSpriteId(), ICONWIDTH, ICONHEIGHT);
-		this->mStackSize.setString(Tools::buildStringWithInt(this->getContainerStack()->getItemStack()->getStackSize()));
-
-		this->mPubItemStack->clear();
-		this->mPubItemStack->addLine(Resource::resource->getBundle()->getString("name") +
-			":" + Tools::getSpaceAfterColon() + this->getContainerStack()->getItemStack()->getItem()->getName(), false);
-		this->mPubItemStack->addLine(Resource::resource->getBundle()->getString("type") + 
-			":" + Tools::getSpaceAfterColon() + this->getContainerStack()->getItemStack()->getItem()->getItemType()->getName(), false);
-		this->mPubItemStack->addLine(Resource::resource->getBundle()->getString("tier") + 
-			":" + Tools::getSpaceAfterColon() + this->getContainerStack()->getItemStack()->getItem()->getItemTier()->getName(), false);
-		this->mPubItemStack->notifyDataSetChanged();
+		this->updateIcon();
+		this->updatePub();
 	}
 
 	this->mHangarView = p_view;
@@ -55,17 +46,8 @@ void ContainerWeaponStackView::notifyItemStackChanged()
 	if(this->getContainerStack() != NULL && this->getContainerStack()->hasItemStack())
 	{
 		this->setEnable(true);
-		this->mIcon = SpriteParameterFactory::getSpriteParameterItems()->getSpritePtr(this->getContainerStack()->getItemStack()->getItem()->getSpriteId(), ICONWIDTH, ICONHEIGHT);
-		this->mStackSize.setString(Tools::buildStringWithInt(this->getContainerStack()->getItemStack()->getStackSize()));
-
-		this->mPubItemStack->clear();
-		this->mPubItemStack->addLine(Resource::resource->getBundle()->getString("name") +
-			":" + Tools::getSpaceAfterColon() + this->getContainerStack()->getItemStack()->getItem()->getName(), false);
-		this->mPubItemStack->addLine(Resource::resource->getBundle()->getString("type") + 
-			":" + Tools::getSpaceAfterColon() + this->getContainerStack()->getItemStack()->getItem()->getItemType()->getName(), false);
-		this->mPubItemStack->addLine(Resource::resource->getBundle()->getString("tier") + 
-			":" + Tools::getSpaceAfterColon() + this->getContainerStack()->getItemStack()->getItem()->getItemTier()->getName(), false);
-		this->mPubItemStack->notifyDataSetChanged();
+		this->updateIcon();
+		this->updatePub();
 	}
 	else
 	{
@@ -76,4 +58,23 @@ void ContainerWeaponStackView::notifyItemStackChanged()
 		this->mHangarView->setContainerWeaponsStacksChanged(true);
 	this->notifyPositionChanged();
 }	
+
+void ContainerWeaponStackView::updateIcon()
+{
+	this->mIcon = SpriteParameterFactory::getSpriteParameterItems()->getSpritePtr(this->getContainerStack()->getItemStack()->getItem()->getSpriteId(), ICONWIDTH, ICONHEIGHT);
+}
+
+void ContainerWeaponStackView::updatePub()
+{
+	this->mPubItemStack->clear();
+	this->mPubItemStack->addLine(Resource::resource->getBundle()->getString("name") +
+		":" + Tools::getSpaceAfterColon() + this->getContainerStack()->getItemStack()->getItem()->getName(), false);
+	this->mPubItemStack->addLine(Resource::resource->getBundle()->getString("type") + 
+		":" + Tools::getSpaceAfterColon() + this->getContainerStack()->getItemStack()->getItem()->getItemType()->getAriane(), false);
+	this->mPubItemStack->addLine(Resource::resource->getBundle()->getString("tier") + 
+		":" + Tools::getSpaceAfterColon() + this->getContainerStack()->getItemStack()->getItem()->getItemTier()->getName(), false);
+	this->mPubItemStack->notifyDataSetChanged();
+}
+
+
 

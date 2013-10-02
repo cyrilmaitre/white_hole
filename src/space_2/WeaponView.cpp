@@ -275,8 +275,14 @@ void WeaponView::notifyWeaponChanged()
 		// Bubble Weapon
 		this->mWeaponInfo->addLine(	Resource::resource->getBundle()->getString("uiWeaponInfoName") + 
 			":" + Tools::getSpaceAfterColon() + this->getWeapon()->getWeaponModel()->getName(), false);
-		this->mWeaponInfo->addLine(	Resource::resource->getBundle()->getString("uiWeaponInfoType") + 
-			":" + Tools::getSpaceAfterColon() + this->getWeapon()->getWeaponModel()->getItemType()->getName(), false);
+
+		if(this->getWeapon()->getWeaponModel()->getItemType()->hasParent())
+			this->mWeaponInfo->addLine(	Resource::resource->getBundle()->getString("uiWeaponInfoType") + 
+				":" + Tools::getSpaceAfterColon() + this->getWeapon()->getWeaponModel()->getItemType()->getParent()->getName() + " " + this->getWeapon()->getWeaponModel()->getItemType()->getName(), false);
+		else
+			this->mWeaponInfo->addLine(	Resource::resource->getBundle()->getString("uiWeaponInfoType") + 
+				":" + Tools::getSpaceAfterColon() + this->getWeapon()->getWeaponModel()->getItemType()->getName(), false);
+
 		this->mWeaponInfo->addLine(	Resource::resource->getBundle()->getString("uiWeaponInfoRange") + 
 			":" + Tools::getSpaceAfterColon() + Tools::buildStringWithInt(this->getWeapon()->getWeaponModel()->getRange()) + " " + Resource::resource->getBundle()->getString("meterAb"), false);
 		this->mWeaponInfo->addLine(	Resource::resource->getBundle()->getString("uiWeaponInfoAngle") + 
