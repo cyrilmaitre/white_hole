@@ -29,6 +29,8 @@ public:
 	long getParentId();
 	void setParentId(long p_id);
 
+	bool isChildOf(ItemType* p_type);
+
 	std::string getText();
 	std::string getIcon();
 	std::string getAriane();

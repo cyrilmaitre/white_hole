@@ -84,6 +84,20 @@ void ItemType::setParentId( long p_id )
 	this->mParentId = p_id;
 }
 
+bool ItemType::isChildOf( ItemType* p_type )
+{
+	if(p_type == NULL)
+		return false;
+
+	if(this->getIdItemType() == p_type->getIdItemType())
+		return true;
+
+	if(this->getParent() != NULL)
+		return this->getParent()->isChildOf(p_type);
+	else 
+		return false;
+}
+
 std::string ItemType::getText()
 {
 	return this->getName();

@@ -1,4 +1,5 @@
 #include "HangarShipAddView.h"
+#include "FactoryGet.h"
 
 
 //*************************************************************
@@ -9,6 +10,7 @@
 #define BORDERSIZE						1
 #define PADDING							15
 #define BUTTONADD_MARGINTOP				20
+#define ITEMTYPE_SHIP_ID				11
 
 
 //*************************************************************
@@ -22,6 +24,7 @@ HangarShipAddView::HangarShipAddView(void)
 	this->setBorderSize(BORDERSIZE, true);
 	this->setPadding(PADDING);
 
+	this->mContainerStack.addItemTypeAllowed(FactoryGet::getItemTypeFactory()->getItemType(ITEMTYPE_SHIP_ID));
 	this->mContainerStackView.setContainerStack(&this->mContainerStack);
 	this->mButtonAdd.setTitle(Resource::resource->getBundle()->getString("hangarButtonAdd"));
 

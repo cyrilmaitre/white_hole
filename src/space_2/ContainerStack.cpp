@@ -88,7 +88,7 @@ bool ContainerStack::isItemTypeAllowed( ItemType* p_type )
 
 	for(int i = 0; i < this->mItemTypesAllowed.size(); i++)
 	{
-		if(this->mItemTypesAllowed[i] != NULL && p_type != NULL && this->mItemTypesAllowed[i]->getIdItemType() == p_type->getIdItemType())
+		if(this->mItemTypesAllowed[i] != NULL && p_type != NULL && p_type->isChildOf(this->mItemTypesAllowed[i]))
 			return true;
 	}
 

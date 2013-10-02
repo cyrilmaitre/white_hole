@@ -110,7 +110,8 @@ void ContainerStackView::update()
 {
 	this->mPubItemStack->update();
 
-	if(	this->hasMouseOver() && (this->getContainerStack()->hasItemStack() || ContainerStackViewManager::getInstance()->isViewDragged()) || 
+	if(	(this->hasMouseOver() && (this->getContainerStack()->hasItemStack() || 
+		(ContainerStackViewManager::getInstance()->isViewDragged() && this->getContainerStack()->isItemTypeAllowed(ContainerStackViewManager::getInstance()->getDraggedView()->getContainerStack()->getItemStack()->getItem()->getItemType())))) || 
 		ContainerStackViewManager::getInstance()->isViewDragged(this))
 	{
 		this->mBackground.setFillColor(CONTAINERSTACKVIEW_BACKGROUND_COLOROVER);

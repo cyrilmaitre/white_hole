@@ -112,7 +112,7 @@ void ContainerStackViewManager::releaseDrag()
 {
 	ContainerStackView* source = this->getDraggedView();
 	ContainerStackView* destination = this->getDraggedDestinationView();
-	if(destination != NULL && source != NULL && source != destination)
+	if(destination != NULL && source != NULL && source != destination && destination->getContainerStack()->isItemTypeAllowed(source->getContainerStack()->getItemStack()->getItem()->getItemType()))
 	{
 		if(!destination->getContainerStack()->hasItemStack())
 		{
@@ -162,7 +162,6 @@ void ContainerStackViewManager::releaseDrag()
 			}
 		}
 	}
-
 	this->setDraggedView(NULL);
 }
 

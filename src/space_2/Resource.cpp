@@ -703,7 +703,6 @@ void Resource::loadConfigs()
 	this->loadConfigs(FOLDER_CONFIG_ITEMTIER);
 	this->loadConfigs(FOLDER_CONFIG_ITEMTYPE);
 	this->loadConfigs(FOLDER_CONFIG_SHIPMODEL);
-	this->loadConfigs(FOLDER_CONFIG_SHIPTYPE);
 	this->loadConfigs(FOLDER_CONFIG_GENERAL);
 	this->loadConfigs(FOLDER_CONFIG_GENERAL_DANGERLEVEL);
 	this->loadConfigs(FOLDER_CONFIG_GENERAL_CHARACTERLEVEL);
