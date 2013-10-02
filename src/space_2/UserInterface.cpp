@@ -32,7 +32,7 @@
 //*************************************************************
 // Init static
 //*************************************************************
-UserInterface * UserInterface::mUserInterface;
+UserInterface * UserInterface::mUserInterface = NULL;
 
 
 //*************************************************************
@@ -489,7 +489,7 @@ void UserInterface::notifyWeaponViewChanged()
 
 	// Add new weapon
 	for(int i = 0; i < Game::game->getShipPiloted()->getWeaponsCount(); i++)
-		this->mWeaponViews.push_back(new WeaponView(Game::game->getShipPiloted()->getWeapon(i), 0, 0));
+		this->mWeaponViews.push_back(new WeaponView(Game::game->getShipPiloted()->getWeapon(i)));
 
 	// Update
 	this->updateWeaponPosition();

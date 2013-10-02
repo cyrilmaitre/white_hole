@@ -26,6 +26,18 @@ Weapon::Weapon( Entity* p_entity, WeaponModel* p_weaponModel, AmmoModel* p_ammoM
 	this->setAmmo(p_ammoModel);
 }
 
+Weapon::Weapon( CharacterShip* p_ship, WeaponModel* p_model )
+{
+	this->init();
+	this->setEntity(p_ship);
+	this->setWeaponModel(p_model);
+
+	this->mIdWeapon = -1;
+	this->mAmmo = NULL;
+	this->mAmmoCount = 0;
+	this->mActif = true;
+}
+
 void Weapon::init()
 {
 	this->mWeaponModel = NULL;
@@ -222,7 +234,10 @@ bool Weapon::isAngleOkChanged()
 
 double Weapon::getBaseDamage()
 {
-	return this->getAmmo()->getDamage() * this->getWeaponModel()->getDamageMultiplier();
+	if(this->mAmmo != NULL)
+		return this->mAmmo->getDamage() * this->getWeaponModel()->getDamageMultiplier();
+	else
+		return 0;
 }
 
 double Weapon::getDps()
@@ -294,14 +309,12 @@ void Weapon::notifyAngleOkChanged()
 
 void Weapon::fire( Entity* p_target, Entity* p_source )
 {
-	if(	!this->isActif() || this->isFiring() || this->isReloading() || !this->isRangeOk() || !this->isAngleOk())
+	if(	!this->isActif() || this->isFiring() || this->isReloading() || !this->isRangeOk() || !this->isAngleOk() || !this->hasAmmo())
 		return;
 
 	this->mFirstFire = false;
 
-	// TODO: Play sound with level in function of distance
-	//Resource::resource->getJuckebox()->soundPlay(this->getWeaponModel()->getSoundFire());
-
+	Resource::resource->getJuckebox()->soundPlay(this->mAmmo->getSoundFire());
 	AutoManager::add(ProjectileManager::getProjectile(p_source, p_target, this));
 
 	this->decAmmoCount();
@@ -310,7 +323,7 @@ void Weapon::fire( Entity* p_target, Entity* p_source )
 
 void Weapon::update()
 {
-	if(this->getAmmoCount() == 0)
+	if(this->getAmmoCount() == 0 && this->getAmmo() != NULL)
 		this->reload();
 
 	if(this->getEntity() != NULL && this->getEntity()->getTarget()->isEntityValid())
@@ -324,15 +337,15 @@ void Weapon::update()
 
 void Weapon::reload()
 {
-	if( !this->isActif() || this->isReloading() || this->isFull() )
+	if( !this->isActif() || this->isReloading() || this->isFull() || this->mAmmo == NULL)
 		return;
 
 	this->mFirstReload = false;
 
+	Resource::resource->getJuckebox()->soundPlay(this->getWeaponModel()->getSoundReload());
 	if(ToolsMap::isCharacterShip(this->getEntity()))
 	{
-		Resource::resource->getJuckebox()->soundPlay(this->getWeaponModel()->getSoundReload());
-		this->setAmmoCount(this->getWeaponModel()->getAmmoMax());
+		
 	}
 	else
 	{

@@ -61,6 +61,7 @@ public:
 	void notifyNameChanged();
 	void notifySkillPointsChanged();
 	void notifyPilotedChanged();
+	void notifyWeaponsChanged();
 
 
 private:

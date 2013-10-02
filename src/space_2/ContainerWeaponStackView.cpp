@@ -73,7 +73,7 @@ void ContainerWeaponStackView::notifyItemStackChanged()
 	}
 
 	if(this->mHangarView != NULL)
-		this->mHangarView->setWeaponsChanged(true);
+		this->mHangarView->setContainerWeaponsStacksChanged(true);
 	this->notifyPositionChanged();
 }	
 

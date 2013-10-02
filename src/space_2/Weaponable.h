@@ -21,11 +21,13 @@ public:
 
 	// Methods
 	void update();
-	void addWeapon(Weapon *p_weapon);
-	void removeWeapon(Weapon *p_weapon);
-	void removeWeapon(int p_index);
+	void addWeapon(Weapon *p_weapon, bool p_notify = true);
+	void removeWeapon(Weapon *p_weapon, bool p_notify = true);
+	void removeWeapon(int p_index, bool p_notify = true);
+	void removeWeaponAll(bool p_notify = true);
 	void fire(Entity *p_target, Entity *p_source);
 	void reload();
+	virtual void notifyWeaponsChanged();
 
 
 private:

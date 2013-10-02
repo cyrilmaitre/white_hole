@@ -10,6 +10,7 @@
 #include "ToolsImage.h"
 #include "NetworkJobManager.h"
 #include "CharacterShipUpdate.h"
+#include "CharacterShipWeaponUpdate.h"
 
 
 //*************************************************************
@@ -268,6 +269,12 @@ Json::Value CharacterShip::saveToJson()
 	json[JSON_PILOTED] = this->isPiloted();
 	json[JSON_IDSHIPMODEL] = this->getShipModel()->getIdItem();
 	json[JSON_IDCHARACTER] = this->getCharacter()->getIdCharacter();
+
+	Json::Value weapons;
+	for(int i = 0; i < this->getWeaponsCount(); i++)
+		weapons[i] = this->getWeapon(i)->saveToJson();
+	json[JSON_WEAPONS] = weapons;
+
 	return json;
 }
 
@@ -326,5 +333,15 @@ void CharacterShip::notifyPilotedChanged()
 {
 	if(this->mLoaded)
 		NetworkJobManager::getInstance()->addJob(new CharacterShipUpdate(this));
+}
+
+void CharacterShip::notifyWeaponsChanged()
+{
+	Weaponable::notifyWeaponsChanged();
+	if(this->isPiloted() && UserInterface::mUserInterface != NULL)
+		UserInterface::mUserInterface->notifyWeaponViewChanged();
+
+	if(this->mLoaded)
+		NetworkJobManager::getInstance()->addJob(new CharacterShipWeaponUpdate(this));
 }
 

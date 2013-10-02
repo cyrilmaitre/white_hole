@@ -31,7 +31,8 @@
 #define WEAPONVIEW_ANGLEICON_OFFSETX			73
 #define WEAPONVIEW_ANGLEICON_OFFSETY			20
 #define WEAPONVIEW_TB_AMMOCOUNT_FONTSIZE		12
-#define WEAPONVIEW_TB_AMMOCOUNT_FONTCOLOR		sf::Color(255, 255, 255)
+#define WEAPONVIEW_TB_AMMOCOUNT_FONTCOLOR		sf::Color(195, 195, 195)
+#define WEAPONVIEW_TB_AMMOCOUNTOUT_FONTCOLOR	sf::Color(195, 0, 0)
 #define WEAPONVIEW_TB_AMMOCOUNT_OFFSETX			4
 #define WEAPONVIEW_INACTIF_BACKCOLOR			sf::Color(30, 30, 30, 215)
 #define WEAPONVIEW_INACTIF_TEXT_FONTSIZE		12
@@ -136,7 +137,8 @@ void WeaponView::update( sf::Event p_event )
 		this->mAngleIcon.update(p_event);
 
 		this->mWeaponInfo->update(p_event);
-		this->mAmmoInfo->update(p_event);
+		if(this->mWeapon->getAmmo() != NULL)
+			this->mAmmoInfo->update(p_event);
 		this->mRangeInfo->update(p_event);
 		this->mAngleInfo->update(p_event);
 
@@ -185,8 +187,17 @@ void WeaponView::updateAmmoCount()
 	if(this->mWeapon != NULL && this->getWeapon()->getAmmo() != NULL)
 	{
 		this->mAmmoCount.setText(Tools::buildStringWithInt(this->getWeapon()->getAmmoCount()) + "/" + Tools::buildStringWithInt(this->getWeapon()->getWeaponModel()->getAmmoMax()));
-		this->updateAmmoCountPosition();
+		if(this->getWeapon()->getAmmoCount() == 0)
+			this->mAmmoCount.setFontColor(WEAPONVIEW_TB_AMMOCOUNTOUT_FONTCOLOR);
+		else
+			this->mAmmoCount.setFontColor(WEAPONVIEW_TB_AMMOCOUNT_FONTCOLOR);
 	}
+	else
+	{
+		this->mAmmoCount.setText("0/0");
+		this->mAmmoCount.setFontColor(WEAPONVIEW_TB_AMMOCOUNTOUT_FONTCOLOR);
+	}
+	this->updateAmmoCountPosition();
 }
 
 void WeaponView::updateRange()
@@ -252,33 +263,36 @@ void WeaponView::notifyWeaponChanged()
 
 		// Bubble Weapon
 		this->mWeaponInfo->addLine(	Resource::resource->getBundle()->getString("uiWeaponInfoName") + 
-									":" + Tools::getSpaceAfterColon() + this->getWeapon()->getWeaponModel()->getName(), false);
+			":" + Tools::getSpaceAfterColon() + this->getWeapon()->getWeaponModel()->getName(), false);
 		this->mWeaponInfo->addLine(	Resource::resource->getBundle()->getString("uiWeaponInfoType") + 
-									":" + Tools::getSpaceAfterColon() + this->getWeapon()->getWeaponModel()->getItemType()->getName(), false);
+			":" + Tools::getSpaceAfterColon() + this->getWeapon()->getWeaponModel()->getItemType()->getName(), false);
 		this->mWeaponInfo->addLine(	Resource::resource->getBundle()->getString("uiWeaponInfoRange") + 
-									":" + Tools::getSpaceAfterColon() + Tools::buildStringWithInt(this->getWeapon()->getWeaponModel()->getRange()) + " " + Resource::resource->getBundle()->getString("meterAb"), false);
+			":" + Tools::getSpaceAfterColon() + Tools::buildStringWithInt(this->getWeapon()->getWeaponModel()->getRange()) + " " + Resource::resource->getBundle()->getString("meterAb"), false);
 		this->mWeaponInfo->addLine(	Resource::resource->getBundle()->getString("uiWeaponInfoAngle") + 
-									":" + Tools::getSpaceAfterColon() + Tools::buildStringWithInt(this->getWeapon()->getWeaponModel()->getRangeAngle()) + " " + Resource::resource->getBundle()->getString("degreesAb"), false);
+			":" + Tools::getSpaceAfterColon() + Tools::buildStringWithInt(this->getWeapon()->getWeaponModel()->getRangeAngle()) + " " + Resource::resource->getBundle()->getString("degreesAb"), false);
 		this->mWeaponInfo->addLine(	Resource::resource->getBundle()->getString("uiWeaponInfoDps") + 
-									":" + Tools::getSpaceAfterColon() + Tools::buildStringWithDouble(this->getWeapon()->getDps()), false);
+			":" + Tools::getSpaceAfterColon() + Tools::buildStringWithDouble(this->getWeapon()->getDps()), false);
 		this->mWeaponInfo->notifyDataSetChanged();
 
 		// Bubble Ammo
-		this->mAmmoInfo->addLine(	Resource::resource->getBundle()->getString("uiAmmoInfoName") + 
-									":" + Tools::getSpaceAfterColon() + this->getWeapon()->getAmmo()->getName(), false);
-		this->mAmmoInfo->addLine(	Resource::resource->getBundle()->getString("uiAmmoInfoType") + 
-									":" + Tools::getSpaceAfterColon() + this->getWeapon()->getAmmo()->getAmmoType()->getName(), false);
-		this->mAmmoInfo->addLine(	Resource::resource->getBundle()->getString("uiAmmoInfoShieldMultiplier") + 
-									":" + Tools::getSpaceAfterColon() + Tools::buildStringWithFloat(this->getWeapon()->getAmmo()->getAmmoType()->getDamageShieldMultiplier()), false);
-		this->mAmmoInfo->addLine(	Resource::resource->getBundle()->getString("uiAmmoInfoArmorMultiplier") + 
-									":" + Tools::getSpaceAfterColon() + Tools::buildStringWithFloat(this->getWeapon()->getAmmo()->getAmmoType()->getDamageArmorMultiplier()), false);
-		this->mAmmoInfo->addLine(	Resource::resource->getBundle()->getString("uiAmmoInfoStructureMultiplier") + 
-									":" + Tools::getSpaceAfterColon() + Tools::buildStringWithFloat(this->getWeapon()->getAmmo()->getAmmoType()->getDamageStructureMultiplier()), false);
-		this->mAmmoInfo->addLine(	Resource::resource->getBundle()->getString("uiAmmoInfoDamage") + 
-									":" + Tools::getSpaceAfterColon() + Tools::buildStringWithDouble(this->getWeapon()->getAmmo()->getDamage()), false);
-		this->mAmmoInfo->addLine(	Resource::resource->getBundle()->getString("uiAmmoInfoSplash") + 
-									":" + Tools::getSpaceAfterColon() + (this->getWeapon()->getAmmo()->getSplashRadius() > 0 ? Resource::resource->getBundle()->getString("yes") : Resource::resource->getBundle()->getString("no")), false);
-		this->mAmmoInfo->notifyDataSetChanged();
+		if(this->mWeapon->getAmmo())
+		{
+			this->mAmmoInfo->addLine(	Resource::resource->getBundle()->getString("uiAmmoInfoName") + 
+				":" + Tools::getSpaceAfterColon() + this->getWeapon()->getAmmo()->getName(), false);
+			this->mAmmoInfo->addLine(	Resource::resource->getBundle()->getString("uiAmmoInfoType") + 
+				":" + Tools::getSpaceAfterColon() + this->getWeapon()->getAmmo()->getAmmoType()->getName(), false);
+			this->mAmmoInfo->addLine(	Resource::resource->getBundle()->getString("uiAmmoInfoShieldMultiplier") + 
+				":" + Tools::getSpaceAfterColon() + Tools::buildStringWithFloat(this->getWeapon()->getAmmo()->getAmmoType()->getDamageShieldMultiplier()), false);
+			this->mAmmoInfo->addLine(	Resource::resource->getBundle()->getString("uiAmmoInfoArmorMultiplier") + 
+				":" + Tools::getSpaceAfterColon() + Tools::buildStringWithFloat(this->getWeapon()->getAmmo()->getAmmoType()->getDamageArmorMultiplier()), false);
+			this->mAmmoInfo->addLine(	Resource::resource->getBundle()->getString("uiAmmoInfoStructureMultiplier") + 
+				":" + Tools::getSpaceAfterColon() + Tools::buildStringWithFloat(this->getWeapon()->getAmmo()->getAmmoType()->getDamageStructureMultiplier()), false);
+			this->mAmmoInfo->addLine(	Resource::resource->getBundle()->getString("uiAmmoInfoDamage") + 
+				":" + Tools::getSpaceAfterColon() + Tools::buildStringWithDouble(this->getWeapon()->getAmmo()->getDamage()), false);
+			this->mAmmoInfo->addLine(	Resource::resource->getBundle()->getString("uiAmmoInfoSplash") + 
+				":" + Tools::getSpaceAfterColon() + (this->getWeapon()->getAmmo()->getSplashRadius() > 0 ? Resource::resource->getBundle()->getString("yes") : Resource::resource->getBundle()->getString("no")), false);
+			this->mAmmoInfo->notifyDataSetChanged();
+		}
 	}
 }
 

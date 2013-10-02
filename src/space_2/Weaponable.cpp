@@ -44,13 +44,17 @@ int Weaponable::getWeaponsCount()
 //*************************************************************
 // Methods
 //*************************************************************
-void Weaponable::addWeapon( Weapon *p_weapon )
+void Weaponable::addWeapon( Weapon *p_weapon, bool p_notify )
 {
 	if(this->getWeaponsCount() < this->getWeaponSlotMax())
+	{
 		this->mWeapons.push_back(p_weapon);
+		if(p_notify)
+			this->notifyWeaponsChanged();
+	}
 }
 
-void Weaponable::removeWeapon( Weapon *p_weapon )
+void Weaponable::removeWeapon( Weapon *p_weapon, bool p_notify )
 {
 	for(int i = 0; i < this->mWeapons.size(); i++)
 	{
@@ -58,15 +62,31 @@ void Weaponable::removeWeapon( Weapon *p_weapon )
 		{
 			delete this->mWeapons[i];
 			this->mWeapons.erase(this->mWeapons.begin() + i);
+			if(p_notify)
+				this->notifyWeaponsChanged();
 			return;
 		}
 	}
 }
 
-void Weaponable::removeWeapon( int p_index )
+void Weaponable::removeWeapon( int p_index, bool p_notify )
 {
 	delete this->mWeapons[p_index];
 	this->mWeapons.erase(this->mWeapons.begin() + p_index);
+	if(p_notify)
+		this->notifyWeaponsChanged();
+}
+
+void Weaponable::removeWeaponAll( bool p_notify )
+{
+	for(int i = 0; i < this->mWeapons.size(); i++)
+	{
+		if(this->mWeapons[i] != NULL)
+			delete this->mWeapons[i];
+	}
+	this->mWeapons.clear();
+	if(p_notify)
+		this->notifyWeaponsChanged();
 }
 
 void Weaponable::fire( Entity *p_target, Entity *p_source )
@@ -85,6 +105,11 @@ void Weaponable::reload()
 {
 	for(int i = 0; i < this->mWeapons.size(); i++)
 		this->getWeapon(i)->reload();
+}
+
+void Weaponable::notifyWeaponsChanged()
+{
+
 }
 
 
