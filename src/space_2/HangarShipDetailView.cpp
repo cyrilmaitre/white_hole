@@ -19,6 +19,11 @@
 #define TYPE_MARGINTOP					5
 #define LEVEL_FONTSIZE					18
 #define LEVEL_MARGINTOP					10
+#define BUTTONRENAME_MARGINLEFT			15
+#define BUTTONRENAME_BORDERSIZE			1
+#define BUTTONRENAME_WIDTH				80
+#define BUTTONRENAME_HEIGHT				16
+#define WEAPONVIEW_MARGINTOP			50
 
 
 //*************************************************************
@@ -42,6 +47,12 @@ HangarShipDetailView::HangarShipDetailView(void)
 	this->mTBName.setFontSize(NAME_FONTSIZE);
 	this->mTBType.setFontSize(TYPE_FONTSIZE);
 	this->mTBLevel.setFontSize(LEVEL_FONTSIZE);
+
+	this->mButtonRename.setSize(BUTTONRENAME_WIDTH, BUTTONRENAME_HEIGHT);
+	this->mButtonRename.setBorderSize(BUTTONRENAME_BORDERSIZE, true);
+	this->mButtonRename.setTitle(Resource::resource->getBundle()->getString("rename"));
+
+	this->mButtonShipSheep.setTitle(Resource::resource->getBundle()->getString("hangarButtonOpenShipSheet"));
 }
 
 HangarShipDetailView::~HangarShipDetailView(void)
@@ -74,7 +85,7 @@ void HangarShipDetailView::update()
 {
 	if(this->isVisible())
 	{
-
+		this->mWeaponView.update();
 	}
 }
 
@@ -82,7 +93,9 @@ void HangarShipDetailView::update( sf::Event p_event )
 {
 	if(this->isVisible())
 	{
-
+		this->mButtonRename.update(p_event);
+		this->mButtonShipSheep.update(p_event);
+		this->mWeaponView.update(p_event);
 	}
 	FieldSet::update(p_event);
 }
@@ -93,6 +106,9 @@ void HangarShipDetailView::updatePositon()
 	this->mTBName.setPosition(this->mIcon.getRightX() + ICON_MARGIN, this->mIcon.getY());
 	this->mTBType.setPosition(this->mTBName.getX(), this->mTBName.getBottomY() + TYPE_MARGINTOP);
 	this->mTBLevel.setPosition(this->mTBType.getX(), this->mTBType.getBottomY() + LEVEL_MARGINTOP);
+	this->mButtonRename.setPosition(this->mTBName.getRightX() + BUTTONRENAME_MARGINLEFT, this->mTBName.getY());
+	this->mButtonShipSheep.setPosition(this->getContentX() + this->getContentWidth() - this->mButtonShipSheep.getWidth(), this->getContentY());
+	this->mWeaponView.setPosition(this->getContentX(), this->mIcon.getBottomY() + WEAPONVIEW_MARGINTOP);
 }
 
 void HangarShipDetailView::draw()
@@ -104,7 +120,17 @@ void HangarShipDetailView::draw()
 		this->mTBName.draw();
 		this->mTBType.draw();
 		this->mTBLevel.draw();
+		this->mButtonRename.draw();
+		this->mButtonShipSheep.draw();
+		this->mWeaponView.draw();
 	}
+}
+
+void HangarShipDetailView::notifySizeChanged()
+{
+	FieldSet::notifySizeChanged();
+	this->mWeaponView.setWidth(this->getContentWidth());
+	this->updatePositon();
 }
 
 void HangarShipDetailView::notifyPositionChanged()
@@ -122,4 +148,6 @@ void HangarShipDetailView::notifyCharacterShipChanged()
 		this->mTBType.setText(this->mCharacterShip->getShipModel()->getName());
 		this->mTBLevel.setText(Resource::resource->getBundle()->getString("level") + ":" + Tools::getSpaceAfterColon() + Tools::formatNumber(this->mCharacterShip->getLevel()));
 	}
+	this->mWeaponView.setCharacterShip(this->mCharacterShip);
+	this->setVisible(this->mCharacterShip != NULL);
 }

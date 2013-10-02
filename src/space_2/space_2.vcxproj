@@ -104,6 +104,7 @@
     <ClCompile Include="CharacterShipUpdate.cpp" />
     <ClCompile Include="CharacterUpdate.cpp" />
     <ClCompile Include="ContainerDropDown.cpp" />
+    <ClCompile Include="ContainerWeaponStackView.cpp" />
     <ClCompile Include="DebugScreen.cpp" />
     <ClCompile Include="DropDownable.cpp" />
     <ClCompile Include="DropDownList.cpp" />
@@ -118,6 +119,7 @@
     <ClCompile Include="HangarShipAddView.cpp" />
     <ClCompile Include="HangarShipDetailView.cpp" />
     <ClCompile Include="HangarShipListView.cpp" />
+    <ClCompile Include="HangarShipWeaponView.cpp" />
     <ClCompile Include="HangarSlotManagementView.cpp" />
     <ClCompile Include="IdValueDouble.cpp" />
     <ClCompile Include="IdValueFloat.cpp" />
@@ -395,6 +397,7 @@
     <ClInclude Include="CharacterShipUpdate.h" />
     <ClInclude Include="CharacterUpdate.h" />
     <ClInclude Include="ContainerDropDown.h" />
+    <ClInclude Include="ContainerWeaponStackView.h" />
     <ClInclude Include="DebugScreen.h" />
     <ClInclude Include="DestructableData.h" />
     <ClInclude Include="DropDownable.h" />
@@ -410,6 +413,7 @@
     <ClInclude Include="HangarShipAddView.h" />
     <ClInclude Include="HangarShipDetailView.h" />
     <ClInclude Include="HangarShipListView.h" />
+    <ClInclude Include="HangarShipWeaponView.h" />
     <ClInclude Include="HangarSlotManagementView.h" />
     <ClInclude Include="IdValueDouble.h" />
     <ClInclude Include="IdValueFloat.h" />

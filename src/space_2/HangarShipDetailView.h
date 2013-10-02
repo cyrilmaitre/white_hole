@@ -4,6 +4,7 @@
 #include "Image.h"
 #include "TextBox.h"
 #include "Button.h"
+#include "HangarShipWeaponView.h"
 
 
 class HangarShipDetailView : public FieldSet
@@ -22,6 +23,7 @@ public:
 	void update(sf::Event p_event);
 	void updatePositon();
 	void draw();
+	void notifySizeChanged();
 	void notifyPositionChanged();
 	void notifyCharacterShipChanged();
 
@@ -33,5 +35,8 @@ private:
 	TextBox mTBName;
 	TextBox mTBType;
 	TextBox mTBLevel;
+	Button mButtonRename;
+	Button mButtonShipSheep;
+	HangarShipWeaponView mWeaponView;
 };
 

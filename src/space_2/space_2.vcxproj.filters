@@ -1248,6 +1248,12 @@
     <ClCompile Include="HangarShipDetailView.cpp">
       <Filter>Fichiers sources\game\ui\stationscreen\panel\hangar</Filter>
     </ClCompile>
+    <ClCompile Include="ContainerWeaponStackView.cpp">
+      <Filter>Fichiers sources\game\item\container</Filter>
+    </ClCompile>
+    <ClCompile Include="HangarShipWeaponView.cpp">
+      <Filter>Fichiers sources\game\ui\stationscreen\panel\hangar</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h">
@@ -2133,6 +2139,12 @@
       <Filter>Fichiers d%27en-tête\game\ui\stationscreen\panel\hangar</Filter>
     </ClInclude>
     <ClInclude Include="HangarShipDetailView.h">
+      <Filter>Fichiers d%27en-tête\game\ui\stationscreen\panel\hangar</Filter>
+    </ClInclude>
+    <ClInclude Include="ContainerWeaponStackView.h">
+      <Filter>Fichiers d%27en-tête\game\item\container</Filter>
+    </ClInclude>
+    <ClInclude Include="HangarShipWeaponView.h">
       <Filter>Fichiers d%27en-tête\game\ui\stationscreen\panel\hangar</Filter>
     </ClInclude>
   </ItemGroup>

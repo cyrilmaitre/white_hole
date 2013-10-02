@@ -50,6 +50,7 @@ success = Success
 buy = Buy
 sell = Sell
 totalMaj = TOTAL
+rename = Rename
 #
 #
 # Running stats
@@ -531,6 +532,8 @@ hangarSlots = Slots:
 hangarSlotAdd = Add Slot
 hangarSlotPrice = Price:
 hangarButtonAdd = Add Ship
+hangarButtonOpenShipSheet = Ship's sheet
+hangarShipWeapon = Weapon:
 #
 #
 # Dashboard
