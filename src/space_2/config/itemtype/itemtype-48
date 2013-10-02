@@ -1,0 +1,5 @@
+id = 48
+name = itemTypeWeaponKineticMediumName
+description = itemTypeWeaponKineticMediumDescription
+icon = 2-2
+itemtype_parent = 24

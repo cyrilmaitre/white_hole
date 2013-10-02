@@ -1,6 +1,6 @@
 #pragma once
 #include "Item.h"
-#include "WeaponType.h"
+
 
 class WeaponModel: public Item
 {
@@ -31,9 +31,6 @@ public:
 	std::string getSoundReload();
 	void setSoundReload(std::string p_sound);
 
-	WeaponType *getWeaponType();
-	void setWeaponType(WeaponType *p_type);
-
 	// Methods
 	void loadFromConfig(KeyValueFile* p_config);
 
@@ -47,7 +44,6 @@ private:
 	float mReloadingSpeed;
 	float mFireRate;
 	std::string mSoundReload;
-	WeaponType *mWeaponType;
 };
 
 

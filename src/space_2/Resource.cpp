@@ -712,7 +712,6 @@ void Resource::loadConfigs()
 	this->loadConfigs(FOLDER_CONFIG_SKILL);
 	this->loadConfigs(FOLDER_CONFIG_AMMOTYPE);
 	this->loadConfigs(FOLDER_CONFIG_AMMO);
-	this->loadConfigs(FOLDER_CONFIG_WEAPONTYPE);
 	this->loadConfigs(FOLDER_CONFIG_WEAPONMODEL);
 	this->loadConfigs(FOLDER_CONFIG_NPCTYPE);
 	this->loadConfigs(FOLDER_CONFIG_NPCSHIPMODEL);

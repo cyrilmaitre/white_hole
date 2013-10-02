@@ -12,7 +12,6 @@
 #define CONFIG_RELOADINGSPEED		"reloadingspeed"
 #define CONFIG_FIRERATE				"firerate"
 #define CONFIG_SOUNDRELOAD			"soundreload"
-#define CONFIG_WEAPONTYPE			"weapontype"
 
 
 //*************************************************************
@@ -20,7 +19,6 @@
 //*************************************************************
 WeaponModel::WeaponModel( KeyValueFile* p_config ): Item(p_config->getInt("id"))
 {
-	this->mWeaponType = NULL;
 	this->loadFromConfig(p_config);
 }
 
@@ -95,16 +93,6 @@ void WeaponModel::setFireRate( float p_fireRate )
 	this->mFireRate = p_fireRate;
 }
 
-WeaponType * WeaponModel::getWeaponType()
-{
-	return this->mWeaponType;
-}
-
-void WeaponModel::setWeaponType( WeaponType *p_type )
-{
-	this->mWeaponType = p_type;
-}
-
 std::string WeaponModel::getSoundReload()
 {
 	return this->mSoundReload;
@@ -141,10 +129,5 @@ void WeaponModel::loadFromConfig( KeyValueFile* p_config )
 
 	if(p_config->has(CONFIG_SOUNDRELOAD))
 		this->setSoundReload(p_config->getString(CONFIG_SOUNDRELOAD));
-
-	if(p_config->has(CONFIG_WEAPONTYPE))
-		this->setWeaponType(FactoryGet::getWeaponTypeFactory()->getWeaponType(p_config->getLong(CONFIG_WEAPONTYPE)));
 }
-
-
 

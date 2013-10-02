@@ -552,14 +552,8 @@
     <ClCompile Include="LifeBar.cpp">
       <Filter>Fichiers sources\game\ui\composant</Filter>
     </ClCompile>
-    <ClCompile Include="WeaponType.cpp">
-      <Filter>Fichiers sources\game\item\weapon</Filter>
-    </ClCompile>
     <ClCompile Include="ItemStack.cpp">
       <Filter>Fichiers sources\game\item</Filter>
-    </ClCompile>
-    <ClCompile Include="WeaponTypeFactory.cpp">
-      <Filter>Fichiers sources\game\item\weapon</Filter>
     </ClCompile>
     <ClCompile Include="FactoryGet.cpp">
       <Filter>Fichiers sources\game\factory</Filter>
@@ -1418,14 +1412,8 @@
     <ClInclude Include="LifeBar.h">
       <Filter>Fichiers d%27en-tête\game\ui\composant</Filter>
     </ClInclude>
-    <ClInclude Include="WeaponType.h">
-      <Filter>Fichiers d%27en-tête\game\item\weapon</Filter>
-    </ClInclude>
     <ClInclude Include="ItemStack.h">
       <Filter>Fichiers d%27en-tête\game\item</Filter>
-    </ClInclude>
-    <ClInclude Include="WeaponTypeFactory.h">
-      <Filter>Fichiers d%27en-tête\game\item\weapon</Filter>
     </ClInclude>
     <ClInclude Include="Factory.h">
       <Filter>Fichiers d%27en-tête\game\factory</Filter>

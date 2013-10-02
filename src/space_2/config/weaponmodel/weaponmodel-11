@@ -7,5 +7,4 @@ range = 1500
 rangeangle = 75
 reloadingspeed = 3
 firerate = 0.08
-weapontype = 1
 soundreload = weapon_kinetic_reload.wav

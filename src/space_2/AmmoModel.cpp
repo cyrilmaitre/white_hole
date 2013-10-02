@@ -115,12 +115,12 @@ void AmmoModel::setAmmoType( AmmoType* p_type )
 	this->mAmmoType = p_type;
 }
 
-WeaponType* AmmoModel::getWeaponType()
+ItemType* AmmoModel::getWeaponType()
 {
 	return this->mWeaponType;
 }
 
-void AmmoModel::setWeaponType( WeaponType* p_type )
+void AmmoModel::setWeaponType( ItemType* p_type )
 {
 	this->mWeaponType = p_type;
 }
@@ -149,7 +149,7 @@ void AmmoModel::loadFromConfig( KeyValueFile* p_config )
 		this->setAmmoType(FactoryGet::getAmmoTypeFactory()->getAmmoType(p_config->getLong(AMMOMODEL_CONFIG_AMMOTYPE)));
 
 	if(p_config->has(AMMOMODEL_CONFIG_WEAPONTYPE))
-		this->setWeaponType(FactoryGet::getWeaponTypeFactory()->getWeaponType(p_config->getLong(AMMOMODEL_CONFIG_WEAPONTYPE)));
+		this->setWeaponType(FactoryGet::getItemTypeFactory()->getItemType(p_config->getLong(AMMOMODEL_CONFIG_WEAPONTYPE)));
 
 	if(p_config->has(AMMOMODEL_CONFIG_PROJECTILETYPE))
 		this->setProjectileType((Projectile::ProjectileType)p_config->getInt(AMMOMODEL_CONFIG_PROJECTILETYPE));

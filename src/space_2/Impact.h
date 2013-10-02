@@ -1,7 +1,6 @@
 #pragma once
 #include "Resource.h"
 #include "ImageGIF.h"
-#include "WeaponType.h"
 #include "Effect.h"
 #include "EntityTarget.h"
 

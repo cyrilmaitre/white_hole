@@ -2,7 +2,6 @@
 #include "ShipModelFactory.h"
 #include "ItemTypeFactory.h"
 #include "ItemTierFactory.h"
-#include "WeaponTypeFactory.h"
 #include "AmmoTypeFactory.h"
 #include "JobFactory.h"
 #include "RaceFactory.h"
@@ -30,7 +29,6 @@ public:
 	static ShipModelFactory *getShipModelFactory();
 	static ItemTypeFactory *getItemTypeFactory();
 	static ItemTierFactory *getItemTierFactory();
-	static WeaponTypeFactory *getWeaponTypeFactory();
 	static AmmoTypeFactory *getAmmoTypeFactory();
 	static JobFactory *getJobFactory();
 	static RaceFactory *getRaceFactory();

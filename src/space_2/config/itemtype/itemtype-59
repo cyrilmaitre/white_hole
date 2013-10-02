@@ -1,0 +1,5 @@
+id = 59
+name = itemTypeWeaponMissileLauncherLargeName
+description = itemTypeWeaponMissileLauncherLargeDescription
+icon = 3-5
+itemtype_parent = 56

@@ -1,5 +1,5 @@
 id = 23
 name = itemTypeWeaponName
 description = itemTypeWeaponDescription
+icon = 0-2
 itemtype_parent = NULL
-itemtype_leaf = false

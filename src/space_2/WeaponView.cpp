@@ -254,7 +254,7 @@ void WeaponView::notifyWeaponChanged()
 		this->mWeaponInfo->addLine(	Resource::resource->getBundle()->getString("uiWeaponInfoName") + 
 									":" + Tools::getSpaceAfterColon() + this->getWeapon()->getWeaponModel()->getName(), false);
 		this->mWeaponInfo->addLine(	Resource::resource->getBundle()->getString("uiWeaponInfoType") + 
-									":" + Tools::getSpaceAfterColon() + this->getWeapon()->getWeaponModel()->getWeaponType()->getName(), false);
+									":" + Tools::getSpaceAfterColon() + this->getWeapon()->getWeaponModel()->getItemType()->getName(), false);
 		this->mWeaponInfo->addLine(	Resource::resource->getBundle()->getString("uiWeaponInfoRange") + 
 									":" + Tools::getSpaceAfterColon() + Tools::buildStringWithInt(this->getWeapon()->getWeaponModel()->getRange()) + " " + Resource::resource->getBundle()->getString("meterAb"), false);
 		this->mWeaponInfo->addLine(	Resource::resource->getBundle()->getString("uiWeaponInfoAngle") + 

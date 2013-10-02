@@ -1,0 +1,5 @@
+id = 53
+name = itemTypeWeaponLazerLargeName
+description = itemTypeWeaponLazerLargeDescription
+icon = 3-3
+itemtype_parent = 25

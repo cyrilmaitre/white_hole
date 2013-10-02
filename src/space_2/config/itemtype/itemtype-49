@@ -1,0 +1,5 @@
+id = 49
+name = itemTypeWeaponKineticLargeName
+description = itemTypeWeaponKineticLargeDescription
+icon = 3-2
+itemtype_parent = 24

@@ -1,5 +1,5 @@
 id = 24
 name = itemTypeWeaponKineticName
 description = itemTypeWeaponKineticDescription
+icon = 1-2
 itemtype_parent = 23
-itemtype_leaf = true

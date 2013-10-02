@@ -1,0 +1,5 @@
+id = 62
+name = itemTypeWeaponRoquetLauncherSmallName
+description = itemTypeWeaponRoquetLauncherSmallDescription
+icon = 1-4
+itemtype_parent = 61

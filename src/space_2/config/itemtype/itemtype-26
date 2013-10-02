@@ -1,5 +1,5 @@
 id = 26
 name = itemTypeWeaponLauncherName
 description = itemTypeWeaponLauncherDescription
+icon = 1-4
 itemtype_parent = 23
-itemtype_leaf = true

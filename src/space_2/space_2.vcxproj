@@ -363,8 +363,6 @@
     <ClCompile Include="Weaponable.cpp" />
     <ClCompile Include="WeaponableData.cpp" />
     <ClCompile Include="WeaponModelFactory.cpp" />
-    <ClCompile Include="WeaponType.cpp" />
-    <ClCompile Include="WeaponTypeFactory.cpp" />
     <ClCompile Include="WeaponView.cpp" />
     <ClCompile Include="WindowMessageWarning.cpp" />
     <ClCompile Include="Wreck.cpp" />
@@ -661,8 +659,6 @@
     <ClInclude Include="Weaponable.h" />
     <ClInclude Include="WeaponableData.h" />
     <ClInclude Include="WeaponModelFactory.h" />
-    <ClInclude Include="WeaponType.h" />
-    <ClInclude Include="WeaponTypeFactory.h" />
     <ClInclude Include="WeaponView.h" />
     <ClInclude Include="WindowMessageWarning.h" />
     <ClInclude Include="Wreck.h" />

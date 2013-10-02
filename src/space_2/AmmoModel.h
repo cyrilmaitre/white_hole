@@ -1,7 +1,6 @@
 #pragma once
 #include "Item.h"
 #include "AmmoType.h"
-#include "WeaponType.h"
 #include "SpriteParameter.h"
 #include "MovableData.h"
 #include "Projectile.h"
@@ -39,8 +38,8 @@ public:
 	AmmoType* getAmmoType();
 	void setAmmoType(AmmoType* p_type);
 
-	WeaponType* getWeaponType();
-	void setWeaponType(WeaponType* p_type);
+	ItemType* getWeaponType();
+	void setWeaponType(ItemType* p_type);
 
 	// Methods
 	void loadFromConfig(KeyValueFile* p_config);
@@ -55,7 +54,7 @@ private:
 	std::string mProjectileColor;
 	float mProjectileScale;
 	std::string mSoundFire;
-	AmmoType *mAmmoType;
-	WeaponType *mWeaponType;
+	AmmoType* mAmmoType;
+	ItemType* mWeaponType;
 };
 

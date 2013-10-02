@@ -21,7 +21,6 @@ void FactoryGet::init()
 	ShipModelFactory::mInstance = new ShipModelFactory();
 	ItemTypeFactory::mInstance = new ItemTypeFactory();
 	ItemTierFactory::mInstance = new ItemTierFactory();
-	WeaponTypeFactory::mInstance = new WeaponTypeFactory();
 	AmmoTypeFactory::mInstance = new AmmoTypeFactory();
 	JobFactory::mInstance = new JobFactory();
 	RaceFactory::mInstance = new RaceFactory();
@@ -53,9 +52,6 @@ void FactoryGet::uninit()
 
 	ItemTierFactory::mInstance->uninit();
 	delete ItemTierFactory::mInstance;
-
-	WeaponTypeFactory::mInstance->uninit();
-	delete WeaponTypeFactory::mInstance;
 
 	AmmoTypeFactory::mInstance->uninit();
 	delete AmmoTypeFactory::mInstance;
@@ -128,11 +124,6 @@ ItemTypeFactory * FactoryGet::getItemTypeFactory()
 ItemTierFactory * FactoryGet::getItemTierFactory()
 {
 	return ItemTierFactory::mInstance;
-}
-
-WeaponTypeFactory * FactoryGet::getWeaponTypeFactory()
-{
-	return WeaponTypeFactory::mInstance;
 }
 
 AmmoTypeFactory * FactoryGet::getAmmoTypeFactory()
