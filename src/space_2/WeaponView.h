@@ -12,9 +12,7 @@ class WeaponView : public Block
 {
 public:
 	// Constructor - Destructor
-	WeaponView(	Weapon *p_weapon,
-				double p_x = 0,
-				double p_y = 0);
+	WeaponView(	Weapon *p_weapon = NULL);
 	~WeaponView(void);
 
 	// Getters - Setters

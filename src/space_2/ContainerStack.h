@@ -38,6 +38,7 @@ public:
 
 	// Methods
 	void addItemTypeAllowed(ItemType* p_type);
+	void clearItemTypeAllowed();
 	void notifyItemStackChanged();
 
 	int incStackSize(int p_size, bool p_notify = true);

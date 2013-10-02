@@ -133,6 +133,11 @@ void ContainerStack::addItemTypeAllowed( ItemType* p_type )
 	this->mItemTypesAllowed.push_back(p_type);
 }
 
+void ContainerStack::clearItemTypeAllowed()
+{
+	this->mItemTypesAllowed.clear();
+}
+
 int ContainerStack::incStackSize( int p_size, bool p_notify )
 {
 	if(this->mItemStack != NULL)

@@ -48,7 +48,7 @@
 //*************************************************************
 // Constructor - Destructor
 //*************************************************************
-WeaponView::WeaponView( Weapon *p_weapon, double p_x, double p_y )
+WeaponView::WeaponView( Weapon *p_weapon )
 {
 	this->mWeapon = NULL;
 
@@ -57,7 +57,7 @@ WeaponView::WeaponView( Weapon *p_weapon, double p_x, double p_y )
 	this->setBackgroundColor(WEAPONVIEW_BACKCOLOR, true);
 	this->setBorderColor(WEAPONVIEW_BORDCOLOR, true);
 	this->setBorderSize(WEAPONVIEW_BORDSIZE, true);
-	this->setSelected(true);
+	this->setVisible(false);
 
 	this->mWeaponIcon.setWidth(WEAPONVIEW_WEAPONICON_SIZE);
 	this->mWeaponIcon.setHeight(WEAPONVIEW_WEAPONICON_SIZE);
@@ -90,6 +90,12 @@ WeaponView::WeaponView( Weapon *p_weapon, double p_x, double p_y )
 	this->mRangeInfo = new PopupBubble(&this->mRangeIcon);
 	this->mAngleInfo = new PopupBubble(&this->mAngleIcon);
 
+	// Bubble range
+	this->mRangeInfo->setText(	Resource::resource->getBundle()->getString("uiRangeInfo"));
+
+	// Bubble angle
+	this->mAngleInfo->setText(	Resource::resource->getBundle()->getString("uiAngleInfo"));
+
 	this->setWeapon(p_weapon);
 	this->updateAmmoCount();
 	this->updateAmmoIcon();
@@ -118,8 +124,11 @@ Weapon * WeaponView::getWeapon()
 
 void WeaponView::setWeapon( Weapon *p_weapon )
 {
-	this->mWeapon = p_weapon;
-	this->notifyWeaponChanged();
+	if(this->mWeapon != p_weapon)
+	{
+		this->mWeapon = p_weapon;
+		this->notifyWeaponChanged();
+	}
 }
 
 
@@ -128,7 +137,7 @@ void WeaponView::setWeapon( Weapon *p_weapon )
 //*************************************************************
 void WeaponView::update( sf::Event p_event )
 {
-	if(this->mWeapon != NULL)
+	if(this->isVisible())
 	{
 		// Update ui
 		this->mWeaponIcon.update(p_event);
@@ -146,13 +155,14 @@ void WeaponView::update( sf::Event p_event )
 		Block::update(p_event);
 
 		// Update actif
-		this->getWeapon()->setActif(this->isSelected());
+		if(this->isClicked())
+			this->mWeapon->setActif(!this->mWeapon->isActif());
 	}
 }
 
 void WeaponView::update()
 {
-	if(this->mWeapon != NULL)
+	if(this->isVisible())
 	{
 		this->mWeaponInfo->update();
 		this->mAmmoInfo->update();
@@ -175,7 +185,7 @@ void WeaponView::update()
 
 void WeaponView::updateAmmoIcon()
 {
-	if(this->mWeapon != NULL && this->getWeapon()->getAmmo() != NULL)
+	if(this->mWeapon != NULL && this->mWeapon->getAmmo() != NULL)
 	{
 		this->mAmmoIcon.setBorderColor(ToolsImage::hexaToColor(this->getWeapon()->getAmmo()->getAmmoType()->getColor()), true);
 		this->mAmmoIcon.setBackgroundImage(SpriteParameterFactory::getSpriteParameterItems()->getSpritePtr(this->getWeapon()->getAmmo()->getSpriteId()), true);
@@ -184,7 +194,7 @@ void WeaponView::updateAmmoIcon()
 
 void WeaponView::updateAmmoCount()
 {
-	if(this->mWeapon != NULL && this->getWeapon()->getAmmo() != NULL)
+	if(this->mWeapon != NULL && this->mWeapon->getAmmo() != NULL)
 	{
 		this->mAmmoCount.setText(Tools::buildStringWithInt(this->getWeapon()->getAmmoCount()) + "/" + Tools::buildStringWithInt(this->getWeapon()->getWeaponModel()->getAmmoMax()));
 		if(this->getWeapon()->getAmmoCount() == 0)
@@ -202,7 +212,7 @@ void WeaponView::updateAmmoCount()
 
 void WeaponView::updateRange()
 {
-	if(this->getWeapon()->isRangeOk())
+	if(this->mWeapon != NULL && this->mWeapon->isRangeOk())
 		this->mRangeIcon.setBackgroundImage(SpriteParameterFactory::getSpriteParameterIcon10X10()->getSpritePtr(IC_10X10_WEAPON_OK), true);
 	else
 		this->mRangeIcon.setBackgroundImage(SpriteParameterFactory::getSpriteParameterIcon10X10()->getSpritePtr(IC_10X10_WEAPON_NOK), true);
@@ -210,7 +220,7 @@ void WeaponView::updateRange()
 
 void WeaponView::updateAngle()
 {
-	if(this->getWeapon()->isAngleOk())
+	if(this->mWeapon != NULL && this->mWeapon->isAngleOk())
 		this->mAngleIcon.setBackgroundImage(SpriteParameterFactory::getSpriteParameterIcon10X10()->getSpritePtr(IC_10X10_WEAPON_OK), true);
 	else
 		this->mAngleIcon.setBackgroundImage(SpriteParameterFactory::getSpriteParameterIcon10X10()->getSpritePtr(IC_10X10_WEAPON_NOK), true);
@@ -224,7 +234,7 @@ void WeaponView::updateAmmoCountPosition()
 
 void WeaponView::draw()
 {
-	if(this->mWeapon != NULL)
+	if(this->isVisible())
 	{
 		// Draw block
 		Block::draw();
@@ -255,11 +265,7 @@ void WeaponView::notifyWeaponChanged()
 	{
 		this->mWeaponIcon.setBackgroundImage(SpriteParameterFactory::getSpriteParameterItems()->getSpritePtr(this->mWeapon->getWeaponModel()->getSpriteId()), true);
 
-		// Bubble range
-		this->mRangeInfo->setText(	Resource::resource->getBundle()->getString("uiRangeInfo"));
 		
-		// Bubble angle
-		this->mAngleInfo->setText(	Resource::resource->getBundle()->getString("uiAngleInfo"));
 
 		// Bubble Weapon
 		this->mWeaponInfo->addLine(	Resource::resource->getBundle()->getString("uiWeaponInfoName") + 
@@ -294,12 +300,12 @@ void WeaponView::notifyWeaponChanged()
 			this->mAmmoInfo->notifyDataSetChanged();
 		}
 	}
+	this->setVisible(this->mWeapon != NULL);
 }
 
 void WeaponView::notifyPositionChanged()
 {
 	Block::notifyPositionChanged();
-
 	this->mWeaponIcon.setPosition(	this->getX() + (this->getWidth() - this->mWeaponIcon.getWidth()) / 2,
 									this->getY() +  WEAPONVIEW_WEAPONICON_OFFSETY);
 
@@ -330,7 +336,6 @@ void WeaponView::drawReloading()
 		reloadingPercent = 1 - (this->getWeapon()->getFireRateTime() / this->getWeapon()->getWeaponModel()->getFireRate());
 	else
 		return;
-
 	ToolsImage::drawReloadPolygon(reloadingPercent, this, WEAPONVIEW_RELOAD_BACKCOLOR);
 }
 

@@ -179,9 +179,7 @@ void HangarShipWeaponView::notifyContainerWeaponsStacksChanged()
 		}
 
 		if(currentWeaponModel != NULL)
-		{
 			this->mCharacterShip->addWeapon(new Weapon(this->mCharacterShip, currentWeaponModel), false);
-		}
 	}
 	this->mCharacterShip->notifyWeaponsChanged();
 }

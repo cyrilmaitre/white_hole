@@ -23,10 +23,11 @@
 #define DASHBOARD_FONTSIZE					13
 #define DASHBOARD_LABELMARGINRIGHT			5
 #define DASHBOARD_LABELMARGINTOP			2
-#define DASHBOARD_UPDATETIME_TICK				1		// Sec
+#define DASHBOARD_UPDATETIME_TICK			1		// Sec
 #define TIMEPLAYED_MIN						1		// Sec
 #define TIMEPLAYED_HOUR						60		// Sec
 #define TIMEPLAYED_DAY						1440
+#define WEAPONVIEW_MAX						8
 
 
 //*************************************************************
@@ -44,6 +45,10 @@ UserInterface::UserInterface( Character* p_character )
 	this->mStationScreen = NULL;
 	this->mCharacter = NULL;
 	this->setCharacter(p_character);
+
+	// Weapons
+	for(int i = 0; i < WEAPONVIEW_MAX; i++)
+		this->mWeaponViews.push_back(new WeaponView());
 
 	// Window statics
 	this->mWindowShipSmall = new WindowShipSmall();
@@ -123,6 +128,9 @@ UserInterface::~UserInterface(void)
 		if(this->mWindowCargoStationBanks[i] != NULL)
 			delete this->mWindowCargoStationBanks[i];
 	}
+
+	for(int i = 0; i < this->mWeaponViews.size(); i++)
+		delete this->mWeaponViews[i];
 
 	delete this->mStationScreen;
 }
@@ -484,15 +492,11 @@ void UserInterface::notifyWeaponViewChanged()
 {
 	// Clear 
 	for(int i = 0; i < this->mWeaponViews.size(); i++)
-		delete this->mWeaponViews[i];
-	this->mWeaponViews.clear();
+		this->mWeaponViews[i]->setWeapon(NULL);
 
 	// Add new weapon
 	for(int i = 0; i < Game::game->getShipPiloted()->getWeaponsCount(); i++)
-		this->mWeaponViews.push_back(new WeaponView(Game::game->getShipPiloted()->getWeapon(i)));
-
-	// Update
-	this->updateWeaponPosition();
+		this->mWeaponViews[i]->setWeapon(Game::game->getShipPiloted()->getWeapon(i));
 }
 
 void UserInterface::notifyCharacterChanged()
