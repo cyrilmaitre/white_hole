@@ -116,6 +116,7 @@
     <ClCompile Include="ExperienceBar.cpp" />
     <ClCompile Include="FlashingLightEffect.cpp" />
     <ClCompile Include="HangarShipAddView.cpp" />
+    <ClCompile Include="HangarShipDetailView.cpp" />
     <ClCompile Include="HangarShipListView.cpp" />
     <ClCompile Include="HangarSlotManagementView.cpp" />
     <ClCompile Include="IdValueDouble.cpp" />
@@ -407,6 +408,7 @@
     <ClInclude Include="ExperienceBar.h" />
     <ClInclude Include="FlashingLightEffect.h" />
     <ClInclude Include="HangarShipAddView.h" />
+    <ClInclude Include="HangarShipDetailView.h" />
     <ClInclude Include="HangarShipListView.h" />
     <ClInclude Include="HangarSlotManagementView.h" />
     <ClInclude Include="IdValueDouble.h" />

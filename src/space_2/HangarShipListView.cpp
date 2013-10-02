@@ -32,7 +32,7 @@
 //*************************************************************
 HangarShipListView::HangarShipListView( CharacterShip* p_ship )
 {
-	this->mShip = NULL;
+	this->mCharacterShip = NULL;
 
 	this->mIcon.setSize(ICON_WIDTH, ICON_HEIGHT);
 	this->mIcon.setBackgroundColor(ICON_BACKGROUNDCOLOR, true);
@@ -52,7 +52,7 @@ HangarShipListView::HangarShipListView( CharacterShip* p_ship )
 	this->setBackgroundColor(BACKGROUNDCOLOR, true);
 	this->setBackgroundColorOver(BACKGROUNDCOLOR_OVER);
 
-	this->setShip(p_ship);
+	this->setCharacterShip(p_ship);
 }
 
 HangarShipListView::~HangarShipListView(void)
@@ -63,16 +63,16 @@ HangarShipListView::~HangarShipListView(void)
 //*************************************************************
 // Getters - Setters
 //*************************************************************
-CharacterShip* HangarShipListView::getShip()
+CharacterShip* HangarShipListView::getCharacterShip()
 {
-	return this->mShip;
+	return this->mCharacterShip;
 }
 
-void HangarShipListView::setShip( CharacterShip* p_ship )
+void HangarShipListView::setCharacterShip( CharacterShip* p_ship )
 {
-	if(this->mShip != p_ship)
+	if(this->mCharacterShip != p_ship)
 	{
-		this->mShip = p_ship;
+		this->mCharacterShip = p_ship;
 		this->notifyShipChanged();
 	}
 }
@@ -114,13 +114,13 @@ void HangarShipListView::draw()
 
 void HangarShipListView::notifyShipChanged()
 {
-	if(this->mShip != NULL)
+	if(this->mCharacterShip != NULL)
 	{
-		this->mIcon.setBackgroundImage(SpriteParameterFactory::getSpriteParameterItems()->getSpritePtr(this->mShip->getShipModel()->getSpriteId()));
-		this->mTBName.setText(this->mShip->getName());
-		this->mTBType.setText(this->mShip->getShipModel()->getName());
-		this->mTBLevel.setText(Resource::resource->getBundle()->getString("level") + ":" + Tools::getSpaceAfterColon() + Tools::formatNumber(this->mShip->getLevel()));
-		this->mIconPiloted.setVisible(this->mShip->isPiloted());
+		this->mIcon.setBackgroundImage(SpriteParameterFactory::getSpriteParameterItems()->getSpritePtr(this->mCharacterShip->getShipModel()->getSpriteId()));
+		this->mTBName.setText(this->mCharacterShip->getName());
+		this->mTBType.setText(this->mCharacterShip->getShipModel()->getName());
+		this->mTBLevel.setText(Resource::resource->getBundle()->getString("level") + ":" + Tools::getSpaceAfterColon() + Tools::formatNumber(this->mCharacterShip->getLevel()));
+		this->mIconPiloted.setVisible(this->mCharacterShip->isPiloted());
 	}
 }
 

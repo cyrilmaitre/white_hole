@@ -13,6 +13,7 @@
 #define SHIPLIST_PADDING				0
 #define SLOTS_MARGINTOP					10
 #define SHIPADD_MARGINTOP				50
+#define SHIPDETAIL_MARGINLEFT			20
 
 
 //*************************************************************
@@ -67,7 +68,11 @@ void StationScreenHangar::update()
 {
 	if(this->isVisible())
 	{
+		if(this->mShipList.isSelectionChanged())
+			this->notifyCharacterShipSelectedChanged();
+
 		this->mShipAddView.update();
+		this->mShipDetailView.update();
 	}
 }
 
@@ -78,6 +83,7 @@ void StationScreenHangar::update( sf::Event p_event )
 		this->mShipList.update(p_event);
 		this->mSlotManagementView.update(p_event);
 		this->mShipAddView.update(p_event);
+		this->mShipDetailView.update(p_event);
 	}
 	StationScreenRightPanel::update(p_event);
 }
@@ -87,6 +93,7 @@ void StationScreenHangar::updatePosition()
 	this->mShipList.setPosition(this->getContentX(), this->getContentY());
 	this->mSlotManagementView.setPosition(this->mShipList.getX() + (this->mShipList.getWidth() - this->mSlotManagementView.getWidth()) / 2, this->mShipList.getBottomY());
 	this->mShipAddView.setPosition(this->mShipList.getX(), this->mSlotManagementView.getBottomY() + SHIPADD_MARGINTOP);
+	this->mShipDetailView.setPosition(this->mShipList.getRightX() + SHIPDETAIL_MARGINLEFT, this->getContentY());
 }
 
 void StationScreenHangar::draw()
@@ -97,12 +104,14 @@ void StationScreenHangar::draw()
 		this->mSlotManagementView.draw();
 		this->mShipList.draw();
 		this->mShipAddView.draw();
+		this->mShipDetailView.draw();
 	}
 }
 
 void StationScreenHangar::notifySizeChanged()
 {
 	StationScreenRightPanel::notifySizeChanged();
+	this->mShipDetailView.setSize(this->getContentWidth() - this->mShipList.getWidth() - SHIPDETAIL_MARGINLEFT, this->getContentHeight());
 }
 
 void StationScreenHangar::notifyPositionChanged()
@@ -116,4 +125,13 @@ void StationScreenHangar::notifyCharacterChanged()
 	StationScreenRightPanel::notifyCharacterChanged();
 	this->mSlotManagementView.setCharacter(this->getCharacter());
 	this->mShipAddView.setCharacter(this->getCharacter());
+}
+
+void StationScreenHangar::notifyCharacterShipSelectedChanged()
+{
+	HangarShipListView* selectedShipView = (HangarShipListView*)this->mShipList.getSelection();
+	if(selectedShipView != NULL)
+	{
+		this->mShipDetailView.setCharacterShip(selectedShipView->getCharacterShip());
+	}
 }

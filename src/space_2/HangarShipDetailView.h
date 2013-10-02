@@ -1,19 +1,17 @@
 #pragma once
-#include "Listable.h"
 #include "CharacterShip.h"
+#include "FieldSet.h"
 #include "Image.h"
 #include "TextBox.h"
-#include "PopupBubble.h"
+#include "Button.h"
 
-// Define
-#define HANGARSHIPLISTVIEW_WIDTH	350
 
-class HangarShipListView : public Listable
+class HangarShipDetailView : public FieldSet
 {
 public:
-	// Constructor - Destructor
-	HangarShipListView(CharacterShip* p_ship);
-	~HangarShipListView(void);
+	// Constructor - Desturctor
+	HangarShipDetailView(void);
+	~HangarShipDetailView(void);
 
 	// Getters - Setters
 	CharacterShip* getCharacterShip();
@@ -22,18 +20,16 @@ public:
 	// Methods
 	void update();
 	void update(sf::Event p_event);
-	void updatePosition();
+	void updatePositon();
 	void draw();
-	void notifyShipChanged();
 	void notifyPositionChanged();
-	void notifySelectedChanged();
+	void notifyCharacterShipChanged();
 
 
 private:
 	// Attributs
 	CharacterShip* mCharacterShip;
 	Image mIcon;
-	Image mIconPiloted;
 	TextBox mTBName;
 	TextBox mTBType;
 	TextBox mTBLevel;
