@@ -10,7 +10,7 @@
 #include "ToolsImage.h"
 #include "NetworkJobManager.h"
 #include "CharacterShipUpdate.h"
-#include "CharacterShipWeaponUpdate.h"
+#include "CharacterShipWeaponCreate.h"
 
 
 //*************************************************************
@@ -342,6 +342,6 @@ void CharacterShip::notifyWeaponsChanged()
 		UserInterface::mUserInterface->notifyWeaponViewChanged();
 
 	if(this->mLoaded)
-		NetworkJobManager::getInstance()->addJob(new CharacterShipWeaponUpdate(this));
+		NetworkJobManager::getInstance()->addJob(new CharacterShipWeaponCreate(this));
 }
 

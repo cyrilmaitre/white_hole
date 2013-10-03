@@ -102,7 +102,7 @@
     <ClCompile Include="CharacterShipItemStackUpdate.cpp" />
     <ClCompile Include="CharacterShipRemove.cpp" />
     <ClCompile Include="CharacterShipUpdate.cpp" />
-    <ClCompile Include="CharacterShipWeaponUpdate.cpp" />
+    <ClCompile Include="CharacterShipWeaponCreate.cpp" />
     <ClCompile Include="CharacterUpdate.cpp" />
     <ClCompile Include="ContainerDropDown.cpp" />
     <ClCompile Include="ContainerWeaponStackView.cpp" />
@@ -396,7 +396,7 @@
     <ClInclude Include="CharacterShipItemStackUpdate.h" />
     <ClInclude Include="CharacterShipRemove.h" />
     <ClInclude Include="CharacterShipUpdate.h" />
-    <ClInclude Include="CharacterShipWeaponUpdate.h" />
+    <ClInclude Include="CharacterShipWeaponCreate.h" />
     <ClInclude Include="CharacterUpdate.h" />
     <ClInclude Include="ContainerDropDown.h" />
     <ClInclude Include="ContainerWeaponStackView.h" />

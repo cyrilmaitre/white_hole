@@ -3,12 +3,12 @@
 #include "NetworkJob.h"
 
 
-class CharacterShipWeaponUpdate : public NetworkJob
+class CharacterShipWeaponCreate : public NetworkJob
 {
 public:
 	// Constructor - Destructor
-	CharacterShipWeaponUpdate(CharacterShip* p_ship);
-	~CharacterShipWeaponUpdate(void);
+	CharacterShipWeaponCreate(CharacterShip* p_ship);
+	~CharacterShipWeaponCreate(void);
 
 	// Methods
 	void job();
