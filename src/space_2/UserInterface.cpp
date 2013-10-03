@@ -2,6 +2,7 @@
 #include "Game.h"
 #include "ContainerStackViewManager.h"
 #include "CharacterBank.h"
+#include "ImageGIFFactory.h"
 
 
 //*************************************************************
@@ -28,6 +29,7 @@
 #define TIMEPLAYED_HOUR						60		// Sec
 #define TIMEPLAYED_DAY						1440
 #define WEAPONVIEW_MAX						8
+#define SAVINGGIF_MARGIN					10
 
 
 //*************************************************************
@@ -78,6 +80,9 @@ UserInterface::UserInterface( Character* p_character )
 	this->mWindowDynamicsStation.push_back(this->mWindowCargoStationShip);
 	
 	// Other stuffs
+	this->mSavingGif = ImageGIFFactory::getSavingGif();
+	//this->mSavingGif->setVisible(false);
+
 	this->mStationScreen = new StationScreen(this->getCharacter());
 	this->mXpBarCharacter.setSize(XPBAR_CHARACTER_WIDTH - this->mXpBarCharacter.getBorderSize() * 2, XPBAR_CHARACTER_HEIGHT);
 	this->mXpBarCharacterShip.setSize(XPBAR_CHARACTER_WIDTH - this->mXpBarCharacter.getBorderSize() * 2, XPBAR_CHARACTER_HEIGHT);
@@ -132,6 +137,7 @@ UserInterface::~UserInterface(void)
 	for(int i = 0; i < this->mWeaponViews.size(); i++)
 		delete this->mWeaponViews[i];
 
+	delete this->mSavingGif;
 	delete this->mStationScreen;
 }
 
@@ -151,6 +157,18 @@ void UserInterface::setCharacter( Character* p_character )
 		this->mCharacter = p_character;
 		this->notifyCharacterChanged();
 	}
+}
+
+bool UserInterface::isSavingGifVisible()
+{
+	sf::Lock lock(this->mSavingGifMutex);
+	return this->mSavingGif->isVisible();
+}
+
+void UserInterface::setSavingGifVisible( bool p_value )
+{
+	sf::Lock lock(this->mSavingGifMutex);
+	this->mSavingGif->setVisible(p_value);
 }
 
 WindowCharacter* UserInterface::getWindowCharacter()
@@ -313,44 +331,15 @@ void UserInterface::handleScreenAppResized()
 
 void UserInterface::update(sf::Event p_event)
 {
-	// Window dynamics
-	this->updateWindowDynamics(p_event);
 
-	// Window statics
-	this->updateWindowStatics(p_event);
-
-	// Update others
-	this->mMenuQuick.update(p_event);
-	this->mXpBarCharacter.update(p_event);
-	this->mXpBarCharacterShip.update(p_event);
-	for(int i = 0; i < this->mWeaponViews.size(); i++)
-		this->mWeaponViews[i]->update(p_event);
 }
 
-void UserInterface::updateWindowStatics( sf::Event p_event )
+void UserInterface::updateInStation( sf::Event p_event )
 {
-	this->mWindowShipSmall->update(p_event);
-	if(this->mWindowSelected != NULL)
-		this->mWindowSelected->update(p_event);
-}
+	// Update
+	this->update(p_event);
 
-void UserInterface::updateWindowDynamics(sf::Event p_event)
-{
-	for(int i = 0; i < this->mWindowDynamics.size(); i++)
-		this->mWindowDynamics[i]->update(p_event);
-
-	for(int i = 0; i < this->mWindowDynamics.size(); i++)
-	{
-		if(this->mWindowDynamics[i]->hasFocus())
-		{
-			this->moveWindowDynamicToBegin(i);
-			break;
-		}
-	}
-}
-
-void UserInterface::updateWindowDynamicsStation( sf::Event p_event )
-{
+	// Update widnows dynamics
 	for(int i = 0; i < this->mWindowDynamicsStation.size(); i++)
 		this->mWindowDynamicsStation[i]->update(p_event);
 
@@ -364,21 +353,81 @@ void UserInterface::updateWindowDynamicsStation( sf::Event p_event )
 	}
 }
 
+void UserInterface::updateInGame( sf::Event p_event )
+{
+	// Update
+	this->update(p_event);
+	this->mMenuQuick.update(p_event);
+	this->mXpBarCharacter.update(p_event);
+	this->mXpBarCharacterShip.update(p_event);
+	for(int i = 0; i < this->mWeaponViews.size(); i++)
+		this->mWeaponViews[i]->update(p_event);
+
+	// Update windows static
+	this->mWindowShipSmall->update(p_event);
+	if(this->mWindowSelected != NULL)
+		this->mWindowSelected->update(p_event);
+
+	// Update windows dynamics
+	for(int i = 0; i < this->mWindowDynamics.size(); i++)
+		this->mWindowDynamics[i]->update(p_event);
+
+	for(int i = 0; i < this->mWindowDynamics.size(); i++)
+	{
+		if(this->mWindowDynamics[i]->hasFocus())
+		{
+			this->moveWindowDynamicToBegin(i);
+			break;
+		}
+	}
+}
+
 void UserInterface::update()
 {
-	// Window dynamics
-	this->updateWindowDynamics();
+	// Update
+	if(this->isSavingGifVisible())
+		this->mSavingGif->update();
 
-	// Window statics
-	this->updateWindowStatics();
-	
-	// Update others
+	// Update windows popup
+	for(int i = 0; i < this->mWindowPopups.size(); i++)
+	{
+		if(!this->mWindowPopups[i]->isOpen())
+		{
+			this->removeWindowPopup(this->mWindowPopups[i]);
+			i--;
+		}
+	}
+}
+
+void UserInterface::updateInStation()
+{
+	// Update
+	this->update();
+
+	// Update windows dynamics
+	for(int i = 0; i < this->mWindowDynamicsStation.size(); i++)
+		this->mWindowDynamicsStation[i]->update();
+}
+
+void UserInterface::updateInGame()
+{
+	// Update
+	this->update();
 	this->mMenuQuick.update();
 	this->mXpBarCharacter.update();
 	this->mXpBarCharacterShip.update();
 	for(int i = 0; i < this->mWeaponViews.size(); i++)
 		this->mWeaponViews[i]->update();
 	this->updateDashboard();
+
+	// Update windows static
+	this->mWindowShipSmall->update();
+	if(this->mWindowSelected != NULL)
+		this->mWindowSelected->update();
+
+	// Update windows dynamics
+	for(int i = 0; i < this->mWindowDynamics.size(); i++)
+		this->mWindowDynamics[i]->update();
 }
 
 void UserInterface::updateDashboard()
@@ -403,48 +452,30 @@ void UserInterface::updateDashboard()
 	this->mDashboardPosition.setText("[" + Tools::formatNumber((int)Game::game->getShipPiloted()->getX(SECTOR_PLANE)) + ";" + Tools::formatNumber((int)Game::game->getShipPiloted()->getY(SECTOR_PLANE)) + "]");
 }
 
-void UserInterface::updateWindowPopups()
-{
-	for(int i = 0; i < this->mWindowPopups.size(); i++)
-	{
-		if(!this->mWindowPopups[i]->isOpen())
-		{
-			this->removeWindowPopup(this->mWindowPopups[i]);
-			i--;
-		}
-	}
-}
-
-void UserInterface::updateWindowStatics()
-{
-	this->mWindowShipSmall->update();
-	if(this->mWindowSelected != NULL)
-		this->mWindowSelected->update();
-}
-
-void UserInterface::updateWindowDynamics()
-{
-	// Dynamics
-	for(int i = 0; i < this->mWindowDynamics.size(); i++)
-		this->mWindowDynamics[i]->update();
-
-	// Popups
-	this->updateWindowPopups();
-}
-
-void UserInterface::updateWindowDynamicsStation()
-{
-	// Dynamics
-	for(int i = 0; i < this->mWindowDynamicsStation.size(); i++)
-		this->mWindowDynamicsStation[i]->update();
-
-	// Popups
-	this->updateWindowPopups();
-}
-
 void UserInterface::draw()
 {
-	// Draw others
+	// Draw saving gif
+	if(this->isSavingGifVisible())
+		this->mSavingGif->draw();
+
+	// Draw dragged item (if exist)
+	ContainerStackViewManager::getInstance()->draw();
+}
+
+void UserInterface::drawInStation()
+{
+	// Draw
+	this->draw();
+
+	// Draw windows dynamics
+	for(int i = this->mWindowDynamicsStation.size() - 1; i >= 0; i--)
+		this->mWindowDynamicsStation[i]->draw();
+}
+
+void UserInterface::drawInGame()
+{
+	// Draw
+	this->draw();
 	Resource::resource->getApp()->draw(this->mInterfaceBottom);
 	this->mMenuQuick.draw();
 	this->mXpBarCharacter.draw();
@@ -459,33 +490,14 @@ void UserInterface::draw()
 	this->mDashboardPositionLabel.draw();
 	this->mDashboardPosition.draw();
 
-	// Draw window statics
-	this->drawWindowStatics();
-	
-	// Draw window dynamics
-	this->drawWindowDynamics();
-
-	// Draw dragged item (if exist)
-	ContainerStackViewManager::getInstance()->draw();
-}
-
-void UserInterface::drawWindowStatics()
-{
+	// Draw windows static
 	this->mWindowShipSmall->draw();
 	if(this->mWindowSelected != NULL)
 		this->mWindowSelected->draw();
-}
 
-void UserInterface::drawWindowDynamics()
-{
+	// Draw windows dynamic
 	for(int i = this->mWindowDynamics.size() - 1; i >= 0; i--)
 		this->mWindowDynamics[i]->draw();
-}
-
-void UserInterface::drawWindowDynamicsStation()
-{
-	for(int i = this->mWindowDynamicsStation.size() - 1; i >= 0; i--)
-		this->mWindowDynamicsStation[i]->draw();
 }
 
 void UserInterface::notifyWeaponViewChanged()
@@ -554,6 +566,9 @@ void UserInterface::updatePosition()
 
 	// Menu Quick
 	this->mMenuQuick.updatePosition();
+
+	// Saving Gif
+	this->mSavingGif->setPosition(Resource::resource->getViewUi()->getSize().x - SAVINGGIF_MARGIN - this->mSavingGif->getWidth(), SAVINGGIF_MARGIN);
 }
 
 void UserInterface::updateWeaponPosition()
@@ -578,4 +593,5 @@ void UserInterface::moveWindowDynamicStationToBegin( int p_index )
 	this->mWindowDynamicsStation.erase(this->mWindowDynamicsStation.begin() + p_index);
 	this->mWindowDynamicsStation.insert(this->mWindowDynamicsStation.begin(), tmpWindow);
 }
+
 

@@ -20,6 +20,7 @@
 #define SP_ID_IMPACT_LASER				IMG_IMPACT_LASER
 #define SP_ID_IMPACT_EXPLOSION			IMG_IMPACT_EXPLOSION
 #define SP_ID_LOADING_SQUARE_CIRCLE		IMG_LOADING_SQUARE_CIRCLE
+#define SP_ID_SAVING_GIF				IMG_SAVING_GIF
 
 class SpriteParameterFactory
 {
@@ -42,6 +43,7 @@ public:
 	static SpriteParameter* getSpriteParameterImpactLaser(bool useLoaded = true);
 	static SpriteParameter* getSpriteParameterImpactExplosion(bool useLoaded = true);
 	static SpriteParameter* getSpriteParameterLoadingSquareCircle(bool useLoaded = true);
+	static SpriteParameter* getSpriteParameterSavingGif(bool useLoaded = true);
 	static SpriteParameter* getSpriteParameter(std::string id, int spriteColumn, int spriteLine, bool useLoaded = true);
 	static void uninit();
 

@@ -160,7 +160,7 @@ void Game::update( sf::Event p_event )
 	EventManager::eventManager->handlePlayerAction(p_event);
 
 	// Update UserInterface
-	Game::game->getUserInterface()->update(p_event);
+	Game::game->getUserInterface()->updateInGame(p_event);
 
 	// Update show Stats
 	RunningStats::update(p_event);
@@ -208,7 +208,7 @@ void Game::update()
 	NetworkJobManager::getInstance()->update();
 
 	// Update UserInterface
-	this->getUserInterface()->update();
+	this->getUserInterface()->updateInGame();
 
 	// Event Manager Post
 	EventManager::eventManager->handlePlayerActionPost();

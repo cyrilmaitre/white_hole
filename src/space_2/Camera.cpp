@@ -129,7 +129,7 @@ void Camera::draw()
 {
 	Game::game->getMap()->draw();
 	AnimationManager::draw();
-	Game::game->getUserInterface()->draw();
+	Game::game->getUserInterface()->drawInGame();
 	RunningStats::draw();
 }
 

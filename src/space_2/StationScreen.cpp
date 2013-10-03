@@ -202,7 +202,7 @@ void StationScreen::update()
 	RunningStats::update();
 
 	// Update Windows
-	UserInterface::mUserInterface->updateWindowDynamicsStation();
+	UserInterface::mUserInterface->updateInStation();
 
 	// Update character
 	this->getCharacter()->update();
@@ -265,7 +265,7 @@ void StationScreen::update( sf::Event p_event )
 	RunningStats::update(p_event);
 
 	// Update windows
-	UserInterface::mUserInterface->updateWindowDynamicsStation(p_event);
+	UserInterface::mUserInterface->updateInStation(p_event);
 
 	// Update left menu
 	this->mLeftMenu->update(p_event);	
@@ -282,9 +282,7 @@ void StationScreen::draw()
 	if(this->mRightPanel != NULL)
 		this->mRightPanel->draw();
 
-	UserInterface::mUserInterface->drawWindowDynamicsStation();
-	ContainerStackViewManager::getInstance()->draw();
-
+	UserInterface::mUserInterface->drawInStation();
 	RunningStats::draw();
 }
 

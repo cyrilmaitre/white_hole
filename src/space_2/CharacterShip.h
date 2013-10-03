@@ -56,11 +56,6 @@ public:
 	void incSkillPoints(int p_inc);
 	void decSkillPoints();
 	void incLevel();
-	void incExperience(long p_inc);
-
-	void notifyNameChanged();
-	void notifySkillPointsChanged();
-	void notifyPilotedChanged();
 	void notifyWeaponsChanged();
 
 

@@ -30,10 +30,7 @@ public:
 	float getDurationInSeconds();
 
 	int getLoop();
-
 	sf::Sprite& getSprite();
-	int getWidth();
-	int getHeight();
 
 	// Graphics
 	void update();

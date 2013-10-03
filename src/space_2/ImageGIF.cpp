@@ -15,6 +15,7 @@ ImageGIF::ImageGIF( int p_nbFrame, int p_offsetX, int p_offsetY, float p_frequen
 	this->mOffsetY					= p_offsetY;
 	this->mFrequency				= p_frequency;
 	this->mSprite.setTexture(*p_texture);
+	this->setSize(this->mSprite.getLocalBounds().width / this->mFrameCount, this->mSprite.getLocalBounds().height);
 
 	this->update();
 	this->notifyPositionChanged();
@@ -29,6 +30,7 @@ ImageGIF::ImageGIF( SpriteParameter* p_sprite, float p_frequency, bool p_spriteD
 	this->mFrameCount				= this->mSpriteParameter->getSpriteColumns();
 	this->mFrequency				= p_frequency;
 	this->mLoop						= 0;
+	this->setSize(p_sprite->getSpriteWidth(), p_sprite->getSpriteHeight());
 
 	this->update();
 	this->notifyPositionChanged();
@@ -60,22 +62,6 @@ sf::Sprite& ImageGIF::getSprite()
 		return this->mSpriteParameter->getSprite();
 	else
 		return this->mSprite;
-}
-
-int ImageGIF::getWidth()
-{
-	if(this->mSpriteParameter != NULL)
-		return this->mSpriteParameter->getSpriteWidth();
-	else
-		return this->mSprite.getLocalBounds().width / this->mFrameCount;
-}
-
-int ImageGIF::getHeight()
-{
-	if(this->mSpriteParameter != NULL)
-		return this->mSpriteParameter->getSpriteHeight();
-	else
-		return this->mSprite.getLocalBounds().height;
 }
 
 int ImageGIF::getLoop()

@@ -40,6 +40,7 @@
 #define IMG_ICON64X64						"icon_64x64.png"
 #define IMG_SPACE_BACKGROUND				"space_background.png"
 #define IMG_LOADING_SQUARE_CIRCLE			"loading_squares_circle.png"
+#define IMG_SAVING_GIF						"saving_gif.png"
 #define IMG_SCROLLBAR						"scrollbar.png"
 #define IMG_RACE							"race.png"
 #define IMG_AVATAR							"avatar.png"

@@ -20,6 +20,7 @@
 #include "WindowPopup.h"
 #include "FieldSet.h"
 #include "Clock.h"
+#include "ImageGIF.h"
 
 // Define
 #define INTERFACEBOTTOM_WIDTH				775
@@ -35,6 +36,9 @@ public:
 	// Getters - Setters
 	Character* getCharacter();
 	void setCharacter(Character* p_character);
+
+	bool isSavingGifVisible();
+	void setSavingGifVisible(bool p_value);
 
 	WindowShipSmall* getWindowShipSmall();
 	WindowCharacter* getWindowCharacter();
@@ -64,23 +68,22 @@ public:
 	// Methode	
 	void addWindowPopup(WindowPopup* p_window);
 	void removeWindowPopup(WindowPopup* p_window);
+
 	void update(sf::Event p_event);
-	void updateWindowStatics(sf::Event p_event);
-	void updateWindowDynamics(sf::Event p_event);
-	void updateWindowDynamicsStation(sf::Event p_event);
+	void updateInStation(sf::Event p_event);
+	void updateInGame(sf::Event p_event);
+
 	void update();
+	void updateInStation();
+	void updateInGame();
+
+	void draw();
+	void drawInStation();
+	void drawInGame();
+
 	void updateDashboard();
-	void updateWindowStatics();
-	void updateWindowDynamics();
-	void updateWindowDynamicsStation();
 	void updatePosition();
 	void updateWeaponPosition();
-	void updateWindowPopups();
-	void draw();
-	void drawWindowStatics();
-	void drawWindowDynamics();
-	void drawWindowDynamicsStation();
-
 	void handleScreenAppResized();
 	void notifyWeaponViewChanged();
 	void notifyCharacterChanged();
@@ -115,6 +118,10 @@ private:
 	StationScreen* mStationScreen;
 
 	std::vector<WindowPopup*> mWindowPopups;
+
+	// Saving
+	ImageGIF* mSavingGif;
+	sf::Mutex mSavingGifMutex;
 
 	// Interface bottom
 	MenuQuick mMenuQuick;

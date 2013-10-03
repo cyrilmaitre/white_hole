@@ -164,11 +164,7 @@ long Character::getTimePlayed()
 
 void Character::setTimePlayed( long p_time )
 {
-	if(this->mTimePlayed != p_time)
-	{
-		this->mTimePlayed = p_time;
-		this->notifyTimePlayedChanged();
-	}
+	this->mTimePlayed = p_time;
 }
 
 bool Character::isAlive()
@@ -203,11 +199,7 @@ int Character::getHangarSpace()
 
 void Character::setHangarSpace( int p_space )
 {
-	if(this->mHangarSpace != p_space)
-	{
-		this->mHangarSpace = p_space;
-		this->notifyHangarSpaceChanged();
-	}
+	this->mHangarSpace = p_space;
 }
 
 User* Character::getUser()
@@ -260,11 +252,7 @@ void Character::setSkillPoints( int p_points )
 	if(p_points < 0)
 		p_points = 0;
 
-	if(this->mSkillPoints != p_points)
-	{
-		this->mSkillPoints = p_points;
-		this->notifySkillPointsChanged();
-	}
+	this->mSkillPoints = p_points;
 }
 
 bool Character::hasSkillPoints()
@@ -547,45 +535,4 @@ void Character::createBase()
 	this->mSkillCharacters[7] = new SkillCharacter(FactoryGet::getSkillFactory()->getSkillSalvaging(), this);
 	this->mSkillCharacters[8] = new SkillCharacter(FactoryGet::getSkillFactory()->getSkillConstruction(), this);
 }
-
-void Character::notifyTimePlayedChanged()
-{
-	if(this->mLoaded)
-		NetworkJobManager::getInstance()->addJob(new CharacterUpdate(this));
-}
-
-void Character::notifySkillPointsChanged()
-{
-	if(this->mLoaded)
-		NetworkJobManager::getInstance()->addJob(new CharacterUpdate(this));
-}
-
-void Character::notifyHangarSpaceChanged()
-{
-	if(this->mLoaded)
-		NetworkJobManager::getInstance()->addJob(new CharacterUpdate(this));
-}
-
-void Character::notifyExperienceChanged()
-{
-	Levelable::notifyExperienceChanged();
-	if(this->mLoaded)
-		NetworkJobManager::getInstance()->addJob(new CharacterUpdate(this));
-}
-
-void Character::notifyLevelChanged()
-{
-	Levelable::notifyLevelChanged();
-	if(this->mLoaded)
-		NetworkJobManager::getInstance()->addJob(new CharacterUpdate(this));
-}
-
-void Character::notifyCreditChanged()
-{
-	if(this->mLoaded)
-		NetworkJobManager::getInstance()->addJob(new CharacterUpdate(this));
-}
-
-
-
 

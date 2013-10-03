@@ -11,6 +11,7 @@
 #include "NetworkJobManager.h"
 #include "CharacterShipUpdate.h"
 #include "CharacterShipWeaponCreate.h"
+#include "CharacterUpdate.h"
 
 
 //*************************************************************
@@ -71,11 +72,7 @@ std::string CharacterShip::getName()
 
 void CharacterShip::setName( std::string p_name )
 {
-	if(this->mName != p_name)
-	{
-		this->mName = p_name;
-		this->notifyNameChanged();
-	}
+	this->mName = p_name;
 }
 
 bool CharacterShip::hasSkillPoints()
@@ -93,11 +90,7 @@ void CharacterShip::setSkillPoints( int p_points )
 	if(p_points < 0)
 		p_points = 0;
 
-	if(this->mSkillPoints != p_points)
-	{
-		this->mSkillPoints = p_points;
-		this->notifySkillPointsChanged();
-	}
+	this->mSkillPoints = p_points;
 }
 
 void CharacterShip::setX( double p_x )
@@ -119,11 +112,7 @@ bool CharacterShip::isPiloted()
 
 void CharacterShip::setPiloted(bool p_piloted)
 {
-	if(this->mPiloted != p_piloted)
-	{
-		this->mPiloted = p_piloted;
-		this->notifyPilotedChanged();
-	}
+	this->mPiloted = p_piloted;
 }
 
 NpcType* CharacterShip::getNpcType()
@@ -308,31 +297,6 @@ void CharacterShip::incLevel()
 {
 	Levelable::incLevel();
 	this->incSkillPoints(this->getLevelConfig()->getSkillPointsOnLevelUp());
-	NetworkJobManager::getInstance()->addJob(new CharacterShipUpdate(this));
-}
-
-void CharacterShip::incExperience( long p_inc )
-{
-	Levelable::incExperience(p_inc);
-	NetworkJobManager::getInstance()->addJob(new CharacterShipUpdate(this));
-}
-
-void CharacterShip::notifySkillPointsChanged()
-{
-	if(this->mLoaded)
-		NetworkJobManager::getInstance()->addJob(new CharacterShipUpdate(this));
-}
-
-void CharacterShip::notifyNameChanged()
-{
-	if(this->mLoaded)
-		NetworkJobManager::getInstance()->addJob(new CharacterShipUpdate(this));
-}
-
-void CharacterShip::notifyPilotedChanged()
-{
-	if(this->mLoaded)
-		NetworkJobManager::getInstance()->addJob(new CharacterShipUpdate(this));
 }
 
 void CharacterShip::notifyWeaponsChanged()
