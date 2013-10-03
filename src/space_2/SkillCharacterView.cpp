@@ -29,7 +29,7 @@
 //*************************************************************
 // Constructor - Destructor
 //*************************************************************
-SkillCharacterView::SkillCharacterView( SkillCharacter* p_skill, double p_x, double p_y )
+SkillCharacterView::SkillCharacterView(void)
 {
 	this->mSkillCharacter = NULL;
 	this->mSkillSprite = NULL;
@@ -43,9 +43,7 @@ SkillCharacterView::SkillCharacterView( SkillCharacter* p_skill, double p_x, dou
 	this->setBackgroundColor(SKILLVIEW_BACK_COLOR, true);
 	this->setBorderSize(SKILLVIEW_BORD_SIZE, true);
 	this->setBorderColor(SKILLVIEW_BORD_COLOR, true);
-
 	this->setEditable(true);
-	this->setSkillCharacter(p_skill);
 
 	this->mButtonInc = new Button();
 	this->mButtonInc->setSize(SKILLVIEW_BUTTON_WIDTH, SKILLVIEW_BUTTON_HEiGHT);
@@ -58,15 +56,12 @@ SkillCharacterView::SkillCharacterView( SkillCharacter* p_skill, double p_x, dou
 	this->mTBName = new TextBox();
 	this->mTBName->setFontSize(SKILLVIEW_TB_NAME_FONTSIZE);
 	this->mTBName->setFontColor(SKILLVIEW_TB_NAME_FONTCOLOR);
-	this->mTBName->setText(this->getSkillCharacter()->getSkill()->getName());
 
 	this->mTBLevel = new TextBox();
 	this->mTBLevel->setFontSize(SKILLVIEW_TB_LEVEL_FONTSIZE);
 	this->mTBLevel->setFontColor(SKILLVIEW_TB_LEVEL_FONTCOLOR);
 
 	this->mPUBLevel = new PopupBubble(this->mTBLevel);
-
-	this->notifyLevelChanged();
 }
 
 
@@ -102,11 +97,15 @@ SkillCharacter* SkillCharacterView::getSkillCharacter()
 
 void SkillCharacterView::setSkillCharacter( SkillCharacter* p_skill )
 {
-	this->mSkillCharacter = p_skill;
+	if(this->mSkillCharacter != p_skill)
+	{
+		this->mSkillCharacter = p_skill;
+		if(this->mSkillSprite != NULL)
+			delete this->mSkillSprite;
+		this->mSkillSprite = SpriteParameterFactory::getSpriteParameterSkill(true)->getSpritePtr(this->getSkillCharacter()->getSkill()->getSpriteId(), SKILLVIEW_IMG_WIDTH, SKILLVIEW_IMG_HEIGHT);
 
-	if(this->mSkillSprite != NULL)
-		delete this->mSkillSprite;
-	this->mSkillSprite = SpriteParameterFactory::getSpriteParameterSkill(true)->getSpritePtr(this->getSkillCharacter()->getSkill()->getSpriteId(), SKILLVIEW_IMG_WIDTH, SKILLVIEW_IMG_HEIGHT);
+		this->notifySkillCharacterChanged();
+	}
 }
 
 bool SkillCharacterView::isEditable()
@@ -126,7 +125,7 @@ void SkillCharacterView::setEditable( bool p_editable )
 void SkillCharacterView::cancel()
 {
 	this->getSkillCharacter()->cancelLevelPending();
-	this->notifyLevelChanged();
+	this->notifySkillCharacterChanged();
 }
 
 void SkillCharacterView::update( sf::Event p_event )
@@ -145,13 +144,13 @@ void SkillCharacterView::update( sf::Event p_event )
 			if(this->mButtonInc->isClicked())
 			{
 				this->getSkillCharacter()->levelUp();
-				this->notifyLevelChanged();
+				this->notifySkillCharacterChanged();
 			}
 
 			if(this->mButtonDec->isClicked())
 			{
 				this->getSkillCharacter()->levelDown();
-				this->notifyLevelChanged();
+				this->notifySkillCharacterChanged();
 			}
 		}
 	}
@@ -256,14 +255,13 @@ void SkillCharacterView::notifyPositionChanged()
 	this->updatePosition();
 }
 
-void SkillCharacterView::notifyLevelChanged()
+void SkillCharacterView::notifySkillCharacterChanged()
 {
-	// Update Level
-	this->mTBLevel->setText(Tools::buildStringWithInt(this->getSkillCharacter()->getTotalLevel())+'%');
-
-	// Update level detail
-	this->updateLevelDetail();
-
-	// Update position
-	this->updatePosition();
+	if(this->mSkillCharacter != NULL)
+	{
+		this->mTBName->setText(this->getSkillCharacter()->getSkill()->getName());
+		this->mTBLevel->setText(Tools::formatNumber(this->getSkillCharacter()->getTotalLevel())+'%');
+		this->updateLevelDetail();
+		this->updatePosition();
+	}
 }

@@ -336,9 +336,6 @@ void UserInterface::update(sf::Event p_event)
 
 void UserInterface::updateInStation( sf::Event p_event )
 {
-	// Update
-	this->update(p_event);
-
 	// Update widnows dynamics
 	for(int i = 0; i < this->mWindowDynamicsStation.size(); i++)
 		this->mWindowDynamicsStation[i]->update(p_event);
@@ -351,23 +348,13 @@ void UserInterface::updateInStation( sf::Event p_event )
 			break;
 		}
 	}
+
+	// Update
+	this->update(p_event);
 }
 
 void UserInterface::updateInGame( sf::Event p_event )
 {
-	// Update
-	this->update(p_event);
-	this->mMenuQuick.update(p_event);
-	this->mXpBarCharacter.update(p_event);
-	this->mXpBarCharacterShip.update(p_event);
-	for(int i = 0; i < this->mWeaponViews.size(); i++)
-		this->mWeaponViews[i]->update(p_event);
-
-	// Update windows static
-	this->mWindowShipSmall->update(p_event);
-	if(this->mWindowSelected != NULL)
-		this->mWindowSelected->update(p_event);
-
 	// Update windows dynamics
 	for(int i = 0; i < this->mWindowDynamics.size(); i++)
 		this->mWindowDynamics[i]->update(p_event);
@@ -380,6 +367,19 @@ void UserInterface::updateInGame( sf::Event p_event )
 			break;
 		}
 	}
+
+	// Update windows static
+	this->mWindowShipSmall->update(p_event);
+	if(this->mWindowSelected != NULL)
+		this->mWindowSelected->update(p_event);
+
+	// Update
+	this->update(p_event);
+	this->mMenuQuick.update(p_event);
+	this->mXpBarCharacter.update(p_event);
+	this->mXpBarCharacterShip.update(p_event);
+	for(int i = 0; i < this->mWeaponViews.size(); i++)
+		this->mWeaponViews[i]->update(p_event);
 }
 
 void UserInterface::update()
@@ -464,18 +464,17 @@ void UserInterface::draw()
 
 void UserInterface::drawInStation()
 {
-	// Draw
-	this->draw();
-
 	// Draw windows dynamics
 	for(int i = this->mWindowDynamicsStation.size() - 1; i >= 0; i--)
 		this->mWindowDynamicsStation[i]->draw();
+
+	// Draw
+	this->draw();
 }
 
 void UserInterface::drawInGame()
 {
 	// Draw
-	this->draw();
 	Resource::resource->getApp()->draw(this->mInterfaceBottom);
 	this->mMenuQuick.draw();
 	this->mXpBarCharacter.draw();
@@ -498,6 +497,9 @@ void UserInterface::drawInGame()
 	// Draw windows dynamic
 	for(int i = this->mWindowDynamics.size() - 1; i >= 0; i--)
 		this->mWindowDynamics[i]->draw();
+
+	// Draw
+	this->draw();
 }
 
 void UserInterface::notifyWeaponViewChanged()

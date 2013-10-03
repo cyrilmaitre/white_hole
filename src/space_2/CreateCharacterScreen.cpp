@@ -89,9 +89,6 @@ CreateCharacterScreen::CreateCharacterScreen(void)
 {
 	// Character
 	this->mCharacter = NULL;
-	this->mCharacter = new Character();
-	this->mCharacter->createBase();
-	this->mCharacter->setSkillPoints(CREATESCREEN_CHARACTER_SKILLPOINT);
 
 	// Init ptr
 	this->mAvatars = NULL;
@@ -186,9 +183,8 @@ CreateCharacterScreen::CreateCharacterScreen(void)
 	this->mTBSkill.setText(Resource::resource->getBundle()->getString("createScreenSkills"));
 	this->mTBSkillPointRemaining.setFontSize(CREATESCREEN_TB_SKILLPTSREM_SIZE);
 	this->mTBSkillPointRemaining.setFontColor(CREATESCREEN_TB_FIELD_COLOR);
-	this->mTBSkillPointRemaining.setText("(" + Resource::resource->getBundle()->getString("createScreenSkillsPtsRemaining") + " : " + Tools::buildStringWithInt(this->mCharacter->getSkillPoints()) + ")");
 	for(int i = 0; i < CHARACTER_SKILL_COUNT; i++)
-		this->mViewSkill[i] = new SkillCharacterView(this->mCharacter->getSkillCharacterByIndex(i));
+		this->mViewSkill[i] = new SkillCharacterView();
 
 	// Set content view
 	this->mButtonBack.setView(this->mScreenView);
@@ -281,20 +277,30 @@ void CreateCharacterScreen::setAvatarSelected( int index )
 //*************************************************************
 void CreateCharacterScreen::reset()
 {
+	if(this->mCharacter != NULL)
+		delete this->mCharacter;
+
+	this->mCharacter = new Character();
+	this->mCharacter->createBase();
+	this->mCharacter->setRace(((RaceView*)this->mViewRaceGroup.getSelection())->getRace());
+	this->mCharacter->setJob(((JobView*)this->mViewJobGroup.getSelection())->getJob());
+	this->mCharacter->setSkillPoints(CREATESCREEN_CHARACTER_SKILLPOINT);
+	for(int i = 0; i < CHARACTER_SKILL_COUNT; i++)
+		this->mViewSkill[i]->setSkillCharacter(this->mCharacter->getSkillCharacterByIndex(i));
+
 	this->mTFName.setValue("");
 	this->setAvatarSelected(0);
 	this->mViewRaceGroup.selectFirst();
 	this->mViewJobGroup.selectFirst();
-	for(int i = 0; i < CHARACTER_SKILL_COUNT; i++)
-		this->mViewSkill[i]->cancel();
+
 }
 
 bool CreateCharacterScreen::launch()
 {
+	this->reset();
 	this->mRunning = true;
 	this->mCharacterCreated = false;
 	this->notifyAppSizeChanged();
-	this->reset();
 	while(Resource::resource->getApp()->isOpen() && Resource::resource->isAppRunning() && this->mRunning)
 	{
 		// Update
@@ -583,7 +589,8 @@ void CreateCharacterScreen::createCharacter()
 
 void CreateCharacterScreen::notifyRaceSelectedChange()
 {
-	this->mCharacter->setRace(((RaceView*)this->mViewRaceGroup.getSelection())->getRace());
+	if(this->mCharacter != NULL)
+		this->mCharacter->setRace(((RaceView*)this->mViewRaceGroup.getSelection())->getRace());
 
 	this->releaseAvatars();
 	this->mAvatarCount = ((RaceView*)this->mViewRaceGroup.getSelection())->getRace()->getAvatarCount();
@@ -597,18 +604,19 @@ void CreateCharacterScreen::notifyRaceSelectedChange()
 	for(int i = 0; i < CHARACTER_SKILL_COUNT; i++)
 	{
 		if(this->mViewSkill[i] != NULL)
-			this->mViewSkill[i]->notifyLevelChanged();
+			this->mViewSkill[i]->notifySkillCharacterChanged();
 	}
 }
 
 void CreateCharacterScreen::notifyJobSelectedChange()
 {
-	this->mCharacter->setJob(((JobView*)this->mViewJobGroup.getSelection())->getJob());
+	if(this->mCharacter != NULL)
+		this->mCharacter->setJob(((JobView*)this->mViewJobGroup.getSelection())->getJob());
 
 	for(int i = 0; i < CHARACTER_SKILL_COUNT; i++)
 	{
 		if(this->mViewSkill[i] != NULL)
-			this->mViewSkill[i]->notifyLevelChanged();
+			this->mViewSkill[i]->notifySkillCharacterChanged();
 	}
 }
 

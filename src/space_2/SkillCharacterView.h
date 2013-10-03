@@ -11,9 +11,7 @@ class SkillCharacterView: public Block
 {
 public:
 	// Constructor - Destructor
-	SkillCharacterView(	SkillCharacter* p_skill,
-				double p_x = 0,
-				double p_y = 0);
+	SkillCharacterView(void);
 	~SkillCharacterView(void);
 
 	// Getters - Setter
@@ -25,7 +23,7 @@ public:
 
 	// Methods
 	void notifyPositionChanged();
-	void notifyLevelChanged();
+	void notifySkillCharacterChanged();
 
 	void cancel();
 	void update();
