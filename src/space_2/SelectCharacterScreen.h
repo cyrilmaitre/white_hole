@@ -16,6 +16,10 @@ public:
 	SelectCharacterScreen(void);
 	~SelectCharacterScreen(void);
 
+	// Getters - Setters
+	User* getUser();
+	void setUser(User* p_user);
+
 	// Methods
 	void launch();
 	void update();
@@ -26,17 +30,21 @@ public:
 	void launchOption();
 	void launchCreateNew();
 	void launchPlay();
+	void notifyUserChanged();
 
 
 private:
 	// Attributs
+	User* mUser;
+
 	FieldSet mFieldsetSelect;
 	Button mButtonOption;
 	Button mButtonLogout;
 	Button mButtonCreateNew;
 	Button mButtonPlay;
-	CreateCharacterScreen *mCreateScreen;
 	ListSelectableGroup mCharactersList;
-	CharacterViewSelect *mCharacterSelectedView;
+	CharacterViewSelect mCharacterSelectedView;
+
+	CreateCharacterScreen mCreateScreen;
 };
 

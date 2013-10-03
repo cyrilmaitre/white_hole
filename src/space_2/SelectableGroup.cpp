@@ -141,4 +141,10 @@ void SelectableGroup::unselectAll()
 	this->notifySelectionChanged();
 }
 
+void SelectableGroup::selectFirst()
+{
+	if(this->mSelectable.size() > 0)
+		this->mSelectable[0]->setSelected(true);
+}
+
 

@@ -37,12 +37,10 @@ public:
 	void setAdmin(bool p_admin);
 
 	int getCharactersCount();
-	void setCharactersCount(int p_count);
-
-	Character** getCharacters();
 	Character* getCharacter(int p_index);
 
 	// Methods
+	void addCharacter(Character* p_character);
 	void loadFromJson(Json::Value json);
 
 
@@ -53,7 +51,6 @@ private:
 	std::string mEmail;
 	long mRegisterDate;
 	bool mAdmin;
-	Character** mCharacters;
-	int mCharactersCount;
+	std::vector<Character*> mCharacters;
 };
 

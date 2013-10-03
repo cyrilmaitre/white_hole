@@ -14,7 +14,7 @@ class CharacterViewSelect: public Block
 {
 public:
 	// Constructor - Destructor
-	CharacterViewSelect(Character *p_character);
+	CharacterViewSelect(void);
 	~CharacterViewSelect(void);
 
 	// Getters - Setters

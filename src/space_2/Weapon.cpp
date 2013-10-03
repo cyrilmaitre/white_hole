@@ -11,6 +11,11 @@
 //*************************************************************
 // Constructor - Destructor
 //*************************************************************
+Weapon::Weapon( void )
+{
+	this->init();
+}
+
 Weapon::Weapon( Json::Value json, CharacterShip *p_characterShip )
 {
 	this->init();

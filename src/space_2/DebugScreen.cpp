@@ -162,8 +162,6 @@ DebugScreen::DebugScreen(void)
 		newDrop->setText("Zoulou #" + Tools::formatNumber(i));
 		this->mDropDownList.addDropDownable(newDrop);
 	}
-
-	this->updatePosition();
 }
 
 DebugScreen::~DebugScreen(void)
@@ -178,7 +176,9 @@ DebugScreen::~DebugScreen(void)
 //*************************************************************
 void DebugScreen::launch()
 {
+	this->mRunning = true;
 	this->update();
+	this->notifyAppSizeChanged();
 	while(Resource::resource->getApp()->isOpen() && Resource::resource->isAppRunning() && this->mRunning)
 	{		
 		// Event

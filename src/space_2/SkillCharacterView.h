@@ -27,6 +27,7 @@ public:
 	void notifyPositionChanged();
 	void notifyLevelChanged();
 
+	void cancel();
 	void update();
 	void updatePosition();
 	void update(sf::Event p_event);

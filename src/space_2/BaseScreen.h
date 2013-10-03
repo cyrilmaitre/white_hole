@@ -18,9 +18,9 @@ public:
 	virtual void draw();
 	virtual void update();
 	virtual void updatePosition();
-	void notifyAppSizeChanged();
 	virtual void hideScreen();
 	virtual void showScreen();
+	void notifyAppSizeChanged();
 
 
 protected:

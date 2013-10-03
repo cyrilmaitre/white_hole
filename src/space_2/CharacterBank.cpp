@@ -35,6 +35,15 @@ CharacterBank::CharacterBank( Json::Value json, Character *p_character ) : Conta
 	this->loadFromJson(json);
 }
 
+CharacterBank::CharacterBank()
+{
+	this->mCharacter = NULL;
+	this->mIdCharacterBank = -1;
+	this->mNumber = -1;
+	this->mUnlock = false;
+	this->mPrice = 0;
+}
+
 CharacterBank::~CharacterBank(void)
 {
 }

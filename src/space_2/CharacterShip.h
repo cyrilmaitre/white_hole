@@ -13,6 +13,7 @@ class CharacterShip : public Ship, public Containerable, public Levelable
 {
 public:
 	// Constructor - Destructor
+	CharacterShip(void);
 	CharacterShip(Json::Value json, Character *p_character);
 	~CharacterShip(void);
 

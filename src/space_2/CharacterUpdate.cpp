@@ -1,5 +1,6 @@
 #include "CharacterUpdate.h"
 #include "NetworkDefine.h"
+#include "UserInterface.h"
 
 
 //*************************************************************
@@ -21,6 +22,7 @@ CharacterUpdate::~CharacterUpdate(void)
 //*************************************************************
 void CharacterUpdate::job()
 {
+	UserInterface::mUserInterface->setSavingGifVisible(true);
 	if(this->mCharacter != NULL)
 	{
 		Json::Value jsonRequest = this->mCharacter->saveToJson();
@@ -32,4 +34,5 @@ void CharacterUpdate::job()
 	{
 		this->setRunning(false);
 	}
+	UserInterface::mUserInterface->setSavingGifVisible(false);
 }

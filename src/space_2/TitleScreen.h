@@ -45,9 +45,10 @@ private:
 	Button mButtonOption;
 	Button mButtonQuit;
 	Button mButtonDebug;
-	ImageGIF* mGIFLoading;
+	ImageGIF* mLoginGif;
 	TextBox mTextBoxLoginFailed;
-	SelectCharacterScreen *mSelectScreen;
-	DebugScreen* mDebugScreen;
+
+	SelectCharacterScreen mSelectScreen;
+	DebugScreen mDebugScreen;
 };
 

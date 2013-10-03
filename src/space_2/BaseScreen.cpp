@@ -64,11 +64,11 @@ void BaseScreen::update()
 
 void BaseScreen::updatePosition()
 {
-	this->mOverlayBottom.setPosition(sf::Vector2f(0, Resource::resource->getViewUi()->getSize().y - BASESCREEN_OVERLAY_HEIGHT));
-	this->mBorderBottom.setPosition(sf::Vector2f(0, Resource::resource->getViewUi()->getSize().y - BASESCREEN_OVERLAY_HEIGHT - BORDER_BOTTOM_HEIGHT));
+	sf::Vector2f windowSize = Resource::resource->getViewUi()->getSize();
 
-	this->mGameVersion.setX(BASESCREEN_GAME_VERSION_OFFSETX);
-	this->mGameVersion.setY((int)Resource::resource->getViewUi()->getSize().y - this->mGameVersion.getHeight() - BASESCREEN_GAME_VERSION_OFFSETY);
+	this->mOverlayBottom.setPosition(sf::Vector2f(0, windowSize.y - BASESCREEN_OVERLAY_HEIGHT));
+	this->mBorderBottom.setPosition(sf::Vector2f(0, windowSize.y - BASESCREEN_OVERLAY_HEIGHT - BORDER_BOTTOM_HEIGHT));
+	this->mGameVersion.setPosition(BASESCREEN_GAME_VERSION_OFFSETX, windowSize.y - this->mGameVersion.getHeight() - BASESCREEN_GAME_VERSION_OFFSETY);
 }
 
 void BaseScreen::notifyAppSizeChanged()

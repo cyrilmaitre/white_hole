@@ -48,9 +48,9 @@
 //*************************************************************
 // Constructor - Destructor
 //*************************************************************
-CharacterViewSelect::CharacterViewSelect( Character *p_character )
+CharacterViewSelect::CharacterViewSelect(void)
 {
-	this->mCharacter = p_character;
+	this->mCharacter = NULL;
 
 	this->setSize(CHARACTERVIEW_SELECT_WIDTH, CHARACTERVIEW_SELECT_HEIGHT);
 	this->setBackgroundColor(CHARACTERVIEW_SELECT_BACK_COLOR, true);
@@ -129,8 +129,11 @@ Character* CharacterViewSelect::getCharacter()
 
 void CharacterViewSelect::setCharacter( Character *p_character )
 {
-	this->mCharacter = p_character;
-	this->notifyCharacterChanged();
+	if(this->mCharacter != p_character)
+	{
+		this->mCharacter = p_character;
+		this->notifyCharacterChanged();
+	}
 }
 
 
@@ -139,7 +142,7 @@ void CharacterViewSelect::setCharacter( Character *p_character )
 //*************************************************************
 void CharacterViewSelect::notifyCharacterChanged()
 {
-	if(this->getCharacter() != NULL)
+	if(this->mCharacter != NULL)
 	{
 		this->mCharacterView.setVisible(true);
 		this->mTBNoCharacterSelected.setVisible(false);

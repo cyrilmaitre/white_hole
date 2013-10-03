@@ -114,7 +114,6 @@ private:
 	long mDateCreation;
 	long mTimePlayed;
 	float mTimeBuffer;
-	mks::Clock mTimeBufferClock;
 	bool mAlive;
 	int mHangarSpace;
 	Race* mRace;
@@ -125,5 +124,8 @@ private:
 	std::vector<CharacterBank*> mBanks;
 	std::vector<CharacterShip*> mShips;
 	CharacterShip *mShipPiloted;
+
+	mks::Clock mTimeBufferClock;
+	mks::Clock mSavingClock;
 };
 

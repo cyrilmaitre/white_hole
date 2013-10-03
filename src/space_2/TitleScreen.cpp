@@ -42,12 +42,10 @@ using namespace std;
 TitleScreen::TitleScreen(void)
 {
 	// Init with default
-	this->mGIFLoading			= NULL;
 	this->mAuthenticateThread	= NULL;
-	this->mSelectScreen			= NULL;
 
-	this->mGIFLoading = ImageGIFFactory::getGifLoadingSquareCircle();
-	this->mGIFLoading->setVisible(false);
+	this->mLoginGif = ImageGIFFactory::getGifLoadingSquareCircle();
+	this->mLoginGif->setVisible(false);
 
 	this->mTextBoxLoginFailed.setFontColor(sf::Color(255, 64, 64));
 	this->mTextBoxLoginFailed.setVisible(false);
@@ -97,7 +95,7 @@ TitleScreen::TitleScreen(void)
 	this->mGameTitle.setView(this->mScreenView);
 	this->mTextFieldUsername.setView(this->mScreenView);
 	this->mTextFieldPassword.setView(this->mScreenView);
-	this->mGIFLoading->setView(this->mScreenView);
+	this->mLoginGif->setView(this->mScreenView);
 	this->mTextBoxLoginFailed.setView(this->mScreenView);
 
 	this->updatePosition();
@@ -109,11 +107,8 @@ TitleScreen::TitleScreen(void)
 
 TitleScreen::~TitleScreen(void)
 {
-	if(this->mGIFLoading != NULL)
-		delete this->mGIFLoading;
-
-	if(this->mSelectScreen != NULL)
-		delete this->mSelectScreen;
+	if(this->mLoginGif != NULL)
+		delete this->mLoginGif;
 }
 
 
@@ -123,10 +118,13 @@ TitleScreen::~TitleScreen(void)
 void TitleScreen::launch()
 {
 	this->update();
+	this->notifyAppSizeChanged();
 	while(Resource::resource->getApp()->isOpen() && Resource::resource->isAppRunning() && this->mRunning)
 	{		
-		// Event
+		// Update
 		this->update();
+
+		// Update event
 		if(Resource::resource->getApp()->pollEvent(this->mEvent))
 		{
 			if( this->mEvent.type == Event::Closed)
@@ -140,22 +138,6 @@ void TitleScreen::launch()
 
 			this->update(this->mEvent);
 		}
-			
-		// Action
-		if(this->mButtonQuit.isClicked())
-			this->launchQuit();
-
-		if(this->mButtonDebug.isClicked())
-			this->launchDebugScreen();
-
-		if(this->mButtonOption.isClicked())
-			this->launchOption();
-
-		if(this->mButtonLogin.isClicked())
-			this->launchLogin();
-
-		if(Session::isAuthenticated())
-			this->launchSelectScreen();
 
 		// Draw
 		this->draw();
@@ -165,44 +147,31 @@ void TitleScreen::launch()
 void TitleScreen::update()
 {
 	BaseScreen::update();
-	this->mGIFLoading->update();
+	this->mLoginGif->update();
+
+	if(Session::isAuthenticated())
+		this->launchSelectScreen();
 }
 
 void TitleScreen::updatePosition()
 {
 	BaseScreen::updatePosition();
+	sf::Vector2f windowSize = Resource::resource->getViewUi()->getSize();
 
-	// Update Button
-	this->mTextFieldUsername.setX((int)Resource::resource->getViewUi()->getSize().x / 2 - this->mTextFieldUsername.getWidth() / 2);
-	this->mTextFieldUsername.setY((int)Resource::resource->getViewUi()->getSize().y - this->mTextFieldUsername.getHeight() - TITLESCREEN_TFUSERNAME_OFFSET_Y);
-
-	this->mTextFieldPassword.setX((int)Resource::resource->getViewUi()->getSize().x / 2 - this->mTextFieldPassword.getWidth() / 2);
-	this->mTextFieldPassword.setY((int)Resource::resource->getViewUi()->getSize().y - this->mTextFieldPassword.getHeight() - TITLESCREEN_TFPASSWORD_OFFSET_Y);
-
-	this->mButtonLogin.setX((int)Resource::resource->getViewUi()->getSize().x / 2 - this->mButtonLogin.getWidth() / 2);
-	this->mButtonLogin.setY((int)Resource::resource->getViewUi()->getSize().y - this->mButtonLogin.getHeight() - TITLESCREEN_BUTTONLOGIN_OFFSETY);
-
-	this->mButtonDebug.setX((int)Resource::resource->getViewUi()->getSize().x - this->mButtonOption.getWidth() - TITLESCREEN_BUTTONRIGHT_OFFSETX);
-	this->mButtonDebug.setY((int)Resource::resource->getViewUi()->getSize().y - this->mButtonOption.getHeight() - TITLESCREEN_BUTTONDEBUG_OFFSETY);
-
-	this->mButtonOption.setX((int)Resource::resource->getViewUi()->getSize().x - this->mButtonOption.getWidth() - TITLESCREEN_BUTTONRIGHT_OFFSETX);
-	this->mButtonOption.setY((int)Resource::resource->getViewUi()->getSize().y - this->mButtonOption.getHeight() - TITLESCREEN_BUTTONOPTIONS_OFFSETY);
-
-	this->mButtonQuit.setX((int)Resource::resource->getViewUi()->getSize().x - this->mButtonQuit.getWidth() - TITLESCREEN_BUTTONRIGHT_OFFSETX);
-	this->mButtonQuit.setY((int)Resource::resource->getViewUi()->getSize().y - this->mButtonQuit.getHeight() - TITLESCREEN_BUTTONQUIT_OFFSETY);
+	this->mTextFieldUsername.setPosition(windowSize.x / 2 - this->mTextFieldUsername.getWidth() / 2, windowSize.y - this->mTextFieldUsername.getHeight() - TITLESCREEN_TFUSERNAME_OFFSET_Y);
+	this->mTextFieldPassword.setPosition(windowSize.x / 2 - this->mTextFieldPassword.getWidth() / 2, windowSize.y - this->mTextFieldPassword.getHeight() - TITLESCREEN_TFPASSWORD_OFFSET_Y);
+	this->mButtonLogin.setPosition(windowSize.x / 2 - this->mButtonLogin.getWidth() / 2, windowSize.y - this->mButtonLogin.getHeight() - TITLESCREEN_BUTTONLOGIN_OFFSETY);
+	this->mButtonDebug.setPosition(windowSize.x - this->mButtonOption.getWidth() - TITLESCREEN_BUTTONRIGHT_OFFSETX, windowSize.y - this->mButtonOption.getHeight() - TITLESCREEN_BUTTONDEBUG_OFFSETY);
+	this->mButtonOption.setPosition(windowSize.x - this->mButtonOption.getWidth() - TITLESCREEN_BUTTONRIGHT_OFFSETX, windowSize.y - this->mButtonOption.getHeight() - TITLESCREEN_BUTTONOPTIONS_OFFSETY);
+	this->mButtonQuit.setPosition(windowSize.x - this->mButtonQuit.getWidth() - TITLESCREEN_BUTTONRIGHT_OFFSETX, windowSize.y - this->mButtonQuit.getHeight() - TITLESCREEN_BUTTONQUIT_OFFSETY);
 
 	// Other
-	this->mGIFLoading->setX(this->mButtonLogin.getX() + this->mButtonLogin.getWidth() + TITLESCREEN_GIF_LOADING_OFFSETX);
-	this->mGIFLoading->setY(this->mButtonLogin.getY() - (15 - (this->mButtonLogin.getHeight() / 2)));
-	this->mTextBoxLoginFailed.setX(this->mButtonLogin.getX() + this->mButtonLogin.getWidth() + TITLESCREEN_GIF_LOADING_OFFSETX);
-	this->mTextBoxLoginFailed.setY(this->mButtonLogin.getY() - ((this->mTextBoxLoginFailed.getHeight() / 2) - (this->mButtonLogin.getHeight() / 2)));
+	this->mLoginGif->setPosition(this->mButtonLogin.getX() + this->mButtonLogin.getWidth() + TITLESCREEN_GIF_LOADING_OFFSETX, this->mButtonLogin.getY() - (15 - (this->mButtonLogin.getHeight() / 2)));
+	this->mTextBoxLoginFailed.setPosition(this->mButtonLogin.getX() + this->mButtonLogin.getWidth() + TITLESCREEN_GIF_LOADING_OFFSETX, this->mButtonLogin.getY() - ((this->mTextBoxLoginFailed.getHeight() / 2) - (this->mButtonLogin.getHeight() / 2)));
 
 	// Update Game Title
-	this->mGameTitle.setX((int)Resource::resource->getViewUi()->getSize().x / 2 - this->mGameTitle.getWidth() / 2);
-	this->mGameTitle.setY((int)((Resource::resource->getViewUi()->getSize().y / 2) - (this->mGameTitle.getHeight() / 2) - (BASESCREEN_OVERLAY_HEIGHT / 2)));
-
-	this->mGameTitleWelcome.setX((int)Resource::resource->getViewUi()->getSize().x / 2 - this->mGameTitleWelcome.getWidth() / 2);
-	this->mGameTitleWelcome.setY(this->mGameTitle.getY() - this->mGameTitleWelcome.getHeight() - GAME_TITLE_WELCOME_OFFSETY);
+	this->mGameTitle.setPosition(windowSize.x / 2 - this->mGameTitle.getWidth() / 2, (windowSize.y / 2) - (this->mGameTitle.getHeight() / 2) - (BASESCREEN_OVERLAY_HEIGHT / 2));
+	this->mGameTitleWelcome.setPosition(windowSize.x / 2 - this->mGameTitleWelcome.getWidth() / 2, this->mGameTitle.getY() - this->mGameTitleWelcome.getHeight() - GAME_TITLE_WELCOME_OFFSETY);
 }
 
 void TitleScreen::update( sf::Event p_event )
@@ -213,25 +182,34 @@ void TitleScreen::update( sf::Event p_event )
 	this->mButtonDebug.update(p_event);
 	this->mButtonOption.update(p_event);
 	this->mButtonQuit.update(p_event);
+
+	if(this->mButtonQuit.isClicked())
+		this->launchQuit();
+
+	if(this->mButtonDebug.isClicked())
+		this->launchDebugScreen();
+
+	if(this->mButtonOption.isClicked())
+		this->launchOption();
+
+	if(this->mButtonLogin.isClicked())
+		this->launchLogin();
 }
 
 void TitleScreen::draw()
 {
-	// Draw base
 	BaseScreen::draw();
 
-	// Draw Title
 	this->mGameTitle.draw();
 	this->mGameTitleWelcome.draw();
 
-	// Draw Ui
 	this->mTextFieldUsername.draw();
 	this->mTextFieldPassword.draw();	
 	this->mButtonLogin.draw();
 	this->mButtonDebug.draw();
 	this->mButtonOption.draw();
 	this->mButtonQuit.draw();
-	this->mGIFLoading->draw();
+	this->mLoginGif->draw();
 	this->mTextBoxLoginFailed.draw();
 
 	Resource::resource->getApp()->display();
@@ -239,7 +217,6 @@ void TitleScreen::draw()
 
 void TitleScreen::authenticateRequest()
 {
-	this->mGIFLoading->setVisible(true);
 	this->mTextBoxLoginFailed.setVisible(false);
 
 	// Create request body
@@ -257,8 +234,10 @@ void TitleScreen::authenticateRequest()
 	{
 		if(jsonResponse->get("authenticated", "false").asString() == "true")
 		{
-			Session::setAuthenticated(true);
 			Session::setUserJson(jsonResponse);
+			Session::setUser(new User(Session::getUserJson()->get("user", NULL)));
+			this->mSelectScreen.setUser(Session::getUser());
+			Session::setAuthenticated(true);
 		}
 		else
 		{
@@ -269,36 +248,26 @@ void TitleScreen::authenticateRequest()
 	{
 		this->mTextBoxLoginFailed.setVisible(true);
 	}
-	this->mGIFLoading->setVisible(false);
+	this->mLoginGif->setVisible(false);
 }
 
 void TitleScreen::launchSelectScreen()
 {
 	this->hideScreen();
-
-	Session::setUser(new User(Session::getUserJson()->get("user", NULL)));
-	this->mSelectScreen = new SelectCharacterScreen();
-	this->mSelectScreen->launch();
-	delete this->mSelectScreen;
-	this->mSelectScreen = NULL;
-	
+	this->mSelectScreen.launch();
 	this->showScreen();
 }
 
 void TitleScreen::launchDebugScreen()
 {
 	this->hideScreen();
-
-	this->mDebugScreen = new DebugScreen();
-	this->mDebugScreen->launch();
-	delete this->mDebugScreen;
-	this->mDebugScreen = NULL;
-
+	this->mDebugScreen.launch();
 	this->showScreen();
 }
 
 void TitleScreen::launchLogin()
 {
+	this->mLoginGif->setVisible(true);
 	if(this->mAuthenticateThread != NULL)
 	{
 		delete this->mAuthenticateThread;
@@ -323,6 +292,6 @@ void TitleScreen::launchQuit()
 void TitleScreen::showScreen()
 {
 	BaseScreen::showScreen();
-	this->mGIFLoading->setVisible(false);
+	this->mLoginGif->setVisible(false);
 	this->mTextBoxLoginFailed.setVisible(false);
 }

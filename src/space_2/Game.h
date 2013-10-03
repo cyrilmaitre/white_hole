@@ -31,6 +31,7 @@ public:
 	void launch(Character* p_character);
 	void launchUninit();
 	void launchTest();
+	void quitGame();
 
 	void changedShipPiloted(CharacterShip* p_ship);
 	void notifyShipPilotedChanged();

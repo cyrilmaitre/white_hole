@@ -81,7 +81,7 @@ UserInterface::UserInterface( Character* p_character )
 	
 	// Other stuffs
 	this->mSavingGif = ImageGIFFactory::getSavingGif();
-	//this->mSavingGif->setVisible(false);
+	this->mSavingGif->setVisible(false);
 
 	this->mStationScreen = new StationScreen(this->getCharacter());
 	this->mXpBarCharacter.setSize(XPBAR_CHARACTER_WIDTH - this->mXpBarCharacter.getBorderSize() * 2, XPBAR_CHARACTER_HEIGHT);

@@ -7,8 +7,6 @@
 //*************************************************************
 User::User( Json::Value json )
 {
-	this->mCharacters = NULL;
-	this->mCharactersCount = 0;
 	this->loadFromJson(json);
 }
 
@@ -19,13 +17,10 @@ User::~User(void)
 
 void User::destroyCharacters()
 {
-	if(this->mCharacters != NULL)
+	for(int i = 0; i < this->mCharacters.size(); i++)
 	{
-		for(int i = 0; i < this->mCharactersCount; i++)
-		{
-			if(this->mCharacters[i] != NULL)
-				delete this->mCharacters[i];
-		}
+		if(this->mCharacters[i] != NULL)
+			delete this->mCharacters[i];
 	}
 }
 
@@ -85,25 +80,15 @@ void User::setAdmin( bool p_admin )
 
 int User::getCharactersCount()
 {
-	return this->mCharactersCount;
-}
-
-void User::setCharactersCount( int p_count )
-{
-	this->mCharactersCount = p_count;
-}
-
-Character** User::getCharacters()
-{
-	return this->mCharacters;
+	return this->mCharacters.size();
 }
 
 Character* User::getCharacter( int p_index )
 {
 	if(p_index < 0)
 		p_index = 0;
-	else if(p_index >= this->getCharactersCount())
-		p_index = this->getCharactersCount() - 1;
+	else if(p_index >= this->mCharacters.size())
+		p_index = this->mCharacters.size() - 1;
 
 	return this->mCharacters[p_index];
 }
@@ -112,6 +97,11 @@ Character* User::getCharacter( int p_index )
 //*************************************************************
 // Methods
 //*************************************************************
+void User::addCharacter( Character* p_character )
+{
+	this->mCharacters.push_back(p_character);
+}
+
 void User::loadFromJson( Json::Value json )
 {
 	this->setIdUser(json.get(USER_JSON_IDUSER, -1).asInt());
@@ -119,13 +109,11 @@ void User::loadFromJson( Json::Value json )
 	this->setEmail(json.get(USER_JSON_EMAIL, "").asString());
 	this->setRegisterDate(json.get(USER_JSON_REGISTERDATE, 0).asInt64());
 	this->setAdmin(json.get(USER_JSON_ADMIN, false).asBool());
-	this->setCharactersCount(json.get(USER_JSON_CHARACTERSCOUNT, 0).asInt());
 
 	this->destroyCharacters();
-	this->mCharacters = new Character*[this->getCharactersCount()];
 	Json::Value jsonCharacters = json.get(USER_JSON_CHARACTERS, NULL);
-	for(int i = 0; i < this->getCharactersCount(); i++)
-		this->mCharacters[i] = new Character(this, jsonCharacters.get(i, NULL));
+	for(int i = 0; i < jsonCharacters.size(); i++)
+		this->addCharacter(new Character(this, jsonCharacters.get(i, NULL)));
 }
 
 

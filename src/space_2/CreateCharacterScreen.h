@@ -25,7 +25,8 @@ public:
 	void releaseAvatars();
 
 	// Methods
-	void launch();
+	void reset();
+	bool launch();
 	void update();
 	void updatePosition();
 	void update(sf::Event p_event);
@@ -43,7 +44,8 @@ public:
 
 private:
 	// Attributs
-	Character *mCharacter;
+	Character* mCharacter;
+	bool mCharacterCreated;
 	Button mButtonBack;
 	Button mButtonCreate;
 	FieldSet mFieldsetCreate;

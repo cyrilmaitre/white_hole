@@ -9,6 +9,9 @@
 #include "NetworkDefine.h"
 #include "ManagerConfig.h"
 #include "PopupManager.h"
+#include "CharacterBank.h"
+#include "CharacterShip.h"
+#include "Weapon.h"
 
 using namespace std;
 using namespace sf;
@@ -78,7 +81,7 @@ using namespace sf;
 #define CREATESCREEN_GIF_LOADING_OFFSETX			20
 #define BUTTON_BORDERSIZE							2
 
-	
+
 //*************************************************************
 // Constructor - Destructor
 //*************************************************************
@@ -127,6 +130,7 @@ CreateCharacterScreen::CreateCharacterScreen(void)
 	this->mFieldsetInfo.setBackgroundColor(CREATESCREEN_FIELDSET_INFO_BACKCOLOR, true);
 	this->mFieldsetInfo.setBorderColor(CREATESCREEN_FIELDSET_INFO_BORDCOLOR, true);
 	this->mFieldsetInfo.setBorderSize(CREATESCREEN_FIELDSET_INFO_BORDSIZE, true);
+	this->mFieldsetInfo.setVisible(false);
 
 	this->mGIFLoading = ImageGIFFactory::getGifLoadingSquareCircle();
 	this->mGIFLoading->setVisible(false);
@@ -206,8 +210,6 @@ CreateCharacterScreen::CreateCharacterScreen(void)
 	this->mTBSkill.setView(this->mScreenView);
 	for(int i = 0; i < CHARACTER_SKILL_COUNT; i++)
 		this->mViewSkill[i]->setView(this->mScreenView);
-
-	this->updatePosition();
 }
 
 CreateCharacterScreen::~CreateCharacterScreen(void)
@@ -277,12 +279,28 @@ void CreateCharacterScreen::setAvatarSelected( int index )
 //*************************************************************
 // Methods
 //*************************************************************
-void CreateCharacterScreen::launch()
+void CreateCharacterScreen::reset()
 {
+	this->mTFName.setValue("");
+	this->setAvatarSelected(0);
+	this->mViewRaceGroup.selectFirst();
+	this->mViewJobGroup.selectFirst();
+	for(int i = 0; i < CHARACTER_SKILL_COUNT; i++)
+		this->mViewSkill[i]->cancel();
+}
+
+bool CreateCharacterScreen::launch()
+{
+	this->mRunning = true;
+	this->mCharacterCreated = false;
+	this->notifyAppSizeChanged();
+	this->reset();
 	while(Resource::resource->getApp()->isOpen() && Resource::resource->isAppRunning() && this->mRunning)
 	{
-		// Event
+		// Update
 		this->update();
+
+		// Update event
 		if(Resource::resource->getApp()->pollEvent(this->mEvent))
 		{
 			if( this->mEvent.type == Event::Closed)
@@ -297,28 +315,10 @@ void CreateCharacterScreen::launch()
 			this->update(this->mEvent);
 		}
 
-		// Action
-		if(this->mButtonCreate.isClicked())
-			this->launchCreate();
-
-		if(this->mButtonBack.isClicked())
-			this->launchBack();
-
-		if(this->mButtonAvatarPrevious.isClicked())
-			this->selectPreviousAvatar();
-
-		if(this->mButtonAvatarNext.isClicked())
-			this->selectNextAvatar();
-
-		if(this->mViewRaceGroup.isSelectionChanged())
-			this->notifyRaceSelectedChange();
-
-		if(this->mViewJobGroup.isSelectionChanged())
-			this->notifyJobSelectedChange();
-
 		// Draw
 		this->draw();
 	}
+	return this->mCharacterCreated;
 }
 
 void CreateCharacterScreen::update()
@@ -329,8 +329,6 @@ void CreateCharacterScreen::update()
 		this->mViewSkill[i]->update();
 
 	this->updateCreateButton();
-
-	// TODO: To move
 	this->mTBSkillPointRemaining.setText("(" + Resource::resource->getBundle()->getString("createScreenSkillsPtsRemaining") + " : " + Tools::buildStringWithInt(this->mCharacter->getSkillPoints()) + ")");
 }
 
@@ -438,6 +436,25 @@ void CreateCharacterScreen::update( sf::Event p_event )
 	// Update Skills
 	for(int i = 0; i < CHARACTER_SKILL_COUNT; i++)
 		this->mViewSkill[i]->update(p_event);
+
+	// Actions
+	if(this->mButtonCreate.isClicked())
+		this->launchCreate();
+
+	if(this->mButtonBack.isClicked())
+		this->launchBack();
+
+	if(this->mButtonAvatarPrevious.isClicked())
+		this->selectPreviousAvatar();
+
+	if(this->mButtonAvatarNext.isClicked())
+		this->selectNextAvatar();
+
+	if(this->mViewRaceGroup.isSelectionChanged())
+		this->notifyRaceSelectedChange();
+
+	if(this->mViewJobGroup.isSelectionChanged())
+		this->notifyJobSelectedChange();
 }
 
 void CreateCharacterScreen::updateCreateButton()
@@ -551,6 +568,9 @@ void CreateCharacterScreen::createCharacter()
 	bool parseSuccessfull = reader.parse(response.getBody(), responseJson);
 	if(parseSuccessfull && responseJson.get("created", "false").asString() == "true")
 	{
+		Character* newCharacter = new Character(Session::getUser(), responseJson.get("character", NULL));
+		Session::getUser()->addCharacter(newCharacter);
+		this->mCharacterCreated = true;
 		this->launchBack();
 	}
 	else

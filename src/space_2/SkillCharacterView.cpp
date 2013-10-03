@@ -123,6 +123,12 @@ void SkillCharacterView::setEditable( bool p_editable )
 //*************************************************************
 // Methods
 //*************************************************************
+void SkillCharacterView::cancel()
+{
+	this->getSkillCharacter()->cancelLevelPending();
+	this->notifyLevelChanged();
+}
+
 void SkillCharacterView::update( sf::Event p_event )
 {
 	if(this->isVisible())

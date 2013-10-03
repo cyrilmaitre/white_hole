@@ -30,6 +30,7 @@
 #define JSON_HANGARSPACE					"hangarSpace"
 #define CHARACTER_JSON_CHARACTERSHIPCOUNT	"shipsCount"
 #define UPDATE_TIMEPLAYED_TICK				10		// Sec
+#define UPDATE_SAVING_TICK					30		// Sec
 #define PERCENTAGE_XP_FOR_SHIP				0.5		// Percent
 
 
@@ -354,12 +355,20 @@ void Character::update()
 
 void Character::updateTime()
 {
+	// Update time
 	this->mTimeBuffer += this->mTimeBufferClock.getElapsedTimeAsSeconds();
 	this->mTimeBufferClock.restart();
 	if(this->mTimeBuffer > UPDATE_TIMEPLAYED_TICK)
 	{
 		this->setTimePlayed(this->getTimePlayed() + UPDATE_TIMEPLAYED_TICK);
 		this->mTimeBuffer -= UPDATE_TIMEPLAYED_TICK;
+	}
+
+	// Update saving
+	if(this->mSavingClock.getElapsedTimeAsSeconds() > UPDATE_SAVING_TICK)
+	{
+		NetworkJobManager::getInstance()->addJob(new CharacterUpdate(this));
+		this->mSavingClock.restart();
 	}
 }
 

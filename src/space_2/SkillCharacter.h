@@ -40,6 +40,7 @@ public:
 	bool canBeLevelDown();
 	void levelUp();
 	void levelDown();
+	void cancelLevelPending();
 	void validateLevelPending();
 	void loadFromJson(Json::Value p_json);
 	Json::Value saveToJson();

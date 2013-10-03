@@ -132,6 +132,12 @@ void SkillCharacter::levelDown()
 	}
 }
 
+void SkillCharacter::cancelLevelPending()
+{
+	this->getCharacter()->incSkillPoints(this->getLevelPending());
+	this->setLevelPending(0);
+}
+
 void SkillCharacter::validateLevelPending()
 {
 	this->setLevel(this->getLevel() + this->getLevelPending());

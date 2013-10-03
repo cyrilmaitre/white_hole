@@ -8,6 +8,7 @@ class CharacterBank : public Containerable, public WindowChoiceActionObject
 {
 public:
 	// Constructor - Destructor
+	CharacterBank(void);
 	CharacterBank(Json::Value json, Character *p_character);
 	~CharacterBank(void);
 

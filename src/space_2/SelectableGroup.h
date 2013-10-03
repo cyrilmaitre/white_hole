@@ -21,6 +21,7 @@ public:
 	void removeSelectable(Selectable* p_selectable);
 	void removeSelectable(int p_position);
 	void unselectAll();
+	void selectFirst();
 	virtual void notifySelectionChanged();
 	void notifySelectableChanged();
 

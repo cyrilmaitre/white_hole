@@ -10,6 +10,7 @@
 #include "ClockManager.h"
 #include "EntityManager.h"
 #include "PopupManager.h"
+#include "CharacterUpdate.h"
 
 using namespace sf;
 
@@ -136,6 +137,7 @@ void Game::launch(Character* p_character)
 		PopupManager::getInstance()->draw();
 		Resource::resource->getApp()->display();		
 	}
+	this->quitGame();
 }
 
 void Game::launchTest()
@@ -233,4 +235,17 @@ void Game::notifyShipPilotedChanged()
 
 	EntityManager::add(this->getShipPiloted());
 	this->getMap()->getMapObjectSelector()->addMapObject(this->getShipPiloted());
+}
+
+void Game::quitGame()
+{
+	// Update character before quit
+	NetworkJobManager::getInstance()->addJob(new CharacterUpdate(this->getCharacter()));
+
+	// Wait while all network jobs done
+	while(NetworkJobManager::getInstance()->hasJob())
+	{
+		NetworkJobManager::getInstance()->update();
+		sf::sleep(sf::seconds(1));
+	}
 }

@@ -17,6 +17,7 @@ class Weapon
 {
 public:
 	// Constructor - Destructor
+	Weapon(void);
 	Weapon(Json::Value json, CharacterShip *p_characterShip);
 	Weapon(Entity* p_entity, WeaponModel* p_weaponModel, AmmoModel* p_ammoModel);
 	Weapon(CharacterShip* p_ship, WeaponModel* p_model);

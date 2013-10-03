@@ -45,6 +45,17 @@ CharacterShip::CharacterShip( Json::Value json, Character *p_character ): Ship(0
 	ToolsImage::setSpriteOriginCenter(this->mArrowObjectSelected);
 }
 
+CharacterShip::CharacterShip(void)
+{
+	this->mCharacter = NULL;
+
+	this->setName("My ship");
+	this->setSkillPoints(0);
+	this->setLevel(0);
+	this->setExperience(0);
+	this->setPiloted(true);
+}
+
 CharacterShip::~CharacterShip(void)
 {
 	if(this->mArrowObjectSelected != NULL)
