@@ -1,7 +1,7 @@
 #include "StationScreen.h"
 #include "ClockManager.h"
 #include "UserInterface.h"
-#include "ContainerStackViewManager.h"
+#include "ContainerViewManager.h"
 #include "NetworkJobManager.h"
 #include "RunningStats.h"
 #include "Juckebox.h"
@@ -259,7 +259,7 @@ void StationScreen::update( sf::Event p_event )
 {
 	// Update drag'n'drop stack view
 	if(p_event.type == sf::Event::MouseButtonReleased && p_event.mouseButton.button == sf::Mouse::Button::Left)
-		ContainerStackViewManager::getInstance()->releaseDrag();
+		ContainerViewManager::getInstance()->releaseDrag();
 
 	// Update show Stats
 	RunningStats::update(p_event);

@@ -1,6 +1,6 @@
 #include "UserInterface.h"
 #include "Game.h"
-#include "ContainerStackViewManager.h"
+#include "ContainerViewManager.h"
 #include "CharacterBank.h"
 #include "ImageGIFFactory.h"
 
@@ -459,7 +459,7 @@ void UserInterface::draw()
 		this->mSavingGif->draw();
 
 	// Draw dragged item (if exist)
-	ContainerStackViewManager::getInstance()->draw();
+	ContainerViewManager::getInstance()->draw();
 }
 
 void UserInterface::drawInStation()

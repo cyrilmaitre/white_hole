@@ -42,15 +42,10 @@ void ContainerRowView::update()
 	}
 }
 
-void ContainerRowView::updatePosition( double newX, double newY )
+void ContainerRowView::updatePosition()
 {
-	this->setPosition(newX, newY);
-
 	for(int i = 0; i < this->mContainerStackViews.size(); i++)
-	{
-		this->mContainerStackViews[i]->updatePosition(	this->getX() + (CONTAINERSTACKVIEW_WIDTH + CONTAINERSTACKVIEW_PADDING) * i,
-														this->getY());
-	}
+		this->mContainerStackViews[i]->setPosition(	this->getX() + (CONTAINERVIEW_WIDTH + CONTAINERSTACKVIEW_PADDING) * i, this->getY());
 }
 
 void ContainerRowView::update( sf::Event p_event )
@@ -85,6 +80,12 @@ void ContainerRowView::notifyContainerRowChanged()
 			this->addContainerStackView(new ContainerStackView(this->getContainerRow()->getContainerStack(i)));
 		}
 	}
+}
+
+void ContainerRowView::notifyPositionChanged()
+{
+	Object::notifyPositionChanged();
+	this->updatePosition();
 }
 
 void ContainerRowView::clear()

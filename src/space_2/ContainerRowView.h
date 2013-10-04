@@ -23,11 +23,13 @@ public:
 	void addContainerStackView(ContainerStackView* p_view);
 	void clear();
 
-	void notifyContainerRowChanged();
 	void update();
-	void updatePosition(double newX, double newY);
+	void updatePosition();
 	void update(sf::Event p_event);
 	void draw();
+	
+	void notifyContainerRowChanged();
+	void notifyPositionChanged();
 
 
 private:

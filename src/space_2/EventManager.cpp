@@ -2,7 +2,7 @@
 #include "Game.h"
 #include "Option.h"
 #include "ToolsMap.h"
-#include "ContainerStackViewManager.h"
+#include "ContainerViewManager.h"
 #include "FactoryGet.h"
 #include "UserInterface.h"
 #include "WindowMessageInfo.h"
@@ -97,7 +97,7 @@ void EventManager::handlePlayerAction( sf::Event p_event )
 
 	// Drag'n'drop
 	if(p_event.type == sf::Event::MouseButtonReleased && p_event.mouseButton.button == sf::Mouse::Button::Left)
-		ContainerStackViewManager::getInstance()->releaseDrag();
+		ContainerViewManager::getInstance()->releaseDrag();
 
 	// Unselect selected object
 	if( p_event.type == sf::Event::KeyPressed && p_event.key.code == Option::option->getAppControl(OPTION_APP_CONTROL_UNSELECT_KEY))

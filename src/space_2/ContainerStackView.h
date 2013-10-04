@@ -1,23 +1,19 @@
 #pragma once
-#include "Focusable.h"
-#include "Button.h"
 #include "PopupBubble.h"
+#include "ContainerView.h"
 
 // Define
-#define CONTAINERSTACKVIEW_WIDTH						36
-#define CONTAINERSTACKVIEW_HEIGHT						36
-#define CONTAINERSTACKVIEW_PADDING						5
+#define CONTAINERSTACKVIEW_PADDING		5
 
 class ContainerStack;
 
-class ContainerStackView : public Focusable
+class ContainerStackView : public ContainerView
 {
 public:
 	// Constructor
 	ContainerStackView(ContainerStack* p_stack = NULL);
 	~ContainerStackView(void);
-	void deleteIcon();
-
+	
 	// Getters - Setters
 	ContainerStack* getContainerStack();
 	void setContainerStack(ContainerStack* p_stack);
@@ -25,24 +21,21 @@ public:
 	bool isDisplayStackSize();
 	void setDisplayStackSize(bool p_value);
 
-	sf::Sprite* getIcon();
-
 	// Methods
 	void update();
-	void updatePosition(double newX, double newY);
-	void notifyPositionChanged();
-	virtual void notifyItemStackChanged();
+	void updateBackgroundColor();
+	void updatePosition();
 	void update(sf::Event p_event);
 	void draw();
+	void notifyPositionChanged();
+	virtual void notifyItemStackChanged();
 
 
 protected:
 	// Attributs
 	ContainerStack* mContainerStack;
-	sf::RectangleShape mBackground;
-	sf::RectangleShape mBackgroundIcon;
+
 	sf::RectangleShape mOverlayStackSize;
-	sf::Sprite* mIcon;
 	sf::Text mStackSize;
 	bool mDisplayStackSize;
 	PopupBubble* mPubItemStack;

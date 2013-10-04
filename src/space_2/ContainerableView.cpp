@@ -116,18 +116,7 @@ void ContainerableView::updateHeight()
 void ContainerableView::notifyPositionChanged()
 {
 	Block::notifyPositionChanged();
-
-	if(this->getContainerable() == NULL)
-		return;
-
-	for(int i = 0; i < this->mContainerRowViews.size(); i++)
-	{
-		this->mContainerRowViews[i]->updatePosition(this->getX() + CONTAINERVIEW_ROW_PADDINGLEFT, 
-													this->getY() + CONTAINERVIEW_ROW_PADDINGTOP + i * (CONTAINERVIEW_ROW_HEIGHT + CONTAINERVIEW_ROW_PADDING));
-	}
-	
-	this->mBottomShape.setPosition(this->getX(), this->getY() + this->getHeight() - CONTAINERVIEW_BOTTOM_HEIGHT);
-	this->updateEstimationPosition();
+	this->updatePosition();
 }
 
 void ContainerableView::updateEstimation()
@@ -156,6 +145,21 @@ void ContainerableView::update()
 	{
 		this->mContainerRowViews[i]->update();
 	}
+}
+
+void ContainerableView::updatePosition()
+{
+	if(this->getContainerable() == NULL)
+		return;
+
+	for(int i = 0; i < this->mContainerRowViews.size(); i++)
+	{
+		this->mContainerRowViews[i]->setPosition(	this->getX() + CONTAINERVIEW_ROW_PADDINGLEFT, 
+													this->getY() + CONTAINERVIEW_ROW_PADDINGTOP + i * (CONTAINERVIEW_ROW_HEIGHT + CONTAINERVIEW_ROW_PADDING));
+	}
+
+	this->mBottomShape.setPosition(this->getX(), this->getY() + this->getHeight() - CONTAINERVIEW_BOTTOM_HEIGHT);
+	this->updateEstimationPosition();
 }
 
 void ContainerableView::update( sf::Event p_event )

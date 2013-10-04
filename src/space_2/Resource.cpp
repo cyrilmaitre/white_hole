@@ -15,7 +15,7 @@
 #include "Network.h"
 #include "FactoryGet.h"
 #include "DangerLevelManager.h"
-#include "ContainerStackViewManager.h"
+#include "ContainerViewManager.h"
 #include "NetworkJobManager.h"
 #include "PlanetManager.h"
 #include "CloudGazManager.h"
@@ -373,7 +373,7 @@ void Resource::initBeforeLoad()
 	RunningStats::init();
 	Session::init();
 	FactoryGet::init();
-	ContainerStackViewManager::init();
+	ContainerViewManager::init();
 	NetworkJobManager::init();
 }
 
@@ -402,7 +402,7 @@ void Resource::uninit()
 	Session::uninit();
 	FactoryGet::uninit();
 	DangerLevelManager::uninit();
-	ContainerStackViewManager::uninit();
+	ContainerViewManager::uninit();
 	NetworkJobManager::uninit();
 	PlanetManager::uninit();
 	CloudGazManager::uninit();

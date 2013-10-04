@@ -110,6 +110,7 @@
     <ClCompile Include="ContainerItemView.cpp" />
     <ClCompile Include="ContainerRestriction.cpp" />
     <ClCompile Include="ContainerStackWeaponView.cpp" />
+    <ClCompile Include="ContainerView.cpp" />
     <ClCompile Include="DebugScreen.cpp" />
     <ClCompile Include="DropDownable.cpp" />
     <ClCompile Include="DropDownList.cpp" />
@@ -182,7 +183,7 @@
     <ClCompile Include="ContainerRow.cpp" />
     <ClCompile Include="ContainerRowView.cpp" />
     <ClCompile Include="ContainerStack.cpp" />
-    <ClCompile Include="ContainerStackViewManager.cpp" />
+    <ClCompile Include="ContainerViewManager.cpp" />
     <ClCompile Include="ContainerStackView.cpp" />
     <ClCompile Include="ContainerableView.cpp" />
     <ClCompile Include="DangerLevelManager.cpp" />
@@ -410,6 +411,7 @@
     <ClInclude Include="ContainerItemView.h" />
     <ClInclude Include="ContainerRestriction.h" />
     <ClInclude Include="ContainerStackWeaponView.h" />
+    <ClInclude Include="ContainerView.h" />
     <ClInclude Include="DebugScreen.h" />
     <ClInclude Include="DestructableData.h" />
     <ClInclude Include="DropDownable.h" />
@@ -486,7 +488,7 @@
     <ClInclude Include="ContainerRow.h" />
     <ClInclude Include="ContainerRowView.h" />
     <ClInclude Include="ContainerStack.h" />
-    <ClInclude Include="ContainerStackViewManager.h" />
+    <ClInclude Include="ContainerViewManager.h" />
     <ClInclude Include="ContainerStackView.h" />
     <ClInclude Include="ContainerableView.h" />
     <ClInclude Include="DangerLevelManager.h" />

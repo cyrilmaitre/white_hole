@@ -10,8 +10,8 @@
 #define CONTAINERVIEW_ROW_PADDINGLEFT		5
 #define CONTAINERVIEW_ROW_PADDINGRIGHT		5
 #define CONTAINERVIEW_ROW_PADDING			5
-#define CONTAINERVIEW_ROW_WIDTH				CONTAINERVIEW_ROW_PADDING + CONTAINER_ROW_SIZE * (CONTAINERVIEW_ROW_PADDING + CONTAINERSTACKVIEW_WIDTH)
-#define CONTAINERVIEW_ROW_HEIGHT			CONTAINERSTACKVIEW_HEIGHT
+#define CONTAINERVIEW_ROW_WIDTH				CONTAINERVIEW_ROW_PADDING + CONTAINER_ROW_SIZE * (CONTAINERVIEW_ROW_PADDING + CONTAINERVIEW_WIDTH)
+#define CONTAINERVIEW_ROW_HEIGHT			CONTAINERVIEW_HEIGHT
 #define CONTAINERVIEW_BACKGROUND_COLOR		sf::Color(127, 127, 127)
 #define CONTAINERVIEW_BORDER_COLOR			sf::Color(100, 100, 100)
 #define CONTAINERVIEW_BORDER_SIZE			2
@@ -37,14 +37,16 @@ public:
 	void addContainerRowView(ContainerRowView* p_view);
 	void clear();
 
-	void notifyContainerableChanged();
-	void notifyPositionChanged();
 	void update();
+	void updatePosition();
 	void updateHeight();
 	void updateEstimation();
 	void updateEstimationPosition();
 	void update(sf::Event p_event);
 	void draw();
+	
+	void notifyContainerableChanged();
+	void notifyPositionChanged();
 
 
 private:

@@ -711,9 +711,6 @@
     <ClCompile Include="ContainerRowView.cpp">
       <Filter>Fichiers sources\game\item\container</Filter>
     </ClCompile>
-    <ClCompile Include="ContainerStackViewManager.cpp">
-      <Filter>Fichiers sources\game\item\container</Filter>
-    </ClCompile>
     <ClCompile Include="WeaponModel.cpp">
       <Filter>Fichiers sources\game\item\weapon</Filter>
     </ClCompile>
@@ -1275,6 +1272,12 @@
     <ClCompile Include="ContainerableView.cpp">
       <Filter>Fichiers sources\game\item\container</Filter>
     </ClCompile>
+    <ClCompile Include="ContainerView.cpp">
+      <Filter>Fichiers sources\game\item\container</Filter>
+    </ClCompile>
+    <ClCompile Include="ContainerViewManager.cpp">
+      <Filter>Fichiers sources\game\item\container</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h">
@@ -1605,9 +1608,6 @@
       <Filter>Fichiers d%27en-tête\game\mapObject\entity\wreck</Filter>
     </ClInclude>
     <ClInclude Include="ContainerRowView.h">
-      <Filter>Fichiers d%27en-tête\game\item\container</Filter>
-    </ClInclude>
-    <ClInclude Include="ContainerStackViewManager.h">
       <Filter>Fichiers d%27en-tête\game\item\container</Filter>
     </ClInclude>
     <ClInclude Include="LootItemModelFactory.h">
@@ -2187,6 +2187,12 @@
       <Filter>Fichiers d%27en-tête\game\item\container</Filter>
     </ClInclude>
     <ClInclude Include="ContainerableView.h">
+      <Filter>Fichiers d%27en-tête\game\item\container</Filter>
+    </ClInclude>
+    <ClInclude Include="ContainerView.h">
+      <Filter>Fichiers d%27en-tête\game\item\container</Filter>
+    </ClInclude>
+    <ClInclude Include="ContainerViewManager.h">
       <Filter>Fichiers d%27en-tête\game\item\container</Filter>
     </ClInclude>
   </ItemGroup>

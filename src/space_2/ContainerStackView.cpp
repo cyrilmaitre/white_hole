@@ -1,26 +1,17 @@
 #include "ContainerStackView.h"
 #include "ContainerStack.h"
 #include "SpriteParameterFactory.h"
-#include "ContainerStackViewManager.h"
+#include "ContainerViewManager.h"
 #include "ManagerConfig.h"
 
 
 //*************************************************************
 // Define
 //*************************************************************
-#define CONTAINERSTACKVIEW_HEIGHT_DRAG					36
-#define CONTAINERSTACKVIEW_BACKGROUND_COLOR				sf::Color(65, 65, 65)
-#define CONTAINERSTACKVIEW_BACKGROUND_COLOROVER			sf::Color(255, 127, 39)
-#define CONTAINERSTACKVIEW_BACKGROUNDICON_COLOR			sf::Color(55, 55, 55)
-#define CONTAINERSTACKVIEW_BACKGROUNDICON_WIDTH			32
-#define CONTAINERSTACKVIEW_BACKGROUNDICON_HEIGHT		32
-#define CONTAINERSTACKVIEW_BACKGROUNDICON_OFFSETX		2
-#define CONTAINERSTACKVIEW_BACKGROUNDICON_OFFSETY		2
 #define CONTAINERSTACKVIEW_OVERLAY_COLOR				sf::Color(0, 0, 0, 175)
 #define CONTAINERSTACKVIEW_OVERLAY_WIDTH				32
 #define CONTAINERSTACKVIEW_OVERLAY_HEIGHT				10
-#define CONTAINERSTACKVIEW_OVERLAY_OFFSETX				CONTAINERSTACKVIEW_BACKGROUNDICON_OFFSETX
-#define CONTAINERSTACKVIEW_OVERLAY_OFFSETY				CONTAINERSTACKVIEW_BACKGROUNDICON_OFFSETY + CONTAINERSTACKVIEW_BACKGROUNDICON_HEIGHT - CONTAINERSTACKVIEW_OVERLAY_HEIGHT
+#define CONTAINERSTACKVIEW_OVERLAY_OFFSETY				CONTAINERVIEW_BACKGROUNDICON_HEIGHT - CONTAINERSTACKVIEW_OVERLAY_HEIGHT
 #define CONTAINERSTACKVIEW_STACKSIZE_OFFSETX			2
 #define CONTAINERSTACKVIEW_STACKSIZE_OFFSETY			-2
 #define CONTAINERSTACKVIEW_STACKSIZE_FONTSIZE			12
@@ -33,18 +24,9 @@
 //*************************************************************
 ContainerStackView::ContainerStackView( ContainerStack* p_stack )
 {
+	this->setContainerViewType(ContainerViewType::ContainerStackView);
 	this->setContainerStack(p_stack);
-
-	this->mIcon = NULL;
 	this->mPubItemStack = NULL;
-
-	this->setSize(CONTAINERSTACKVIEW_WIDTH, CONTAINERSTACKVIEW_HEIGHT_DRAG);
-
-	this->mBackground.setSize(sf::Vector2f(this->getWidth(), this->getHeight()));
-	this->mBackground.setFillColor(CONTAINERSTACKVIEW_BACKGROUND_COLOR);
-
-	this->mBackgroundIcon.setSize(sf::Vector2f(CONTAINERSTACKVIEW_BACKGROUNDICON_WIDTH, CONTAINERSTACKVIEW_BACKGROUNDICON_HEIGHT));
-	this->mBackgroundIcon.setFillColor(CONTAINERSTACKVIEW_BACKGROUNDICON_COLOR);
 
 	this->mOverlayStackSize.setSize(sf::Vector2f(CONTAINERSTACKVIEW_OVERLAY_WIDTH, CONTAINERSTACKVIEW_OVERLAY_HEIGHT));
 	this->mOverlayStackSize.setFillColor(CONTAINERSTACKVIEW_OVERLAY_COLOR);
@@ -57,24 +39,15 @@ ContainerStackView::ContainerStackView( ContainerStack* p_stack )
 	this->mPubItemStack = new PopupBubble(this);
 	
 	this->notifyItemStackChanged();
-	ContainerStackViewManager::getInstance()->addView(this);
+	ContainerViewManager::getInstance()->addView(this);
 }
 
 ContainerStackView::~ContainerStackView(void)
 {
-	this->deleteIcon();
-
 	if(this->mPubItemStack != NULL)
 		delete this->mPubItemStack;
 
-	ContainerStackViewManager::getInstance()->removeView(this);
-}
-
-void ContainerStackView::deleteIcon()
-{
-	if(this->mIcon != NULL)
-		delete this->mIcon;
-	this->mIcon = NULL;
+	ContainerViewManager::getInstance()->removeView(this);
 }
 
 
@@ -101,61 +74,76 @@ void ContainerStackView::setDisplayStackSize( bool p_value )
 	this->mDisplayStackSize = p_value;
 }
 
-sf::Sprite* ContainerStackView::getIcon()
-{
-	return this->mIcon;
-}
-
 
 //*************************************************************
 // Methods
 //*************************************************************
 void ContainerStackView::update()
 {
+	ContainerView::update();
 	this->mPubItemStack->update();
-
-	if(	(this->hasMouseOver() && (this->getContainerStack()->hasItemStack() || 
-		(ContainerStackViewManager::getInstance()->isViewDragged() && this->getContainerStack()->isItemTypeAllowed(ContainerStackViewManager::getInstance()->getDraggedView()->getContainerStack()->getItemStack()->getItem()->getItemType())))) || 
-		ContainerStackViewManager::getInstance()->isViewDragged(this))
-	{
-		this->mBackground.setFillColor(CONTAINERSTACKVIEW_BACKGROUND_COLOROVER);
-	}
-	else
-	{
-		this->mBackground.setFillColor(CONTAINERSTACKVIEW_BACKGROUND_COLOR);
-	}
-
+	this->updateBackgroundColor();
 	if(this->getContainerStack()->isItemStackChanged())
 		this->notifyItemStackChanged();
 }
 
-void ContainerStackView::updatePosition( double newX, double newY )
+void ContainerStackView::updateBackgroundColor()
 {
-	this->setPosition(newX, newY);
+	bool instanceIsDraggedView = ContainerViewManager::getInstance()->isViewDragged(this);
+	bool overColor = false;
+
+	if(instanceIsDraggedView)
+	{
+		overColor = true;
+	}
+	else if(this->hasMouseOver())
+	{
+		bool viewDragged = ContainerViewManager::getInstance()->isViewDragged();
+		if(this->getContainerStack()->hasItemStack() && !viewDragged)
+		{
+			overColor = true;
+		}
+		else if(viewDragged)
+		{
+			ContainerView* draggedView = ContainerViewManager::getInstance()->getDraggedView();
+			if(draggedView->getContainerViewType() == ContainerView::ContainerViewType::ContainerStackView)
+			{
+				bool itemTypeDraggedAllowed =  this->getContainerStack()->isItemTypeAllowed(((ContainerStackView*)draggedView)->getContainerStack()->getItemStack()->getItem()->getItemType());
+				if(itemTypeDraggedAllowed)
+					overColor = true;
+			}
+		}
+	}
+
+	if(overColor)
+		this->mBackground.setFillColor(CONTAINERVIEW_BACKGROUND_COLOROVER);
+	else
+		this->mBackground.setFillColor(CONTAINERVIEW_BACKGROUND_COLOR);
+}
+
+void ContainerStackView::updatePosition(void)
+{
+	if(this->mIcon != NULL)
+	{
+		this->mOverlayStackSize.setPosition(this->mIcon->getPosition().x, this->mIcon->getPosition().y + CONTAINERSTACKVIEW_OVERLAY_OFFSETY);
+		this->mStackSize.setPosition(	this->mOverlayStackSize.getPosition().x + CONTAINERSTACKVIEW_OVERLAY_WIDTH - this->mStackSize.getLocalBounds().width - CONTAINERSTACKVIEW_STACKSIZE_OFFSETX, 
+										this->mOverlayStackSize.getPosition().y + CONTAINERSTACKVIEW_STACKSIZE_OFFSETY + ((this->mOverlayStackSize.getLocalBounds().height - this->mStackSize.getLocalBounds().height) / 2));
+	}
 }
 
 void ContainerStackView::update( sf::Event p_event )
 {
-	Focusable::update(p_event);
-	this->mPubItemStack->update(p_event);
+	ContainerView::update(p_event);
 
+	this->mPubItemStack->update(p_event);
 	if(this->hasFocus() && this->getContainerStack()->hasItemStack())
-		ContainerStackViewManager::getInstance()->setDraggedView(this);
+		ContainerViewManager::getInstance()->setDraggedView(this);
 }
 
 void ContainerStackView::notifyPositionChanged()
 {
-	Focusable::notifyPositionChanged();
-	this->mBackground.setPosition(this->getX(), this->getY());
-	this->mBackgroundIcon.setPosition(this->getX() + CONTAINERSTACKVIEW_BACKGROUNDICON_OFFSETX, this->getY() + CONTAINERSTACKVIEW_BACKGROUNDICON_OFFSETY);
-
-	if(this->mIcon != NULL)
-	{
-		this->mIcon->setPosition(this->getX() + CONTAINERSTACKVIEW_BACKGROUNDICON_OFFSETX, this->getY() + CONTAINERSTACKVIEW_BACKGROUNDICON_OFFSETY);
-		this->mOverlayStackSize.setPosition(this->getX() + CONTAINERSTACKVIEW_OVERLAY_OFFSETX, this->getY() + CONTAINERSTACKVIEW_OVERLAY_OFFSETY);
-		this->mStackSize.setPosition(	this->getX() + CONTAINERSTACKVIEW_OVERLAY_OFFSETX + CONTAINERSTACKVIEW_OVERLAY_WIDTH - this->mStackSize.getLocalBounds().width - CONTAINERSTACKVIEW_STACKSIZE_OFFSETX, 
-										this->getY() + CONTAINERSTACKVIEW_OVERLAY_OFFSETY + CONTAINERSTACKVIEW_STACKSIZE_OFFSETY + ((this->mOverlayStackSize.getLocalBounds().height - this->mStackSize.getLocalBounds().height) / 2));
-	}
+	ContainerView::notifyPositionChanged();
+	this->updatePosition();
 }
 
 void ContainerStackView::notifyItemStackChanged()
@@ -165,7 +153,7 @@ void ContainerStackView::notifyItemStackChanged()
 	if(this->getContainerStack() != NULL && this->getContainerStack()->hasItemStack())
 	{
 		this->setEnable(true);
-		this->mIcon = SpriteParameterFactory::getSpriteParameterItems()->getSpritePtr(this->getContainerStack()->getItemStack()->getItem()->getSpriteId(), CONTAINERSTACKVIEW_BACKGROUNDICON_WIDTH, CONTAINERSTACKVIEW_BACKGROUNDICON_HEIGHT);
+		this->mIcon = SpriteParameterFactory::getSpriteParameterItems()->getSpritePtr(this->getContainerStack()->getItemStack()->getItem()->getSpriteId(), CONTAINERVIEW_BACKGROUNDICON_WIDTH, CONTAINERVIEW_BACKGROUNDICON_HEIGHT);
 		this->mStackSize.setString(Tools::buildStringWithInt(this->getContainerStack()->getItemStack()->getStackSize()));
 
 		this->mPubItemStack->clear();
@@ -195,18 +183,12 @@ void ContainerStackView::notifyItemStackChanged()
 
 void ContainerStackView::draw()
 {
-	Resource::resource->getApp()->draw(this->mBackground);
-	Resource::resource->getApp()->draw(this->mBackgroundIcon);
-
-	if(this->mIcon != NULL)
+	ContainerView::draw();
+	
+	if(this->mIcon != NULL && this->isDisplayStackSize())
 	{
-		Resource::resource->getApp()->draw(*this->mIcon);	
-
-		if(this->isDisplayStackSize())
-		{
-			Resource::resource->getApp()->draw(this->mOverlayStackSize);
-			Resource::resource->getApp()->draw(this->mStackSize);
-		}
+		Resource::resource->getApp()->draw(this->mOverlayStackSize);
+		Resource::resource->getApp()->draw(this->mStackSize);
 	}
 }
 
