@@ -40,9 +40,9 @@ void ContainerDropDown::notifyContainerChanged()
 {
 	if(this->mContainer != NULL)
 	{
-		if(this->mContainer->getType() == ContainerStack::ContainerStackType::TypeCharacterShip)
+		if(this->mContainer->getType() == Containerable::ContainerStackType::TypeCharacterShip)
 			this->setText(Resource::resource->getBundle()->getString("shipCargo"));
-		else if(this->mContainer->getType() == ContainerStack::ContainerStackType::TypeCharacterBank)
+		else if(this->mContainer->getType() == Containerable::ContainerStackType::TypeCharacterBank)
 			this->setText(Resource::resource->getBundle()->getString("bankCargo") + Tools::buildStringWithInt(((CharacterBank*)this->mContainer)->getNumber()));
 		else
 			this->setText("ERROR");

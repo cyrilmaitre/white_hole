@@ -8,7 +8,7 @@
 //*************************************************************
 // Constructor - Destructor
 //*************************************************************
-ContainerStack::ContainerStack( ContainerRow* p_parent, ItemStack* p_stack, int p_position, ContainerStackType p_type ) : mItemStack(NULL)
+ContainerStack::ContainerStack( ContainerRow* p_parent, ItemStack* p_stack, int p_position, Containerable::ContainerStackType p_type ) : mItemStack(NULL)
 {
 	this->mContainerRow = p_parent;
 	this->mItemStack = p_stack;
@@ -21,7 +21,7 @@ ContainerStack::ContainerStack( ItemStack* p_stack ) : mItemStack(NULL)
 {
 	this->mContainerRow = NULL;
 	this->mItemStack = p_stack;
-	this->mType = ContainerStack::ContainerStackType::TypeNone;
+	this->mType = Containerable::ContainerStackType::TypeNone;
 	this->mPosition = 0;
 	this->mItemStackChanged = false;
 }
@@ -64,12 +64,12 @@ bool ContainerStack::hasItemStack()
 	return this->mItemStack != NULL;
 }
 
-ContainerStack::ContainerStackType ContainerStack::getType()
+Containerable::ContainerStackType ContainerStack::getType()
 {
 	return this->mType;
 }
 
-void ContainerStack::setType( ContainerStackType p_type )
+void ContainerStack::setType( Containerable::ContainerStackType p_type )
 {
 	this->mType = p_type;
 }
@@ -104,12 +104,12 @@ void ContainerStack::notifyItemStackChanged()
 	// Update server
 	switch(this->mType)
 	{
-	case ContainerStack::ContainerStackType::TypeCharacterShip:
+	case Containerable::ContainerStackType::TypeCharacterShip:
 		if(Game::game != NULL && Game::game->getShipPiloted() != NULL)
 			NetworkJobManager::getInstance()->addJob(new CharacterShipItemStackUpdate(this->getItemStack(), this->getPosition()));
 		break;
 
-	case ContainerStack::ContainerStackType::TypeCharacterBank:
+	case Containerable::ContainerStackType::TypeCharacterBank:
 		CharacterBank* bank = dynamic_cast<CharacterBank*>(this->getContainerRow()->getContainerable());
 		if(Game::game != NULL && bank != NULL)
 			NetworkJobManager::getInstance()->addJob(new CharacterBankItemStackUpdate(bank, this->getItemStack(), this->getPosition()));

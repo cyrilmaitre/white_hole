@@ -1,16 +1,16 @@
 #pragma once
-#include "ContainerStack.h"
-
-class Containerable;
+#include "Containerable.h"
 
 // Define
 #define CONTAINER_ROW_SIZE		8
+
+class ContainerStack;
 
 class ContainerRow
 {
 public:
 	// Constructor
-	ContainerRow( Containerable* p_parent, int p_containerStackCount, int p_position, ContainerStack::ContainerStackType p_type = ContainerStack::ContainerStackType::TypeNone);
+	ContainerRow( Containerable* p_parent, int p_containerStackCount, int p_position, Containerable::ContainerStackType p_type = Containerable::ContainerStackType::TypeNone);
 	~ContainerRow(void);
 
 	// Getters - Setters
@@ -20,8 +20,8 @@ public:
 	int getContainerStacksCount();
 	void setContainerStacksCount(int p_count);
 
-	ContainerStack::ContainerStackType getType();
-	void setType(ContainerStack::ContainerStackType p_type);
+	Containerable::ContainerStackType getType();
+	void setType(Containerable::ContainerStackType p_type);
 
 	int getPosition();
 	void setPosition(int p_position);
@@ -31,7 +31,7 @@ public:
 	// Attributs
 	Containerable* mContainerable;
 	ContainerStack* mContainerStacks[CONTAINER_ROW_SIZE];
-	ContainerStack::ContainerStackType mType;
+	Containerable::ContainerStackType mType;
 	int mPosition;
 	int mContainerStacksCount;
 };

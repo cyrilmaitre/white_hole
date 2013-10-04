@@ -1,11 +1,9 @@
 #pragma once
-#include "PopupBubble.h"
 #include "ContainerView.h"
+#include "ContainerStack.h"
 
 // Define
 #define CONTAINERSTACKVIEW_PADDING		5
-
-class ContainerStack;
 
 class ContainerStackView : public ContainerView
 {
@@ -38,6 +36,5 @@ protected:
 	sf::RectangleShape mOverlayStackSize;
 	sf::Text mStackSize;
 	bool mDisplayStackSize;
-	PopupBubble* mPubItemStack;
 };
 

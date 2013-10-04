@@ -22,7 +22,7 @@
 //*************************************************************
 // Constructor - Destructor
 //*************************************************************
-CharacterBank::CharacterBank( Json::Value json, Character *p_character ) : Containerable(ContainerStack::ContainerStackType::TypeCharacterBank)
+CharacterBank::CharacterBank( Json::Value json, Character *p_character ) : Containerable(Containerable::ContainerStackType::TypeCharacterBank)
 {
 	this->mCharacter = NULL;
 	this->mIdCharacterBank = -1;

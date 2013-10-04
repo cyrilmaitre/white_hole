@@ -17,6 +17,7 @@
 ContainerView::ContainerView(void)
 {
 	this->mIcon = NULL;
+	this->mPUBInfo = NULL;
 
 	this->setSize(CONTAINERVIEW_WIDTH, CONTAINERVIEW_HEIGHT_DRAG);
 
@@ -25,11 +26,18 @@ ContainerView::ContainerView(void)
 
 	this->mBackgroundIcon.setSize(sf::Vector2f(CONTAINERVIEW_BACKGROUNDICON_WIDTH, CONTAINERVIEW_BACKGROUNDICON_HEIGHT));
 	this->mBackgroundIcon.setFillColor(CONTAINERVIEW_BACKGROUNDICON_COLOR);
+
+	this->mPUBInfo = new PopupBubble(this);
+
+	ContainerViewManager::getInstance()->addView(this);
 }
 
 ContainerView::~ContainerView(void)
 {
 	this->deleteIcon();
+	if(this->mPUBInfo != NULL)
+		delete this->mPUBInfo;
+	ContainerViewManager::getInstance()->removeView(this);
 }
 
 void ContainerView::deleteIcon()
@@ -64,11 +72,12 @@ void ContainerView::setContainerViewType( ContainerViewType p_type )
 //*************************************************************
 void ContainerView::update()
 {
-	
+	this->mPUBInfo->update();
 }
 
 void ContainerView::update( sf::Event p_event )
 {
+	this->mPUBInfo->update(p_event);
 	Focusable::update(p_event);
 }
 

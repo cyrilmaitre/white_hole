@@ -1,10 +1,12 @@
 #include "Containerable.h"
+#include "ContainerRow.h"
+#include "ContainerStack.h"
 
 
 //*************************************************************
 // Constructreur - Destructeur
 //*************************************************************
-Containerable::Containerable(ContainerStack::ContainerStackType p_type)
+Containerable::Containerable(Containerable::ContainerStackType p_type)
 {
 	this->mContainerRows = NULL;
 	this->mContainerRowCount = 0;
@@ -83,12 +85,12 @@ bool Containerable::isContentChanged(bool p_resetValue)
 	return returnValue;
 }
 
-ContainerStack::ContainerStackType Containerable::getType()
+Containerable::ContainerStackType Containerable::getType()
 {
 	return this->mType;
 }
 
-void Containerable::setType( ContainerStack::ContainerStackType p_type )
+void Containerable::setType( Containerable::ContainerStackType p_type )
 {
 	this->mType = p_type;
 }

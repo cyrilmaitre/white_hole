@@ -39,7 +39,7 @@ StationScreenMarketSell::StationScreenMarketSell( StationScreenMarket* p_market 
 	this->setDisplayTitle(false);
 
 	this->setCargoMax(CARGOMAX);
-	this->setType(ContainerStack::ContainerStackType::TypeNone);
+	this->setType(Containerable::ContainerStackType::TypeNone);
 	this->mContainerableView.setContainerable(this);
 	this->mContainerableView.setDisplayEstimation(false);
 

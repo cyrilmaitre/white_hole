@@ -1,5 +1,6 @@
 #pragma once
 #include "Focusable.h"
+#include "PopupBubble.h"
 
 // Define
 #define CONTAINERVIEW_WIDTH							36
@@ -15,8 +16,8 @@ public:
 	// Enum
 	enum ContainerViewType
 	{
-		ContainerStackView,
-		ContainerItemView
+		StackView,
+		ItemView
 	};
 
 	// Constructor - Destructor
@@ -43,6 +44,7 @@ protected:
 	sf::RectangleShape mBackground;
 	sf::RectangleShape mBackgroundIcon;
 	sf::Sprite* mIcon;
+	PopupBubble* mPUBInfo;
 	ContainerViewType mContainerViewType;
 };
 

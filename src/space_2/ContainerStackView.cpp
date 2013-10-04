@@ -24,9 +24,9 @@
 //*************************************************************
 ContainerStackView::ContainerStackView( ContainerStack* p_stack )
 {
-	this->setContainerViewType(ContainerViewType::ContainerStackView);
+	this->mContainerStack = NULL;
+	this->setContainerViewType(ContainerViewType::StackView);
 	this->setContainerStack(p_stack);
-	this->mPubItemStack = NULL;
 
 	this->mOverlayStackSize.setSize(sf::Vector2f(CONTAINERSTACKVIEW_OVERLAY_WIDTH, CONTAINERSTACKVIEW_OVERLAY_HEIGHT));
 	this->mOverlayStackSize.setFillColor(CONTAINERSTACKVIEW_OVERLAY_COLOR);
@@ -34,20 +34,11 @@ ContainerStackView::ContainerStackView( ContainerStack* p_stack )
 	this->mStackSize.setFont(*Resource::resource->getFontDefault());
 	this->mStackSize.setCharacterSize(CONTAINERSTACKVIEW_STACKSIZE_FONTSIZE);
 	this->mStackSize.setColor(CONTAINERSTACKVIEW_STACKSIZE_FONTCOLOR);
-	
 	this->mDisplayStackSize = true;
-	this->mPubItemStack = new PopupBubble(this);
-	
-	this->notifyItemStackChanged();
-	ContainerViewManager::getInstance()->addView(this);
 }
 
 ContainerStackView::~ContainerStackView(void)
 {
-	if(this->mPubItemStack != NULL)
-		delete this->mPubItemStack;
-
-	ContainerViewManager::getInstance()->removeView(this);
 }
 
 
@@ -61,7 +52,11 @@ ContainerStack* ContainerStackView::getContainerStack()
 
 void ContainerStackView::setContainerStack( ContainerStack* p_stack )
 {
-	this->mContainerStack = p_stack;
+	if(this->mContainerStack != p_stack)
+	{
+		this->mContainerStack = p_stack;
+		this->notifyItemStackChanged();
+	}
 }
 
 bool ContainerStackView::isDisplayStackSize()
@@ -81,10 +76,12 @@ void ContainerStackView::setDisplayStackSize( bool p_value )
 void ContainerStackView::update()
 {
 	ContainerView::update();
-	this->mPubItemStack->update();
-	this->updateBackgroundColor();
-	if(this->getContainerStack()->isItemStackChanged())
-		this->notifyItemStackChanged();
+	if(this->mContainerStack != NULL)
+	{
+		if(this->mContainerStack->isItemStackChanged())
+			this->notifyItemStackChanged();
+		this->updateBackgroundColor();
+	}
 }
 
 void ContainerStackView::updateBackgroundColor()
@@ -106,9 +103,9 @@ void ContainerStackView::updateBackgroundColor()
 		else if(viewDragged)
 		{
 			ContainerView* draggedView = ContainerViewManager::getInstance()->getDraggedView();
-			if(draggedView->getContainerViewType() == ContainerView::ContainerViewType::ContainerStackView)
+			if(draggedView->getContainerViewType() == ContainerViewType::StackView)
 			{
-				bool itemTypeDraggedAllowed =  this->getContainerStack()->isItemTypeAllowed(((ContainerStackView*)draggedView)->getContainerStack()->getItemStack()->getItem()->getItemType());
+				bool itemTypeDraggedAllowed = this->getContainerStack()->isItemTypeAllowed(((ContainerStackView*)draggedView)->getContainerStack()->getItemStack()->getItem()->getItemType());
 				if(itemTypeDraggedAllowed)
 					overColor = true;
 			}
@@ -135,7 +132,6 @@ void ContainerStackView::update( sf::Event p_event )
 {
 	ContainerView::update(p_event);
 
-	this->mPubItemStack->update(p_event);
 	if(this->hasFocus() && this->getContainerStack()->hasItemStack())
 		ContainerViewManager::getInstance()->setDraggedView(this);
 }
@@ -156,22 +152,22 @@ void ContainerStackView::notifyItemStackChanged()
 		this->mIcon = SpriteParameterFactory::getSpriteParameterItems()->getSpritePtr(this->getContainerStack()->getItemStack()->getItem()->getSpriteId(), CONTAINERVIEW_BACKGROUNDICON_WIDTH, CONTAINERVIEW_BACKGROUNDICON_HEIGHT);
 		this->mStackSize.setString(Tools::buildStringWithInt(this->getContainerStack()->getItemStack()->getStackSize()));
 
-		this->mPubItemStack->clear();
-		this->mPubItemStack->addLine(	Resource::resource->getBundle()->getString("name") +
+		this->mPUBInfo->clear();
+		this->mPUBInfo->addLine(	Resource::resource->getBundle()->getString("name") +
 			":" + Tools::getSpaceAfterColon() + this->getContainerStack()->getItemStack()->getItem()->getName(), false);
-		this->mPubItemStack->addLine(	Resource::resource->getBundle()->getString("type") + 
+		this->mPUBInfo->addLine(	Resource::resource->getBundle()->getString("type") + 
 			":" + Tools::getSpaceAfterColon() + this->getContainerStack()->getItemStack()->getItem()->getItemType()->getAriane(), false);
-		this->mPubItemStack->addLine(Resource::resource->getBundle()->getString("tier") + 
+		this->mPUBInfo->addLine(Resource::resource->getBundle()->getString("tier") + 
 			":" + Tools::getSpaceAfterColon() + this->getContainerStack()->getItemStack()->getItem()->getItemTier()->getName(), false);
-		this->mPubItemStack->addLine(Resource::resource->getBundle()->getString("price") + 
+		this->mPUBInfo->addLine(Resource::resource->getBundle()->getString("price") + 
 			":" + Tools::getSpaceAfterColon() + Tools::buildStringWithDouble(this->getContainerStack()->getItemStack()->getItem()->getPrice()) +
 			" " + Resource::resource->getBundle()->getString("creditAb"), false);
-		this->mPubItemStack->addLine(Resource::resource->getBundle()->getString("itemStackSize") + 
+		this->mPUBInfo->addLine(Resource::resource->getBundle()->getString("itemStackSize") + 
 			":" + Tools::getSpaceAfterColon() + Tools::buildStringWithInt(this->getContainerStack()->getItemStack()->getStackSize()), false);
-		this->mPubItemStack->addLine(Resource::resource->getBundle()->getString("itemStackPrice") + 
+		this->mPUBInfo->addLine(Resource::resource->getBundle()->getString("itemStackPrice") + 
 			":" + Tools::getSpaceAfterColon() + Tools::buildStringWithDouble(this->getContainerStack()->getItemStack()->getStackPrice()) + 
 			" " + Resource::resource->getBundle()->getString("creditAb"), false);
-		this->mPubItemStack->notifyDataSetChanged();
+		this->mPUBInfo->notifyDataSetChanged();
 	}
 	else
 	{

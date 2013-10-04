@@ -1,11 +1,12 @@
 #include "ContainerRow.h"
 #include "Containerable.h"
+#include "ContainerStack.h"
 
 
 //*************************************************************
 // Constructor - Destructor
 //*************************************************************
-ContainerRow::ContainerRow(Containerable* p_parent, int p_containerStackCount, int p_position, ContainerStack::ContainerStackType p_type)
+ContainerRow::ContainerRow(Containerable* p_parent, int p_containerStackCount, int p_position, Containerable::ContainerStackType p_type)
 {
 	this->mContainerable = p_parent;
 	this->mType = p_type;
@@ -51,9 +52,14 @@ ContainerStack* ContainerRow::getContainerStack( int p_index )
 	return this->mContainerStacks[p_index];
 }
 
-ContainerStack::ContainerStackType ContainerRow::getType()
+Containerable::ContainerStackType ContainerRow::getType()
 {
 	return this->mType;
+}
+
+void ContainerRow::setType( Containerable::ContainerStackType p_type )
+{
+	this->mType = p_type;
 }
 
 int ContainerRow::getContainerStacksCount()
@@ -64,11 +70,6 @@ int ContainerRow::getContainerStacksCount()
 void ContainerRow::setContainerStacksCount( int p_count )
 {
 	this->mContainerStacksCount = p_count;
-}
-
-void ContainerRow::setType( ContainerStack::ContainerStackType p_type )
-{
-	this->mType = p_type;
 }
 
 int ContainerRow::getPosition()

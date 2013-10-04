@@ -1,23 +1,14 @@
 #pragma once
 #include "ItemStack.h"
-#include "ContainerStackView.h"
 #include "ContainerRestriction.h"
+#include "ContainerRow.h"
 
-class ContainerRow;
 
 class ContainerStack : public ContainerRestriction
 {
 public:
-	// Enum
-	enum ContainerStackType 
-	{
-		TypeCharacterShip = 0,
-		TypeCharacterBank,
-		TypeNone
-	};
-
 	// Constructor - Destructor
-	ContainerStack(ContainerRow* p_parent, ItemStack* p_stack, int p_position, ContainerStackType p_type = ContainerStack::ContainerStackType::TypeNone);
+	ContainerStack(ContainerRow* p_parent, ItemStack* p_stack, int p_position, Containerable::ContainerStackType p_type = Containerable::ContainerStackType::TypeNone);
 	ContainerStack(ItemStack* p_stack = NULL);
 	~ContainerStack(void);
 
@@ -29,8 +20,8 @@ public:
 	bool hasItemStack();
 	bool isItemStackChanged();
 
-	ContainerStackType getType();
-	void setType(ContainerStackType p_type);
+	Containerable::ContainerStackType getType();
+	void setType(Containerable::ContainerStackType p_type);
 
 	int getPosition();
 	void setPosition(int p_position);
@@ -47,7 +38,7 @@ private:
 	// Attributs
 	ContainerRow* mContainerRow;
 	ItemStack* mItemStack;
-	ContainerStackType mType;
+	Containerable::ContainerStackType mType;
 	int mPosition;
 	bool mItemStackChanged;
 };

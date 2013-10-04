@@ -115,11 +115,11 @@ void ContainerViewManager::releaseDrag()
 
 	if(source != NULL && destination != NULL)
 	{
-		if(source->getContainerViewType() == ContainerView::ContainerViewType::ContainerStackView && destination->getContainerViewType() == ContainerView::ContainerViewType::ContainerStackView)
+		if(source->getContainerViewType() == ContainerView::ContainerViewType::StackView && destination->getContainerViewType() == ContainerView::ContainerViewType::StackView)
 			this->releaseDrag((ContainerStackView*)source, (ContainerStackView*)destination);
-		else if(source->getContainerViewType() == ContainerView::ContainerViewType::ContainerStackView && destination->getContainerViewType() == ContainerView::ContainerViewType::ContainerItemView)
+		else if(source->getContainerViewType() == ContainerView::ContainerViewType::StackView && destination->getContainerViewType() == ContainerView::ContainerViewType::ItemView)
 			this->releaseDrag((ContainerStackView*)source, (ContainerItemView*)destination);
-		else if(source->getContainerViewType() == ContainerView::ContainerViewType::ContainerItemView && destination->getContainerViewType() == ContainerView::ContainerViewType::ContainerStackView)
+		else if(source->getContainerViewType() == ContainerView::ContainerViewType::ItemView && destination->getContainerViewType() == ContainerView::ContainerViewType::StackView)
 			this->releaseDrag((ContainerItemView*)source, (ContainerStackView*)destination);
 		else
 			this->releaseDrag((ContainerItemView*)source, (ContainerItemView*)destination);

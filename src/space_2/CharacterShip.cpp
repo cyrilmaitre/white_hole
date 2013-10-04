@@ -32,7 +32,7 @@
 //*************************************************************
 // Constructor - Destructor
 //*************************************************************
-CharacterShip::CharacterShip( Json::Value json, Character *p_character ): Ship(0, 0), Containerable(ContainerStack::ContainerStackType::TypeCharacterShip)
+CharacterShip::CharacterShip( Json::Value json, Character *p_character ): Ship(0, 0), Containerable(Containerable::ContainerStackType::TypeCharacterShip)
 {
 	this->mLoaded = false;
 	this->setCharacter(p_character);

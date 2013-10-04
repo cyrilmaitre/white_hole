@@ -1,14 +1,22 @@
 #pragma once
 #include "ContainerableData.h"
-#include "ContainerRow.h"
 #include "ItemStack.h"
 
+class ContainerRow;
 
 class Containerable: public ContainerableData
 {
 public:
+	// Enum
+	enum ContainerStackType 
+	{
+		TypeCharacterShip = 0,
+		TypeCharacterBank,
+		TypeNone
+	};
+
 	// Constructor - Destructor
-	Containerable(ContainerStack::ContainerStackType p_type = ContainerStack::ContainerStackType::TypeNone);
+	Containerable(Containerable::ContainerStackType p_type = Containerable::ContainerStackType::TypeNone);
 	~Containerable(void);
 	void deleteContainerRows();
 
@@ -28,8 +36,8 @@ public:
 	int getItemCount(Item* p_item);
 	std::map<Item*, int> getItemsCount();
 
-	ContainerStack::ContainerStackType getType();
-	void setType(ContainerStack::ContainerStackType p_type);
+	Containerable::ContainerStackType getType();
+	void setType(Containerable::ContainerStackType p_type);
 
 	// Methods
 	void empty();
@@ -47,6 +55,6 @@ private:
 	int mContainerRowCount;
 	bool mContentChanged;
 	double mContentEstimation;
-	ContainerStack::ContainerStackType mType;
+	Containerable::ContainerStackType mType;
 };
 

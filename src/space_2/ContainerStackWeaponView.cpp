@@ -66,14 +66,14 @@ void ContainerStackWeaponView::updateIcon()
 
 void ContainerStackWeaponView::updatePub()
 {
-	this->mPubItemStack->clear();
-	this->mPubItemStack->addLine(Resource::resource->getBundle()->getString("name") +
+	this->mPUBInfo->clear();
+	this->mPUBInfo->addLine(Resource::resource->getBundle()->getString("name") +
 		":" + Tools::getSpaceAfterColon() + this->getContainerStack()->getItemStack()->getItem()->getName(), false);
-	this->mPubItemStack->addLine(Resource::resource->getBundle()->getString("type") + 
+	this->mPUBInfo->addLine(Resource::resource->getBundle()->getString("type") + 
 		":" + Tools::getSpaceAfterColon() + this->getContainerStack()->getItemStack()->getItem()->getItemType()->getAriane(), false);
-	this->mPubItemStack->addLine(Resource::resource->getBundle()->getString("tier") + 
+	this->mPUBInfo->addLine(Resource::resource->getBundle()->getString("tier") + 
 		":" + Tools::getSpaceAfterColon() + this->getContainerStack()->getItemStack()->getItem()->getItemTier()->getName(), false);
-	this->mPubItemStack->notifyDataSetChanged();
+	this->mPUBInfo->notifyDataSetChanged();
 }
 
 
