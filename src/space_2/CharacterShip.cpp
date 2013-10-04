@@ -245,6 +245,7 @@ void CharacterShip::loadFromJson( Json::Value json )
 	}
 
 	// ItemStacks
+	this->setNotifyServerOnChange(false);
 	Json::Value itemStacks = json.get(JSON_ITEMSTACKS, NULL);
 	if(itemStacks != NULL)
 	{
@@ -255,6 +256,7 @@ void CharacterShip::loadFromJson( Json::Value json )
 			this->addItemStack(currentStack, currentItemStack.get(CHARACTERSHIP_JSON_ITEMSTACKPOSITION, 0).asInt());
 		}
 	}
+	this->setNotifyServerOnChange(true);
 	this->mLoaded = true;
 }
 

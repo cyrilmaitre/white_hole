@@ -7,6 +7,7 @@
 // Define
 //*************************************************************
 #define RESPONSEJSON_CHARACTERSHIP		"charactership"
+#define JSON_WEAPONS					"weapons"
 
 
 //*************************************************************
@@ -40,11 +41,23 @@ void CharacterShipWeaponCreate::job()
 		bool parsingSuccessfull = reader.parse(response.getBody(), jsonResponse);
 		if(parsingSuccessfull)
 		{
-			CharacterShip* newShip = new CharacterShip(jsonResponse.get(RESPONSEJSON_CHARACTERSHIP, NULL), NULL);
-			if(newShip->getWeaponsCount() == this->mCharacterShip->getWeaponsCount())
+			// Get charactership
+			Json::Value jsonCharacterShip = jsonResponse.get(RESPONSEJSON_CHARACTERSHIP, NULL);
+			if(jsonCharacterShip != NULL)
 			{
-				for(int i = 0; i < newShip->getWeaponsCount(); i++)
-					this->mCharacterShip->getWeapon(i)->setIdWeapon(newShip->getWeapon(i)->getIdWeapon());
+				// Get weapons
+				Json::Value weapons = jsonCharacterShip.get(JSON_WEAPONS, NULL);
+				if(weapons != NULL)
+				{
+					for(int i = 0; i < weapons.size(); i++)
+					{
+						// Get current weapon and update id
+						Weapon* tmpWeapon = new Weapon(weapons.get(i, NULL), NULL);
+						if(i < this->mCharacterShip->getWeaponsCount())
+							this->mCharacterShip->getWeapon(i)->setIdWeapon(tmpWeapon->getIdWeapon());
+						delete tmpWeapon;
+					}
+				}
 			}
 		}
 

@@ -256,20 +256,15 @@ double Weapon::getDps()
 //*************************************************************
 void Weapon::loadFromJson( Json::Value json )
 {
-	if(ToolsMap::isCharacterShip(this->getEntity()))
-	{
-		CharacterShip* characterShip = (CharacterShip*)this->getEntity();
-
-		this->setIdWeapon(json.get(JSON_IDWEAPON, -1).asInt());
-		long ammoId = json.get(JSON_IDAMMO, -1).asInt();
-		if(ammoId != -1)
-			this->setAmmo(FactoryGet::getAmmoFactory()->getAmmo(ammoId));
-		else
-			this->setAmmo(NULL);
-		this->setAmmoCount(json.get(JSON_AMMOCOUNT, 0).asInt());
-		this->setActif(json.get(JSON_ACTIF, true).asBool());
-		this->setWeaponModel(FactoryGet::getWeaponModelFactory()->getWeaponModel(json.get(JSON_IDWEAPONMODEL, -1).asInt()));
-	}	
+	this->setIdWeapon(json.get(JSON_IDWEAPON, -1).asInt());
+	long ammoId = json.get(JSON_IDAMMO, -1).asInt();
+	if(ammoId != -1)
+		this->setAmmo(FactoryGet::getAmmoFactory()->getAmmo(ammoId));
+	else
+		this->setAmmo(NULL);
+	this->setAmmoCount(json.get(JSON_AMMOCOUNT, 0).asInt());
+	this->setActif(json.get(JSON_ACTIF, true).asBool());
+	this->setWeaponModel(FactoryGet::getWeaponModelFactory()->getWeaponModel(json.get(JSON_IDWEAPONMODEL, -1).asInt()));
 }
 
 Json::Value Weapon::saveToJson()

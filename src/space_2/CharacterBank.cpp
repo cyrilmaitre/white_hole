@@ -161,6 +161,7 @@ void CharacterBank::loadFromJson( Json::Value json )
 	this->setUnlock(json.get(JSON_UNLOCK, false).asBool());
 
 	// ItemStacks
+	this->setNotifyServerOnChange(false);
 	Json::Value itemStacks = json.get(JSON_ITEMSTACKS, NULL);
 	if(itemStacks != NULL)
 	{
@@ -171,6 +172,7 @@ void CharacterBank::loadFromJson( Json::Value json )
 			this->addItemStack(currentStack, currentItemStack.get(JSON_ITEMSTACKPOSITION, 0).asInt(), false);
 		}
 	}
+	this->setNotifyServerOnChange(true);
 }
 
 Json::Value CharacterBank::saveToJson()

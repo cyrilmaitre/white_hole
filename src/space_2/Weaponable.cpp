@@ -32,11 +32,13 @@ bool Weaponable::isWeaponEmpty()
 
 Weapon * Weaponable::getWeapon( int p_index )
 {
+	sf::Lock lock(this->mMutex);
 	return this->mWeapons[p_index];
 }
 
 int Weaponable::getWeaponsCount()
 {
+	sf::Lock lock(this->mMutex);
 	return this->mWeapons.size();
 }
 
@@ -46,6 +48,7 @@ int Weaponable::getWeaponsCount()
 //*************************************************************
 void Weaponable::addWeapon( Weapon *p_weapon, bool p_notify )
 {
+	sf::Lock lock(this->mMutex);
 	if(this->getWeaponsCount() < this->getWeaponSlotMax())
 	{
 		this->mWeapons.push_back(p_weapon);
@@ -56,6 +59,7 @@ void Weaponable::addWeapon( Weapon *p_weapon, bool p_notify )
 
 void Weaponable::removeWeapon( Weapon *p_weapon, bool p_notify )
 {
+	sf::Lock lock(this->mMutex);
 	for(int i = 0; i < this->mWeapons.size(); i++)
 	{
 		if(this->mWeapons[i] == p_weapon)
@@ -71,6 +75,7 @@ void Weaponable::removeWeapon( Weapon *p_weapon, bool p_notify )
 
 void Weaponable::removeWeapon( int p_index, bool p_notify )
 {
+	sf::Lock lock(this->mMutex);
 	delete this->mWeapons[p_index];
 	this->mWeapons.erase(this->mWeapons.begin() + p_index);
 	if(p_notify)
@@ -79,6 +84,7 @@ void Weaponable::removeWeapon( int p_index, bool p_notify )
 
 void Weaponable::removeWeaponAll( bool p_notify )
 {
+	sf::Lock lock(this->mMutex);
 	for(int i = 0; i < this->mWeapons.size(); i++)
 	{
 		if(this->mWeapons[i] != NULL)

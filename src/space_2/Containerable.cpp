@@ -12,6 +12,7 @@ Containerable::Containerable(Containerable::ContainerStackType p_type)
 	this->mContainerRowCount = 0;
 	this->mContentChanged = false;
 	this->setContentEstimation(0);
+	this->mNotifyServerOnChange = true;
 	this->mType = p_type;
 }
 
@@ -195,6 +196,16 @@ std::map<Item*, int> Containerable::getItemsCount()
 	return itemsCount;
 }
 
+bool Containerable::isNotifyServerOnChange()
+{
+	return this->mNotifyServerOnChange;
+}
+
+void Containerable::setNotifyServerOnChange( bool p_value )
+{
+	this->mNotifyServerOnChange = p_value;
+}
+
 
 //*************************************************************
 // Methods
@@ -375,4 +386,5 @@ void Containerable::updateContentEstimation()
 	}
 	this->setContentEstimation(newEstimation);
 }
+
 

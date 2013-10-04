@@ -112,7 +112,7 @@ void Game::uninit()
 	while(NetworkJobManager::getInstance()->hasJob())
 	{
 		NetworkJobManager::getInstance()->update();
-		sf::sleep(sf::seconds(1));
+		sf::sleep(sf::milliseconds(100));
 	}
 
 	// Delete

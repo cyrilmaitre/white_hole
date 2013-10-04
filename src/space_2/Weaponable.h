@@ -33,5 +33,6 @@ public:
 private:
 	// Attributs
 	std::vector<Weapon*> mWeapons;
+	sf::Mutex mMutex;
 };
 

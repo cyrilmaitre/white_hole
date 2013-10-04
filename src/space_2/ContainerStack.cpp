@@ -99,21 +99,23 @@ void ContainerStack::notifyItemStackChanged()
 {
 	this->mItemStackChanged = true;
 	if(this->mContainerRow != NULL)
-		this->mContainerRow->getContainerable()->notifyContentChanged();
-
-	// Update server
-	switch(this->mType)
 	{
-	case Containerable::ContainerStackType::TypeCharacterShip:
-		if(Game::game != NULL && Game::game->getShipPiloted() != NULL)
-			NetworkJobManager::getInstance()->addJob(new CharacterShipItemStackUpdate(this->getItemStack(), this->getPosition()));
-		break;
+		this->mContainerRow->getContainerable()->notifyContentChanged();
+		
+		// Update server
+		switch(this->mType)
+		{
+		case Containerable::ContainerStackType::TypeCharacterShip:
+			if(this->mContainerRow->getContainerable()->isNotifyServerOnChange())
+				NetworkJobManager::getInstance()->addJob(new CharacterShipItemStackUpdate(this->getItemStack(), this->getPosition()));
+			break;
 
-	case Containerable::ContainerStackType::TypeCharacterBank:
-		CharacterBank* bank = dynamic_cast<CharacterBank*>(this->getContainerRow()->getContainerable());
-		if(Game::game != NULL && bank != NULL)
-			NetworkJobManager::getInstance()->addJob(new CharacterBankItemStackUpdate(bank, this->getItemStack(), this->getPosition()));
-		break;
+		case Containerable::ContainerStackType::TypeCharacterBank:
+			CharacterBank* bank = dynamic_cast<CharacterBank*>(this->getContainerRow()->getContainerable());
+			if(this->mContainerRow->getContainerable()->isNotifyServerOnChange() && bank != NULL)
+				NetworkJobManager::getInstance()->addJob(new CharacterBankItemStackUpdate(bank, this->getItemStack(), this->getPosition()));
+			break;
+		}
 	}
 }
 

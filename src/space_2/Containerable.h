@@ -36,6 +36,9 @@ public:
 	int getItemCount(Item* p_item);
 	std::map<Item*, int> getItemsCount();
 
+	bool isNotifyServerOnChange();
+	void setNotifyServerOnChange(bool p_value);
+
 	Containerable::ContainerStackType getType();
 	void setType(Containerable::ContainerStackType p_type);
 
@@ -55,6 +58,7 @@ private:
 	int mContainerRowCount;
 	bool mContentChanged;
 	double mContentEstimation;
+	bool mNotifyServerOnChange;
 	Containerable::ContainerStackType mType;
 };
 
