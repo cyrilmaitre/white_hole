@@ -241,7 +241,7 @@ void CharacterShip::loadFromJson( Json::Value json )
 	if(weapons != NULL)
 	{
 		for(int i = 0; i < weapons.size(); i++)
-			this->addWeapon(new Weapon(weapons.get(i, NULL), this));
+			this->addWeapon(new Weapon(weapons.get(i, NULL), this), false);
 	}
 
 	// ItemStacks
