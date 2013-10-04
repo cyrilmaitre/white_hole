@@ -23,6 +23,7 @@ public:
 	void decZoomLevel();
 
 	void notifyPositionChanged();
+	void notifyOpenChanged();
 	void update();
 	void update(sf::Event p_event);
 	void drawContent();

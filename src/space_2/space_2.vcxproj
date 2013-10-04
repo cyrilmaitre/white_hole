@@ -138,6 +138,7 @@
     <ClCompile Include="LevelFactory.cpp" />
     <ClCompile Include="LevelShip.cpp" />
     <ClCompile Include="ListSelectableGroup.cpp" />
+    <ClCompile Include="LoadingGameScreen.cpp" />
     <ClCompile Include="MapMiniView.cpp" />
     <ClCompile Include="MapObjectModel.cpp" />
     <ClCompile Include="MarketItemBuyView.cpp" />
@@ -301,6 +302,7 @@
     <ClCompile Include="TurretEffect.cpp" />
     <ClCompile Include="TurretEffectModel.cpp" />
     <ClCompile Include="TurretEffectModelFactory.cpp" />
+    <ClCompile Include="UnloadingGameScreen.cpp" />
     <ClCompile Include="UserInterface.cpp" />
     <ClCompile Include="Image.cpp" />
     <ClCompile Include="Manager.cpp" />
@@ -435,6 +437,7 @@
     <ClInclude Include="LevelFactory.h" />
     <ClInclude Include="LevelShip.h" />
     <ClInclude Include="ListSelectableGroup.h" />
+    <ClInclude Include="LoadingGameScreen.h" />
     <ClInclude Include="MapMiniView.h" />
     <ClInclude Include="MapObjectModel.h" />
     <ClInclude Include="MarketItemBuyView.h" />
@@ -601,6 +604,7 @@
     <ClInclude Include="TurretEffect.h" />
     <ClInclude Include="TurretEffectModel.h" />
     <ClInclude Include="TurretEffectModelFactory.h" />
+    <ClInclude Include="UnloadingGameScreen.h" />
     <ClInclude Include="UserInterface.h" />
     <ClInclude Include="Image.h" />
     <ClInclude Include="Manager.h" />

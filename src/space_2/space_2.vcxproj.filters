@@ -1257,6 +1257,12 @@
     <ClCompile Include="CharacterShipWeaponCreate.cpp">
       <Filter>Fichiers sources\resource\network</Filter>
     </ClCompile>
+    <ClCompile Include="UnloadingGameScreen.cpp">
+      <Filter>Fichiers sources\screen</Filter>
+    </ClCompile>
+    <ClCompile Include="LoadingGameScreen.cpp">
+      <Filter>Fichiers sources\screen</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h">
@@ -2152,6 +2158,12 @@
     </ClInclude>
     <ClInclude Include="CharacterShipWeaponCreate.h">
       <Filter>Fichiers d%27en-tête\resource\network</Filter>
+    </ClInclude>
+    <ClInclude Include="UnloadingGameScreen.h">
+      <Filter>Fichiers d%27en-tête\screen</Filter>
+    </ClInclude>
+    <ClInclude Include="LoadingGameScreen.h">
+      <Filter>Fichiers d%27en-tête\screen</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -112,6 +112,15 @@ void WindowMap::notifyPositionChanged()
 								this->mButtonDezoom.getBottomY() + TB_OFFSETY);
 }
 
+void WindowMap::notifyOpenChanged()
+{
+	Window::notifyOpenChanged();
+	if(this->isOpen())
+	{
+		this->mMapView->updateTexture();
+	}
+}
+
 void WindowMap::update()
 {
 	if(this->isOpen() && !this->isReduce())

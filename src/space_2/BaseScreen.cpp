@@ -45,6 +45,22 @@ BaseScreen::~BaseScreen(void)
 
 
 //*************************************************************
+// Getters - Setters
+//*************************************************************
+bool BaseScreen::isRunning()
+{
+	sf::Lock lock(this->mMutex);
+	return this->mRunning;
+}
+
+void BaseScreen::setRunning( bool p_running )
+{
+	sf::Lock lock(this->mMutex);
+	this->mRunning = p_running;
+}
+
+
+//*************************************************************
 // Methods
 //*************************************************************
 void BaseScreen::draw()
@@ -91,3 +107,5 @@ void BaseScreen::showScreen()
 	this->mScreenView->setVisible(true);
 	this->notifyAppSizeChanged();
 }
+
+

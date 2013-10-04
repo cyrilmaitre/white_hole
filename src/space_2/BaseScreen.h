@@ -14,6 +14,10 @@ public:
 	BaseScreen(void);
 	~BaseScreen(void);
 
+	// Getters - Setters
+	bool isRunning();
+	void setRunning(bool p_running);
+
 	// Methods
 	virtual void draw();
 	virtual void update();
@@ -32,5 +36,6 @@ protected:
 	sf::RectangleShape mBorderBottom;
 	TextBox mGameVersion;
 	View *mScreenView;
+	sf::Mutex mMutex;
 };
 

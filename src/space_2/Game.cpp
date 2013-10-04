@@ -27,16 +27,23 @@ Game * Game::game = NULL;
 Game::Game(void)
 {
 	// Init
-	this->game				= this;
-	this->mMap				= NULL;
-	this->mCamera			= NULL;
-	this->mUserInterface	= NULL;
-	this->mCharacter		= NULL;
+	Game::game = this;
+	this->mMap = NULL;
+	this->mCamera = NULL;
+	this->mUserInterface = NULL;
+	this->mCharacter = NULL;
+
+	this->mThreadInit = NULL;
+	this->mThreadUninit = NULL;
 }
 
 Game::~Game(void)
 {
+	if(this->mThreadInit != NULL)
+		delete this->mThreadInit;
 
+	if(this->mThreadUninit != NULL)
+		delete this->mThreadUninit;
 }
 
 
@@ -46,19 +53,6 @@ Game::~Game(void)
 Map* Game::getMap()
 {
 	return this->mMap;
-}
-
-void Game::setMap( Map* p_myMap )
-{
-	// Delete myMap if exist
-	if(this->mMap != NULL)
-	{
-		delete this->mMap;
-		this->mMap = NULL;
-	}
-
-	// Set
-	this->mMap = p_myMap;
 }
 
 UserInterface* Game::getUserInterface()
@@ -83,13 +77,12 @@ CharacterShip* Game::getShipPiloted()
 //*************************************************************
 // Getters - Setters
 //*************************************************************
-void Game::launchInit( Character* p_character )
+void Game::init()
 {
 	// Init basic
-	this->mCharacter		= p_character;
-	this->mMap				= new Map();
-	this->mCamera			= new Camera();
-	this->mUserInterface	= new UserInterface(this->mCharacter);
+	this->mMap = new Map();
+	this->mCamera = new Camera();
+	this->mUserInterface = new UserInterface(this->mCharacter);
 
 	// Init
 	sf::Vector2i characterShipPosition = MapObject::convertPosition(sf::Vector2i(SECTOR_WIDTH / 2, SECTOR_HEIGHT / 2), SECTOR_PLANE, SHIP_PLANE);
@@ -101,20 +94,79 @@ void Game::launchInit( Character* p_character )
 
 	Resource::resource->getJuckebox()->playlistLaunch();
 	Resource::resource->updateViewMap();
+
+	// First update
+	this->update(this->mEvent);
+	this->update();
+
+	// Finish
+	this->mScreenLoading.setRunning(false);
+}
+
+void Game::uninit()
+{
+	// Update character before quit
+	NetworkJobManager::getInstance()->addJob(new CharacterUpdate(this->getCharacter()));
+
+	// Wait while all network jobs done
+	while(NetworkJobManager::getInstance()->hasJob())
+	{
+		NetworkJobManager::getInstance()->update();
+		sf::sleep(sf::seconds(1));
+	}
+
+	// Delete
+	delete this->mMap;
+	this->mMap = NULL;
+
+	delete this->mCamera;
+	this->mCamera = NULL;
+
+	delete this->mUserInterface;
+	this->mUserInterface = NULL;
+
+	// Finish
+	this->mScreenUnloading.setRunning(false);
+}
+
+void Game::launchInit( Character* p_character )
+{
+	// Set character
+	this->mCharacter = p_character;
+
+	// Launch thread
+	if(this->mThreadInit != NULL)
+	{
+		delete this->mThreadInit;
+		this->mThreadInit = NULL;
+	}
+
+	this->mThreadInit = new sf::Thread(&Game::init, this);
+	this->mThreadInit->launch();
+
+	// Screen loading
+	this->mScreenLoading.launch();
 }
 
 void Game::launchUninit()
 {
-	// Delete basic
-	delete this->mMap;
-	delete this->mCamera;
-	delete this->mUserInterface;
+	// Launch thread
+	if(this->mThreadUninit != NULL)
+	{
+		delete this->mThreadUninit;
+		this->mThreadUninit = NULL;
+	}
+
+	this->mThreadUninit = new sf::Thread(&Game::uninit, this);
+	this->mThreadUninit->launch();	
+
+	// Screen unloading
+	this->mScreenUnloading.launch();
 }
 
 void Game::launch(Character* p_character)
 {
 	this->launchInit(p_character);
-	this->launchTest();
 	while(Resource::resource->getApp()->isOpen() && Resource::resource->isAppRunning())
 	{
 		// Update
@@ -128,7 +180,7 @@ void Game::launch(Character* p_character)
 				Resource::resource->resizeAllView();
 
 			// Update Game when event
-			this->update(mEvent);
+			this->update(this->mEvent);
 		}
 		this->update();
 
@@ -137,23 +189,7 @@ void Game::launch(Character* p_character)
 		PopupManager::getInstance()->draw();
 		Resource::resource->getApp()->display();		
 	}
-	this->quitGame();
-}
-
-void Game::launchTest()
-{
-	// Function tests
-	/*
-	Animation * plop = new Animation(UiImageGIFFactory::getGifShield());
-	plop->setAnimationX(250);
-	plop->setAnimationY(250);
-	plop->setSpriteOriginCenter();
-	plop->rotate(45, 90, 15000, ANIMATION_ROTATION_DIRECTION_LEFT);
-	plop->scaleNewSize(96, 96, 10000);
-	plop->translate(750, 100, 7500);
-	plop->start();
-	AnimationManager::addAnimation(plop);
-	*/
+	this->launchUninit();
 }
 
 void Game::update( sf::Event p_event )
@@ -237,15 +273,4 @@ void Game::notifyShipPilotedChanged()
 	this->getMap()->getMapObjectSelector()->addMapObject(this->getShipPiloted());
 }
 
-void Game::quitGame()
-{
-	// Update character before quit
-	NetworkJobManager::getInstance()->addJob(new CharacterUpdate(this->getCharacter()));
 
-	// Wait while all network jobs done
-	while(NetworkJobManager::getInstance()->hasJob())
-	{
-		NetworkJobManager::getInstance()->update();
-		sf::sleep(sf::seconds(1));
-	}
-}

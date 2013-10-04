@@ -7,6 +7,8 @@
 #include "UserInterface.h"
 #include "Character.h"
 #include "CharacterShip.h"
+#include "LoadingGameScreen.h"
+#include "UnloadingGameScreen.h"
 
 
 class Game
@@ -18,20 +20,18 @@ public:
 
 	// Getters - Setters
 	Map* getMap();
-	void setMap(Map* p_myMap);
-
 	UserInterface* getUserInterface();
 	Character* getCharacter();
 	CharacterShip* getShipPiloted();
 
 	// Method
+	void init();
+	void uninit();
 	void update();
 	void update(sf::Event p_event);
 	void launchInit(Character* p_character);
 	void launch(Character* p_character);
 	void launchUninit();
-	void launchTest();
-	void quitGame();
 
 	void changedShipPiloted(CharacterShip* p_ship);
 	void notifyShipPilotedChanged();
@@ -47,5 +47,11 @@ private:
 	UserInterface* mUserInterface;
 	Character* mCharacter;
 	sf::Event mEvent;
+
+	sf::Thread* mThreadInit;
+	sf::Thread* mThreadUninit;
+
+	LoadingGameScreen mScreenLoading;
+	UnloadingGameScreen mScreenUnloading;
 };
 
