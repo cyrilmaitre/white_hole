@@ -273,6 +273,7 @@ void WeaponView::notifyWeaponChanged()
 		this->mWeaponIcon.setBackgroundImage(SpriteParameterFactory::getSpriteParameterItems()->getSpritePtr(this->mWeapon->getWeaponModel()->getSpriteId()), true);
 
 		// Bubble Weapon
+		this->mWeaponInfo->clear(false);
 		this->mWeaponInfo->addLine(	Resource::resource->getBundle()->getString("uiWeaponInfoName") + 
 			":" + Tools::getSpaceAfterColon() + this->getWeapon()->getWeaponModel()->getName(), false);
 
@@ -294,6 +295,7 @@ void WeaponView::notifyWeaponChanged()
 		// Bubble Ammo
 		if(this->mWeapon->getAmmo())
 		{
+			this->mAmmoInfo->clear(false);
 			this->mAmmoInfo->addLine(	Resource::resource->getBundle()->getString("uiAmmoInfoName") + 
 				":" + Tools::getSpaceAfterColon() + this->getWeapon()->getAmmo()->getName(), false);
 			this->mAmmoInfo->addLine(	Resource::resource->getBundle()->getString("uiAmmoInfoType") + 
