@@ -88,7 +88,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;NOMINMAX;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>build2.1/include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>build2.1/include;../../lib/boost/boost_1_54_0</AdditionalIncludeDirectories>
       <PrecompiledHeaderFile>
       </PrecompiledHeaderFile>
       <PrecompiledHeaderOutputFile>
@@ -115,7 +115,7 @@
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>D:\Projets\white_hole\lib\boost\boost_1_54_0;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalIncludeDirectories>include</AdditionalIncludeDirectories>
-      <AdditionalIncludeDirectories>build2.0/include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>build2.0/include;../../lib/boost/boost_1_54_0</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -169,7 +169,6 @@
     <ClCompile Include="CharacterShipUpdate.cpp" />
     <ClCompile Include="CharacterUpdate.cpp" />
     <ClCompile Include="ContainerDropDown.cpp" />
-    <ClCompile Include="ChatClient.cpp" />
     <ClCompile Include="DebugScreen.cpp" />
     <ClCompile Include="DropDownable.cpp" />
     <ClCompile Include="DropDownList.cpp" />

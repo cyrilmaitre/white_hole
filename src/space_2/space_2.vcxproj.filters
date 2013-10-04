@@ -2177,5 +2177,11 @@
     <ClInclude Include="WindowChat.h">
       <Filter>Fichiers d%27en-tête\game\ui\window</Filter>
     </ClInclude>
+    <ClInclude Include="ChatClient.h">
+      <Filter>Fichiers d%27en-tête</Filter>
+    </ClInclude>
+    <ClInclude Include="ChatDefine.h">
+      <Filter>Fichiers d%27en-tête</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

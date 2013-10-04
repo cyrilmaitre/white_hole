@@ -39,7 +39,7 @@ Resource * Resource::resource;
 //*************************************************************
 // Constructreur - Destructeur
 //*************************************************************
-Resource::Resource(): mApp(VideoMode(Option::option->getAppScreenWidth(), Option::option->getAppScreenHeight(), APP_SCREEN_COLOR), APP_GAME_NAME, Option::option->getAppScreenMode(), sf::ContextSettings(0, 0, Option::option->getAppAntiAliasingLevel())), mChatClient(new ChatClient)
+Resource::Resource(): mApp(sf::VideoMode(Option::option->getAppScreenWidth(), Option::option->getAppScreenHeight(), APP_SCREEN_COLOR), APP_GAME_NAME, Option::option->getAppScreenMode(), sf::ContextSettings(0, 0, Option::option->getAppAntiAliasingLevel())), mChatClient(new ChatClient)
 {
 	//*************************************************************
 	// Sauvegarde de l'objet ressource
@@ -472,18 +472,18 @@ void Resource::loadImagesFromMKK(std:: string path)
 
 			// cout << "-> " << file_name << " size: " << mDatImage.GetFileSize(file_name) << endl;
 
-			Image *tmpImage = new Image();
+			sf::Image *tmpImage = new sf::Image();
 			if(tmpImage->loadFromMemory(buffer, mDatImage.GetFileSize(file_name)) || buffer == NULL)
-				tmpImage->createMaskFromColor(Color(0,255,255));
+				tmpImage->createMaskFromColor(sf::Color(0,255,255));
 			else
-				cout << "Error while loading image: " << path+file_name << endl;
+				std::cout << "Error while loading image: " << path+file_name << std::endl;
 
-			this->mImage.insert(pair<string, Image*>(file_name, tmpImage));
+			this->mImage.insert(std::pair<std::string, sf::Image*>(file_name, tmpImage));
 
 		}
 	}
 	else {
-		cout << "Unable to load image from .mkk: " << path << endl;
+		std::cout << "Unable to load image from .mkk: " << path << std::endl;
 	}
 }
 
@@ -560,15 +560,15 @@ void Resource::loadFontsFromMKK(std:: string path)
 			// cout << "-> " << file_name << " size: " << mDatFont.GetFileSize(file_name) << endl;
 
 
-			Font *tmpFont = new Font();
+			sf::Font *tmpFont = new sf::Font();
 			if(!tmpFont->loadFromMemory(buffer, mDatFont.GetFileSize(file_name)) || buffer == NULL)
-				cout << "Error while loading font: " << file_name << endl;
+				std::cout << "Error while loading font: " << file_name << std::endl;
 
-			this->mFont.insert(pair<string, Font*>(file_name, tmpFont));
+			this->mFont.insert(std::pair<std::string, sf::Font*>(file_name, tmpFont));
 		}
 	}
 	else {
-		cout << "Unable to load font from .mkk: " << path << endl;
+		std::cout << "Unable to load font from .mkk: " << path << std::endl;
 	}
 }
 
@@ -610,16 +610,16 @@ void Resource::loadSoundBuffersFromMKK(std:: string path)
 
 			// cout << "-> " << file_name << " size: " << mDatSound.GetFileSize(file_name) << endl;
 
-			SoundBuffer *tmpSoundBuffer = new SoundBuffer();
+			sf::SoundBuffer *tmpSoundBuffer = new sf::SoundBuffer();
 			if (!tmpSoundBuffer->loadFromMemory(buffer, mDatSound.GetFileSize(file_name)) || buffer == NULL)
-				cout << "Error while loading sound: " << path+file_name << endl;
+				std::cout << "Error while loading sound: " << path+file_name << std::endl;
 
-			this->mBuffer.insert(pair<string, SoundBuffer*>(file_name, tmpSoundBuffer));
+			this->mBuffer.insert(std::pair<std::string, sf::SoundBuffer*>(file_name, tmpSoundBuffer));
 
 		}
 	}
 	else {
-		cout << "Unable to load sound from .mkk: " << path << endl;
+		std::cout << "Unable to load sound from .mkk: " << path << std::endl;
 	}
 }
 

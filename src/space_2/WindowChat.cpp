@@ -30,9 +30,10 @@ WindowChat::WindowChat(void)
 	this->txtbox.setFontColor(sf::Color(255, 255, 255));
 	this->txtbox.setPosition(getContentX(), getContentY()+txtfield.getHeight());
 	this->txtbox.setWidth(getContentWidth());
-	this->txtbox.setAutoResizeHeight(false);
+	this->txtbox.setAutoResizeHeight(true);
 	this->txtbox.setAutoResizeWidth(false);
 	this->txtbox.setHeight(getContentHeight());
+	this->txtbox.setAutoResizeHeightMax(getContentHeight());
 }
 
 WindowChat::~WindowChat(void)

@@ -255,7 +255,7 @@ void ChatClient::mRunClient(void)
 
 			if (status == sf::Socket::Disconnected || status == sf::Socket::Error)
 			{
-					mSocket.setBlocking(false);
+					mSocket.setBlocking(true);
 
 					this->updateNetworkState(NetworkStateCode::NS_CONNECTING);
 
@@ -278,6 +278,8 @@ void ChatClient::mRunClient(void)
 
 			if(status == sf::Socket::Status::Done)
 			{
+				mSocket.setBlocking(false);
+
 				this->updateNetworkState(NetworkStateCode::NS_CONNECTION_OK);
 				{ std::ostringstream msg; msg << "Connection OK !" << ""; Debug::msg(msg); }
 
