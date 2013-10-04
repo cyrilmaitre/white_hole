@@ -24,7 +24,7 @@ public:
 	virtual void notifyItemChanged();
 
 
-private:
+protected:
 	// Attributs
 	ContainerItem* mContainerItem;
 };

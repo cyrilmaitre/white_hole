@@ -3,7 +3,6 @@
 
 class HangarShipWeaponView;
 
-
 class ContainerStackWeaponView : public ContainerStackView
 {
 public:

@@ -1,8 +1,23 @@
 #pragma once
-class ContainerItemAmmoView
+#include "ContainerItemView.h"
+
+class HangarShipWeaponView;
+
+class ContainerItemAmmoView : public ContainerItemView
 {
 public:
-	ContainerItemAmmoView(void);
+	// Constructor - Destructor
+	ContainerItemAmmoView(HangarShipWeaponView* p_view, ContainerItem* p_item);
 	~ContainerItemAmmoView(void);
+
+	// Methods
+	void updateIcon();
+	void updatePub();
+	void notifyItemChanged();
+
+
+private:
+	// Attributs
+	HangarShipWeaponView* mHangarView;
 };
 

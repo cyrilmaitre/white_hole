@@ -3,6 +3,7 @@
 #include "CharacterShip.h"
 #include "TextBox.h"
 #include "ContainerStackWeaponView.h"
+#include "ContainerItemAmmoView.h"
 #include "Image.h"
 #include "PopupBubble.h"
 
@@ -21,8 +22,14 @@ public:
 	bool isContainerWeaponsStacksChanged();
 	void setContainerWeaponsStacksChanged(bool p_value);
 
+	bool isContainerAmmosItemsChanged();
+	void setContainerAmmosItemsChanged(bool p_value);
+
 	// Methods
 	void update();
+	void updateCharacterShipWeapons();
+	void updateCharacterShipWeaponAmmos();
+	void updateContainerAmmosItems();
 	void update(sf::Event p_event);
 	void updatePosition();
 	void draw();
@@ -30,6 +37,7 @@ public:
 	void notifyPositionChanged();
 	void notifyCharacterShipChanged();
 	void notifyContainerWeaponsStacksChanged();
+	void notifyContainerAmmosItemChanged();
 
 
 private:
@@ -39,7 +47,11 @@ private:
 	TextBox mTBAmmo;
 	Image mIconTypeAllowed;
 	PopupBubble mPUBTypeAllowed;
+
 	std::vector<ContainerStackWeaponView*> mContainerWeaponStackViews;
 	bool mContainerWeaponsStacksChanged;
+
+	std::vector<ContainerItemAmmoView*> mContainerAmmosItemViews;
+	bool mContainerAmmosItemsChanged;
 };
 

@@ -47,7 +47,6 @@ HangarShipWeaponView::HangarShipWeaponView(void) : mPUBTypeAllowed(&this->mIconT
 	this->mIconTypeAllowed.setBackgroundColor(ICONTYPEALLOWED_BACKCOLOR, true);
 	this->mIconTypeAllowed.setBorderSize(ICONTYPEALLOWED_BORDERSIZE, true);
 	this->mIconTypeAllowed.setBackgroundImage(SpriteParameterFactory::getSpriteParameterIcon16X16()->getSpritePtr(IC_16X16_INFO), true);
-
 }
 
 HangarShipWeaponView::~HangarShipWeaponView(void)
@@ -89,6 +88,18 @@ void HangarShipWeaponView::setContainerWeaponsStacksChanged( bool p_value )
 	this->mContainerWeaponsStacksChanged = p_value;
 }
 
+bool HangarShipWeaponView::isContainerAmmosItemsChanged()
+{
+	bool returnValue = this->mContainerAmmosItemsChanged;
+	this->mContainerAmmosItemsChanged = false;
+	return returnValue;
+}
+
+void HangarShipWeaponView::setContainerAmmosItemsChanged( bool p_value )
+{
+	this->mContainerAmmosItemsChanged = p_value;
+}
+
 
 //*************************************************************
 // Methods
@@ -105,6 +116,40 @@ void HangarShipWeaponView::update()
 		if(this->isContainerWeaponsStacksChanged())
 			this->notifyContainerWeaponsStacksChanged();
 	}
+}
+
+void HangarShipWeaponView::updateCharacterShipWeapons()
+{
+	// Remove all
+	this->mCharacterShip->removeWeaponAll(false);
+
+	// Add 
+	for(int i = 0; i < this->mContainerWeaponStackViews.size(); i++)
+	{
+		WeaponModel* currentWeaponModel = NULL;
+		if(this->mContainerWeaponStackViews[i]->getContainerStack()->getItemStack() != NULL)
+		{
+			Item* currentItem = this->mContainerWeaponStackViews[i]->getContainerStack()->getItemStack()->getItem();
+			currentWeaponModel = FactoryGet::getWeaponModelFactory()->getWeaponModel(currentItem->getIdItem());
+		}
+
+		if(currentWeaponModel != NULL)
+			this->mCharacterShip->addWeapon(new Weapon(this->mCharacterShip, currentWeaponModel), false);
+	}
+	this->mCharacterShip->notifyWeaponsChanged();
+
+	// Update ammos item
+	this->updateContainerAmmosItems();
+}
+
+void HangarShipWeaponView::updateCharacterShipWeaponAmmos()
+{
+	// Update des ammos des weapon en fonction de ce qui se trouve dans le container
+}
+
+void HangarShipWeaponView::updateContainerAmmosItems()
+{
+	// Update le container ammo en fonction de se qui se trouve dans les weapon du ship (check type allowed et orphean ammo)
 }
 
 void HangarShipWeaponView::update( sf::Event p_event )
@@ -205,28 +250,22 @@ void HangarShipWeaponView::notifyCharacterShipChanged()
 	}
 	this->mPUBTypeAllowed.notifyDataSetChanged();
 
-	// Update position
+	// Update
+	this->updateContainerAmmosItems();
 	this->updatePosition();
 }
 
 void HangarShipWeaponView::notifyContainerWeaponsStacksChanged()
 {
-	// Remove all
-	this->mCharacterShip->removeWeaponAll(false);
-
-	// Add 
-	for(int i = 0; i < this->mContainerWeaponStackViews.size(); i++)
-	{
-		WeaponModel* currentWeaponModel = NULL;
-		if(this->mContainerWeaponStackViews[i]->getContainerStack()->getItemStack() != NULL)
-		{
-			Item* currentItem = this->mContainerWeaponStackViews[i]->getContainerStack()->getItemStack()->getItem();
-			currentWeaponModel = FactoryGet::getWeaponModelFactory()->getWeaponModel(currentItem->getIdItem());
-		}
-
-		if(currentWeaponModel != NULL)
-			this->mCharacterShip->addWeapon(new Weapon(this->mCharacterShip, currentWeaponModel), false);
-	}
-	this->mCharacterShip->notifyWeaponsChanged();
+	this->updateCharacterShipWeapons();
 }
+
+void HangarShipWeaponView::notifyContainerAmmosItemChanged()
+{
+	this->updateCharacterShipWeaponAmmos();
+}
+
+
+
+
 
