@@ -8,7 +8,7 @@
 //*************************************************************
 // Define
 //*************************************************************
-#define HEIGHT							100
+#define HEIGHT							150
 #define BACKGROUNDCOLOR					sf::Color(25, 26, 28)
 #define BORDERCOLOR						sf::Color(194, 194, 194)
 #define BORDERSIZE						1
@@ -16,6 +16,8 @@
 #define WEAPON_FONTSIZE					18
 #define WEAPON_MARGINRIGHT				50
 #define WEAPONVIEW_MARGIN_LEFT			20
+#define AMMO_FONTSIZE					18
+#define AMMO_MARGINTOP					65
 #define ICONTYPEALLOWED_WIDTH			16
 #define ICONTYPEALLOWED_HEIGHT			16
 #define ICONTYPEALLOWED_BACKCOLOR		sf::Color(255, 255, 255, 0)
@@ -38,6 +40,8 @@ HangarShipWeaponView::HangarShipWeaponView(void) : mPUBTypeAllowed(&this->mIconT
 	this->mContainerWeaponsStacksChanged = false;
 	this->mTBWeapon.setText(Resource::resource->getBundle()->getString("hangarShipWeapon"));
 	this->mTBWeapon.setFontSize(WEAPON_FONTSIZE);
+	this->mTBAmmo.setText(Resource::resource->getBundle()->getString("hangarShipAmmo"));
+	this->mTBAmmo.setFontSize(AMMO_FONTSIZE);
 
 	this->mIconTypeAllowed.setSize(ICONTYPEALLOWED_WIDTH, ICONTYPEALLOWED_HEIGHT);
 	this->mIconTypeAllowed.setBackgroundColor(ICONTYPEALLOWED_BACKCOLOR, true);
@@ -128,6 +132,8 @@ void HangarShipWeaponView::updatePosition()
 	}
 	if(this->mContainerWeaponStackViews.size() > 0)
 		this->mIconTypeAllowed.setPosition(this->mContainerWeaponStackViews[this->mContainerWeaponStackViews.size() - 1]->getRightX() + ICONTYPEALLOWED_MARGINLEFT, this->getContentY());
+
+	this->mTBAmmo.setPosition(this->getContentX(), this->mTBWeapon.getBottomY() + AMMO_MARGINTOP);
 }
 
 void HangarShipWeaponView::draw()
@@ -139,6 +145,7 @@ void HangarShipWeaponView::draw()
 		for(int i = 0; i < this->mContainerWeaponStackViews.size(); i++)
 			this->mContainerWeaponStackViews[i]->draw();
 		this->mIconTypeAllowed.draw();
+		this->mTBAmmo.draw();
 	}
 }
 

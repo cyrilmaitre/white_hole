@@ -22,7 +22,9 @@ CharacterUpdate::~CharacterUpdate(void)
 //*************************************************************
 void CharacterUpdate::job()
 {
-	UserInterface::mUserInterface->setSavingGifVisible(true);
+	if(UserInterface::mUserInterface != NULL)
+		UserInterface::mUserInterface->setSavingGifVisible(true);
+
 	if(this->mCharacter != NULL)
 	{
 		Json::Value jsonRequest = this->mCharacter->saveToJson();
@@ -34,5 +36,7 @@ void CharacterUpdate::job()
 	{
 		this->setRunning(false);
 	}
-	UserInterface::mUserInterface->setSavingGifVisible(false);
+
+	if(UserInterface::mUserInterface != NULL)
+		UserInterface::mUserInterface->setSavingGifVisible(false);
 }

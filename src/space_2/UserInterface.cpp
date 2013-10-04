@@ -43,7 +43,8 @@ UserInterface * UserInterface::mUserInterface = NULL;
 //*************************************************************
 UserInterface::UserInterface( Character* p_character )
 {
-	this->mUserInterface = this;
+	UserInterface::mUserInterface = this;
+
 	this->mStationScreen = NULL;
 	this->mCharacter = NULL;
 	this->setCharacter(p_character);
@@ -107,12 +108,13 @@ UserInterface::UserInterface( Character* p_character )
 	this->mDashboardTimeLabel.setText(Resource::resource->getBundle()->getString("dashboardTime"));
 	this->mDashboardPositionLabel.setText(Resource::resource->getBundle()->getString("dashboardPosition"));
 
-	// Update
 	this->updatePosition();
 }
 
 UserInterface::~UserInterface(void)
 {
+	UserInterface::mUserInterface = NULL;
+
 	delete this->mWindowShipSmall;
 	delete this->mWindowSelectedCharacterShip;
 	delete this->mWindowsSelectedNpcShip;

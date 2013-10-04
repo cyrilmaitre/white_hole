@@ -518,6 +518,7 @@ hangarSlotPrice = Price:
 hangarButtonAdd = Add Ship
 hangarButtonOpenShipSheet = Ship's sheet
 hangarShipWeapon = Weapon:
+hangarShipAmmo = Ammo:
 hangarShipWeaponAllowed = Allowed weapons:
 #
 #

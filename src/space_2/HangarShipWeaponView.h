@@ -36,6 +36,7 @@ private:
 	// Attributs
 	CharacterShip* mCharacterShip;
 	TextBox mTBWeapon;
+	TextBox mTBAmmo;
 	Image mIconTypeAllowed;
 	PopupBubble mPUBTypeAllowed;
 	std::vector<ContainerStackWeaponView*> mContainerWeaponStackViews;

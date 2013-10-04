@@ -11,11 +11,7 @@ int main()
 	TitleScreen mTitleScreen;
 	Game mGame;
 
-	// Launch Game
-	while(mRessource.isAppRunning())
-	{
-		mTitleScreen.launch();
-	}
+	mTitleScreen.launch();
 
 	return EXIT_SUCCESS;
 }

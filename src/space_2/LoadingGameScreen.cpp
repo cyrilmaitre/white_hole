@@ -22,7 +22,7 @@ void LoadingGameScreen::launch()
 	this->setRunning(true);
 	this->update();
 	this->notifyAppSizeChanged();
-	while(Resource::resource->getApp()->isOpen() && Resource::resource->isAppRunning() && this->isRunning())
+	while(this->isRunning())
 	{		
 		// Update
 		this->update();
