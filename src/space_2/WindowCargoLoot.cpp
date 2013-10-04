@@ -41,24 +41,24 @@ WindowCargoLoot::WindowCargoLoot( void )
 	this->mButtonLootAll.setWidth(BUTTON_BOTTOM_WIDTH);
 	this->mButtonLootAll.setHeight(BUTTON_BOTTOM_HEIGHT);
 
-	this->mContainerView = new ContainerView();
-	this->notifyContainerViewChanged();
+	this->mContainerableView = new ContainerableView();
+	this->notifyContainerableViewChanged();
 
 	this->setPositionMiddleScreen();
 }
 
 WindowCargoLoot::~WindowCargoLoot(void)
 {
-	delete this->mContainerView;
+	delete this->mContainerableView;
 }
 
 
 //*************************************************************
 // Getters - Setters
 //*************************************************************
-ContainerView* WindowCargoLoot::getContainerView()
+ContainerableView* WindowCargoLoot::getContainerableView()
 {
-	return this->mContainerView;
+	return this->mContainerableView;
 }
 
 Wreck* WindowCargoLoot::getWreck()
@@ -79,26 +79,26 @@ void WindowCargoLoot::setWreck( Wreck* p_wreck )
 void WindowCargoLoot::notifyPositionChanged()
 {
 	Window::notifyPositionChanged();
-	this->mContainerView->setX(this->getContentX());
-	this->mContainerView->setY(this->getContentY());
+	this->mContainerableView->setX(this->getContentX());
+	this->mContainerableView->setY(this->getContentY());
 
-	this->mSpriteCredit.setPosition(this->getContainerView()->getX(), 
-									this->getContainerView()->getY() + this->getContainerView()->getHeight() + SPRITECREDIT_OFFSETY);
+	this->mSpriteCredit.setPosition(this->getContainerableView()->getX(), 
+									this->getContainerableView()->getY() + this->getContainerableView()->getHeight() + SPRITECREDIT_OFFSETY);
 
-	this->mTBCredit.setPosition(this->getContainerView()->getX() + this->mSpriteCredit.getLocalBounds().width + TEXTBOXCREDIT_OFFSETX,
-								this->getContainerView()->getY() + this->getContainerView()->getHeight() + TEXTBOXCREDIT_OFFSETY);
+	this->mTBCredit.setPosition(this->getContainerableView()->getX() + this->mSpriteCredit.getLocalBounds().width + TEXTBOXCREDIT_OFFSETX,
+								this->getContainerableView()->getY() + this->getContainerableView()->getHeight() + TEXTBOXCREDIT_OFFSETY);
 
-	this->mButtonLootAll.setPosition(	this->getContainerView()->getX() + this->getContainerView()->getWidth() - this->mButtonLootAll.getWidth(),
-										this->getContainerView()->getY() + this->getContainerView()->getHeight() + BUTTON_BOTTOM_OFFSETY);
+	this->mButtonLootAll.setPosition(	this->getContainerableView()->getX() + this->getContainerableView()->getWidth() - this->mButtonLootAll.getWidth(),
+										this->getContainerableView()->getY() + this->getContainerableView()->getHeight() + BUTTON_BOTTOM_OFFSETY);
 
 	this->mButtonLootCredit.setPosition(this->mButtonLootAll.getX() - this->mButtonLootCredit.getWidth() - BUTTON_BOTTOM_OFFSETX,
-										this->getContainerView()->getY() + this->getContainerView()->getHeight() + BUTTON_BOTTOM_OFFSETY);				
+										this->getContainerableView()->getY() + this->getContainerableView()->getHeight() + BUTTON_BOTTOM_OFFSETY);				
 }
 
-void WindowCargoLoot::notifyContainerViewChanged()
+void WindowCargoLoot::notifyContainerableViewChanged()
 {
-	this->setContentHeight(this->mContainerView->getHeight() + BOTTOM_HEIGHT);
-	this->setContentWidth(this->mContainerView->getWidth());
+	this->setContentHeight(this->mContainerableView->getHeight() + BOTTOM_HEIGHT);
+	this->setContentWidth(this->mContainerableView->getWidth());
 	this->notifyPositionChanged();
 }
 
@@ -107,16 +107,16 @@ void WindowCargoLoot::notifyWreckChanged()
 	if(this->getWreck() != NULL)
 		this->mTBCredit.setText(Tools::formatNumber(this->getWreck()->getCredit()));
 
-	this->getContainerView()->setContainerable(this->getWreck());
+	this->getContainerableView()->setContainerable(this->getWreck());
 }
 
 void WindowCargoLoot::update()
 {
-	if(this->mContainerView->isContainerableChanged())
-		this->notifyContainerViewChanged();
+	if(this->mContainerableView->isContainerableChanged())
+		this->notifyContainerableViewChanged();
 
 	if(this->isOpen() && !this->isReduce())
-		this->mContainerView->update();
+		this->mContainerableView->update();
 }
 
 void WindowCargoLoot::update( sf::Event p_event )
@@ -125,7 +125,7 @@ void WindowCargoLoot::update( sf::Event p_event )
 	{
 		this->mButtonLootAll.update(p_event);
 		this->mButtonLootCredit.update(p_event);
-		this->mContainerView->update(p_event);
+		this->mContainerableView->update(p_event);
 
 		if(this->mButtonLootCredit.isClicked())
 		{
@@ -141,7 +141,7 @@ void WindowCargoLoot::drawContent()
 {
 	if(this->isOpen() && !this->isReduce())
 	{
-		this->mContainerView->draw();
+		this->mContainerableView->draw();
 		
 		Resource::resource->getApp()->draw(this->mSpriteCredit);
 		this->mTBCredit.draw();

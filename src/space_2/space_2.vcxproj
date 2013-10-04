@@ -105,7 +105,11 @@
     <ClCompile Include="CharacterShipWeaponCreate.cpp" />
     <ClCompile Include="CharacterUpdate.cpp" />
     <ClCompile Include="ContainerDropDown.cpp" />
-    <ClCompile Include="ContainerWeaponStackView.cpp" />
+    <ClCompile Include="ContainerItem.cpp" />
+    <ClCompile Include="ContainerItemAmmoView.cpp" />
+    <ClCompile Include="ContainerItemView.cpp" />
+    <ClCompile Include="ContainerRestriction.cpp" />
+    <ClCompile Include="ContainerStackWeaponView.cpp" />
     <ClCompile Include="DebugScreen.cpp" />
     <ClCompile Include="DropDownable.cpp" />
     <ClCompile Include="DropDownList.cpp" />
@@ -180,7 +184,7 @@
     <ClCompile Include="ContainerStack.cpp" />
     <ClCompile Include="ContainerStackViewManager.cpp" />
     <ClCompile Include="ContainerStackView.cpp" />
-    <ClCompile Include="ContainerView.cpp" />
+    <ClCompile Include="ContainerableView.cpp" />
     <ClCompile Include="DangerLevelManager.cpp" />
     <ClCompile Include="DangerLevel.cpp" />
     <ClCompile Include="DangerLevelFactory.cpp" />
@@ -401,7 +405,11 @@
     <ClInclude Include="CharacterShipWeaponCreate.h" />
     <ClInclude Include="CharacterUpdate.h" />
     <ClInclude Include="ContainerDropDown.h" />
-    <ClInclude Include="ContainerWeaponStackView.h" />
+    <ClInclude Include="ContainerItem.h" />
+    <ClInclude Include="ContainerItemAmmoView.h" />
+    <ClInclude Include="ContainerItemView.h" />
+    <ClInclude Include="ContainerRestriction.h" />
+    <ClInclude Include="ContainerStackWeaponView.h" />
     <ClInclude Include="DebugScreen.h" />
     <ClInclude Include="DestructableData.h" />
     <ClInclude Include="DropDownable.h" />
@@ -480,7 +488,7 @@
     <ClInclude Include="ContainerStack.h" />
     <ClInclude Include="ContainerStackViewManager.h" />
     <ClInclude Include="ContainerStackView.h" />
-    <ClInclude Include="ContainerView.h" />
+    <ClInclude Include="ContainerableView.h" />
     <ClInclude Include="DangerLevelManager.h" />
     <ClInclude Include="DangerLevel.h" />
     <ClInclude Include="DangerLevelFactory.h" />

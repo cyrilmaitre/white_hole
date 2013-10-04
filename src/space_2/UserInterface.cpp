@@ -533,7 +533,7 @@ void UserInterface::notifyCharacterChanged()
 		{
 			CharacterBank* currentBank = this->getCharacter()->getBank(i);
 			WindowCargoStation* currentWindowBank = new WindowCargoStation(Resource::resource->getBundle()->getString("bankCargo") + Tools::buildStringWithInt(currentBank->getNumber()));
-			currentWindowBank->getContainerView()->setContainerable(currentBank);
+			currentWindowBank->getContainerableView()->setContainerable(currentBank);
 			this->mWindowCargoStationBanks.push_back(currentWindowBank);
 			this->mWindowDynamicsStation.push_back(currentWindowBank);
 		}

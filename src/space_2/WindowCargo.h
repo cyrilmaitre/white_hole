@@ -1,6 +1,6 @@
 #pragma once
 #include "Window.h"
-#include "ContainerView.h"
+#include "ContainerableView.h"
 
 
 class WindowCargo : public Window
@@ -11,11 +11,11 @@ public:
 	~WindowCargo(void);
 
 	// Getters - Setters
-	ContainerView* getContainerView();
+	ContainerableView* getContainerableView();
 
 	// Methods
 	void notifyPositionChanged();
-	void notifyContainerViewChanged();
+	void notifyContainerableViewChanged();
 	void update();
 	void update(sf::Event p_event);
 	void drawContent();
@@ -23,6 +23,6 @@ public:
 
 private:
 	// Attributs
-	ContainerView *mContainerView;
+	ContainerableView *mContainerableView;
 };
 

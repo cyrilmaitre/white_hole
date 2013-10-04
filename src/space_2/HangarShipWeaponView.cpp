@@ -168,15 +168,15 @@ void HangarShipWeaponView::notifyCharacterShipChanged()
 	for(int i = 0; i < this->mCharacterShip->getWeaponSlotMax(); i++)
 	{
 		// Create view
-		ContainerWeaponStackView* newView = NULL;
+		ContainerStackWeaponView* newView = NULL;
 		if(i < this->mCharacterShip->getWeaponsCount())
 		{
 			ContainerStack* currentStack = new ContainerStack(new ItemStack(this->mCharacterShip->getWeapon(i)->getWeaponModel(), 1));
-			newView = new ContainerWeaponStackView(this, currentStack);
+			newView = new ContainerStackWeaponView(this, currentStack);
 		}
 		else
 		{
-			newView = new ContainerWeaponStackView(this, new ContainerStack());
+			newView = new ContainerStackWeaponView(this, new ContainerStack());
 		}		
 
 		// Add restriction and add to vector

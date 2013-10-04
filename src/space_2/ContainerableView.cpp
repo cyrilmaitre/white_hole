@@ -1,4 +1,4 @@
-#include "ContainerView.h"
+#include "ContainerableView.h"
 #include "ManagerConfig.h"
 
 
@@ -14,7 +14,7 @@
 //*************************************************************
 // Constructreur - Destructeur
 //*************************************************************
-ContainerView::ContainerView( double p_x, double p_y)
+ContainerableView::ContainerableView( double p_x, double p_y)
 {
 	this->mContainerable = NULL;
 	this->mContainerableChanged = false;
@@ -32,7 +32,7 @@ ContainerView::ContainerView( double p_x, double p_y)
 	this->setBorderSize(CONTAINERVIEW_BORDER_SIZE, true);
 }
 
-ContainerView::~ContainerView(void)
+ContainerableView::~ContainerableView(void)
 {
 }
 
@@ -40,12 +40,12 @@ ContainerView::~ContainerView(void)
 //*************************************************************
 // Getters - Setters
 //*************************************************************
-Containerable* ContainerView::getContainerable()
+Containerable* ContainerableView::getContainerable()
 {
 	return this->mContainerable;
 }
 
-void ContainerView::setContainerable(Containerable* p_containerable)
+void ContainerableView::setContainerable(Containerable* p_containerable)
 {
 	if(this->mContainerable != p_containerable)
 	{
@@ -54,12 +54,12 @@ void ContainerView::setContainerable(Containerable* p_containerable)
 	}
 }
 
-bool ContainerView::isDisplayEstimation()
+bool ContainerableView::isDisplayEstimation()
 {
 	return this->mDisplayEstimation;
 }
 
-void ContainerView::setDisplayEstimation( bool p_estimation )
+void ContainerableView::setDisplayEstimation( bool p_estimation )
 {
 	if(this->mDisplayEstimation != p_estimation)
 	{
@@ -68,7 +68,7 @@ void ContainerView::setDisplayEstimation( bool p_estimation )
 	}
 }
 
-bool ContainerView::isContainerableChanged()
+bool ContainerableView::isContainerableChanged()
 {
 	bool returnValue = this->mContainerableChanged;
 	this->mContainerableChanged = false;
@@ -79,7 +79,7 @@ bool ContainerView::isContainerableChanged()
 //*************************************************************
 // Methods
 //*************************************************************
-void ContainerView::notifyContainerableChanged()
+void ContainerableView::notifyContainerableChanged()
 {
 	this->clear();
 	if(this->getContainerable() != NULL)
@@ -98,7 +98,7 @@ void ContainerView::notifyContainerableChanged()
 	}
 }
 
-void ContainerView::updateHeight()
+void ContainerableView::updateHeight()
 {
 	if(this->isDisplayEstimation())
 	{
@@ -113,7 +113,7 @@ void ContainerView::updateHeight()
 	}
 }
 
-void ContainerView::notifyPositionChanged()
+void ContainerableView::notifyPositionChanged()
 {
 	Block::notifyPositionChanged();
 
@@ -130,7 +130,7 @@ void ContainerView::notifyPositionChanged()
 	this->updateEstimationPosition();
 }
 
-void ContainerView::updateEstimation()
+void ContainerableView::updateEstimation()
 {
 	this->mTBEstimation.setText(Resource::resource->getBundle()->getString("windowCargoEstimation") + 
 								Tools::getSpaceAfterColon() + 
@@ -138,13 +138,13 @@ void ContainerView::updateEstimation()
 	this->updateEstimationPosition();
 }
 
-void ContainerView::updateEstimationPosition()
+void ContainerableView::updateEstimationPosition()
 {
 	this->mTBEstimation.setPosition(this->getX() + this->getWidth() - this->mTBEstimation.getWidth() - CONTAINERVIEW_ROW_PADDINGRIGHT,
 									this->getY() + this->getHeight() - this->mTBEstimation.getHeight() - (CONTAINERVIEW_BOTTOM_HEIGHT - this->mTBEstimation.getHeight()) / 2);
 }
 
-void ContainerView::update()
+void ContainerableView::update()
 {
 	if(this->getContainerable() == NULL)
 		return;
@@ -158,7 +158,7 @@ void ContainerView::update()
 	}
 }
 
-void ContainerView::update( sf::Event p_event )
+void ContainerableView::update( sf::Event p_event )
 {
 	for(int i = 0; i < this->mContainerRowViews.size(); i++)
 	{
@@ -170,7 +170,7 @@ void ContainerView::update( sf::Event p_event )
 	this->mTBEstimation.update(p_event);
 }
 
-void ContainerView::draw()
+void ContainerableView::draw()
 {
 	Block::draw();
 
@@ -186,12 +186,12 @@ void ContainerView::draw()
 	}
 }
 
-void ContainerView::addContainerRowView( ContainerRowView* p_view )
+void ContainerableView::addContainerRowView( ContainerRowView* p_view )
 {
 	this->mContainerRowViews.push_back(p_view);
 }
 
-void ContainerView::clear()
+void ContainerableView::clear()
 {
 	for(int i = 0; i < this->mContainerRowViews.size(); i++)
 	{

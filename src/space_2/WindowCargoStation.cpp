@@ -11,8 +11,8 @@ WindowCargoStation::WindowCargoStation(std::string p_title)
 	this->setWindowTitle(p_title);
 	this->setWindowIcon(SpriteParameterFactory::getSpriteParameterIcon16X16()->getSprite(IC_16X16_NINESQUARE));
 
-	this->mContainerView = new ContainerView();
-	this->notifyContainerViewChanged();
+	this->mContainerView = new ContainerableView();
+	this->notifyContainerableViewChanged();
 
 	this->setPositionMiddleScreen();
 }
@@ -26,7 +26,7 @@ WindowCargoStation::~WindowCargoStation(void)
 //*************************************************************
 // Getters - Setters
 //*************************************************************
-ContainerView* WindowCargoStation::getContainerView()
+ContainerableView* WindowCargoStation::getContainerableView()
 {
 	return this->mContainerView;
 }
@@ -51,7 +51,7 @@ void WindowCargoStation::notifyPositionChanged()
 void WindowCargoStation::update()
 {
 	if(this->mContainerView->isContainerableChanged())
-		this->notifyContainerViewChanged();
+		this->notifyContainerableViewChanged();
 
 	if(this->isOpen() && !this->isReduce())
 		this->mContainerView->update();
@@ -64,7 +64,7 @@ void WindowCargoStation::update( sf::Event p_event )
 	Window::update(p_event);
 }
 
-void WindowCargoStation::notifyContainerViewChanged()
+void WindowCargoStation::notifyContainerableViewChanged()
 {
 	this->setContentHeight(this->mContainerView->getHeight());
 	this->setContentWidth(this->mContainerView->getWidth());

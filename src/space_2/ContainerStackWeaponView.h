@@ -4,12 +4,12 @@
 class HangarShipWeaponView;
 
 
-class ContainerWeaponStackView : public ContainerStackView
+class ContainerStackWeaponView : public ContainerStackView
 {
 public:
 	// Constructor - Destructor
-	ContainerWeaponStackView(HangarShipWeaponView* p_view, ContainerStack* p_stack);
-	~ContainerWeaponStackView(void);
+	ContainerStackWeaponView(HangarShipWeaponView* p_view, ContainerStack* p_stack);
+	~ContainerStackWeaponView(void);
 
 	// Methods
 	void updateIcon();

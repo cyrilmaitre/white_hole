@@ -40,15 +40,15 @@ StationScreenMarketSell::StationScreenMarketSell( StationScreenMarket* p_market 
 
 	this->setCargoMax(CARGOMAX);
 	this->setType(ContainerStack::ContainerStackType::TypeNone);
-	this->mContainerView.setContainerable(this);
-	this->mContainerView.setDisplayEstimation(false);
+	this->mContainerableView.setContainerable(this);
+	this->mContainerableView.setDisplayEstimation(false);
 
 	this->mTBTotalLabel.setFontSize(TBTOTAL_FONTSIZE);
 	this->mTBTotalLabel.setText(Resource::resource->getBundle()->getString("totalMaj"));
 	this->mTBTotal.setFontSize(TBTOTAL_FONTSIZE);
 	this->mButtonSell.setTitle(Resource::resource->getBundle()->getString("sell"));
 
-	this->mTBMLDetail.setSize(DETAIL_WIDTH, this->mContainerView.getHeight());
+	this->mTBMLDetail.setSize(DETAIL_WIDTH, this->mContainerableView.getHeight());
 	this->mTBMLDetail.setBorderColor(DETAIL_BORDERCOLOR, true);
 	this->mTBMLDetail.setBorderSize(DETAIL_BORDERSIZE, true);
 	this->mTBMLDetail.setForceScrollBar(true);
@@ -88,7 +88,7 @@ void StationScreenMarketSell::sell()
 	double newBalance = Game::game->getCharacter()->getCredit();
 
 	// Empty container
-	this->mContainerView.getContainerable()->empty();
+	this->mContainerableView.getContainerable()->empty();
 
 	// Message success
 	std::string messageSuccess = Resource::resource->getBundle()->getString("marketSellSuccessMsg1") + "<br/>";
@@ -126,10 +126,10 @@ void StationScreenMarketSell::update()
 {
 	if(this->isVisible())
 	{
-		if(this->mContainerView.getContainerable()->isContentChanged(false))
+		if(this->mContainerableView.getContainerable()->isContentChanged(false))
 			this->updateItemsCount();
 
-		this->mContainerView.update();
+		this->mContainerableView.update();
 
 		if(this->mTotalClock.getElapsedTimeAsMilliseconds() > UPDATE_TICK)
 		{
@@ -141,16 +141,16 @@ void StationScreenMarketSell::update()
 
 void StationScreenMarketSell::updatePosition()
 {
-	this->mContainerView.setPosition(this->getContentX(), this->getContentY());
-	this->mTBTotalLabel.setPosition(this->getContentX() + (this->mContainerView.getWidth() - this->mTBTotalLabel.getWidth()) / 2, this->mContainerView.getBottomY() + CONTAINER_MARGINBOTTOM);
+	this->mContainerableView.setPosition(this->getContentX(), this->getContentY());
+	this->mTBTotalLabel.setPosition(this->getContentX() + (this->mContainerableView.getWidth() - this->mTBTotalLabel.getWidth()) / 2, this->mContainerableView.getBottomY() + CONTAINER_MARGINBOTTOM);
 	this->updateTotalPosition();
-	this->mButtonSell.setPosition(this->getContentX() + (this->mContainerView.getWidth() - this->mButtonSell.getWidth()) / 2, this->mTBTotal.getBottomY() + BUTTONBUY_MARGINTOP);
-	this->mTBMLDetail.setPosition(this->mContainerView.getRightX() + DETAIL_MARGIN_LEFT, this->getContentY());
+	this->mButtonSell.setPosition(this->getContentX() + (this->mContainerableView.getWidth() - this->mButtonSell.getWidth()) / 2, this->mTBTotal.getBottomY() + BUTTONBUY_MARGINTOP);
+	this->mTBMLDetail.setPosition(this->mContainerableView.getRightX() + DETAIL_MARGIN_LEFT, this->getContentY());
 }
 
 void StationScreenMarketSell::updateTotalPosition()
 {
-	this->mTBTotal.setPosition(this->getContentX() + (this->mContainerView.getWidth() - this->mTBTotal.getWidth()) / 2, this->mTBTotalLabel.getBottomY() + TBTOTALLABEL_MARGINBOTTOM);
+	this->mTBTotal.setPosition(this->getContentX() + (this->mContainerableView.getWidth() - this->mTBTotal.getWidth()) / 2, this->mTBTotalLabel.getBottomY() + TBTOTALLABEL_MARGINBOTTOM);
 }
 
 void StationScreenMarketSell::updateTotal()
@@ -175,7 +175,7 @@ void StationScreenMarketSell::updateTotal()
 
 void StationScreenMarketSell::updateItemsCount()
 {
-	this->mContainerItemsCount = this->mContainerView.getContainerable()->getItemsCount();
+	this->mContainerItemsCount = this->mContainerableView.getContainerable()->getItemsCount();
 	this->mTBMLDetail.setVisible(this->mContainerItemsCount.size() > 0);
 	this->mButtonSell.setEnable(this->mContainerItemsCount.size() > 0);
 	this->updateTotal();
@@ -185,7 +185,7 @@ void StationScreenMarketSell::update( sf::Event p_event )
 {
 	if(this->isVisible())
 	{
-		this->mContainerView.update(p_event);
+		this->mContainerableView.update(p_event);
 		this->mButtonSell.update(p_event);
 		this->mTBMLDetail.update(p_event);
 
@@ -200,7 +200,7 @@ void StationScreenMarketSell::draw()
 	FieldSet::draw();
 	if(this->isVisible())
 	{
-		this->mContainerView.draw();
+		this->mContainerableView.draw();
 		this->mTBTotalLabel.draw();
 		this->mTBTotal.draw();
 		this->mButtonSell.draw();

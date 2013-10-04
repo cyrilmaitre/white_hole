@@ -48,12 +48,15 @@ ItemStack* ContainerStack::getItemStack()
 
 void ContainerStack::setItemStack( ItemStack *p_stack, bool p_removePrec, bool p_notify )
 {
-	if(p_removePrec && this->mItemStack != NULL && this->mItemStack != p_stack)
-		delete this->mItemStack;
+	if(this->mItemStack != p_stack)
+	{
+		if(p_removePrec && this->mItemStack != NULL)
+			delete this->mItemStack;
 
-	this->mItemStack = p_stack;
-	if(p_notify)
-		this->notifyItemStackChanged();
+		this->mItemStack = p_stack;
+		if(p_notify)
+			this->notifyItemStackChanged();
+	}
 }
 
 bool ContainerStack::hasItemStack()
@@ -79,20 +82,6 @@ int ContainerStack::getPosition()
 void ContainerStack::setPosition( int p_position )
 {
 	this->mPosition = p_position;
-}
-
-bool ContainerStack::isItemTypeAllowed( ItemType* p_type )
-{
-	if(this->mItemTypesAllowed.size() == 0)
-		return true;
-
-	for(int i = 0; i < this->mItemTypesAllowed.size(); i++)
-	{
-		if(this->mItemTypesAllowed[i] != NULL && p_type != NULL && p_type->isChildOf(this->mItemTypesAllowed[i]))
-			return true;
-	}
-
-	return false;
 }
 
 bool ContainerStack::isItemStackChanged()
@@ -126,16 +115,6 @@ void ContainerStack::notifyItemStackChanged()
 			NetworkJobManager::getInstance()->addJob(new CharacterBankItemStackUpdate(bank, this->getItemStack(), this->getPosition()));
 		break;
 	}
-}
-
-void ContainerStack::addItemTypeAllowed( ItemType* p_type )
-{
-	this->mItemTypesAllowed.push_back(p_type);
-}
-
-void ContainerStack::clearItemTypeAllowed()
-{
-	this->mItemTypesAllowed.clear();
 }
 
 int ContainerStack::incStackSize( int p_size, bool p_notify )

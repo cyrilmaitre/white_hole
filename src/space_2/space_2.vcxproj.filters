@@ -642,9 +642,6 @@
     <ClCompile Include="ContainerRow.cpp">
       <Filter>Fichiers sources\game\item\container</Filter>
     </ClCompile>
-    <ClCompile Include="ContainerView.cpp">
-      <Filter>Fichiers sources\game\item\container</Filter>
-    </ClCompile>
     <ClCompile Include="ContainerStack.cpp">
       <Filter>Fichiers sources\game\item\container</Filter>
     </ClCompile>
@@ -1248,9 +1245,6 @@
     <ClCompile Include="HangarShipDetailView.cpp">
       <Filter>Fichiers sources\game\ui\stationscreen\panel\hangar</Filter>
     </ClCompile>
-    <ClCompile Include="ContainerWeaponStackView.cpp">
-      <Filter>Fichiers sources\game\item\container</Filter>
-    </ClCompile>
     <ClCompile Include="HangarShipWeaponView.cpp">
       <Filter>Fichiers sources\game\ui\stationscreen\panel\hangar</Filter>
     </ClCompile>
@@ -1262,6 +1256,24 @@
     </ClCompile>
     <ClCompile Include="LoadingGameScreen.cpp">
       <Filter>Fichiers sources\screen</Filter>
+    </ClCompile>
+    <ClCompile Include="ContainerStackWeaponView.cpp">
+      <Filter>Fichiers sources\game\item\container</Filter>
+    </ClCompile>
+    <ClCompile Include="ContainerRestriction.cpp">
+      <Filter>Fichiers sources\game\item\container</Filter>
+    </ClCompile>
+    <ClCompile Include="ContainerItemView.cpp">
+      <Filter>Fichiers sources\game\item\container</Filter>
+    </ClCompile>
+    <ClCompile Include="ContainerItem.cpp">
+      <Filter>Fichiers sources\game\item\container</Filter>
+    </ClCompile>
+    <ClCompile Include="ContainerItemAmmoView.cpp">
+      <Filter>Fichiers sources\game\item\container</Filter>
+    </ClCompile>
+    <ClCompile Include="ContainerableView.cpp">
+      <Filter>Fichiers sources\game\item\container</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1524,9 +1536,6 @@
       <Filter>Fichiers d%27en-tête\game\mapObject\automanaged\projectile</Filter>
     </ClInclude>
     <ClInclude Include="ContainerRow.h">
-      <Filter>Fichiers d%27en-tête\game\item\container</Filter>
-    </ClInclude>
-    <ClInclude Include="ContainerView.h">
       <Filter>Fichiers d%27en-tête\game\item\container</Filter>
     </ClInclude>
     <ClInclude Include="ContainerStack.h">
@@ -2150,9 +2159,6 @@
     <ClInclude Include="HangarShipDetailView.h">
       <Filter>Fichiers d%27en-tête\game\ui\stationscreen\panel\hangar</Filter>
     </ClInclude>
-    <ClInclude Include="ContainerWeaponStackView.h">
-      <Filter>Fichiers d%27en-tête\game\item\container</Filter>
-    </ClInclude>
     <ClInclude Include="HangarShipWeaponView.h">
       <Filter>Fichiers d%27en-tête\game\ui\stationscreen\panel\hangar</Filter>
     </ClInclude>
@@ -2164,6 +2170,24 @@
     </ClInclude>
     <ClInclude Include="LoadingGameScreen.h">
       <Filter>Fichiers d%27en-tête\screen</Filter>
+    </ClInclude>
+    <ClInclude Include="ContainerStackWeaponView.h">
+      <Filter>Fichiers d%27en-tête\game\item\container</Filter>
+    </ClInclude>
+    <ClInclude Include="ContainerRestriction.h">
+      <Filter>Fichiers d%27en-tête\game\item\container</Filter>
+    </ClInclude>
+    <ClInclude Include="ContainerItem.h">
+      <Filter>Fichiers d%27en-tête\game\item\container</Filter>
+    </ClInclude>
+    <ClInclude Include="ContainerItemView.h">
+      <Filter>Fichiers d%27en-tête\game\item\container</Filter>
+    </ClInclude>
+    <ClInclude Include="ContainerItemAmmoView.h">
+      <Filter>Fichiers d%27en-tête\game\item\container</Filter>
+    </ClInclude>
+    <ClInclude Include="ContainerableView.h">
+      <Filter>Fichiers d%27en-tête\game\item\container</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

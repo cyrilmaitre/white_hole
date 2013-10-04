@@ -2,7 +2,7 @@
 #include "FieldSet.h"
 #include "StationScreenMarket.h"
 #include "Containerable.h"
-#include "ContainerView.h"
+#include "ContainerableView.h"
 #include "TextBox.h"
 #include "Button.h"
 #include "TextBoxMultiLine.h"
@@ -35,7 +35,7 @@ public:
 private:
 	// Attributs
 	StationScreenMarket* mScreenMarket;
-	ContainerView mContainerView;
+	ContainerableView mContainerableView;
 	std::map<Item*, int> mContainerItemsCount;
 	TextBox mTBTotalLabel;
 	TextBox mTBTotal;

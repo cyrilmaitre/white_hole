@@ -1,10 +1,11 @@
 #pragma once
 #include "ItemStack.h"
 #include "ContainerStackView.h"
+#include "ContainerRestriction.h"
 
 class ContainerRow;
 
-class ContainerStack
+class ContainerStack : public ContainerRestriction
 {
 public:
 	// Enum
@@ -26,6 +27,7 @@ public:
 	ItemStack* getItemStack();
 	void setItemStack(ItemStack *p_stack, bool p_removePrec = false, bool p_notify = true);
 	bool hasItemStack();
+	bool isItemStackChanged();
 
 	ContainerStackType getType();
 	void setType(ContainerStackType p_type);
@@ -33,17 +35,12 @@ public:
 	int getPosition();
 	void setPosition(int p_position);
 
-	bool isItemTypeAllowed(ItemType* p_type);
-	bool isItemStackChanged();
-
 	// Methods
-	void addItemTypeAllowed(ItemType* p_type);
-	void clearItemTypeAllowed();
-	void notifyItemStackChanged();
-
 	int incStackSize(int p_size, bool p_notify = true);
 	int decStackSize(int p_size, bool p_notify = true);
 	void setStackSize(int p_size, bool p_notify = true);
+
+	void notifyItemStackChanged();
 
 
 private:
@@ -53,6 +50,5 @@ private:
 	ContainerStackType mType;
 	int mPosition;
 	bool mItemStackChanged;
-	std::vector<ItemType*> mItemTypesAllowed;
 };
 

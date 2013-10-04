@@ -145,13 +145,13 @@ void StationScreen::loadPanelCraft()
 void StationScreen::launchBegin()
 {
 	// Ship Cargo refresh
-	UserInterface::mUserInterface->getWindowCargoStationShip()->getContainerView()->notifyContainerableChanged();
+	UserInterface::mUserInterface->getWindowCargoStationShip()->getContainerableView()->notifyContainerableChanged();
 }
 
 void StationScreen::launchEnd()
 {
 	// Ship Cargo refresh
-	UserInterface::mUserInterface->getWindowCargo()->getContainerView()->notifyContainerableChanged();
+	UserInterface::mUserInterface->getWindowCargo()->getContainerableView()->notifyContainerableChanged();
 }
 
 void StationScreen::launch( Station* p_station )

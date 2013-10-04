@@ -16,13 +16,13 @@
 #define CONTAINERVIEW_BORDER_COLOR			sf::Color(100, 100, 100)
 #define CONTAINERVIEW_BORDER_SIZE			2
 
-class ContainerView : public Block
+class ContainerableView : public Block
 {
 public:
 	// Constructor - Destructor
-	ContainerView(	double p_x = 0,
+	ContainerableView(	double p_x = 0,
 					double p_y = 0);
-	~ContainerView(void);
+	~ContainerableView(void);
 
 	// Getters - Setters
 	Containerable* getContainerable();

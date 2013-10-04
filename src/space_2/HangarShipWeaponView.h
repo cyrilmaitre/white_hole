@@ -2,7 +2,7 @@
 #include "FieldSet.h"
 #include "CharacterShip.h"
 #include "TextBox.h"
-#include "ContainerWeaponStackView.h"
+#include "ContainerStackWeaponView.h"
 #include "Image.h"
 #include "PopupBubble.h"
 
@@ -38,7 +38,7 @@ private:
 	TextBox mTBWeapon;
 	Image mIconTypeAllowed;
 	PopupBubble mPUBTypeAllowed;
-	std::vector<ContainerWeaponStackView*> mContainerWeaponStackViews;
+	std::vector<ContainerStackWeaponView*> mContainerWeaponStackViews;
 	bool mContainerWeaponsStacksChanged;
 };
 

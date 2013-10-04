@@ -1,4 +1,4 @@
-#include "ContainerWeaponStackView.h"
+#include "ContainerStackWeaponView.h"
 #include "HangarShipWeaponView.h"
 
 
@@ -14,7 +14,7 @@
 //*************************************************************
 // Constructor - Destructor
 //*************************************************************
-ContainerWeaponStackView::ContainerWeaponStackView(HangarShipWeaponView* p_view, ContainerStack* p_stack) : ContainerStackView(p_stack)
+ContainerStackWeaponView::ContainerStackWeaponView(HangarShipWeaponView* p_view, ContainerStack* p_stack) : ContainerStackView(p_stack)
 {
 	this->setSize(CONTAINERWIDTH, CONTAINERHEIGHT);
 	this->setDisplayStackSize(false);
@@ -31,7 +31,7 @@ ContainerWeaponStackView::ContainerWeaponStackView(HangarShipWeaponView* p_view,
 	this->mHangarView = p_view;
 }
 
-ContainerWeaponStackView::~ContainerWeaponStackView(void)
+ContainerStackWeaponView::~ContainerStackWeaponView(void)
 {
 	delete this->mContainerStack;
 }
@@ -39,7 +39,7 @@ ContainerWeaponStackView::~ContainerWeaponStackView(void)
 //*************************************************************
 // Methods
 //*************************************************************
-void ContainerWeaponStackView::notifyItemStackChanged()
+void ContainerStackWeaponView::notifyItemStackChanged()
 {
 	this->deleteIcon();
 
@@ -59,12 +59,12 @@ void ContainerWeaponStackView::notifyItemStackChanged()
 	this->notifyPositionChanged();
 }	
 
-void ContainerWeaponStackView::updateIcon()
+void ContainerStackWeaponView::updateIcon()
 {
 	this->mIcon = SpriteParameterFactory::getSpriteParameterItems()->getSpritePtr(this->getContainerStack()->getItemStack()->getItem()->getSpriteId(), ICONWIDTH, ICONHEIGHT);
 }
 
-void ContainerWeaponStackView::updatePub()
+void ContainerStackWeaponView::updatePub()
 {
 	this->mPubItemStack->clear();
 	this->mPubItemStack->addLine(Resource::resource->getBundle()->getString("name") +

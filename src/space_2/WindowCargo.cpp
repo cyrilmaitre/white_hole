@@ -11,23 +11,23 @@ WindowCargo::WindowCargo(void)
 	this->setWindowTitle(Resource::resource->getBundle()->getString("windowsTitleCargo"));
 	this->setWindowIcon(SpriteParameterFactory::getSpriteParameterIcon16X16()->getSprite(IC_16X16_NINESQUARE));
 
-	this->mContainerView = new ContainerView();
-	this->notifyContainerViewChanged();
+	this->mContainerableView = new ContainerableView();
+	this->notifyContainerableViewChanged();
 	
 	this->setPositionMiddleScreen();
 }
 
 WindowCargo::~WindowCargo(void)
 {
-	delete this->mContainerView;
+	delete this->mContainerableView;
 }
 
 //*************************************************************
 // Getters - Setterss
 //*************************************************************
-ContainerView* WindowCargo::getContainerView()
+ContainerableView* WindowCargo::getContainerableView()
 {
-	return this->mContainerView;
+	return this->mContainerableView;
 }
 
 
@@ -37,34 +37,34 @@ ContainerView* WindowCargo::getContainerView()
 void WindowCargo::drawContent()
 {
 	if(this->isOpen() && !this->isReduce())
-		this->mContainerView->draw();
+		this->mContainerableView->draw();
 }
 
 void WindowCargo::notifyPositionChanged()
 {
 	Window::notifyPositionChanged();
-	this->mContainerView->setX(this->getContentX());
-	this->mContainerView->setY(this->getContentY());
+	this->mContainerableView->setX(this->getContentX());
+	this->mContainerableView->setY(this->getContentY());
 }
 
 void WindowCargo::update()
 {
-	if(this->mContainerView->isContainerableChanged())
-		this->notifyContainerViewChanged();
+	if(this->mContainerableView->isContainerableChanged())
+		this->notifyContainerableViewChanged();
 
 	if(this->isOpen() && !this->isReduce())
-		this->mContainerView->update();
+		this->mContainerableView->update();
 }
 
 void WindowCargo::update( sf::Event p_event )
 {
 	if(this->isOpen() && !this->isReduce())
-		this->mContainerView->update(p_event);
+		this->mContainerableView->update(p_event);
 	Window::update(p_event);
 }
 
-void WindowCargo::notifyContainerViewChanged()
+void WindowCargo::notifyContainerableViewChanged()
 {
-	this->setContentHeight(this->mContainerView->getHeight());
-	this->setContentWidth(this->mContainerView->getWidth());
+	this->setContentHeight(this->mContainerableView->getHeight());
+	this->setContentWidth(this->mContainerableView->getWidth());
 }

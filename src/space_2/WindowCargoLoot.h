@@ -1,6 +1,6 @@
 #pragma once
 #include "Window.h"
-#include "ContainerView.h"
+#include "ContainerableView.h"
 #include "Wreck.h"
 
 
@@ -12,14 +12,14 @@ public:
 	~WindowCargoLoot(void);
 
 	// Getters - Setters
-	ContainerView* getContainerView();
+	ContainerableView* getContainerableView();
 
 	Wreck* getWreck();
 	void setWreck(Wreck* p_wreck);
 
 	// Methods
 	void notifyPositionChanged();
-	void notifyContainerViewChanged();
+	void notifyContainerableViewChanged();
 	void notifyWreckChanged();
 	void update();
 	void update(sf::Event p_event);
@@ -28,7 +28,7 @@ public:
 
 private:
 	// Attributs
-	ContainerView *mContainerView;
+	ContainerableView *mContainerableView;
 	Wreck *mWreck;
 
 	sf::Sprite mSpriteCredit;
