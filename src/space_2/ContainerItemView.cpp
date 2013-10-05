@@ -93,7 +93,7 @@ void ContainerItemView::updateBackgroundColor()
 
 void ContainerItemView::update( sf::Event p_event )
 {
-
+	ContainerView::update(p_event);
 }
 
 void ContainerItemView::updatePosition()
@@ -103,12 +103,12 @@ void ContainerItemView::updatePosition()
 
 void ContainerItemView::draw()
 {
-
+	ContainerView::draw();
 }
 
 void ContainerItemView::notifyPositionChanged()
 {
-
+	ContainerView::notifyPositionChanged();
 }
 
 void ContainerItemView::notifyItemChanged()

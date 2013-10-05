@@ -7,7 +7,7 @@ class ContainerItem : public ContainerRestriction
 {
 public:
 	// Constructor - Destructor
-	ContainerItem(Item* p_item);
+	ContainerItem(Item* p_item = NULL);
 	~ContainerItem(void);
 
 	// Getters - Setters
@@ -17,7 +17,7 @@ public:
 	bool isItemChanged();
 
 	// Methods
-	void notifyItemChanged();
+	virtual void notifyItemChanged();
 
 
 private:

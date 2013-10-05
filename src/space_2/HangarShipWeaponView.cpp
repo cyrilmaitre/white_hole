@@ -8,7 +8,7 @@
 //*************************************************************
 // Define
 //*************************************************************
-#define HEIGHT							150
+#define HEIGHT							140
 #define BACKGROUNDCOLOR					sf::Color(25, 26, 28)
 #define BORDERCOLOR						sf::Color(194, 194, 194)
 #define BORDERSIZE						1
@@ -111,10 +111,16 @@ void HangarShipWeaponView::update()
 		for(int i = 0; i < this->mContainerWeaponStackViews.size(); i++)
 			this->mContainerWeaponStackViews[i]->update();
 
+		for(int i = 0; i < this->mContainerAmmosItemViews.size(); i++)
+			this->mContainerAmmosItemViews[i]->update();
+
 		this->mPUBTypeAllowed.update();
 
 		if(this->isContainerWeaponsStacksChanged())
 			this->notifyContainerWeaponsStacksChanged();
+
+		if(this->isContainerAmmosItemsChanged())
+			this->notifyContainerAmmosItemChanged();
 	}
 }
 
@@ -159,6 +165,9 @@ void HangarShipWeaponView::update( sf::Event p_event )
 		for(int i = 0; i < this->mContainerWeaponStackViews.size(); i++)
 			this->mContainerWeaponStackViews[i]->update(p_event);
 
+		for(int i = 0; i < this->mContainerAmmosItemViews.size(); i++)
+			this->mContainerAmmosItemViews[i]->update(p_event);
+
 		this->mIconTypeAllowed.update(p_event);
 		this->mPUBTypeAllowed.update(p_event);
 	}
@@ -179,6 +188,11 @@ void HangarShipWeaponView::updatePosition()
 		this->mIconTypeAllowed.setPosition(this->mContainerWeaponStackViews[this->mContainerWeaponStackViews.size() - 1]->getRightX() + ICONTYPEALLOWED_MARGINLEFT, this->getContentY());
 
 	this->mTBAmmo.setPosition(this->getContentX(), this->mTBWeapon.getBottomY() + AMMO_MARGINTOP);
+	for(int i = 0; i < this->mContainerAmmosItemViews.size(); i++)
+	{
+		this->mContainerAmmosItemViews[i]->setPosition(	this->mContainerWeaponStackViews[i]->getX() + (this->mContainerWeaponStackViews[i]->getWidth() - this->mContainerAmmosItemViews[i]->getWidth()) / 2,
+														this->mTBAmmo.getY());
+	}
 }
 
 void HangarShipWeaponView::draw()
@@ -190,7 +204,10 @@ void HangarShipWeaponView::draw()
 		for(int i = 0; i < this->mContainerWeaponStackViews.size(); i++)
 			this->mContainerWeaponStackViews[i]->draw();
 		this->mIconTypeAllowed.draw();
+
 		this->mTBAmmo.draw();
+		for(int i = 0; i < this->mContainerAmmosItemViews.size(); i++)
+			this->mContainerAmmosItemViews[i]->draw();
 	}
 }
 
@@ -216,10 +233,17 @@ void HangarShipWeaponView::notifyCharacterShipChanged()
 	}
 	this->mContainerWeaponStackViews.clear();
 
+	for(int i = 0; i < this->mContainerAmmosItemViews.size(); i++)
+	{
+		if(this->mContainerAmmosItemViews[i] != NULL)
+			delete this->mContainerAmmosItemViews[i];
+	}
+	this->mContainerAmmosItemViews.clear();
+
 	// Add
 	for(int i = 0; i < this->mCharacterShip->getWeaponSlotMax(); i++)
 	{
-		// Create view
+		// Weapon view
 		ContainerStackWeaponView* newView = NULL;
 		if(i < this->mCharacterShip->getWeaponsCount())
 		{
@@ -229,12 +253,14 @@ void HangarShipWeaponView::notifyCharacterShipChanged()
 		else
 		{
 			newView = new ContainerStackWeaponView(this, new ContainerStack());
-		}		
-
-		// Add restriction and add to vector
+		}	
+		
 		for(int j = 0; j < this->mCharacterShip->getShipModel()->getWeaponTypeAllowedCount(); j++)
 			newView->getContainerStack()->addItemTypeAllowed(this->mCharacterShip->getShipModel()->getWeaponTypeAllowed(j));
 		this->mContainerWeaponStackViews.push_back(newView);
+
+		// Ammo view
+		this->mContainerAmmosItemViews.push_back(new ContainerItemAmmoView(this, new ContainerItem()));
 	}
 
 	// Update pub

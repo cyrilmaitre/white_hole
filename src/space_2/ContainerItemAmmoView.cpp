@@ -5,10 +5,10 @@
 //*************************************************************
 // Define
 //*************************************************************
-#define CONTAINERWIDTH			52
-#define CONTAINERHEIGHT			52
-#define ICONWIDTH				48
-#define ICONHEIGHT				48
+#define CONTAINERWIDTH			36
+#define CONTAINERHEIGHT			36
+#define ICONWIDTH				32
+#define ICONHEIGHT				32
 
 
 //*************************************************************
@@ -28,6 +28,7 @@ ContainerItemAmmoView::ContainerItemAmmoView( HangarShipWeaponView* p_view, Cont
 	}
 
 	this->mHangarView = p_view;
+	this->notifyItemChanged();
 }
 
 ContainerItemAmmoView::~ContainerItemAmmoView(void)

@@ -4,7 +4,7 @@
 //*************************************************************
 // Constructor - Destructor
 //*************************************************************
-ContainerItem::ContainerItem( Item* p_item = NULL ) : mItem(NULL)
+ContainerItem::ContainerItem( Item* p_item ) : mItem(NULL)
 {
 	this->mItem = p_item;
 	this->mItemChanged = false;

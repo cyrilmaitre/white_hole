@@ -31,7 +31,7 @@ public:
 	int decStackSize(int p_size, bool p_notify = true);
 	void setStackSize(int p_size, bool p_notify = true);
 
-	void notifyItemStackChanged();
+	virtual void notifyItemStackChanged();
 
 
 private:

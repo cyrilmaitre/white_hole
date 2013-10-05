@@ -29,6 +29,7 @@ ContainerStackWeaponView::ContainerStackWeaponView(HangarShipWeaponView* p_view,
 	}
 
 	this->mHangarView = p_view;
+	this->notifyItemStackChanged();
 }
 
 ContainerStackWeaponView::~ContainerStackWeaponView(void)
