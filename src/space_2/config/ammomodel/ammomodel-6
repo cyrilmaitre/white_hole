@@ -5,7 +5,6 @@ lifeTime = 10
 damage = 10
 splashradius = 0
 ammotype = 3
-weapontype = 3 
 velocity = 2000
 quickening = 1000
 projectile_type = 4

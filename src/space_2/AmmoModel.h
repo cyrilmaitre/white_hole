@@ -38,9 +38,6 @@ public:
 	AmmoType* getAmmoType();
 	void setAmmoType(AmmoType* p_type);
 
-	ItemType* getWeaponType();
-	void setWeaponType(ItemType* p_type);
-
 	// Methods
 	void loadFromConfig(KeyValueFile* p_config);
 
@@ -55,6 +52,5 @@ private:
 	float mProjectileScale;
 	std::string mSoundFire;
 	AmmoType* mAmmoType;
-	ItemType* mWeaponType;
 };
 

@@ -13,7 +13,6 @@
 #define AMMOMODEL_CONFIG_PROJECTILESCALE	"projectile_scale"
 #define AMMOMODEL_CONFIG_SOUNDFIRE			"sound_fire"
 #define AMMOMODEL_CONFIG_AMMOTYPE			"ammotype"
-#define AMMOMODEL_CONFIG_WEAPONTYPE			"weapontype"
 
 
 //*************************************************************
@@ -22,8 +21,6 @@
 AmmoModel::AmmoModel(KeyValueFile* p_config): Item(p_config->getInt("id"))
 {
 	this->mAmmoType = NULL;
-	this->mWeaponType = NULL;
-
 	this->loadFromConfig(p_config);
 }
 
@@ -115,16 +112,6 @@ void AmmoModel::setAmmoType( AmmoType* p_type )
 	this->mAmmoType = p_type;
 }
 
-ItemType* AmmoModel::getWeaponType()
-{
-	return this->mWeaponType;
-}
-
-void AmmoModel::setWeaponType( ItemType* p_type )
-{
-	this->mWeaponType = p_type;
-}
-
 
 //*************************************************************
 // Methods
@@ -147,9 +134,6 @@ void AmmoModel::loadFromConfig( KeyValueFile* p_config )
 
 	if(p_config->has(AMMOMODEL_CONFIG_AMMOTYPE))
 		this->setAmmoType(FactoryGet::getAmmoTypeFactory()->getAmmoType(p_config->getLong(AMMOMODEL_CONFIG_AMMOTYPE)));
-
-	if(p_config->has(AMMOMODEL_CONFIG_WEAPONTYPE))
-		this->setWeaponType(FactoryGet::getItemTypeFactory()->getItemType(p_config->getLong(AMMOMODEL_CONFIG_WEAPONTYPE)));
 
 	if(p_config->has(AMMOMODEL_CONFIG_PROJECTILETYPE))
 		this->setProjectileType((Projectile::ProjectileType)p_config->getInt(AMMOMODEL_CONFIG_PROJECTILETYPE));

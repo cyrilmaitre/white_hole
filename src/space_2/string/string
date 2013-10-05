@@ -378,10 +378,10 @@ ammoTypeAntiStructureDescription = Bonus damage against structure, but malus dam
 #
 #
 # Ammo
-ammo200mmName = 200mm
-ammo200mmDescription = 200mm Description...
-ammo200mmAntiShieldName = 200mm Anti-shield
-ammo200mmAntiShieldDescription = 200mm Anti-shield description...
+ammoSmallCarbonizedLeadName = Carbonized Lead S
+ammoSmallCarbonizedLeadDescription = Small Projectile Ammo. This ammo uses a simple lead slug encased in a hard shell of crystalline carbon. It is fairly cheap.<br/>  <br/>Damage: 5<br/>Damage type: Normal<br/>Splash damage: No<br/>  <br/>Velocity: 2500<br/>Quickening: Instant
+ammoSmallTitaniumSabotName = Titanium Sabot S
+ammoSmallTitaniumSabotDescription = Small Projectile Ammo. This is among the most feared ammunition around. It has excellent penetration. Once the ship's outer layer is penetrated, the core explodes, spraying the interior with a cloud of fragmentation fletchets that cause considerable damage to the vulnerable interior structure.<br/>  <br/>Damage: 8<br/>Damage type: Normal<br/>Splash damage: No<br/>  <br/>Velocity: 2500<br/>Quickening: Instant
 ammoLaserSmallName = Laser Small
 ammoLaserSmallDescription = Laser Small description...
 ammoLaserLargeName = Laser Large
