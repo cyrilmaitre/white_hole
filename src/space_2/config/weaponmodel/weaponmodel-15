@@ -8,3 +8,4 @@ rangeangle = 45
 reloadingspeed = 1
 firerate = 0.1
 soundreload = weapon_kinetic_reload.wav
+ammotype_allowed = 73

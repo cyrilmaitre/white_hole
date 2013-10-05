@@ -155,8 +155,6 @@ void HangarShipWeaponView::updateCharacterShipWeaponAmmos()
 
 void HangarShipWeaponView::updateContainerAmmosItems()
 {
-	// Update restriction
-
 	// Update content
 	for(int i = 0; i < this->mCharacterShip->getWeaponsCount(); i++)
 	{
@@ -166,23 +164,30 @@ void HangarShipWeaponView::updateContainerAmmosItems()
 		}
 		else
 		{
-			// Correct index
-			int index = i;
+			Weapon* currentWeapon = this->mCharacterShip->getWeapon(i);
+
+			// Correct index ammo view
+			int indexAmmoView = i;
 			for(int j = 0; j < i; j++)
 			{
 				if(!this->mContainerWeaponStackViews[j]->getContainerStack()->hasItemStack())
-					index++;
+					indexAmmoView++;
 			}
 
+			// Restriction
+			this->mContainerAmmosItemViews[indexAmmoView]->getContainerItem()->clearItemTypeAllowed();
+			for(int j = 0; j < currentWeapon->getWeaponModel()->getAmmoTypeAllowedCount(); j++)
+				this->mContainerAmmosItemViews[indexAmmoView]->getContainerItem()->addItemTypeAllowed(currentWeapon->getWeaponModel()->getAmmoTypeAllowed(j));
+
 			// Update
-			if(this->mCharacterShip->getWeapon(i)->getAmmo() != NULL)
+			if(currentWeapon->getAmmo() != NULL)
 			{
-				this->mContainerAmmosItemViews[index]->getContainerItem()->setItem(this->mCharacterShip->getWeapon(i)->getAmmo());
+				this->mContainerAmmosItemViews[indexAmmoView]->getContainerItem()->setItem(currentWeapon->getAmmo());
 			}
-			else if(this->mContainerAmmosItemViews[index]->getContainerItem()->hasItem())
+			else if(this->mContainerAmmosItemViews[indexAmmoView]->getContainerItem()->hasItem())
 			{
-				if(!this->mContainerAmmosItemViews[index]->getContainerItem()->isItemTypeAllowed(this->mContainerAmmosItemViews[index]->getContainerItem()->getItem()->getItemType()))
-					this->mContainerAmmosItemViews[index]->getContainerItem()->setItem(NULL);
+				if(!this->mContainerAmmosItemViews[indexAmmoView]->getContainerItem()->isItemTypeAllowed(this->mContainerAmmosItemViews[indexAmmoView]->getContainerItem()->getItem()->getItemType()))
+					this->mContainerAmmosItemViews[indexAmmoView]->getContainerItem()->setItem(NULL);
 			}
 		}
 	}
