@@ -1,0 +1,5 @@
+id = 72
+name = itemTypeAmmoLaserExtraLargeName
+description = itemTypeAmmoLaserExtraLargeDescription
+icon = 9-1
+itemtype_parent = 32

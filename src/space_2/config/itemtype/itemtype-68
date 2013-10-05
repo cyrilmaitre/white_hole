@@ -1,0 +1,5 @@
+id = 68
+name = itemTypeAmmoKineticExtraLargeName
+description = itemTypeAmmoKineticExtraLargeDescription
+icon = 4-1
+itemtype_parent = 31

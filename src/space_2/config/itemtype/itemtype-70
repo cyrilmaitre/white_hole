@@ -1,0 +1,5 @@
+id = 70
+name = itemTypeAmmoLaserMediumName
+description = itemTypeAmmoLaserMediumDescription
+icon = 7-1
+itemtype_parent = 32

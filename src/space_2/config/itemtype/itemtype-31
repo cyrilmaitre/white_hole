@@ -1,5 +1,5 @@
 id = 31
 name = itemTypeAmmoKineticName
 description = itemTypeAmmoKineticDescription
-icon = 1-0
+icon = 1-1
 itemtype_parent = 30

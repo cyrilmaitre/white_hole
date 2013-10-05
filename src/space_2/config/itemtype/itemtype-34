@@ -1,5 +1,5 @@
 id = 34
-name = itemTypeAmmoRoquet
+name = itemTypeAmmoRoquetName
 description = itemTypeAmmoRoquetDescription
-icon = 1-0
+icon = 11-2
 itemtype_parent = 30

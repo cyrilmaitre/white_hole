@@ -1,0 +1,5 @@
+id = 74
+name = itemTypeAmmoMissileMediumName
+description = itemTypeAmmoMissileMediumDescription
+icon = 12-1
+itemtype_parent = 33

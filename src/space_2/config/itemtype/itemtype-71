@@ -1,0 +1,5 @@
+id = 71
+name = itemTypeAmmoLaserLargeName
+description = itemTypeAmmoLaserLargeDescription
+icon = 8-1
+itemtype_parent = 32

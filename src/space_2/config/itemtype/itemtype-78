@@ -1,0 +1,5 @@
+id = 78
+name = itemTypeAmmoRoquetMediumName
+description = itemTypeAmmoRoquetMediumDescription
+icon = 12-2
+itemtype_parent = 34

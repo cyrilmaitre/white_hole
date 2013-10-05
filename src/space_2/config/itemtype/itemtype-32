@@ -1,5 +1,5 @@
 id = 32
 name = itemTypeAmmoLaserName
 description = itemTypeAmmoLaserDescription
-icon = 1-0
+icon = 5-1
 itemtype_parent = 30

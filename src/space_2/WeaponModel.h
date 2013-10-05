@@ -31,6 +31,10 @@ public:
 	std::string getSoundReload();
 	void setSoundReload(std::string p_sound);
 
+	int getAmmoTypeAllowedCount();
+	ItemType* getAmmoTypeAllowed(int p_index);
+	std::vector<ItemType*> getAmmoTypeAllowed();
+
 	// Methods
 	void loadFromConfig(KeyValueFile* p_config);
 
@@ -44,6 +48,8 @@ private:
 	float mReloadingSpeed;
 	float mFireRate;
 	std::string mSoundReload;
+
+	std::vector<ItemType*> mAmmoTypeAllowed;
 };
 
 

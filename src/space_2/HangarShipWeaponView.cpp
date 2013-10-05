@@ -155,9 +155,36 @@ void HangarShipWeaponView::updateCharacterShipWeaponAmmos()
 
 void HangarShipWeaponView::updateContainerAmmosItems()
 {
-	for(int i = 0; i < this->mContainerWeaponStackViews.size(); i++)
-	{
+	// Update restriction
 
+	// Update content
+	for(int i = 0; i < this->mCharacterShip->getWeaponsCount(); i++)
+	{
+		if(!this->mContainerWeaponStackViews[i]->getContainerStack()->hasItemStack())
+		{
+			this->mContainerAmmosItemViews[i]->getContainerItem()->setItem(NULL);
+		}
+		else
+		{
+			// Correct index
+			int index = i;
+			for(int j = 0; j < i; j++)
+			{
+				if(!this->mContainerWeaponStackViews[j]->getContainerStack()->hasItemStack())
+					index++;
+			}
+
+			// Update
+			if(this->mCharacterShip->getWeapon(i)->getAmmo() != NULL)
+			{
+				this->mContainerAmmosItemViews[index]->getContainerItem()->setItem(this->mCharacterShip->getWeapon(i)->getAmmo());
+			}
+			else if(this->mContainerAmmosItemViews[index]->getContainerItem()->hasItem())
+			{
+				if(!this->mContainerAmmosItemViews[index]->getContainerItem()->isItemTypeAllowed(this->mContainerAmmosItemViews[index]->getContainerItem()->getItem()->getItemType()))
+					this->mContainerAmmosItemViews[index]->getContainerItem()->setItem(NULL);
+			}
+		}
 	}
 }
 

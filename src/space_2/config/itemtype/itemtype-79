@@ -1,0 +1,5 @@
+id = 79
+name = itemTypeAmmoRoquetLargeName
+description = itemTypeAmmoRoquetLargeDescription
+icon = 13-2
+itemtype_parent = 34

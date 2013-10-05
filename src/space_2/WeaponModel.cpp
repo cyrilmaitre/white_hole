@@ -12,6 +12,7 @@
 #define CONFIG_RELOADINGSPEED		"reloadingspeed"
 #define CONFIG_FIRERATE				"firerate"
 #define CONFIG_SOUNDRELOAD			"soundreload"
+#define CONFIG_AMMOTYPEALLOWED		"ammotype_allowed"
 
 
 //*************************************************************
@@ -103,6 +104,21 @@ void WeaponModel::setSoundReload( std::string p_sound )
 	this->mSoundReload = p_sound;
 }
 
+int WeaponModel::getAmmoTypeAllowedCount()
+{
+	return this->mAmmoTypeAllowed.size();
+}
+
+ItemType* WeaponModel::getAmmoTypeAllowed( int p_index )
+{
+	return this->mAmmoTypeAllowed[p_index];
+}
+
+std::vector<ItemType*> WeaponModel::getAmmoTypeAllowed()
+{
+	return this->mAmmoTypeAllowed;
+}
+
 
 //*************************************************************
 // Methods
@@ -129,5 +145,12 @@ void WeaponModel::loadFromConfig( KeyValueFile* p_config )
 
 	if(p_config->has(CONFIG_SOUNDRELOAD))
 		this->setSoundReload(p_config->getString(CONFIG_SOUNDRELOAD));
+
+	if(p_config->has(CONFIG_AMMOTYPEALLOWED))
+	{
+		SplitString ammoIds(p_config->getString(CONFIG_AMMOTYPEALLOWED), ";");
+		for(int i = 0; i < ammoIds.getSplitCount(); i++)
+			this->mAmmoTypeAllowed.push_back(FactoryGet::getItemTypeFactory()->getItemType(Tools::getLongFromString(ammoIds.getSplitString(i))));
+	}
 }
 
