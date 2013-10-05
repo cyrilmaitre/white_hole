@@ -130,9 +130,10 @@ void ContainerViewManager::releaseDrag()
 
 void ContainerViewManager::releaseDrag( ContainerStackView* p_source, ContainerStackView* p_destination )
 {
-	if(p_source != p_destination && p_destination->getContainerStack()->isItemTypeAllowed(p_source->getContainerStack()->getItemStack()->getItem()->getItemType()))
+	if(p_source != p_destination)
 	{
-		if(!p_destination->getContainerStack()->hasItemStack())
+		bool sourceTypeIsAllowed = p_destination->getContainerStack()->isItemTypeAllowed(p_source->getContainerStack()->getItemStack()->getItem()->getItemType());
+		if(!p_destination->getContainerStack()->hasItemStack() && sourceTypeIsAllowed)
 		{
 			if(!sf::Keyboard::isKeyPressed(Option::option->getAppControl(OPTION_APP_CONTROL_HALFSTACKMOVE_KEY)))
 			{
@@ -152,7 +153,7 @@ void ContainerViewManager::releaseDrag( ContainerStackView* p_source, ContainerS
 				}
 			}
 		}
-		else
+		else if(sourceTypeIsAllowed && p_source->getContainerStack()->isItemTypeAllowed(p_destination->getContainerStack()->getItemStack()->getItem()->getItemType()))
 		{
 			if(p_destination->getContainerStack()->getItemStack()->getItem()->getIdItem() != p_source->getContainerStack()->getItemStack()->getItem()->getIdItem())
 			{
@@ -184,7 +185,8 @@ void ContainerViewManager::releaseDrag( ContainerStackView* p_source, ContainerS
 
 void ContainerViewManager::releaseDrag( ContainerStackView* p_source, ContainerItemView* p_destination )
 {
-
+	if(p_destination->getContainerItem()->isItemTypeAllowed(p_source->getContainerStack()->getItemStack()->getItem()->getItemType()))
+		p_destination->getContainerItem()->setItem(p_source->getContainerStack()->getItemStack()->getItem());
 }
 
 void ContainerViewManager::releaseDrag( ContainerItemView* p_source, ContainerStackView* p_destination )
@@ -194,7 +196,16 @@ void ContainerViewManager::releaseDrag( ContainerItemView* p_source, ContainerSt
 
 void ContainerViewManager::releaseDrag( ContainerItemView* p_source, ContainerItemView* p_destination )
 {
+	Item* sourceItem = p_source->getContainerItem()->getItem();
+	Item* destinationItem = p_destination->getContainerItem()->getItem();
+	if(sourceItem != NULL && destinationItem != NULL)
+	{
+		if(p_destination->getContainerItem()->isItemTypeAllowed(sourceItem->getItemType()))
+			p_destination->getContainerItem()->setItem(sourceItem);
 
+		if(p_source->getContainerItem()->isItemTypeAllowed(destinationItem->getItemType()))
+			p_source->getContainerItem()->setItem(destinationItem);
+	}
 }
 
 void ContainerViewManager::addView( ContainerView* p_view )

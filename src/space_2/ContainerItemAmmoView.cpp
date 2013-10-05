@@ -14,7 +14,7 @@
 //*************************************************************
 // Constructor - Destructor
 //*************************************************************
-ContainerItemAmmoView::ContainerItemAmmoView( HangarShipWeaponView* p_view, ContainerItem* p_item )
+ContainerItemAmmoView::ContainerItemAmmoView( HangarShipWeaponView* p_view, ContainerItem* p_item ) : ContainerItemView(p_item)
 {
 	this->setSize(CONTAINERWIDTH, CONTAINERHEIGHT);
 
