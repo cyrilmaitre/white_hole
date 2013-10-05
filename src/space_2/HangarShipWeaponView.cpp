@@ -155,7 +155,10 @@ void HangarShipWeaponView::updateCharacterShipWeaponAmmos()
 
 void HangarShipWeaponView::updateContainerAmmosItems()
 {
-	// Update le container ammo en fonction de se qui se trouve dans les weapon du ship (check type allowed et orphean ammo)
+	for(int i = 0; i < this->mContainerWeaponStackViews.size(); i++)
+	{
+
+	}
 }
 
 void HangarShipWeaponView::update( sf::Event p_event )

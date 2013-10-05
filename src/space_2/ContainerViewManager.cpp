@@ -198,12 +198,12 @@ void ContainerViewManager::releaseDrag( ContainerItemView* p_source, ContainerIt
 {
 	Item* sourceItem = p_source->getContainerItem()->getItem();
 	Item* destinationItem = p_destination->getContainerItem()->getItem();
-	if(sourceItem != NULL && destinationItem != NULL)
+	if(sourceItem != NULL)
 	{
 		if(p_destination->getContainerItem()->isItemTypeAllowed(sourceItem->getItemType()))
 			p_destination->getContainerItem()->setItem(sourceItem);
 
-		if(p_source->getContainerItem()->isItemTypeAllowed(destinationItem->getItemType()))
+		if(destinationItem == NULL || p_source->getContainerItem()->isItemTypeAllowed(destinationItem->getItemType()))
 			p_source->getContainerItem()->setItem(destinationItem);
 	}
 }

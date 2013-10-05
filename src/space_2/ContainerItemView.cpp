@@ -94,6 +94,9 @@ void ContainerItemView::updateBackgroundColor()
 void ContainerItemView::update( sf::Event p_event )
 {
 	ContainerView::update(p_event);
+
+	if(this->hasFocus() && this->getContainerItem()->hasItem())
+		ContainerViewManager::getInstance()->setDraggedView(this);
 }
 
 void ContainerItemView::updatePosition()
