@@ -1,9 +1,9 @@
-id = 5
-name = ammoSmallProtonName
-description = ammoSmallProtonDescription
-price = 12
+id = 18
+name = ammoSmallDepletedUraniumName
+description = ammoSmallDepletedUraniumDescription
+price = 16
 stackmax = 4000
-sprite = 4-7
+sprite = 6-7
 itemtype = 65
 itemtier = 1
 buyable = true

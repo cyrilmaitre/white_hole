@@ -1,11 +1,11 @@
-id = 5
-name = ammoSmallProtonName
-description = ammoSmallProtonDescription
-price = 12
+id = 19
+name = ammoSmallPhasedPlasmaName
+description = ammoSmallPhasedPlasmaDescription
+price = 34
 stackmax = 4000
-sprite = 4-7
+sprite = 7-7
 itemtype = 65
-itemtier = 1
+itemtier = 2
 buyable = true
 stockminimum_min = 20000
 stockminimum_max = 40000

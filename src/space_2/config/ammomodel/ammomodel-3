@@ -2,12 +2,12 @@
 id = 3
 # AMMO
 lifeTime = 2
-damage = 10
+damage = 5
 splashradius = 0
-ammotype = 3 
-velocity = 2000
+ammotype = 4
+velocity = 2500
 quickening = 99999
-projectile_type = 2
-projectile_color = #BE1414
-projectile_scale = 0.5
-sound_fire = weapon_laser_2.wav
+projectile_type = 0
+projectile_color = #FFFFFF
+projectile_scale = 1
+sound_fire = weapon_kinetic_1.wav

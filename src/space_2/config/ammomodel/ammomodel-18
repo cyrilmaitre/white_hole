@@ -1,10 +1,10 @@
 # ITEM
-id = 6
+id = 18
 # AMMO
 lifeTime = 10
-damage = 13
+damage = 8
 splashradius = 0
-ammotype = 2
+ammotype = 3
 velocity = 2500
 quickening = 99999
 projectile_type = 0

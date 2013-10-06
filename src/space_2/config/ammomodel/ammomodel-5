@@ -2,12 +2,12 @@
 id = 5
 # AMMO
 lifeTime = 10
-damage = 10
+damage = 5
 splashradius = 0
-ammotype = 3 
-velocity = 2000
-quickening = 1000
-projectile_type = 4
-projectile_color = #BE1414
-projectile_scale = 0.5
-sound_fire = weapon_launcher_2.wav
+ammotype = 2
+velocity = 2500
+quickening = 99999
+projectile_type = 0
+projectile_color = #FFFFFF
+projectile_scale = 1
+sound_fire = weapon_kinetic_1.wav
