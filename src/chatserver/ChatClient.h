@@ -48,11 +48,11 @@ public:
 	void clearOutputBuffer(void);					// clear received messages buffer (public)
 
 	// network state
-	const NetworkState& getNetworkState();
-	void				notifyNetworkState();	// called after reading the network state
+	const NetworkState& getNetworkState(void);
+	void				notifyNetworkState(void);	// called after reading the network state
 
 	// auth response
-	const AuthResponse	getAuthResponse();
+	const AuthResponse	getAuthResponse(void);
 
 	// others methods
 	void connect(std::string p_username, std::string p_sha1password);
@@ -67,6 +67,9 @@ public:
 	// auto reconnect
 	bool isAutoReconnectEnabled(void);
 	void setAutoReconnect(bool p_autoreconnect);
+
+	// userlist
+	const std::vector<std::string>& getUserList(void);
 
 private:
 	sf::TcpSocket		mSocket;
@@ -100,6 +103,12 @@ private:
 	// auth response
 	AuthResponse	mAuthResponse;
 	void			setAuthResponse(AuthResponse p_authResponse);
+
+	// userlist
+	std::vector<std::string>	mUserList;
+	void						addUser(std::string p_userName);
+	void						removeUser(std::string p_userName);
+	void						clearUserList(void);
 	
 };
 

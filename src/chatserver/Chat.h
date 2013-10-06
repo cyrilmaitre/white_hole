@@ -207,4 +207,8 @@ class Chat {
 public:
 	static std::string serverCmdToString(sf::Uint16 p_command);
 	static std::string authResponseToString(sf::Uint16 p_authResponse);
+
+	// TOOLS
+	static bool			stringInVector(std::string& p_testString, std::vector<std::string>& p_testVector);
+	static std::string	lowerLetters(std::string& p_string);
 };

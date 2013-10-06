@@ -40,7 +40,7 @@ sf::Packet& operator << (sf::Packet& packet, const C2S_Command c2s_command)
 // -- Auth
 sf::Packet& operator << (sf::Packet& packet, const C2S_Auth c2s_auth)
 {
-	// properties size veritifcation
+	// properties size veritifcatiRon
 	// username
 	if(c2s_auth.user.length() > MAX_SIZE_USERNAME) {
 		c2s_auth.user.substr(0,MAX_SIZE_USERNAME);
@@ -106,6 +106,7 @@ void ChatClient::setRunning(bool p_running)
 }
 // </running>
 
+
 //<autoreconnect>
 bool ChatClient::isAutoReconnectEnabled(void)
 {
@@ -121,22 +122,24 @@ void ChatClient::setAutoReconnect(bool p_autoreconnect)
 }
 // </autoreconnect>
 
+
 // <mutex>
-sf::Mutex& ChatClient::getMutex()
+sf::Mutex& ChatClient::getMutex(void)
 {
 	return this->mMutex;
 }
 // </mutex>
 
+
 // <chatbuffer>
 // out
-const MessageBuffer& ChatClient::getOutputBuffer()
+const MessageBuffer& ChatClient::getOutputBuffer(void)
 {
 	sf::Lock lock(mMutex);
 	return this->mOutputBuffer;
 }
 
-void ChatClient::clearOutputBuffer()
+void ChatClient::clearOutputBuffer(void)
 {
 	sf::Lock lock(mMutex);
 	this->mOutputBuffer.clear();
@@ -150,7 +153,7 @@ void ChatClient::pushOutputBuffer(std::shared_ptr<Message> p_message)
 }
 
 // int
-const MessageBuffer& ChatClient::getInputBuffer()
+const MessageBuffer& ChatClient::getInputBuffer(void)
 {
 	sf::Lock lock(mMutex);
 	return this->mInputBuffer;
@@ -162,7 +165,7 @@ void ChatClient::pushInputBuffer(std::shared_ptr<Message> p_message)
 	this->mInputBuffer.push_back(p_message);
 }
 
-void ChatClient::clearInputBuffer()
+void ChatClient::clearInputBuffer(void)
 {
 	sf::Lock lock(mMutex);
 	this->mInputBuffer.clear();
@@ -170,8 +173,77 @@ void ChatClient::clearInputBuffer()
 }
 // </chatbuffer>
 
+
+// <userList>
+// get list
+const std::vector<std::string>& ChatClient::getUserList()
+{
+	sf::Lock lock(mMutex);
+	return this->mUserList;
+}
+
+// (private) add user in list + add in alphabetical order
+void ChatClient::addUser(std::string p_userName)
+{
+	sf::Lock lock(mMutex);
+
+	if(mUserList.empty()) {
+		mUserList.push_back(p_userName);
+	}
+	else {
+		// param username with letters in lowercase
+		std::string lowerParam		= Chat::lowerLetters(p_userName);
+
+		// by default, the position is the end, because we'll look for string in the list which are AFTER the param string
+		// so, if no result, the param string should be place at the end
+		std::vector<std::string>::iterator insertAt = mUserList.end();
+
+		// Find position to insert
+		for (auto it = mUserList.begin(); it != mUserList.end(); it++)
+		{
+			std::string lowerCurrent	= Chat::lowerLetters(*it);
+
+			// -1 -> 1er terme AVANT le 2e
+			//  1 -> 1er terme APRES le 2e
+			// Si l'username courant (dans la liste) est APRES (>0) l'username passé en paramètre
+			// Alors on insert ce dernier a la place de l'username courant (= position courante de l'itérateur = it)
+			// ==> Donc on cherche le premier item dans la liste qui se trouverait après le username passé en paramètre
+			if ( std::strcmp( lowerCurrent.c_str(), lowerParam.c_str() ) >= 0 ) {
+				insertAt = it;
+				break;
+			}
+		}
+
+		// Insert
+		mUserList.insert(insertAt, p_userName);
+
+	}
+}
+
+// (private) remove user
+void ChatClient::removeUser(std::string p_userName)
+{
+	sf::Lock lock(mMutex);
+	for (auto it = mUserList.begin(); it != mUserList.end(); it++) {
+        if (*it == p_userName) {
+            it = mUserList.erase(it);
+			break;
+		}
+	}
+}
+
+// (private) clear userlist
+void ChatClient::clearUserList(void)
+{
+	sf::Lock lock(mMutex);
+	this->mUserList.clear();
+	this->mUserList.shrink_to_fit();
+}
+// </userList>
+
+
 // <networkstate>
-const NetworkState& ChatClient::getNetworkState()
+const NetworkState& ChatClient::getNetworkState(void)
 {
 	sf::Lock lock(mMutex);
 	return this->mNetworkState;
@@ -189,7 +261,7 @@ void ChatClient::updateNetworkState(NetworkStateCode p_networkStateCode, std::st
 
 }
 
-void ChatClient::notifyNetworkState()
+void ChatClient::notifyNetworkState(void)
 {
 	sf::Lock lock(mMutex);
 	this->mNetworkState.newState = false;
@@ -198,7 +270,7 @@ void ChatClient::notifyNetworkState()
 
 
 // <authresponse>
-const AuthResponse ChatClient::getAuthResponse()
+const AuthResponse ChatClient::getAuthResponse(void)
 {
 	sf::Lock lock(mMutex);
 	return this->mAuthResponse;
@@ -364,6 +436,7 @@ void ChatClient::mRunClient(void)
 			}
 				
 			// ------------------------------------------------------------------------------------------------------------------
+			// Clear stuff at the end of the "session"
 			this->clearInputBuffer();
 			this->clearOutputBuffer();
 
@@ -462,6 +535,21 @@ void ChatClient::handlePacket(sf::Packet& p_packet)
 					}
 					break;
 
+					// USER JOIN
+				case ServerCommand::S_JOIN:
+					{
+						this->addUser(s2c_command->argument);
+					}
+					break;
+
+					// USER QUIT
+				case ServerCommand::S_QUIT:
+					{
+						this->removeUser(s2c_command->argument);
+					}
+					break;
+					
+
 				} // -- end of switch() {}
 
 			}
@@ -477,10 +565,16 @@ void ChatClient::handlePacket(sf::Packet& p_packet)
 				this->updateNetworkState(NetworkStateCode::NS_CONNECTION_OK_AUTHRESPONSE);
 				this->setAuthResponse((AuthResponse) s2c_auth->authResponse);
 
+				// if auth OK
+				if(s2c_auth->authResponse == AuthResponse::AR_OK)
+				{
+					// add himself in the userlist
+					this->addUser(this->mUsername);
+				}
 				// don't reconnect if banned, invalid IDs or maintenance
-				if(s2c_auth->authResponse == AuthResponse::AR_BANNED
-					&& s2c_auth->authResponse != AuthResponse::AR_INVALID_IDS
-					&& s2c_auth->authResponse != AuthResponse::AR_MAINTENANCE)
+				else if(s2c_auth->authResponse == AuthResponse::AR_BANNED
+					|| s2c_auth->authResponse == AuthResponse::AR_INVALID_IDS
+					|| s2c_auth->authResponse == AuthResponse::AR_MAINTENANCE)
 				{
 						this->setAutoReconnect(false);
 				}

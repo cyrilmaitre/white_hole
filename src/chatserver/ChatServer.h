@@ -79,6 +79,4 @@ private:
 	std::unique_ptr<sf::Thread> mThread;
 	void						mAsyncTasks(void);
 
-	// TOOLS
-	bool		stringInVector(std::string& p_testString, std::vector<std::string>& p_testVector);
 };

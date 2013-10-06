@@ -5,15 +5,15 @@
 //*************************************************************
 #define UIWINDOW_PLAYER_WIDTH		320
 #define UIWINDOW_PLAYER_HEIGHT		150
-
+#define MAX_CHAT_LINES				100
 
 //*************************************************************
 // Constructor - Destructor
 //*************************************************************
 WindowChat::WindowChat(void)
 {
-	this->setContentWidth(UIWINDOW_PLAYER_WIDTH);
-	this->setContentHeight(UIWINDOW_PLAYER_HEIGHT);
+	this->setContentWidth(600); // 320
+	this->setContentHeight(300);
 	this->setType(Window::WindowType::TypeDynamic);
 	this->setOpen(false);
 	this->setWindowIcon(SpriteParameterFactory::getSpriteParameterIcon16X16()->getSprite(IC_16X16_PERSON));
@@ -22,18 +22,24 @@ WindowChat::WindowChat(void)
 
 	// txtfield
 	this->txtfield.setPosition(getContentX(), getContentY());
-	this->txtfield.setWidth(getContentWidth());
+	this->txtfield.setWidth(400);
 	this->txtfield.setType(TextField::TextFieldType::TypeText);
 	this->txtfield.setEnable(false);
 	
 	// txtbox
 	this->txtbox.setFontColor(sf::Color(255, 255, 255));
+	this->txtbox.setHeight(300-txtfield.getHeight());
+	this->txtbox.setWidth(400);
 	this->txtbox.setPosition(getContentX(), getContentY()+txtfield.getHeight());
-	this->txtbox.setWidth(getContentWidth());
-	this->txtbox.setAutoResizeHeight(true);
 	this->txtbox.setAutoResizeWidth(false);
-	this->txtbox.setHeight(getContentHeight());
-	this->txtbox.setAutoResizeHeightMax(getContentHeight());
+
+	// txtbox 2 (userlist)
+	this->txtboxUL.setFontColor(sf::Color(255, 255, 255));
+	this->txtboxUL.setHeight(300);
+	this->txtboxUL.setWidth(txtfield.getWidth()-200-10);
+	this->txtboxUL.setPosition(getContentX()+txtfield.getWidth()+10, getContentY());
+	this->txtboxUL.setAutoResizeWidth(false);
+	this->txtboxUL.setForceScrollBar(true);
 }
 
 WindowChat::~WindowChat(void)
@@ -165,6 +171,8 @@ void WindowChat::update(sf::Event p_event)
 	}
 
 	this->txtfield.update(p_event);
+	this->txtbox.update(p_event);
+	this->txtboxUL.update(p_event);
 	Window::update(p_event);
 }
 
@@ -227,7 +235,20 @@ void WindowChat::drawContent()
 	}
 
 	// txtfield
+
 	txtfield.draw();
+
+
+	// txtboxUL (userlist)
+	std::string userListContent = "";
+	std::vector<std::string> userList(Resource::resource->getChatClient()->getUserList());
+	for(unsigned int i = 0; i < userList.size(); i++)
+	{
+		userListContent += userList[i]+"<br/>";
+	}
+
+	this->txtboxUL.setText(userListContent);
+	txtboxUL.draw();
 
 	// txtbox = MUST BE DRAWN AFTER ALL COMPONENT
 	{
@@ -261,6 +282,7 @@ void WindowChat::drawContent()
 		
 		Resource::resource->getChatClient()->clearOutputBuffer();
 	}
+
 	txtbox.draw();
 }
 
@@ -269,11 +291,12 @@ void WindowChat::notifyPositionChanged()
 	Window::notifyPositionChanged();
 	this->txtfield.setPosition(getContentX(), getContentY());
 	this->txtbox.setPosition(getContentX(), getContentY()+txtfield.getHeight());
+	this->txtboxUL.setPosition(getContentX()+txtfield.getWidth()+10, getContentY());
 }
 
 void WindowChat::pushChat(std::string p_string)
 {
-	if(this->chatLines.size() >= 10) {
+	if(this->chatLines.size() >= MAX_CHAT_LINES) {
 		this->chatLines.pop_front();
 	}
 

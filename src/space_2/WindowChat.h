@@ -18,6 +18,7 @@ public:
 
 private:
 	TextBoxMultiLine			txtbox;
+	TextBoxMultiLine			txtboxUL;
 	TextField					txtfield;
 	std::deque<std::string>		chatLines;
 };

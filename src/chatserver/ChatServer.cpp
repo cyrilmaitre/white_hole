@@ -936,8 +936,3 @@ void ChatServer::mAsyncTasks(void)
 	}
 	{ std::ostringstream msg; msg << "[THREAD] Async Task thread FINISHED" << ""; Debug::msg(msg); }
 }
-
-bool ChatServer::stringInVector(std::string& p_testString, std::vector<std::string>& p_testVector)
-{
-	return (std::find(p_testVector.begin(), p_testVector.end(), p_testString) != p_testVector.end());
-}

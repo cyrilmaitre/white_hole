@@ -117,3 +117,36 @@ std::string Chat::authResponseToString(sf::Uint16 p_authResponse)
 
 	return "Unknown response";
 }
+
+// -------------------------------
+//  ----------- TOOLS ------------
+// -------------------------------
+// return TRUE if a string is in a vector<string>
+bool Chat::stringInVector(std::string& p_testString, std::vector<std::string>& p_testVector)
+{
+	return (std::find(p_testVector.begin(), p_testVector.end(), p_testString) != p_testVector.end());
+}
+
+
+
+// return a string with letters (A-Z) in lowercase
+std::string	Chat::lowerLetters(std::string& p_string)
+{
+	std::string loweredString = "";
+
+	// 65-90  = MAJ letters
+	// 97-122 = MIN letters
+	for(std::string::size_type i = 0; i < p_string.size(); ++i) {
+
+		// if char is A-Z
+		if(p_string[i] >= 65 && p_string[i] <= 90) {
+			loweredString += (char)p_string[i]+32;
+		}
+		else {
+			loweredString += (char)p_string[i];
+		}
+	}
+
+
+	return loweredString;
+}
