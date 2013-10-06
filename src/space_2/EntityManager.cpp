@@ -2,6 +2,7 @@
 #include "AutoManager.h"
 #include "ExplosionEffect.h"
 #include "ToolsMap.h"
+#include "StationManager.h"
 
 
 //*************************************************************
@@ -83,9 +84,9 @@ void EntityManager::remove( int p_id, bool p_delete )
 				deleteEntity->destroy();
 
 			if(ToolsMap::isStation(deleteEntity))
-				Resource::resource->getThreadTerminator()->addTerminable((Station*)deleteEntity);
-			else
-				delete deleteEntity;
+				StationManager::getInstance()->removeStation((Station*)deleteEntity);
+			
+			delete deleteEntity;
 		}
 		EntityManager::mEntities.erase(p_id);
 	}

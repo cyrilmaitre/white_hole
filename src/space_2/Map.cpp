@@ -57,11 +57,17 @@ Map::Map(void)
 
 	// Init npc ship spawner
 	this->mNpcShipSpawner = new NpcShipSpawner();
+
+	// Start update station
+	StationManager::getInstance()->startUpdateThread();
 }
 
 
 Map::~Map(void)
 {
+	// Stop update station
+	StationManager::getInstance()->stopUpdateThread();
+
 	// Delete sector tab
 	for(int i = 0; i < MAP_SECTORS_TAB_SIZE; i++)
 	{

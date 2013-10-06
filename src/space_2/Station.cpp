@@ -9,7 +9,7 @@
 //*************************************************************
 #define ROTATION_VELOCITY_MIN			0.1
 #define ROTATION_VELOCITY_MAX			0.5
-#define STOCKS_UPDATE_TICK				10 // Sec
+#define STOCKS_UPDATE_TICK				30 // Sec
 #define STOCKS_UPDATE_TICK_IN			1 // Sec
 
 
@@ -35,31 +35,16 @@ Station::Station(void) : Npc(this)
 		if(itemList[i]->isBuyable())
 			this->addItemStock(new ItemStock(itemList[i], this));
 	}
-
-	this->mUpdateStocks = true;
 	this->mUpdateStocksTick = STOCKS_UPDATE_TICK;
-	this->mStocksThread = new sf::Thread(&Station::updateStocks, this);
-	this->mStocksThread->launch();
 }
 
 Station::~Station(void)
 {
-	delete this->mStocksThread;
-
 	for(int i = 0; i < this->mStocks.size(); i++)
 		delete this->mStocks[i];
 
 	if(this->mSpinnerSprite != NULL)
 		delete this->mSpinnerSprite;
-}
-
-void Station::terminate( bool p_instant )
-{
-	this->setUpdateStocks(false);
-	if(p_instant)
-		this->mStocksThread->terminate();
-	else
-		this->mStocksThread->wait();
 }
 
 
@@ -82,15 +67,13 @@ void Station::setModel( StationModel* p_model )
 
 int Station::getItemStockCount()
 {
-	sf::Lock lock(this->mStocksMutex);
-
+	sf::Lock lock(this->mMutex);
 	return this->mStocks.size();
 }
 
 ItemStock* Station::getItemStock( int p_index )
 {
-	sf::Lock lock(this->mStocksMutex);
-
+	sf::Lock lock(this->mMutex);
 	if(p_index < 0)
 		p_index = 0;
 	else if(p_index >= this->mStocks.size())
@@ -101,8 +84,7 @@ ItemStock* Station::getItemStock( int p_index )
 
 ItemStock* Station::getItemStock( Item* p_item )
 {
-	sf::Lock lock(this->mStocksMutex);
-
+	sf::Lock lock(this->mMutex);
 	for(int i = 0; i < this->mStocks.size(); i++)
 	{
 		if(this->mStocks[i]->getItem()->getIdItem() == p_item->getIdItem())
@@ -111,32 +93,25 @@ ItemStock* Station::getItemStock( Item* p_item )
 	return NULL;
 }
 
-bool Station::isUpdateStocks()
-{
-	sf::Lock lock(this->mStocksMutex);	
-
-	return this->mUpdateStocks;
-}
-
-void Station::setUpdateStocks( bool p_value )
-{
-	sf::Lock lock(this->mStocksMutex);
-
-	this->mUpdateStocks = p_value;
-}
-
 float Station::getUpdateStocksTick()
 {
-	sf::Lock lock(this->mStocksMutex);
-
+	sf::Lock lock(this->mMutex);
 	return this->mUpdateStocksTick;
 }
 
 void Station::setUpdateStocksTick( float p_tick )
 {
-	sf::Lock lock(this->mStocksMutex);
-
+	sf::Lock lock(this->mMutex);
 	this->mUpdateStocksTick = p_tick;
+}
+
+bool Station::isUpdateStocksTime()
+{
+	sf::Lock lock(this->mMutex);
+	bool returnValue = this->mUpdateStocksClock.getElapsedTimeAsSeconds() > this->mUpdateStocksTick;
+	if(returnValue)
+		this->mUpdateStocksClock.restart();
+	return returnValue;
 }
 
 
@@ -163,17 +138,8 @@ void Station::update()
 
 void Station::updateStocks()
 {
-	while(this->isUpdateStocks())
-	{
-		sf::sleep(sf::seconds(this->getUpdateStocksTick()));
-		for(int i = 0; i < this->getItemStockCount(); i++)
-		{
-			if(this->isUpdateStocks())
-				this->getItemStock(i)->update();
-			else
-				break;
-		}
-	}
+	for(int i = 0; i < this->getItemStockCount(); i++)
+		this->getItemStock(i)->update();
 }
 
 void Station::updateSpinner()
@@ -257,15 +223,13 @@ void Station::unloadSprite()
 
 void Station::addItemStock( ItemStock* p_stock )
 {
-	sf::Lock lock(this->mStocksMutex);
-
+	sf::Lock lock(this->mMutex);
 	this->mStocks.push_back(p_stock);
 }
 
 void Station::removeItemStock( ItemStock* p_stock )
 {
-	sf::Lock lock(this->mStocksMutex);
-
+	sf::Lock lock(this->mMutex);
 	for(int i = 0; i < this->mStocks.size(); i++)
 	{
 		if(this->mStocks[i]->getIdItemStock() == p_stock->getIdItemStock())

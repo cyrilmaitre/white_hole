@@ -8,6 +8,7 @@
 #include "ToolsImage.h"
 #include "EntityManager.h"
 #include "ToolsMap.h"
+#include "StationManager.h"
 
 
 //*************************************************************
@@ -537,6 +538,9 @@ void Sector::addEntity( Entity* p_entity, bool p_definePosition )
 	// Add to others managers
 	EntityManager::add(p_entity);
 	Game::game->getMap()->getMapObjectSelector()->addMapObject(p_entity);
+
+	if(ToolsMap::isStation(p_entity))
+		StationManager::getInstance()->addStation((Station*)p_entity);
 }
 
 void Sector::removeEntity( Entity* p_entity )

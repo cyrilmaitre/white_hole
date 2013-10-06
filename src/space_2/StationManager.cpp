@@ -2,6 +2,11 @@
 #include "FactoryGet.h"
 #include "FactoryGet.h"
 
+//*************************************************************
+// Define
+//*************************************************************
+#define UPDATESTATIONS_SLEEP		500	// ms
+
 
 //*************************************************************
 // Init static
@@ -15,10 +20,15 @@ StationManager* StationManager::mInstance;
 StationManager::StationManager(KeyValueFile* p_config)
 {
 	this->setStationModelCount(p_config->getInt(STATIONMANAGER_CONFIG_COUNT));
+	this->setUpdateStations(true);
+
+	this->mUpdateStationsThread = NULL;
 }
 
 StationManager::~StationManager(void)
 {
+	if(this->mUpdateStationsThread != NULL)
+		delete this->mUpdateStationsThread;
 }
 
 
@@ -33,6 +43,36 @@ int StationManager::getStationModelCount()
 void StationManager::setStationModelCount( int p_count )
 {
 	this->mStationModelCount = p_count;
+}
+
+int StationManager::getStationsCount()
+{
+	sf::Lock lock(this->mMutex);
+	return this->mStations.size();
+}
+
+Station* StationManager::getStation( int p_index )
+{
+	sf::Lock lock(this->mMutex);
+
+	if(p_index < 0)
+		p_index = 0;
+	else if(p_index >= this->mStations.size())
+		p_index = this->mStations.size() - 1;
+
+	return this->mStations[p_index];
+}
+
+bool StationManager::isUpdateStations()
+{
+	sf::Lock lock(this->mMutex);
+	return this->mUpdateStations;
+}
+
+void StationManager::setUpdateStations( bool p_value )
+{
+	sf::Lock lock(this->mMutex);
+	this->mUpdateStations = p_value;
 }
 
 
@@ -68,3 +108,57 @@ Station* StationManager::generateStation( Sector* p_sector )
 
 	return generatedStation;
 }
+
+void StationManager::addStation( Station* p_station )
+{
+	sf::Lock lock(this->mMutex);
+	this->mStations.push_back(p_station);
+}
+
+void StationManager::removeStation( Station* p_station )
+{
+	sf::Lock lock(this->mMutex);
+	for(int i = 0; i < this->mStations.size(); i++)
+	{
+		if(this->mStations[i]->getIdMapObject() == p_station->getIdMapObject())
+		{
+			this->mStations.erase(this->mStations.begin() + i);
+			break;
+		}
+	}
+}
+
+void StationManager::updateStocksAll()
+{
+	while(this->isUpdateStations())
+	{
+		for(int i = 0; i < this->getStationsCount(); i++)
+		{
+			if(this->isUpdateStations())
+				this->updateStock(this->getStation(i));
+			else
+				break;
+		}
+		sf::sleep(sf::milliseconds(UPDATESTATIONS_SLEEP));
+	}
+}
+
+void StationManager::updateStock( Station* p_station )
+{
+	sf::Lock lock(this->mMutex);
+	if(p_station->isUpdateStocksTime())
+		p_station->updateStocks();
+}
+
+void StationManager::startUpdateThread()
+{
+	this->mUpdateStationsThread = new sf::Thread(&StationManager::updateStocksAll, this);
+	this->mUpdateStationsThread->launch();
+}
+
+void StationManager::stopUpdateThread()
+{
+	this->setUpdateStations(false);
+}
+
+

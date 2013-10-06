@@ -18,6 +18,12 @@ public:
 	int getStationModelCount();
 	void setStationModelCount(int p_count);
 
+	int getStationsCount();
+	Station* getStation(int p_index);
+
+	bool isUpdateStations();
+	void setUpdateStations(bool p_value);
+
 	// Static
 	static StationManager *getInstance();
 	static void init();
@@ -27,10 +33,23 @@ public:
 	StationModel* getRandomModel();
 	Station* generateStation(Sector* p_sector);
 
+	void addStation(Station* p_station);
+	void removeStation(Station* p_station);
+	void updateStocksAll();
+	void updateStock(Station* p_station);
+
+	void startUpdateThread();
+	void stopUpdateThread();
+
 
 private:
 	// Attributs
 	int mStationModelCount;
+
+	std::vector<Station*> mStations;
+	bool mUpdateStations;
+	sf::Thread* mUpdateStationsThread;
+	sf::Mutex mMutex;
 
 	// Static
 	static StationManager* mInstance;
