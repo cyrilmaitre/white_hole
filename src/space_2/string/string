@@ -394,6 +394,22 @@ ammoSmallDepletedUraniumName = Depleted Uranium S
 ammoSmallDepletedUraniumDescription = Small projectile Ammo. Very commonly used by Minmatar pilots, this ammo is incendiary and also has great penetration. Just be careful handling it unless you want to wake up with an extra toe on your forehead.<br/>  <br/>Damage: 8<br/>Damage type: Anti-armor<br/>Splash damage: No<br/>  <br/>Velocity: 2500<br/>Quickening: Instant
 ammoSmallPhasedPlasmaName = Phased Plasma S
 ammoSmallPhasedPlasmaDescription = Small Projectile Ammo. This ammo uses a similar plasma containment core as hybrid charges except that it is mounted in a standard cannon shell.<br/>  <br/>Damage: 12<br/>Damage type: Anti-armor<br/>Splash damage: No<br/>  <br/>Velocity: 2500<br/>Quickening: Instant
+ammoMediumCarbonizedLeadName = Carbonized Lead M
+ammoMediumCarbonizedLeadDescription = Medium Projectile Ammo. This ammo uses a simple lead slug encased in a hard shell of crystalline carbon. It is fairly cheap and works very well against most armors. Shields, however, are a problem.<br/>  <br/>Damage: 10<br/>Damage type: Normal<br/>Splash damage: No<br/>  <br/>Velocity: 2500<br/>Quickening: Instant
+ammoMediumTitaniumSabotName = Titanium Sabot M
+ammoMediumTitaniumSabotDescription = Medium Projectile Ammo. This is among the most feared ammunition around. It has excellent penetration. Once the ship's outer layer is penetrated, the core explodes, spraying the interior with a cloud of fragmentation fletchets that cause considerable damage to the vulnerable interior structure.<br/>  <br/>Damage: 16<br/>Damage type: Normal<br/>Splash damage: No<br/>  <br/>Velocity: 2500<br/>Quickening: Instant
+ammoMediumNuclearName = Nuclear M
+ammoMediumNuclearDescription = Medium Projectile Ammo. Nuclear weapons are considered by most races to be crude and primitive. However, the Minmatar still favor them over more sophisticated weapons due to the abundance of materials for plutonium production in Minmatar space.<br/>  <br/>Damage: 10<br/>Damage type: Anti-structure<br/>Splash damage: No<br/>  <br/>Velocity: 2500<br/>Quickening: Instant
+ammoMediumFusionName = Fusion M
+ammoMediumFusionDescription = Medium Projectile Ammo. The destructive power of a fusion warhead is superior to most other projectile warheads available, although it has problems penetrating heavy shield systems.<br/>  <br/>Damage: 24<br/>Damage type: Anti-structure<br/>Splash damage: No<br/>  <br/>Velocity: 2500<br/>Quickening: Instant
+ammoMediumProtonName = Proton M
+ammoMediumProtonDescription = Medium Projectile Ammo. Emits a focused, high intensity proton burst upon impact. Fairly effective vs. both shields and armor.<br/>  <br/>Damage: 10<br/>Damage type: Anti-shield<br/>Splash damage: No<br/>  <br/>Velocity: 2500<br/>Quickening: Instant
+ammoMediumEMPName = EMP M
+ammoMediumEMPDescription = Medium Projectile Ammo. A new technology, this highly advanced ammunition emits a focused EM pulse. Very potent against shields.<br/>  <br/>Damage: 24<br/>Damage type: Anti-shield<br/>Splash damage: No<br/>  <br/>Velocity: 2500<br/>Quickening: Instant
+ammoMediumDepletedUraniumName = Depleted Uranium M
+ammoMediumDepletedUraniumDescription = Medium Projectile Ammo. Very commonly used by Minmatar pilots, this ammo is incendiary and also has great penetration. Just be careful handling it unless you want to wake up with an extra toe on your forehead.<br/>  <br/>Damage: 16<br/>Damage type: Anti-armor<br/>Splash damage: No<br/>  <br/>Velocity: 2500<br/>Quickening: Instant
+ammoMediumPhasedPlasmaName = Phased Plasma M
+ammoMediumPhasedPlasmaDescription = Medium Projectile Ammo. This ammo uses a similar plasma containment core as hybrid charges except that it is mounted in a standard cannon shell.<br/>  <br/>Damage: 24<br/>Damage type: Anti-armor<br/>Splash damage: No<br/>  <br/>Velocity: 2500<br/>Quickening: Instant
 #
 #
 # Weapon Model
