@@ -1,0 +1,17 @@
+id = 32811
+name = ammoExtraLargeLeadChargeName
+description = ammoExtraLargeLeadChargeDescription
+price = 1074.0
+stackmax = 80
+sprite = 11-10
+itemtype = 72
+itemtier = 2
+buyable = true
+stockminimum_min = 400
+stockminimum_max = 800
+stockmaximum_min = 880
+stockmaximum_max = 1600
+production_min = 0.0
+production_max = 400.0
+consumption_min = 0.0
+consumption_max = 400.0

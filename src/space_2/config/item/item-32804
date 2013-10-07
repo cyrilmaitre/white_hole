@@ -1,0 +1,17 @@
+id = 32804
+name = ammoLargeTungstenChargeName
+description = ammoLargeTungstenChargeDescription
+price = 67.0
+stackmax = 400
+sprite = 4-10
+itemtype = 71
+itemtier = 1
+buyable = true
+stockminimum_min = 2000
+stockminimum_max = 4000
+stockmaximum_min = 4400
+stockmaximum_max = 8000
+production_min = 0.0
+production_max = 2000.0
+consumption_min = 0.0
+consumption_max = 2000.0
