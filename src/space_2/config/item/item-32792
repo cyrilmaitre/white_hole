@@ -1,0 +1,17 @@
+id = 32792
+name = ammoMediumAntimatterChargeName
+description = ammoMediumAntimatterChargeDescription
+price = 75.0
+stackmax = 800
+sprite = 8-9
+itemtype = 70
+itemtier = 1
+buyable = true
+stockminimum_min = 4000
+stockminimum_max = 8000
+stockmaximum_min = 8800
+stockmaximum_max = 16000
+production_min = 0.0
+production_max = 4000.0
+consumption_min = 0.0
+consumption_max = 4000.0

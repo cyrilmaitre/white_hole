@@ -1,0 +1,17 @@
+id = 32788
+name = ammoSmallTungstenChargeName
+description = ammoSmallTungstenChargeDescription
+price = 10.0
+stackmax = 4000
+sprite = 4-9
+itemtype = 69
+itemtier = 1
+buyable = true
+stockminimum_min = 20000
+stockminimum_max = 40000
+stockmaximum_min = 44000
+stockmaximum_max = 80000
+production_min = 0.0
+production_max = 20000.0
+consumption_min = 0.0
+consumption_max = 20000.0

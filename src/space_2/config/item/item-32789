@@ -1,0 +1,17 @@
+id = 32789
+name = ammoSmallIronChargeName
+description = ammoSmallIronChargeDescription
+price = 15.0
+stackmax = 4000
+sprite = 5-9
+itemtype = 69
+itemtier = 2
+buyable = true
+stockminimum_min = 20000
+stockminimum_max = 40000
+stockmaximum_min = 44000
+stockmaximum_max = 80000
+production_min = 0.0
+production_max = 20000.0
+consumption_min = 0.0
+consumption_max = 20000.0
