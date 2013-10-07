@@ -1,7 +1,7 @@
 # ITEM
 id = 26
 # AMMO
-lifeTime = 10
+lifeTime = 2
 damage = 16
 splashradius = 0
 ammotype = 3
