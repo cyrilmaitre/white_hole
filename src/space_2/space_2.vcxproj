@@ -466,8 +466,6 @@
     <ClInclude Include="CharacterShipUpdate.h" />
     <ClInclude Include="CharacterUpdate.h" />
     <ClInclude Include="ContainerDropDown.h" />
-    <ClInclude Include="ChatClient.h" />
-    <ClInclude Include="ChatDefine.h" />
     <ClInclude Include="DebugScreen.h" />
     <ClInclude Include="DestructableData.h" />
     <ClInclude Include="DropDownable.h" />

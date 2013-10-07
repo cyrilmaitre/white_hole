@@ -112,6 +112,7 @@
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\space_2\jsoncpp.cpp" />
     <ClCompile Include="Chat.cpp" />
     <ClCompile Include="ChatClient.cpp" />
     <ClCompile Include="ChatServer.cpp" />
@@ -120,6 +121,8 @@
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\space_2\json-forwards.h" />
+    <ClInclude Include="..\space_2\json.h" />
     <ClInclude Include="Chat.h" />
     <ClInclude Include="ChatClient.h" />
     <ClInclude Include="ChatServer.h" />

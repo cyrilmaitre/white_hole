@@ -12,10 +12,10 @@
 
 enum ClientState
 {
-	UNKNOWN_CS,
-	TCP_CONNECTED,
-	DROPPED,
-	AUTHED
+	UNKNOWN_CS,			// unknown, initialization value
+	TCP_CONNECTED,		// client just connected to the server
+	DROPPED,			// client has been dropped by the server
+	AUTHED				// client authenticated (so, he's TCP connected, of course)
 };
 
 enum ClientAttributes
@@ -88,6 +88,12 @@ public:
 	sf::Uint64	getNbSentPackets();
 	void		notifySentPacket();
 	void		resetNbSentPackets();
+
+	// IDs
+	std::string getUsername();
+	std::string getSha1Password();
+	void		setIDs(std::string p_username, std::string p_password);
+	void		clearIDs();
 	
 
 private:
@@ -105,5 +111,9 @@ private:
 	sf::Uint64						mFloodControlTime;
 	sf::Uint64						mNbSentPackets;			// used for flood control
 
+	// IDs
+	std::string						mUsername;
+	std::string						mSha1password;
 };
+
 

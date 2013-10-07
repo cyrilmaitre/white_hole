@@ -242,6 +242,37 @@ void ChatClient::clearUserList(void)
 // </userList>
 
 
+// </username>
+std::string ChatClient::getUsername()
+{
+	sf::Lock lock(mMutex);
+	return this->mUsername;
+}
+
+
+void ChatClient::setUsername(std::string p_username)
+{
+	sf::Lock lock(mMutex);
+	this->mUsername = p_username;
+}
+// </username>
+
+
+// </sha1password>
+std::string ChatClient::getSha1Password()
+{
+	sf::Lock lock(mMutex);
+	return this->mSha1password;
+}
+
+void ChatClient::setSha1Password(std::string p_sha1password)
+{
+	sf::Lock lock(mMutex);
+	this->mSha1password = p_sha1password;
+}
+// </sha1password>
+
+
 // <networkstate>
 const NetworkState& ChatClient::getNetworkState(void)
 {
@@ -290,12 +321,12 @@ void ChatClient::connect(std::string p_username, std::string p_sha1password)
 {
 	{
 		sf::Lock lock(mMutex);
-		this->mUsername = p_username;
-		this->mSha1password = p_sha1password;
+		this->setUsername(p_username);
+		this->setSha1Password(p_sha1password);
 
 	}
 
-	{ std::ostringstream msg; msg << mUsername << " / " << mSha1password; Debug::msg(msg); }
+	{ std::ostringstream msg; msg << this->getUsername() << " / " << this->getSha1Password(); Debug::msg(msg); }
 	if(!mRunning)
 	{
 		this->mThread = std::unique_ptr<sf::Thread>(new sf::Thread(&ChatClient::mRunClient, this));
@@ -356,7 +387,7 @@ void ChatClient::mRunClient(void)
 				{ std::ostringstream msg; msg << "Connection OK !" << ""; Debug::msg(msg); }
 
 				// ------------------- Auth packet ------------------------------------------------------------------------------
-				std::shared_ptr<C2S_Auth> auth = std::make_shared<C2S_Auth>(this->mUsername, this->mSha1password);
+				std::shared_ptr<C2S_Auth> auth = std::make_shared<C2S_Auth>(this->getUsername(), this->getSha1Password());
 				this->pushInputBuffer(auth);
 
 
@@ -439,6 +470,7 @@ void ChatClient::mRunClient(void)
 			// Clear stuff at the end of the "session"
 			this->clearInputBuffer();
 			this->clearOutputBuffer();
+			this->clearUserList();
 
 			// Auto reconnect
 			if(!this->isAutoReconnectEnabled()) {
@@ -535,6 +567,16 @@ void ChatClient::handlePacket(sf::Packet& p_packet)
 					}
 					break;
 
+
+					// USER LIST RESYNC
+				case ServerCommand::S_USERLIST_RESYNC:
+					{
+						this->clearUserList();
+						this->addUser(this->getUsername()); // client add himself to the userlist
+					}
+					break;
+
+
 					// USER JOIN
 				case ServerCommand::S_JOIN:
 					{
@@ -568,8 +610,7 @@ void ChatClient::handlePacket(sf::Packet& p_packet)
 				// if auth OK
 				if(s2c_auth->authResponse == AuthResponse::AR_OK)
 				{
-					// add himself in the userlist
-					this->addUser(this->mUsername);
+					// do something after auth successful
 				}
 				// don't reconnect if banned, invalid IDs or maintenance
 				else if(s2c_auth->authResponse == AuthResponse::AR_BANNED
@@ -580,7 +621,7 @@ void ChatClient::handlePacket(sf::Packet& p_packet)
 				}
 
 				this->pushOutputBuffer(s2c_auth);
-				{ std::ostringstream msg; msg << "[AUTH] #" << s2c_auth->authResponse << ""; Debug::msg(msg); }
+				{ std::ostringstream msg; msg << "[AUTH] Response: " << Chat::authResponseToString(s2c_auth->authResponse) << " (" << s2c_auth->authResponse << ")"; Debug::msg(msg); }
 
 			}
 		}

@@ -24,7 +24,12 @@ int main(int argc, char** argv)
 	else if(str == "c")
 	{
 		
-		ChatClient chatClient;
+		ChatClient chatClient3;
+		ChatClient chatClient4;
+		ChatClient chatClient5;
+		ChatClient chatClient6;
+		ChatClient chatClient7;
+		ChatClient chatClient8;
 		bool started = false;
 
 		// simulate game loop & mandatory for thread to live forever
@@ -32,7 +37,12 @@ int main(int argc, char** argv)
 		{
 			if(!started) {
 				started = true;
-				chatClient.connect("testcli", "testcli");
+				chatClient3.connect("watwat3", "b754d59302ca2aaaa54dc6cd42a6e963d60d99c");
+				chatClient4.connect("watwat4", "b754d59302ca2aaaa54dc6cd42a6e963d60d99c");
+				chatClient5.connect("watwat5", "b754d59302ca2aaaa54dc6cd42a6e963d60d99c");
+				chatClient6.connect("watwat6", "b754d59302ca2aaaa54dc6cd42a6e963d60d99c");
+				chatClient7.connect("watwat7", "b754d59302ca2aaaa54dc6cd42a6e963d60d99c");
+				chatClient8.connect("watwat8", "b754d59302ca2aaaa54dc6cd42a6e963d60d99c");
 			}
 		}
 	

@@ -5,8 +5,8 @@
 
 #define SERVER_NAME				"Makaki"
 #define SERVER_MOTD				"Sisi la famille"
-#define MAX_CLIENTS				15					// max client allowed on server
-#define MAX_IP_TOGETHER			3					// nd de connexion max par IP
+#define MAX_CLIENTS				5000				// max client allowed on server
+#define MAX_IP_TOGETHER			15					// nd de connexion max par IP
 #define MAX_S_PACKETSEND_RETRY	5					// if 5+ packets are not received by the client, then drop it
 #define PING_IDLE_TIME			120					// if nothing received for 120s from the client, then ping it.
 #define PING_TIMEOUT			100					// client must PONG within 100s
@@ -33,8 +33,29 @@ struct BroadcastCondition
 	sf::Uint64 ignoreClientID;
 	ClientState clientState;
 	ClientAttributes clientHasAttributes;
-	
 };
+
+
+
+enum AsyncRequestCode
+{
+	ASR_UNKNOWN,
+	ASR_AUTHENTICATE,
+	ASR_FETCH_FRIENDLIST,
+	ASR_DONE
+};
+
+struct AsyncRequest
+{
+	AsyncRequest(std::shared_ptr<Client> client, AsyncRequestCode asyncRequestCode = AsyncRequestCode::ASR_UNKNOWN)
+		: client(client), asyncRequestCode(asyncRequestCode)
+	{}
+
+	std::shared_ptr<Client> client;
+	AsyncRequestCode		asyncRequestCode;
+
+};
+
 
 class ChatServer
 {
@@ -43,7 +64,8 @@ public:
 	void create(void);
 	void create(unsigned short p_port);
 	void addClient(std::shared_ptr<Client> p_client);
-	void authenticate(std::shared_ptr<Client> p_client, C2S_Auth p_auth);
+	bool authenticate(std::shared_ptr<Client> p_client, C2S_Auth p_auth);
+	bool authenticate(std::shared_ptr<Client> p_client);
 	void dropClient(std::shared_ptr<Client> p_client);
 	void handlePacket(sf::Packet& p_packet, std::shared_ptr<Client> p_client);
 	bool sendPacket(sf::Packet& p_packet, std::shared_ptr<Client> p_client, bool dropClientIfFailed = false);
@@ -65,18 +87,21 @@ public:
 private:
 	sf::SocketSelector selector;
 	sf::TcpListener listener;
-	std::vector< std::shared_ptr<Client> > clients;	// List to store the future clients
+	std::vector<std::shared_ptr<Client>> clients;	// List to store the future clients
 	unsigned short mPort;
 	bool mRunning;
 	void mRunServer(void);
 
 	// friend lists
-	std::vector<std::string>						mFriendlistFetchQueue;
 	std::map<std::string, std::vector<std::string>> mClientFriendlists;
 
-	// threds
+	// threads
 	sf::Mutex					mMutex;
 	std::unique_ptr<sf::Thread> mThread;
 	void						mAsyncTasks(void);
+
+	// async requests
+	std::vector<AsyncRequest> mAsyncRequests;
+
 
 };

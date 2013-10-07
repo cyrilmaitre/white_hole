@@ -15,7 +15,9 @@ Client::Client(void) :
 	mPongRequested(false),
 	mConnectionTime((sf::Uint64)time(NULL)),
 	mFloodControlTime((sf::Uint64)time(NULL) + FLOOD_INTERVAL),
-	mNbSentPackets(0)
+	mNbSentPackets(0),
+	mUsername(""),
+	mSha1password("")
 {
 	this->mUniqueID = (sf::Uint64) mSocket.get();
 }
@@ -110,8 +112,6 @@ sf::Uint64 Client::getConnectionTime()
 // </connectionTime>
 
 
-
-
 // <floodControlTime>
 sf::Uint64	Client::getFloodControlTime()
 {
@@ -119,12 +119,29 @@ sf::Uint64	Client::getFloodControlTime()
 }
 // <floodControlTime>
 
+
 // <nbSentPackets>
 sf::Uint64 Client::getNbSentPackets()
 {
 	return this->mNbSentPackets;
 }
 // </nbSentPackets>
+
+
+// </username>
+std::string Client::getUsername()
+{
+	return this->mUsername;
+}
+// </username>
+
+
+// </sha1password>
+std::string Client::getSha1Password()
+{
+	return this->mSha1password;
+}
+// </sha1password>
 
 // ----------------------------------------------------------------------
 // methods
@@ -208,3 +225,18 @@ void Client::resetNbSentPackets()
 	this->mNbSentPackets = 0;
 }
 // </nbSentPackets>
+
+
+// <IDs>
+void Client::setIDs(std::string p_username, std::string p_password)
+{
+	this->mUsername = p_username;
+	this->mSha1password = p_password;
+}
+
+void Client::clearIDs()
+{
+	this->mUsername = "";
+	this->mSha1password = "";
+}
+// </IDs>

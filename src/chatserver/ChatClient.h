@@ -54,6 +54,12 @@ public:
 	// auth response
 	const AuthResponse	getAuthResponse(void);
 
+	// auth stuff
+	std::string getUsername();
+	void		setUsername(std::string p_username);
+	std::string getSha1Password();
+	void		setSha1Password(std::string p_sha1password);
+
 	// others methods
 	void connect(std::string p_username, std::string p_sha1password);
 	void handlePacket(sf::Packet& p_packet);

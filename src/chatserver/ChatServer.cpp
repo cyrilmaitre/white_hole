@@ -1,4 +1,5 @@
 #include "ChatServer.h"
+#include <json\json.h>
 
 // ----------------------------------------------------------------------
 // operator overloads for sf::Packet
@@ -274,7 +275,7 @@ void ChatServer::mRunServer(void)
 		}  // -- end of selector.wait
 
 
-		// CHECK / UPDATES (ie: ping, auth, flood) -> "asynchronous jobs"
+		// CHECK / UPDATES (ie: ping, auth, flood) -> "asynchronous" jobs, low CPU time
 		for(unsigned int i = 0; i < clients.size(); i++)
 		{
 			std::shared_ptr<Client> client = clients[i];
@@ -332,6 +333,7 @@ void ChatServer::mRunServer(void)
 */
 void ChatServer::addClient(std::shared_ptr<Client> p_client)
 {
+	sf::Lock lock(mMutex);
 	p_client->setState(ClientState::TCP_CONNECTED);
 
 	//Add the new client to the clients list
@@ -347,35 +349,73 @@ void ChatServer::addClient(std::shared_ptr<Client> p_client)
 /*
 	Authenticate the user
 */
-void ChatServer::authenticate(std::shared_ptr<Client> p_client, C2S_Auth p_auth)
+// test (temp method)
+bool ChatServer::authenticate(std::shared_ptr<Client> p_client)
 {
-	{ std::ostringstream msg; msg << "[AUTH] user:" << p_auth.user << "- pass:" << p_auth.sha1password;	Debug::msg(msg); }
-	// auth test here
-	// set name after
-	p_client->setName(p_auth.user);
+	sf::Lock lock(mMutex);
+	return this->authenticate(p_client, C2S_Auth(p_client->getUsername(), p_client->getSha1Password()));
+}
 
-	// if auth IDs OK...
-	// already online ?
-	std::shared_ptr<Client> dstClient = this->findClientByName(p_client->getName());
+bool ChatServer::authenticate(std::shared_ptr<Client> p_client, C2S_Auth p_auth)
+{
+	sf::Lock lock(mMutex);
 
-	// if client is already connected ..., kill the other
-	if(dstClient.get() != 0)
+	{ std::ostringstream msg; msg << "[AUTH] user:" << p_auth.user << " - pass:" << p_auth.sha1password;	Debug::msg(msg); }
+
+	// ---------------------------------------------------------------------------------------
+	// auth test (JSON request)
+	AuthResponse authResponseFail = AuthResponse::AR_NONE;
+	bool authSuccessful = false;
+
+	Json::Value jsonRequest;
+	jsonRequest["username"] = p_auth.user;
+	jsonRequest["password"] = p_auth.sha1password;
+
+	Json::StyledWriter writer;
+	sf::Http::Response response = Chat::sendJsonRequest(sf::Http::Request::Post, "/SpaceUMad/resources/user/login", writer.write(jsonRequest));
+	Json::Value* jsonResponse = new Json::Value();   
+	Json::Reader reader;
+	bool parsingSuccessfull = reader.parse(response.getBody(), *jsonResponse);
+	if(parsingSuccessfull)
 	{
-		S2C_Command s2c_cmd(ServerCommand::S_DROPPED_NORC, "Ghost kill (by "+p_client->getSocket().getRemoteAddress().toString()+")");
-		sf::Packet packet;
-		packet << s2c_cmd;
-		this->sendPacket(packet, dstClient);
-		this->dropClient(dstClient);
+		if(jsonResponse->get("authenticated", "false").asString() == "true")
+		{
+			authSuccessful = true;
+		} else {
+			authResponseFail = AuthResponse::AR_INVALID_IDS;
+		}
+	} else {
+		// error from the server ?
+		authResponseFail = AuthResponse::AR_ERROR;
 	}
-	
+	// -- end of auth test (JSON request) ----------------------------------------------------
 
 
-	// if tests above are OK
-	if(true)
+	// If login+password are OKs
+	if(authSuccessful)
 	{
+		// set name after
+		p_client->setName(p_auth.user);
+
+		// if auth IDs OK...
+		// already online ?
+		std::shared_ptr<Client> dstClient = this->findClientByName(p_client->getName());
+
+		// if client is already connected ..., kill the other
+		if(dstClient.get() != 0)
+		{
+			S2C_Command s2c_cmd(ServerCommand::S_DROPPED_NORC, "Ghost kill (by "+p_client->getSocket().getRemoteAddress().toString()+")");
+			sf::Packet packet;
+			packet << s2c_cmd;
+			this->sendPacket(packet, dstClient);
+			this->dropClient(dstClient);
+		}
+
 		// client is now authed
 		p_client->setState(ClientState::AUTHED); 
-	
+		// client will now receive pong requests if inactive
+		p_client->notifyLastActivityTime();
+
 		// send him a response
 		{
 			sf::Packet packet;
@@ -397,23 +437,25 @@ void ChatServer::authenticate(std::shared_ptr<Client> p_client, C2S_Auth p_auth)
 			this->broadcast(packet, bc);
 		}
 
-		// fetch friend list ... later
-		{
-			sf::Lock lock(mMutex);
-			sf::Packet packet;
 
-			this->mFriendlistFetchQueue.push_back(p_client->getName());
-
-		}
 	}
+	// if auth not successful...
 	else
 	{
 		sf::Packet packet;
-		S2C_Auth s2c_auth(AuthResponse::AR_INVALID_IDS);
+		S2C_Auth s2c_auth(authResponseFail);
 
 		packet << s2c_auth;
 		this->sendPacket(packet, p_client);
 	}
+
+	// auth test done, so clear IDs from memory
+	{
+		sf::Lock lock(mMutex);
+		p_client->clearIDs();
+	}
+
+	return authSuccessful;
 }
 
 
@@ -422,6 +464,7 @@ void ChatServer::authenticate(std::shared_ptr<Client> p_client, C2S_Auth p_auth)
 */
 void ChatServer::dropClient(std::shared_ptr<Client> p_client)
 {
+	sf::Lock lock(mMutex);
 
 	// broadcast disconnexion to all clients
 	if(p_client->getState() == ClientState::AUTHED)
@@ -568,7 +611,11 @@ void ChatServer::handlePacket(sf::Packet& p_packet, std::shared_ptr<Client> p_cl
 				C2S_Auth c2s_auth;
 				if(p_packet >> c2s_auth)
 				{
-					this->authenticate(p_client, c2s_auth);
+					{
+					sf::Lock lock(mMutex);
+					p_client->setIDs(c2s_auth.user, c2s_auth.sha1password);
+					this->mAsyncRequests.push_back(AsyncRequest(p_client, AsyncRequestCode::ASR_AUTHENTICATE));
+					}
 				}
 				else
 				{
@@ -913,24 +960,62 @@ sf::Uint32 ChatServer::connectionCountByIP(sf::IpAddress p_compareIP)
 
 
 
+// threaded, used for high CPU time operations
 void ChatServer::mAsyncTasks(void)
 {
 	{ std::ostringstream msg; msg << "[THREAD] Async Task thread STARTING" << ""; Debug::msg(msg); }
 	while(this->isRunning())
 	{
-		std::vector<std::string> copyFriendlistFetchQueue;
 
-		// COPY friend list fetching queue
 		{
 			sf::Lock lock(mMutex);
-			copyFriendlistFetchQueue = mFriendlistFetchQueue;
-		}
 
-		// Friend lists
-		for (auto it = copyFriendlistFetchQueue.begin(); it != copyFriendlistFetchQueue.end();)
-		{
+			// Async Requests
+			for (auto it = mAsyncRequests.begin(); it != mAsyncRequests.end();)
+			{
+				// request removal
+				if (it->asyncRequestCode == AsyncRequestCode::ASR_DONE) {
+					it = mAsyncRequests.erase(it);
+				} 
+				// authentication
+				else if (it->asyncRequestCode == AsyncRequestCode::ASR_AUTHENTICATE) {
+					{ std::ostringstream msg; msg << "[ASYNC] Authentication" << ""; Debug::msg(msg); }
+					// if authentication is OK
+					if(this->authenticate(it->client)) {
+						// send userlist
+						// - reset userlist
+						sf::Packet packet;
+						packet << S2C_Command(ServerCommand::S_USERLIST_RESYNC);
+						this->sendPacket(packet, it->client);
+						// - send username one by one
+						for(auto cl = clients.begin(); cl != clients.end(); ++cl) {
+							if((*cl)->getState() == ClientState::AUTHED && (*cl)->isNamed()) {
+								// don't send the username of the receiver (it's added in userlist elsewhere in the code, see S_USERLIST_RESYNC in ChatClient)
+								if(it->client->getName().compare((*cl)->getName()) != 0)
+								{
+									sf::Packet packet;
+									packet << S2C_Command(ServerCommand::S_JOIN, (*cl)->getName());
+									this->sendPacket(packet, it->client);
+								}
+							}
+						}
+					}
+					it->asyncRequestCode = AsyncRequestCode::ASR_DONE;
+					++it;
+				}
+				// friend list fetch
+				else if (it->asyncRequestCode == AsyncRequestCode::ASR_FETCH_FRIENDLIST) {
+					{ std::ostringstream msg; msg << "[ASYNC] Fetch friendlist" << ""; Debug::msg(msg); }
+					it->asyncRequestCode = AsyncRequestCode::ASR_DONE;
+					++it;
+				}
+				else {
+					++it;
+				}
 
-		}
+			} // -- end of loop for
+
+		} // -- end of lock
 
 		sf::sleep(sf::milliseconds(500));	// for CPU
 	}

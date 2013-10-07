@@ -48,6 +48,7 @@ enum ServerCommand
 	S_UNKNOWN_CMD,
 	S_JOIN,						// someone join the chat server
 	S_QUIT,						// someone leave the chat server
+	S_USERLIST_RESYNC,			// tell the client to clear userlist
 	S_KICK,
 	S_MOTD,
 	S_SAY,
@@ -209,6 +210,7 @@ public:
 	static std::string authResponseToString(sf::Uint16 p_authResponse);
 
 	// TOOLS
-	static bool			stringInVector(std::string& p_testString, std::vector<std::string>& p_testVector);
-	static std::string	lowerLetters(std::string& p_string);
+	static bool					stringInVector(std::string& p_testString, std::vector<std::string>& p_testVector);
+	static std::string			lowerLetters(std::string& p_string);
+	static sf::Http::Response	sendJsonRequest( sf::Http::Request::Method p_method, std::string p_uri, std::string p_json);
 };

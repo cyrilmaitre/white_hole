@@ -16,6 +16,10 @@ std::string Chat::serverCmdToString(sf::Uint16 p_command)
 		return "QUIT";
 		break;
 
+	case ServerCommand::S_USERLIST_RESYNC:
+		return "USERLIST RESYNC";
+		break;
+
 	case ServerCommand::S_KICK:
 		return "KICK";
 		break;
@@ -149,4 +153,26 @@ std::string	Chat::lowerLetters(std::string& p_string)
 
 
 	return loweredString;
+}
+
+sf::Http::Response Chat::sendJsonRequest( sf::Http::Request::Method p_method, std::string p_uri, std::string p_json )
+{
+	sf::Http http;
+	http.setHost("makakistudio", 8080);
+
+	std::map<std::string, std::string> fields;
+	fields.insert(std::pair<std::string, std::string>("Content-type", "application/json"));
+
+	// Send request
+	sf::Http::Request request;
+	request.setMethod(p_method);
+	request.setUri(p_uri);
+	if(p_json != "")
+		request.setBody(p_json);
+	for( std::map<std::string, std::string>::iterator it = fields.begin() ; it != fields.end(); it++ )
+		request.setField((*it).first, (*it).second);
+	request.setHttpVersion(1, 0);
+
+	// Get response
+	return http.sendRequest(request);
 }

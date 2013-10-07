@@ -85,7 +85,7 @@ void WindowChat::update(sf::Event p_event)
 						if(result[0].compare("help") == 0) {
 							this->pushChat("> Available commands: /help, /afk, /w <user> <message>, /f+ <user>, /f- <user>, /f! <user>, /clear");
 						}
-						if(result[0].compare("clear") == 0) {
+						else if(result[0].compare("clear") == 0) {
 							this->clearChat();
 						}
 						// /afk
@@ -107,7 +107,7 @@ void WindowChat::update(sf::Event p_event)
 								}
 
 								// create & send message
-								std::shared_ptr<C2S_Chat> c2s_chat(new C2S_Chat("", result[1], ChatDstType::USER));
+								std::shared_ptr<C2S_Chat> c2s_chat(new C2S_Chat(message, result[1], ChatDstType::USER));
 								Resource::resource->getChatClient()->pushInputBuffer(c2s_chat);
 
 							}
@@ -267,7 +267,13 @@ void WindowChat::drawContent()
 					if(s2c_chat->dstType == ChatDstType::CHANNEL)
 						this->pushChat("<"+s2c_chat->from+"> "+s2c_chat->message);
 					else if(s2c_chat->dstType == ChatDstType::USER)
-						this->pushChat("(MP) from "+s2c_chat->from+" : "+s2c_chat->message);
+					{
+						if(Resource::resource->getChatClient()->getUsername().compare(s2c_chat->from) == 0)
+							this->pushChat("(MP) to "+s2c_chat->to+" : "+s2c_chat->message);
+						else
+							this->pushChat("(MP) from "+s2c_chat->from+" : "+s2c_chat->message);
+					}
+					
 
 				}
 				// Si c'est une commande
@@ -314,4 +320,5 @@ void WindowChat::pushChat(std::string p_string)
 void WindowChat::clearChat()
 {
 	this->chatLines.clear();
+	this->txtbox.setText("");
 }

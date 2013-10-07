@@ -31,6 +31,18 @@
     <Filter Include="Source Files\chat\client">
       <UniqueIdentifier>{d84e37fa-3e27-43f1-a28a-cb06729b4d3d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\libs">
+      <UniqueIdentifier>{cb4805d0-98cb-4d88-a3fc-7acdc2101980}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\libs\json">
+      <UniqueIdentifier>{5c621a7e-3270-4208-af1e-6bbd42729519}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\libs">
+      <UniqueIdentifier>{0907db1b-8546-44f8-9a0d-7c94d469260f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\libs\json">
+      <UniqueIdentifier>{6aa37875-9978-4701-9a49-b686ee0410e2}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -51,6 +63,9 @@
     <ClCompile Include="Chat.cpp">
       <Filter>Source Files\chat</Filter>
     </ClCompile>
+    <ClCompile Include="..\space_2\jsoncpp.cpp">
+      <Filter>Source Files\libs\json</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Debug.h">
@@ -67,6 +82,12 @@
     </ClInclude>
     <ClInclude Include="Chat.h">
       <Filter>Header Files\chat</Filter>
+    </ClInclude>
+    <ClInclude Include="..\space_2\json.h">
+      <Filter>Header Files\libs\json</Filter>
+    </ClInclude>
+    <ClInclude Include="..\space_2\json-forwards.h">
+      <Filter>Header Files\libs\json</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
