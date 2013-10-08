@@ -2,7 +2,7 @@
 id = 14
 # WEAPON MODEL
 damagemultiplier = 5.742
-ammomax = 40
+ammomax = 20
 range = 966
 rangeangle = 4.7
 reloadingspeed = 1.62
