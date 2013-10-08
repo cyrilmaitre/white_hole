@@ -1,7 +1,7 @@
 id = 32797
 name = ammoMediumIronChargeName
 description = ammoMediumIronChargeDescription
-price = 40.0
+price = 74.0
 stackmax = 800
 sprite = 13-9
 itemtype = 70

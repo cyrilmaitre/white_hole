@@ -1,7 +1,7 @@
 id = 32799
 name = ammoMediumThoriumChargeName
 description = ammoMediumThoriumChargeDescription
-price = 50.0
+price = 75.0
 stackmax = 800
 sprite = 15-9
 itemtype = 70

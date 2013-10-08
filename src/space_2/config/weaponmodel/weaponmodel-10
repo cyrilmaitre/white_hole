@@ -3,7 +3,7 @@ id = 10
 # WEAPON MODEL
 damagemultiplier = 4.62
 ammomax = 40
-range = 805
+range = 805.0
 rangeangle = 4.7
 reloadingspeed = 1.7
 firerate = 0.425
