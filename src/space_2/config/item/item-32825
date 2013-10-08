@@ -1,0 +1,17 @@
+id = 32825
+name = ammoSmallNovaIIName
+description = ammoSmallNovaIIDescription
+price = 24.0
+stackmax = 2000
+sprite = 5-11
+itemtype = 73
+itemtier = 2
+buyable = true
+stockminimum_min = 10000
+stockminimum_max = 20000
+stockmaximum_min = 22000
+stockmaximum_max = 40000
+production_min = 0.0
+production_max = 10000.0
+consumption_min = 0.0
+consumption_max = 10000.0

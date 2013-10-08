@@ -1,0 +1,17 @@
+id = 32837
+name = ammoLargeScourgeIIName
+description = ammoLargeScourgeIIDescription
+price = 96.0
+stackmax = 333
+sprite = 1-12
+itemtype = 75
+itemtier = 2
+buyable = true
+stockminimum_min = 1665
+stockminimum_max = 3330
+stockmaximum_min = 3663
+stockmaximum_max = 6660
+production_min = 0.0
+production_max = 1665.0
+consumption_min = 0.0
+consumption_max = 1665.0

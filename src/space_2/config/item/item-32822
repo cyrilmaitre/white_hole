@@ -1,0 +1,17 @@
+id = 32822
+name = ammoSmallMjolnirIName
+description = ammoSmallMjolnirIDescription
+price = 12.0
+stackmax = 2000
+sprite = 2-11
+itemtype = 73
+itemtier = 1
+buyable = true
+stockminimum_min = 10000
+stockminimum_max = 20000
+stockmaximum_min = 22000
+stockmaximum_max = 40000
+production_min = 0.0
+production_max = 10000.0
+consumption_min = 0.0
+consumption_max = 10000.0

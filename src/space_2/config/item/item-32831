@@ -1,0 +1,17 @@
+id = 32831
+name = ammoMediumMjolnirIIName
+description = ammoMediumMjolnirIIDescription
+price = 48.0
+stackmax = 666
+sprite = 11-11
+itemtype = 74
+itemtier = 2
+buyable = true
+stockminimum_min = 3330
+stockminimum_max = 6660
+stockmaximum_min = 7326
+stockmaximum_max = 13320
+production_min = 0.0
+production_max = 3330.0
+consumption_min = 0.0
+consumption_max = 3330.0

@@ -1,0 +1,13 @@
+# ITEM
+id = 32820
+# AMMO
+lifeTime = 10
+damage = 40.0
+splashradius = 1.0
+ammotype = 1
+velocity = 1000.0
+quickening = 2500.0
+projectile_type = 4
+projectile_color = #FFFFFF
+projectile_scale = 1.0
+sound_fire = weapon_kinetic_1.wav

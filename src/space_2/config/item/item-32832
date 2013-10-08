@@ -1,0 +1,17 @@
+id = 32832
+name = ammoMediumNovaIName
+description = ammoMediumNovaIDescription
+price = 24.0
+stackmax = 666
+sprite = 12-11
+itemtype = 74
+itemtier = 1
+buyable = true
+stockminimum_min = 3330
+stockminimum_max = 6660
+stockmaximum_min = 7326
+stockmaximum_max = 13320
+production_min = 0.0
+production_max = 3330.0
+consumption_min = 0.0
+consumption_max = 3330.0
