@@ -1,5 +1,5 @@
 id = 57
 name = itemTypeWeaponMissileLauncherSmallName
 description = itemTypeWeaponMissileLauncherSmallDescription
-icon = 1-5
+icon = 1-4
 itemtype_parent = 56
