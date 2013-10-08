@@ -30,4 +30,4 @@ rotation_velocity = 180
 reactors = [{"x":-14,"y":22,"type":0,"size":20,"reactoralphaspeed":200},{"x":14,"y":22,"type":1,"size":20,"reactoralphaspeed":200}]
 flashinglights = [{"x":-14,"y":5,"color":0,"size":16,"tickmin":1000,"tickmax":2500},{"x":14,"y":5,"color":0,"size":16,"tickmin":1000,"tickmax":2500}]
 weapons = [{"x":-18,"y":-3,"size":15,"sprite":"cannon_basic.png"},{"x":18,"y":-3,"size":15,"sprite":"cannon_basic.png"}]
-weapontype_allowed = 47;51;57;62
+weapontype_allowed = 47;51;57
