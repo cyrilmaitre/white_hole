@@ -1,11 +1,11 @@
 # ITEM
 id = 15
 # WEAPON MODEL
-damagemultiplier = 10
-ammomax = 50
-range = 3000
-rangeangle = 45
-reloadingspeed = 1
-firerate = 0.1
+damagemultiplier = 7.768
+ammomax = 20
+range = 1200
+rangeangle = 3.8
+reloadingspeed = 2.0
+firerate = 0.51
 soundreload = weapon_kinetic_reload.wav
-ammotype_allowed = 73
+ammotype_allowed = 65

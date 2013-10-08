@@ -573,20 +573,22 @@ ammoExtraLargeInfernoIIDescription = An Amarr creation with powerful capabilitie
 #
 #
 # Weapon Model
-weaponModelLightAutoCannonName = Light Auto-Cannon
-weaponModelLightAutoCannonDescription = Light Auto-Cannon description...
-weaponModelMediumAutoCannonName = Medium Auto-Cannon
-weaponModelMediumAutoCannonDescription = Medium Auto-Cannon description...
-weaponModelLargeAutoCannonName = Large Auto-Cannon
-weaponModelLargeAutoCannonDescription = Large Auto-Cannon description...
-weaponModelLightLaserName = Light Laser
-weaponModelLightLaserDescription = Light Laser description...
-weaponModelMediumLaserName = Medium Laser
-weaponModelMediumLaserDescription = Medium Laser description...
-weaponModelLightLauncherName = Light Launcher
-weaponModelLightLauncherDescription = Light Launcher description...
-weaponModelMediumLauncherLauncherName = Medium Launcher
-weaponModelMediumLauncherDescription = Medium Launcher description...
+weaponKineticSmallLACIName = 250mm Light Artillery Cannon I
+weaponKineticSmallLACIDescription = This artillery is one of the most powerful weapons that can be mounted on a frigate.<br/>Must be loaded with the following projectile ammo types: Projectile Ammo Small.
+weaponKineticSmallLACIIName = 250mm Light Artillery Cannon II
+weaponKineticSmallLACIIDescription = This artillery is one of the most powerful weapons that can be mounted on a frigate.<br/>Must be loaded with the following projectile ammo types: Projectile Ammo Small.
+weaponKineticSmallLACIIIName = 250mm Light Artillery Cannon III
+weaponKineticSmallLACIIIDescription = This artillery is one of the most powerful weapons that can be mounted on a frigate.<br/>Must be loaded with the following projectile ammo types: Projectile Ammo Small.
+weaponKineticSmallHAIName = 280mm Howitzer Artillery I
+weaponKineticSmallHAIDescription = Rocket-assisted artillery projectiles designed for long-range combat. It is the most powerful projectile weapon able to be fitted onto frigates.<br/>Must be loaded with the following projectile ammo types: Projectile Ammo Small.
+weaponKineticSmallHAIIName = 280mm Howitzer Artillery II
+weaponKineticSmallHAIIDescription = Rocket-assisted artillery projectiles designed for long-range combat. It is the most powerful projectile weapon able to be fitted onto frigates.<br/>Must be loaded with the following projectile ammo types: Projectile Ammo Small.
+weaponKineticSmallHAIIIName = 280mm Howitzer Artillery III
+weaponKineticSmallHAIIIDescription = Rocket-assisted artillery projectiles designed for long-range combat. It is the most powerful projectile weapon able to be fitted onto frigates.<br/>Must be loaded with the following projectile ammo types: Projectile Ammo Small.
+weaponKineticSmallGACIName = 125mm Gatling AutoCannon I
+weaponKineticSmallGACIDescription = This multi-barrel autocannon is designed for skirmish warfare.<br/>Must be loaded with the following projectile ammo types: Projectile Ammo Small.
+weaponKineticSmallGACIIName = 125mm Gatling AutoCannon II
+weaponKineticSmallGACIIDescription = This multi-barrel autocannon is designed for skirmish warfare.<br/>Must be loaded with the following projectile ammo types: Projectile Ammo Small.
 #
 #
 # Ui
