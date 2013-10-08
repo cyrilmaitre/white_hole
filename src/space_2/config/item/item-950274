@@ -1,0 +1,17 @@
+id = 950274
+name = weaponKineticSmallLACII150Name
+description = weaponKineticSmallLACII150Description
+price = 620000.0
+stackmax = 1
+sprite = 10-1
+itemtype = 47
+itemtier = 2
+buyable = true
+stockminimum_min = 10
+stockminimum_max = 20
+stockmaximum_min = 22
+stockmaximum_max = 40
+production_min = 0.0
+production_max = 10.0
+consumption_min = 0.0
+consumption_max = 10.0

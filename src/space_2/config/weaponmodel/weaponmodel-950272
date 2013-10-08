@@ -1,9 +1,9 @@
 # ITEM
-id = 16
+id = 950272
 # WEAPON MODEL
-damagemultiplier = 2.0625
+damagemultiplier = 2.57895
 ammomax = 200
-range = 800.0
+range = 960.0
 rangeangle = 23.8
 reloadingspeed = 0.6
 firerate = 0.15

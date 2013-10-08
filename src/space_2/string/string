@@ -589,6 +589,20 @@ weaponKineticSmallGACIName = 125mm Gatling AutoCannon I
 weaponKineticSmallGACIDescription = This multi-barrel autocannon is designed for skirmish warfare.<br/>Must be loaded with the following projectile ammo types: Projectile Ammo Small.
 weaponKineticSmallGACIIName = 125mm Gatling AutoCannon II
 weaponKineticSmallGACIIDescription = This multi-barrel autocannon is designed for skirmish warfare.<br/>Must be loaded with the following projectile ammo types: Projectile Ammo Small.
+weaponKineticSmallGACIIIName = 125mm Gatling AutoCannon III
+weaponKineticSmallGACIIIDescription = This multi-barrel autocannon is designed for skirmish warfare.<br/>Must be loaded with the following projectile ammo types: Projectile Ammo Small.
+weaponKineticSmallLACI150Name = 150mm Light AutoCannon I
+weaponKineticSmallLACI150Description = A simple but effective close combat autocannon.<br/>Must be loaded with the following projectile ammo types: Projectile Ammo Small.
+weaponKineticSmallLACII150Name = 150mm Light AutoCannon II
+weaponKineticSmallLACII150Description = A simple but effective close combat autocannon.<br/>Must be loaded with the following projectile ammo types: Projectile Ammo Small.
+weaponKineticSmallLACIII150Name = 150mm Light AutoCannon III
+weaponKineticSmallLACIII150Description = A simple but effective close combat autocannon.<br/>Must be loaded with the following projectile ammo types: Projectile Ammo Small.
+weaponKineticSmallACIName = 200mm AutoCannon I
+weaponKineticSmallACIDescription = A powerful autocannon that can smash apart most lightly armored frigates with ease.<br/>Must be loaded with the following projectile ammo types: Projectile Ammo Small.
+weaponKineticSmallACIIName = 200mm AutoCannon II
+weaponKineticSmallACIIDescription = A powerful autocannon that can smash apart most lightly armored frigates with ease.<br/>Must be loaded with the following projectile ammo types: Projectile Ammo Small.
+weaponKineticSmallACIIIName = 200mm AutoCannon III
+weaponKineticSmallACIIIDescription = A powerful autocannon that can smash apart most lightly armored frigates with ease.<br/>Must be loaded with the following projectile ammo types: Projectile Ammo Small.
 #
 #
 # Ui
