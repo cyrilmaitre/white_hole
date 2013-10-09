@@ -30,6 +30,8 @@
 //*************************************************************
 HangarShipWeaponView::HangarShipWeaponView(void) : mPUBTypeAllowed(&this->mIconTypeAllowed)
 {
+	this->mCharacterShip = NULL;
+
 	this->setHeight(HEIGHT);
 	this->setDisplayTitle(false);
 	this->setBackgroundColor(BACKGROUNDCOLOR, true);
@@ -182,6 +184,9 @@ void HangarShipWeaponView::updateCharacterShipWeaponAmmos()
 
 void HangarShipWeaponView::updateContainerAmmosItems()
 {
+	if(this->mCharacterShip == NULL)
+		return;
+
 	// Update content
 	for(int i = 0; i < this->mCharacterShip->getWeaponsCount(); i++)
 	{

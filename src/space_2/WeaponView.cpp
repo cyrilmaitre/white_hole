@@ -4,6 +4,7 @@
 #include "Game.h"
 #include "MapObject.h"
 #include "ManagerConfig.h"
+#include "FactoryGet.h"
 
 
 //*************************************************************
@@ -59,25 +60,20 @@ WeaponView::WeaponView( Weapon *p_weapon )
 	this->setBorderSize(WEAPONVIEW_BORDSIZE, true);
 	this->setVisible(false);
 
-	this->mWeaponIcon.setWidth(WEAPONVIEW_WEAPONICON_SIZE);
-	this->mWeaponIcon.setHeight(WEAPONVIEW_WEAPONICON_SIZE);
+	this->mWeaponIcon.setSize(WEAPONVIEW_WEAPONICON_SIZE, WEAPONVIEW_WEAPONICON_SIZE);
 	this->mWeaponIcon.setBackgroundColor(WEAPONVIEW_WEAPONICON_BACKCOLOR, true);
 	this->mWeaponIcon.setBorderColor(WEAPONVIEW_WEAPONICON_BORDCOLOR, true);
 	this->mWeaponIcon.setBorderSize(WEAPONVIEW_WEAPONICON_BORDSIZE, true);
 
-	this->mAmmoIcon.setWidth(WEAPONVIEW_AMMOICON_SIZE);
-	this->mAmmoIcon.setHeight(WEAPONVIEW_AMMOICON_SIZE);
-	this->mAmmoIcon.setBackgroundColor(WEAPONVIEW_AMMOICON_BACKCOLOR, true);
-	this->mAmmoIcon.setBorderSize(WEAPONVIEW_AMMOICON_BORDSIZE, true);
+	this->mAmmoContainer = new ContainerItemAmmoView(this, new ContainerItem(NULL));
+	this->mAmmoContainerChanged = false;
 	this->mAmmoCount.setFontSize(WEAPONVIEW_TB_AMMOCOUNT_FONTSIZE);
 	this->mAmmoCount.setFontColor(WEAPONVIEW_TB_AMMOCOUNT_FONTCOLOR);
 
-	this->mRangeIcon.setWidth(WEAPONVIEW_RANGEICON_SIZE);
-	this->mRangeIcon.setHeight(WEAPONVIEW_RANGEICON_SIZE);
+	this->mRangeIcon.setSize(WEAPONVIEW_RANGEICON_SIZE, WEAPONVIEW_RANGEICON_SIZE);
 	this->mRangeIcon.setBorderSize(WEAPONVIEW_RANGEICON_BORDSIZE);
 
-	this->mAngleIcon.setWidth(WEAPONVIEW_ANGLEICON_SIZE);
-	this->mAngleIcon.setHeight(WEAPONVIEW_ANGLEICON_SIZE);
+	this->mAngleIcon.setSize(WEAPONVIEW_ANGLEICON_SIZE, WEAPONVIEW_ANGLEICON_SIZE);
 	this->mAngleIcon.setBorderSize(WEAPONVIEW_ANGLEICON_BORDSIZE);
 
 	this->mInactifShape.setFillColor(WEAPONVIEW_INACTIF_BACKCOLOR);
@@ -86,29 +82,19 @@ WeaponView::WeaponView( Weapon *p_weapon )
 	this->mInactifText.setText(Resource::resource->getBundle()->getString("inactive"));
 
 	this->mWeaponInfo = new PopupBubble(&this->mWeaponIcon);
-	this->mAmmoInfo = new PopupBubble(&this->mAmmoIcon);
 	this->mRangeInfo = new PopupBubble(&this->mRangeIcon);
 	this->mAngleInfo = new PopupBubble(&this->mAngleIcon);
 
-	// Bubble range
 	this->mRangeInfo->setText(	Resource::resource->getBundle()->getString("uiRangeInfo"));
-
-	// Bubble angle
 	this->mAngleInfo->setText(	Resource::resource->getBundle()->getString("uiAngleInfo"));
 
 	this->setWeapon(p_weapon);
-	this->updateAmmoCount();
-	this->updateAmmoIcon();
-	this->updateAngle();
-	this->updateRange();
-	this->notifyPositionChanged();
-	this->notifySizeChanged();
 }
 
 WeaponView::~WeaponView(void)
 {
+	delete this->mAmmoContainer;
 	delete this->mWeaponInfo;
-	delete this->mAmmoInfo;
 	delete this->mRangeInfo;
 	delete this->mAngleInfo;
 }
@@ -131,54 +117,34 @@ void WeaponView::setWeapon( Weapon *p_weapon )
 	}
 }
 
+bool WeaponView::isAmmoContainerChanged()
+{
+	bool returnValue = this->mAmmoContainerChanged;
+	this->mAmmoContainerChanged = false;
+	return returnValue;
+}
+
+void WeaponView::setAmmoContainerChanged( bool p_changed )
+{
+	this->mAmmoContainerChanged = p_changed;
+}
+
 
 //*************************************************************
 // Methods
 //*************************************************************
-void WeaponView::update( sf::Event p_event )
-{
-	if(this->isVisible())
-	{
-		// Update ui
-		this->mWeaponIcon.update(p_event);
-		this->mWeaponInfo->update(p_event);
-
-		if(this->mWeapon->getAmmo() != NULL)
-		{
-			this->mAmmoIcon.update(p_event);
-			this->mAmmoInfo->update(p_event);
-		}
-
-		this->mRangeIcon.update(p_event);
-		this->mRangeInfo->update(p_event);
-
-		this->mAngleIcon.update(p_event);
-		this->mAngleInfo->update(p_event);
-
-		// Update block
-		Block::update(p_event);
-
-		// Update actif
-		if(this->isClicked())
-			this->mWeapon->setActif(!this->mWeapon->isActif());
-	}
-}
-
 void WeaponView::update()
 {
 	if(this->isVisible())
 	{
-		this->mWeaponInfo->update();
-		this->mAmmoInfo->update();
-		this->mRangeInfo->update();
-		this->mAngleInfo->update();
-
 		if(this->getWeapon()->isAmmoChanged())
 		{
-			this->updateAmmoIcon();
-			this->updateAmmoInfo();
+			this->updateAmmoContainer();
 			this->updateWeaponInfo();
 		}
+
+		if(this->isAmmoContainerChanged())
+			this->notifyAmmoContainerChanged();
 
 		if(this->getWeapon()->isAmmoCountChanged())
 			this->updateAmmoCount();
@@ -188,44 +154,37 @@ void WeaponView::update()
 
 		if(this->getWeapon()->isAngleOkChanged())
 			this->updateAngle();
+
+		this->mWeaponInfo->update();
+		this->mAmmoContainer->update();
+		this->mRangeInfo->update();
+		this->mAngleInfo->update();
 	}
 }
 
-void WeaponView::updateAmmoIcon()
+void WeaponView::updatePosition()
 {
-	// Clear
-	this->mAmmoIcon.setBorderColor(WEAPONVIEW_BORDCOLOR, true);
-	this->mAmmoIcon.setBackgroundImage(NULL, false);
+	this->mWeaponIcon.setPosition(	this->getX() + (this->getWidth() - this->mWeaponIcon.getWidth()) / 2,
+		this->getY() +  WEAPONVIEW_WEAPONICON_OFFSETY);
 
-	// Update
-	if(this->mWeapon != NULL && this->mWeapon->getAmmo() != NULL)
-	{
-		this->mAmmoIcon.setBorderColor(this->getWeapon()->getAmmo()->getAmmoType()->getColor(), true);
-		this->mAmmoIcon.setBackgroundImage(SpriteParameterFactory::getSpriteParameterItems()->getSpritePtr(this->getWeapon()->getAmmo()->getSpriteId()), true);
-	}
+	this->mAmmoContainer->setPosition(	this->getX() + WEAPONVIEW_AMMOICON_OFFSETX,
+		this->getY() + this->getHeight() - this->mAmmoContainer->getHeight() - WEAPONVIEW_AMMOICON_OFFSETY);
+	this->updateAmmoCountPosition();
+
+	this->mInactifShape.setPosition(this->getX(), this->getY());
+	this->mInactifText.setPosition(	this->getX() + (this->getWidth() - this->mInactifText.getWidth()) / 2,
+		this->getY() + (this->getHeight() - this->mInactifText.getHeight()) / 2);
+
+	this->mRangeIcon.setPosition(this->getX() + WEAPONVIEW_RANGEICON_OFFSETX, this->getY() + WEAPONVIEW_RANGEICON_OFFSETY);
+	this->mAngleIcon.setPosition(this->getX() + WEAPONVIEW_ANGLEICON_OFFSETX, this->getY() + WEAPONVIEW_ANGLEICON_OFFSETY);
 }
 
-void WeaponView::updateAmmoInfo()
+void WeaponView::updateAmmoContainer()
 {
-	this->mAmmoInfo->clear(false);
+	this->mAmmoContainer->getContainerItem()->setItem(NULL);
 	if(this->mWeapon != NULL && this->mWeapon->getAmmo() != NULL)
-	{
-		this->mAmmoInfo->addLine(	Resource::resource->getBundle()->getString("uiAmmoInfoName") + 
-			":" + Tools::getSpaceAfterColon() + this->getWeapon()->getAmmo()->getName(), false);
-		this->mAmmoInfo->addLine(	Resource::resource->getBundle()->getString("uiAmmoInfoType") + 
-			":" + Tools::getSpaceAfterColon() + this->getWeapon()->getAmmo()->getAmmoType()->getName(), false);
-		this->mAmmoInfo->addLine(	Resource::resource->getBundle()->getString("uiAmmoInfoShieldMultiplier") + 
-			":" + Tools::getSpaceAfterColon() + Tools::buildStringWithFloat(this->getWeapon()->getAmmo()->getAmmoType()->getDamageShieldMultiplier()), false);
-		this->mAmmoInfo->addLine(	Resource::resource->getBundle()->getString("uiAmmoInfoArmorMultiplier") + 
-			":" + Tools::getSpaceAfterColon() + Tools::buildStringWithFloat(this->getWeapon()->getAmmo()->getAmmoType()->getDamageArmorMultiplier()), false);
-		this->mAmmoInfo->addLine(	Resource::resource->getBundle()->getString("uiAmmoInfoStructureMultiplier") + 
-			":" + Tools::getSpaceAfterColon() + Tools::buildStringWithFloat(this->getWeapon()->getAmmo()->getAmmoType()->getDamageStructureMultiplier()), false);
-		this->mAmmoInfo->addLine(	Resource::resource->getBundle()->getString("uiAmmoInfoDamage") + 
-			":" + Tools::getSpaceAfterColon() + Tools::buildStringWithDouble(this->getWeapon()->getAmmo()->getDamage()), false);
-		this->mAmmoInfo->addLine(	Resource::resource->getBundle()->getString("uiAmmoInfoSplash") + 
-			":" + Tools::getSpaceAfterColon() + (this->getWeapon()->getAmmo()->getSplashRadius() > 0 ? Resource::resource->getBundle()->getString("yes") : Resource::resource->getBundle()->getString("no")), false);
-	}
-	this->mAmmoInfo->notifyDataSetChanged();
+		this->mAmmoContainer->getContainerItem()->setItem(FactoryGet::getItemFactory()->getItem(this->mWeapon->getAmmo()->getIdItem()));
+	this->setAmmoContainerChanged(false);
 }
 
 void WeaponView::updateAmmoCount()
@@ -267,8 +226,8 @@ void WeaponView::updateAngle()
 
 void WeaponView::updateAmmoCountPosition()
 {
-	this->mAmmoCount.setPosition(	this->mAmmoIcon.getRightX() + (this->getWidth() - this->mAmmoIcon.getWidth() - WEAPONVIEW_AMMOICON_OFFSETX - this->mAmmoCount.getWidth()) / 2,
-									this->mAmmoIcon.getY() + (this->mAmmoIcon.getHeight() - this->mAmmoCount.getHeight()) / 2);
+	this->mAmmoCount.setPosition(	this->mAmmoContainer->getRightX() + (this->getWidth() - this->mAmmoContainer->getWidth() - WEAPONVIEW_AMMOICON_OFFSETX - this->mAmmoCount.getWidth()) / 2,
+									this->mAmmoContainer->getY() + (this->mAmmoContainer->getHeight() - this->mAmmoCount.getHeight()) / 2);
 }
 
 void WeaponView::updateWeaponInfo()
@@ -296,6 +255,28 @@ void WeaponView::updateWeaponInfo()
 	this->mWeaponInfo->notifyDataSetChanged();
 }
 
+void WeaponView::update( sf::Event p_event )
+{
+	if(this->isVisible())
+	{
+		// Update ui
+		this->mWeaponIcon.update(p_event);
+		this->mWeaponInfo->update(p_event);
+		this->mAmmoContainer->update(p_event);
+		this->mRangeIcon.update(p_event);
+		this->mRangeInfo->update(p_event);
+		this->mAngleIcon.update(p_event);
+		this->mAngleInfo->update(p_event);
+
+		// Update block
+		Block::update(p_event);
+
+		// Update actif
+		if(this->mWeaponIcon.isClicked())
+			this->mWeapon->setActif(!this->mWeapon->isActif());
+	}
+}
+
 void WeaponView::draw()
 {
 	if(this->isVisible())
@@ -305,7 +286,7 @@ void WeaponView::draw()
 
 		// Draw ui
 		this->mWeaponIcon.draw();
-		this->mAmmoIcon.draw();
+		this->mAmmoContainer->draw();
 		this->mAmmoCount.draw();
 		this->mRangeIcon.draw();
 		this->mAngleIcon.draw();
@@ -323,45 +304,6 @@ void WeaponView::draw()
 	}
 }
 
-void WeaponView::notifyWeaponChanged()
-{
-	if(this->mWeapon != NULL)
-	{
-		this->mWeaponIcon.setBackgroundImage(SpriteParameterFactory::getSpriteParameterItems()->getSpritePtr(this->mWeapon->getWeaponModel()->getSpriteId()), true);
-	}
-	this->updateWeaponInfo();
-	this->updateAmmoCount();
-	this->updateAmmoIcon();
-	this->updateAmmoInfo();
-	this->updateAngle();
-	this->updateRange();
-	this->setVisible(this->mWeapon != NULL);
-}
-
-void WeaponView::notifyPositionChanged()
-{
-	Block::notifyPositionChanged();
-	this->mWeaponIcon.setPosition(	this->getX() + (this->getWidth() - this->mWeaponIcon.getWidth()) / 2,
-									this->getY() +  WEAPONVIEW_WEAPONICON_OFFSETY);
-
-	this->mAmmoIcon.setPosition(	this->getX() + WEAPONVIEW_AMMOICON_OFFSETX,
-									this->getY() + this->getHeight() - this->mAmmoIcon.getHeight() - WEAPONVIEW_AMMOICON_OFFSETY);
-	this->updateAmmoCountPosition();
-
-	this->mInactifShape.setPosition(this->getX(), this->getY());
-	this->mInactifText.setPosition(	this->getX() + (this->getWidth() - this->mInactifText.getWidth()) / 2,
-									this->getY() + (this->getHeight() - this->mInactifText.getHeight()) / 2);
-
-	this->mRangeIcon.setPosition(this->getX() + WEAPONVIEW_RANGEICON_OFFSETX, this->getY() + WEAPONVIEW_RANGEICON_OFFSETY);
-	this->mAngleIcon.setPosition(this->getX() + WEAPONVIEW_ANGLEICON_OFFSETX, this->getY() + WEAPONVIEW_ANGLEICON_OFFSETY);
-}
-
-void WeaponView::notifySizeChanged()
-{
-	Block::notifySizeChanged();
-	this->mInactifShape.setSize(sf::Vector2f(this->getWidth(), this->getHeight()));
-}
-
 void WeaponView::drawReloading()
 {
 	float reloadingPercent = 1;
@@ -374,4 +316,45 @@ void WeaponView::drawReloading()
 	ToolsImage::drawReloadPolygon(reloadingPercent, this, WEAPONVIEW_RELOAD_BACKCOLOR);
 }
 
+void WeaponView::notifyPositionChanged()
+{
+	Block::notifyPositionChanged();
+	this->updatePosition();
+}
+
+void WeaponView::notifySizeChanged()
+{
+	Block::notifySizeChanged();
+	this->mInactifShape.setSize(sf::Vector2f(this->getWidth(), this->getHeight()));
+}
+
+void WeaponView::notifyWeaponChanged()
+{
+	if(this->mWeapon != NULL)
+	{
+		this->mWeaponIcon.setBackgroundImage(SpriteParameterFactory::getSpriteParameterItems()->getSpritePtr(this->mWeapon->getWeaponModel()->getSpriteId()), true);
+	}
+	this->updateWeaponInfo();
+	this->updateAmmoCount();
+	this->updateAmmoContainer();
+	this->updateAngle();
+	this->updateRange();
+	this->setVisible(this->mWeapon != NULL);
+}
+
+void WeaponView::notifyAmmoContainerChanged()
+{
+	if(this->mWeapon != NULL)
+	{
+		if(this->mAmmoContainer->getContainerItem()->hasItem())
+		{
+			AmmoModel* ammoModel = FactoryGet::getAmmoFactory()->getAmmo(this->mAmmoContainer->getContainerItem()->getItem()->getIdItem());
+			this->mWeapon->setAmmo(ammoModel);
+		}
+		else
+		{
+			this->mWeapon->setAmmo(NULL);
+		}
+	}
+}
 

@@ -77,6 +77,11 @@ void HangarShipDetailView::setCharacterShip( CharacterShip* p_ship )
 	}
 }
 
+HangarShipWeaponView* HangarShipDetailView::getShipWeaponView()
+{
+	return &this->mWeaponView;
+}
+
 
 //*************************************************************
 // Methods

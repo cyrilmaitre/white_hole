@@ -18,6 +18,8 @@ public:
 	CharacterShip* getCharacterShip();
 	void setCharacterShip(CharacterShip* p_ship);
 
+	HangarShipWeaponView* getShipWeaponView();
+
 	// Methods
 	void update();
 	void update(sf::Event p_event);

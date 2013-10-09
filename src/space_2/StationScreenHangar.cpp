@@ -57,6 +57,7 @@ void StationScreenHangar::load()
 		}
 	}
 	this->mShipList.notifyDataSetChanged();
+	this->mShipDetailView.getShipWeaponView()->updateContainerAmmosItems();
 }
 
 void StationScreenHangar::unload()

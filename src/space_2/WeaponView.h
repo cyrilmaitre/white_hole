@@ -3,6 +3,7 @@
 #include "Block.h"
 #include "TextBox.h"
 #include "PopupBubble.h"
+#include "ContainerItemAmmoView.h"
 
 // Define
 #define WEAPONVIEW_WIDTH						86	
@@ -19,36 +20,47 @@ public:
 	Weapon *getWeapon();
 	void setWeapon(Weapon *p_weapon);
 
+	bool isAmmoContainerChanged();
+	void setAmmoContainerChanged(bool p_changed);
+
 	// Methods
+	void update(sf::Event p_event);
+	void update();
+	void updatePosition();
+	void updateWeaponInfo();
+	void updateAmmoCountPosition();
+	void updateAmmoCount();
+	void updateAmmoContainer();
+	void updateRange();
+	void updateAngle();
+
+	void draw();
+	void drawReloading();
+
 	void notifyWeaponChanged();
 	void notifyPositionChanged();
 	void notifySizeChanged();
-	void update(sf::Event p_event);
-	void update();
-	void updateAmmoCountPosition();
-	void updateAmmoCount();
-	void updateAmmoIcon();
-	void updateAmmoInfo();
-	void updateWeaponInfo();
-	void updateRange();
-	void updateAngle();
-	void draw();
-	void drawReloading();
+	void notifyAmmoContainerChanged();
 
 
 private:
 	// Atrributs
 	Weapon *mWeapon;
-	Block mWeaponIcon;
-	Block mAmmoIcon;
-	TextBox mAmmoCount;
+
 	sf::RectangleShape mInactifShape;
 	TextBox mInactifText;
-	PopupBubble *mWeaponInfo;
-	PopupBubble *mAmmoInfo;
+
+	Block mWeaponIcon;
+	PopupBubble* mWeaponInfo;
+
+	ContainerItemAmmoView* mAmmoContainer;
+	bool mAmmoContainerChanged;
+	TextBox mAmmoCount;
+	
 	Block mRangeIcon;
 	Block mAngleIcon;
-	PopupBubble *mRangeInfo;
-	PopupBubble *mAngleInfo;
+
+	PopupBubble* mRangeInfo;
+	PopupBubble* mAngleInfo;
 };
 
