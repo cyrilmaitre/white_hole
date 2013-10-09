@@ -105,6 +105,11 @@ SpriteParameter* SpriteParameterFactory::getSpriteParameterLoadingSquareCircle( 
 	return SpriteParameterFactory::getSpriteParameter(SP_ID_LOADING_SQUARE_CIRCLE, 8, 1, useLoaded);
 }
 
+SpriteParameter* SpriteParameterFactory::getSpriteParameterLoadingBert( bool useLoaded )
+{
+	return SpriteParameterFactory::getSpriteParameter(SP_ID_LOADING_BERT, 8, 1, useLoaded);
+}
+
 SpriteParameter* SpriteParameterFactory::getSpriteParameterSavingGif( bool useLoaded )
 {
 	return SpriteParameterFactory::getSpriteParameter(SP_ID_SAVING_GIF, 20, 1, useLoaded);

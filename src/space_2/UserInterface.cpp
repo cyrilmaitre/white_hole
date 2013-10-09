@@ -71,12 +71,14 @@ UserInterface::UserInterface( Character* p_character )
 	this->mWindowCargoLoot = new WindowCargoLoot();
 	this->mWindowMap = new WindowMap();
 	this->mWindowJukebox = new WindowJukebox();
+	this->mWindowSystem = new WindowSystem();
 	this->mWindowDynamics.push_back(this->mWindowCharacter);
 	this->mWindowDynamics.push_back(this->mWindowShip);
 	this->mWindowDynamics.push_back(this->mWindowCargo);
 	this->mWindowDynamics.push_back(this->mWindowCargoLoot);
 	this->mWindowDynamics.push_back(this->mWindowMap);
 	this->mWindowDynamics.push_back(this->mWindowJukebox);
+	this->mWindowDynamics.push_back(this->mWindowSystem);
 	this->mWindowCharacter->setCharacter(p_character);
 
 	this->mWindowCargoStationShip = new WindowCargoStation(Resource::resource->getBundle()->getString("shipCargo"), this->mCargoShipView);
@@ -134,6 +136,7 @@ UserInterface::~UserInterface(void)
 	delete this->mWindowCargoLoot;
 	delete this->mWindowMap;
 	delete this->mWindowJukebox;
+	delete this->mWindowSystem;
 
 	delete this->mWindowCargoStationShip;
 	for(int i = 0; i < this->mWindowCargoStationBanks.size(); i++)
@@ -247,6 +250,11 @@ WindowCargoLoot* UserInterface::getWindowCargoLoot()
 WindowMap* UserInterface::getWindowMap()
 {
 	return this->mWindowMap;
+}
+
+WindowSystem* UserInterface::getWindowSystem()
+{
+	return this->mWindowSystem;
 }
 
 WindowCargoStation* UserInterface::getWindowCargoStationShip()

@@ -1281,6 +1281,9 @@
     <ClCompile Include="WindowShip.cpp">
       <Filter>Fichiers sources\game\ui\window</Filter>
     </ClCompile>
+    <ClCompile Include="WindowSystem.cpp">
+      <Filter>Fichiers sources\game\ui\window</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h">
@@ -2199,6 +2202,9 @@
       <Filter>Fichiers d%27en-tête\game\item\container</Filter>
     </ClInclude>
     <ClInclude Include="WindowShip.h">
+      <Filter>Fichiers d%27en-tête\game\ui\window</Filter>
+    </ClInclude>
+    <ClInclude Include="WindowSystem.h">
       <Filter>Fichiers d%27en-tête\game\ui\window</Filter>
     </ClInclude>
   </ItemGroup>

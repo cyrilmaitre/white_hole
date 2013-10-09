@@ -129,7 +129,7 @@ CreateCharacterScreen::CreateCharacterScreen(void)
 	this->mFieldsetInfo.setBorderSize(CREATESCREEN_FIELDSET_INFO_BORDSIZE, true);
 	this->mFieldsetInfo.setVisible(false);
 
-	this->mGIFLoading = ImageGIFFactory::getGifLoadingSquareCircle();
+	this->mGIFLoading = ImageGIFFactory::getLoadingSquareCircle();
 	this->mGIFLoading->setVisible(false);
 
 	this->mTFName.setSize(CREATESCREEN_TF_NAME_WIDTH, CREATESCREEN_TF_NAME_HEIGHT);

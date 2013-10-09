@@ -377,6 +377,7 @@
     <ClCompile Include="WeaponModelFactory.cpp" />
     <ClCompile Include="WeaponView.cpp" />
     <ClCompile Include="WindowMessageWarning.cpp" />
+    <ClCompile Include="WindowSystem.cpp" />
     <ClCompile Include="Wreck.cpp" />
     <ClCompile Include="WreckManager.cpp" />
     <ClCompile Include="WreckMini.cpp" />
@@ -685,6 +686,7 @@
     <ClInclude Include="WeaponModelFactory.h" />
     <ClInclude Include="WeaponView.h" />
     <ClInclude Include="WindowMessageWarning.h" />
+    <ClInclude Include="WindowSystem.h" />
     <ClInclude Include="Wreck.h" />
     <ClInclude Include="WreckManager.h" />
     <ClInclude Include="WreckMini.h" />

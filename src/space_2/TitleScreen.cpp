@@ -44,7 +44,7 @@ TitleScreen::TitleScreen(void)
 	// Init with default
 	this->mAuthenticateThread	= NULL;
 
-	this->mLoginGif = ImageGIFFactory::getGifLoadingSquareCircle();
+	this->mLoginGif = ImageGIFFactory::getLoadingSquareCircle();
 	this->mLoginGif->setVisible(false);
 
 	this->mTextBoxLoginFailed.setFontColor(sf::Color(255, 64, 64));

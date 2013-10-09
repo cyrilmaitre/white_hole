@@ -51,6 +51,10 @@ buy = Buy
 sell = Sell
 totalMaj = TOTAL
 rename = Rename
+system = System
+options = Options
+logout = Logout
+quit = Quit
 #
 #
 # Running stats
@@ -764,3 +768,7 @@ hangarShipAmmoInfoAmmoTYpe = Damage type:
 dashboardDay = Day:
 dashboardTime = Time:
 dashboardPosition = Position:
+#
+#
+# Misc
+unloadingGame = Saving your character somewhere on the internet

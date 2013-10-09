@@ -19,6 +19,9 @@ public:
 	~Game(void);
 
 	// Getters - Setters
+	bool isRunning();
+	void setRunning(bool p_running);
+
 	Map* getMap();
 	UserInterface* getUserInterface();
 	Character* getCharacter();
@@ -42,6 +45,7 @@ public:
 
 private:
 	// Attributs
+	bool mRunning;
 	Map* mMap;
 	Camera* mCamera;
 	UserInterface* mUserInterface;

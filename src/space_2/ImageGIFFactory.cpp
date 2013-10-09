@@ -17,9 +17,14 @@ ImageGIFFactory::~ImageGIFFactory(void)
 //*************************************************************
 // Getters - Setters
 //*************************************************************
-ImageGIF* ImageGIFFactory::getGifLoadingSquareCircle()
+ImageGIF* ImageGIFFactory::getLoadingSquareCircle()
 {
 	return new ImageGIF(SpriteParameterFactory::getSpriteParameterLoadingSquareCircle(false), 0.1, true);
+}
+
+ImageGIF* ImageGIFFactory::getLoadingBert()
+{
+	return new ImageGIF(SpriteParameterFactory::getSpriteParameterLoadingBert(false), 0.1, true);
 }
 
 ImageGIF* ImageGIFFactory::getSavingGif()

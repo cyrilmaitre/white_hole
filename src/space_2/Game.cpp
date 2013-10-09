@@ -28,6 +28,7 @@ Game::Game(void)
 {
 	// Init
 	Game::game = this;
+	this->mRunning = true;
 	this->mMap = NULL;
 	this->mCamera = NULL;
 	this->mUserInterface = NULL;
@@ -50,6 +51,16 @@ Game::~Game(void)
 //*************************************************************
 // Getters - Setters
 //*************************************************************
+bool Game::isRunning()
+{
+	return this->mRunning;
+}
+
+void Game::setRunning( bool p_running )
+{
+	this->mRunning = p_running;
+}
+
 Map* Game::getMap()
 {
 	return this->mMap;
@@ -167,7 +178,7 @@ void Game::launchUninit()
 void Game::launch(Character* p_character)
 {
 	this->launchInit(p_character);
-	while(Resource::resource->getApp()->isOpen() && Resource::resource->isAppRunning())
+	while(Resource::resource->getApp()->isOpen() && Resource::resource->isAppRunning() && this->isRunning())
 	{
 		// Update
 		EventManager::eventManager->reset();
@@ -274,5 +285,6 @@ void Game::notifyShipPilotedChanged()
 	EntityManager::add(this->getShipPiloted());
 	this->getMap()->getMapObjectSelector()->addMapObject(this->getShipPiloted());
 }
+
 
 

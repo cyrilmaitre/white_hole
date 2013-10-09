@@ -7,7 +7,8 @@ class ImageGIFFactory
 {
 public:
 	// Getters - Setters
-	static ImageGIF* getGifLoadingSquareCircle();
+	static ImageGIF* getLoadingSquareCircle();
+	static ImageGIF* getLoadingBert();
 	static ImageGIF* getSavingGif();
 	static ImageGIF* getImpactLaser();
 	static ImageGIF* getImpactExplosion();

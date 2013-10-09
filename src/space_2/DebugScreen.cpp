@@ -70,7 +70,7 @@ DebugScreen::DebugScreen(void)
 	this->mButtonDownFontSize.setTitle("Dec FontSize");
 
 	this->mButtonLoading.setTitle("Hide");
-	this->mGIFLoading = ImageGIFFactory::getGifLoadingSquareCircle();
+	this->mGIFLoading = ImageGIFFactory::getLoadingSquareCircle();
 
 	this->mTextboxMultiline.setSize(150, 85);
 	this->mTextboxMultiline.setBackgroundColor(sf::Color(125, 125, 125), true);
