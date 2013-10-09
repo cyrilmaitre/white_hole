@@ -1,6 +1,6 @@
 #include "MenuQuickCargo.h"
 #include "SpriteParameterFactory.h"
-#include "Game.h"
+#include "UserInterface.h"
 
 
 //*************************************************************
@@ -22,5 +22,5 @@ MenuQuickCargo::~MenuQuickCargo(void)
 //*************************************************************
 void MenuQuickCargo::notifyItemClicked()
 {
-	Game::game->getUserInterface()->getWindowCargo()->setOpen(!Game::game->getUserInterface()->getWindowCargo()->isOpen());
+	UserInterface::mUserInterface->getWindowCargo()->setOpenSwitch();
 }

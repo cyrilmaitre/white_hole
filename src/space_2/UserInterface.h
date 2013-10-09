@@ -21,6 +21,7 @@
 #include "FieldSet.h"
 #include "Clock.h"
 #include "ImageGIF.h"
+#include "WindowShip.h"
 
 // Define
 #define INTERFACEBOTTOM_WIDTH				775
@@ -42,6 +43,7 @@ public:
 
 	WindowShipSmall* getWindowShipSmall();
 	WindowCharacter* getWindowCharacter();
+	WindowShip* getWindowShip();
 	WindowJukebox* getWindowJukebox();
 	WindowSelectedCharacterShip* getWindowSelectedCharacterShip();
 	WindowSelectedNpcShip* getWindowSelectedNpcShip();
@@ -107,6 +109,8 @@ private:
 
 	std::vector<Window*> mWindowDynamics;
 	WindowCharacter *mWindowCharacter;
+	WindowShip* mWindowShip;
+	ContainerableView* mCargoShipView;
 	WindowCargo *mWindowCargo;
 	WindowCargoLoot *mWindowCargoLoot;
 	WindowMap *mWindowMap;

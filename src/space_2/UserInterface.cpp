@@ -64,22 +64,26 @@ UserInterface::UserInterface( Character* p_character )
 	this->mWindowSelected = NULL;
 
 	// Window dynamics
-	this->mWindowCharacter	= new WindowCharacter();
-	this->mWindowCargo = new WindowCargo();
+	this->mWindowCharacter = new WindowCharacter();
+	this->mWindowShip = new WindowShip();
+	this->mCargoShipView = new ContainerableView();
+	this->mWindowCargo = new WindowCargo(this->mCargoShipView);
 	this->mWindowCargoLoot = new WindowCargoLoot();
 	this->mWindowMap = new WindowMap();
 	this->mWindowJukebox = new WindowJukebox();
-	
 	this->mWindowDynamics.push_back(this->mWindowCharacter);
+	this->mWindowDynamics.push_back(this->mWindowShip);
 	this->mWindowDynamics.push_back(this->mWindowCargo);
 	this->mWindowDynamics.push_back(this->mWindowCargoLoot);
 	this->mWindowDynamics.push_back(this->mWindowMap);
 	this->mWindowDynamics.push_back(this->mWindowJukebox);
+	this->mWindowCharacter->setCharacter(p_character);
 
-	this->mWindowCargoStationShip = new WindowCargoStation(Resource::resource->getBundle()->getString("shipCargo"));
-
+	this->mWindowCargoStationShip = new WindowCargoStation(Resource::resource->getBundle()->getString("shipCargo"), this->mCargoShipView);
 	this->mWindowDynamicsStation.push_back(this->mWindowCargoStationShip);
-	
+	this->mWindowDynamicsStation.push_back(this->mWindowCharacter);
+	this->mWindowDynamicsStation.push_back(this->mWindowShip);
+
 	// Other stuffs
 	this->mSavingGif = ImageGIFFactory::getSavingGif();
 	this->mSavingGif->setVisible(false);
@@ -122,8 +126,10 @@ UserInterface::~UserInterface(void)
 	delete this->mWindowSelectedWreckMini;
 	delete this->mWindowSelectedStation;
 	delete this->mWindowSelectedEntity;
-
+	
 	delete this->mWindowCharacter;
+	delete this->mWindowShip;
+	delete this->mCargoShipView;
 	delete this->mWindowCargo;
 	delete this->mWindowCargoLoot;
 	delete this->mWindowMap;
@@ -176,6 +182,11 @@ void UserInterface::setSavingGifVisible( bool p_value )
 WindowCharacter* UserInterface::getWindowCharacter()
 {
 	return this->mWindowCharacter;
+}
+
+WindowShip* UserInterface::getWindowShip()
+{
+	return this->mWindowShip;
 }
 
 WindowJukebox* UserInterface::getWindowJukebox()

@@ -47,6 +47,8 @@ private:
 	Button mButtonCraft;
 	Button mButtonShipCargo;
 	std::vector<Button*> mButtonBanks;
+	Button mButtonCharacterSheet;
+	Button mButtonShipSheed;
 	Button mButtonUndock;
 
 	// Methods 

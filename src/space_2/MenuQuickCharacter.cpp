@@ -1,6 +1,6 @@
 #include "MenuQuickCharacter.h"
 #include "SpriteParameterFactory.h"
-#include "Game.h"
+#include "UserInterface.h"
 
 
 //*************************************************************
@@ -22,5 +22,5 @@ MenuQuickCharacter::~MenuQuickCharacter(void)
 //*************************************************************
 void MenuQuickCharacter::notifyItemClicked()
 {
-	Game::game->getUserInterface()->getWindowCharacter()->setOpen(!Game::game->getUserInterface()->getWindowCharacter()->isOpen());
+	UserInterface::mUserInterface->getWindowCharacter()->setOpenSwitch();
 }

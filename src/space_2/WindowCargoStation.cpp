@@ -4,14 +4,23 @@
 //*************************************************************
 // Constructor - Destructor
 //*************************************************************
-WindowCargoStation::WindowCargoStation(std::string p_title)
+WindowCargoStation::WindowCargoStation(std::string p_title, ContainerableView* p_containerableView)
 {
 	this->setType(Window::WindowType::TypeDynamic);
 	this->setOpen(false);
 	this->setWindowTitle(p_title);
 	this->setWindowIcon(SpriteParameterFactory::getSpriteParameterIcon16X16()->getSprite(IC_16X16_NINESQUARE));
 
-	this->mContainerView = new ContainerableView();
+	if(p_containerableView != NULL)
+	{
+		this->mContainerViewDeletion = false;
+		this->mContainerView = p_containerableView;
+	}
+	else
+	{
+		this->mContainerViewDeletion = true;
+		this->mContainerView = new ContainerableView();
+	}
 	this->notifyContainerableViewChanged();
 
 	this->setPositionMiddleScreen();
@@ -19,7 +28,8 @@ WindowCargoStation::WindowCargoStation(std::string p_title)
 
 WindowCargoStation::~WindowCargoStation(void)
 {
-	delete this->mContainerView;
+	if(this->mContainerViewDeletion)
+		delete this->mContainerView;
 }
 
 

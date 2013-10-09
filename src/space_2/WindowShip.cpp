@@ -1,4 +1,4 @@
-#include "WindowCharacter.h"
+#include "WindowShip.h"
 
 
 //*************************************************************
@@ -11,18 +11,18 @@
 //*************************************************************
 // Constructor - Destructor
 //*************************************************************
-WindowCharacter::WindowCharacter(void)
+WindowShip::WindowShip(void)
 {
 	this->setContentWidth(WINDOW_WIDTH);
 	this->setContentHeight(WINDOW_HEIGHT);
 	this->setType(Window::WindowType::TypeDynamic);
 	this->setOpen(false);
-	this->setWindowIcon(SpriteParameterFactory::getSpriteParameterIcon16X16()->getSprite(IC_16X16_PERSON));
+	this->setWindowIcon(SpriteParameterFactory::getSpriteParameterIcon16X16()->getSprite(IC_16X16_SHIP));
 
 	this->setPositionMiddleScreen();
 }
 
-WindowCharacter::~WindowCharacter(void)
+WindowShip::~WindowShip(void)
 {
 }
 
@@ -30,17 +30,17 @@ WindowCharacter::~WindowCharacter(void)
 //*************************************************************
 // Getters - Setters
 //*************************************************************
-Character* WindowCharacter::getCharacter()
+CharacterShip* WindowShip::getCharacterShip()
 {
-	return this->mCharacter;
+	return this->mCharacterShip;
 }
 
-void WindowCharacter::setCharacter( Character* p_character )
+void WindowShip::setCharacterShip( CharacterShip* p_ship )
 {
-	if(this->mCharacter != p_character)
+	if(this->mCharacterShip != p_ship)
 	{
-		this->mCharacter = p_character;
-		this->notifyCharacterChanged();
+		this->mCharacterShip = p_ship;
+		this->notifyCharacterShipChanged();
 	}
 }
 
@@ -48,15 +48,16 @@ void WindowCharacter::setCharacter( Character* p_character )
 //*************************************************************
 // Methods
 //*************************************************************
-void WindowCharacter::drawContent()
+void WindowShip::drawContent()
 {
 
 }
 
-void WindowCharacter::notifyCharacterChanged()
+void WindowShip::notifyCharacterShipChanged()
 {
-	if(this->mCharacter != NULL)
+	if(this->mCharacterShip != NULL)
 	{
-		this->setWindowTitle(this->mCharacter->getName());
+		this->setWindowTitle(this->mCharacterShip->getName());
 	}
 }
+

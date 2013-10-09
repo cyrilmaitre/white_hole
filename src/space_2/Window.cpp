@@ -170,6 +170,11 @@ void Window::setOpen( bool p_open )
 	this->notifyOpenChanged();
 }
 
+void Window::setOpenSwitch()
+{
+	this->setOpen(!this->mOpen);
+}
+
 bool Window::isReduce()
 {
 	return this->mReduce;

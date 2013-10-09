@@ -7,7 +7,7 @@ class WindowCargo : public Window
 {
 public:
 	// Constructor
-	WindowCargo(void);
+	WindowCargo(ContainerableView* p_containerableView = NULL);
 	~WindowCargo(void);
 
 	// Getters - Setters
@@ -24,5 +24,6 @@ public:
 private:
 	// Attributs
 	ContainerableView *mContainerableView;
+	bool mContainerViewDeletion;
 };
 

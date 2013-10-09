@@ -7,7 +7,7 @@ class WindowCargoStation : public Window
 {
 public:
 	// Constructor - Destructor
-	WindowCargoStation(std::string p_title);
+	WindowCargoStation(std::string p_title, ContainerableView* p_containerableView = NULL);
 	~WindowCargoStation(void);
 
 	// Getters - Setters
@@ -24,5 +24,6 @@ public:
 private:
 	// Attributs
 	ContainerableView *mContainerView;
+	bool mContainerViewDeletion;
 };
 

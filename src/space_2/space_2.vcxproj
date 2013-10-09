@@ -338,6 +338,7 @@
     <ClCompile Include="WindowSelectedStation.cpp" />
     <ClCompile Include="WindowSelectedWreck.cpp" />
     <ClCompile Include="WindowSelectedWreckMini.cpp" />
+    <ClCompile Include="WindowShip.cpp" />
     <ClCompile Include="WindowShipSmall.cpp" />
     <ClCompile Include="Window.cpp" />
     <ClCompile Include="ImageGIF.cpp" />
@@ -646,6 +647,7 @@
     <ClInclude Include="WindowSelectedStation.h" />
     <ClInclude Include="WindowSelectedWreck.h" />
     <ClInclude Include="WindowSelectedWreckMini.h" />
+    <ClInclude Include="WindowShip.h" />
     <ClInclude Include="WindowShipSmall.h" />
     <ClInclude Include="Window.h" />
     <ClInclude Include="ImageGIF.h" />

@@ -265,9 +265,10 @@ void Game::notifyShipPilotedChanged()
 {
 	this->mUserInterface->notifyWeaponViewChanged();
 	this->mUserInterface->getXpBarCharacterShip()->setLevelable(this->getShipPiloted());
-	this->mUserInterface->getWindowShipSmall()->setCharacterShip(this->getCharacter()->getShipPiloted());
-	this->mUserInterface->getWindowCargo()->getContainerableView()->setContainerable(this->getCharacter()->getShipPiloted());
-	this->mUserInterface->getWindowCargoStationShip()->getContainerableView()->setContainerable(this->getCharacter()->getShipPiloted());
+	this->mUserInterface->getWindowShip()->setCharacterShip(this->getShipPiloted());
+	this->mUserInterface->getWindowShipSmall()->setCharacterShip(this->getShipPiloted());
+	this->mUserInterface->getWindowCargo()->getContainerableView()->setContainerable(this->getShipPiloted());
+	this->mUserInterface->getWindowCargoStationShip()->getContainerableView()->setContainerable(this->getShipPiloted());
 
 	EntityManager::add(this->getShipPiloted());
 	this->getMap()->getMapObjectSelector()->addMapObject(this->getShipPiloted());

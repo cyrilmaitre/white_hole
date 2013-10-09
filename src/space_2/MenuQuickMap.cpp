@@ -1,6 +1,6 @@
 #include "MenuQuickMap.h"
 #include "SpriteParameterFactory.h"
-#include "Game.h"
+#include "UserInterface.h"
 
 
 //*************************************************************
@@ -22,5 +22,5 @@ MenuQuickMap::~MenuQuickMap(void)
 //*************************************************************
 void MenuQuickMap::notifyItemClicked()
 {
-	Game::game->getUserInterface()->getWindowMap()->setOpen(!Game::game->getUserInterface()->getWindowMap()->isOpen());
+	UserInterface::mUserInterface->getWindowMap()->setOpenSwitch();
 }

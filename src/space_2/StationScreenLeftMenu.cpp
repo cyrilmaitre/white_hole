@@ -166,7 +166,7 @@ void StationScreenLeftMenu::update( sf::Event p_event )
 
 	this->mButtonShipCargo.update(p_event);
 	if(this->mButtonShipCargo.isClicked())
-		UserInterface::mUserInterface->getWindowCargoStationShip()->setOpen(!UserInterface::mUserInterface->getWindowCargoStationShip()->isOpen());
+		UserInterface::mUserInterface->getWindowCargoStationShip()->setOpenSwitch();
 
 	for(int i = 0; i < this->mButtonBanks.size(); i++)
 	{
@@ -234,7 +234,7 @@ void StationScreenLeftMenu::buttonBankClicked( int p_index )
 	if(currentBank->isUnlock())
 	{
 		// If Unlock
-		UserInterface::mUserInterface->getWindowCargoStationBank(p_index)->setOpen(!UserInterface::mUserInterface->getWindowCargoStationBank(p_index)->isOpen());
+		UserInterface::mUserInterface->getWindowCargoStationBank(p_index)->setOpenSwitch();
 	}
 	else
 	{

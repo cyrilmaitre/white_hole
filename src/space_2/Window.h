@@ -40,6 +40,7 @@ public:
 
 	bool isOpen();
 	void setOpen(bool p_open);
+	void setOpenSwitch();
 
 	bool isReduce();
 	void setReduce(bool p_reduce);

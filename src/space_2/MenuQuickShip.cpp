@@ -1,5 +1,6 @@
 #include "MenuQuickShip.h"
 #include "SpriteParameterFactory.h"
+#include "UserInterface.h"
 
 
 //*************************************************************
@@ -21,5 +22,5 @@ MenuQuickShip::~MenuQuickShip(void)
 //*************************************************************
 void MenuQuickShip::notifyItemClicked()
 {
-
+	UserInterface::mUserInterface->getWindowShip()->setOpenSwitch();
 }

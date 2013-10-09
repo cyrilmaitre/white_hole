@@ -1278,6 +1278,9 @@
     <ClCompile Include="ContainerViewManager.cpp">
       <Filter>Fichiers sources\game\item\container</Filter>
     </ClCompile>
+    <ClCompile Include="WindowShip.cpp">
+      <Filter>Fichiers sources\game\ui\window</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h">
@@ -2194,6 +2197,9 @@
     </ClInclude>
     <ClInclude Include="ContainerViewManager.h">
       <Filter>Fichiers d%27en-tête\game\item\container</Filter>
+    </ClInclude>
+    <ClInclude Include="WindowShip.h">
+      <Filter>Fichiers d%27en-tête\game\ui\window</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

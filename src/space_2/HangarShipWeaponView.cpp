@@ -347,6 +347,7 @@ void HangarShipWeaponView::notifyCharacterShipChanged()
 	this->mPUBTypeAllowed.notifyDataSetChanged();
 
 	// Update
+	this->setContainerWeaponsStacksChanged(false);
 	this->updateContainerAmmosItems();
 	this->updatePosition();
 }
