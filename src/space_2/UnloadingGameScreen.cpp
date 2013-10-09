@@ -1,4 +1,13 @@
 #include "UnloadingGameScreen.h"
+#include "ImageGIFFactory.h"
+
+
+//*************************************************************
+// Define
+//*************************************************************
+#define UNLOADING_FONTSIZE			32
+#define UNLOADING_MARGINTOP			50
+#define GIFUNLOADING_MARGINTOP		20
 
 
 //*************************************************************
@@ -6,11 +15,14 @@
 //*************************************************************
 UnloadingGameScreen::UnloadingGameScreen(void)
 {
-	this->mTBUnloading.setText("Unloading...");
+	this->mTBUnloading.setText(Resource::resource->getBundle()->getString("unloadingGame"));
+	this->mTBUnloading.setFontSize(UNLOADING_FONTSIZE);
+	this->mGifUnloading = ImageGIFFactory::getLoadingBert();
 }
 
 UnloadingGameScreen::~UnloadingGameScreen(void)
 {
+	delete this->mGifUnloading;
 }
 
 
@@ -50,6 +62,7 @@ void UnloadingGameScreen::launch()
 void UnloadingGameScreen::update()
 {
 	BaseScreen::update();
+	this->mGifUnloading->update();
 }
 
 void UnloadingGameScreen::update( sf::Event p_event )
@@ -60,7 +73,8 @@ void UnloadingGameScreen::update( sf::Event p_event )
 void UnloadingGameScreen::updatePosition()
 {
 	BaseScreen::updatePosition();
-	this->mTBUnloading.setPosition(0, 0);
+	this->mTBUnloading.setPosition((Resource::resource->getViewUi()->getSize().x - this->mTBUnloading.getWidth()) / 2, (Resource::resource->getViewUi()->getSize().y - this->mTBUnloading.getHeight()) / 2 - UNLOADING_MARGINTOP);
+	this->mGifUnloading->setPosition((Resource::resource->getViewUi()->getSize().x - this->mGifUnloading->getWidth()) / 2, this->mTBUnloading.getBottomY() + GIFUNLOADING_MARGINTOP);
 }
 
 void UnloadingGameScreen::draw()
@@ -68,5 +82,6 @@ void UnloadingGameScreen::draw()
 	Resource::resource->getApp()->clear(sf::Color::White);
 	Resource::resource->getApp()->draw(this->mBackgroundSprite);
 	this->mTBUnloading.draw();
+	this->mGifUnloading->draw();
 	Resource::resource->getApp()->display();
 }	

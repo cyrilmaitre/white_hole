@@ -12,7 +12,7 @@ public:
 	~LoadingGameScreen(void);
 
 	// Methods
-	void launch();
+	double launch();
 	void update();
 	void updatePosition();
 	void update(sf::Event p_event);

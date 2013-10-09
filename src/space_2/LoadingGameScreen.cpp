@@ -29,7 +29,7 @@ LoadingGameScreen::~LoadingGameScreen(void)
 //*************************************************************
 // Methodss
 //*************************************************************
-void LoadingGameScreen::launch()
+double LoadingGameScreen::launch()
 {
 	this->setRunning(true);
 	this->update();
@@ -57,6 +57,7 @@ void LoadingGameScreen::launch()
 		// Draw
 		this->draw();
 	}
+	return 0;
 }
 
 void LoadingGameScreen::update()

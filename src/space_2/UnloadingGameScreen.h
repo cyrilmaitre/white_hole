@@ -1,6 +1,7 @@
 #pragma once
 #include "BaseScreen.h"
 #include "TextBox.h"
+#include "ImageGIF.h"
 
 
 class UnloadingGameScreen : public BaseScreen
@@ -21,5 +22,6 @@ public:
 private:
 	// Attributs
 	TextBox mTBUnloading;
+	ImageGIF* mGifUnloading;
 };
 
