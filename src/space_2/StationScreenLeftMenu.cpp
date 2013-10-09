@@ -15,6 +15,7 @@
 #define LEFTMENU_BUTTON_WIDTH				150
 #define LEFTMENU_BUTTON_HEIGHT				25
 #define LEFTMENU_BUTTON_MARGIN				10
+#define LEFTMENU_BUTTON_HANGAR_MARGINTOP	75
 #define LEFTMENU_BUTTON_CARGO_MARGINTOP		75
 #define LEFTMENU_PADDING					10
 #define LEFTMENU_WIDTH						LEFTMENU_PADDING * 2 + LEFTMENU_BUTTON_WIDTH
@@ -50,6 +51,9 @@ StationScreenLeftMenu::StationScreenLeftMenu(Character* p_character, StationScre
 
 	this->mButtonShipCargo.setSize(LEFTMENU_BUTTON_WIDTH, LEFTMENU_BUTTON_HEIGHT);
 	this->mButtonShipCargo.setTitle(Resource::resource->getBundle()->getString("shipCargo"));
+
+	this->mButtonCharacterSheet.setSize(LEFTMENU_BUTTON_WIDTH, LEFTMENU_BUTTON_HEIGHT);
+	this->mButtonShipSheet.setSize(LEFTMENU_BUTTON_WIDTH, LEFTMENU_BUTTON_HEIGHT);
 
 	this->mButtonUndock.setSize(LEFTMENU_BUTTON_WIDTH, LEFTMENU_BUTTON_HEIGHT);
 	this->mButtonUndock.setTitle(Resource::resource->getBundle()->getString("undock"));
@@ -132,9 +136,21 @@ void StationScreenLeftMenu::updateButtonBank()
 	}
 }
 
+void StationScreenLeftMenu::updateButtonSheet()
+{
+	if(this->mCharacter != NULL)
+	{
+		this->mButtonCharacterSheet.setTitle(this->mCharacter->getName());
+		this->mButtonShipSheet.setTitle(this->mCharacter->getShipPiloted()->getName());
+	}
+}
+
 void StationScreenLeftMenu::updatePosition()
 {
-	this->mButtonHangar.setPosition(this->getLeftX() + LEFTMENU_PADDING, this->getTopY() + LEFTMENU_PADDING);
+	this->mButtonCharacterSheet.setPosition(this->getLeftX() + LEFTMENU_PADDING, this->getTopY() + LEFTMENU_PADDING);
+	this->mButtonShipSheet.setPosition(this->mButtonCharacterSheet.getLeftX(), this->mButtonCharacterSheet.getBottomY() + LEFTMENU_BUTTON_MARGIN);
+	
+	this->mButtonHangar.setPosition(this->mButtonShipSheet.getLeftX(), this->mButtonShipSheet.getBottomY() + LEFTMENU_BUTTON_HANGAR_MARGINTOP);
 	this->mButtonMarket.setPosition(this->mButtonHangar.getLeftX(), this->mButtonHangar.getBottomY() + LEFTMENU_BUTTON_MARGIN);
 	this->mButtonCraft.setPosition(this->mButtonMarket.getLeftX(), this->mButtonMarket.getBottomY() + LEFTMENU_BUTTON_MARGIN);
 
@@ -152,6 +168,14 @@ void StationScreenLeftMenu::updatePosition()
 
 void StationScreenLeftMenu::update( sf::Event p_event )
 {
+	this->mButtonCharacterSheet.update(p_event);
+	if(this->mButtonCharacterSheet.isClicked())
+		UserInterface::mUserInterface->getWindowCharacter()->setOpenSwitch();
+
+	this->mButtonShipSheet.update(p_event);
+	if(this->mButtonShipSheet.isClicked())
+		UserInterface::mUserInterface->getWindowShip()->setOpenSwitch();
+
 	this->mButtonHangar.update(p_event);
 	if(this->mButtonHangar.isClicked())
 		this->getStationScreen()->loadPanelHangar();
@@ -185,6 +209,8 @@ void StationScreenLeftMenu::update( sf::Event p_event )
 void StationScreenLeftMenu::draw()
 {
 	FieldSet::draw();
+	this->mButtonCharacterSheet.draw();
+	this->mButtonShipSheet.draw();
 	this->mButtonHangar.draw();
 	this->mButtonMarket.draw();
 	this->mButtonCraft.draw();
@@ -211,6 +237,7 @@ void StationScreenLeftMenu::notifyCharacterChanged()
 			this->mButtonBanks.push_back(new Button());
 	}
 
+	this->updateButtonSheet();
 	this->updateButtonBank();
 	this->updatePosition();
 }

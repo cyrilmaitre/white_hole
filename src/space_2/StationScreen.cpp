@@ -95,6 +95,11 @@ void StationScreen::setStation( Station* p_station )
 	}
 }
 
+StationScreenLeftMenu* StationScreen::getLeftMenu()
+{
+	return this->mLeftMenu;
+}
+
 StationScreenRightPanel* StationScreen::getRightPanel()
 {
 	return this->mRightPanel;

@@ -26,6 +26,8 @@ public:
 	Station* getStation();
 	void setStation(Station* p_station);
 
+	StationScreenLeftMenu* getLeftMenu();
+
 	StationScreenRightPanel* getRightPanel();
 	void setRightPanel(StationScreenRightPanel* p_panel);
 

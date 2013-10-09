@@ -269,6 +269,7 @@ void Game::notifyShipPilotedChanged()
 	this->mUserInterface->getWindowShipSmall()->setCharacterShip(this->getShipPiloted());
 	this->mUserInterface->getWindowCargo()->getContainerableView()->setContainerable(this->getShipPiloted());
 	this->mUserInterface->getWindowCargoStationShip()->getContainerableView()->setContainerable(this->getShipPiloted());
+	this->mUserInterface->getStationScreen()->getLeftMenu()->updateButtonSheet();
 
 	EntityManager::add(this->getShipPiloted());
 	this->getMap()->getMapObjectSelector()->addMapObject(this->getShipPiloted());

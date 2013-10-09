@@ -26,6 +26,7 @@ public:
 	// Methods
 	void update();
 	void updateButtonBank();
+	void updateButtonSheet();
 	void updatePosition();
 	void update(sf::Event p_event);
 	void draw();
@@ -48,7 +49,7 @@ private:
 	Button mButtonShipCargo;
 	std::vector<Button*> mButtonBanks;
 	Button mButtonCharacterSheet;
-	Button mButtonShipSheed;
+	Button mButtonShipSheet;
 	Button mButtonUndock;
 
 	// Methods 
