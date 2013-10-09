@@ -368,6 +368,43 @@ bool Containerable::addItem( Item* p_item, int p_quantity )
 	return false;
 }
 
+bool Containerable::removeItem( Item* p_item, int p_quantity )
+{
+	if(p_quantity <= 0)
+		return true;
+
+	if(p_item != NULL)
+	{
+		for(int i = 0; i < this->getContainerRowCount(); i++)
+		{
+			for(int j = 0; j < CONTAINER_ROW_SIZE; j++)
+			{
+				ContainerRow* currentRow = this->getContainerRow(i);
+				if(currentRow != NULL)
+				{
+					ContainerStack* currentStack = currentRow->getContainerStack(j);
+					if(currentStack != NULL)
+					{
+						if(currentStack->hasItemStack() && currentStack->getItemStack()->getItem()->getIdItem() == p_item->getIdItem())
+						{
+							p_quantity = currentStack->decStackSize(p_quantity);
+							if(currentStack->getItemStack()->getStackSize() == 0)
+								currentStack->setItemStack(NULL);
+						}
+					}
+				}
+
+				if(p_quantity <= 0)
+					break;
+			}
+
+			if(p_quantity <= 0)
+				break;
+		}
+	}
+	return p_quantity == 0;
+}
+
 void Containerable::updateContentEstimation()
 {
 	double newEstimation = 0;

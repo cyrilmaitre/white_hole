@@ -92,6 +92,13 @@ void Weapon::setAmmo( AmmoModel *p_ammo )
 {
 	if(this->mAmmo != p_ammo)
 	{
+		// Remove old ammos if character ship
+		if(this->getEntity() != NULL && ToolsMap::isCharacterShip(this->getEntity()) && this->mAmmo != NULL && this->mAmmoCount > 0)
+		{
+			CharacterShip* ship = (CharacterShip*)this->getEntity();
+			ship->addItem(this->mAmmo, this->mAmmoCount);
+		}
+
 		this->mAmmo = p_ammo;
 		this->notifyAmmoChanged();
 	}
@@ -172,7 +179,7 @@ void Weapon::setWeaponModel( WeaponModel *p_model )
 
 bool Weapon::isReloading()
 {
-	return this->mRealoadClock.getElapsedTimeAsSeconds() < this->getWeaponModel()->getReloadingSpeed() && !this->mFirstReload;
+	return this->mReloadClock.getElapsedTimeAsSeconds() < this->getWeaponModel()->getReloadingSpeed() && !this->mFirstReload;
 }
 
 bool Weapon::isFiring()
@@ -187,7 +194,7 @@ bool Weapon::isFull()
 
 float Weapon::getReloadTime()
 {
-	return this->mRealoadClock.getElapsedTimeAsSeconds();
+	return this->mReloadClock.getElapsedTimeAsSeconds();
 }
 
 float Weapon::getFireRateTime()
@@ -290,6 +297,7 @@ Json::Value Weapon::saveToJson()
 void Weapon::notifyAmmoChanged()
 {
 	this->mAmmoChanged = true;
+	this->mAmmoCount = 0;
 }
 
 void Weapon::notifyAmmoCountChanged()
@@ -345,14 +353,23 @@ void Weapon::reload()
 	Resource::resource->getJuckebox()->soundPlay(this->getWeaponModel()->getSoundReload());
 	if(ToolsMap::isCharacterShip(this->getEntity()))
 	{
+		CharacterShip* characterShip = (CharacterShip*) this->getEntity();
+		int ammoAvailable = characterShip->getItemCount(this->mAmmo);
+		int ammoToReload = this->mWeaponModel->getAmmoMax() - this->mAmmoCount;
+		int ammoReload = ammoAvailable >= ammoToReload ? ammoToReload : ammoAvailable;
 		
+		if(ammoReload > 0)
+		{
+			characterShip->removeItem(this->mAmmo, ammoReload);
+			this->setAmmoCount(this->mAmmoCount + ammoReload);
+			this->mReloadClock.restart();
+		}
 	}
 	else
 	{
 		this->setAmmoCount(this->getWeaponModel()->getAmmoMax());
+		this->mReloadClock.restart();
 	}
-
-	this->mRealoadClock.restart();
 }
 
 

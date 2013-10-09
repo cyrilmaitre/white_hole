@@ -88,7 +88,10 @@ void Weaponable::removeWeaponAll( bool p_notify )
 	for(int i = 0; i < this->mWeapons.size(); i++)
 	{
 		if(this->mWeapons[i] != NULL)
+		{
+			this->mWeapons[i]->setAmmo(NULL);
 			delete this->mWeapons[i];
+		}
 	}
 	this->mWeapons.clear();
 	if(p_notify)

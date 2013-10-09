@@ -100,6 +100,6 @@ private:
 	bool mFirstReload;
 
 	mks::Clock mFireRateClock;
-	mks::Clock mRealoadClock;
+	mks::Clock mReloadClock;
 };
 

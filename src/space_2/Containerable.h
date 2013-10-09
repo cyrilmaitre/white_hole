@@ -50,6 +50,7 @@ public:
 	bool addItemStack(ItemStack* p_itemStack);
 	bool addItemStack(ItemStack* p_itemStack, int p_position, bool p_notify = true);
 	bool addItem(Item* p_item, int p_quantity);
+	bool removeItem(Item* p_item, int p_quantity);
 	
 
 private:
