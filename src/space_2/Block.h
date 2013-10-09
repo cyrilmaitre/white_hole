@@ -19,15 +19,12 @@ public:
 	void setBackgroundColorFocus(sf::Color p_color);
 
 	sf::Sprite* getBackgroundImage();
-	void setBackgroundImage(sf::Texture *p_image, bool p_scale = true, bool p_setAll = false);
 	void setBackgroundImage(sf::Sprite *p_sprite, bool p_scale = true);
 			
 	sf::Sprite* getBackgroundImageOver();
-	void setBackgroundImageOver(sf::Texture *p_image, bool p_scale = true);
 	void setBackgroundImageOver(sf::Sprite *p_sprite, bool p_scale = true);
 
 	sf::Sprite* getBackgroundImageFocus();
-	void setBackgroundImageFocus(sf::Texture *p_image, bool p_scale = true);
 	void setBackgroundImageFocus(sf::Sprite *p_sprite, bool p_scale = true);
 
 	sf::Color getBorderColor();

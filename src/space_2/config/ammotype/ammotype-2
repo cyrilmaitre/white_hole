@@ -1,6 +1,6 @@
 id = 2
 name = ammoTypeAntiShieldName
 description = ammoTypeAntiShieldDescription
-color = #68A2FF
+color = #1E6086
 damagebonus = 10;0;0
 damagemalus = 0;5;5

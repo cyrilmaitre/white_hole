@@ -29,6 +29,7 @@ public:
 	void updateAmmoCount();
 	void updateAmmoIcon();
 	void updateAmmoInfo();
+	void updateWeaponInfo();
 	void updateRange();
 	void updateAngle();
 	void draw();
@@ -39,7 +40,7 @@ private:
 	// Atrributs
 	Weapon *mWeapon;
 	Block mWeaponIcon;
-	Block	mAmmoIcon;
+	Block mAmmoIcon;
 	TextBox mAmmoCount;
 	sf::RectangleShape mInactifShape;
 	TextBox mInactifText;

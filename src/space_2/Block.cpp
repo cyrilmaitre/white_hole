@@ -120,48 +120,23 @@ sf::Sprite* Block::getBackgroundImage()
 	return this->mBackgroundImage;
 }
 
-void Block::setBackgroundImage( sf::Texture *p_image, bool scale, bool setAll )
-{
-	if(this->mBackgroundImage == NULL)
-		this->mBackgroundImage = new sf::Sprite();
-
-	this->mBackgroundImage->setTexture(*p_image);
-	this->mBackgroundImage->setPosition((float)this->getX(), (float)this->getY());
-	if(scale)
-		this->mBackgroundImage->setScale((float)this->getWidth() / (float)(this->mBackgroundImage->getTexture()->getSize().x), (float)this->getHeight() / (float)(this->mBackgroundImage->getTexture()->getSize().y));
-
-	if(setAll)
-	{
-		this->setBackgroundImageFocus(p_image, scale);
-		this->setBackgroundImageOver(p_image, scale);
-	}
-}
-
 void Block::setBackgroundImage( sf::Sprite *p_sprite, bool scale )
 {
 	if(this->mBackgroundImage != NULL)
 		delete this->mBackgroundImage;
 
 	this->mBackgroundImage = p_sprite;
-	this->mBackgroundImage->setPosition((float)this->getX(), (float)this->getY());
-	if(scale)
-		this->mBackgroundImage->setScale((float)this->getWidth() / (float)(this->mBackgroundImage->getTextureRect().width), (float)this->getHeight() / (float)(this->mBackgroundImage->getTextureRect().height));
+	if(this->mBackgroundImage != NULL)
+	{
+		this->mBackgroundImage->setPosition((float)this->getX(), (float)this->getY());
+		if(scale)
+			this->mBackgroundImage->setScale((float)this->getWidth() / (float)(this->mBackgroundImage->getTextureRect().width), (float)this->getHeight() / (float)(this->mBackgroundImage->getTextureRect().height));
+	}
 }
 
 sf::Sprite* Block::getBackgroundImageOver()
 {
 	return this->mBackgroundImageOver;
-}
-
-void Block::setBackgroundImageOver( sf::Texture *p_image, bool scale )
-{
-	if(this->mBackgroundImageOver == NULL)
-		this->mBackgroundImageOver = new sf::Sprite();
-
-	this->mBackgroundImageOver->setTexture(*p_image);
-	this->mBackgroundImageOver->setPosition((float)this->getX(), (float)this->getY());
-	if(scale)
-		this->mBackgroundImageOver->setScale((float)this->getWidth() / (float)(this->mBackgroundImageOver->getTexture()->getSize().x), (float)this->getHeight() / (float)this->mBackgroundImageOver->getTexture()->getSize().y);
 }
 
 void Block::setBackgroundImageOver( sf::Sprite *p_sprite, bool scale )
@@ -170,25 +145,17 @@ void Block::setBackgroundImageOver( sf::Sprite *p_sprite, bool scale )
 		delete this->mBackgroundImageOver;
 
 	this->mBackgroundImageOver = p_sprite;
-	this->mBackgroundImageOver->setPosition((float)this->getX(), (float)this->getY());
-	if(scale)
-		this->mBackgroundImageOver->setScale((float)this->getWidth() / (float)(this->mBackgroundImageOver->getTextureRect().width), (float)this->getHeight() / (float)this->mBackgroundImageOver->getTextureRect().height);
+	if(this->mBackgroundImageOver != NULL)
+	{
+		this->mBackgroundImageOver->setPosition((float)this->getX(), (float)this->getY());
+		if(scale)
+			this->mBackgroundImageOver->setScale((float)this->getWidth() / (float)(this->mBackgroundImageOver->getTextureRect().width), (float)this->getHeight() / (float)this->mBackgroundImageOver->getTextureRect().height);
+	}
 }
 
 sf::Sprite* Block::getBackgroundImageFocus()
 {
 	return this->mBackgroundImageFocus;
-}
-
-void Block::setBackgroundImageFocus( sf::Texture *p_image, bool scale )
-{
-	if(this->mBackgroundImageFocus == NULL)
-		this->mBackgroundImageFocus = new sf::Sprite();
-
-	this->mBackgroundImageFocus->setTexture(*p_image);
-	this->mBackgroundImageFocus->setPosition((float)this->getX(), (float)this->getY());
-	if(scale)
-		this->mBackgroundImageFocus->setScale((float)this->getWidth() / (float)(this->mBackgroundImageFocus->getTexture()->getSize().x), (float)this->getHeight() / (float)(this->mBackgroundImageFocus->getTexture()->getSize().y));
 }
 
 void Block::setBackgroundImageFocus( sf::Sprite *p_sprite, bool scale )
@@ -197,9 +164,12 @@ void Block::setBackgroundImageFocus( sf::Sprite *p_sprite, bool scale )
 		delete this->mBackgroundImageFocus;
 
 	this->mBackgroundImageFocus = p_sprite;
-	this->mBackgroundImageFocus->setPosition((float)this->getX(), (float)this->getY());
-	if(scale)
-		this->mBackgroundImageFocus->setScale((float)this->getWidth() / (float)(this->mBackgroundImageFocus->getTextureRect().width), (float)this->getHeight() / (float)(this->mBackgroundImageFocus->getTextureRect().height));
+	if(this->mBackgroundImageFocus != NULL)
+	{
+		this->mBackgroundImageFocus->setPosition((float)this->getX(), (float)this->getY());
+		if(scale)
+			this->mBackgroundImageFocus->setScale((float)this->getWidth() / (float)(this->mBackgroundImageFocus->getTextureRect().width), (float)this->getHeight() / (float)(this->mBackgroundImageFocus->getTextureRect().height));
+	}
 }
 
 sf::Color Block::getBorderColor()

@@ -177,6 +177,7 @@ void WeaponView::update()
 		{
 			this->updateAmmoIcon();
 			this->updateAmmoInfo();
+			this->updateWeaponInfo();
 		}
 
 		if(this->getWeapon()->isAmmoCountChanged())
@@ -192,23 +193,23 @@ void WeaponView::update()
 
 void WeaponView::updateAmmoIcon()
 {
+	// Clear
+	this->mAmmoIcon.setBorderColor(WEAPONVIEW_BORDCOLOR, true);
+	this->mAmmoIcon.setBackgroundImage(NULL, false);
+
+	// Update
 	if(this->mWeapon != NULL && this->mWeapon->getAmmo() != NULL)
 	{
 		this->mAmmoIcon.setBorderColor(this->getWeapon()->getAmmo()->getAmmoType()->getColor(), true);
 		this->mAmmoIcon.setBackgroundImage(SpriteParameterFactory::getSpriteParameterItems()->getSpritePtr(this->getWeapon()->getAmmo()->getSpriteId()), true);
 	}
-	else
-	{
-
-	}
 }
 
 void WeaponView::updateAmmoInfo()
 {
-	// Bubble Ammo
-	if(this->mWeapon->getAmmo())
+	this->mAmmoInfo->clear(false);
+	if(this->mWeapon != NULL && this->mWeapon->getAmmo() != NULL)
 	{
-		this->mAmmoInfo->clear(false);
 		this->mAmmoInfo->addLine(	Resource::resource->getBundle()->getString("uiAmmoInfoName") + 
 			":" + Tools::getSpaceAfterColon() + this->getWeapon()->getAmmo()->getName(), false);
 		this->mAmmoInfo->addLine(	Resource::resource->getBundle()->getString("uiAmmoInfoType") + 
@@ -223,8 +224,8 @@ void WeaponView::updateAmmoInfo()
 			":" + Tools::getSpaceAfterColon() + Tools::buildStringWithDouble(this->getWeapon()->getAmmo()->getDamage()), false);
 		this->mAmmoInfo->addLine(	Resource::resource->getBundle()->getString("uiAmmoInfoSplash") + 
 			":" + Tools::getSpaceAfterColon() + (this->getWeapon()->getAmmo()->getSplashRadius() > 0 ? Resource::resource->getBundle()->getString("yes") : Resource::resource->getBundle()->getString("no")), false);
-		this->mAmmoInfo->notifyDataSetChanged();
 	}
+	this->mAmmoInfo->notifyDataSetChanged();
 }
 
 void WeaponView::updateAmmoCount()
@@ -270,6 +271,31 @@ void WeaponView::updateAmmoCountPosition()
 									this->mAmmoIcon.getY() + (this->mAmmoIcon.getHeight() - this->mAmmoCount.getHeight()) / 2);
 }
 
+void WeaponView::updateWeaponInfo()
+{
+	this->mWeaponInfo->clear(false);
+	if(this->mWeapon != NULL)
+	{
+		this->mWeaponInfo->addLine(	Resource::resource->getBundle()->getString("uiWeaponInfoName") + 
+			":" + Tools::getSpaceAfterColon() + this->getWeapon()->getWeaponModel()->getName(), false);
+
+		if(this->getWeapon()->getWeaponModel()->getItemType()->hasParent())
+			this->mWeaponInfo->addLine(	Resource::resource->getBundle()->getString("uiWeaponInfoType") + 
+			":" + Tools::getSpaceAfterColon() + this->getWeapon()->getWeaponModel()->getItemType()->getParent()->getName() + " " + this->getWeapon()->getWeaponModel()->getItemType()->getName(), false);
+		else
+			this->mWeaponInfo->addLine(	Resource::resource->getBundle()->getString("uiWeaponInfoType") + 
+			":" + Tools::getSpaceAfterColon() + this->getWeapon()->getWeaponModel()->getItemType()->getName(), false);
+
+		this->mWeaponInfo->addLine(	Resource::resource->getBundle()->getString("uiWeaponInfoRange") + 
+			":" + Tools::getSpaceAfterColon() + Tools::buildStringWithInt(this->getWeapon()->getWeaponModel()->getRange()) + " " + Resource::resource->getBundle()->getString("meterAb"), false);
+		this->mWeaponInfo->addLine(	Resource::resource->getBundle()->getString("uiWeaponInfoAngle") + 
+			":" + Tools::getSpaceAfterColon() + Tools::buildStringWithInt(this->getWeapon()->getWeaponModel()->getRangeAngle()) + " " + Resource::resource->getBundle()->getString("degreesAb"), false);
+		this->mWeaponInfo->addLine(	Resource::resource->getBundle()->getString("uiWeaponInfoDps") + 
+			":" + Tools::getSpaceAfterColon() + Tools::buildStringWithDouble(this->getWeapon()->getDps()), false);
+	}
+	this->mWeaponInfo->notifyDataSetChanged();
+}
+
 void WeaponView::draw()
 {
 	if(this->isVisible())
@@ -302,33 +328,13 @@ void WeaponView::notifyWeaponChanged()
 	if(this->mWeapon != NULL)
 	{
 		this->mWeaponIcon.setBackgroundImage(SpriteParameterFactory::getSpriteParameterItems()->getSpritePtr(this->mWeapon->getWeaponModel()->getSpriteId()), true);
-
-		// Bubble Weapon
-		this->mWeaponInfo->clear(false);
-		this->mWeaponInfo->addLine(	Resource::resource->getBundle()->getString("uiWeaponInfoName") + 
-			":" + Tools::getSpaceAfterColon() + this->getWeapon()->getWeaponModel()->getName(), false);
-
-		if(this->getWeapon()->getWeaponModel()->getItemType()->hasParent())
-			this->mWeaponInfo->addLine(	Resource::resource->getBundle()->getString("uiWeaponInfoType") + 
-				":" + Tools::getSpaceAfterColon() + this->getWeapon()->getWeaponModel()->getItemType()->getParent()->getName() + " " + this->getWeapon()->getWeaponModel()->getItemType()->getName(), false);
-		else
-			this->mWeaponInfo->addLine(	Resource::resource->getBundle()->getString("uiWeaponInfoType") + 
-				":" + Tools::getSpaceAfterColon() + this->getWeapon()->getWeaponModel()->getItemType()->getName(), false);
-
-		this->mWeaponInfo->addLine(	Resource::resource->getBundle()->getString("uiWeaponInfoRange") + 
-			":" + Tools::getSpaceAfterColon() + Tools::buildStringWithInt(this->getWeapon()->getWeaponModel()->getRange()) + " " + Resource::resource->getBundle()->getString("meterAb"), false);
-		this->mWeaponInfo->addLine(	Resource::resource->getBundle()->getString("uiWeaponInfoAngle") + 
-			":" + Tools::getSpaceAfterColon() + Tools::buildStringWithInt(this->getWeapon()->getWeaponModel()->getRangeAngle()) + " " + Resource::resource->getBundle()->getString("degreesAb"), false);
-		this->mWeaponInfo->addLine(	Resource::resource->getBundle()->getString("uiWeaponInfoDps") + 
-			":" + Tools::getSpaceAfterColon() + Tools::buildStringWithDouble(this->getWeapon()->getDps()), false);
-		this->mWeaponInfo->notifyDataSetChanged();
-
-		this->updateAmmoCount();
-		this->updateAmmoIcon();
-		this->updateAmmoInfo();
-		this->updateAngle();
-		this->updateRange();
 	}
+	this->updateWeaponInfo();
+	this->updateAmmoCount();
+	this->updateAmmoIcon();
+	this->updateAmmoInfo();
+	this->updateAngle();
+	this->updateRange();
 	this->setVisible(this->mWeapon != NULL);
 }
 

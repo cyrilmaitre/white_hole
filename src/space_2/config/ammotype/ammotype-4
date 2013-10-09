@@ -1,6 +1,6 @@
 id = 4
 name = ammoTypeAntiStructureName
 description = ammoTypeAntiStructureDescription
-color = #FF8C3F
+color = #9B1A0F
 damagebonus = 0;0;10
 damagemalus = 5;5;0
