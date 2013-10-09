@@ -1,5 +1,6 @@
 #include "AmmoType.h"
 #include "SplitString.h"
+#include "ToolsImage.h"
 
 
 //*************************************************************
@@ -48,12 +49,12 @@ void AmmoType::setDescription( std::string p_description )
 	this->mDescription = p_description;
 }
 
-std::string AmmoType::getColor()
+sf::Color AmmoType::getColor()
 {
 	return this->mColor;
 }
 
-void AmmoType::setColor( std::string p_color )
+void AmmoType::setColor( sf::Color p_color )
 {
 	this->mColor = p_color;
 }
@@ -128,7 +129,7 @@ void AmmoType::loadFromConfig( KeyValueFile* p_config )
 	this->setIdAmmoType(p_config->getLong(AMMOTYPE_CONFIG_ID));
 	this->setName(Resource::resource->getBundle()->getString(p_config->getString(AMMOTYPE_CONFIG_NAME)));
 	this->setDescription(Resource::resource->getBundle()->getString(p_config->getString(AMMOTYPE_CONFIG_DESCRIPTION)));
-	this->setColor(p_config->getString(AMMOTYPE_CONFIG_COLOR));
+	this->setColor(ToolsImage::hexaToColor(p_config->getString(AMMOTYPE_CONFIG_COLOR)));
 	this->setDamageBonus(p_config->getString(AMMOTYPE_CONFIG_DAMAGEBONUS));
 	this->setDamageMalus(p_config->getString(AMMOTYPE_CONFIG_DAMAGEMALUS));
 }

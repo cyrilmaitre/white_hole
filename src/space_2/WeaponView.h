@@ -28,6 +28,7 @@ public:
 	void updateAmmoCountPosition();
 	void updateAmmoCount();
 	void updateAmmoIcon();
+	void updateAmmoInfo();
 	void updateRange();
 	void updateAngle();
 	void draw();

@@ -160,12 +160,12 @@ void ContainerStackView::notifyItemStackChanged()
 		this->mPUBInfo->addLine(Resource::resource->getBundle()->getString("tier") + 
 			":" + Tools::getSpaceAfterColon() + this->getContainerStack()->getItemStack()->getItem()->getItemTier()->getName(), false);
 		this->mPUBInfo->addLine(Resource::resource->getBundle()->getString("price") + 
-			":" + Tools::getSpaceAfterColon() + Tools::buildStringWithDouble(this->getContainerStack()->getItemStack()->getItem()->getPrice()) +
+			":" + Tools::getSpaceAfterColon() + Tools::formatNumber(this->getContainerStack()->getItemStack()->getItem()->getPrice()) +
 			" " + Resource::resource->getBundle()->getString("creditAb"), false);
 		this->mPUBInfo->addLine(Resource::resource->getBundle()->getString("itemStackSize") + 
-			":" + Tools::getSpaceAfterColon() + Tools::buildStringWithInt(this->getContainerStack()->getItemStack()->getStackSize()), false);
+			":" + Tools::getSpaceAfterColon() + Tools::formatNumber(this->getContainerStack()->getItemStack()->getStackSize()), false);
 		this->mPUBInfo->addLine(Resource::resource->getBundle()->getString("itemStackPrice") + 
-			":" + Tools::getSpaceAfterColon() + Tools::buildStringWithDouble(this->getContainerStack()->getItemStack()->getStackPrice()) + 
+			":" + Tools::getSpaceAfterColon() + Tools::formatNumber(this->getContainerStack()->getItemStack()->getStackPrice()) + 
 			" " + Resource::resource->getBundle()->getString("creditAb"), false);
 		this->mPUBInfo->notifyDataSetChanged();
 	}

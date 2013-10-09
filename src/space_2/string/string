@@ -748,6 +748,13 @@ hangarButtonOpenShipSheet = Ship's sheet
 hangarShipWeapon = Weapon:
 hangarShipAmmo = Ammo:
 hangarShipWeaponAllowed = Allowed weapons:
+hangarShipWeaponInfoDamageMultiplier = Damage multiplier:
+hangarShipWeaponInfoAmmoMax = Charger:
+hangarShipWeaponInfoRange = Range:
+hangarShipWeaponInfoRangeAngle = Sight:
+hangarShipWeaponInfoRealoadingSpeed = Reloading speed:
+hangarShipWeaponInfoFirerate = Fire rate:
+hangarShipWeaponInfoAmmoType = Ammo allowed:
 #
 #
 # Dashboard

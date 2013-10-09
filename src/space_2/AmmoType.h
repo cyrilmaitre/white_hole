@@ -30,8 +30,8 @@ public:
 	std::string getDescription();
 	void setDescription(std::string p_description);
 
-	std::string getColor();
-	void setColor(std::string p_color);
+	sf::Color getColor();
+	void setColor(sf::Color p_color);
 
 	int getDamageShieldBonus();
 	int getDamageShieldMalus();
@@ -54,7 +54,7 @@ private:
 	long mIdAmmoType;
 	std::string mName;
 	std::string mDescription;
-	std::string mColor;
+	sf::Color mColor;
 	int mDamageBonus[AMMOTYPE_BONUS_COUNT];
 	int mDamageMalus[AMMOTYPE_MALUS_COUNT];
 };

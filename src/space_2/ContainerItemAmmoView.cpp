@@ -1,14 +1,16 @@
 #include "ContainerItemAmmoView.h"
 #include "HangarShipWeaponView.h"
+#include "FactoryGet.h"
+#include "AmmoModel.h"
 
 
 //*************************************************************
 // Define
 //*************************************************************
-#define CONTAINERWIDTH			36
-#define CONTAINERHEIGHT			36
-#define ICONWIDTH				32
-#define ICONHEIGHT				32
+#define CONTAINERWIDTH				36
+#define CONTAINERHEIGHT				36
+#define ICONWIDTH					32
+#define ICONHEIGHT					32
 
 
 //*************************************************************

@@ -1,5 +1,7 @@
 #include "ContainerStackWeaponView.h"
 #include "HangarShipWeaponView.h"
+#include "Weapon.h"
+#include "FactoryGet.h"
 
 
 //*************************************************************
@@ -74,6 +76,33 @@ void ContainerStackWeaponView::updatePub()
 		":" + Tools::getSpaceAfterColon() + this->getContainerStack()->getItemStack()->getItem()->getItemType()->getAriane(), false);
 	this->mPUBInfo->addLine(Resource::resource->getBundle()->getString("tier") + 
 		":" + Tools::getSpaceAfterColon() + this->getContainerStack()->getItemStack()->getItem()->getItemTier()->getName(), false);
+
+	WeaponModel* weaponModel = FactoryGet::getWeaponModelFactory()->getWeaponModel(this->getContainerStack()->getItemStack()->getItem()->getIdItem());
+	this->mPUBInfo->addLine("  ");
+	this->mPUBInfo->addLine(Resource::resource->getBundle()->getString("hangarShipWeaponInfoDamageMultiplier") + 
+		":" + Tools::getSpaceAfterColon() + Tools::formatNumber(weaponModel->getDamageMultiplier()), false);
+	this->mPUBInfo->addLine(Resource::resource->getBundle()->getString("hangarShipWeaponInfoAmmoMax") + 
+		":" + Tools::getSpaceAfterColon() + Tools::formatNumber(weaponModel->getAmmoMax()), false);
+	this->mPUBInfo->addLine(Resource::resource->getBundle()->getString("hangarShipWeaponInfoRange") + 
+		":" + Tools::getSpaceAfterColon() + Tools::formatNumber(weaponModel->getRange()), false);
+	this->mPUBInfo->addLine(Resource::resource->getBundle()->getString("hangarShipWeaponInfoRangeAngle") + 
+		":" + Tools::getSpaceAfterColon() + Tools::formatNumber(weaponModel->getRangeAngle()), false);
+	this->mPUBInfo->addLine(Resource::resource->getBundle()->getString("hangarShipWeaponInfoRealoadingSpeed") + 
+		":" + Tools::getSpaceAfterColon() + Tools::formatNumber(weaponModel->getReloadingSpeed()), false);
+	this->mPUBInfo->addLine(Resource::resource->getBundle()->getString("hangarShipWeaponInfoFirerate") + 
+		":" + Tools::getSpaceAfterColon() + Tools::formatNumber(weaponModel->getFireRate()), false);
+
+	this->mPUBInfo->addLine("  ");
+	this->mPUBInfo->addLine(Resource::resource->getBundle()->getString("hangarShipWeaponInfoAmmoType"));
+	for(int i = 0; i < weaponModel->getAmmoTypeAllowedCount(); i++)
+	{
+		ItemType* currentType = weaponModel->getAmmoTypeAllowed(i);
+		if(currentType->hasParent())
+			this->mPUBInfo->addLine("- " + currentType->getParent()->getName() + " " + currentType->getName());
+		else
+			this->mPUBInfo->addLine("- " + currentType->getName());
+	}
+
 	this->mPUBInfo->notifyDataSetChanged();
 }
 
