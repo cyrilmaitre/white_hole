@@ -27,5 +27,7 @@ public:
 protected:
 	// Attributs
 	ContainerItem* mContainerItem;
+	sf::Color mBackgroundColor;
+	sf::Color mBackgroundColorOver;
 };
 

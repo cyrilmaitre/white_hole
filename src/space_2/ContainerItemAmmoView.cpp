@@ -56,6 +56,16 @@ void ContainerItemAmmoView::updatePub()
 		":" + Tools::getSpaceAfterColon() + this->getContainerItem()->getItem()->getItemType()->getAriane(), false);
 	this->mPUBInfo->addLine(Resource::resource->getBundle()->getString("tier") + 
 		":" + Tools::getSpaceAfterColon() + this->getContainerItem()->getItem()->getItemTier()->getName(), false);
+
+	AmmoModel* ammoModel = FactoryGet::getAmmoFactory()->getAmmo(this->getContainerItem()->getItem()->getIdItem());
+	this->mPUBInfo->addLine("  ");
+	this->mPUBInfo->addLine(Resource::resource->getBundle()->getString("hangarShipAmmoInfoDamage") + 
+		":" + Tools::getSpaceAfterColon() + Tools::formatNumber(ammoModel->getDamage()), false);
+	this->mPUBInfo->addLine(Resource::resource->getBundle()->getString("hangarShipAmmoInfoSplash") + 
+		":" + Tools::getSpaceAfterColon() + Tools::formatNumber(ammoModel->getSplashRadius()), false);
+	this->mPUBInfo->addLine(Resource::resource->getBundle()->getString("hangarShipAmmoInfoAmmoTYpe") + 
+		":" + Tools::getSpaceAfterColon() + ammoModel->getAmmoType()->getName(), false);
+
 	this->mPUBInfo->notifyDataSetChanged();
 }
 
@@ -65,12 +75,16 @@ void ContainerItemAmmoView::notifyItemChanged()
 
 	if(this->getContainerItem() != NULL && this->getContainerItem()->hasItem())
 	{
+		AmmoModel* ammoModel = FactoryGet::getAmmoFactory()->getAmmo(this->getContainerItem()->getItem()->getIdItem());
+
+		this->mBackgroundColor = ammoModel->getAmmoType()->getColor();
 		this->setEnable(true);
 		this->updateIcon();
 		this->updatePub();
 	}
 	else
 	{
+		this->mBackgroundColor = CONTAINERVIEW_BACKGROUND_COLOR;
 		this->setEnable(false);
 	}
 

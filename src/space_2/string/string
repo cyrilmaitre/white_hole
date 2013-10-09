@@ -755,6 +755,9 @@ hangarShipWeaponInfoRangeAngle = Sight:
 hangarShipWeaponInfoRealoadingSpeed = Reloading speed:
 hangarShipWeaponInfoFirerate = Fire rate:
 hangarShipWeaponInfoAmmoType = Ammo allowed:
+hangarShipAmmoInfoDamage = Damage:
+hangarShipAmmoInfoSplash = Splash damage:
+hangarShipAmmoInfoAmmoTYpe = Damage type:
 #
 #
 # Dashboard

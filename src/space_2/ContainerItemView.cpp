@@ -11,6 +11,9 @@ ContainerItemView::ContainerItemView( ContainerItem* p_item )
 	this->mContainerItem = NULL;
 	this->setContainerItem(p_item);
 	this->setContainerViewType(ContainerViewType::ItemView);
+
+	this->mBackgroundColor = CONTAINERVIEW_BACKGROUND_COLOR;
+	this->mBackgroundColorOver = CONTAINERVIEW_BACKGROUND_COLOROVER;
 }
 
 ContainerItemView::~ContainerItemView(void)
@@ -86,9 +89,9 @@ void ContainerItemView::updateBackgroundColor()
 	}
 
 	if(overColor)
-		this->mBackground.setFillColor(CONTAINERVIEW_BACKGROUND_COLOROVER);
+		this->mBackground.setFillColor(this->mBackgroundColorOver);
 	else
-		this->mBackground.setFillColor(CONTAINERVIEW_BACKGROUND_COLOR);
+		this->mBackground.setFillColor(this->mBackgroundColor);
 }
 
 void ContainerItemView::update( sf::Event p_event )
