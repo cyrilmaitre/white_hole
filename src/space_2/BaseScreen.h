@@ -24,7 +24,7 @@ public:
 	virtual void updatePosition();
 	virtual void hideScreen();
 	virtual void showScreen();
-	void notifyAppSizeChanged();
+	virtual void notifyAppSizeChanged();
 
 
 protected:

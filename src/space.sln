@@ -2,15 +2,22 @@
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "space_2", "space_2\space_2.vcxproj", "{39970792-E322-49B6-9602-522FBE2B83D7}"
+	ProjectSection(ProjectDependencies) = postProject
+		{98400D17-43A5-1A40-95BE-C53AC78E7694} = {98400D17-43A5-1A40-95BE-C53AC78E7694}
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Box2D", "..\lib\box2d\Box2D_v2.2.1\Build\vs2010\Box2D.vcxproj", "{98400D17-43A5-1A40-95BE-C53AC78E7694}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Debug|Mixed Platforms = Debug|Mixed Platforms
 		Debug|Win32 = Debug|Win32
+		Debug|x64 = Debug|x64
 		Release|Any CPU = Release|Any CPU
 		Release|Mixed Platforms = Release|Mixed Platforms
 		Release|Win32 = Release|Win32
+		Release|x64 = Release|x64
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{39970792-E322-49B6-9602-522FBE2B83D7}.Debug|Any CPU.ActiveCfg = Debug|Win32
@@ -18,11 +25,27 @@ Global
 		{39970792-E322-49B6-9602-522FBE2B83D7}.Debug|Mixed Platforms.Build.0 = Debug|Win32
 		{39970792-E322-49B6-9602-522FBE2B83D7}.Debug|Win32.ActiveCfg = Debug|Win32
 		{39970792-E322-49B6-9602-522FBE2B83D7}.Debug|Win32.Build.0 = Debug|Win32
+		{39970792-E322-49B6-9602-522FBE2B83D7}.Debug|x64.ActiveCfg = Debug|Win32
 		{39970792-E322-49B6-9602-522FBE2B83D7}.Release|Any CPU.ActiveCfg = Release|Win32
 		{39970792-E322-49B6-9602-522FBE2B83D7}.Release|Mixed Platforms.ActiveCfg = Release|Win32
 		{39970792-E322-49B6-9602-522FBE2B83D7}.Release|Mixed Platforms.Build.0 = Release|Win32
 		{39970792-E322-49B6-9602-522FBE2B83D7}.Release|Win32.ActiveCfg = Release|Win32
 		{39970792-E322-49B6-9602-522FBE2B83D7}.Release|Win32.Build.0 = Release|Win32
+		{39970792-E322-49B6-9602-522FBE2B83D7}.Release|x64.ActiveCfg = Release|Win32
+		{98400D17-43A5-1A40-95BE-C53AC78E7694}.Debug|Any CPU.ActiveCfg = Debug|x64
+		{98400D17-43A5-1A40-95BE-C53AC78E7694}.Debug|Mixed Platforms.ActiveCfg = Debug|x64
+		{98400D17-43A5-1A40-95BE-C53AC78E7694}.Debug|Mixed Platforms.Build.0 = Debug|x64
+		{98400D17-43A5-1A40-95BE-C53AC78E7694}.Debug|Win32.ActiveCfg = Debug|Win32
+		{98400D17-43A5-1A40-95BE-C53AC78E7694}.Debug|Win32.Build.0 = Debug|Win32
+		{98400D17-43A5-1A40-95BE-C53AC78E7694}.Debug|x64.ActiveCfg = Debug|x64
+		{98400D17-43A5-1A40-95BE-C53AC78E7694}.Debug|x64.Build.0 = Debug|x64
+		{98400D17-43A5-1A40-95BE-C53AC78E7694}.Release|Any CPU.ActiveCfg = Release|x64
+		{98400D17-43A5-1A40-95BE-C53AC78E7694}.Release|Mixed Platforms.ActiveCfg = Release|x64
+		{98400D17-43A5-1A40-95BE-C53AC78E7694}.Release|Mixed Platforms.Build.0 = Release|x64
+		{98400D17-43A5-1A40-95BE-C53AC78E7694}.Release|Win32.ActiveCfg = Release|Win32
+		{98400D17-43A5-1A40-95BE-C53AC78E7694}.Release|Win32.Build.0 = Release|Win32
+		{98400D17-43A5-1A40-95BE-C53AC78E7694}.Release|x64.ActiveCfg = Release|x64
+		{98400D17-43A5-1A40-95BE-C53AC78E7694}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -49,7 +49,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>D:\Projets\white_hole\lib\boost\boost_1_54_0;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>D:\Projets\white_hole\lib\box2d\Box2D_v2.2.1;D:\Projets\white_hole\lib\boost\boost_1_54_0;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -67,7 +67,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>D:\Projets\white_hole\lib\boost\boost_1_54_0;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>D:\Projets\white_hole\lib\box2d\Box2D_v2.2.1;D:\Projets\white_hole\lib\boost\boost_1_54_0;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -146,6 +146,12 @@
     <ClCompile Include="LoadingGameScreen.cpp" />
     <ClCompile Include="MapMiniView.cpp" />
     <ClCompile Include="MapObjectModel.cpp" />
+    <ClCompile Include="MarioGame.cpp" />
+    <ClCompile Include="MarioGameBlock.cpp" />
+    <ClCompile Include="MarioGameBonus.cpp" />
+    <ClCompile Include="MarioGameBrick.cpp" />
+    <ClCompile Include="MarioGameGround.cpp" />
+    <ClCompile Include="MarioGameMario.cpp" />
     <ClCompile Include="MarketItemBuyView.cpp" />
     <ClCompile Include="MarketItemDetailView.cpp" />
     <ClCompile Include="MarketItemListView.cpp" />
@@ -452,6 +458,12 @@
     <ClInclude Include="LoadingGameScreen.h" />
     <ClInclude Include="MapMiniView.h" />
     <ClInclude Include="MapObjectModel.h" />
+    <ClInclude Include="MarioGame.h" />
+    <ClInclude Include="MarioGameBlock.h" />
+    <ClInclude Include="MarioGameBonus.h" />
+    <ClInclude Include="MarioGameBrick.h" />
+    <ClInclude Include="MarioGameGround.h" />
+    <ClInclude Include="MarioGameMario.h" />
     <ClInclude Include="MarketItemBuyView.h" />
     <ClInclude Include="MarketItemDetailView.h" />
     <ClInclude Include="MarketItemListView.h" />
@@ -690,6 +702,11 @@
     <ClInclude Include="Wreck.h" />
     <ClInclude Include="WreckManager.h" />
     <ClInclude Include="WreckMini.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\lib\box2d\Box2D_v2.2.1\Build\vs2010\Box2D.vcxproj">
+      <Project>{98400d17-43a5-1a40-95be-c53ac78e7694}</Project>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

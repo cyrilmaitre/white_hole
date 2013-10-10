@@ -2,6 +2,7 @@
 #include "BaseScreen.h"
 #include "TextBox.h"
 #include "ImageGIF.h"
+#include "MarioGame.h"
 
 
 class LoadingGameScreen : public BaseScreen
@@ -17,11 +18,13 @@ public:
 	void updatePosition();
 	void update(sf::Event p_event);
 	void draw();
+	void notifyAppSizeChanged();
 
 
 private:
 	// Attributs
 	TextBox mTBLoading;
 	ImageGIF* mGifLoading;
+	MarioGame mMarioGame;
 };
 

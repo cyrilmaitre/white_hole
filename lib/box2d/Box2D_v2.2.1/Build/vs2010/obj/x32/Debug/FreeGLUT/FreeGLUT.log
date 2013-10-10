@@ -1,0 +1,67 @@
+﻿La génération a démarré 10/10/2013 14:56:20.
+     1>Projet "D:\Projets\white_hole\lib\box2d\Box2D_v2.2.1\Build\vs2010\FreeGLUT.vcxproj" sur le nœud 2 (build cible(s)).
+     1>InitializeBuildStatus:
+         Création de "obj\x32\Debug\FreeGLUT\FreeGLUT.unsuccessfulbuild", car "AlwaysCreate" a été spécifié.
+       ClCompile:
+         C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /Od /Oy- /D _CRT_SECURE_NO_WARNINGS /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /Gy /fp:precise /Zc:wchar_t /Zc:forScope /Fo"obj\x32\Debug\FreeGLUT\\" /Fd"bin\Debug\FreeGLUT.pdb" /Gd /TC /analyze- /errorReport:prompt ..\..\freeglut\freeglut_callbacks.c ..\..\freeglut\freeglut_cursor.c ..\..\freeglut\freeglut_display.c ..\..\freeglut\freeglut_ext.c ..\..\freeglut\freeglut_font.c ..\..\freeglut\freeglut_font_data.c ..\..\freeglut\freeglut_gamemode.c ..\..\freeglut\freeglut_geometry.c ..\..\freeglut\freeglut_glutfont_definitions.c ..\..\freeglut\freeglut_init.c ..\..\freeglut\freeglut_input_devices.c ..\..\freeglut\freeglut_joystick.c ..\..\freeglut\freeglut_main.c ..\..\freeglut\freeglut_menu.c ..\..\freeglut\freeglut_misc.c ..\..\freeglut\freeglut_overlay.c ..\..\freeglut\freeglut_spaceball.c ..\..\freeglut\freeglut_state.c ..\..\freeglut\freeglut_stroke_mono_roman.c ..\..\freeglut\freeglut_stroke_roman.c ..\..\freeglut\freeglut_structure.c ..\..\freeglut\freeglut_teapot.c ..\..\freeglut\freeglut_videoresize.c ..\..\freeglut\freeglut_window.c
+         freeglut_window.c
+         freeglut_videoresize.c
+         freeglut_teapot.c
+         freeglut_structure.c
+         freeglut_stroke_roman.c
+         freeglut_stroke_mono_roman.c
+         freeglut_state.c
+         freeglut_spaceball.c
+         freeglut_overlay.c
+         freeglut_misc.c
+         freeglut_menu.c
+         freeglut_main.c
+         freeglut_joystick.c
+         freeglut_input_devices.c
+         freeglut_init.c
+         freeglut_glutfont_definitions.c
+         freeglut_geometry.c
+         freeglut_gamemode.c
+         freeglut_font_data.c
+         freeglut_font.c
+         Génération de code en cours...
+         Compilation en cours...
+         freeglut_ext.c
+         freeglut_display.c
+         freeglut_cursor.c
+         freeglut_callbacks.c
+         Génération de code en cours...
+       Lib:
+         C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\Lib.exe /OUT:"bin\Debug\FreeGLUT.lib" /NOLOGO /MACHINE:X86 obj\x32\Debug\FreeGLUT\freeglut_callbacks.obj
+         obj\x32\Debug\FreeGLUT\freeglut_cursor.obj
+         obj\x32\Debug\FreeGLUT\freeglut_display.obj
+         obj\x32\Debug\FreeGLUT\freeglut_ext.obj
+         obj\x32\Debug\FreeGLUT\freeglut_font.obj
+         obj\x32\Debug\FreeGLUT\freeglut_font_data.obj
+         obj\x32\Debug\FreeGLUT\freeglut_gamemode.obj
+         obj\x32\Debug\FreeGLUT\freeglut_geometry.obj
+         obj\x32\Debug\FreeGLUT\freeglut_glutfont_definitions.obj
+         obj\x32\Debug\FreeGLUT\freeglut_init.obj
+         obj\x32\Debug\FreeGLUT\freeglut_input_devices.obj
+         obj\x32\Debug\FreeGLUT\freeglut_joystick.obj
+         obj\x32\Debug\FreeGLUT\freeglut_main.obj
+         obj\x32\Debug\FreeGLUT\freeglut_menu.obj
+         obj\x32\Debug\FreeGLUT\freeglut_misc.obj
+         obj\x32\Debug\FreeGLUT\freeglut_overlay.obj
+         obj\x32\Debug\FreeGLUT\freeglut_spaceball.obj
+         obj\x32\Debug\FreeGLUT\freeglut_state.obj
+         obj\x32\Debug\FreeGLUT\freeglut_stroke_mono_roman.obj
+         obj\x32\Debug\FreeGLUT\freeglut_stroke_roman.obj
+         obj\x32\Debug\FreeGLUT\freeglut_structure.obj
+         obj\x32\Debug\FreeGLUT\freeglut_teapot.obj
+         obj\x32\Debug\FreeGLUT\freeglut_videoresize.obj
+         obj\x32\Debug\FreeGLUT\freeglut_window.obj
+         FreeGLUT.vcxproj -> D:\Projets\white_hole\lib\box2d\Box2D_v2.2.1\Build\vs2010\bin\Debug\FreeGLUT.lib
+       FinalizeBuildStatus:
+         Suppression du fichier "obj\x32\Debug\FreeGLUT\FreeGLUT.unsuccessfulbuild".
+         Mise à jour de l'horodatage "obj\x32\Debug\FreeGLUT\FreeGLUT.lastbuildstate".
+     1>Génération du projet "D:\Projets\white_hole\lib\box2d\Box2D_v2.2.1\Build\vs2010\FreeGLUT.vcxproj" terminée (build cible(s)).
+
+La génération a réussi.
+
+Temps écoulé 00:00:05.54

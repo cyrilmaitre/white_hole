@@ -379,6 +379,12 @@
     <Filter Include="Fichiers sources\game\ui\stationscreen\panel\hangar">
       <UniqueIdentifier>{97fc00cb-97af-4e47-8554-a4433cd888ec}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Fichiers d%27en-tête\screen\mariogame">
+      <UniqueIdentifier>{01b44412-5bf4-4022-bc27-32e0fd9cf3d8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fichiers sources\screen\mariogame">
+      <UniqueIdentifier>{441722c7-dc2b-48c6-9dc2-3c7c0547001c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Game.cpp">
@@ -1283,6 +1289,24 @@
     </ClCompile>
     <ClCompile Include="WindowSystem.cpp">
       <Filter>Fichiers sources\game\ui\window</Filter>
+    </ClCompile>
+    <ClCompile Include="MarioGame.cpp">
+      <Filter>Fichiers sources\screen\mariogame</Filter>
+    </ClCompile>
+    <ClCompile Include="MarioGameBlock.cpp">
+      <Filter>Fichiers sources\screen\mariogame</Filter>
+    </ClCompile>
+    <ClCompile Include="MarioGameGround.cpp">
+      <Filter>Fichiers sources\screen\mariogame</Filter>
+    </ClCompile>
+    <ClCompile Include="MarioGameBonus.cpp">
+      <Filter>Fichiers sources\screen\mariogame</Filter>
+    </ClCompile>
+    <ClCompile Include="MarioGameBrick.cpp">
+      <Filter>Fichiers sources\screen\mariogame</Filter>
+    </ClCompile>
+    <ClCompile Include="MarioGameMario.cpp">
+      <Filter>Fichiers sources\screen\mariogame</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -2206,6 +2230,24 @@
     </ClInclude>
     <ClInclude Include="WindowSystem.h">
       <Filter>Fichiers d%27en-tête\game\ui\window</Filter>
+    </ClInclude>
+    <ClInclude Include="MarioGame.h">
+      <Filter>Fichiers d%27en-tête\screen\mariogame</Filter>
+    </ClInclude>
+    <ClInclude Include="MarioGameBlock.h">
+      <Filter>Fichiers d%27en-tête\screen\mariogame</Filter>
+    </ClInclude>
+    <ClInclude Include="MarioGameGround.h">
+      <Filter>Fichiers d%27en-tête\screen\mariogame</Filter>
+    </ClInclude>
+    <ClInclude Include="MarioGameBonus.h">
+      <Filter>Fichiers d%27en-tête\screen\mariogame</Filter>
+    </ClInclude>
+    <ClInclude Include="MarioGameBrick.h">
+      <Filter>Fichiers d%27en-tête\screen\mariogame</Filter>
+    </ClInclude>
+    <ClInclude Include="MarioGameMario.h">
+      <Filter>Fichiers d%27en-tête\screen\mariogame</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

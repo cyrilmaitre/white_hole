@@ -34,7 +34,7 @@ double LoadingGameScreen::launch()
 	this->setRunning(true);
 	this->update();
 	this->notifyAppSizeChanged();
-	while(this->isRunning())
+	while(Resource::resource->isAppRunning())
 	{		
 		// Update
 		this->update();
@@ -64,11 +64,12 @@ void LoadingGameScreen::update()
 {
 	BaseScreen::update();
 	this->mGifLoading->update();
+	this->mMarioGame.update();
 }
 
 void LoadingGameScreen::update( sf::Event p_event )
 {
-
+	this->mMarioGame.update(p_event);
 }
 
 void LoadingGameScreen::updatePosition()
@@ -76,6 +77,7 @@ void LoadingGameScreen::updatePosition()
 	BaseScreen::updatePosition();
 	this->mTBLoading.setPosition((Resource::resource->getViewUi()->getSize().x - this->mTBLoading.getWidth()) / 2, (Resource::resource->getViewUi()->getSize().y - this->mTBLoading.getHeight()) / 2 - LOADING_MARGINTOP);
 	this->mGifLoading->setPosition((Resource::resource->getViewUi()->getSize().x - this->mGifLoading->getWidth()) / 2, this->mTBLoading.getBottomY() + GIFLOADING_MARGINTOP);
+	this->mMarioGame.setPosition(0, Resource::resource->getViewUi()->getSize().y - this->mMarioGame.getHeight());
 }
 
 void LoadingGameScreen::draw()
@@ -84,5 +86,13 @@ void LoadingGameScreen::draw()
 	Resource::resource->getApp()->draw(this->mBackgroundSprite);
 	this->mTBLoading.draw();
 	this->mGifLoading->draw();
+	this->mMarioGame.draw();
 	Resource::resource->getApp()->display();
+}
+
+void LoadingGameScreen::notifyAppSizeChanged()
+{
+	BaseScreen::notifyAppSizeChanged();
+	this->mMarioGame.setWidth(Resource::resource->getViewUi()->getSize().x);
+	this->updatePosition();
 }

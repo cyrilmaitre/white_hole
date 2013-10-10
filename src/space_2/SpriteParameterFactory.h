@@ -22,6 +22,7 @@
 #define SP_ID_LOADING_SQUARE_CIRCLE		IMG_LOADING_SQUARE_CIRCLE
 #define SP_ID_SAVING_GIF				IMG_SAVING_GIF
 #define SP_ID_LOADING_BERT				IMG_LOADING_BERT
+#define SP_ID_MARIOGAME					IMG_MARIOGAME
 
 class SpriteParameterFactory
 {
@@ -46,6 +47,7 @@ public:
 	static SpriteParameter* getSpriteParameterLoadingSquareCircle(bool useLoaded = true);
 	static SpriteParameter* getSpriteParameterLoadingBert(bool useLoaded = true);
 	static SpriteParameter* getSpriteParameterSavingGif(bool useLoaded = true);
+	static SpriteParameter* getSpriteParameterMarioGame(bool useLoaded = true);
 	static SpriteParameter* getSpriteParameter(std::string id, int spriteColumn, int spriteLine, bool useLoaded = true);
 	static void uninit();
 

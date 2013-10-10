@@ -63,6 +63,7 @@
 #define IMG_PROJECTILE_MISSILE_GLOW			"projectile_missile_glow.png"
 #define IMG_PROJECTILE_ROCKET				"projectile_rocket.png"
 #define IMG_PROJECTILE_ROCKET_GLOW			"projectile_rocket_glow.png"
+#define IMG_MARIOGAME						"mariogame.png"
 
 // Fonts
 #define FOLDER_FONT					"font/"
