@@ -122,7 +122,7 @@ SpriteParameter* SpriteParameterFactory::getSpriteParameterImpactExplosion( bool
 
 SpriteParameter* SpriteParameterFactory::getSpriteParameterMarioGame( bool useLoaded )
 {
-	return SpriteParameterFactory::getSpriteParameter(SP_ID_MARIOGAME, 5, 2, useLoaded);
+	return SpriteParameterFactory::getSpriteParameter(SP_ID_MARIOGAME, 5, 4, useLoaded);
 }
 
 SpriteParameter* SpriteParameterFactory::getSpriteParameter( std::string id, int spriteColumn, int spriteLine, bool useLoaded )

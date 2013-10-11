@@ -4,13 +4,18 @@
 
 
 //*************************************************************
+// Define
+//*************************************************************
+#define BONUS_EFFECTTIME		0.25	// sec
+
+
+//*************************************************************
 // Constructor - Destructor
 //*************************************************************
-MarioGameBonus::MarioGameBonus( MarioGame* p_game, sf::Vector2i p_positionGrid ) : MarioGameBlock(p_game, p_positionGrid)
+MarioGameBonus::MarioGameBonus( MarioGame* p_game, sf::Vector2i p_positionGrid ) : MarioGameBlockActive(p_game, p_positionGrid)
 {
-	this->mActive = true;
-	this->mSprite = SpriteParameterFactory::getSpriteParameterMarioGame()->getSpritePtr(MARIOGAME_SPRITE_BONUSACTIVE);
-	ToolsImage::setSpriteOriginCenter(this->mSprite);
+	this->mBonusState = BonusState::ActiveOne;
+	this->notifyBonusStateChanged();
 }
 
 MarioGameBonus::~MarioGameBonus(void)
@@ -21,17 +26,17 @@ MarioGameBonus::~MarioGameBonus(void)
 //*************************************************************
 // Getters - Setters
 //*************************************************************
-bool MarioGameBonus::isActive()
+MarioGameBonus::BonusState MarioGameBonus::getBonusState()
 {
-	return this->mActive;
+	return this->mBonusState;
 }
 
-void MarioGameBonus::setActive( bool p_active )
+void MarioGameBonus::setBonusState( BonusState p_state )
 {
-	if(this->mActive != p_active)
+	if(this->mBonusState != p_state)
 	{
-		this->mActive = p_active;
-		this->notifyActiveChanged();
+		this->mBonusState = p_state;
+		this->notifyBonusStateChanged();
 	}
 }
 
@@ -39,7 +44,29 @@ void MarioGameBonus::setActive( bool p_active )
 //*************************************************************
 // Methods
 //*************************************************************
-void MarioGameBonus::notifyActiveChanged()
+void MarioGameBonus::update()
+{
+	MarioGameBlockActive::update();
+	this->updateBonusState();
+}
+
+void MarioGameBonus::updateBonusState()
+{
+	if(this->getBonusState() != BonusState::Inactive && this->mBonusClock.getElapsedTimeAsSeconds() > BONUS_EFFECTTIME)
+	{
+		if(this->getBonusState() == BonusState::ActiveOne)
+			this->setBonusState(BonusState::ActiveTwo);
+		else if(this->getBonusState() == BonusState::ActiveTwo)
+			this->setBonusState(BonusState::ActiveThree);
+		else if(this->getBonusState() == BonusState::ActiveThree)
+			this->setBonusState(BonusState::ActiveFour);
+		else if(this->getBonusState() == BonusState::ActiveFour)
+			this->setBonusState(BonusState::ActiveOne);
+		this->mBonusClock.restart();
+	}
+}
+
+void MarioGameBonus::notifyBonusStateChanged()
 {
 	if(this->mSprite != NULL)
 	{
@@ -47,8 +74,42 @@ void MarioGameBonus::notifyActiveChanged()
 		this->mSprite = NULL;
 	}
 
-	if(this->isActive())
-		this->mSprite = SpriteParameterFactory::getSpriteParameterMarioGame()->getSpritePtr(MARIOGAME_SPRITE_BONUSACTIVE);
-	else
+	switch(this->mBonusState)
+	{
+	case ActiveOne:
+		this->mSprite = SpriteParameterFactory::getSpriteParameterMarioGame()->getSpritePtr(MARIOGAME_SPRITE_BONUSACTIVEONE);
+		break;
+
+	case ActiveTwo:
+		this->mSprite = SpriteParameterFactory::getSpriteParameterMarioGame()->getSpritePtr(MARIOGAME_SPRITE_BONUSACTIVETWO);
+		break;
+
+	case ActiveThree:
+		this->mSprite = SpriteParameterFactory::getSpriteParameterMarioGame()->getSpritePtr(MARIOGAME_SPRITE_BONUSACTIVETHREE);
+		break;
+
+	case ActiveFour:
+		this->mSprite = SpriteParameterFactory::getSpriteParameterMarioGame()->getSpritePtr(MARIOGAME_SPRITE_BONUSACTIVEFOUR);
+		break;
+
+	case Inactive:
 		this->mSprite = SpriteParameterFactory::getSpriteParameterMarioGame()->getSpritePtr(MARIOGAME_SPRITE_BONUSINACTIVE);
+		break;
+	}
+	ToolsImage::setSpriteOriginCenter(this->mSprite);
+	this->updatePosition();
+}
+
+void MarioGameBonus::BeginContact( b2Contact* p_contact, MarioGameUserData::UserDataIndex p_index )
+{
+	if(this->getBonusState() != BonusState::Inactive)
+	{
+		b2WorldManifold worldManifold;
+		p_contact->GetWorldManifold(&worldManifold);
+		if(worldManifold.points[0].y < this->mBodyBrick->GetPosition().y && this->mGame->getBlock(this->mPositionGrid.x, this->mPositionGrid.y + 1) == NULL)
+		{
+			MarioGameBlockActive::BeginContact(p_contact, p_index);
+			this->setBonusState(BonusState::Inactive);
+		}
+	}
 }

@@ -10,7 +10,8 @@ public:
 		BlockActive = 0,
 		Brick,
 		Bonus,
-		Mario
+		Mario,
+		Coin
 	};
 
 	enum UserDataIndex

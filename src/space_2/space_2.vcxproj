@@ -151,6 +151,7 @@
     <ClCompile Include="MarioGameBlockActive.cpp" />
     <ClCompile Include="MarioGameBonus.cpp" />
     <ClCompile Include="MarioGameBrick.cpp" />
+    <ClCompile Include="MarioGameCoin.cpp" />
     <ClCompile Include="MarioGameGround.cpp" />
     <ClCompile Include="MarioGameMario.cpp" />
     <ClCompile Include="MarioGameUserData.cpp" />
@@ -465,6 +466,7 @@
     <ClInclude Include="MarioGameBlockActive.h" />
     <ClInclude Include="MarioGameBonus.h" />
     <ClInclude Include="MarioGameBrick.h" />
+    <ClInclude Include="MarioGameCoin.h" />
     <ClInclude Include="MarioGameGround.h" />
     <ClInclude Include="MarioGameMario.h" />
     <ClInclude Include="MarioGameUserData.h" />

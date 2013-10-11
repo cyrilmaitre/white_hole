@@ -3,6 +3,8 @@
 #include "MarioGameGround.h"
 #include "MarioGameMario.h"
 #include "MarioGameBrick.h"
+#include "MarioGameBonus.h"
+#include "MarioGameCoin.h"
 
 
 //*************************************************************
@@ -95,7 +97,19 @@ void MarioGame::update()
 		for(int j = 0; j < this->mWorldBlocksSize.y; j++)
 		{
 			if(this->mWorldBlocks[i][j] != NULL)
-				this->mWorldBlocks[i][j]->update();
+			{
+				// Check if coin
+				MarioGameCoin* coin = dynamic_cast<MarioGameCoin*>(this->mWorldBlocks[i][j]);
+				if(coin != NULL && coin->getCoinState() == MarioGameCoin::CoinState::Destroy)
+				{
+					delete this->mWorldBlocks[i][j];
+					this->mWorldBlocks[i][j] = NULL;
+				}
+				else
+				{
+					this->mWorldBlocks[i][j]->update();
+				}
+			}
 		}
 	}
 
@@ -154,10 +168,15 @@ void MarioGame::createWorldBlocks()
 
 
 	for(int i = 5; i < 20; i++)
-		this->mWorldBlocks[i][3] = new MarioGameBrick(this, sf::Vector2i(i,3));
+		this->mWorldBlocks[i][3] = new MarioGameBrick(this, sf::Vector2i(i, 3));
 
 	for(int i = 15; i < 20; i++)
-		this->mWorldBlocks[i][4] = new MarioGameBrick(this, sf::Vector2i(i,4));
+		this->mWorldBlocks[i][4] = new MarioGameBrick(this, sf::Vector2i(i, 4));
+
+	this->mWorldBlocks[30][3] = new MarioGameBonus(this, sf::Vector2i(30, 3));
+	
+	for(int i = 15; i < 20; i++)
+		this->mWorldBlocks[i][2] = new MarioGameCoin(this, sf::Vector2i(i, 2));
 }
 
 void MarioGame::updatePosition()

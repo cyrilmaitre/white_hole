@@ -4,10 +4,10 @@
 //*************************************************************
 // Define
 //*************************************************************
-#define UPPEDSTATE_TIME				0.1		// sec
-#define DOWNEDSTATE_TIME			0.1		// sec
-#define UPPEDSTATE_OFFSET			10		// px
-#define DOWNEDSTATE_OFFSET			10		// px
+#define UPPEDSTATE_TIME				0.08		// sec
+#define DOWNEDSTATE_TIME			0.08		// sec
+#define UPPEDSTATE_OFFSET			15			// px
+#define DOWNEDSTATE_OFFSET			15			// px
 
 
 //*************************************************************
@@ -29,6 +29,7 @@ MarioGameBlockActive::MarioGameBlockActive( MarioGame* p_game, sf::Vector2i p_po
 
 MarioGameBlockActive::~MarioGameBlockActive(void)
 {
+	this->mGame->getWorld()->DestroyBody(this->mBodyBrick);
 }
 
 
@@ -84,7 +85,7 @@ void MarioGameBlockActive::BeginContact( b2Contact* p_contact, MarioGameUserData
 {
 	b2WorldManifold worldManifold;
 	p_contact->GetWorldManifold(&worldManifold);
-	if(worldManifold.points[0].y < this->mBodyBrick->GetPosition().y && this->getActiveState() == ActiveState::Idle)
+	if(worldManifold.points[0].y < this->mBodyBrick->GetPosition().y && this->getActiveState() == ActiveState::Idle && this->mGame->getBlock(this->mPositionGrid.x, this->mPositionGrid.y + 1) == NULL)
 	{
 		this->setActiveState(ActiveState::Upped);
 		this->mActiveClock.restart();

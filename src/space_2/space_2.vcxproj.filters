@@ -1314,6 +1314,9 @@
     <ClCompile Include="MarioGameBlockActive.cpp">
       <Filter>Fichiers sources\screen\mariogame</Filter>
     </ClCompile>
+    <ClCompile Include="MarioGameCoin.cpp">
+      <Filter>Fichiers sources\screen\mariogame</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h">
@@ -2262,6 +2265,9 @@
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
     <ClInclude Include="MarioGameBlockActive.h">
+      <Filter>Fichiers d%27en-tête\screen\mariogame</Filter>
+    </ClInclude>
+    <ClInclude Include="MarioGameCoin.h">
       <Filter>Fichiers d%27en-tête\screen\mariogame</Filter>
     </ClInclude>
   </ItemGroup>
