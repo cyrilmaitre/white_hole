@@ -1,5 +1,6 @@
 #include "MarioGameBonus.h"
 #include "SpriteParameterFactory.h"
+#include "ToolsImage.h"
 
 
 //*************************************************************
@@ -9,6 +10,7 @@ MarioGameBonus::MarioGameBonus( MarioGame* p_game, sf::Vector2i p_positionGrid )
 {
 	this->mActive = true;
 	this->mSprite = SpriteParameterFactory::getSpriteParameterMarioGame()->getSpritePtr(MARIOGAME_SPRITE_BONUSACTIVE);
+	ToolsImage::setSpriteOriginCenter(this->mSprite);
 }
 
 MarioGameBonus::~MarioGameBonus(void)

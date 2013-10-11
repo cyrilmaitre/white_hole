@@ -17,7 +17,7 @@ class MarioGameBlock;
 #define MARIOGAME_SPRITE_BRICK				"3-1"
 #define MARIOGAME_SPRITE_COIN				"4-1"
 
-class MarioGame : public Object
+class MarioGame : public Object, public b2ContactListener
 {
 public:
 	// Constructor - Destructor
@@ -27,6 +27,7 @@ public:
 
 	// Getters - Setters
 	b2World* getWorld();
+	MarioGameBlock* getBlock(int p_x, int p_y);
 
 	// Methods
 	void createWorldBlocks();
@@ -38,6 +39,14 @@ public:
 	void notifyPositionChanged();
 	void notifySizeChanged();
 
+	void BeginContact(b2Contact* contact);
+	void PreSolve(b2Contact* contact, const b2Manifold* oldManifold);
+
+	static float pixelToMeter(float p_pixel);
+	static sf::Vector2f pixelToMeter(sf::Vector2f p_pixel);
+	static float meterToPixel(float  p_meter);
+	static sf::Vector2f meterToPixel(sf::Vector2f  p_meter);
+
 
 private:
 	// Attributs
@@ -48,5 +57,6 @@ private:
 	MarioGameMario* mMario;
 	sf::Vector2i mWorldBlocksSize;
 	MarioGameBlock*** mWorldBlocks;
+	b2Body* mBodyGround;
 };
 

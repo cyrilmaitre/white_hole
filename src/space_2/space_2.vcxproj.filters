@@ -1308,6 +1308,12 @@
     <ClCompile Include="MarioGameMario.cpp">
       <Filter>Fichiers sources\screen\mariogame</Filter>
     </ClCompile>
+    <ClCompile Include="MarioGameUserData.cpp">
+      <Filter>Fichiers sources\screen\mariogame</Filter>
+    </ClCompile>
+    <ClCompile Include="MarioGameBlockActive.cpp">
+      <Filter>Fichiers sources\screen\mariogame</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h">
@@ -2247,6 +2253,15 @@
       <Filter>Fichiers d%27en-tête\screen\mariogame</Filter>
     </ClInclude>
     <ClInclude Include="MarioGameMario.h">
+      <Filter>Fichiers d%27en-tête\screen\mariogame</Filter>
+    </ClInclude>
+    <ClInclude Include="MarioGameUserData.h">
+      <Filter>Fichiers d%27en-tête\screen\mariogame</Filter>
+    </ClInclude>
+    <ClInclude Include="resource1.h">
+      <Filter>Fichiers d%27en-tête</Filter>
+    </ClInclude>
+    <ClInclude Include="MarioGameBlockActive.h">
       <Filter>Fichiers d%27en-tête\screen\mariogame</Filter>
     </ClInclude>
   </ItemGroup>
