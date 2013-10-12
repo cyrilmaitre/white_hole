@@ -75,6 +75,11 @@ public:
 	// connection time
 	sf::Uint64	getConnectionTime();
 
+	// auth request time (=time where the server ask the client to auth)
+	sf::Uint64	getAuthRequestTime();
+	void		updateAuthRequestTime();
+	void		disableAuthRequestTime();
+
 	// waiting for pong
 	bool isPongRequested();	// do the client have to pong the server ?
 	void requestPong();		// we want a PONG !
@@ -102,10 +107,13 @@ private:
 	sf::Uint16						mAttributes;
 	std::unique_ptr<sf::TcpSocket>	mSocket;
 	std::string						mName;
+
+	// stats
 	sf::Uint64						mNbDroppedPackets;
 	sf::Uint64						mConnectionTime;
+	sf::Uint64						mAuthRequestTime;
 	sf::Uint64						mDisconnectionTime;
-	sf::Uint64						mLastActivityTime;	// in ms (milliseconds)
+	sf::Uint64						mLastActivityTime;
 	bool							mPongRequested;
 
 	sf::Uint64						mFloodControlTime;

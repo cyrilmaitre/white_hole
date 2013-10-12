@@ -13,7 +13,6 @@
 #define AUTH_TIMEOUT			30					// 30s to authenticate
 #define FLOOD_INTERVAL			1					// control flood on X seconds
 #define FLOOD_MAX_PACKETS		20					// max packets allowed in FLOOD_INTERVAL
-#define FLOOD_BUFFER			30					// max packets put in buffer
 
 // -------------
 // --- CLASS ---
@@ -47,12 +46,14 @@ enum AsyncRequestCode
 
 struct AsyncRequest
 {
-	AsyncRequest(std::shared_ptr<Client> client, AsyncRequestCode asyncRequestCode = AsyncRequestCode::ASR_UNKNOWN)
-		: client(client), asyncRequestCode(asyncRequestCode)
-	{}
+	AsyncRequest(std::weak_ptr<Client> client, AsyncRequestCode asyncRequestCode = AsyncRequestCode::ASR_UNKNOWN)
+		: client(client), asyncRequestCode(asyncRequestCode), timestamp((sf::Uint64)time(NULL))
+	{
 
-	std::shared_ptr<Client> client;
+	}
+	std::weak_ptr<Client>	client;
 	AsyncRequestCode		asyncRequestCode;
+	sf::Uint64				timestamp;
 
 };
 
@@ -64,11 +65,11 @@ public:
 	void create(void);
 	void create(unsigned short p_port);
 	void addClient(std::shared_ptr<Client> p_client);
-	bool authenticate(std::shared_ptr<Client> p_client, C2S_Auth p_auth);
-	bool authenticate(std::shared_ptr<Client> p_client);
-	void dropClient(std::shared_ptr<Client> p_client);
-	void handlePacket(sf::Packet& p_packet, std::shared_ptr<Client> p_client);
-	bool sendPacket(sf::Packet& p_packet, std::shared_ptr<Client> p_client, bool dropClientIfFailed = false);
+	bool authenticate(std::weak_ptr<Client> p_wclient, C2S_Auth p_auth);
+	bool authenticate(std::weak_ptr<Client> p_wclient);
+	void dropClient(std::weak_ptr<Client> p_wclient);
+	void handlePacket(sf::Packet& p_packet, std::weak_ptr<Client> p_wclient);
+	bool sendPacket(sf::Packet& p_packet, std::weak_ptr<Client> p_wclient, bool dropClientIfFailed = false);
 	void broadcast(sf::Packet& p_packet, BroadcastCondition& p_broadcastCond);
 	void disconnect(void);
 	
@@ -99,6 +100,9 @@ private:
 	sf::Mutex					mMutex;
 	std::unique_ptr<sf::Thread> mThread;
 	void						mAsyncTasks(void);
+
+	std::unique_ptr<sf::Thread> mThreadCLI;
+	void						mCLI(void);
 
 	// async requests
 	std::vector<AsyncRequest> mAsyncRequests;

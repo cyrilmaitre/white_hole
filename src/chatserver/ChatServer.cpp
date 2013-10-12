@@ -193,12 +193,12 @@ void ChatServer::mRunServer(void)
 							this->addClient(client);
 
 							//send motd to new client
-							S2C_Command s2c_cmd(ServerCommand::S_MOTD, SERVER_MOTD);
+							/*S2C_Command s2c_cmd(ServerCommand::S_MOTD, SERVER_MOTD);
 							{
 								packet << s2c_cmd;
 							}
 
-							this->sendPacket(packet, client);
+							this->sendPacket(packet, client);*/
 						}
 						else
 						{
@@ -288,7 +288,7 @@ void ChatServer::mRunServer(void)
 			}
 
 			// check auth timeot
-			if(client->getState() == ClientState::TCP_CONNECTED && client->getConnectionTime()+AUTH_TIMEOUT < now){
+			if(client->getState() == ClientState::TCP_CONNECTED && client->getAuthRequestTime() != 0 && client->getAuthRequestTime()+AUTH_TIMEOUT < now){
 				{ std::ostringstream msg; msg << "Client #" << client->getUniqueID() << " AUTH timeout (" << client->getSocket().getRemoteAddress() << ")"; Debug::msg(msg); }
 				this->dropClient(client);
 			}
@@ -335,6 +335,7 @@ void ChatServer::addClient(std::shared_ptr<Client> p_client)
 {
 	sf::Lock lock(mMutex);
 	p_client->setState(ClientState::TCP_CONNECTED);
+	p_client->updateAuthRequestTime();
 
 	//Add the new client to the clients list
 	clients.push_back(p_client);
@@ -350,17 +351,49 @@ void ChatServer::addClient(std::shared_ptr<Client> p_client)
 	Authenticate the user
 */
 // test (temp method)
-bool ChatServer::authenticate(std::shared_ptr<Client> p_client)
+bool ChatServer::authenticate(std::weak_ptr<Client> p_wclient)
 {
-	sf::Lock lock(mMutex);
-	return this->authenticate(p_client, C2S_Auth(p_client->getUsername(), p_client->getSha1Password()));
+	std::shared_ptr<Client> p_client = p_wclient.lock();
+    if (p_client)
+    {
+       	C2S_Auth c2s_auth;
+		{
+		sf::Lock lock(mMutex);
+		c2s_auth.user = p_client->getUsername();
+		c2s_auth.sha1password = p_client->getSha1Password();
+		}
+		return this->authenticate(p_client, c2s_auth);
+	
+    }
+    else
+    {
+		return false;
+    }
 }
 
-bool ChatServer::authenticate(std::shared_ptr<Client> p_client, C2S_Auth p_auth)
+bool ChatServer::authenticate(std::weak_ptr<Client> p_wclient, C2S_Auth p_auth)
 {
-	sf::Lock lock(mMutex);
+	// --------------------- SECURITY CHECKS ----------------------------
+	// Test is pointed object has been destroyed
+	std::shared_ptr<Client> p_client = p_wclient.lock();
+	if (!p_client) {
+		{ std::ostringstream msg; msg << "Client does not exist anymore"; Debug::msg(msg); }
+		return false;
+	}
 
-	{ std::ostringstream msg; msg << "[AUTH] user:" << p_auth.user << " - pass:" << p_auth.sha1password;	Debug::msg(msg); }
+	// Test if client has been dropped
+	mMutex.lock();
+	bool clientDropped = (p_client->getState() == ClientState::DROPPED);
+	sf::Uint64 clientID = p_client->getUniqueID();
+	mMutex.unlock();
+
+	if(clientDropped) {
+		{ std::ostringstream msg; msg << "Client #" << clientID << " has already been dropped"; Debug::msg(msg); }
+		return false;
+	}
+	// ----------------- end of SECURITY CHECKS -------------------------
+
+	{ std::ostringstream msg; msg << "[AUTH] Client #" << clientID << " - " << "user:" << p_auth.user << " - pass:" << p_auth.sha1password;	Debug::msg(msg); }
 
 	// ---------------------------------------------------------------------------------------
 	// auth test (JSON request)
@@ -391,68 +424,82 @@ bool ChatServer::authenticate(std::shared_ptr<Client> p_client, C2S_Auth p_auth)
 	// -- end of auth test (JSON request) ----------------------------------------------------
 
 
-	// If login+password are OKs
-	if(authSuccessful)
+	// Retest if client has not been dropped while trying to auth
+	mMutex.lock();
+	bool clientDroppedWhileAuth = (p_client->getState() == ClientState::DROPPED);
+	mMutex.unlock();
+	
+	if(!clientDroppedWhileAuth)
 	{
-		// set name after
-		p_client->setName(p_auth.user);
+		sf::Lock lock(mMutex);
 
-		// if auth IDs OK...
-		// already online ?
-		std::shared_ptr<Client> dstClient = this->findClientByName(p_client->getName());
-
-		// if client is already connected ..., kill the other
-		if(dstClient.get() != 0)
+		// If login+password are OKs
+		if(authSuccessful)
 		{
-			S2C_Command s2c_cmd(ServerCommand::S_DROPPED_NORC, "Ghost kill (by "+p_client->getSocket().getRemoteAddress().toString()+")");
-			sf::Packet packet;
-			packet << s2c_cmd;
-			this->sendPacket(packet, dstClient);
-			this->dropClient(dstClient);
+			// set name after
+			p_client->setName(p_auth.user);
+
+			// if auth IDs OK...
+			// already online ?
+			std::shared_ptr<Client> dstClient = this->findClientByName(p_client->getName());
+
+			// if client is already connected ..., kill the other
+			if(dstClient.get() != 0)
+			{
+				S2C_Command s2c_cmd(ServerCommand::S_DROPPED_NORC, "Ghost kill (by "+p_client->getSocket().getRemoteAddress().toString()+")");
+				sf::Packet packet;
+				packet << s2c_cmd;
+				this->sendPacket(packet, dstClient);
+				this->dropClient(dstClient);
+			}
+
+			// client is now authed
+			p_client->setState(ClientState::AUTHED); 
+			// client will now receive pong requests if inactive
+			p_client->notifyLastActivityTime();
+
+			// send him a response
+			{
+				sf::Packet packet;
+				S2C_Auth s2c_auth(AuthResponse::AR_OK);
+				packet << s2c_auth;
+				this->sendPacket(packet, p_client);
+			}
+
+			// broadcast to all authed user that the user joined
+			{
+				sf::Packet packet;
+				S2C_Command s2c_command(ServerCommand::S_JOIN, p_client->getName());
+				packet << s2c_command;
+
+				BroadcastCondition bc;
+				bc.ignoreClientID = p_client->getUniqueID();
+				bc.clientState = ClientState::AUTHED;
+
+				this->broadcast(packet, bc);
+			}
+
+
 		}
-
-		// client is now authed
-		p_client->setState(ClientState::AUTHED); 
-		// client will now receive pong requests if inactive
-		p_client->notifyLastActivityTime();
-
-		// send him a response
+		// if auth not successful...
+		else
 		{
 			sf::Packet packet;
-			S2C_Auth s2c_auth(AuthResponse::AR_OK);
+			S2C_Auth s2c_auth(authResponseFail);
+
 			packet << s2c_auth;
 			this->sendPacket(packet, p_client);
 		}
 
-		// broadcast to all authed user that the user joined
+		// auth test done, so clear IDs from memory
 		{
-			sf::Packet packet;
-			S2C_Command s2c_command(ServerCommand::S_JOIN, p_client->getName());
-			packet << s2c_command;
-
-			BroadcastCondition bc;
-			bc.ignoreClientID = p_client->getUniqueID();
-			bc.clientState = ClientState::AUTHED;
-
-			this->broadcast(packet, bc);
+			sf::Lock lock(mMutex);
+			p_client->clearIDs();
 		}
-
-
 	}
-	// if auth not successful...
-	else
-	{
-		sf::Packet packet;
-		S2C_Auth s2c_auth(authResponseFail);
-
-		packet << s2c_auth;
-		this->sendPacket(packet, p_client);
-	}
-
-	// auth test done, so clear IDs from memory
-	{
-		sf::Lock lock(mMutex);
-		p_client->clearIDs();
+	else {
+		{ std::ostringstream msg; msg << "Client #" << clientID << " has already been dropped WHILE AUTHENTICATING"; Debug::msg(msg); }
+		return false;
 	}
 
 	return authSuccessful;
@@ -462,9 +509,31 @@ bool ChatServer::authenticate(std::shared_ptr<Client> p_client, C2S_Auth p_auth)
 /*
 	remove client from selector & from vector (if in it)
 */
-void ChatServer::dropClient(std::shared_ptr<Client> p_client)
+void ChatServer::dropClient(std::weak_ptr<Client> p_wclient)
 {
+	// --------------------- SECURITY CHECKS ----------------------------
+	// Test is pointed object has been destroyed
+	std::shared_ptr<Client> p_client = p_wclient.lock();
+	if (!p_client) {
+		{ std::ostringstream msg; msg << "Client does not exist anymore"; Debug::msg(msg); }
+		return;
+	}
+
+	// Test if client has been dropped
+	mMutex.lock();
+	bool clientDropped = (p_client->getState() == ClientState::DROPPED);
+	sf::Uint64 clientID = p_client->getUniqueID();
+	mMutex.unlock();
+
+	if(clientDropped) {
+		{ std::ostringstream msg; msg << "Client " << clientID << " has already been dropped"; Debug::msg(msg); }
+		return;
+	}
+	// ----------------- end of SECURITY CHECKS -------------------------
+
 	sf::Lock lock(mMutex);
+	// this might seems useless since it will be delete later. it's just a security.
+	p_client->setState(ClientState::DROPPED); 
 
 	// broadcast disconnexion to all clients
 	if(p_client->getState() == ClientState::AUTHED)
@@ -481,11 +550,10 @@ void ChatServer::dropClient(std::shared_ptr<Client> p_client)
 	}
 
 	// disconnect
-	p_client->setState(ClientState::DROPPED); // this might seems useless since it will be delete later. it's just a security.
-
 	{ std::ostringstream msg; msg << "Client #" <<  p_client->getUniqueID() << " disconnected - " << p_client->getSocket().getRemoteAddress().toString() << "";	Debug::msg(msg); }
 
 	selector.remove(p_client->getSocket());
+
 
     for (auto it = clients.begin(); it != clients.end();) {
         if (*it == p_client) {
@@ -501,10 +569,31 @@ void ChatServer::dropClient(std::shared_ptr<Client> p_client)
 /*
 	send packet to a client, drop client if dropClientIfFailed=true
 */
-bool ChatServer::sendPacket(sf::Packet& p_packet, std::shared_ptr<Client> p_client, bool dropClientIfFailed)
+bool ChatServer::sendPacket(sf::Packet& p_packet, std::weak_ptr<Client> p_wclient, bool dropClientIfFailed)
 {
-    bool packetSent = false;
+	// --------------------- SECURITY CHECKS ----------------------------
+	// Test is pointed object has been destroyed
+	std::shared_ptr<Client> p_client = p_wclient.lock();
+	if (!p_client) {
+		{ std::ostringstream msg; msg << "Client does not exist anymore"; Debug::msg(msg); }
+		return false;
+	}
+
+	// Test if client has been dropped
+	mMutex.lock();
+	bool clientDropped = (p_client->getState() == ClientState::DROPPED);
+	sf::Uint64 clientID = p_client->getUniqueID();
+	mMutex.unlock();
+
+	if(clientDropped) {
+		{ std::ostringstream msg; msg << "Client " << clientID << " has already been dropped"; Debug::msg(msg); }
+		return false;
+	}
+	// ----------------- end of SECURITY CHECKS -------------------------
+
     
+	bool packetSent = false;
+   
     for(int i = 0; i < MAX_S_PACKETSEND_RETRY; i++)
     {
         // Si le packet a été envoyé
@@ -573,8 +662,29 @@ void ChatServer::broadcast(sf::Packet& p_packet, BroadcastCondition& p_broadcast
 /*
 	handle every packet received
 */
-void ChatServer::handlePacket(sf::Packet& p_packet, std::shared_ptr<Client> p_client)
+void ChatServer::handlePacket(sf::Packet& p_packet, std::weak_ptr<Client> p_wclient)
 {	
+	// --------------------- SECURITY CHECKS ----------------------------
+	// Test is pointed object has been destroyed
+	std::shared_ptr<Client> p_client = p_wclient.lock();
+	if (!p_client) {
+		{ std::ostringstream msg; msg << "Client does not exist anymore"; Debug::msg(msg); }
+		return;
+	}
+
+	// Test if client has been dropped
+	mMutex.lock();
+	bool clientDropped = (p_client->getState() == ClientState::DROPPED);
+	sf::Uint64 clientID = p_client->getUniqueID();
+	mMutex.unlock();
+
+	if(clientDropped) {
+		{ std::ostringstream msg; msg << "Client " << clientID << " has already been dropped"; Debug::msg(msg); }
+		return;
+	}
+	// ----------------- end of SECURITY CHECKS -------------------------
+
+
 	// Flood control
 	// -- if client is not flooding
 	if(p_client->getNbSentPackets() < FLOOD_MAX_PACKETS) {
@@ -613,6 +723,7 @@ void ChatServer::handlePacket(sf::Packet& p_packet, std::shared_ptr<Client> p_cl
 				{
 					{
 					sf::Lock lock(mMutex);
+					p_client->disableAuthRequestTime();
 					p_client->setIDs(c2s_auth.user, c2s_auth.sha1password);
 					this->mAsyncRequests.push_back(AsyncRequest(p_client, AsyncRequestCode::ASR_AUTHENTICATE));
 					}
@@ -966,58 +1077,77 @@ void ChatServer::mAsyncTasks(void)
 	{ std::ostringstream msg; msg << "[THREAD] Async Task thread STARTING" << ""; Debug::msg(msg); }
 	while(this->isRunning())
 	{
-
+		std::vector<AsyncRequest> copyAsyncRequests;
 		{
 			sf::Lock lock(mMutex);
+			copyAsyncRequests = mAsyncRequests;
+		}
 
-			// Async Requests
-			for (auto it = mAsyncRequests.begin(); it != mAsyncRequests.end();)
+		// Async Requests - READ ONLY (copy)
+		for (auto it = copyAsyncRequests.begin(); it != copyAsyncRequests.end(); ++it)
+		{
+			std::shared_ptr<Client> itClient = it->client.lock();
+			if(itClient)
 			{
-				// request removal
-				if (it->asyncRequestCode == AsyncRequestCode::ASR_DONE) {
-					it = mAsyncRequests.erase(it);
-				} 
-				// authentication
-				else if (it->asyncRequestCode == AsyncRequestCode::ASR_AUTHENTICATE) {
+				if (it->asyncRequestCode == AsyncRequestCode::ASR_AUTHENTICATE) {
 					{ std::ostringstream msg; msg << "[ASYNC] Authentication" << ""; Debug::msg(msg); }
 					// if authentication is OK
-					if(this->authenticate(it->client)) {
+					if(this->authenticate(itClient)) {
 						// send userlist
 						// - reset userlist
 						sf::Packet packet;
 						packet << S2C_Command(ServerCommand::S_USERLIST_RESYNC);
-						this->sendPacket(packet, it->client);
+						this->sendPacket(packet, itClient);
 						// - send username one by one
 						for(auto cl = clients.begin(); cl != clients.end(); ++cl) {
 							if((*cl)->getState() == ClientState::AUTHED && (*cl)->isNamed()) {
 								// don't send the username of the receiver (it's added in userlist elsewhere in the code, see S_USERLIST_RESYNC in ChatClient)
-								if(it->client->getName().compare((*cl)->getName()) != 0)
+								if(itClient->getName().compare((*cl)->getName()) != 0)
 								{
 									sf::Packet packet;
 									packet << S2C_Command(ServerCommand::S_JOIN, (*cl)->getName());
-									this->sendPacket(packet, it->client);
+									this->sendPacket(packet, itClient);
 								}
 							}
 						}
+					} else {
+						// update auth request time
+						itClient->updateAuthRequestTime();
 					}
-					it->asyncRequestCode = AsyncRequestCode::ASR_DONE;
-					++it;
 				}
 				// friend list fetch
 				else if (it->asyncRequestCode == AsyncRequestCode::ASR_FETCH_FRIENDLIST) {
 					{ std::ostringstream msg; msg << "[ASYNC] Fetch friendlist" << ""; Debug::msg(msg); }
-					it->asyncRequestCode = AsyncRequestCode::ASR_DONE;
-					++it;
+				
 				}
-				else {
-					++it;
-				}
+			}
+			else {
+				{ std::ostringstream msg; msg << "[ASYNC] Couldn't process this async request, client does not exist anymore" << ""; Debug::msg(msg); }
+			}
 
-			} // -- end of loop for
+		} // -- end of loop for
 
-		} // -- end of lock
+
+		// Async Request - CLEANING
+		{
+			sf::Lock lock(mMutex);
+			this->mAsyncRequests.clear();
+			this->mAsyncRequests.shrink_to_fit();
+		}
 
 		sf::sleep(sf::milliseconds(500));	// for CPU
 	}
 	{ std::ostringstream msg; msg << "[THREAD] Async Task thread FINISHED" << ""; Debug::msg(msg); }
+}
+
+// CLI
+void ChatServer::mCLI(void)
+{
+	{ std::ostringstream msg; msg << "[THREAD] CLI thread STARTING" << ""; Debug::msg(msg); }
+	while(this->isRunning())
+	{
+		std::string str;
+		std::getline(std::cin, str);
+	}
+	{ std::ostringstream msg; msg << "[THREAD] CLI thread FINISHED" << ""; Debug::msg(msg); }
 }

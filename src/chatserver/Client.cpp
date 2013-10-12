@@ -14,6 +14,7 @@ Client::Client(void) :
 	mLastActivityTime(0),
 	mPongRequested(false),
 	mConnectionTime((sf::Uint64)time(NULL)),
+	mAuthRequestTime(0),
 	mFloodControlTime((sf::Uint64)time(NULL) + FLOOD_INTERVAL),
 	mNbSentPackets(0),
 	mUsername(""),
@@ -21,7 +22,6 @@ Client::Client(void) :
 {
 	this->mUniqueID = (sf::Uint64) mSocket.get();
 }
-
 
 Client::~Client(void)
 {
@@ -111,6 +111,13 @@ sf::Uint64 Client::getConnectionTime()
 }
 // </connectionTime>
 
+
+// <authRequestTime>
+sf::Uint64	Client::getAuthRequestTime()
+{
+	return this->mAuthRequestTime;
+}
+// <authRequestTime>
 
 // <floodControlTime>
 sf::Uint64	Client::getFloodControlTime()
@@ -205,6 +212,18 @@ void Client::requestPong()
 }
 // </pingRequested>
 
+
+// <authRequestTime>
+void Client::updateAuthRequestTime()
+{
+	this->mAuthRequestTime = (sf::Uint64)time(NULL);
+}
+
+void Client::disableAuthRequestTime()
+{
+	this->mAuthRequestTime = 0;
+}
+// </authRequestTime>
 
 // <floodControlTime>
 void Client::updateFloodControlTime()
