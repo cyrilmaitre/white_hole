@@ -7,6 +7,8 @@
 // Define
 //*************************************************************
 #define BONUS_EFFECTTIME		0.25	// sec
+#define BONUS_VALUE_MIN			100.0f
+#define BONUS_VALUE_MAX			200.0f
 
 
 //*************************************************************
@@ -110,6 +112,7 @@ void MarioGameBonus::BeginContact( b2Contact* p_contact, MarioGameUserData::User
 		{
 			MarioGameBlockActive::BeginContact(p_contact, p_index);
 			this->setBonusState(BonusState::Inactive);
+			this->mGame->incCredit(Tools::random(BONUS_VALUE_MIN, BONUS_VALUE_MAX) * MARIOGAME_VALUE_MULTIPLIER);
 		}
 	}
 }

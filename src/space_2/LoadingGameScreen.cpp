@@ -6,7 +6,7 @@
 // Define
 //*************************************************************
 #define LOADING_FONTSIZE			32
-#define LOADING_MARGINTOP			50
+#define LOADING_MARGINTOP			200
 #define GIFLOADING_MARGINTOP		20
 
 
@@ -34,6 +34,7 @@ double LoadingGameScreen::launch()
 	this->setRunning(true);
 	this->update();
 	this->notifyAppSizeChanged();
+	this->mMarioGame.reset();
 	while(this->isRunning())
 	{		
 		// Update
@@ -57,7 +58,7 @@ double LoadingGameScreen::launch()
 		// Draw
 		this->draw();
 	}
-	return 0;
+	return this->mMarioGame.getCredit();
 }
 
 void LoadingGameScreen::update()
@@ -75,7 +76,7 @@ void LoadingGameScreen::update( sf::Event p_event )
 void LoadingGameScreen::updatePosition()
 {
 	BaseScreen::updatePosition();
-	this->mTBLoading.setPosition((Resource::resource->getViewUi()->getSize().x - this->mTBLoading.getWidth()) / 2, (Resource::resource->getViewUi()->getSize().y - this->mTBLoading.getHeight()) / 2 - LOADING_MARGINTOP);
+	this->mTBLoading.setPosition((Resource::resource->getViewUi()->getSize().x - this->mTBLoading.getWidth()) / 2, LOADING_MARGINTOP);
 	this->mGifLoading->setPosition((Resource::resource->getViewUi()->getSize().x - this->mGifLoading->getWidth()) / 2, this->mTBLoading.getBottomY() + GIFLOADING_MARGINTOP);
 	this->mMarioGame.setPosition(0, Resource::resource->getViewUi()->getSize().y - this->mMarioGame.getHeight());
 }

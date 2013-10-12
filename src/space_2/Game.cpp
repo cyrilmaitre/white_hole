@@ -156,7 +156,8 @@ void Game::launchInit( Character* p_character )
 	this->mThreadInit->launch();
 
 	// Screen loading
-	this->mScreenLoading.launch();
+	double miniGameCredit = this->mScreenLoading.launch();
+	this->mCharacter->incCredit(miniGameCredit);
 }
 
 void Game::launchUninit()

@@ -8,6 +8,7 @@ class MarioGameMario;
 class MarioGameBlock;
 
 // Define
+#define MARIOGAME_VALUE_MULTIPLIER			1.0
 #define MARIOGAME_SPRITE_MARIOIDLE			"0-0"
 #define MARIOGAME_SPRITE_MARIORUNONE		"1-0"
 #define MARIOGAME_SPRITE_MARIORUNTWO		"2-0"
@@ -40,7 +41,12 @@ public:
 	b2World* getWorld();
 	MarioGameBlock* getBlock(int p_x, int p_y);
 
+	double getCredit();
+	void setCredit(double p_credit);
+	void incCredit(double p_credit);
+
 	// Methods
+	void reset();
 	void createWorld();
 	void createBricks();
 	void createBricks(int p_line);
@@ -54,6 +60,7 @@ public:
 	void draw();
 	void notifyPositionChanged();
 	void notifySizeChanged();
+	void notifyCreditChanged();
 
 	void BeginContact(b2Contact* contact);
 	void PreSolve(b2Contact* contact, const b2Manifold* oldManifold);
@@ -75,6 +82,11 @@ private:
 	sf::Vector2i mWorldBlocksSize;
 	MarioGameBlock*** mWorldBlocks;
 	b2Body* mBodyGround;
+	sf::Sprite mSpriteKeyPad;
+	TextBox mTBKeyPad;
+	TextBox mTBCreditLabel;
+	TextBox mTBCredit;
+	double mCredit;
 	mks::Clock mGameClock;
 };
 

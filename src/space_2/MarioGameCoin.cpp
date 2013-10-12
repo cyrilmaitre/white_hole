@@ -7,6 +7,7 @@
 // Define
 //*************************************************************
 #define COIN_EFFECTFRAME_TIME		0.40f	// sec
+#define COIN_VALUE					10.0	// credit
 
 
 //*************************************************************
@@ -111,5 +112,6 @@ void MarioGameCoin::PreSolve( b2Contact* p_contact, const b2Manifold* p_oldManif
 {
 	this->setCoinState(CoinState::Destroy);
 	p_contact->SetEnabled(false);
+	this->mGame->incCredit(COIN_VALUE * MARIOGAME_VALUE_MULTIPLIER);
 }
 

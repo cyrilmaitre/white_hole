@@ -11,8 +11,11 @@ int main()
 	TitleScreen mTitleScreen;
 	Game mGame;
 
-//	LoadingGameScreen screen;
-//	screen.launch();
+	/*
+	// Mini game mario debug
+	LoadingGameScreen screen;
+	screen.launch();
+	*/
 
 	mTitleScreen.launch();
 

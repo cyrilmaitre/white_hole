@@ -10,17 +10,23 @@
 //*************************************************************
 // Define
 //*************************************************************
-#define GAME_HEIGHT				512
-#define METERTOPIXEL			32
-#define PIXELTOMETER			1 / METERTOPIXEL
-#define GEN_BRICKTICK			25.0f		// percent
-#define GEN_BRICKSSIZE_MIN		2			// blocks
-#define GEN_BRICKSSIZE_MAX		10			// blocks
-#define GEN_BONUSTICK			5.0f		// percent
-#define GEN_COINTICK			10.0f		// percent		
-#define GEN_COINTICKDOUBLE		50.0f		// percent
-#define GEN_COINSIZE_MIN		2			// coins
-#define GEN_COINSIZE_MAX		8			// coins
+#define GAME_HEIGHT						384
+#define METERTOPIXEL					32
+#define PIXELTOMETER					1 / METERTOPIXEL
+#define GEN_BRICKTICK					25.0f		// percent
+#define GEN_BRICKSSIZE_MIN				2			// blocks
+#define GEN_BRICKSSIZE_MAX				10			// blocks
+#define GEN_BONUSTICK					5.0f		// percent
+#define GEN_COINTICK					10.0f		// percent		
+#define GEN_COINTICKDOUBLE				50.0f		// percent
+#define GEN_COINSIZE_MIN				2			// coins
+#define GEN_COINSIZE_MAX				8			// coins
+#define KEYPADSPRITE_MARGINLEFT			20
+#define KEYPADTB_MARGINLEFT				10
+#define CREDITLABEL_MARGINTOP			10
+#define CREDITLABEL_MARGINRIGHT			5
+#define TB_KEYPAD_FONTSIZE				20
+#define TB_CREDIT_FONTSIZE				18
 
 
 //*************************************************************
@@ -40,6 +46,14 @@ MarioGame::MarioGame(void)
 	this->mWorldPositionIter = 2;
 
 	this->setSize(Resource::resource->getViewUi()->getSize().x, GAME_HEIGHT);
+	this->mSpriteKeyPad.setTexture(*Resource::resource->getTexture(IMG_MARIOGAME_KEYPAD));
+	this->mTBKeyPad.setText(Resource::resource->getBundle()->getString("marioKeypadToMove"));
+	this->mTBKeyPad.setFontSize(TB_KEYPAD_FONTSIZE);
+	this->mTBCreditLabel.setText(Resource::resource->getBundle()->getString("marioCredit"));
+	this->mTBCreditLabel.setFontSize(TB_CREDIT_FONTSIZE);
+	this->mTBCredit.setFontSize(TB_CREDIT_FONTSIZE);
+	this->mCredit = 0.0f;
+	this->notifyCreditChanged();
 }
 
 MarioGame::~MarioGame(void)
@@ -84,10 +98,35 @@ MarioGameBlock* MarioGame::getBlock( int p_x, int p_y )
 	return this->mWorldBlocks[p_x][p_y];
 }
 
+double MarioGame::getCredit()
+{
+	return this->mCredit;
+}
+
+void MarioGame::setCredit( double p_credit )
+{
+	if(this->mCredit != p_credit)
+	{
+		this->mCredit = p_credit;
+		this->notifyCreditChanged();
+	}
+}
+
+void MarioGame::incCredit( double p_credit )
+{
+	this->setCredit(this->mCredit + p_credit);
+}
+
 
 //*************************************************************
 // Methods
 //*************************************************************
+void MarioGame::reset()
+{
+	this->setCredit(0.0);
+	this->createWorld();
+}
+
 void MarioGame::createWorld()
 {
 	//*********************************************
@@ -155,10 +194,6 @@ void MarioGame::update( sf::Event p_event )
 {
 	Object::update(p_event);
 	this->mMario->update(p_event);
-
-	// Debug
-	if(p_event.type == sf::Event::EventType::KeyReleased && p_event.key.code == sf::Keyboard::R)
-		this->createWorld();
 }
 
 void MarioGame::update()
@@ -204,6 +239,10 @@ void MarioGame::updateFrameRate()
 
 void MarioGame::updatePosition()
 {
+	this->mSpriteKeyPad.setPosition(this->getX() + KEYPADSPRITE_MARGINLEFT, this->getY());
+	this->mTBKeyPad.setPosition(this->mSpriteKeyPad.getPosition().x + this->mSpriteKeyPad.getGlobalBounds().width + KEYPADTB_MARGINLEFT, this->mSpriteKeyPad.getPosition().y + (this->mSpriteKeyPad.getGlobalBounds().height - this->mTBKeyPad.getHeight()) / 2);
+	this->mTBCreditLabel.setPosition(this->mSpriteKeyPad.getPosition().x, this->mSpriteKeyPad.getPosition().y + this->mSpriteKeyPad.getGlobalBounds().height + CREDITLABEL_MARGINTOP);
+	this->mTBCredit.setPosition(this->mTBCreditLabel.getRightX() + CREDITLABEL_MARGINRIGHT, this->mTBCreditLabel.getY());
 	for(int i = 0; i < this->mWorldBlocksSize.x; i++)
 	{
 		this->mWorldBlocks[i][0]->setPosition(	this->getX() + i * MARIOGAME_BLOCK_WIDTH + MARIOGAME_BLOCK_WIDTH / 2, 
@@ -213,6 +252,12 @@ void MarioGame::updatePosition()
 
 void MarioGame::draw()
 {
+	// Draw ui
+	Resource::resource->getApp()->draw(this->mSpriteKeyPad);
+	this->mTBKeyPad.draw();
+	this->mTBCreditLabel.draw();
+	this->mTBCredit.draw();
+
 	// Draw blocks
 	for(int i = 0; i < this->mWorldBlocksSize.x; i++)
 	{
@@ -237,6 +282,11 @@ void MarioGame::notifySizeChanged()
 {
 	Object::notifySizeChanged();
 	this->createWorld();
+}
+
+void MarioGame::notifyCreditChanged()
+{
+	this->mTBCredit.setText(Tools::formatNumber((long)this->mCredit) + " " + Resource::resource->getBundle()->getString("creditAb"));
 }
 
 float MarioGame::pixelToMeter( float p_pixel )
@@ -366,3 +416,4 @@ void MarioGame::createCoins( int p_line )
 		}
 	}
 }
+
