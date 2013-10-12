@@ -106,7 +106,7 @@ void MarioGameBonus::BeginContact( b2Contact* p_contact, MarioGameUserData::User
 	{
 		b2WorldManifold worldManifold;
 		p_contact->GetWorldManifold(&worldManifold);
-		if(worldManifold.points[0].y < this->mBodyBrick->GetPosition().y && this->mGame->getBlock(this->mPositionGrid.x, this->mPositionGrid.y + 1) == NULL)
+		if(worldManifold.points[0].y < this->mBodyBrick->GetPosition().y)
 		{
 			MarioGameBlockActive::BeginContact(p_contact, p_index);
 			this->setBonusState(BonusState::Inactive);

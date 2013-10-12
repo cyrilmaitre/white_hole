@@ -1,5 +1,5 @@
-﻿La génération a démarré 10/10/2013 11:47:17.
-     1>Projet "C:\Users\Ikg\Desktop\Box2D_v2.2.1\Box2D_v2.2.1\Build\vs2010\GLUI.vcxproj" sur le nœud 3 (build cible(s)).
+﻿La génération a démarré 12/10/2013 14:44:18.
+     1>Projet "D:\Projets\white_hole\lib\box2d\Box2D_v2.2.1\Build\vs2010\GLUI.vcxproj" sur le nœud 2 (build cible(s)).
      1>InitializeBuildStatus:
          Création de "obj\x32\Release\GLUI\GLUI.unsuccessfulbuild", car "AlwaysCreate" a été spécifié.
        ClCompile:
@@ -73,12 +73,12 @@
          obj\x32\Release\GLUI\glui_treepanel.obj
          obj\x32\Release\GLUI\glui_window.obj
          obj\x32\Release\GLUI\quaternion.obj
-         GLUI.vcxproj -> C:\Users\Ikg\Desktop\Box2D_v2.2.1\Box2D_v2.2.1\Build\vs2010\bin\Release\GLUI.lib
+         GLUI.vcxproj -> D:\Projets\white_hole\lib\box2d\Box2D_v2.2.1\Build\vs2010\bin\Release\GLUI.lib
        FinalizeBuildStatus:
          Suppression du fichier "obj\x32\Release\GLUI\GLUI.unsuccessfulbuild".
          Mise à jour de l'horodatage "obj\x32\Release\GLUI\GLUI.lastbuildstate".
-     1>Génération du projet "C:\Users\Ikg\Desktop\Box2D_v2.2.1\Box2D_v2.2.1\Build\vs2010\GLUI.vcxproj" terminée (build cible(s)).
+     1>Génération du projet "D:\Projets\white_hole\lib\box2d\Box2D_v2.2.1\Build\vs2010\GLUI.vcxproj" terminée (build cible(s)).
 
 La génération a réussi.
 
-Temps écoulé 00:00:18.15
+Temps écoulé 00:00:17.21

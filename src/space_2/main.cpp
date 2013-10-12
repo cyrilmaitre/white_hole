@@ -8,13 +8,13 @@ int main()
 	Option mOption;
 	Resource mRessource;
 	EventManager mEventManager;
-	//TitleScreen mTitleScreen;
-	//Game mGame;
+	TitleScreen mTitleScreen;
+	Game mGame;
 
-	LoadingGameScreen screen;
-	screen.launch();
+//	LoadingGameScreen screen;
+//	screen.launch();
 
-	//mTitleScreen.launch();
+	mTitleScreen.launch();
 
 	return EXIT_SUCCESS;
 }

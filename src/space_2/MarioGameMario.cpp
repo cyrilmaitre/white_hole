@@ -7,7 +7,7 @@
 // Define
 //*************************************************************
 #define MARIO_INITAL_POSITIONX		1
-#define MARIO_INITAL_POSITIONY		5
+#define MARIO_INITAL_POSITIONY		2
 #define MARIO_RUNNING_TICK			0.1	// sec
 #define MARIO_DIRECTION_RIGHT		true
 #define MARIO_DIRECTION_LEFT		false
@@ -77,6 +77,11 @@ void MarioGameMario::setMarioState( MarioState p_state )
 //*************************************************************
 // Methods
 //*************************************************************
+void MarioGameMario::resetPosition()
+{
+	this->mBody->SetTransform(b2Vec2(MARIO_INITAL_POSITIONX, MARIO_INITAL_POSITIONY), this->mBody->GetAngle());
+}
+
 void MarioGameMario::update()
 {
 	// Update velocity
@@ -114,9 +119,6 @@ void MarioGameMario::update()
 void MarioGameMario::updateMarioState()
 {
 	b2Vec2 currentVelocity = this->mBody->GetLinearVelocity();
-	//if(this->getMarioState() == MarioState::Jumping && currentVelocity.y == 0)
-	//	this->setMarioState(MarioState::None);
-
 	if(this->getMarioState() != MarioState::Jumping)
 	{
 		if(currentVelocity.x < 0 || currentVelocity.x > 0)

@@ -39,7 +39,11 @@ public:
 	MarioGameBlock* getBlock(int p_x, int p_y);
 
 	// Methods
-	void createWorldBlocks();
+	void createWorld();
+	void createBricks();
+	void createBricks(int p_line);
+	void createCoins();
+	void createCoins(int p_line);
 
 	void update(sf::Event p_event);
 	void update();

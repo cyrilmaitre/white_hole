@@ -30,6 +30,7 @@ public:
 	void setMarioState(MarioState p_state);
 
 	// Methods
+	void resetPosition();
 	void update();
 	void updateMarioState();
 	void update(sf::Event p_event);

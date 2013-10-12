@@ -1,4 +1,5 @@
 #include "MarioGameBlockActive.h"
+#include "MarioGameCoin.h"
 
 
 //*************************************************************
@@ -85,7 +86,9 @@ void MarioGameBlockActive::BeginContact( b2Contact* p_contact, MarioGameUserData
 {
 	b2WorldManifold worldManifold;
 	p_contact->GetWorldManifold(&worldManifold);
-	if(worldManifold.points[0].y < this->mBodyBrick->GetPosition().y && this->getActiveState() == ActiveState::Idle && this->mGame->getBlock(this->mPositionGrid.x, this->mPositionGrid.y + 1) == NULL)
+	MarioGameBlock* topBlock = this->mGame->getBlock(this->mPositionGrid.x, this->mPositionGrid.y + 1);
+	bool topBlockCoin = dynamic_cast<MarioGameCoin*>(topBlock) != NULL;
+	if(worldManifold.points[0].y < this->mBodyBrick->GetPosition().y && this->getActiveState() == ActiveState::Idle && (topBlock == NULL || topBlockCoin))
 	{
 		this->setActiveState(ActiveState::Upped);
 		this->mActiveClock.restart();

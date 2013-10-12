@@ -10,9 +10,17 @@
 //*************************************************************
 // Define
 //*************************************************************
-#define GAME_HEIGHT			256
-#define METERTOPIXEL		32
-#define PIXELTOMETER		1 / METERTOPIXEL
+#define GAME_HEIGHT				512
+#define METERTOPIXEL			32
+#define PIXELTOMETER			1 / METERTOPIXEL
+#define GEN_BRICKTICK			25.0f		// percent
+#define GEN_BRICKSSIZE_MIN		2			// blocks
+#define GEN_BRICKSSIZE_MAX		10			// blocks
+#define GEN_BONUSTICK			5.0f		// percent
+#define GEN_COINTICK			10.0f		// percent		
+#define GEN_COINTICKDOUBLE		50.0f		// percent
+#define GEN_COINSIZE_MIN		2			// coins
+#define GEN_COINSIZE_MAX		8			// coins
 
 
 //*************************************************************
@@ -84,6 +92,10 @@ void MarioGame::update( sf::Event p_event )
 {
 	Object::update(p_event);
 	this->mMario->update(p_event);
+
+	// Debug
+	if(p_event.type == sf::Event::EventType::KeyReleased && p_event.key.code == sf::Keyboard::R)
+		this->createWorld();
 }
 
 void MarioGame::update()
@@ -117,7 +129,7 @@ void MarioGame::update()
 	this->mMario->update();
 }
 
-void MarioGame::createWorldBlocks()
+void MarioGame::createWorld()
 {
 	//*********************************************
 	// Destroy
@@ -154,10 +166,10 @@ void MarioGame::createWorldBlocks()
 	this->updatePosition();
 
 	b2Vec2 vs[4];
-	vs[0].Set(0.0f, 10.0f);
+	vs[0].Set(0.0f, 50.0f);
 	vs[1].Set(0.0f, 1.0f);
 	vs[2].Set(MarioGame::pixelToMeter(Resource::resource->getViewUi()->getSize().x), 1.0f);
-	vs[3].Set(MarioGame::pixelToMeter(Resource::resource->getViewUi()->getSize().x), 10.0f);
+	vs[3].Set(MarioGame::pixelToMeter(Resource::resource->getViewUi()->getSize().x), 50.0f);
 	b2ChainShape chain;
 	chain.CreateChain(vs, 4);
 
@@ -167,16 +179,17 @@ void MarioGame::createWorldBlocks()
 	this->mBodyGround->CreateFixture(&chain, 0.0f);
 
 
-	for(int i = 5; i < 20; i++)
-		this->mWorldBlocks[i][3] = new MarioGameBrick(this, sf::Vector2i(i, 3));
+	//*********************************************
+	// Generate new world
+	//*********************************************
+	this->createBricks();
+	this->createCoins();
 
-	for(int i = 15; i < 20; i++)
-		this->mWorldBlocks[i][4] = new MarioGameBrick(this, sf::Vector2i(i, 4));
 
-	this->mWorldBlocks[30][3] = new MarioGameBonus(this, sf::Vector2i(30, 3));
-	
-	for(int i = 15; i < 20; i++)
-		this->mWorldBlocks[i][2] = new MarioGameCoin(this, sf::Vector2i(i, 2));
+	//*********************************************
+	// Reset mario
+	//*********************************************
+	this->mMario->resetPosition();
 }
 
 void MarioGame::updatePosition()
@@ -213,7 +226,7 @@ void MarioGame::notifyPositionChanged()
 void MarioGame::notifySizeChanged()
 {
 	Object::notifySizeChanged();
-	this->createWorldBlocks();
+	this->createWorld();
 }
 
 float MarioGame::pixelToMeter( float p_pixel )
@@ -277,5 +290,69 @@ void MarioGame::PreSolve( b2Contact* contact, const b2Manifold* oldManifold )
 	{
 		data = (MarioGameUserData*)b->GetBody()->GetUserData();
 		data->PreSolve(contact, oldManifold, MarioGameUserData::UserDataIndex::IndexB);
+	}
+}
+
+void MarioGame::createBricks()
+{
+	this->createBricks(3);
+	this->createBricks(6);
+}
+
+void MarioGame::createBricks( int p_line )
+{
+	for(int i = 0; i < this->mWorldBlocksSize.x; i++)
+	{
+		if(this->mWorldBlocks[i][p_line] == NULL)
+		{
+			float gen = Tools::random(0.0f, 100.0f);
+			if(this->getBlock(i - 1, p_line) == NULL && this->getBlock(i - 2, p_line) != NULL)
+				gen = 100.0f;
+			if(gen < GEN_BRICKTICK)
+			{
+				int size = Tools::random(GEN_BRICKSSIZE_MIN, GEN_BRICKSSIZE_MAX);
+				if(i + size >= this->mWorldBlocksSize.x)
+					size = this->mWorldBlocksSize.x - 1 - i;
+				for(int j = i; j <= i + size; j++)
+				{
+					float genBonus = Tools::random(0.0f, 100.0f);
+					if(genBonus < GEN_BONUSTICK)
+						this->mWorldBlocks[j][p_line] = new MarioGameBonus(this, sf::Vector2i(j, p_line));
+					else
+						this->mWorldBlocks[j][p_line] = new MarioGameBrick(this, sf::Vector2i(j, p_line));
+				}
+			}
+		}
+	}
+}
+
+void MarioGame::createCoins()
+{
+	this->createCoins(1);
+	this->createCoins(4);
+	this->createCoins(7);
+}
+
+void MarioGame::createCoins( int p_line )
+{
+	for(int i = 0; i < this->mWorldBlocksSize.x; i++)
+	{
+		if(this->mWorldBlocks[i][p_line] == NULL)
+		{
+			float gen = Tools::random(0.0f, 100.0f);
+			bool genDouble = Tools::random(0.0f, 100.0f) < GEN_COINTICKDOUBLE;
+			if(gen < GEN_COINTICK)
+			{
+				int size = Tools::random(GEN_COINSIZE_MIN, GEN_COINSIZE_MAX);
+				if(i + size >= this->mWorldBlocksSize.x)
+					size = this->mWorldBlocksSize.x - 1 - i;
+				for(int j = i; j <= i + size; j++)
+				{
+					this->mWorldBlocks[j][p_line] = new MarioGameCoin(this, sf::Vector2i(j, p_line));
+					if(genDouble)
+						this->mWorldBlocks[j][p_line + 1] = new MarioGameCoin(this, sf::Vector2i(j, p_line + 1));
+				}
+			}
+		}
 	}
 }

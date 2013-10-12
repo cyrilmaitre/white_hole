@@ -1,4 +1,4 @@
-﻿La génération a démarré 10/10/2013 14:44:14.
+﻿La génération a démarré 12/10/2013 14:03:44.
      1>Projet "D:\Projets\white_hole\lib\box2d\Box2D_v2.2.1\Build\vs2010\Box2D.vcxproj" sur le nœud 2 (rebuild cible(s)).
      1>_PrepareForClean:
          Suppression du fichier "obj\x64\Release\Box2D\Box2D.lastbuildstate".
@@ -110,4 +110,4 @@
 
 La génération a réussi.
 
-Temps écoulé 00:00:08.85
+Temps écoulé 00:00:09.75
