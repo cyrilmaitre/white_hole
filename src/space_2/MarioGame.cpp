@@ -31,7 +31,7 @@ MarioGame::MarioGame(void)
 	this->mWorldBlocks = NULL;
 	this->mBodyGround = NULL;
 
-	b2Vec2 gravity(0.0f, -1.0f);
+	b2Vec2 gravity(0.0f, -75.0f);
 	this->mWorld = new b2World(gravity);
 	this->mWorld->SetContactListener(this);
 	this->mMario = new MarioGameMario(this);
@@ -88,47 +88,6 @@ MarioGameBlock* MarioGame::getBlock( int p_x, int p_y )
 //*************************************************************
 // Methods
 //*************************************************************
-void MarioGame::update( sf::Event p_event )
-{
-	Object::update(p_event);
-	this->mMario->update(p_event);
-
-	// Debug
-	if(p_event.type == sf::Event::EventType::KeyReleased && p_event.key.code == sf::Keyboard::R)
-		this->createWorld();
-}
-
-void MarioGame::update()
-{
-	// Update world
-	this->mWorld->Step(this->mWorldTimeStep, this->mWorldVelocityIter, this->mWorldPositionIter);
-
-	// Update blocks
-	for(int i = 0; i < this->mWorldBlocksSize.x; i++)
-	{
-		for(int j = 0; j < this->mWorldBlocksSize.y; j++)
-		{
-			if(this->mWorldBlocks[i][j] != NULL)
-			{
-				// Check if coin
-				MarioGameCoin* coin = dynamic_cast<MarioGameCoin*>(this->mWorldBlocks[i][j]);
-				if(coin != NULL && coin->getCoinState() == MarioGameCoin::CoinState::Destroy)
-				{
-					delete this->mWorldBlocks[i][j];
-					this->mWorldBlocks[i][j] = NULL;
-				}
-				else
-				{
-					this->mWorldBlocks[i][j]->update();
-				}
-			}
-		}
-	}
-
-	// Update mario
-	this->mMario->update();
-}
-
 void MarioGame::createWorld()
 {
 	//*********************************************
@@ -192,8 +151,61 @@ void MarioGame::createWorld()
 	this->mMario->resetPosition();
 }
 
+void MarioGame::update( sf::Event p_event )
+{
+	Object::update(p_event);
+	this->mMario->update(p_event);
+
+	// Debug
+	if(p_event.type == sf::Event::EventType::KeyReleased && p_event.key.code == sf::Keyboard::R)
+		this->createWorld();
+}
+
+void MarioGame::update()
+{
+	// Update framerate
+	this->updateFrameRate();
+
+	// Update world
+	this->mWorldTimeStep = 1 / this->mFrameRate;
+	this->mWorld->Step(this->mWorldTimeStep, this->mWorldVelocityIter, this->mWorldPositionIter);
+
+	// Update blocks
+	for(int i = 0; i < this->mWorldBlocksSize.x; i++)
+	{
+		for(int j = 0; j < this->mWorldBlocksSize.y; j++)
+		{
+			if(this->mWorldBlocks[i][j] != NULL)
+			{
+				// Check if coin
+				MarioGameCoin* coin = dynamic_cast<MarioGameCoin*>(this->mWorldBlocks[i][j]);
+				if(coin != NULL && coin->getCoinState() == MarioGameCoin::CoinState::Destroy)
+				{
+					delete this->mWorldBlocks[i][j];
+					this->mWorldBlocks[i][j] = NULL;
+				}
+				else
+				{
+					this->mWorldBlocks[i][j]->update();
+				}
+			}
+		}
+	}
+
+	// Update mario
+	this->mMario->update();
+}
+
+void MarioGame::updateFrameRate()
+{	
+	this->mFrameRate = 1.0f / this->mGameClock.getElapsedTimeAsSeconds();
+	this->mTBFrameRate.setText("Frame Rate: " + Tools::formatNumber((int)this->mFrameRate));
+	this->mGameClock.restart();
+}
+
 void MarioGame::updatePosition()
 {
+	this->mTBFrameRate.setPosition(this->getX(), this->getY());
 	for(int i = 0; i < this->mWorldBlocksSize.x; i++)
 	{
 		this->mWorldBlocks[i][0]->setPosition(	this->getX() + i * MARIOGAME_BLOCK_WIDTH + MARIOGAME_BLOCK_WIDTH / 2, 
@@ -203,6 +215,9 @@ void MarioGame::updatePosition()
 
 void MarioGame::draw()
 {
+	// Draw framerate
+	this->mTBFrameRate.draw();
+
 	// Draw blocks
 	for(int i = 0; i < this->mWorldBlocksSize.x; i++)
 	{

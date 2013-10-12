@@ -88,12 +88,12 @@ void MarioGameMario::update()
 	b2Vec2 currentVelocity = this->mBody->GetLinearVelocity();
 	if( sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
 	{
-		this->mBody->SetLinearVelocity(b2Vec2(1.0f, currentVelocity.y));
+		this->mBody->SetLinearVelocity(b2Vec2(12.0f, currentVelocity.y));
 		this->mMarioDirection = MARIO_DIRECTION_RIGHT;
 	}
 	else if( sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
 	{
-		this->mBody->SetLinearVelocity(b2Vec2(-1.0f, currentVelocity.y));
+		this->mBody->SetLinearVelocity(b2Vec2(-12.0f, currentVelocity.y));
 		this->mMarioDirection = MARIO_DIRECTION_LEFT;
 	}
 	else 
@@ -103,7 +103,7 @@ void MarioGameMario::update()
 
 	if( this->getMarioState() != MarioState::Jumping && sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
 	{
-		this->mBody->ApplyLinearImpulse(b2Vec2(0.0f, 3.0f), this->mBody->GetPosition());
+		this->mBody->ApplyLinearImpulse(b2Vec2(0.0f, 25.0f), this->mBody->GetPosition());
 		this->setMarioState(MarioState::Jumping);
 	}
 

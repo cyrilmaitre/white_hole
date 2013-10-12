@@ -16,7 +16,7 @@
 #include "ThreadTerminator.h"
 
 // Define divers
-#define RESOURCE_APP_FRAME_LIMIT			500
+#define RESOURCE_APP_FRAME_LIMIT			60
 #define RESOURCE_APP_INITIAL_POSITION_X		0
 #define RESOURCE_APP_INITIAL_POSITION_Y		0
 #define RESOURCE_PI							3.14159265

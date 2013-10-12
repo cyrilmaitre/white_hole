@@ -1,6 +1,8 @@
 #pragma once
 #include "Object.h"
 #include "Box2D/Box2D.h"
+#include "Clock.h";
+#include "TextBox.h"
 
 class MarioGameMario;
 class MarioGameBlock;
@@ -47,6 +49,7 @@ public:
 
 	void update(sf::Event p_event);
 	void update();
+	void updateFrameRate();
 	void updatePosition();
 	void draw();
 	void notifyPositionChanged();
@@ -63,6 +66,8 @@ public:
 
 private:
 	// Attributs
+	float mFrameRate;
+	TextBox mTBFrameRate;
 	b2World* mWorld;
 	float mWorldTimeStep;
 	float mWorldVelocityIter;
@@ -71,5 +76,6 @@ private:
 	sf::Vector2i mWorldBlocksSize;
 	MarioGameBlock*** mWorldBlocks;
 	b2Body* mBodyGround;
+	mks::Clock mGameClock;
 };
 
