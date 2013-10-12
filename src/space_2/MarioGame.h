@@ -67,7 +67,6 @@ public:
 private:
 	// Attributs
 	float mFrameRate;
-	TextBox mTBFrameRate;
 	b2World* mWorld;
 	float mWorldTimeStep;
 	float mWorldVelocityIter;

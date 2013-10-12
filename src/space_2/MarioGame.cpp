@@ -199,13 +199,11 @@ void MarioGame::update()
 void MarioGame::updateFrameRate()
 {	
 	this->mFrameRate = 1.0f / this->mGameClock.getElapsedTimeAsSeconds();
-	this->mTBFrameRate.setText("Frame Rate: " + Tools::formatNumber((int)this->mFrameRate));
 	this->mGameClock.restart();
 }
 
 void MarioGame::updatePosition()
 {
-	this->mTBFrameRate.setPosition(this->getX(), this->getY());
 	for(int i = 0; i < this->mWorldBlocksSize.x; i++)
 	{
 		this->mWorldBlocks[i][0]->setPosition(	this->getX() + i * MARIOGAME_BLOCK_WIDTH + MARIOGAME_BLOCK_WIDTH / 2, 
@@ -215,9 +213,6 @@ void MarioGame::updatePosition()
 
 void MarioGame::draw()
 {
-	// Draw framerate
-	this->mTBFrameRate.draw();
-
 	// Draw blocks
 	for(int i = 0; i < this->mWorldBlocksSize.x; i++)
 	{
