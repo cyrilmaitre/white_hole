@@ -5,6 +5,9 @@
 #include <vld.h>
 #endif
 
+
+
+
 int main(int argc, char** argv)
 {
 
@@ -19,6 +22,7 @@ int main(int argc, char** argv)
 		ChatServer chatServer;
 		//start a server on the default port
 		chatServer.create();
+
 	}
 	// client
 	else if(str == "c")
@@ -43,6 +47,8 @@ int main(int argc, char** argv)
 				chatClient6.connect("watwat6", "b754d59302ca2aaaa54dc6cd42a6e963d60d99c");
 				chatClient7.connect("watwat7", "b754d59302ca2aaaa54dc6cd42a6e963d60d99c");
 				chatClient8.connect("watwat8", "b754d59302ca2aaaa54dc6cd42a6e963d60d99c");
+			} else {
+				sf::sleep(sf::seconds(1));
 			}
 		}
 	

@@ -14,6 +14,9 @@
 #define FLOOD_INTERVAL			1					// control flood on X seconds
 #define FLOOD_MAX_PACKETS		20					// max packets allowed in FLOOD_INTERVAL
 
+#define SERVER_ALLOW_RESTART	true
+#define ENABLE_CLI				true
+
 // -------------
 // --- CLASS ---
 // -------------

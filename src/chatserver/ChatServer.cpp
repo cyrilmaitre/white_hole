@@ -137,195 +137,218 @@ void ChatServer::create(unsigned short port)
 */
 void ChatServer::mRunServer(void)
 {
-	// Create a socket to listen to new connections
-	sf::Socket::Status status = listener.listen(mPort);
-
-	if(status != sf::Socket::Status::Done) {
-		{ std::ostringstream msg; msg << "Unable to bind port: " << mPort << ""; Debug::msg(msg); }
-		exit(EXIT_FAILURE);
-	}
-	{ std::ostringstream msg; msg << "Server starting on port: " << mPort << ". Listener blocking: " << listener.isBlocking() << ""; Debug::msg(msg); }
-
-	// Add the listener to the selector
-	selector.add(listener);
-
-	//
-	this->setRunning(true);
-
-	// -- ASYNC JOBS --
-	// Async friendlists job
-	this->mThread = std::unique_ptr<sf::Thread>(new sf::Thread(&ChatServer::mAsyncTasks, this));
-	this->mThread->launch();
-
-
-	// -- SERVER MAIN LOOP --
-	// Enter loop to handle new connection and updating of server / clients
-	while(this->isRunning())
+	while(true)
 	{
+		// Create a socket to listen to new connections
+		sf::Socket::Status status = listener.listen(mPort);
 
-		//Make the selector wait for data on any socket
-		if(selector.wait(sf::Time(sf::microseconds(50))))
+		if(status != sf::Socket::Status::Done) {
+			{ std::ostringstream msg; msg << "Unable to bind port: " << mPort << ""; Debug::msg(msg); }
+			exit(EXIT_FAILURE);
+		}
+		{ std::ostringstream msg; msg << "Server starting on port: " << mPort << ". Listener blocking: " << listener.isBlocking() << ""; Debug::msg(msg); }
+
+		// Add the listener to the selector
+		selector.add(listener);
+
+		//
+		this->setRunning(true);
+
+		// -- ASYNC JOBS --
+		// Async friendlists job
+		this->mThread = std::unique_ptr<sf::Thread>(new sf::Thread(&ChatServer::mAsyncTasks, this));
+		this->mThread->launch();
+
+		// CLi
+		if(ENABLE_CLI) {
+			this->mThreadCLI = std::unique_ptr<sf::Thread>(new sf::Thread(&ChatServer::mCLI, this));
+			this->mThreadCLI->launch();
+		}
+
+
+		// -- SERVER MAIN LOOP --
+		// Enter loop to handle new connection and updating of server / clients
+		while(this->isRunning())
 		{
 
-			//If there are available slots test the listener
-			if(selector.isReady(listener))
+			//Make the selector wait for data on any socket
+			if(selector.wait(sf::Time(sf::microseconds(50))))
 			{
-				{ std::ostringstream msg; msg << "Selector is ready" << ""; Debug::msg(msg); }
 
-				//The listener is ready: there is a pending connection
-				std::shared_ptr<Client> client = std::make_shared<Client>();
-
-				// non-blocking = big packets won't block server
-				client->getSocket().setBlocking(false);		
-
-				if(listener.accept(client->getSocket()) == sf::Socket::Done)
+				//If there are available slots test the listener
+				if(selector.isReady(listener))
 				{
+					{ std::ostringstream msg; msg << "Selector is ready" << ""; Debug::msg(msg); }
 
-					sf::Packet packet;
-					// if server is not full
-					if(clients.size() < MAX_CLIENTS)
+					//The listener is ready: there is a pending connection
+					std::shared_ptr<Client> client = std::make_shared<Client>();
+
+					// non-blocking = big packets won't block server
+					client->getSocket().setBlocking(false);		
+
+					if(listener.accept(client->getSocket()) == sf::Socket::Done)
 					{
 
-						// if max connections by ip not reached
-						if(this->connectionCountByIP(client->getSocket().getRemoteAddress()) < MAX_IP_TOGETHER)
+						sf::Packet packet;
+						// if server is not full
+						if(clients.size() < MAX_CLIENTS)
 						{
-							// client allowed
-							this->addClient(client);
 
-							//send motd to new client
-							/*S2C_Command s2c_cmd(ServerCommand::S_MOTD, SERVER_MOTD);
+							// if max connections by ip not reached
+							if(this->connectionCountByIP(client->getSocket().getRemoteAddress()) < MAX_IP_TOGETHER)
 							{
-								packet << s2c_cmd;
-							}
+								// client allowed
+								this->addClient(client);
 
-							this->sendPacket(packet, client);*/
+							}
+							else
+							{
+								//send rejection message because too many connections from same IP
+								S2C_Command s2c_cmd(ServerCommand::S_DROPPED_NORC, "Too many connections from same IP");
+								{
+									packet << s2c_cmd;
+								}
+								this->sendPacket(packet, client);
+								this->dropClient(client);
+							}
 						}
 						else
 						{
-							//send rejection message because too many connections from same IP
-							S2C_Command s2c_cmd(ServerCommand::S_DROPPED_NORC, "Too many connections from same IP");
+							//send rejection message because server is full and tidy up
+							S2C_Command s2c_cmd(ServerCommand::S_DROPPED_NORC, "Chat server is full");
 							{
 								packet << s2c_cmd;
 							}
 							this->sendPacket(packet, client);
 							this->dropClient(client);
 						}
+
 					}
-					else
+					else 
 					{
-						//send rejection message because server is full and tidy up
-						S2C_Command s2c_cmd(ServerCommand::S_DROPPED_NORC, "Chat server is full");
-						{
-							packet << s2c_cmd;
-						}
-						this->sendPacket(packet, client);
+						{ std::ostringstream msg; msg << "Error, can't get connection with client " << client->getSocket().getRemoteAddress() << ""; Debug::msg(msg); }
 						this->dropClient(client);
 					}
 
-				}
-				else 
+				} // -- end of server listener ready
+
+				//The listener socket is not ready, test all other sockets (the clients)
+				for(unsigned int i = 0; i < clients.size(); i++)
 				{
-					{ std::ostringstream msg; msg << "Error, can't get connection with client " << client->getSocket().getRemoteAddress() << ""; Debug::msg(msg); }
-					this->dropClient(client);
-				}
+					std::shared_ptr<Client> client = clients[i];
+					sf::Packet packet;
 
-			} // -- end of server listener ready
+					//check to see if we can receive data
+					if (selector.isReady(client->getSocket()))
+					{
 
-			//The listener socket is not ready, test all other sockets (the clients)
+						//The client has sent some data, we can receive it
+						sf::Socket::Status status = client->getSocket().receive(packet);
+
+						// Packet status ?
+						if(status == sf::Socket::Status::Done)
+						{
+							{ std::ostringstream msg; msg << "Packet received successfuly" << ""; Debug::msg(msg); }
+							this->handlePacket(packet, client);
+						}
+						else if(status == sf::Socket::Status::Disconnected)
+						{
+							{ std::ostringstream msg; msg << "Packet received with code: Status::Disconnected ("<< status << ")"; Debug::msg(msg); }
+							this->dropClient(client);
+						}
+						else if(status == sf::Socket::Status::NotReady)
+						{
+							{ std::ostringstream msg; msg << "Packet received with code: Status::NotReady ("<< status << ")"; Debug::msg(msg); }
+						}
+						else if(status == sf::Socket::Status::Error)
+						{
+							{ std::ostringstream msg; msg << "Packet received with code: Status::Error ("<< status << ")"; Debug::msg(msg); }
+						}
+						else
+						{
+							{ std::ostringstream msg; msg << "(!) ERROR This code is not handle by SFML 2.0/2.1 : ("<< status << ")"; Debug::msg(msg); }
+						}
+
+					} // -- end of client socket ready
+
+				} // -- end of clients loop
+
+			}  // -- end of selector.wait
+
+
+			// CHECK / UPDATES (ie: ping, auth, flood) -> "asynchronous" jobs, low CPU time
 			for(unsigned int i = 0; i < clients.size(); i++)
 			{
 				std::shared_ptr<Client> client = clients[i];
-				sf::Packet packet;
+				sf::Uint64 now = (sf::Uint64)time(NULL);
 
-				//check to see if we can receive data
-				if (selector.isReady(client->getSocket()))
+				// update flood control -> reset next control time. see handlePacket() for "counter-flood" actions
+				if(client->getFloodControlTime() < now) {
+					client->resetNbSentPackets();
+					client->updateFloodControlTime();
+				}
+
+				// check auth timeot
+				if(client->getState() == ClientState::TCP_CONNECTED && client->getAuthRequestTime() != 0 && client->getAuthRequestTime()+AUTH_TIMEOUT < now){
+					{ std::ostringstream msg; msg << "Client #" << client->getUniqueID() << " AUTH timeout (" << client->getSocket().getRemoteAddress() << ")"; Debug::msg(msg); }
+					this->dropClient(client);
+				}
+
+				// check ping timeout
+				if(client->isPongRequested())
 				{
-
-					//The client has sent some data, we can receive it
-					sf::Socket::Status status = client->getSocket().receive(packet);
-
-					// Packet status ?
-					if(status == sf::Socket::Status::Done)
-					{
-						{ std::ostringstream msg; msg << "Packet received successfuly" << ""; Debug::msg(msg); }
-						this->handlePacket(packet, client);
-					}
-					else if(status == sf::Socket::Status::Disconnected)
-					{
-						{ std::ostringstream msg; msg << "Packet received with code: Status::Disconnected ("<< status << ")"; Debug::msg(msg); }
+					if(client->getLastActivityTime()+PING_IDLE_TIME+PING_TIMEOUT < now) {
+						{ std::ostringstream msg; msg << "Client #" << client->getUniqueID() << " PING timeout (" << client->getSocket().getRemoteAddress() << ")"; Debug::msg(msg); }
 						this->dropClient(client);
 					}
-					else if(status == sf::Socket::Status::NotReady)
+				}
+				else
+				{
+					// if no ping requested, then request one if client is idling
+					if(client->getLastActivityTime() != 0 && client->getLastActivityTime()+PING_IDLE_TIME < now)
 					{
-						{ std::ostringstream msg; msg << "Packet received with code: Status::NotReady ("<< status << ")"; Debug::msg(msg); }
-					}
-					else if(status == sf::Socket::Status::Error)
-					{
-						{ std::ostringstream msg; msg << "Packet received with code: Status::Error ("<< status << ")"; Debug::msg(msg); }
-					}
-					else
-					{
-						{ std::ostringstream msg; msg << "(!) ERROR This code is not handle by SFML 2.0/2.1 : ("<< status << ")"; Debug::msg(msg); }
-					}
+						client->requestPong();
 
-				} // -- end of client socket ready
+						sf::Packet pingPacket;
+						S2C_Command s2c_ping(ServerCommand::S_PING);
+						pingPacket << s2c_ping;
+						this->sendPacket(pingPacket, client);
+					}
+				}
 
 			} // -- end of clients loop
 
-		}  // -- end of selector.wait
+
+		} // -- end of server main loop
 
 
-		// CHECK / UPDATES (ie: ping, auth, flood) -> "asynchronous" jobs, low CPU time
-		for(unsigned int i = 0; i < clients.size(); i++)
-		{
-			std::shared_ptr<Client> client = clients[i];
-			sf::Uint64 now = (sf::Uint64)time(NULL);
+		{ std::ostringstream msg; msg << "---- SERVER SHUTTING DOWN ----"; Debug::msg(msg); }
 
-			// update flood control -> reset next control time. see handlePacket() for "counter-flood" actions
-			if(client->getFloodControlTime() < now) {
-				client->resetNbSentPackets();
-				client->updateFloodControlTime();
-			}
+		// May be useful for all async jobs to stop
+		this->setRunning(false);
 
-			// check auth timeot
-			if(client->getState() == ClientState::TCP_CONNECTED && client->getAuthRequestTime() != 0 && client->getAuthRequestTime()+AUTH_TIMEOUT < now){
-				{ std::ostringstream msg; msg << "Client #" << client->getUniqueID() << " AUTH timeout (" << client->getSocket().getRemoteAddress() << ")"; Debug::msg(msg); }
-				this->dropClient(client);
-			}
+		// waiting for threads to stop
+		this->mThread->wait(); 
+		{ std::ostringstream msg; msg << "[THREAD] Async jobs stopped"; Debug::msg(msg); }
 
-			// check ping timeout
-			if(client->isPongRequested())
-			{
-				if(client->getLastActivityTime()+PING_IDLE_TIME+PING_TIMEOUT < now) {
-					{ std::ostringstream msg; msg << "Client #" << client->getUniqueID() << " PING timeout (" << client->getSocket().getRemoteAddress() << ")"; Debug::msg(msg); }
-					this->dropClient(client);
-				}
-			}
-			else
-			{
-				// if no ping requested, then request one if client is idling
-				if(client->getLastActivityTime() != 0 && client->getLastActivityTime()+PING_IDLE_TIME < now)
-				{
-					client->requestPong();
+		if(ENABLE_CLI) {
+			this->mThreadCLI->wait();
+			{ std::ostringstream msg; msg << "[THREAD] CLI stopped"; Debug::msg(msg); }
+		}
 
-					sf::Packet pingPacket;
-					S2C_Command s2c_ping(ServerCommand::S_PING);
-					pingPacket << s2c_ping;
-					this->sendPacket(pingPacket, client);
-				}
-			}
+		// Clear clients vector
+		this->clients.clear();
+		this->clients.shrink_to_fit();
 
-		} // -- end of clients loop
+		// Close socket
+		selector.clear();
+		listener.close();
 
+		if(!SERVER_ALLOW_RESTART)
+			break;
+	}
 
-	} // -- end of server main loop
-
-	// May be useful for all async jobs to stop
-	this->setRunning(false);
-
-	// Clear clients vector
-	this->clients.clear();
-	this->clients.shrink_to_fit();
+	{ std::ostringstream msg; msg << "---- SERVER STOPPED ----"; Debug::msg(msg); }
 }
 
 /*
@@ -466,6 +489,17 @@ bool ChatServer::authenticate(std::weak_ptr<Client> p_wclient, C2S_Auth p_auth)
 				this->sendPacket(packet, p_client);
 			}
 
+			//send motd
+			
+			{
+				sf::Packet packet;
+				S2C_Command s2c_cmd(ServerCommand::S_MOTD, SERVER_MOTD);
+				packet << s2c_cmd;
+				this->sendPacket(packet, p_client);
+			}
+
+			
+
 			// broadcast to all authed user that the user joined
 			{
 				sf::Packet packet;
@@ -532,8 +566,6 @@ void ChatServer::dropClient(std::weak_ptr<Client> p_wclient)
 	// ----------------- end of SECURITY CHECKS -------------------------
 
 	sf::Lock lock(mMutex);
-	// this might seems useless since it will be delete later. it's just a security.
-	p_client->setState(ClientState::DROPPED); 
 
 	// broadcast disconnexion to all clients
 	if(p_client->getState() == ClientState::AUTHED)
@@ -548,6 +580,9 @@ void ChatServer::dropClient(std::weak_ptr<Client> p_wclient)
 
 		this->broadcast(packet, bc);
 	}
+
+	// this might seems useless since it will be delete later. it's just a security.
+	p_client->setState(ClientState::DROPPED); 
 
 	// disconnect
 	{ std::ostringstream msg; msg << "Client #" <<  p_client->getUniqueID() << " disconnected - " << p_client->getSocket().getRemoteAddress().toString() << "";	Debug::msg(msg); }
@@ -1021,6 +1056,7 @@ void ChatServer::handlePacket(sf::Packet& p_packet, std::weak_ptr<Client> p_wcli
 
 std::shared_ptr<Client> ChatServer::findClientByName(std::string p_name)
 {
+	sf::Lock lock(mMutex);
 	std::shared_ptr<Client> foundClient(nullptr);
 	for(auto it = clients.begin(); it != clients.end(); ++it)
 	{
@@ -1038,6 +1074,7 @@ std::shared_ptr<Client> ChatServer::findClientByName(std::string p_name)
 
 std::shared_ptr<Client> ChatServer::findClientByUID(sf::Uint64 p_uid)
 {
+	sf::Lock lock(mMutex);
 	std::shared_ptr<Client> foundClient(nullptr);
 	for(auto it = clients.begin(); it != clients.end(); ++it)
 	{
@@ -1148,6 +1185,90 @@ void ChatServer::mCLI(void)
 	{
 		std::string str;
 		std::getline(std::cin, str);
+
+		// get all arguments
+		std::vector<std::string> args;
+		std::istringstream iss(str);
+		for (std::string token; std::getline(iss, token, ' '); )
+		{
+			args.push_back(std::move(token));
+		}
+
+
+		if(args.size() > 0)
+		{
+			// message is all input except 1st argument
+			std::string message = "";
+			if(args.size() >= 1) {
+				for(std::vector<std::string>::size_type i = 1; i != args.size(); i++) {
+					if (!message.empty()) {
+						message.append(" ");
+					}
+					message.append(args[i]);
+				}
+			}
+
+			if(args[0].compare("status") == 0) {
+				sf::Lock lock(mMutex);
+				
+				{ std::ostringstream msg; msg << "#" << "ID" << "\t\t" << "STATE" << "\t\t"<< "IP" << "\t\t" << "NAME"; Debug::msg(msg); }
+				for(std::vector<std::shared_ptr<Client>>::const_iterator it = clients.begin(); it != clients.end(); ++it)
+				{
+					
+					std::ostringstream msg;
+					msg << "#" << (*it)->getUniqueID() << "\t" << (*it)->getState() << "\t\t"<< (*it)->getSocket().getRemoteAddress().toString() << "\t" << (*it)->getName();
+					Debug::msg(msg);
+				}
+				
+			}
+			else if(args[0].compare("say") == 0) {
+				if(args.size() >= 2) {
+					sf::Packet packet;
+					S2C_Command s2c_command(ServerCommand::S_SAY, message);
+					packet << s2c_command;
+
+					BroadcastCondition bc;
+					bc.clientState = ClientState::AUTHED;
+					mMutex.lock();
+					this->broadcast(packet, bc);
+					{ std::ostringstream msg; msg << "[CLI] Broadcasting: '" << message <<  "'"; Debug::msg(msg); }
+					mMutex.unlock();
+				}
+				
+			}
+			else if(args[0].compare("kickall") == 0) {
+				for(std::vector<std::shared_ptr<Client>>::const_iterator it = clients.begin(); it != clients.end(); ++it)
+				{
+					this->dropClient(*it);
+				}
+			}
+			else if(args[0].compare("kick") == 0) {
+				if(args.size() >= 2) {
+					std::shared_ptr<Client> findClientByName = this->findClientByName(args[1]);
+					if(findClientByName.get() != 0)
+					{
+						this->dropClient(std::weak_ptr<Client>(findClientByName));
+						{ std::ostringstream msg; msg << "[CLI] Kick: Kicked client '" << args[1] <<  "'"; Debug::msg(msg); }
+					} else {
+						{ std::ostringstream msg; msg << "[CLI] Kick: Can't find client '" << args[1] <<  "'"; Debug::msg(msg); }
+					}
+				}
+			}
+			else if(args[0].compare("clear") == 0) {
+				std::cout << std::string(50, '\n');
+			}
+			else if(args[0].compare("stop") == 0) {
+				this->setRunning(false);
+				if(SERVER_ALLOW_RESTART)
+					{ std::ostringstream msg; msg << "[CLI] Server will restart..."; Debug::msg(msg); }
+				else
+					{ std::ostringstream msg; msg << "[CLI] Stopping server instance..."; Debug::msg(msg); }
+			}
+
+		}
+
+	
+		sf::sleep(sf::seconds(1));
 	}
 	{ std::ostringstream msg; msg << "[THREAD] CLI thread FINISHED" << ""; Debug::msg(msg); }
 }
