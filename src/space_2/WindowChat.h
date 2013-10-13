@@ -19,6 +19,7 @@ public:
 private:
 	TextBoxMultiLine			txtbox;
 	TextBoxMultiLine			txtboxUL;
+	Button						buttonSend;
 	TextField					txtfield;
 	std::deque<std::string>		chatLines;
 };

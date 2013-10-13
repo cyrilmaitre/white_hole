@@ -7,39 +7,73 @@
 #define UIWINDOW_PLAYER_HEIGHT		150
 #define MAX_CHAT_LINES				100
 
+#define WINDOW_WIDTH	600
+#define WINDOW_HEIGHT	300
+#define MRG	5
+#define UL_WIDTH		200-(MRG*2)
+#define UL_HEIGHT		WINDOW_HEIGHT
+#define UL_X			WINDOW_WIDTH-UL_WIDTH+(MRG*3)
+#define UL_Y			0
+#define TXTBOX_WIDTH	400
+#define TXTBOX_HEIGHT	275
+#define TXTBOX_X		0
+#define TXTBOX_Y		0
+#define TXTFIELD_WIDTH	340
+#define TXTFIELD_HEIGHT	WINDOW_HEIGHT-TXTBOX_HEIGHT-MRG
+#define TXTFIELD_X		0
+#define TXTFIELD_Y		TXTBOX_Y+TXTBOX_HEIGHT+MRG
+#define BUTTON_WIDTH	TXTBOX_WIDTH-TXTFIELD_WIDTH-(MRG*2)
+#define BUTTON_HEIGHT	WINDOW_HEIGHT-TXTBOX_HEIGHT-MRG
+#define BUTTON_X		TXTFIELD_WIDTH+MRG+2
+#define BUTTON_Y		TXTFIELD_Y
+
+
 //*************************************************************
 // Constructor - Destructor
 //*************************************************************
 WindowChat::WindowChat(void)
 {
-	this->setContentWidth(600); // 320
-	this->setContentHeight(300);
+	this->setWindowTitle("Chat");
+
+	this->setContentWidth(WINDOW_WIDTH); // 320
+	this->setContentHeight(WINDOW_HEIGHT);
 	this->setType(Window::WindowType::TypeDynamic);
 	this->setOpen(false);
 	this->setWindowIcon(SpriteParameterFactory::getSpriteParameterIcon16X16()->getSprite(IC_16X16_PERSON));
 
 	this->setPositionMiddleScreen();
-
-	// txtfield
-	this->txtfield.setPosition(getContentX(), getContentY());
-	this->txtfield.setWidth(400);
-	this->txtfield.setType(TextField::TextFieldType::TypeText);
-	this->txtfield.setEnable(false);
 	
 	// txtbox
 	this->txtbox.setFontColor(sf::Color(255, 255, 255));
-	this->txtbox.setHeight(300-txtfield.getHeight());
-	this->txtbox.setWidth(400);
-	this->txtbox.setPosition(getContentX(), getContentY()+txtfield.getHeight());
+	this->txtbox.setHeight(TXTBOX_HEIGHT);
+	this->txtbox.setWidth(TXTBOX_WIDTH);
+	this->txtbox.setPosition(getContentX()+TXTBOX_X, getContentY()+TXTBOX_Y);
 	this->txtbox.setAutoResizeWidth(false);
 
-	// txtbox 2 (userlist)
+	// txtfield -> positionné par rapport à txtbox
+	this->txtfield.setPosition(getContentX()+TXTFIELD_X, getContentY()+TXTFIELD_Y);
+	this->txtfield.setWidth(TXTFIELD_WIDTH);
+	this->txtfield.setHeight(TXTFIELD_HEIGHT);
+	this->txtfield.setType(TextField::TextFieldType::TypeText);
+	this->txtfield.setEnable(false);
+
+	// button send -> positionné par rapport à txtbox
+	this->buttonSend.setTitle("Send");
+	this->buttonSend.setWidth(BUTTON_WIDTH);
+	this->buttonSend.setHeight(BUTTON_HEIGHT);
+	this->buttonSend.setPosition(getContentX()+BUTTON_X, getContentY()+BUTTON_Y);
+
+	// txtbox 2 (userlist) -> positionné par rapport à txtfield
 	this->txtboxUL.setFontColor(sf::Color(255, 255, 255));
-	this->txtboxUL.setHeight(300);
-	this->txtboxUL.setWidth(txtfield.getWidth()-200-10);
-	this->txtboxUL.setPosition(getContentX()+txtfield.getWidth()+10, getContentY());
+	this->txtboxUL.setHeight(UL_HEIGHT);
+	this->txtboxUL.setBorderColor(sf::Color(150,150,150), true);
+	this->txtboxUL.setBorderSize(1, true);
+	this->txtboxUL.setPadding(2);
+	this->txtboxUL.setWidth(UL_WIDTH);
+	this->txtboxUL.setPosition(getContentX()+UL_X, getContentY()+UL_Y);
 	this->txtboxUL.setAutoResizeWidth(false);
 	this->txtboxUL.setForceScrollBar(true);
+
 }
 
 WindowChat::~WindowChat(void)
@@ -173,6 +207,7 @@ void WindowChat::update(sf::Event p_event)
 	this->txtfield.update(p_event);
 	this->txtbox.update(p_event);
 	this->txtboxUL.update(p_event);
+	this->buttonSend.update(p_event);
 	Window::update(p_event);
 }
 
@@ -235,8 +270,7 @@ void WindowChat::drawContent()
 	}
 
 	// txtfield
-
-	txtfield.draw();
+	this->txtfield.draw();
 
 
 	// txtboxUL (userlist)
@@ -248,7 +282,11 @@ void WindowChat::drawContent()
 	}
 
 	this->txtboxUL.setText(userListContent);
-	txtboxUL.draw();
+	this->txtboxUL.draw();
+
+
+	// buttonSend
+	this->buttonSend.draw();
 
 	// txtbox = MUST BE DRAWN AFTER ALL COMPONENT
 	{
@@ -289,15 +327,16 @@ void WindowChat::drawContent()
 		Resource::resource->getChatClient()->clearOutputBuffer();
 	}
 
-	txtbox.draw();
+	this->txtbox.draw();
 }
 
 void WindowChat::notifyPositionChanged()
 {
 	Window::notifyPositionChanged();
-	this->txtfield.setPosition(getContentX(), getContentY());
-	this->txtbox.setPosition(getContentX(), getContentY()+txtfield.getHeight());
-	this->txtboxUL.setPosition(getContentX()+txtfield.getWidth()+10, getContentY());
+	this->txtfield.setPosition(getContentX()+TXTFIELD_X, getContentY()+TXTFIELD_Y);
+	this->txtbox.setPosition(getContentX()+TXTBOX_X, getContentY()+TXTBOX_Y);
+	this->buttonSend.setPosition(getContentX()+BUTTON_X, getContentY()+BUTTON_Y);
+	this->txtboxUL.setPosition(getContentX()+UL_X, getContentY()+UL_Y);
 }
 
 void WindowChat::pushChat(std::string p_string)
