@@ -1,0 +1,17 @@
+id = 983044
+name = weaponKineticMedium720HAIIName
+description = weaponKineticMedium720HAIIDescription
+price = 1850000.0
+stackmax = 1
+sprite = 4-2
+itemtype = 48
+itemtier = 2
+buyable = true
+stockminimum_min = 5
+stockminimum_max = 10
+stockmaximum_min = 11
+stockmaximum_max = 20
+production_min = 0.0
+production_max = 5.0
+consumption_min = 0.0
+consumption_max = 5.0

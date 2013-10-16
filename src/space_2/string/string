@@ -607,6 +607,37 @@ weaponKineticSmallACIIName = 200mm AutoCannon II
 weaponKineticSmallACIIDescription = A powerful autocannon that can smash apart most lightly armored frigates with ease.<br/>Must be loaded with the following projectile ammo types: Projectile Ammo Small.
 weaponKineticSmallACIIIName = 200mm AutoCannon III
 weaponKineticSmallACIIIDescription = A powerful autocannon that can smash apart most lightly armored frigates with ease.<br/>Must be loaded with the following projectile ammo types: Projectile Ammo Small.
+weaponKineticMedium650ACIName = 650mm Artillery Cannon I
+weaponKineticMedium650ACIDescription = A powerful long-range cannon. One of the most damaging weapons mountable on a cruiser.<br/>Must be loaded with the following projectile ammo types: Projectile Ammo Medium.
+weaponKineticMedium650ACIIName = 650mm Artillery Cannon II
+weaponKineticMedium650ACIIDescription = A powerful long-range cannon. One of the most damaging weapons mountable on a cruiser.<br/>Must be loaded with the following projectile ammo types: Projectile Ammo Medium.
+weaponKineticMedium650ACIIIName = 650mm Artillery Cannon III
+weaponKineticMedium650ACIIIDescription = A powerful long-range cannon. One of the most damaging weapons mountable on a cruiser.<br/>Must be loaded with the following projectile ammo types: Projectile Ammo Medium.
+weaponKineticMedium720HAIName = 720mm Howitzer Artillery I
+weaponKineticMedium720HAIDescription = This 720mm rocket-assisted howitzer is designed for long-range bombardment.<br/>Must be loaded with the following projectile ammo types: Projectile Ammo Medium.
+weaponKineticMedium720HAIIName = 720mm Howitzer Artillery II
+weaponKineticMedium720HAIIDescription = This 720mm rocket-assisted howitzer is designed for long-range bombardment.<br/>Must be loaded with the following projectile ammo types: Projectile Ammo Medium.
+weaponKineticMedium720HAIIIName = 720mm Howitzer Artillery III
+weaponKineticMedium720HAIIIDescription = This 720mm rocket-assisted howitzer is designed for long-range bombardment.<br/>Must be loaded with the following projectile ammo types: Projectile Ammo Medium.
+weaponKineticMedium220VAIName = 220mm Vulcan AutoCannon I
+weaponKineticMedium220VAIDescription = The 220mm multi-barrel autocannon is designed for skirmish warfare.<br/>Must be loaded with the following projectile ammo types: Projectile Ammo Medium.
+weaponKineticMedium220VAIIName = 220mm Vulcan AutoCannon II
+weaponKineticMedium220VAIIDescription = The 220mm multi-barrel autocannon is designed for skirmish warfare.<br/>Must be loaded with the following projectile ammo types: Projectile Ammo Medium.
+weaponKineticMedium220VAIIIName = 220mm Vulcan AutoCannon III
+weaponKineticMedium220VAIIIDescription = The 220mm multi-barrel autocannon is designed for skirmish warfare.<br/>Must be loaded with the following projectile ammo types: Projectile Ammo Medium.
+weaponKineticMedium425AIName = 425mm AutoCannon I
+weaponKineticMedium425AIDescription = The 425mm is a behemoth that will inflict severe damage on most cruisers and frigates in short-range battles.<br/>Must be loaded with the following projectile ammo types: Projectile Ammo Medium.
+weaponKineticMedium425AIIName = 425mm AutoCannon II
+weaponKineticMedium425AIIDescription = The 425mm is a behemoth that will inflict severe damage on most cruisers and frigates in short-range battles.<br/>Must be loaded with the following projectile ammo types: Projectile Ammo Medium.
+weaponKineticMedium425AIIIName = 425mm AutoCannon III
+weaponKineticMedium425AIIIDescription = The 425mm is a behemoth that will inflict severe damage on most cruisers and frigates in short-range battles.<br/>Must be loaded with the following projectile ammo types: Projectile Ammo Medium.
+weaponKineticMediumDual180AIName = Dual 180mm AutoCannon I
+weaponKineticMediumDual180AIDescription = This dual 180mm autocannon is a simple but effective close combat weapon.<br/>Must be loaded with the following projectile ammo types: Projectile Ammo Medium.
+weaponKineticMediumDual180AIIName = Dual 180mm AutoCannon II
+weaponKineticMediumDual180AIIDescription = This dual 180mm autocannon is a simple but effective close combat weapon.<br/>Must be loaded with the following projectile ammo types: Projectile Ammo Medium.
+weaponKineticMediumDual180AIIIName = Dual 180mm AutoCannon III
+weaponKineticMediumDual180AIIIDescription = This dual 180mm autocannon is a simple but effective close combat weapon.<br/>Must be loaded with the following projectile ammo types: Projectile Ammo Medium.
+#
 #
 #
 # Ui
