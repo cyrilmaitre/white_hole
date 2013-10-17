@@ -1,5 +1,5 @@
 id = 73
-name = itemTypeAmmoMissileSmallDescription
-description = itemTypeAmmoMissileSmallName
+name = itemTypeAmmoMissileSmallName
+description = itemTypeAmmoMissileSmallDescription
 icon = 11-1
 itemtype_parent = 33
