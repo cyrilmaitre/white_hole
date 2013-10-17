@@ -101,7 +101,7 @@ void MarketItemListView::notifyItemChanged()
 		this->mTBName.setText(this->getItem()->getName());
 		this->mTBTier.setText(this->getItem()->getItemTier()->getName());
 		this->mTBTier.setFontColor(this->getItem()->getItemTier()->getColor());
-		this->mTBPrice.setText(Tools::formatNumber((int)this->getItem()->getPrice()) + " " + Resource::resource->getBundle()->getString("creditAb"));
+		this->mTBPrice.setText(Tools::formatNumber(this->getItem()->getPrice()) + " " + Resource::resource->getBundle()->getString("creditAb"));
 
 		this->updatePosition();
 	}

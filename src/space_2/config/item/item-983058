@@ -1,10 +1,10 @@
-id = 983040
-name = weaponKineticMedium650ACIName
-description = weaponKineticMedium650ACIDescription
-price = 210000.0
+id = 983058
+name = weaponKineticLarge1400HAIName
+description = weaponKineticLarge1400HAIDescription
+price = 1220000.0
 stackmax = 1
-sprite = 2-1
-itemtype = 48
+sprite = 4-1
+itemtype = 49
 itemtier = 1
 buyable = true
 stockminimum_min = 5

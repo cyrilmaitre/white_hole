@@ -1,10 +1,10 @@
-id = 983040
-name = weaponKineticMedium650ACIName
-description = weaponKineticMedium650ACIDescription
-price = 210000.0
+id = 1015810
+name = weaponKineticExtraLarge6x2500RAIName
+description = weaponKineticExtraLarge6x2500RAIDescription
+price = 5.975E7
 stackmax = 1
-sprite = 2-1
-itemtype = 48
+sprite = 7-1
+itemtype = 50
 itemtier = 1
 buyable = true
 stockminimum_min = 5

@@ -1,0 +1,11 @@
+# ITEM
+id = 983059
+# WEAPON MODEL
+damagemultiplier = 12.807
+ammomax = 20
+range = 4800.0
+rangeangle = 0.51
+reloadingspeed = 8.03
+firerate = 2.01
+soundreload = weapon_kinetic_reload.wav
+ammotype_allowed = 67
