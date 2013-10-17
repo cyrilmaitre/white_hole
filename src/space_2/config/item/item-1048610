@@ -1,0 +1,17 @@
+id = 1048610
+name = weaponLaserMediumHEBIName
+description = weaponLaserMediumHEBIDescription
+price = 140000.0
+stackmax = 1
+sprite = 3-2
+itemtype = 52
+itemtier = 1
+buyable = true
+stockminimum_min = 5
+stockminimum_max = 10
+stockmaximum_min = 11
+stockmaximum_max = 20
+production_min = 0.0
+production_max = 5.0
+consumption_min = 0.0
+consumption_max = 5.0
