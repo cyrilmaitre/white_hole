@@ -1,0 +1,17 @@
+id = 1048589
+name = weaponLaserSmall75GRIName
+description = weaponLaserSmall75GRIDescription
+price = 12000.0
+stackmax = 1
+sprite = 0-2
+itemtype = 51
+itemtier = 1
+buyable = true
+stockminimum_min = 10
+stockminimum_max = 20
+stockmaximum_min = 22
+stockmaximum_max = 40
+production_min = 0.0
+production_max = 10.0
+consumption_min = 0.0
+consumption_max = 10.0
