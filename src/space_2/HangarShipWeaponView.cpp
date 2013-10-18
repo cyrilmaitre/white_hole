@@ -134,18 +134,18 @@ void HangarShipWeaponView::updateCharacterShipWeapons()
 	// Add 
 	for(int i = 0; i < this->mContainerWeaponStackViews.size(); i++)
 	{
+		ContainerStack* weaponStack = this->mContainerWeaponStackViews[i]->getContainerStack();
+		ContainerItem* ammoItem = this->mContainerAmmosItemViews[i]->getContainerItem();
 		WeaponModel* currentWeaponModel = NULL;
-		if(this->mContainerWeaponStackViews[i]->getContainerStack()->getItemStack() != NULL)
-		{
-			Item* currentItem = this->mContainerWeaponStackViews[i]->getContainerStack()->getItemStack()->getItem();
-			currentWeaponModel = FactoryGet::getWeaponModelFactory()->getWeaponModel(currentItem->getIdItem());
-		}
+
+		if(weaponStack->hasItemStack())
+			currentWeaponModel = FactoryGet::getWeaponModelFactory()->getWeaponModel(weaponStack->getItemStack()->getItem()->getIdItem());
 
 		if(currentWeaponModel != NULL)
 		{
 			Weapon* newWeapon = new Weapon(this->mCharacterShip, currentWeaponModel);
-			if(this->mContainerAmmosItemViews[i]->getContainerItem()->hasItem() && newWeapon->getWeaponModel()->isAmmoTypeAllowed(this->mContainerAmmosItemViews[i]->getContainerItem()->getItem()->getItemType()))
-				newWeapon->setAmmo(FactoryGet::getAmmoFactory()->getAmmo(this->mContainerAmmosItemViews[i]->getContainerItem()->getItem()->getIdItem()));
+			if(ammoItem->hasItem() && newWeapon->getWeaponModel()->isAmmoTypeAllowed(ammoItem->getItem()->getItemType()))
+				newWeapon->setAmmo(FactoryGet::getAmmoFactory()->getAmmo(ammoItem->getItem()->getIdItem()));
 			this->mCharacterShip->addWeapon(newWeapon, false);
 		}
 	}
@@ -157,29 +157,26 @@ void HangarShipWeaponView::updateCharacterShipWeapons()
 
 void HangarShipWeaponView::updateCharacterShipWeaponAmmos()
 {
-	for(int i = 0; i < this->mCharacterShip->getWeaponsCount(); i++)
+	if(this->mCharacterShip == NULL)
+		return;
+
+	int indexWeapon = 0;
+	for(int i = 0; i < this->mContainerWeaponStackViews.size(); i++)
 	{
-		if(this->mContainerWeaponStackViews[i]->getContainerStack()->hasItemStack())
+		ContainerStack* weaponStack = this->mContainerWeaponStackViews[i]->getContainerStack();
+		ContainerItem* ammoItem = this->mContainerAmmosItemViews[i]->getContainerItem();
+
+		if(weaponStack->hasItemStack())
 		{
-			Weapon* currentWeapon = this->mCharacterShip->getWeapon(i);
-
-			// Correct index ammo view
-			int indexAmmoView = 0;
-			int indexWeapon = i;
-			while(indexWeapon >= 0)
-			{
-				if(this->mContainerWeaponStackViews[indexAmmoView]->getContainerStack()->hasItemStack())
-					indexWeapon--;
-
-				if(indexWeapon >= 0)
-					indexAmmoView++;
-			}
+			Weapon* currentWeapon = this->mCharacterShip->getWeapon(indexWeapon);
 
 			// Update ammo
-			if(this->mContainerAmmosItemViews[i]->getContainerItem()->hasItem())
-				currentWeapon->setAmmo(FactoryGet::getAmmoFactory()->getAmmo(this->mContainerAmmosItemViews[i]->getContainerItem()->getItem()->getIdItem()));
+			if(ammoItem->hasItem())
+				currentWeapon->setAmmo(FactoryGet::getAmmoFactory()->getAmmo(ammoItem->getItem()->getIdItem()));
+
+			indexWeapon++;
 		}
-	}	
+	}
 }
 
 void HangarShipWeaponView::updateContainerAmmosItems()
@@ -187,44 +184,41 @@ void HangarShipWeaponView::updateContainerAmmosItems()
 	if(this->mCharacterShip == NULL)
 		return;
 
-	// Update content
-	for(int i = 0; i < this->mCharacterShip->getWeaponsCount(); i++)
-	{
-		// Correct index ammo view
-		int indexAmmoView = 0;
-		int indexWeapon = i;
-		while(indexWeapon >= 0)
-		{
-			if(this->mContainerWeaponStackViews[indexAmmoView]->getContainerStack()->hasItemStack())
-				indexWeapon--;
-
-			if(indexWeapon >= 0)
-				indexAmmoView++;
-		}
-
-		// Restriction
-		Weapon* currentWeapon = this->mCharacterShip->getWeapon(i);
-		this->mContainerAmmosItemViews[indexAmmoView]->getContainerItem()->clearItemTypeAllowed();
-		for(int j = 0; j < currentWeapon->getWeaponModel()->getAmmoTypeAllowedCount(); j++)
-			this->mContainerAmmosItemViews[indexAmmoView]->getContainerItem()->addItemTypeAllowed(currentWeapon->getWeaponModel()->getAmmoTypeAllowed(j));
-
-		// Update
-		if(currentWeapon->getAmmo() != NULL)
-		{
-			this->mContainerAmmosItemViews[indexAmmoView]->getContainerItem()->setItem(currentWeapon->getAmmo());
-		}
-		else if(this->mContainerAmmosItemViews[indexAmmoView]->getContainerItem()->hasItem())
-		{
-			if(!this->mContainerAmmosItemViews[indexAmmoView]->getContainerItem()->isItemTypeAllowed(this->mContainerAmmosItemViews[indexAmmoView]->getContainerItem()->getItem()->getItemType()))
-				this->mContainerAmmosItemViews[indexAmmoView]->getContainerItem()->setItem(NULL);
-		}
-	}
-
-	// Update NULL
+	int indexWeapon = 0;
 	for(int i = 0; i < this->mContainerWeaponStackViews.size(); i++)
 	{
-		if(!this->mContainerWeaponStackViews[i]->getContainerStack()->hasItemStack())
-			this->mContainerAmmosItemViews[i]->getContainerItem()->setItem(NULL);
+		ContainerStack* weaponStack = this->mContainerWeaponStackViews[i]->getContainerStack();
+		ContainerItem* ammoItem = this->mContainerAmmosItemViews[i]->getContainerItem();
+
+		ammoItem->clearItemTypeAllowed();
+		if(weaponStack->hasItemStack())
+		{
+			Weapon* currentWeapon = this->mCharacterShip->getWeapon(indexWeapon);
+			WeaponModel* currentWeaponModel = currentWeapon->getWeaponModel();
+
+			// Restriction
+			for(int j = 0; j < currentWeaponModel->getAmmoTypeAllowedCount(); j++)
+				ammoItem->addItemTypeAllowed(currentWeaponModel->getAmmoTypeAllowed(j));
+
+			// Update
+			if(currentWeapon->getAmmo() != NULL)
+			{
+				// Weapon ammo --> Ammoview ammo
+				ammoItem->setItem(currentWeapon->getAmmo());
+			}
+			else if(ammoItem->hasItem())
+			{
+				// NULL --> Ammoview ammo current ammo not allowed
+				if(!ammoItem->isItemTypeAllowed(ammoItem->getItem()->getItemType()))
+					ammoItem->setItem(NULL);
+			}
+
+			indexWeapon++;
+		}
+		else
+		{
+			ammoItem->setItem(NULL);
+		}
 	}
 }
 
@@ -340,15 +334,16 @@ void HangarShipWeaponView::notifyCharacterShipChanged()
 	{
 		ItemType* currentType = this->mCharacterShip->getShipModel()->getWeaponTypeAllowed(i);
 		if(currentType->hasParent())
-			this->mPUBTypeAllowed.addLine("- " + currentType->getParent()->getName() + " " + currentType->getName());
+			this->mPUBTypeAllowed.addLine("- " + currentType->getParent()->getName() + " " + currentType->getName(), false);
 		else
-			this->mPUBTypeAllowed.addLine("- " + currentType->getName());
+			this->mPUBTypeAllowed.addLine("- " + currentType->getName(), false);
 	}
 	this->mPUBTypeAllowed.notifyDataSetChanged();
 
 	// Update
 	this->setContainerWeaponsStacksChanged(false);
 	this->updateContainerAmmosItems();
+	this->setContainerAmmosItemsChanged(false);
 	this->updatePosition();
 }
 
