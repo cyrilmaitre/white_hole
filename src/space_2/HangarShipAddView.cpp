@@ -28,6 +28,7 @@ HangarShipAddView::HangarShipAddView(void)
 	this->mContainerStackView.setContainerStack(&this->mContainerStack);
 	this->mContainerStackView.setDisplayStackSize(false);
 	this->mButtonAdd.setTitle(Resource::resource->getBundle()->getString("hangarButtonAdd"));
+	this->updateButtonAdd();
 
 	this->setHeight(PADDING * 2 + this->mContainerStackView.getHeight() + this->mButtonAdd.getHeight() + BUTTONADD_MARGINTOP);
 }
@@ -50,16 +51,40 @@ void HangarShipAddView::setCharacter( Character* p_character )
 	this->mCharacter = p_character;
 }
 
+bool HangarShipAddView::isNewShipAdded()
+{
+	bool returnValue = this->mNewShipAdded;
+	this->mNewShipAdded = false;
+	return returnValue;
+}
+
+void HangarShipAddView::setNewShipAdded( bool p_value )
+{
+	this->mNewShipAdded = p_value;
+}
+
 
 //*************************************************************
 // Methods
 //*************************************************************
+void HangarShipAddView::addNewCharacterShip()
+{
+	if(this->mContainerStackView.getContainerStack()->getItemStack()->getItem() == NULL)
+		return;
+
+	this->mCharacter->addShip(this->mContainerStackView.getContainerStack()->getItemStack()->getItem());
+	this->mContainerStackView.getContainerStack()->setItemStack(NULL);
+	this->notifyNewShipAdded();
+}
+
 void HangarShipAddView::update( sf::Event p_event )
 {
 	if(this->isVisible())
 	{
 		this->mContainerStackView.update(p_event);
 		this->mButtonAdd.update(p_event);
+		if(this->mButtonAdd.isClicked())
+			this->addNewCharacterShip();
 	}
 	FieldSet::update(p_event);
 }
@@ -69,7 +94,13 @@ void HangarShipAddView::update()
 	if(this->isVisible())
 	{
 		this->mContainerStackView.update();
+		this->updateButtonAdd();
 	}
+}
+
+void HangarShipAddView::updateButtonAdd()
+{
+	this->mButtonAdd.setEnable(this->mContainerStackView.getContainerStack()->hasItemStack());
 }
 
 void HangarShipAddView::updatePosition()
@@ -99,3 +130,10 @@ void HangarShipAddView::notifyPositionChanged()
 	FieldSet::notifyPositionChanged();
 	this->updatePosition();
 }
+
+void HangarShipAddView::notifyNewShipAdded()
+{
+	this->mNewShipAdded = true;
+}
+
+

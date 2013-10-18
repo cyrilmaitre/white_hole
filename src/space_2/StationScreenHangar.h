@@ -19,6 +19,7 @@ public:
 	void unload();
 	void update();
 	void updatePosition();
+	void updateShipList();
 	void update(sf::Event p_event);
 	void draw();
 	void notifySizeChanged();

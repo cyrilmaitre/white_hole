@@ -55,6 +55,8 @@ system = System
 options = Options
 logout = Logout
 quit = Quit
+drop = Drop
+pilot = Pilot
 #
 #
 # Running stats

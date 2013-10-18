@@ -48,12 +48,13 @@ CharacterShip::CharacterShip( Json::Value json, Character *p_character ): Ship(0
 CharacterShip::CharacterShip(void)
 {
 	this->mCharacter = NULL;
+	this->mArrowObjectSelected = NULL;
 
 	this->setName("My ship");
 	this->setSkillPoints(0);
 	this->setLevel(0);
 	this->setExperience(0);
-	this->setPiloted(true);
+	this->setPiloted(false);
 }
 
 CharacterShip::~CharacterShip(void)

@@ -5,6 +5,7 @@
 #include "User.h"
 #include "Levelable.h"
 #include "Clock.h"
+#include "Item.h"
 
 class CharacterShip;
 class CharacterBank;
@@ -85,6 +86,7 @@ public:
 	void updateTime();
 
 	void addShip(CharacterShip* p_ship); 
+	void addShip(Item* p_ship);
 	void removeShip(CharacterShip* p_ship);
 	void addBank(CharacterBank* p_bank);
 

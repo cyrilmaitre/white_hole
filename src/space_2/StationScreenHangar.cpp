@@ -47,16 +47,7 @@ StationScreenHangar::~StationScreenHangar(void)
 //*************************************************************
 void StationScreenHangar::load()
 {
-	this->mShipList.clear(false);
-	if(this->getCharacter() != NULL)
-	{
-		for(int i = 0; i < this->getCharacter()->getShipCount(); i++)
-		{
-			HangarShipListView* newShipView = new HangarShipListView(this->getCharacter()->getShip(i));
-			this->mShipList.addItem(newShipView, false);
-		}
-	}
-	this->mShipList.notifyDataSetChanged();
+	this->updateShipList();
 	this->mShipDetailView.getShipWeaponView()->updateContainerAmmosItems();
 }
 
@@ -71,6 +62,9 @@ void StationScreenHangar::update()
 	{
 		if(this->mShipList.isSelectionChanged())
 			this->notifyCharacterShipSelectedChanged();
+
+		if(this->mShipAddView.isNewShipAdded())
+			this->updateShipList();
 
 		this->mShipAddView.update();
 		this->mShipDetailView.update();
@@ -87,6 +81,20 @@ void StationScreenHangar::update( sf::Event p_event )
 		this->mShipDetailView.update(p_event);
 	}
 	StationScreenRightPanel::update(p_event);
+}
+
+void StationScreenHangar::updateShipList()
+{
+	this->mShipList.clear(false);
+	if(this->getCharacter() != NULL)
+	{
+		for(int i = 0; i < this->getCharacter()->getShipCount(); i++)
+		{
+			HangarShipListView* newShipView = new HangarShipListView(this->getCharacter()->getShip(i));
+			this->mShipList.addItem(newShipView, false);
+		}
+	}
+	this->mShipList.notifyDataSetChanged();
 }
 
 void StationScreenHangar::updatePosition()

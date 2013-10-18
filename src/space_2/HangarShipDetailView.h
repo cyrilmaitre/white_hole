@@ -40,5 +40,9 @@ private:
 	Button mButtonRename;
 	Button mButtonShipSheep;
 	HangarShipWeaponView mWeaponView;
+
+	Button mButtonSell;
+	Button mButtonDrop;
+	Button mButtonPilot;
 };
 

@@ -6,6 +6,7 @@
 #include "SkillCharacter.h"
 #include "CharacterBank.h"
 #include "NetworkJobManager.h"
+#include "CharacterShipCreate.h"
 
 
 //*************************************************************
@@ -418,7 +419,7 @@ void Character::loadFromJson( Json::Value json )
 		for(int i = 0; i < shipCount; i++)
 		{
 			CharacterShip* currentShip = new CharacterShip(jsonShips.get(i, NULL), this);
-			this->addShip(currentShip);
+			this->mShips.push_back(currentShip);
 			if(currentShip != NULL && currentShip->isPiloted())
 				this->setShipPiloted(currentShip);
 		}
@@ -468,7 +469,16 @@ Json::Value Character::saveToJson()
 
 void Character::addShip(CharacterShip* p_ship)
 {
+	NetworkJobManager::getInstance()->addJob(new CharacterShipCreate(p_ship));
 	this->mShips.push_back(p_ship);
+}
+
+void Character::addShip( Item* p_ship )
+{
+	CharacterShip* newShip = new CharacterShip();
+	newShip->setShipModel(FactoryGet::getShipModelFactory()->getShipModel(p_ship->getIdItem()));
+	newShip->setCharacter(this);
+	this->addShip(newShip);
 }
 
 void Character::removeShip( CharacterShip* p_ship )
