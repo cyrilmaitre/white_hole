@@ -1,4 +1,5 @@
 #include "HangarShipDetailView.h"
+#include "Game.h"
 
 
 //*************************************************************
@@ -111,7 +112,10 @@ void HangarShipDetailView::update( sf::Event p_event )
 		this->mWeaponView.update(p_event);
 		this->mButtonSell.update(p_event);
 		this->mButtonDrop.update(p_event);
+
 		this->mButtonPilot.update(p_event);
+		if(this->mButtonPilot.isClicked())
+			this->updateShipPiloted();
 	}
 	FieldSet::update(p_event);
 }
@@ -128,6 +132,11 @@ void HangarShipDetailView::updatePositon()
 	this->mButtonSell.setPosition(this->getContentX(), this->getContentY() + this->getContentHeight() - this->mButtonSell.getHeight());
 	this->mButtonDrop.setPosition(this->mButtonSell.getRightX() + BUTTONDROP_MARGIN_LEFT, this->getContentY() + this->getContentHeight() - this->mButtonDrop.getHeight());
 	this->mButtonPilot.setPosition(this->getContentX() + this->getContentWidth() - this->mButtonPilot.getWidth(), this->getContentY() + this->getContentHeight() - this->mButtonPilot.getHeight());
+}
+
+void HangarShipDetailView::updateShipPiloted()
+{
+	Game::game->changedShipPiloted(this->mCharacterShip);
 }
 
 void HangarShipDetailView::draw()

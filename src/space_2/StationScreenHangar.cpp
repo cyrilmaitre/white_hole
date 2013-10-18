@@ -4,7 +4,7 @@
 //*************************************************************
 // Constructor - Destructor
 //*************************************************************
-#define SHIPLIST_HEIGHT					500
+#define SHIPLIST_HEIGHT					474
 #define SHIPLIST_BACKGROUNDCOLOR		sf::Color(25, 26, 28)
 #define	SHIPLIST_BORDERCOLOR			sf::Color(194, 194, 194)
 #define SHIPLIST_BORDERSIZE				1

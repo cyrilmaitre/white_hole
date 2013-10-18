@@ -24,6 +24,7 @@ public:
 	void update();
 	void update(sf::Event p_event);
 	void updatePositon();
+	void updateShipPiloted();
 	void draw();
 	void notifySizeChanged();
 	void notifyPositionChanged();

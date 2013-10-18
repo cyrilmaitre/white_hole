@@ -152,7 +152,7 @@ void TextMultiLine::addLineBlank(bool p_notify)
 
 void TextMultiLine::addLineTextBox( std::string p_text, bool p_notify )
 {
-	TextBox *tmpTextBox = new TextBox();
+	TextBox* tmpTextBox = new TextBox();
 	tmpTextBox->setFont(this->mFont);
 	tmpTextBox->setFontSize(this->mFontSize);
 	tmpTextBox->setFontColor(this->mFontColor);

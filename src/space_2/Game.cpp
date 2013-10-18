@@ -266,9 +266,10 @@ void Game::update()
 
 void Game::changedShipPiloted( CharacterShip* p_ship )
 {
-	EntityManager::remove(this->getShipPiloted());
+	EntityManager::remove(this->getShipPiloted(), false);
 	this->getMap()->getMapObjectSelector()->removeMapObject(this->getShipPiloted());
 
+	p_ship->setPosition(this->getShipPiloted()->Object::getX(), this->getShipPiloted()->Object::getY());
 	this->getCharacter()->setShipPiloted(p_ship);
 	this->notifyShipPilotedChanged();
 }
@@ -280,7 +281,6 @@ void Game::notifyShipPilotedChanged()
 	this->mUserInterface->getWindowShip()->setCharacterShip(this->getShipPiloted());
 	this->mUserInterface->getWindowShipSmall()->setCharacterShip(this->getShipPiloted());
 	this->mUserInterface->getWindowCargo()->getContainerableView()->setContainerable(this->getShipPiloted());
-	this->mUserInterface->getWindowCargoStationShip()->getContainerableView()->setContainerable(this->getShipPiloted());
 	this->mUserInterface->getStationScreen()->getLeftMenu()->updateButtonSheet();
 
 	EntityManager::add(this->getShipPiloted());
