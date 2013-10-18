@@ -123,7 +123,7 @@ void ContainerableView::updateEstimation()
 {
 	this->mTBEstimation.setText(Resource::resource->getBundle()->getString("windowCargoEstimation") + 
 								Tools::getSpaceAfterColon() + 
-								Tools::formatNumber((long)this->getContainerable()->getContentEstimation()));
+								Tools::formatNumber(this->getContainerable()->getContentEstimation()));
 	this->updateEstimationPosition();
 }
 
