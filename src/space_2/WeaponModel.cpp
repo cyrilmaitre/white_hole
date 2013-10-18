@@ -119,6 +119,20 @@ std::vector<ItemType*> WeaponModel::getAmmoTypeAllowed()
 	return this->mAmmoTypeAllowed;
 }
 
+bool WeaponModel::isAmmoTypeAllowed( ItemType* p_type )
+{
+	bool allowed = false;
+	for(int i = 0; i < this->mAmmoTypeAllowed.size(); i++)
+	{
+		if(this->mAmmoTypeAllowed[i]->getIdItemType() == p_type->getIdItemType())
+		{
+			allowed = true;
+			break;
+		}
+	}
+	return allowed;
+}
+
 
 //*************************************************************
 // Methods

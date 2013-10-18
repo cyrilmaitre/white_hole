@@ -491,7 +491,6 @@
     <ClInclude Include="RadarEffect.h" />
     <ClInclude Include="ReactorEffect.h" />
     <ClInclude Include="ReactorDustEffect.h" />
-    <ClInclude Include="resource1.h" />
     <ClInclude Include="ResourceConfig.h" />
     <ClInclude Include="Rotable.h" />
     <ClInclude Include="RotableData.h" />

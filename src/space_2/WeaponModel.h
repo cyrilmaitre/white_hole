@@ -34,6 +34,7 @@ public:
 	int getAmmoTypeAllowedCount();
 	ItemType* getAmmoTypeAllowed(int p_index);
 	std::vector<ItemType*> getAmmoTypeAllowed();
+	bool isAmmoTypeAllowed(ItemType* p_type);
 
 	// Methods
 	void loadFromConfig(KeyValueFile* p_config);

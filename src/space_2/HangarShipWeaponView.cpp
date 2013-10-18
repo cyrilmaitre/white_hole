@@ -144,7 +144,7 @@ void HangarShipWeaponView::updateCharacterShipWeapons()
 		if(currentWeaponModel != NULL)
 		{
 			Weapon* newWeapon = new Weapon(this->mCharacterShip, currentWeaponModel);
-			if(this->mContainerAmmosItemViews[i]->getContainerItem()->hasItem())
+			if(this->mContainerAmmosItemViews[i]->getContainerItem()->hasItem() && newWeapon->getWeaponModel()->isAmmoTypeAllowed(this->mContainerAmmosItemViews[i]->getContainerItem()->getItem()->getItemType()))
 				newWeapon->setAmmo(FactoryGet::getAmmoFactory()->getAmmo(this->mContainerAmmosItemViews[i]->getContainerItem()->getItem()->getIdItem()));
 			this->mCharacterShip->addWeapon(newWeapon, false);
 		}
