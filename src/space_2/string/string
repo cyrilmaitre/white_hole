@@ -809,6 +809,14 @@ weaponLaserLargeNBCIIIName = Neutron Blaster Cannon III
 weaponLaserLargeNBCIIIDescription = Particle blasters operate on a similar principle as the railgun except they fire a magnetically contained ball of subatomic particles. No other turret class can match the sheer destructive power of particle blasters, but due to the rapid dispersion of the containment field, it also has the worst range of all turrets.<br/>Must be loaded with the following projectile ammo types: Laser Charge Large.
 weaponLaserLargeNBCIVName = Neutron Blaster Cannon IV
 weaponLaserLargeNBCIVDescription = Particle blasters operate on a similar principle as the railgun except they fire a magnetically contained ball of subatomic particles. No other turret class can match the sheer destructive power of particle blasters, but due to the rapid dispersion of the containment field, it also has the worst range of all turrets.<br/>Must be loaded with the following projectile ammo types: Laser Charge Large.
+weaponLaserExtraLargeD1000RIName = Dual 1000mm Railgun I
+weaponLaserExtraLargeD1000RIDescription = One of the largest weapons currently in existence, this massive railgun is designed for extended sieges of stationary installations and other large targets.<br/>Must be loaded with the following projectile ammo types: Laser Charge Large.
+weaponLaserExtraLargeD1000RIIName = Dual 1000mm Railgun II
+weaponLaserExtraLargeD1000RIIDescription = One of the largest weapons currently in existence, this massive railgun is designed for extended sieges of stationary installations and other large targets.<br/>Must be loaded with the following projectile ammo types: Laser Charge Large.
+weaponLaserExtraLargeISBCIName = Ion Siege Blaster Cannon I
+weaponLaserExtraLargeISBCIDescription = One of the largest weapons currently in existence, this massive blaster is designed for extended sieges of stationary installations and other large targets.<br/>Must be loaded with the following projectile ammo types: Laser Charge Large.
+weaponLaserExtraLargeISBCIIName = Ion Siege Blaster Cannon II
+weaponLaserExtraLargeISBCIIDescription = One of the largest weapons currently in existence, this massive blaster is designed for extended sieges of stationary installations and other large targets.<br/>Must be loaded with the following projectile ammo types: Laser Charge Large.
 #
 #
 #

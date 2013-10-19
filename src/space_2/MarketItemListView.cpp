@@ -14,7 +14,7 @@
 #define ICON_BACKGROUNDCOLOR		sf::Color(65, 65, 65)
 #define ICON_BORD_COLOR				sf::Color(128, 128, 128, 125)
 #define ICON_BORD_SIZE				2
-#define NAME_FONTSIZE				18
+#define NAME_FONTSIZE				17
 #define TIER_FONTSIZE				14
 #define TIER_MARGINTOP				5
 
