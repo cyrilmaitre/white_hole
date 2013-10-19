@@ -90,8 +90,11 @@ void StationScreenHangar::updateShipList()
 	{
 		for(int i = 0; i < this->getCharacter()->getShipCount(); i++)
 		{
-			HangarShipListView* newShipView = new HangarShipListView(this->getCharacter()->getShip(i));
+			CharacterShip* currentShip = this->getCharacter()->getShip(i);
+			HangarShipListView* newShipView = new HangarShipListView(currentShip);
 			this->mShipList.addItem(newShipView, false);
+			if(currentShip->isPiloted())
+				newShipView->setSelected(true);
 		}
 	}
 	this->mShipList.notifyDataSetChanged();
