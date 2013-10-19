@@ -20,7 +20,6 @@ public:
 	void setCharacterShip(CharacterShip* p_ship);
 
 	// Methods
-	void update();
 	void update(sf::Event p_event);
 	void updatePosition();
 	void draw();

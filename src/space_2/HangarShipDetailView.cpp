@@ -137,6 +137,14 @@ void HangarShipDetailView::updatePositon()
 void HangarShipDetailView::updateShipPiloted()
 {
 	Game::game->changedShipPiloted(this->mCharacterShip);
+	this->updateButtonPilot();
+}
+
+void HangarShipDetailView::updateButtonPilot()
+{
+	this->mButtonSell.setEnable(!this->mCharacterShip->isPiloted());
+	this->mButtonDrop.setEnable(!this->mCharacterShip->isPiloted());
+	this->mButtonPilot.setEnable(!this->mCharacterShip->isPiloted());
 }
 
 void HangarShipDetailView::draw()
@@ -178,7 +186,7 @@ void HangarShipDetailView::notifyCharacterShipChanged()
 		this->mTBName.setText(this->mCharacterShip->getName());
 		this->mTBType.setText(this->mCharacterShip->getShipModel()->getName());
 		this->mTBLevel.setText(Resource::resource->getBundle()->getString("level") + ":" + Tools::getSpaceAfterColon() + Tools::formatNumber(this->mCharacterShip->getLevel()));
-		this->mButtonPilot.setEnable(!this->mCharacterShip->isPiloted());
+		this->updateButtonPilot();
 	}
 	this->mWeaponView.setCharacterShip(this->mCharacterShip);
 	this->setVisible(this->mCharacterShip != NULL);

@@ -81,10 +81,6 @@ void HangarShipListView::setCharacterShip( CharacterShip* p_ship )
 //*************************************************************
 // Methods
 //*************************************************************
-void HangarShipListView::update()
-{
-}
-
 void HangarShipListView::update( sf::Event p_event )
 {
 	Listable::update(p_event);
@@ -108,7 +104,9 @@ void HangarShipListView::draw()
 		this->mTBName.draw();
 		this->mTBType.draw();
 		this->mTBLevel.draw();
-		this->mIconPiloted.draw();
+
+		if(this->mCharacterShip->isPiloted())
+			this->mIconPiloted.draw();
 	}
 }
 
@@ -120,7 +118,6 @@ void HangarShipListView::notifyShipChanged()
 		this->mTBName.setText(this->mCharacterShip->getName());
 		this->mTBType.setText(this->mCharacterShip->getShipModel()->getName());
 		this->mTBLevel.setText(Resource::resource->getBundle()->getString("level") + ":" + Tools::getSpaceAfterColon() + Tools::formatNumber(this->mCharacterShip->getLevel()));
-		this->mIconPiloted.setVisible(this->mCharacterShip->isPiloted());
 	}
 }
 
