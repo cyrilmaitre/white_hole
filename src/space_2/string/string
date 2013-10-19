@@ -817,6 +817,29 @@ weaponLaserExtraLargeISBCIName = Ion Siege Blaster Cannon I
 weaponLaserExtraLargeISBCIDescription = One of the largest weapons currently in existence, this massive blaster is designed for extended sieges of stationary installations and other large targets.<br/>Must be loaded with the following projectile ammo types: Laser Charge Large.
 weaponLaserExtraLargeISBCIIName = Ion Siege Blaster Cannon II
 weaponLaserExtraLargeISBCIIDescription = One of the largest weapons currently in existence, this massive blaster is designed for extended sieges of stationary installations and other large targets.<br/>Must be loaded with the following projectile ammo types: Laser Charge Large.
+weaponMissileSmallLMLIName = Light Missile Launcher I
+weaponMissileSmallLMLIDescription = Favored by many for its average capacity and firing rate. Useful in both fast attack raids and longer battles.<br/>Must be loaded with the following projectile ammo types: Missile Small.
+weaponMissileSmallLMLIIName = Light Missile Launcher II
+weaponMissileSmallLMLIIDescription = Favored by many for its average capacity and firing rate. Useful in both fast attack raids and longer battles.<br/>Must be loaded with the following projectile ammo types: Missile Small.
+weaponMissileSmallLMLIIIName = Light Missile Launcher III
+weaponMissileSmallLMLIIIDescription = Favored by many for its average capacity and firing rate. Useful in both fast attack raids and longer battles.<br/>Must be loaded with the following projectile ammo types: Missile Small.
+weaponMissileMediumRLMLIName = Rapid Light Missile Launcher I
+weaponMissileMediumRLMLIDescription = Launcher for cruisers intended to counter fast frigates, can only be fitted with regular light missiles.<br/>Must be loaded with the following projectile ammo types: Missile Medium.
+weaponMissileMediumRLMLIIName = Rapid Light Missile Launcher II
+weaponMissileMediumRLMLIIDescription = Launcher for cruisers intended to counter fast frigates, can only be fitted with regular light missiles.<br/>Must be loaded with the following projectile ammo types: Missile Medium.
+weaponMissileMediumRLMLIIIName = Rapid Light Missile Launcher III
+weaponMissileMediumRLMLIIIDescription = Launcher for cruisers intended to counter fast frigates, can only be fitted with regular light missiles.<br/>Must be loaded with the following projectile ammo types: Missile Medium.
+weaponMissileLargeHMLIName = Heavy Missile Launcher I
+weaponMissileLargeHMLIDescription = Designed for long engagements between medium sized ships. Slow firing rate, but makes up for it with a large missile capacity.<br/>Must be loaded with the following projectile ammo types: Missile Large.
+weaponMissileLargeHMLIIName = Heavy Missile Launcher II
+weaponMissileLargeHMLIIDescription = Designed for long engagements between medium sized ships. Slow firing rate, but makes up for it with a large missile capacity.<br/>Must be loaded with the following projectile ammo types: Missile Large.
+weaponMissileLargeHMLIIIName = Heavy Missile Launcher III
+weaponMissileLargeHMLIIIDescription = Designed for long engagements between medium sized ships. Slow firing rate, but makes up for it with a large missile capacity.<br/>Must be loaded with the following projectile ammo types: Missile Large.
+weaponMissileExtraLargeCCLIName = Citadel Cruise Launcher I
+weaponMissileExtraLargeCCLIDescription = The size of a small cruiser, this massive launcher is designed for extended sieges of stationary installations and other large targets.<br/>Must be loaded with the following projectile ammo types: Missile Extra Large.
+weaponMissileExtraLargeCCLIIName = Citadel Cruise Launcher II
+weaponMissileExtraLargeCCLIIName = Citadel Cruise Launcher II
+weaponMissileExtraLargeCCLIIDescription = The size of a small cruiser, this massive launcher is designed for extended sieges of stationary installations and other large targets.<br/>Must be loaded with the following projectile ammo types: Missile Extra Large.
 #
 #
 #
