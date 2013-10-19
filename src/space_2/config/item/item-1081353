@@ -1,0 +1,17 @@
+id = 1081353
+name = weaponLaserLargeD250RIIName
+description = weaponLaserLargeD250RIIDescription
+price = 2860000.0
+stackmax = 1
+sprite = 4-2
+itemtype = 53
+itemtier = 2
+buyable = true
+stockminimum_min = 0
+stockminimum_max = 0
+stockmaximum_min = 0
+stockmaximum_max = 0
+production_min = 0.0
+production_max = 0.0
+consumption_min = 0.0
+consumption_max = 0.0

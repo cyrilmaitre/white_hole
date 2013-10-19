@@ -1,0 +1,17 @@
+id = 1081360
+name = weaponLaserLargeIBCIName
+description = weaponLaserLargeIBCIDescription
+price = 1340000.0
+stackmax = 1
+sprite = 5-2
+itemtype = 53
+itemtier = 1
+buyable = true
+stockminimum_min = 0
+stockminimum_max = 0
+stockmaximum_min = 0
+stockmaximum_max = 0
+production_min = 0.0
+production_max = 0.0
+consumption_min = 0.0
+consumption_max = 0.0
