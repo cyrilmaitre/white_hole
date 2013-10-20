@@ -70,6 +70,7 @@ public:
 
 	void notifyAppSoundGlobalChanged();
 	void notifyAppSoundAmbiantChanged();
+	void notifyAppSoundMusicChanged();
 
 	static Option* getInstance();
 	static void destroyInstance();

@@ -95,10 +95,12 @@ void Game::init()
 
 	// Init
 	Camera::getInstance()->setZoom(1.0f);
+	Jukebox::getInstance()->playlistNext();
 	sf::Vector2i characterShipPosition = MapObject::convertPosition(sf::Vector2i(SECTOR_WIDTH / 2, SECTOR_HEIGHT / 2), SECTOR_PLANE, SHIP_PLANE);
 
 	this->mCharacter->init();
 	this->getShipPiloted()->setPosition(characterShipPosition.x, characterShipPosition.y);
+	Camera::getInstance()->setCameraPosition(characterShipPosition.x, characterShipPosition.y);
 	this->getUserInterface()->getXpBarCharacter()->setLevelable(this->mCharacter);
 	this->notifyShipPilotedChanged();
 	Resource::resource->updateViewMap();
@@ -131,6 +133,9 @@ void Game::uninit()
 
 	delete this->mUserInterface;
 	this->mUserInterface = NULL;
+
+	// Stop playlist
+	Jukebox::getInstance()->stopPlaylist();
 
 	// Finish
 	this->mScreenUnloading.setRunning(false);
@@ -174,6 +179,7 @@ void Game::launchUninit()
 
 void Game::launch(Character* p_character)
 {
+	this->mRunning = true;
 	this->launchInit(p_character);
 	while(Resource::resource->getApp()->isOpen() && Resource::resource->isAppRunning() && this->isRunning())
 	{

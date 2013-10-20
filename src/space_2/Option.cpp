@@ -21,7 +21,7 @@ Option* Option::mInstance = NULL;
 #define OPTION_APP_ANTIALIASING_LEVEL_VALUE		0
 #define OPTION_APP_SOUND_GLOBAL_VALUE			50
 #define OPTION_APP_SOUND_MUSIC_VALUE			50
-#define OPTION_APP_SOUND_AMBIENT_VALUE			50
+#define OPTION_APP_SOUND_AMBIENT_VALUE			10
 #define OPTION_APP_SOUND_EFFECT_VALUE			50
 #define OPTION_APP_LANGUAGE_VALUE				OPTION_APP_LANGUAGE_EN
 #define OPTION_APP_CONTROL_UP_VALUE				sf::Keyboard::Z
@@ -42,6 +42,11 @@ Option* Option::mInstance = NULL;
 //*************************************************************
 Option::Option(void) : mOptionFile((OPTION_FILE_PATHNAME OPTION_FILE_FILENAME),  OPTION_FILE_FILENAME)
 {
+	this->mAppSoundGlobal = - 1;
+	this->mAppSoundAmbient = -1;
+	this->mAppSoundMusic = -1;
+	this->mAppSoundEffect = -1;
+
 	if(this->mOptionFile.loadFromFile())
 	{
 		this->loadOptionFromFile();
@@ -149,7 +154,11 @@ void Option::setAppSoundAmbient( float p_app_sound_ambient )
 	else if(p_app_sound_ambient > 100.0f)
 		p_app_sound_ambient = 100.0f;
 
-	this->mAppSoundAmbient = p_app_sound_ambient;
+	if(this->mAppSoundAmbient != p_app_sound_ambient)
+	{
+		this->mAppSoundAmbient = p_app_sound_ambient;
+		this->notifyAppSoundAmbiantChanged();
+	}
 }
 
 float Option::getAppSoundMusic()
@@ -164,7 +173,11 @@ void Option::setAppSoundMusic( float p_app_sound_music )
 	else if(p_app_sound_music > 100.0f)
 		p_app_sound_music = 100.0f;
 
-	this->mAppSoundMusic = p_app_sound_music;
+	if(this->mAppSoundMusic != p_app_sound_music)
+	{
+		this->mAppSoundMusic = p_app_sound_music;
+		this->notifyAppSoundMusicChanged();
+	}
 }
 
 float Option::getAppSoundEffect()
@@ -349,6 +362,11 @@ void Option::notifyAppSoundGlobalChanged()
 void Option::notifyAppSoundAmbiantChanged()
 {
 	Jukebox::getInstance()->getMusicAmbiant()->setVolume(this->mAppSoundAmbient);
+}
+
+void Option::notifyAppSoundMusicChanged()
+{
+	Jukebox::getInstance()->getMusicPlaylist()->setVolume(this->mAppSoundMusic);
 }
 
 

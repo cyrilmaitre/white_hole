@@ -1323,6 +1323,9 @@
     <ClCompile Include="Option.cpp">
       <Filter>Fichiers sources\resource\option</Filter>
     </ClCompile>
+    <ClCompile Include="JukeboxMusic.cpp">
+      <Filter>Fichiers sources</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h">
@@ -2272,6 +2275,9 @@
     </ClInclude>
     <ClInclude Include="Option.h">
       <Filter>Fichiers d%27en-tête\resource\option</Filter>
+    </ClInclude>
+    <ClInclude Include="JukeboxMusic.h">
+      <Filter>Fichiers d%27en-tête\resource\sound</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

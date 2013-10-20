@@ -139,6 +139,7 @@
     <ClCompile Include="ImpactManager.cpp" />
     <ClCompile Include="ItemStock.cpp" />
     <ClCompile Include="ItemStockSimulator.cpp" />
+    <ClCompile Include="JukeboxMusic.cpp" />
     <ClCompile Include="Level.cpp" />
     <ClCompile Include="Levelable.cpp" />
     <ClCompile Include="LevelCharacter.cpp" />
@@ -454,6 +455,7 @@
     <ClInclude Include="ItemStockSimulator.h" />
     <ClInclude Include="json-forwards.h" />
     <ClInclude Include="json.h" />
+    <ClInclude Include="JukeboxMusic.h" />
     <ClInclude Include="Level.h" />
     <ClInclude Include="Levelable.h" />
     <ClInclude Include="LevelCharacter.h" />
