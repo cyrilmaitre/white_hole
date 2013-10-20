@@ -385,6 +385,12 @@
     <Filter Include="Fichiers sources\screen\mariogame">
       <UniqueIdentifier>{441722c7-dc2b-48c6-9dc2-3c7c0547001c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Fichiers d%27en-tête\resource\option">
+      <UniqueIdentifier>{eeac9cdc-1e99-4142-8808-5fa25e3f595e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fichiers sources\resource\option">
+      <UniqueIdentifier>{f5834a0e-9eba-4d50-bf8b-17b44f6ad146}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Game.cpp">
@@ -419,9 +425,6 @@
     </ClCompile>
     <ClCompile Include="Tools.cpp">
       <Filter>Fichiers sources\tools</Filter>
-    </ClCompile>
-    <ClCompile Include="Juckebox.cpp">
-      <Filter>Fichiers sources\resource\sound</Filter>
     </ClCompile>
     <ClCompile Include="ParticleManager.cpp">
       <Filter>Fichiers sources\game\mapObject\particle</Filter>
@@ -915,9 +918,6 @@
     <ClCompile Include="IdValueInt.cpp">
       <Filter>Fichiers sources\mks\tools</Filter>
     </ClCompile>
-    <ClCompile Include="Option.cpp">
-      <Filter>Fichiers sources\mks\resource</Filter>
-    </ClCompile>
     <ClCompile Include="Internationalisation.cpp">
       <Filter>Fichiers sources\mks\resource</Filter>
     </ClCompile>
@@ -1317,6 +1317,12 @@
     <ClCompile Include="MarioGameCoin.cpp">
       <Filter>Fichiers sources\screen\mariogame</Filter>
     </ClCompile>
+    <ClCompile Include="Jukebox.cpp">
+      <Filter>Fichiers sources\resource\sound</Filter>
+    </ClCompile>
+    <ClCompile Include="Option.cpp">
+      <Filter>Fichiers sources\resource\option</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h">
@@ -1348,9 +1354,6 @@
     </ClInclude>
     <ClInclude Include="SpriteParameterFactory.h">
       <Filter>Fichiers d%27en-tête\resource\image</Filter>
-    </ClInclude>
-    <ClInclude Include="Juckebox.h">
-      <Filter>Fichiers d%27en-tête\resource\sound</Filter>
     </ClInclude>
     <ClInclude Include="Particle.h">
       <Filter>Fichiers d%27en-tête\game\mapObject\particle</Filter>
@@ -1859,9 +1862,6 @@
     <ClInclude Include="IdValueInt.h">
       <Filter>Fichiers d%27en-tête\mks\tools</Filter>
     </ClInclude>
-    <ClInclude Include="Option.h">
-      <Filter>Fichiers d%27en-tête\mks\resource</Filter>
-    </ClInclude>
     <ClInclude Include="Internationalisation.h">
       <Filter>Fichiers d%27en-tête\mks\resource</Filter>
     </ClInclude>
@@ -2266,6 +2266,12 @@
     </ClInclude>
     <ClInclude Include="MarioGameCoin.h">
       <Filter>Fichiers d%27en-tête\screen\mariogame</Filter>
+    </ClInclude>
+    <ClInclude Include="Jukebox.h">
+      <Filter>Fichiers d%27en-tête\resource\sound</Filter>
+    </ClInclude>
+    <ClInclude Include="Option.h">
+      <Filter>Fichiers d%27en-tête\resource\option</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

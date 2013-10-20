@@ -3,44 +3,24 @@
 #include "KeyValueFile.h"
 
 // Define
-#define OPTION_FILE_PATHNAME					"option/"
-#define OPTION_FILE_FILENAME					"option.cfg"
-#define OPTION_VERSION_KEY						"option_version"
-#define OPTION_VERSION_VALUE					"1.0.41"
-#define OPTION_APP_SCREEN_WIDTH_KEY				"app_screen_width"
-#define OPTION_APP_SCREEN_WIDTH_VALUE			1280
-#define OPTION_APP_SCREEN_HEIGHT_KEY			"app_screen_height"
-#define OPTION_APP_SCREEN_HEIGHT_VALUE			950
-#define OPTION_APP_SCREEN_MODE_KEY				"app_screen_mode"
-#define OPTION_APP_SCREEN_MODE_VALUE			OPTION_APP_SCREEN_MODE_WINDOWED
-#define OPTION_APP_ANTIALIASING_LEVEL_KEY		"app_antialiasing_level"
-#define OPTION_APP_ANTIALIASING_LEVEL_VALUE		0
-#define OPTION_APP_SOUND_MUSIC_KEY				"app_sound_music"
-#define OPTION_APP_SOUND_MUSIC_VALUE			0
-#define OPTION_APP_SOUND_AMBIENT_KEY			"app_sound_ambient"
-#define OPTION_APP_SOUND_AMBIENT_VALUE			0
-#define OPTION_APP_LANGUAGE_KEY					"app_language"
-#define OPTION_APP_LANGUAGE_VALUE				OPTION_APP_LANGUAGE_EN
-#define OPTION_APP_CONTROL_UP_KEY				"app_control_up"
-#define OPTION_APP_CONTROL_UP_VALUE				sf::Keyboard::Z
-#define OPTION_APP_CONTROL_RIGHT_KEY			"app_control_right"
-#define OPTION_APP_CONTROL_RIGHT_VALUE			sf::Keyboard::D
-#define OPTION_APP_CONTROL_DOWN_KEY				"app_control_down"
-#define OPTION_APP_CONTROL_DOWN_VALUE			sf::Keyboard::S
-#define OPTION_APP_CONTROL_LEFT_KEY				"app_control_left"
-#define OPTION_APP_CONTROL_LEFT_VALUE			sf::Keyboard::Q
-#define OPTION_APP_CONTROL_FIRE_KEY				"app_control_fire"			// Not used for the moment (mouse)
-#define OPTION_APP_CONTROL_FIRE_VALUE			sf::Mouse::Button::Right	// Not used for the moment (mouse)
-#define OPTION_APP_CONTROL_RELOAD_KEY			"app_control_reload"
-#define OPTION_APP_CONTROL_RELOAD_VALUE			sf::Keyboard::R
-#define OPTION_APP_CONTROL_UNSELECT_KEY			"app_control_unselect"
-#define OPTION_APP_CONTROL_UNSELECT_VALUE		sf::Keyboard::Escape
-#define OPTION_APP_CONTROL_HALFSTACKMOVE_KEY	"half_stack_move"
-#define OPTION_APP_CONTROL_HALFSTACKMOVE_VALUE	sf::Keyboard::LShift
-#define OPTION_APP_SCREEN_MODE_WINDOWED			(sf::Style::Resize | sf::Style::Close)
-#define OPTION_APP_SCREEN_MODE_FULLSCREEN		sf::Style::Fullscreen
-#define OPTION_APP_LANGUAGE_EN					"en"
-#define OPTION_APP_LANGUAGE_FR					"fr"
+#define OPTIONKEY_VERSION					"option_version"
+#define OPTIONKEY_SCREEN_WIDTH				"app_screen_width"
+#define OPTIONKEY_SCREEN_HEIGHT				"app_screen_height"
+#define OPTIONKEY_SCREEN_MODE				"app_screen_mode"
+#define OPTIONKEY_ANTIALIASING_LEVEL		"app_antialiasing_level"
+#define OPTIONKEY_SOUND_GLOBAL				"app_sound_global"
+#define OPTIONKEY_SOUND_MUSIC				"app_sound_music"
+#define OPTIONKEY_SOUND_AMBIENT				"app_sound_ambient"
+#define OPTIONKEY_SOUND_EFFECT				"app_sound_effect"
+#define OPTIONKEY_LANGUAGE					"app_language"
+#define OPTIONKEY_CONTROL_UP				"app_control_up"
+#define OPTIONKEY_CONTROL_RIGHT				"app_control_right"
+#define OPTIONKEY_CONTROL_DOWN				"app_control_down"
+#define OPTIONKEY_CONTROL_LEFT				"app_control_left"
+#define OPTIONKEY_CONTROL_RELOAD			"app_control_reload"
+#define OPTIONKEY_CONTROL_UNSELECT			"app_control_unselect"
+#define OPTIONKEY_CONTROL_HALFSTACKMOVE		"half_stack_move"
+
 
 class Option
 {
@@ -50,6 +30,9 @@ public:
 	~Option(void);
 
 	// Getters - Setters
+	std::string getAppVersion();
+	void setAppVersion(std::string p_version);
+
 	int getAppScreenWidth();
 	void setAppScreenWidth(int p_width);
 
@@ -62,11 +45,17 @@ public:
 	int getAppAntiAliasingLevel();
 	void setAppAntiAliasingLevel(int p_level);
 
-	int getAppSoundMusic();
-	void setAppSoundMusic(int p_app_sound_music);
+	float getAppSoundGlobal();
+	void setAppSoundGlobal(float p_appSoundGlobal);
 
-	int getAppSoundAmbient();
-	void setAppSoundAmbient(int p_app_sound_ambient);
+	float getAppSoundAmbient();
+	void setAppSoundAmbient(float p_app_sound_ambient);
+
+	float getAppSoundMusic();
+	void setAppSoundMusic(float p_app_sound_music);
+
+	float getAppSoundEffect();
+	void setAppSoundEffect(float p_appSoundEffect);
 
 	std::string getAppLanguage();
 	void setAppLanguage(std::string p_app_language);
@@ -79,13 +68,19 @@ public:
 	bool loadOptionFromDefault();
 	bool saveOptionToFile();
 
-	// Static
-	static Option *option;
+	void notifyAppSoundGlobalChanged();
+	void notifyAppSoundAmbiantChanged();
 
+	static Option* getInstance();
+	static void destroyInstance();
 
+	
 private:
 	// Option info
 	KeyValueFile mOptionFile;
+
+	// App
+	std::string mAppVersion;
 
 	// Screen
 	int mAppScreenWidth;
@@ -94,13 +89,18 @@ private:
 	int mAntiAliasingLevel;
 
 	// Sound
-	int mAppSoundMusic;
-	int mAppSoundAmbient;
+	float mAppSoundGlobal;
+	float mAppSoundAmbient;
+	float mAppSoundMusic;
+	float mAppSoundEffect;
 
 	// Internationalisation
 	std::string mAppLanguage;
 
 	// Controls
 	std::map<std::string, sf::Keyboard::Key> mAppControls;
+
+	// Static
+	static Option* mInstance;
 };
 

@@ -27,7 +27,7 @@ BaseScreen::BaseScreen(void)
 
 	this->mGameVersion.setFontColor(sf::Color::White);
 	this->mGameVersion.setFontSize(ManagerConfig::FontSize::Tiny);
-	this->mGameVersion.setText(Resource::resource->getBundle()->getString("version") + " " + OPTION_VERSION_VALUE);
+	this->mGameVersion.setText(Resource::resource->getBundle()->getString("version") + " " + Option::getInstance()->getAppVersion());
 	this->mGameVersion.setView(this->mScreenView);
 
 	this->mOverlayBottom.setFillColor(BASESCREEN_OVERLAY_COLOR);

@@ -82,18 +82,6 @@
 #define SOUND_WEAPON_KINETIC_2			"weapon_kinetic_2.wav"
 #define SOUND_WEAPON_KINETIC_RELOAD		"weapon_kinetic_reload.wav"
 
-// Music
-#define FOLDER_MUSIC					"sound/music/"
-
-#define MUSIC_THEME_1					"theme_1.wav"
-#define MUSIC_THEME_2					"theme_2.wav"
-#define MUSIC_THEME_3					"theme_3.wav"
-#define MUSIC_THEME_4					"theme_4.wav"				
-#define THEME_1_NAME					"Theme number 1"
-#define THEME_2_NAME					"Theme number 2"
-#define THEME_3_NAME					"Theme number 3"
-#define THEME_4_NAME					"Theme number 4"
-
 // Config
 #define FOLDER_CONFIG							"config/"
 #define FOLDER_CONFIG_ITEMTIER					FOLDER_CONFIG"itemtier/"

@@ -47,7 +47,6 @@ private:
 	// Attributs
 	bool mRunning;
 	Map* mMap;
-	Camera* mCamera;
 	UserInterface* mUserInterface;
 	Character* mCharacter;
 	sf::Event mEvent;

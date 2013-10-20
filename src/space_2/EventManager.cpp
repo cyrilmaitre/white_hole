@@ -83,16 +83,16 @@ void EventManager::handlePlayerAction( sf::Event p_event )
 		while(delta > 0)
 		{
 			if(isUp)
-				Camera::camera->incZoom();
+				Camera::getInstance()->incZoom();
 			else
-				Camera::camera->decZoom();
+				Camera::getInstance()->decZoom();
 
 			delta--;
 		}
 	}
 
 	// CharacterShip reload
-	if( p_event.type == sf::Event::KeyPressed && p_event.key.code == Option::option->getAppControl(OPTION_APP_CONTROL_RELOAD_KEY))
+	if( p_event.type == sf::Event::KeyPressed && p_event.key.code == Option::getInstance()->getAppControl(OPTIONKEY_CONTROL_RELOAD))
 		Game::game->getShipPiloted()->reload();
 
 	// Drag'n'drop
@@ -100,7 +100,7 @@ void EventManager::handlePlayerAction( sf::Event p_event )
 		ContainerViewManager::getInstance()->releaseDrag();
 
 	// Unselect selected object
-	if( p_event.type == sf::Event::KeyPressed && p_event.key.code == Option::option->getAppControl(OPTION_APP_CONTROL_UNSELECT_KEY))
+	if( p_event.type == sf::Event::KeyPressed && p_event.key.code == Option::getInstance()->getAppControl(OPTIONKEY_CONTROL_UNSELECT))
 		Game::game->getMap()->getMapObjectSelector()->unselect();
 }
 

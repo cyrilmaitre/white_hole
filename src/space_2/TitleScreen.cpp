@@ -8,6 +8,7 @@
 #include "Network.h"
 #include "ImageGIFFactory.h"
 #include "NetworkDefine.h"
+#include "Jukebox.h"
 
 using namespace sf;
 using namespace std;
@@ -43,6 +44,8 @@ TitleScreen::TitleScreen(void)
 {
 	// Init with default
 	this->mAuthenticateThread	= NULL;
+
+	Jukebox::getInstance()->playMusicAmbiant();
 
 	this->mLoginGif = ImageGIFFactory::getLoadingSquareCircle();
 	this->mLoginGif->setVisible(false);

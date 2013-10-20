@@ -125,8 +125,8 @@ void Particle::draw()
 
 void Particle::update()
 {
-	float tmpX = this->getX() - MapObject::convertSize(Camera::frameShipMoveOffset.x, MAPOBJECT_PLANE_1, this->getPlane());
-	float tmpY = this->getY() - MapObject::convertSize(Camera::frameShipMoveOffset.y, MAPOBJECT_PLANE_1, this->getPlane());
+	float tmpX = this->getX() - MapObject::convertSize(Camera::frameCameraOffset.x, MAPOBJECT_PLANE_1, this->getPlane());
+	float tmpY = this->getY() - MapObject::convertSize(Camera::frameCameraOffset.y, MAPOBJECT_PLANE_1, this->getPlane());
 	float varX = 0;
 
 	varX += MapObject::convertSize(this->getVelocityAt(MovableCardinality::East) * ((float)this->mVelocityClock.getElapsedTimeAsMilliseconds() / 1000.f), MAPOBJECT_PLANE_1, this->getPlane());

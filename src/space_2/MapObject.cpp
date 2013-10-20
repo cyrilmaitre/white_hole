@@ -382,9 +382,9 @@ void MapObject::updateScreenPosition()
 
 void MapObject::updateVisible()
 {
-	sf::Vector2f cameraPositionInPlace = Camera::camera->getPositionInPlane(this->getPlane());
-	int demiScreenWidthInPlane = Camera::camera->getCameraPlaneWidth() / 2;
-	int demiScreenHeightInPlane = Camera::camera->getCameraPlaneHeight() / 2;
+	sf::Vector2f cameraPositionInPlace = Camera::getInstance()->getPositionInPlane(this->getPlane());
+	int demiScreenWidthInPlane = Camera::getInstance()->getCameraPlaneWidth() / 2;
+	int demiScreenHeightInPlane = Camera::getInstance()->getCameraPlaneHeight() / 2;
 	bool valueVisible = !(	this->Object::getX() + this->getWidthHalf() < cameraPositionInPlace.x - demiScreenWidthInPlane || 
 							this->Object::getX() - this->getWidthHalf() > cameraPositionInPlace.x + demiScreenWidthInPlane ||
 							this->Object::getY() + this->getHeightHalf() < cameraPositionInPlace.y - demiScreenHeightInPlane ||

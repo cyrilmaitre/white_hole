@@ -105,18 +105,6 @@ void CharacterShip::setSkillPoints( int p_points )
 	this->mSkillPoints = p_points;
 }
 
-void CharacterShip::setX( double p_x )
-{
-	Object::setX(p_x);
-	Camera::camera->setCameraX(p_x);
-}
-
-void CharacterShip::setY( double p_y )
-{
-	Object::setY(p_y);
-	Camera::camera->setCameraY(p_y);
-}
-
 bool CharacterShip::isPiloted()
 {
 	return this->mPiloted;
@@ -178,20 +166,17 @@ void CharacterShip::updatePosition()
 {
 	float varX = this->getMoveX();
 	float varY = this->getMoveY();
-
-	Camera::frameShipMoveOffset.x = varX; 
-	Camera::frameShipMoveOffset.y = varY; 
-
-	this->setX(this->Object::getX() + varX);
-	this->setY(this->Object::getY() + varY);
+	Camera::frameCameraOffset.x = varX; 
+	Camera::frameCameraOffset.y = varY; 
+	this->setPosition(this->Object::getX() + varX, this->Object::getY() + varY);
 }
 
 void CharacterShip::updateQuickeningActive()
 {
-	bool keyUpPressed = sf::Keyboard::isKeyPressed(Option::option->getAppControl(OPTION_APP_CONTROL_UP_KEY));
-	bool keyRightPressed = sf::Keyboard::isKeyPressed(Option::option->getAppControl(OPTION_APP_CONTROL_RIGHT_KEY));
-	bool keyDownPressed = sf::Keyboard::isKeyPressed(Option::option->getAppControl(OPTION_APP_CONTROL_DOWN_KEY));
-	bool keyLeftPressed = sf::Keyboard::isKeyPressed(Option::option->getAppControl(OPTION_APP_CONTROL_LEFT_KEY));
+	bool keyUpPressed = sf::Keyboard::isKeyPressed(Option::getInstance()->getAppControl(OPTIONKEY_CONTROL_UP));
+	bool keyRightPressed = sf::Keyboard::isKeyPressed(Option::getInstance()->getAppControl(OPTIONKEY_CONTROL_RIGHT));
+	bool keyDownPressed = sf::Keyboard::isKeyPressed(Option::getInstance()->getAppControl(OPTIONKEY_CONTROL_DOWN));
+	bool keyLeftPressed = sf::Keyboard::isKeyPressed(Option::getInstance()->getAppControl(OPTIONKEY_CONTROL_LEFT));
 	
 	this->setQuickeningActiveAt(MovableCardinality::North, keyUpPressed && !keyRightPressed && !keyLeftPressed);
 	this->setQuickeningActiveAt(MovableCardinality::NorthEast, keyUpPressed && keyRightPressed );
@@ -321,5 +306,11 @@ void CharacterShip::notifyWeaponsChanged()
 
 	if(this->mLoaded)
 		NetworkJobManager::getInstance()->addJob(new CharacterShipWeaponCreate(this));
+}
+
+void CharacterShip::notifyPositionChanged()
+{
+	Ship::notifyPositionChanged();
+	Camera::getInstance()->setCameraPosition(this->Object::getX(), this->Object::getY());
 }
 

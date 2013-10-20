@@ -4,7 +4,7 @@
 #include "AutoManager.h"
 #include "Impact.h"
 #include "ProjectileManager.h"
-#include "Juckebox.h"
+#include "Jukebox.h"
 #include "ToolsMap.h"
 
 
@@ -322,7 +322,7 @@ void Weapon::fire( Entity* p_target, Entity* p_source )
 
 	this->mFirstFire = false;
 
-	Resource::resource->getJuckebox()->soundPlay(this->mAmmo->getSoundFire());
+	//Jukebox::getInstance()->soundPlay(this->mAmmo->getSoundFire());
 	AutoManager::add(ProjectileManager::getProjectile(p_source, p_target, this));
 
 	this->decAmmoCount();
@@ -350,7 +350,7 @@ void Weapon::reload()
 
 	this->mFirstReload = false;
 
-	Resource::resource->getJuckebox()->soundPlay(this->getWeaponModel()->getSoundReload());
+	//Jukebox::getInstance()->soundPlay(this->getWeaponModel()->getSoundReload());
 	if(ToolsMap::isCharacterShip(this->getEntity()))
 	{
 		CharacterShip* characterShip = (CharacterShip*) this->getEntity();

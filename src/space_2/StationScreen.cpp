@@ -4,7 +4,7 @@
 #include "ContainerViewManager.h"
 #include "NetworkJobManager.h"
 #include "RunningStats.h"
-#include "Juckebox.h"
+#include "Jukebox.h"
 #include "CharacterBank.h"
 #include "Tools.h"
 #include "WindowMessageInfo.h"
@@ -200,7 +200,7 @@ void StationScreen::update()
 	ClockManager::update();
 
 	// Update Juckbox
-	Resource::resource->getJuckebox()->update();
+	Jukebox::getInstance()->update();
 
 	// Update Network Manager
 	NetworkJobManager::getInstance()->update();

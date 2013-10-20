@@ -482,7 +482,7 @@ void MapMiniView::update()
 	}
 
 	// Update texture rect
-	sf::Vector2f cameraPosition = Camera::camera->getPositionInPlane(SECTOR_PLANE);
+	sf::Vector2f cameraPosition = Camera::getInstance()->getPositionInPlane(SECTOR_PLANE);
 	int offsetX = ((currentSector->getX() - cameraPosition.x) / SECTOR_WIDTH) * this->getSectorMiniWidth();
 	int offsetY = ((currentSector->getY() - cameraPosition.y) / SECTOR_HEIGHT) * this->getSectorMiniHeight();
 

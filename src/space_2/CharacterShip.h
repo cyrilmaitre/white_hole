@@ -28,9 +28,6 @@ public:
 	int getSkillPoints();
 	void setSkillPoints(int p_points);
 
-	void setX(double p_x);
-	void setY(double p_y);
-
 	bool isPiloted();
 	void setPiloted(bool p_piloted);
 
@@ -57,8 +54,9 @@ public:
 	void incSkillPoints(int p_inc);
 	void decSkillPoints();
 	void incLevel();
-	void notifyWeaponsChanged();
 
+	void notifyWeaponsChanged();
+	void notifyPositionChanged();
 
 private:
 	// Attrtributs

@@ -6,7 +6,7 @@
 #include "AutoManager.h"
 #include "NetworkJobManager.h"
 #include "WreckManager.h"
-#include "Juckebox.h"
+#include "Jukebox.h"
 #include "ClockManager.h"
 #include "EntityManager.h"
 #include "PopupManager.h"
@@ -30,7 +30,6 @@ Game::Game(void)
 	Game::game = this;
 	this->mRunning = true;
 	this->mMap = NULL;
-	this->mCamera = NULL;
 	this->mUserInterface = NULL;
 	this->mCharacter = NULL;
 
@@ -92,18 +91,16 @@ void Game::init()
 {
 	// Init basic
 	this->mMap = new Map();
-	this->mCamera = new Camera();
 	this->mUserInterface = new UserInterface(this->mCharacter);
 
 	// Init
+	Camera::getInstance()->setZoom(1.0f);
 	sf::Vector2i characterShipPosition = MapObject::convertPosition(sf::Vector2i(SECTOR_WIDTH / 2, SECTOR_HEIGHT / 2), SECTOR_PLANE, SHIP_PLANE);
 
 	this->mCharacter->init();
 	this->getShipPiloted()->setPosition(characterShipPosition.x, characterShipPosition.y);
 	this->getUserInterface()->getXpBarCharacter()->setLevelable(this->mCharacter);
 	this->notifyShipPilotedChanged();
-
-	Resource::resource->getJuckebox()->playlistLaunch();
 	Resource::resource->updateViewMap();
 
 	// First update
@@ -127,11 +124,10 @@ void Game::uninit()
 	}
 
 	// Delete
+	Camera::destroyInstance();
+
 	delete this->mMap;
 	this->mMap = NULL;
-
-	delete this->mCamera;
-	this->mCamera = NULL;
 
 	delete this->mUserInterface;
 	this->mUserInterface = NULL;
@@ -197,7 +193,7 @@ void Game::launch(Character* p_character)
 		this->update();
 
 		// Draw
-		this->mCamera->draw();
+		Camera::getInstance()->draw();
 		PopupManager::getInstance()->draw();
 		Resource::resource->getApp()->display();		
 	}
@@ -231,7 +227,7 @@ void Game::update()
 	EventManager::eventManager->handlePlayerActionPre();
 
 	// Update Juckbox
-	Resource::resource->getJuckebox()->update();
+	Jukebox::getInstance()->update();
 
 	// Update Animation
 	AnimationManager::update();

@@ -2,10 +2,10 @@
 #include "Resource.h"
 #include "Game.h"
 #include "TitleScreen.h"
+#include "Jukebox.h"
 
 int main()
 {
-	Option mOption;
 	Resource mRessource;
 	EventManager mEventManager;
 	TitleScreen mTitleScreen;
@@ -18,6 +18,9 @@ int main()
 	*/
 
 	mTitleScreen.launch();
+
+	Option::destroyInstance();
+	Jukebox::destroyInstance();
 
 	return EXIT_SUCCESS;
 }

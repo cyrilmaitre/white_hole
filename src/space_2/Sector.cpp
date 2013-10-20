@@ -424,8 +424,8 @@ void Sector::update( sf::Event p_event )
 void Sector::updateSpritePosition()
 {
 	sf::Vector2f backgroundPosition;
-	backgroundPosition.x = (float)this->getX() - Camera::camera->getPositionInPlane(SECTOR_PLANE).x;
-	backgroundPosition.y = (float)this->getY() - Camera::camera->getPositionInPlane(SECTOR_PLANE).y;
+	backgroundPosition.x = (float)this->getX() - Camera::getInstance()->getPositionInPlane(SECTOR_PLANE).x;
+	backgroundPosition.y = (float)this->getY() - Camera::getInstance()->getPositionInPlane(SECTOR_PLANE).y;
 	Camera::centerPosition(&backgroundPosition, SECTOR_PLANE);
 
 	this->mBackgroundSprite.setPosition(backgroundPosition);

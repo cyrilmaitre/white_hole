@@ -135,7 +135,7 @@ void ContainerViewManager::releaseDrag( ContainerStackView* p_source, ContainerS
 		bool sourceTypeIsAllowed = p_destination->getContainerStack()->isItemTypeAllowed(p_source->getContainerStack()->getItemStack()->getItem()->getItemType());
 		if(!p_destination->getContainerStack()->hasItemStack() && sourceTypeIsAllowed)
 		{
-			if(!sf::Keyboard::isKeyPressed(Option::option->getAppControl(OPTION_APP_CONTROL_HALFSTACKMOVE_KEY)))
+			if(!sf::Keyboard::isKeyPressed(Option::getInstance()->getAppControl(OPTIONKEY_CONTROL_HALFSTACKMOVE)))
 			{
 				p_destination->getContainerStack()->setItemStack(p_source->getContainerStack()->getItemStack());
 				p_source->getContainerStack()->setItemStack(NULL);

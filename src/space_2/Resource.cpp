@@ -1,6 +1,6 @@
 #include <iostream>
 #include "Resource.h"
-#include "Juckebox.h"
+#include "Jukebox.h"
 #include "BootScreen.h"
 #include "Game.h"
 #include "Camera.h"
@@ -38,7 +38,7 @@ Resource * Resource::resource;
 //*************************************************************
 // Constructreur - Destructeur
 //*************************************************************
-Resource::Resource(): mApp(sf::VideoMode(Option::option->getAppScreenWidth(), Option::option->getAppScreenHeight(), APP_SCREEN_COLOR), APP_GAME_NAME, Option::option->getAppScreenMode(), sf::ContextSettings(0, 0, Option::option->getAppAntiAliasingLevel()))
+Resource::Resource(): mApp(sf::VideoMode(Option::getInstance()->getAppScreenWidth(), Option::getInstance()->getAppScreenHeight(), APP_SCREEN_COLOR), APP_GAME_NAME, Option::getInstance()->getAppScreenMode(), sf::ContextSettings(0, 0, Option::getInstance()->getAppAntiAliasingLevel()))
 {
 	//*************************************************************
 	// Sauvegarde de l'objet ressource
@@ -82,7 +82,6 @@ Resource::Resource(): mApp(sf::VideoMode(Option::option->getAppScreenWidth(), Op
 	//*************************************************************
 	// Instantiate 
 	//*************************************************************
-	this->mJuckebox	= new Juckebox();
 	this->mThreadterminator = new ThreadTerminator();
 
 
@@ -201,12 +200,12 @@ sf::Font* Resource::getFontUiTheme()
 	return this->getFont(FONT_UITHEME);
 }
 
-sf::SoundBuffer* Resource::getBuffer( std::string p_name )
+sf::SoundBuffer* Resource::getSoundBuffer( std::string p_name )
 {
 	std::map<std::string, sf::SoundBuffer*>::iterator it;
-	it = this->mBuffer.find(p_name);
+	it = this->mSoundBuffer.find(p_name);
 
-	if(it != this->mBuffer.end())
+	if(it != this->mSoundBuffer.end())
 	{
 		return it->second;
 	}
@@ -218,31 +217,9 @@ sf::SoundBuffer* Resource::getBuffer( std::string p_name )
 	return NULL;
 }
 
-sf::Music* Resource::getMusic( std::string p_name )
-{
-	std::map<std::string, sf::Music*>::iterator it;
-	it = this->mMusic.find(p_name);
-
-	if(it != this->mMusic.end())
-	{
-		return it->second;
-	}
-	else
-	{
-		std::cout << "Unable to find loaded music: " << p_name << std::endl;
-	}
-
-	return NULL;
-}
-
 Internationalisation* Resource::getBundle()
 {
 	return this->mBundle;
-}
-
-Juckebox* Resource::getJuckebox()
-{
-	return this->mJuckebox;
 }
 
 ThreadTerminator* Resource::getThreadTerminator()
@@ -328,7 +305,7 @@ void Resource::updateViewMap()
 
 			if(currentView != NULL)
 			{
-				float zoom = Camera::camera->getZoom(currentPlane);
+				float zoom = Camera::getInstance()->getZoom(currentPlane);
 				currentView->zoom(zoom);
 
 				int viewWidth = this->mApp.getSize().x / zoom;
@@ -418,7 +395,6 @@ void Resource::loadAsync()
 	this->loadImages();
 	this->loadFonts();
 	this->loadSoundBuffers();
-	this->loadMusic();
 	this->loadConfigs();
 
 	// Close bootScreen
@@ -438,7 +414,6 @@ void Resource::unload()
 	this->unloadTextures();
 	this->unloadFonts();
 	this->unloadSoundBuffers();
-	this->unloadMusic();
 }
 
 
@@ -621,7 +596,7 @@ void Resource::loadSoundBuffers( std::string path )
 				if (!tmpSoundBuffer->loadFromFile(path+file_name))						
 					std::cout << "Error while loading sound: " << path+file_name << std::endl;
 
-				this->mBuffer.insert(std::pair<std::string, sf::SoundBuffer*>(file_name, tmpSoundBuffer));
+				this->mSoundBuffer.insert(std::pair<std::string, sf::SoundBuffer*>(file_name, tmpSoundBuffer));
 			}
 		}
 		closedir(dir);
@@ -634,57 +609,7 @@ void Resource::loadSoundBuffers( std::string path )
 
 void Resource::unloadSoundBuffers()
 {
-	for( std::map<std::string, sf::SoundBuffer*>::iterator it = this->mBuffer.begin() ; it != this->mBuffer.end(); it++ )
-	{
-		if((*it).second != NULL)
-		{
-			delete (*it).second;
-			(*it).second = NULL;
-		}
-	}
-}
-
-
-//*************************************************************
-// Configuration music
-//*************************************************************
-void Resource::loadMusic()
-{
-	this->loadMusic(FOLDER_MUSIC);
-}
-
-void Resource::loadMusic( std::string path )
-{
-	DIR *dir;
-	struct dirent *ent;
-	dir = opendir(path.data());
-
-	if (dir != NULL)
-	{
-		while ((ent = readdir (dir)) != NULL)
-		{
-			std::string file_name = ent->d_name;
-
-			if(file_name[0] != '.' && ent->d_type != DT_DIR)
-			{
-				sf::Music *tmpMusic = new sf::Music();
-				if (!tmpMusic->openFromFile(path+file_name))						
-					std::cout << "Error while loading music: " << path+file_name << std::endl;
-
-				this->mMusic.insert(std::pair<std::string, sf::Music*>(file_name, tmpMusic));
-			}
-		}
-		closedir(dir);
-	}
-	else
-	{
-		std::cout << "Enable to find music folder: " << path << std::endl;
-	}
-}
-
-void Resource::unloadMusic()
-{
-	for( std::map<std::string, sf::Music*>::iterator it = this->mMusic.begin() ; it != this->mMusic.end(); it++ )
+	for( std::map<std::string, sf::SoundBuffer*>::iterator it = this->mSoundBuffer.begin() ; it != this->mSoundBuffer.end(); it++ )
 	{
 		if((*it).second != NULL)
 		{

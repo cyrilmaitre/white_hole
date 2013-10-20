@@ -17,7 +17,7 @@ Internationalisation::Internationalisation(void)
 {
 	std::string nameFile = FILE_BASE_NAME;
 	nameFile.append("-");
-	nameFile.append(Option::option->getAppLanguage());
+	nameFile.append(Option::getInstance()->getAppLanguage());
 
 	if(Tools::isFileExist(nameFile))
 		this->mBundle = new KeyValueFile(FILE_PATH + nameFile, nameFile, true);

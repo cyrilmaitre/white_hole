@@ -15,10 +15,10 @@ public:
 
 	// Getters - Setters
 	double getCameraX();
-	void setCameraX(double p_x);
-
 	double getCameraY();
+	void setCameraX(double p_x);
 	void setCameraY(double p_y);
+	void setCameraPosition(double p_x, double p_y);
 
 	sf::Vector2f getPositionInPlane(int p_plane);
 	float getPlaneWidth(int p_plane);
@@ -32,16 +32,19 @@ public:
 
 	// Methods
 	void draw();
-	void notifyZoomChanged();
 	void incZoom();
 	void decZoom();
 
+	void notifyZoomChanged();
+	void notifyPositionChanged();
+
+	static Camera* getInstance();
+	static void destroyInstance();
 	static sf::Vector2f* centerPosition(sf::Vector2f* p_position, int p_plane);
 	static sf::Vector2f getObjectPositionInScreen(MapObject* p_object);
 
 	// Attributs
-	static Camera *camera;
-	static sf::Vector2f frameShipMoveOffset;
+	static sf::Vector2f frameCameraOffset;
 
 
 private:
@@ -49,4 +52,6 @@ private:
 	double mCameraX;		// Coordonnee x camera plane 1
 	double mCameraY;		// Coordonnee y camera plane 1
 	float mZoom;
+
+	static Camera *mInstance;
 };

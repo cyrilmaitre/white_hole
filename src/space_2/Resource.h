@@ -24,7 +24,7 @@
 #define RESOURCE_ID_VIEW_MAP				1
 #define RESOURCE_ID_VIEW_DEFAULT			RESOURCE_ID_VIEW_UI
 
-class Juckebox;
+class Jukebox;
 
 class Resource
 {
@@ -44,12 +44,10 @@ public:
 	sf::Font* getFontDefault();
 	sf::Font* getFontUi();
 	sf::Font* getFontUiTheme();
-	sf::SoundBuffer* getBuffer(std::string p_name);
-	sf::Music* getMusic(std::string p_name);
+	sf::SoundBuffer* getSoundBuffer(std::string p_name);
 	KeyValueFile* getConfig(std::string p_name);
 	std::vector<KeyValueFile*> getConfigs(std::string p_configName);
 	Internationalisation* getBundle();
-	Juckebox* getJuckebox();
 	ThreadTerminator* getThreadTerminator();
 
 	bool isAppRunning();
@@ -71,8 +69,6 @@ public:
 	void loadFonts(std::string path);
 	void loadSoundBuffers();
 	void loadSoundBuffers(std::string path);
-	void loadMusic();
-	void loadMusic(std::string path);
 	void loadConfigs();
 	void loadConfigs(std::string path);
 
@@ -81,7 +77,6 @@ public:
 	void unloadTextures();
 	void unloadFonts();
 	void unloadSoundBuffers();
-	void unloadMusic();
 
 	void resizeAllView();
 	void selectView(int id_view, int p_plane = 0);
@@ -99,11 +94,9 @@ private:
 	std::map<std::string, sf::Image*> mImage;
 	std::map<std::string, sf::Texture*> mTexture;
 	std::map<std::string, sf::Font*> mFont;
-	std::map<std::string, sf::SoundBuffer*> mBuffer;
-	std::map<std::string, sf::Music*> mMusic;
+	std::map<std::string, sf::SoundBuffer*> mSoundBuffer;
 	std::map<std::string, KeyValueFile> mConfig;
 	Internationalisation *mBundle;
-	Juckebox *mJuckebox;
 	ThreadTerminator* mThreadterminator;
 	
 	bool mAppRunning;
