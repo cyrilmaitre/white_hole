@@ -322,7 +322,7 @@ void Weapon::fire( Entity* p_target, Entity* p_source )
 
 	this->mFirstFire = false;
 
-	Jukebox::getInstance()->playSound(this->mAmmo->getSoundFire(), this->getEntity()->getPosition(SECTOR_PLANE), 25.0f, 10.0f);
+	Jukebox::getInstance()->playSound(this->mAmmo->getSoundFire(), this->getEntity()->getPosition(SECTOR_PLANE), 25.0f, 30.0f);
 	AutoManager::add(ProjectileManager::getProjectile(p_source, p_target, this));
 
 	this->decAmmoCount();

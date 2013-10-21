@@ -120,8 +120,7 @@ void Entity::update()
 	{	
 		sf::Vector2f objectPositionScreen = this->getScreenPosition();
 		this->mTBDistance.setText(Tools::buildStringWithInt(Game::game->getMap()->getMapObjectSelector()->getObjectSelectedDistance()) + " " + Resource::resource->getBundle()->getString("meterAb"));
-		this->mTBDistance.setX(objectPositionScreen.x - this->mTBDistance.getWidth() / 2);
-		this->mTBDistance.setY(objectPositionScreen.y + CIRCLE_SELECTED_SIZE / 2 + this->getRocking() + ENTITY_DISTANCE_OFFSETY);
+		this->mTBDistance.setPosition(objectPositionScreen.x - this->mTBDistance.getWidth() / 2, objectPositionScreen.y + CIRCLE_SELECTED_SIZE / 2 + this->getRocking() + ENTITY_DISTANCE_OFFSETY);
 	}
 
 	for(int i = 0; i < this->mRadarEffects.size(); i++)
