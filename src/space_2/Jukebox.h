@@ -40,7 +40,7 @@ public:
 	void playlistPrevious();
 
 	void playSound(std::string p_sound, float p_volume = 1.0);
-	void playSound(std::string p_sound, sf::Vector2f p_position, bool p_relativeToListener = false, float p_volume = 1.0);
+	void playSound(std::string p_sound, sf::Vector2f p_position, float p_distanceMin = 1.0f, float p_attenuation = 0.0f, bool p_relativeToListener = false, float p_volume = 1.0);
 	bool addSound(sf::Sound* p_sound);
 	void removeSound(sf::Sound* p_sound);
 

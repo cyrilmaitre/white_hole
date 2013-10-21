@@ -53,10 +53,9 @@ Resource::Resource(): mApp(sf::VideoMode(Option::getInstance()->getAppScreenWidt
 	this->initBeforeLoad();
 
 	// Other init
-	this->mApp.setPosition(sf::Vector2i(RESOURCE_APP_INITIAL_POSITION_X, RESOURCE_APP_INITIAL_POSITION_Y));		// Display window in corner top-left
-	//this->mApp.setFramerateLimit(RESOURCE_APP_FRAME_LIMIT);						// Set frame limit
-	this->setAppRunning(true);														// App is running
-	srand(unsigned(time(NULL)));													// Initialize random 
+	this->mApp.setPosition(sf::Vector2i(RESOURCE_APP_INITIAL_POSITION_X, RESOURCE_APP_INITIAL_POSITION_Y));	
+	//this->mApp.setFramerateLimit(RESOURCE_APP_FRAME_LIMIT);
+	this->setAppRunning(true);
 	Tools::init();
 	
 

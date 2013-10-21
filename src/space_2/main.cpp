@@ -6,6 +6,8 @@
 
 int main()
 {
+	srand(unsigned(time(NULL)));
+
 	Resource mRessource;
 	EventManager mEventManager;
 	TitleScreen mTitleScreen;

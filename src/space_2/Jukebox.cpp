@@ -1,10 +1,8 @@
-#include <fstream>
-#include <string>
-#include <sstream>
 #include "Jukebox.h"
 #include "Resource.h"
 #include "Option.h"
 #include "SplitString.h"
+#include "Camera.h"
 
 
 //*************************************************************
@@ -22,7 +20,7 @@
 // Init static
 //*************************************************************
 Jukebox* Jukebox::mInstance = NULL;
-int sufflePlaylist(int i) { return Tools::random(0, 1000); }
+int sufflePlaylist(int i) { return std::rand()%i; }
 
 
 //*************************************************************
@@ -122,7 +120,7 @@ Jukebox::PlaylistState Jukebox::getPlaylistState()
 
 void Jukebox::setListenerPosition( float p_x, float p_y )
 {
-	sf::Listener::setPosition(p_x, 0.f, p_y);
+	sf::Listener::setPosition(p_x, 1.f, p_y);
 }
 
 
@@ -208,10 +206,10 @@ void Jukebox::playlistPrevious()
 
 void Jukebox::playSound( std::string p_sound, float p_volume /*= 1.0*/ )
 {
-	this->playSound(p_sound, sf::Vector2f(0.0f, 0.0f), true, p_volume);
+	this->playSound(p_sound, sf::Vector2f(0.0f, 0.0f), 1.0f, 0.0f, true, p_volume);
 }
 
-void Jukebox::playSound( std::string p_sound, sf::Vector2f p_position, bool p_relativeToListener /*= false*/, float p_volume /*= 1.0*/ )
+void Jukebox::playSound( std::string p_sound, sf::Vector2f p_position, float p_distanceMin /*= 1.0f*/, float p_attenuation /*= 0.0f*/, bool p_relativeToListener /*= false*/, float p_volume /*= 1.0*/ )
 {
 	if(p_volume < 0.0f)
 		p_volume = 0.0f;
@@ -222,7 +220,9 @@ void Jukebox::playSound( std::string p_sound, sf::Vector2f p_position, bool p_re
 	newSound->setBuffer(*Resource::resource->getSoundBuffer(p_sound));
 	newSound->setVolume(Option::getInstance()->getAppSoundEffect() * p_volume);
 	newSound->setRelativeToListener(p_relativeToListener);
-	newSound->setPosition(p_position.x, 0.0f, p_position.y);
+	newSound->setPosition(p_position.x, p_distanceMin * 1.0f / Camera::getInstance()->getZoom(), p_position.y);
+	newSound->setMinDistance(p_distanceMin);
+	newSound->setAttenuation(p_attenuation);
 
 	if(this->addSound(newSound))
 		newSound->play();
