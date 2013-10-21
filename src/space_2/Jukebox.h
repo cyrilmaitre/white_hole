@@ -3,9 +3,6 @@
 #include "Clock.h"
 #include "JukeboxMusic.h"
 
-// Define
-#define JUCKEBOX_SIMULTANEOUS_SOUND		128
-#define JUCKEBOX_SOUND_UPDATE_TICK		1.f
 
 class Jukebox
 {
@@ -42,10 +39,10 @@ public:
 	void playlistNext();
 	void playlistPrevious();
 
-	void soundPlay(std::string p_soundKey, int p_amplifier = 100);
-	void soundPlay(sf::SoundBuffer *p_mySoundBuffer, int p_amplifier = 100);
-	bool soundInsert(sf::Sound *mySound);
-	bool soundRemove(sf::Sound *mySound);
+	void playSound(std::string p_sound, float p_volume = 1.0);
+	void playSound(std::string p_sound, sf::Vector2f p_position, bool p_relativeToListener = false, float p_volume = 1.0);
+	bool addSound(sf::Sound* p_sound);
+	void removeSound(sf::Sound* p_sound);
 
 	void update();
 	void updatePlaylist();
@@ -66,7 +63,7 @@ private:
 	PlaylistState mPlaylistState;
 
 	// Sound
-	sf::Sound *mSounds[JUCKEBOX_SIMULTANEOUS_SOUND];
+	std::vector<sf::Sound*> mSounds;
 	mks::Clock mSoundTimer;
 
 	// Static

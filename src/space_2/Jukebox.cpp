@@ -10,19 +10,19 @@
 //*************************************************************
 // Define
 //*************************************************************
+#define SOUND_POOL_SIZE						128		// sounds
+#define SOUND_UPDATE_TICK					1.f		// sec
 #define MUSICFOLDER_PATHNAME				"music/"
 #define JUKEBOXCONFIG						"jukebox"
 #define JUKEBOXCONFIG_PLAYLIST				"playlist"
 #define AMBIANT_THEME_FILENAME				"ambiant-01.ogg"
-#define PLAYLIST_NEXTPLAY_TICJMIN			15.0f	// sec
-#define PLAYLIST_NEXTPLAY_TICJMAX			45.0f	// sec
 
 
 //*************************************************************
 // Init static
 //*************************************************************
 Jukebox* Jukebox::mInstance = NULL;
-int sufflePlaylist (int i) { return Tools::random(0, 1000); }
+int sufflePlaylist(int i) { return Tools::random(0, 1000); }
 
 
 //*************************************************************
@@ -56,12 +56,6 @@ Jukebox::Jukebox(void)
 	this->mMusicPlaylistIndex = -1;
 	this->mPlaylistState = PlaylistState::Stopped;
 	std::random_shuffle(this->mPlaylist.begin(), this->mPlaylist.end(), sufflePlaylist);
-
-	// Init with default
-	for(int i = 0; i < JUCKEBOX_SIMULTANEOUS_SOUND; i++)
-	{
-		this->mSounds[i] = NULL;
-	}
 }
 
 Jukebox::~Jukebox(void)
@@ -84,14 +78,10 @@ Jukebox::~Jukebox(void)
 	for(int i = 0; i < this->mPlaylist.size(); i++)
 		delete this->mPlaylist[i];
 
-	// Remove sound
-	for(int i = 0; i < JUCKEBOX_SIMULTANEOUS_SOUND; i++)
+	for(int i = 0; i < this->mSounds.size(); i++)
 	{
 		if(this->mSounds[i] != NULL)
-		{
-			this->mSounds[i]->stop();
 			delete this->mSounds[i];
-		}
 	}
 }
 
@@ -216,59 +206,52 @@ void Jukebox::playlistPrevious()
 	this->playPlaylist();
 }
 
-void Jukebox::soundPlay( sf::SoundBuffer *p_mySoundBuffer, int p_amplifier )
+void Jukebox::playSound( std::string p_sound, float p_volume /*= 1.0*/ )
 {
-	sf::Sound *mySound = new sf::Sound;	
-
-	mySound->setBuffer(*p_mySoundBuffer);
-	mySound->setVolume(Option::getInstance()->getAppSoundAmbient() * ((float)p_amplifier / 100.f));
-	
-	if(this->soundInsert(mySound))
-		mySound->play();
-	else
-		delete mySound;
+	this->playSound(p_sound, sf::Vector2f(0.0f, 0.0f), true, p_volume);
 }
 
-void Jukebox::soundPlay( std::string p_soundKey, int p_amplifier )
+void Jukebox::playSound( std::string p_sound, sf::Vector2f p_position, bool p_relativeToListener /*= false*/, float p_volume /*= 1.0*/ )
 {
-	this->soundPlay(Resource::resource->getSoundBuffer(p_soundKey), p_amplifier);
+	if(p_volume < 0.0f)
+		p_volume = 0.0f;
+	else if(p_volume > 1.0f)
+		p_volume = 1.0f;
+
+	sf::Sound* newSound = new sf::Sound();
+	newSound->setBuffer(*Resource::resource->getSoundBuffer(p_sound));
+	newSound->setVolume(Option::getInstance()->getAppSoundEffect() * p_volume);
+	newSound->setRelativeToListener(p_relativeToListener);
+	newSound->setPosition(p_position.x, 0.0f, p_position.y);
+
+	if(this->addSound(newSound))
+		newSound->play();
+	else
+		delete newSound;
 }
 
-bool Jukebox::soundInsert( sf::Sound *mySound )
+bool Jukebox::addSound( sf::Sound* p_sound )
 {
-	int index = 0;
-
-	while(this->mSounds[index] != NULL && index < JUCKEBOX_SIMULTANEOUS_SOUND)
-		index ++;
-
-	if(this->mSounds[index] == NULL)
-	{
-		this->mSounds[index] = mySound;
-
-		return true;
-	}
-	else
-	{
+	if(this->mSounds.size() > SOUND_POOL_SIZE)
 		return false;
-	}
+
+	this->mSounds.push_back(p_sound);
+	return true;
 }
 
-bool Jukebox::soundRemove( sf::Sound *mySound )
+void Jukebox::removeSound( sf::Sound* p_sound )
 {
-	int index = 0;
+	if(p_sound == NULL)
+		return;
 
-	while(this->mSounds[index] != mySound && index < JUCKEBOX_SIMULTANEOUS_SOUND)
-		index++;
-
-	if(this->mSounds[index] == mySound)
+	for(int i = 0; i < this->mSounds.size(); i++)
 	{
-		delete this->mSounds[index];
-		this->mSounds[index] = NULL;
-
-		return true;
+		if(this->mSounds[i] == p_sound)
+		{
+			delete this->mSounds[i];
+			this->mSounds.erase(this->mSounds.begin() + i);
+		}
 	}
-
-	return false;
 }
 
 void Jukebox::update()
@@ -285,19 +268,16 @@ void Jukebox::updatePlaylist()
 
 void Jukebox::updateSound()
 {
-	if(this->mSoundTimer.getElapsedTimeAsSeconds() > JUCKEBOX_SOUND_UPDATE_TICK)
+	if(this->mSoundTimer.getElapsedTimeAsSeconds() > SOUND_UPDATE_TICK)
 	{
-		for(int i = 0; i < JUCKEBOX_SIMULTANEOUS_SOUND; i++)
+		for(int i = 0; i < this->mSounds.size(); i++)
 		{
-			if(this->mSounds[i] != NULL)
+			if(this->mSounds[i] != NULL && this->mSounds[i]->getStatus() == sf::Sound::Status::Stopped)
 			{
-				if(this->mSounds[i]->getStatus() == sf::Sound::Status::Stopped)
-				{
-					this->soundRemove(this->mSounds[i]);
-				}
+				this->removeSound(this->mSounds[i]);
+				i--; // Stay on the same index
 			}
 		}
-
 		this->mSoundTimer.restart();
 	}
 }
@@ -308,5 +288,6 @@ void Jukebox::loadNewMusicPlaylist()
 		this->mMusicPlaylist->stop();
 	this->mMusicPlaylist->openFromFile(MUSICFOLDER_PATHNAME + this->mPlaylist[this->mMusicPlaylistIndex]->getFileName());
 }
+
 
 
