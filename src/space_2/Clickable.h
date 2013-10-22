@@ -10,6 +10,7 @@ public:
 
 	// Getters - Setters
 	bool isClicked();
+	void setClicked(bool p_value);
 
 	bool isUpdateClicked();
 	void setUpdateClicked(bool p_param);
@@ -22,6 +23,7 @@ protected:
 
 	// Methods
 	void update(sf::Event p_event);
+	virtual void notifyClickedChanged();
 
 
 private:

@@ -3,6 +3,7 @@
 #include "Option.h"
 #include "ClockManager.h"
 #include "ManagerConfig.h"
+#include "Jukebox.h"
 
 
 //*************************************************************
@@ -76,6 +77,7 @@ void BaseScreen::update()
 {
 	EventManager::eventManager->reset();
 	ClockManager::update();
+	Jukebox::getInstance()->update();
 }
 
 void BaseScreen::updatePosition()

@@ -27,6 +27,7 @@ protected:
 	void notifyPositionChanged();
 	void notifySizeChanged();
 	void updateTitlePosition();
+	void notifyClickedChanged();
 
 
 private:

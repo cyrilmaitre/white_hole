@@ -24,6 +24,15 @@ bool Clickable::isClicked()
 	return clickedValue;
 }
 
+void Clickable::setClicked( bool p_value )
+{
+	if(this->mClicked != p_value)
+	{
+		this->mClicked = p_value;
+		this->notifyClickedChanged();
+	}
+}
+
 bool Clickable::isUpdateClicked()
 {
 	return this->mUpdateClicked;
@@ -53,14 +62,19 @@ void Clickable::updateClicked( sf::Event p_event )
 	if(p_event.type == sf::Event::MouseButtonReleased && p_event.mouseButton.button == sf::Mouse::Left)
 	{
 		if(this->mMouseOver)
-			this->mClicked = true;
+			this->setClicked(true);
 		else
-			this->mClicked = false;
+			this->setClicked(false);
 	}
 	else
 	{
-		this->mClicked = false;
+		this->setClicked(false);
 	}
+}
+
+void Clickable::notifyClickedChanged()
+{
+
 }
 
 

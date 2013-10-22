@@ -28,6 +28,8 @@ int sufflePlaylist(int i) { return std::rand()%i; }
 //*************************************************************
 Jukebox::Jukebox(void)
 {
+	sf::Listener::setPosition(0.0f, 1.f, 0.0f);
+
 	// Load ambiant
 	this->mMusicAmbiant = new sf::Music();
 	this->mMusicAmbiant->openFromFile(MUSICFOLDER_PATHNAME AMBIANT_THEME_FILENAME);
@@ -206,7 +208,7 @@ void Jukebox::playlistPrevious()
 
 void Jukebox::playSound( std::string p_sound, float p_volume /*= 1.0*/ )
 {
-	this->playSound(p_sound, sf::Vector2f(0.0f, 0.0f), 1.0f, 0.0f, true, p_volume);
+	this->playSound(p_sound, sf::Vector2f(0.0f, 0.0f), 0.0f, 0.0f, true, p_volume);
 }
 
 void Jukebox::playSound( std::string p_sound, sf::Vector2f p_position, float p_distanceMin /*= 1.0f*/, float p_attenuation /*= 0.0f*/, bool p_relativeToListener /*= false*/, float p_volume /*= 1.0*/ )
@@ -219,10 +221,13 @@ void Jukebox::playSound( std::string p_sound, sf::Vector2f p_position, float p_d
 	sf::Sound* newSound = new sf::Sound();
 	newSound->setBuffer(*Resource::resource->getSoundBuffer(p_sound));
 	newSound->setVolume(Option::getInstance()->getAppSoundEffect() * p_volume);
-	newSound->setRelativeToListener(p_relativeToListener);
-	newSound->setPosition(p_position.x, p_distanceMin * 1.0f / Camera::getInstance()->getZoom(), p_position.y);
-	newSound->setMinDistance(p_distanceMin);
-	newSound->setAttenuation(p_attenuation);
+	if(p_attenuation > 0.0f)
+	{
+		newSound->setRelativeToListener(p_relativeToListener);
+		newSound->setPosition(p_position.x, p_distanceMin * 1.0f / Camera::getInstance()->getZoom(), p_position.y);
+		newSound->setMinDistance(p_distanceMin);
+		newSound->setAttenuation(p_attenuation);
+	}
 
 	if(this->addSound(newSound))
 		newSound->play();

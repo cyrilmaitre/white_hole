@@ -134,9 +134,6 @@ void Game::uninit()
 	delete this->mUserInterface;
 	this->mUserInterface = NULL;
 
-	// Stop playlist
-	Jukebox::getInstance()->stopPlaylist();
-
 	// Finish
 	this->mScreenUnloading.setRunning(false);
 }
@@ -175,6 +172,9 @@ void Game::launchUninit()
 
 	// Screen unloading
 	this->mScreenUnloading.launch();
+
+	// Stop playlist
+	Jukebox::getInstance()->stopPlaylist();
 }
 
 void Game::launch(Character* p_character)

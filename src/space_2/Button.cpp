@@ -1,5 +1,7 @@
 #include "Button.h"
 #include "Manager.h"
+#include "Jukebox.h"
+
 
 //******************************
 // Define
@@ -13,6 +15,7 @@
 #define DEFAULT_HEIGHT						25
 #define DEFAULT_BORDERSIZE					2
 #define DEFAULT_TITLE						""
+#define SOUND_CLICK							"effectUiClick.ogg"
 
 
 //******************************
@@ -28,8 +31,6 @@ Button::Button()
 	this->setBorderColorFocus(DEFAULT_BORDERCOLOR_FOCUS);
 	this->setBorderColorOver(DEFAULT_BORDERCOLOR_OVER);
 	this->setTitle(DEFAULT_TITLE);
-
-	this->mClicked = false;
 }
 
 Button::~Button(void)
@@ -115,4 +116,11 @@ void Button::notifySizeChanged()
 void Button::updateTitlePosition()
 {
 	this->mTitle.setPosition((float)(this->getX() + (this->getWidth() - this->mTitle.getWidth()) / 2), (float)(this->getY() + (this->getHeight() - this->mTitle.getHeight()) / 2));
+}
+
+void Button::notifyClickedChanged()
+{
+	Clickable::notifyClickedChanged();
+	if(this->mClicked)
+		Jukebox::getInstance()->playSound(SOUND_CLICK);
 }
