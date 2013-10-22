@@ -8,6 +8,6 @@ ammotype = 1
 velocity = 2500.0
 quickening = 99999.0
 projectile_type = 0
-projectile_color = #EFEEE9
+projectile_color = #FFFFFF
 projectile_scale = 0.5
 sound_fire = ammoKineticFire_01.ogg

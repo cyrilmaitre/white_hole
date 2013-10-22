@@ -6,6 +6,6 @@ ammomax = 120
 range = 2400.0
 rangeangle = 6.0
 reloadingspeed = 1.0
-firerate = 0.26
+firerate = 0.12
 soundreload = weaponReloadKineticLaser.ogg
 ammotype_allowed = 66
