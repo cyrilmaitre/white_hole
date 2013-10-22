@@ -221,12 +221,12 @@ void Jukebox::playSound( std::string p_sound, sf::Vector2f p_position, float p_d
 	sf::Sound* newSound = new sf::Sound();
 	newSound->setBuffer(*Resource::resource->getSoundBuffer(p_sound));
 	newSound->setVolume(Option::getInstance()->getAppSoundEffect() * p_volume);
+	newSound->setAttenuation(p_attenuation);
 	if(p_attenuation > 0.0f)
 	{
 		newSound->setRelativeToListener(p_relativeToListener);
 		newSound->setPosition(p_position.x, p_distanceMin * 1.0f / Camera::getInstance()->getZoom(), p_position.y);
 		newSound->setMinDistance(p_distanceMin);
-		newSound->setAttenuation(p_attenuation);
 	}
 
 	if(this->addSound(newSound))

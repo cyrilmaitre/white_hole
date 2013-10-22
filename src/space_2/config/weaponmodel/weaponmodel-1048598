@@ -7,5 +7,5 @@ range = 1500.0
 rangeangle = 21.65
 reloadingspeed = 0.8
 firerate = 0.2
-soundreload = weapon_kinetic_reload.wav
+soundreload = weaponReloadKineticLaser.ogg
 ammotype_allowed = 69

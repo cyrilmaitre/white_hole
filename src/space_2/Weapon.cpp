@@ -350,7 +350,6 @@ void Weapon::reload()
 
 	this->mFirstReload = false;
 
-	//Jukebox::getInstance()->soundPlay(this->getWeaponModel()->getSoundReload());
 	if(ToolsMap::isCharacterShip(this->getEntity()))
 	{
 		CharacterShip* characterShip = (CharacterShip*) this->getEntity();
@@ -363,6 +362,8 @@ void Weapon::reload()
 			characterShip->removeItem(this->mAmmo, ammoReload);
 			this->setAmmoCount(this->mAmmoCount + ammoReload);
 			this->mReloadClock.restart();
+
+			Jukebox::getInstance()->playSound(this->getWeaponModel()->getSoundReload());
 		}
 	}
 	else
