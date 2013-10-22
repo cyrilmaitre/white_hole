@@ -35,7 +35,7 @@
 #define BUTTONBUY_MARGINTOP					40
 #define UPDATE_TICK							500	// ms
 #define ACTIONCOMMAND_BUY					"actionbuy"
-#define SOUND_MONEY							"windowPurchase.ogg"
+#define SOUND_MONEY							"soundMoney.ogg"
 
 
 //*************************************************************

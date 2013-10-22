@@ -25,7 +25,7 @@
 #define DETAIL_PADDING					5
 #define UPDATE_TICK						500	// ms
 #define ACTIONCOMMAND_SELL				"actioncommand_sell"
-#define SOUND_MONEY						"windowPurchase.ogg"
+#define SOUND_MONEY						"soundMoney.ogg"
 
 
 //*************************************************************

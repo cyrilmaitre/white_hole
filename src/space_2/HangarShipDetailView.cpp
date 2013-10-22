@@ -1,5 +1,6 @@
 #include "HangarShipDetailView.h"
 #include "Game.h"
+#include "Jukebox.h"
 
 
 //*************************************************************
@@ -28,6 +29,7 @@
 #define BUTTONPILOT_WIDTH				128
 #define BUTTONPILOT_HEIGHT				48
 #define BUTTONDROP_MARGIN_LEFT			10
+#define SOUND_PILOTCHANGED				"soundPilotChanged.ogg"
 
 
 //*************************************************************
@@ -138,6 +140,7 @@ void HangarShipDetailView::updateShipPiloted()
 {
 	Game::game->changedShipPiloted(this->mCharacterShip);
 	this->updateButtonPilot();
+	Jukebox::getInstance()->playSound(SOUND_PILOTCHANGED);
 }
 
 void HangarShipDetailView::updateButtonPilot()

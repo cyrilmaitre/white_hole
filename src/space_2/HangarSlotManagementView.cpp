@@ -20,7 +20,7 @@
 #define SLOTPRICE_FONTSIZE				14
 #define SLOTPRICE						50000	// cred
 #define ACTIONCOMMAND_BUYSLOT			"actioncommand_buyslot"
-#define SOUND_MONEY						"windowPurchase.ogg"
+#define SOUND_MONEY						"soundMoney.ogg"
 
 
 //*************************************************************

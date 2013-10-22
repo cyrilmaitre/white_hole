@@ -24,7 +24,7 @@
 #define LEFTMENU_BORDCOLOR					sf::Color(128, 128, 128, 250)
 #define LEFTMENU_BORDSIZE					2
 #define ACTIONCOMMAND_UNLOCKBANK			"unlockbank"
-#define SOUND_MONEY							"windowPurchase.ogg"
+#define SOUND_MONEY							"soundMoney.ogg"
 
 
 //*************************************************************
