@@ -4,6 +4,7 @@
 #include "WindowChoiceAsk.h"
 #include "WindowMessageSuccess.h"
 #include "Game.h"
+#include "Jukebox.h"
 
 
 //*************************************************************
@@ -24,6 +25,7 @@
 #define DETAIL_PADDING					5
 #define UPDATE_TICK						500	// ms
 #define ACTIONCOMMAND_SELL				"actioncommand_sell"
+#define SOUND_MONEY						"windowPurchase.ogg"
 
 
 //*************************************************************
@@ -96,6 +98,7 @@ void StationScreenMarketSell::sell()
 	messageSuccess += Resource::resource->getBundle()->getString("marketSellSuccessMsg3") + Tools::getSpaceAfterColon() + Tools::formatNumber(oldBalance) + "<br/>";
 	messageSuccess += Resource::resource->getBundle()->getString("marketSellSuccessMsg4") + Tools::getSpaceAfterColon() + Tools::formatNumber(newBalance);
 	UserInterface::mUserInterface->addWindowPopup(new WindowMessageSuccess(Resource::resource->getBundle()->getString("marketSellSuccessTitle"), messageSuccess));
+	Jukebox::getInstance()->playSound(SOUND_MONEY);
 }
 
 void StationScreenMarketSell::sellConfirmation()

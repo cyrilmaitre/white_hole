@@ -7,6 +7,7 @@
 #include "CharacterUpdate.h"
 #include "WindowMessageSuccess.h"
 #include "NetworkJobManager.h"
+#include "Jukebox.h"
 
 
 //*************************************************************
@@ -23,6 +24,7 @@
 #define LEFTMENU_BORDCOLOR					sf::Color(128, 128, 128, 250)
 #define LEFTMENU_BORDSIZE					2
 #define ACTIONCOMMAND_UNLOCKBANK			"unlockbank"
+#define SOUND_MONEY							"windowPurchase.ogg"
 
 
 //*************************************************************
@@ -293,6 +295,7 @@ void StationScreenLeftMenu::onButtonTrueClicked( WindowChoiceActionObject* p_obj
 			this->updateButtonBank();
 			UserInterface::mUserInterface->addWindowPopup(new WindowMessageSuccess(	Resource::resource->getBundle()->getString("success"), 
 																					Resource::resource->getBundle()->getString("windowSuccessBank")));
+			Jukebox::getInstance()->playSound(SOUND_MONEY);
 		}
 	}
 }

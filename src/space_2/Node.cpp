@@ -1,6 +1,7 @@
 #include "Node.h"
 #include "Tree.h"
 #include "SpriteParameterFactory.h"
+#include "Jukebox.h"
 
 
 //*************************************************************
@@ -14,6 +15,7 @@
 #define TB_FONTCOLOR				sf::Color(192, 192, 192)
 #define TB_MARGINLEFT				PADDING * 2
 #define LEVEL_OFFSET				16
+#define SOUND_CLICK					"effectUiClick.ogg"
 
 
 //*************************************************************
@@ -239,5 +241,12 @@ void Node::notifySelectedChanged()
 			this->setBackgroundColorOver(BACKGROUNDCOLOR_OVER);
 		}
 	}
+}
+
+void Node::notifyClickedChanged()
+{
+	Listable::notifyClickedChanged();
+	if(this->mClicked && !this->mNodeData->isLeaf())
+		Jukebox::getInstance()->playSound(SOUND_CLICK);
 }
 

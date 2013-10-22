@@ -7,6 +7,7 @@
 #include "WindowMessageError.h"
 #include "WindowChoiceAsk.h"
 #include "WindowMessageSuccess.h"
+#include "Jukebox.h"
 
 
 //*************************************************************
@@ -34,6 +35,7 @@
 #define BUTTONBUY_MARGINTOP					40
 #define UPDATE_TICK							500	// ms
 #define ACTIONCOMMAND_BUY					"actionbuy"
+#define SOUND_MONEY							"windowPurchase.ogg"
 
 
 //*************************************************************
@@ -128,6 +130,7 @@ void MarketItemBuyView::buy()
 	messageSuccess += Resource::resource->getBundle()->getString("marketBuySuccessMsg4") + Tools::getSpaceAfterColon() + Tools::formatNumber(oldBalance) + "<br/>";
 	messageSuccess += Resource::resource->getBundle()->getString("marketBuySuccessMsg5") + Tools::getSpaceAfterColon() + Tools::formatNumber(newBalance);
 	UserInterface::mUserInterface->addWindowPopup(new WindowMessageSuccess(Resource::resource->getBundle()->getString("marketBuySuccessTitle"), messageSuccess));
+	Jukebox::getInstance()->playSound(SOUND_MONEY);
 }
 
 void MarketItemBuyView::buyConfirmation()

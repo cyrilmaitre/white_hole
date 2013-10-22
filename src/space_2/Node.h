@@ -35,6 +35,7 @@ public:
 	void notifyPositionChanged();
 	void notifySizeChanged();
 	void notifySelectedChanged();
+	void notifyClickedChanged();
 
 
 private:

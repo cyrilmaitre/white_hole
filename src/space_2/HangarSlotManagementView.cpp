@@ -3,6 +3,7 @@
 #include "WindowMessageError.h"
 #include "WindowMessageSuccess.h"
 #include "WindowChoiceAsk.h"
+#include "Jukebox.h"
 
 
 //*************************************************************
@@ -19,6 +20,7 @@
 #define SLOTPRICE_FONTSIZE				14
 #define SLOTPRICE						50000	// cred
 #define ACTIONCOMMAND_BUYSLOT			"actioncommand_buyslot"
+#define SOUND_MONEY						"windowPurchase.ogg"
 
 
 //*************************************************************
@@ -78,6 +80,7 @@ void HangarSlotManagementView::addSlot()
 		this->getCharacter()->incHangarSpace();
 		UserInterface::mUserInterface->addWindowPopup(new WindowMessageSuccess(	Resource::resource->getBundle()->getString("success"), 
 																				Resource::resource->getBundle()->getString("windowSuccessSlot")));
+		Jukebox::getInstance()->playSound(SOUND_MONEY);
 		this->updateTBSlots();
 	}
 	else
