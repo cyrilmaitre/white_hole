@@ -356,6 +356,10 @@ shipModelFrigate3Name = Inquisitor I
 shipModelFrigate3Description = desc.
 shipModelFrigate4Name = Inquisitor II
 shipModelFrigate4Description = desc.
+shipModelFrigate5Name = Crucifier I
+shipModelFrigate5Description = desc.
+shipModelFrigate6Name = Crucifier II
+shipModelFrigate6Description = desc.
 #
 #
 # Window UiGame Ship Small

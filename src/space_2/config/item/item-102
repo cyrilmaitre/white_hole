@@ -1,0 +1,17 @@
+id = 102
+name = shipModelFrigate5Name
+description = shipModelFrigate5Description
+price = 1000000
+stackmax = 1
+sprite = 2-6
+itemtype = 35
+itemtier = 1
+buyable = true
+stockminimum_min = 1
+stockminimum_max = 2
+stockmaximum_min = 5
+stockmaximum_max = 10
+production_min = 0.5
+production_max = 2.5
+consumption_min = 0.5
+consumption_max = 2.5

@@ -1,0 +1,35 @@
+# ITEM
+id = 102
+#SHIP MODEL
+hitbox_width = 48
+hitbox_height = 48
+scale_min = 1
+scale_max = 1
+sprite = frigate-05.png
+sprite_wreck = wreck_shipsmall_3.png
+sprite_wreckember = wreck_shipsmall_3_ember.png
+sprite_wreckelec = wreck_shipsmall_3_elec.png
+sprite_shield = frigateshield-03.png
+explosion_sound = explosionSmall_01.ogg
+levelconf = shiplevel-5
+shield = 1000
+shield_regen = 5
+shield_resist = 0
+armor = 1500
+armor_regen = 2
+armor_resist = 0
+structure = 2000
+structure_regen = 1
+structure_resist = 0
+velocity = 750
+quickening = 200
+cargo = 50
+weapon_slot = 4
+upgrade_slot = 2
+stuff_slot = 2
+rotation_velocity = 180
+reactors = [{"x":2,"y":21,"size":20,"type":0,"reactoralphaspeed":200}]
+reactor_sound = reactorSmall.ogg
+flashinglights = [{"x":-12,"y":9,"color":0,"size":16,"tickmin":2500,"tickmax":5000}]
+weapons = [{"x":-16,"y":-4,"size":15,"sprite":"cannon_basic.png"},{"x":15,"y":2,"size":15,"sprite":"cannon_basic.png"}]
+weapontype_allowed = 47;51;57
