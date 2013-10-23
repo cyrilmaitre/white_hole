@@ -1,5 +1,15 @@
 #include "ProjectileMissile.h"
 #include "ToolsImage.h"
+#include "Jukebox.h"
+#include "Sector.h"
+
+
+//*************************************************************
+// Define
+//*************************************************************
+#define IMPACTSOUND						"ammoMissileImpact_01.ogg"
+#define IMPACTSOUND_DISTMIN				25.0f
+#define IMPACTSOUND_ATTENUATION			30.0f
 
 
 //*************************************************************
@@ -91,4 +101,9 @@ void ProjectileMissile::draw()
 	Projectile::draw();
 	if(this->mSpriteMissileGlow != NULL)
 		Resource::resource->getApp()->draw(*this->mSpriteMissileGlow);
+}
+
+void ProjectileMissile::playSoundImpact()
+{
+	Jukebox::getInstance()->playSound(IMPACTSOUND, this->getPosition(SECTOR_PLANE), IMPACTSOUND_DISTMIN, IMPACTSOUND_ATTENUATION);
 }

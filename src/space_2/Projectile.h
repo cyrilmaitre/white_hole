@@ -41,6 +41,7 @@ public:
 	virtual void update();
 	void updatePosition();
 	virtual void draw();
+	virtual void playSoundImpact();
 	virtual void notifyFinished();
 	virtual void notifyScaleChanged();
 	virtual void notifyColorChanged();

@@ -154,9 +154,14 @@ void Projectile::notifyFinished()
 	if(this->getTarget()->isEntityValid() && this->getSource()->isEntityValid() && this->isTargetReached())
 	{
 		if(this->getTarget()->getEntity()->hasShield())
+		{
 			this->getTarget()->getEntity()->shieldImpact();
+		}
 		else
+		{
 			AutoManager::add(ImpactManager::getImpact(this->getImpactType(), this->getTarget()->getEntity(), this->getTargetOffsetX(), this->getTargetOffsetY(), this->getScale()));
+			this->playSoundImpact();
+		}
 
 		this->getTarget()->getEntity()->setAttacked(true);
 		this->getTarget()->getEntity()->takeDamage(this->mWeapon);
@@ -169,6 +174,11 @@ void Projectile::notifyScaleChanged()
 }
 
 void Projectile::notifyColorChanged()
+{
+
+}
+
+void Projectile::playSoundImpact()
 {
 
 }

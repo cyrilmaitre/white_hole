@@ -17,6 +17,7 @@ public:
 	void notifyColorChanged();
 	void notifyRotationChanged();
 	void draw();
+	void playSoundImpact();
 
 
 private:
