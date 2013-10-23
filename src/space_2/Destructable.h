@@ -50,7 +50,7 @@ public:
 	void incStructure(double p_value);
 	void decStructure(double p_value);
 
-	void notifyShieldChanged();
+	virtual void notifyShieldChanged(bool p_recover = false);
 	void notifyShieldMaxChanged();
 	void notifyArmorChanged();
 	void notifyArmorMaxChanged();

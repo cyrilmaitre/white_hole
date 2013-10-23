@@ -57,6 +57,8 @@ public:
 
 	void notifyWeaponsChanged();
 	void notifyPositionChanged();
+	void notifyShieldChanged(bool p_recover);
+
 
 private:
 	// Attrtributs

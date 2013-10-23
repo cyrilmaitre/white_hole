@@ -37,8 +37,12 @@ void Destructable::setShield( double p_shield )
 	else if(p_shield < 0)
 		p_shield = 0;
 
+	bool recoverShield = false;
+	if(this->mShield == 0 && p_shield > 0)
+		recoverShield = true;
+
 	this->mShield = p_shield;
-	this->notifyShieldChanged();
+	this->notifyShieldChanged(recoverShield);
 }
 
 double Destructable::getArmor()
@@ -280,7 +284,7 @@ void Destructable::heal( double p_heal )
 	}
 }
 
-void Destructable::notifyShieldChanged()
+void Destructable::notifyShieldChanged(bool p_recover)
 {
 	this->mShieldChanged = true;
 }

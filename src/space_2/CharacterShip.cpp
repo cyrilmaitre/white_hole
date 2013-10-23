@@ -12,6 +12,7 @@
 #include "CharacterShipUpdate.h"
 #include "CharacterShipWeaponCreate.h"
 #include "CharacterUpdate.h"
+#include "Jukebox.h"
 
 
 //*************************************************************
@@ -27,6 +28,13 @@
 #define JSON_WEAPONS					"weapons"
 #define JSON_ITEMSTACKS					"itemStacks"
 #define NPCTYPE_ID						1
+
+
+//*************************************************************
+// Define
+//*************************************************************
+#define SHIELDSOUND_BREAK				"shieldBreak.ogg"
+#define SHIELDSOUND_RECOVER				"shieldRecover.ogg"
 
 
 //*************************************************************
@@ -312,5 +320,17 @@ void CharacterShip::notifyPositionChanged()
 {
 	Ship::notifyPositionChanged();
 	Camera::getInstance()->setCameraPosition(this->Object::getX(), this->Object::getY());
+}
+
+void CharacterShip::notifyShieldChanged( bool p_recover )
+{
+	Ship::notifyShieldChanged(p_recover);
+	if(this->mLoaded)
+	{
+		if(this->getShield() == 0)
+			Jukebox::getInstance()->playSound(SHIELDSOUND_BREAK);
+		else if(p_recover)
+			Jukebox::getInstance()->playSound(SHIELDSOUND_RECOVER);
+	}	
 }
 

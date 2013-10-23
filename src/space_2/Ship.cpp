@@ -16,7 +16,6 @@ Ship::Ship( double p_x , double p_y ) : EntityMovable(p_x, p_y, SHIP_PLANE), mSh
 	this->setUpgradeSlotMax(0);
 	this->setStuffSlotMax(0);
 	this->setObjectOpacity(MapObjectOpacity::Opacity0);
-	this->setReactorSoundType(ReactorSoundType::Small);
 }
 
 Ship::~Ship(void)
