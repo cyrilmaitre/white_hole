@@ -9,8 +9,9 @@ public:
 	// Enum
 	enum ReactorEffectType
 	{
-		Left = 0,
-		Right
+		Single = 0,
+		Left = 1,
+		Right = 2
 	};
 
 	// Constructor - Destructor

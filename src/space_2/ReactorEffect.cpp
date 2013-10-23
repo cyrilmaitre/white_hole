@@ -115,8 +115,10 @@ void ReactorEffect::updateActive()
 		this->mActive = true;
 	else if(this->getType() == ReactorEffectType::Right)
 		this->mActive =	this->getEntityMovable()->isQuickeningActiveAt(Movable::MovableCardinality::West);
-	else
+	else if(this->getType() == ReactorEffectType::Left)
 		this->mActive =	this->getEntityMovable()->isQuickeningActiveAt(Movable::MovableCardinality::East);
+	else if(this->getType() == ReactorEffectType::Single)
+		this->mActive = this->getEntityMovable()->isQuickeningActiveAt(Movable::MovableCardinality::West) || this->getEntityMovable()->isQuickeningActiveAt(Movable::MovableCardinality::East);
 }
 
 void ReactorEffect::updateReactorAlpha()
