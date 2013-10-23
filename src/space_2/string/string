@@ -348,12 +348,14 @@ itemTypeWeaponTurretLauncherDescription =  Turret Launcher description...
 #
 #
 # Ship Model
-shipModelFrigate1Name = Punisher
+shipModelFrigate1Name = Punisher I
 shipModelFrigate1Description = desc.
 shipModelFrigate2Name = Punisher II
 shipModelFrigate2Description = desc.
-shipModelFrigate3Name = Imicus
-shipModelFrigate3Description = The Imicus is a Frigate designed for exploring the depths of space.<br/>  <br/>Development<br/>The Imicus is a slow but hard-shelled frigate, ideal for any type of scouting activity. Used by merchant, miner and combat groups, the Imicus is usually relied upon as the operation's eyes and ears when traversing low security sectors. 
+shipModelFrigate3Name = Inquisitor I
+shipModelFrigate3Description = desc.
+shipModelFrigate4Name = Inquisitor II
+shipModelFrigate4Description = desc.
 #
 #
 # Window UiGame Ship Small
