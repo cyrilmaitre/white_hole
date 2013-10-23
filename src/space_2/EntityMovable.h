@@ -10,6 +10,15 @@
 class EntityMovable : public Entity, public Movable, public EntityMovableData
 {
 public:
+	// Enum
+	enum ReactorSoundType
+	{
+		Small,
+		Medium,
+		Large,
+		None
+	};
+
 	// Constructor - Destructor
 	EntityMovable(	double p_x = 0, double p_y = 0,	int p_plane = MAPOBJECT_PLANE_1);
 	~EntityMovable(void);
@@ -41,6 +50,9 @@ public:
 
 	bool isTargetReached();
 
+	ReactorSoundType getReactorSoundType();
+	void setReactorSoundType(ReactorSoundType p_type);
+
 	// Methods
 	void addReactorEffect(ReactorEffect* p_reactor);
 	void update();
@@ -48,6 +60,7 @@ public:
 	void updateRocking();
 	void updateRotation();
 	void updateSprite();
+	void updateReactorsSound();
 	virtual void updatePosition();
 	virtual void updateQuickeningActive();
 	void update(sf::Event p_event);
@@ -55,6 +68,7 @@ public:
 	double generateTargetPositionX();
 	double generateTargetPositionY();
 	void notifyReactorJsonChanged();
+	void notifyReactorSoundTypeChanged();
 
 
 protected:
@@ -70,5 +84,7 @@ protected:
 	double mTargetGenRange;
 
 	std::vector<ReactorEffect*> mReactors;
+	sf::Sound* mReactorsSound;
+	ReactorSoundType mReactorsSoundType;
 };
 

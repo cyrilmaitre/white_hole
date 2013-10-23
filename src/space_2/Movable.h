@@ -37,6 +37,7 @@ public:
 	float getVelocityAt(MovableCardinality p_cardinality);
 	void setVelocityAt(MovableCardinality cardinality, float p_velocity);
 
+	bool isQuickeningActive();
 	bool isQuickeningActiveAt(MovableCardinality p_cardinality);
 	void setQuickeningActiveAt(MovableCardinality p_cardinality, bool p_value);
 

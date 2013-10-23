@@ -40,6 +40,17 @@ void Movable::setVelocityAt( MovableCardinality cardinality, float p_velocity )
 	this->mVelocity[cardinality] = p_velocity;
 }
 
+bool Movable::isQuickeningActive()
+{
+	return	this->isQuickeningActiveAt(Movable::MovableCardinality::NorthEast) ||
+			this->isQuickeningActiveAt(Movable::MovableCardinality::North) ||
+			this->isQuickeningActiveAt(Movable::MovableCardinality::NorthWest) ||
+			this->isQuickeningActiveAt(Movable::MovableCardinality::SouthEast) ||
+			this->isQuickeningActiveAt(Movable::MovableCardinality::South) ||
+			this->isQuickeningActiveAt(Movable::MovableCardinality::SouthWest) ||
+			this->isQuickeningActiveAt(Movable::MovableCardinality::Normal);
+}
+
 bool Movable::isQuickeningActiveAt( MovableCardinality p_cardinality )
 {
 	return this->mQuickeningActive[p_cardinality];

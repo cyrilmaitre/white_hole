@@ -4,12 +4,18 @@
 #include "EntityManager.h"
 #include "CharacterShip.h"
 #include "ToolsImage.h"
+#include "Option.h"
 
 
 //*************************************************************
 // Define
 //*************************************************************
-#define REACTOR_IMG		"reactor_wisp.png"
+#define REACTOR_IMG							"reactor_wisp.png"
+#define REACTORSOUND_SMALL					"reactorSmall.ogg"
+#define REACTORSOUND_MEDIUM					"reactorMedium.ogg"
+#define REACTORSOUND_LARGE					"reactorLarge.ogg"
+#define REACTORSOUND_DISTMIN				25.0f
+#define REACTORSOUND_ATTENUATION			30.0f
 
 
 //*************************************************************
@@ -25,12 +31,16 @@ EntityMovable::EntityMovable( double p_x, double p_y, int p_plane ) : Entity(p_p
 	this->mSourceX = p_x;
 	this->mSourceY = p_y;
 	this->mTargetGenRange = 0;
+	this->mReactorsSound = NULL;
+	this->mReactorsSoundType = ReactorSoundType::None;
 
 	this->setTargetDistanceMax(TARGET_DISTANCE_MAX_DEFAULT);
 }
 
 EntityMovable::~EntityMovable(void)
 {
+	if(this->mReactorsSound != NULL)
+		delete this->mReactorsSound;
 }
 
 
@@ -127,6 +137,20 @@ void EntityMovable::setTargetGenRange( double p_range )
 	this->mTargetGenRange = p_range;
 }
 
+EntityMovable::ReactorSoundType EntityMovable::getReactorSoundType()
+{
+	return this->mReactorsSoundType;
+}
+
+void EntityMovable::setReactorSoundType( ReactorSoundType p_type )
+{
+	if(this->mReactorsSoundType != p_type)
+	{
+		this->mReactorsSoundType = p_type;
+		this->notifyReactorSoundTypeChanged();
+	}
+}
+
 
 //*************************************************************
 // Methods
@@ -154,6 +178,8 @@ void EntityMovable::update()
 
 	for(int i = 0; i < this->mReactors.size(); i++)
 		this->mReactors[i]->update();
+
+	this->updateReactorsSound();
 }
 
 void EntityMovable::updateRotation()
@@ -278,6 +304,23 @@ void EntityMovable::updateMove()
 	}
 }
 
+void EntityMovable::updateReactorsSound()
+{
+	if(this->mReactorsSound != NULL)
+	{
+		if(this->isQuickeningActive())
+		{
+			this->mReactorsSound->setPosition(this->getX(SECTOR_PLANE), this->mReactorsSound->getMinDistance() * 1.0f / Camera::getInstance()->getZoom(), this->getY(SECTOR_PLANE));
+			if(this->mReactorsSound->getStatus() != sf::SoundSource::Status::Playing)
+				this->mReactorsSound->play();
+		}
+		else 
+		{
+			this->mReactorsSound->pause();
+		}
+	}
+}
+
 bool EntityMovable::isTargetReached()
 {
 	if(this->isTargetPositionDefined())
@@ -330,9 +373,41 @@ void EntityMovable::notifyReactorJsonChanged()
 	}
 }
 
+void EntityMovable::notifyReactorSoundTypeChanged()
+{
+	if(this->mReactorsSound != NULL)
+	{
+		if(this->mReactorsSound->getStatus() != sf::SoundSource::Status::Stopped)
+			this->mReactorsSound->stop();
 
+		delete this->mReactorsSound;
+	}
 
+	switch(this->mReactorsSoundType)
+	{
+	case ReactorSoundType::Small:
+		this->mReactorsSound = new sf::Sound();
+		this->mReactorsSound->setBuffer(*Resource::resource->getSoundBuffer(REACTORSOUND_SMALL));
+		break;
 
+	case ReactorSoundType::Medium:
+		this->mReactorsSound = new sf::Sound();
+		this->mReactorsSound->setBuffer(*Resource::resource->getSoundBuffer(REACTORSOUND_MEDIUM));
+		break;
 
+	case ReactorSoundType::Large:
+		this->mReactorsSound = new sf::Sound();
+		this->mReactorsSound->setBuffer(*Resource::resource->getSoundBuffer(REACTORSOUND_LARGE));
+		break;
+	}
 
+	if(this->mReactorsSound != NULL)
+	{
+		this->mReactorsSound->setLoop(true);
+		this->mReactorsSound->setVolume(Option::getInstance()->getAppSoundEffect());
+		this->mReactorsSound->setRelativeToListener(false);
+		this->mReactorsSound->setMinDistance(REACTORSOUND_DISTMIN);
+		this->mReactorsSound->setAttenuation(REACTORSOUND_ATTENUATION);
+	}
+}
 

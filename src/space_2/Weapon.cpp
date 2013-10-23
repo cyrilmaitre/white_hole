@@ -7,6 +7,12 @@
 #include "Jukebox.h"
 #include "ToolsMap.h"
 
+//*************************************************************
+// Define
+//*************************************************************
+#define SOUNDFIRE_DISTMIN				25.0f
+#define SOUNDIFRE_ATTENUATION			30.0f
+
 
 //*************************************************************
 // Constructor - Destructor
@@ -322,7 +328,7 @@ void Weapon::fire( Entity* p_target, Entity* p_source )
 
 	this->mFirstFire = false;
 
-	Jukebox::getInstance()->playSound(this->mAmmo->getSoundFire(), this->getEntity()->getPosition(SECTOR_PLANE), 25.0f, 30.0f);
+	Jukebox::getInstance()->playSound(this->mAmmo->getSoundFire(), this->getEntity()->getPosition(SECTOR_PLANE), SOUNDFIRE_DISTMIN, SOUNDIFRE_ATTENUATION);
 	AutoManager::add(ProjectileManager::getProjectile(p_source, p_target, this));
 
 	this->decAmmoCount();
