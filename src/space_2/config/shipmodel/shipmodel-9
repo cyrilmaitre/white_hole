@@ -28,6 +28,7 @@ upgrade_slot = 2
 stuff_slot = 2
 rotation_velocity = 180
 reactors = [{"x":-14,"y":22,"type":0,"size":20,"reactoralphaspeed":200},{"x":14,"y":22,"type":1,"size":20,"reactoralphaspeed":200}]
+reactor_sound = reactorSmall.ogg
 flashinglights = [{"x":-14,"y":5,"color":0,"size":16,"tickmin":1000,"tickmax":2500},{"x":14,"y":5,"color":0,"size":16,"tickmin":1000,"tickmax":2500}]
 weapons = [{"x":-18,"y":-3,"size":15,"sprite":"cannon_basic.png"},{"x":18,"y":-3,"size":15,"sprite":"cannon_basic.png"}]
 weapontype_allowed = 47;48;49;50;51;52;53;54;57;58;59;60

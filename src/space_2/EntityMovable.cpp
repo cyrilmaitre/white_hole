@@ -11,9 +11,6 @@
 // Define
 //*************************************************************
 #define REACTOR_IMG							"reactor_wisp.png"
-#define REACTORSOUND_SMALL					"reactorSmall.ogg"
-#define REACTORSOUND_MEDIUM					"reactorMedium.ogg"
-#define REACTORSOUND_LARGE					"reactorLarge.ogg"
 #define REACTORSOUND_DISTMIN				25.0f
 #define REACTORSOUND_ATTENUATION			30.0f
 
@@ -32,7 +29,6 @@ EntityMovable::EntityMovable( double p_x, double p_y, int p_plane ) : Entity(p_p
 	this->mSourceY = p_y;
 	this->mTargetGenRange = 0;
 	this->mReactorsSound = NULL;
-	this->mReactorsSoundType = ReactorSoundType::None;
 
 	this->setTargetDistanceMax(TARGET_DISTANCE_MAX_DEFAULT);
 }
@@ -135,20 +131,6 @@ double EntityMovable::getTargetGenRange()
 void EntityMovable::setTargetGenRange( double p_range )
 {
 	this->mTargetGenRange = p_range;
-}
-
-EntityMovable::ReactorSoundType EntityMovable::getReactorSoundType()
-{
-	return this->mReactorsSoundType;
-}
-
-void EntityMovable::setReactorSoundType( ReactorSoundType p_type )
-{
-	if(this->mReactorsSoundType != p_type)
-	{
-		this->mReactorsSoundType = p_type;
-		this->notifyReactorSoundTypeChanged();
-	}
 }
 
 
@@ -373,7 +355,7 @@ void EntityMovable::notifyReactorJsonChanged()
 	}
 }
 
-void EntityMovable::notifyReactorSoundTypeChanged()
+void EntityMovable::notifyReactorSoundChanged()
 {
 	if(this->mReactorsSound != NULL)
 	{
@@ -383,26 +365,10 @@ void EntityMovable::notifyReactorSoundTypeChanged()
 		delete this->mReactorsSound;
 	}
 
-	switch(this->mReactorsSoundType)
+	if(this->getReactorSound() != "")
 	{
-	case ReactorSoundType::Small:
 		this->mReactorsSound = new sf::Sound();
-		this->mReactorsSound->setBuffer(*Resource::resource->getSoundBuffer(REACTORSOUND_SMALL));
-		break;
-
-	case ReactorSoundType::Medium:
-		this->mReactorsSound = new sf::Sound();
-		this->mReactorsSound->setBuffer(*Resource::resource->getSoundBuffer(REACTORSOUND_MEDIUM));
-		break;
-
-	case ReactorSoundType::Large:
-		this->mReactorsSound = new sf::Sound();
-		this->mReactorsSound->setBuffer(*Resource::resource->getSoundBuffer(REACTORSOUND_LARGE));
-		break;
-	}
-
-	if(this->mReactorsSound != NULL)
-	{
+		this->mReactorsSound->setBuffer(*Resource::resource->getSoundBuffer(this->getReactorSound()));
 		this->mReactorsSound->setLoop(true);
 		this->mReactorsSound->setVolume(Option::getInstance()->getAppSoundEffect());
 		this->mReactorsSound->setRelativeToListener(false);
