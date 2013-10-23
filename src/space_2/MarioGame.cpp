@@ -204,7 +204,8 @@ void MarioGame::update()
 	// Update world
 	this->mWorldTimeStep = 1 / this->mFrameRate;
 	this->mWorld->Step(this->mWorldTimeStep, this->mWorldVelocityIter, this->mWorldPositionIter);
-
+	// Update mario
+	this->mMario->update();
 	// Update blocks
 	for(int i = 0; i < this->mWorldBlocksSize.x; i++)
 	{
@@ -227,8 +228,7 @@ void MarioGame::update()
 		}
 	}
 
-	// Update mario
-	this->mMario->update();
+	
 }
 
 void MarioGame::updateFrameRate()

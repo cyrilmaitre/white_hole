@@ -1,6 +1,7 @@
 #include "MarioGameCoin.h"
 #include "ToolsImage.h"
 #include "SpriteParameterFactory.h"
+#include "Jukebox.h"
 
 
 //*************************************************************
@@ -8,6 +9,7 @@
 //*************************************************************
 #define COIN_EFFECTFRAME_TIME		0.40f	// sec
 #define COIN_VALUE					10.0	// credit
+#define COIN_SOUND					"marioGameCoin.ogg"
 
 
 //*************************************************************
@@ -88,16 +90,20 @@ void MarioGameCoin::notifyCoinStateChanged()
 
 	switch(this->mCoinState)
 	{
-	case ActiveOne:
+	case CoinState::ActiveOne:
 		this->mSprite = SpriteParameterFactory::getSpriteParameterMarioGame()->getSpritePtr(MARIOGAME_SPRITE_COINONE);
 		break;
 
-	case ActiveTwo:
+	case CoinState::ActiveTwo:
 		this->mSprite = SpriteParameterFactory::getSpriteParameterMarioGame()->getSpritePtr(MARIOGAME_SPRITE_COINTWO);
 		break;
 
-	case ActiveThree:
+	case CoinState::ActiveThree:
 		this->mSprite = SpriteParameterFactory::getSpriteParameterMarioGame()->getSpritePtr(MARIOGAME_SPRITE_COINTHREE);
+		break;
+
+	case CoinState::Destroy:
+		Jukebox::getInstance()->playSound(COIN_SOUND);
 		break;
 	}
 

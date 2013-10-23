@@ -1,5 +1,6 @@
 #include "MarioGameBlockActive.h"
 #include "MarioGameCoin.h"
+#include "Jukebox.h"
 
 
 //*************************************************************
@@ -9,6 +10,7 @@
 #define DOWNEDSTATE_TIME			0.08		// sec
 #define UPPEDSTATE_OFFSET			15			// px
 #define DOWNEDSTATE_OFFSET			15			// px
+#define SOUND_PUMP					"marioGamePump.ogg"
 
 
 //*************************************************************
@@ -92,6 +94,7 @@ void MarioGameBlockActive::BeginContact( b2Contact* p_contact, MarioGameUserData
 	{
 		this->setActiveState(ActiveState::Upped);
 		this->mActiveClock.restart();
+		Jukebox::getInstance()->playSound(SOUND_PUMP);
 	}
 }
 

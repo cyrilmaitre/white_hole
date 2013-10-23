@@ -1,6 +1,7 @@
 #include "MarioGameMario.h"
 #include "SpriteParameterFactory.h"
 #include "ToolsImage.h"
+#include "Jukebox.h"
 
 
 //*************************************************************
@@ -11,6 +12,7 @@
 #define MARIO_RUNNING_TICK			0.1	// sec
 #define MARIO_DIRECTION_RIGHT		true
 #define MARIO_DIRECTION_LEFT		false
+#define MARIO_JUMPSOUND				"marioGameJump.ogg"
 
 
 //*************************************************************
@@ -105,6 +107,7 @@ void MarioGameMario::update()
 	{
 		this->mBody->ApplyLinearImpulse(b2Vec2(0.0f, 25.0f), this->mBody->GetPosition());
 		this->setMarioState(MarioState::Jumping);
+		Jukebox::getInstance()->playSound(MARIO_JUMPSOUND);
 	}
 
 	// Update state
