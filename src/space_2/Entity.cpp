@@ -8,6 +8,7 @@
 #include "FlashingLightEffect.h"
 #include "NpcType.h"
 #include "WreckManager.h"
+#include "Jukebox.h"
 
 
 //*************************************************************
@@ -17,6 +18,8 @@
 #define SHIELDIMPACT_ALPHA				100
 #define SHIELDIMPACT_ALPHARECOVER		50		// per sec
 #define TARGET_HITBOX_OFFSET			0.6		// per one
+#define SOUNDEXPLOSION_DISTMIN			50.0f
+#define SOUNDEXPLOSION_ATTENUATION		30.0f
 
 
 //*************************************************************
@@ -326,9 +329,15 @@ void Entity::draw()
 void Entity::destroy()
 {
 	if(this->getObjectType() != MapObjectType::TypeWreck && this->getObjectType() != MapObjectType::TypeWreckMini)
+	{
 		AutoManager::add(new ExplosionEffect(this));
+		if(this->getExplosionSound() != "")
+			Jukebox::getInstance()->playSound(this->getExplosionSound(), this->getPosition(SECTOR_PLANE), SOUNDEXPLOSION_DISTMIN, SOUNDEXPLOSION_ATTENUATION);
+	}
 	else
+	{
 		AutoManager::add(new ExplosionEffect(this, false));
+	}
 
 	if(this->getObjectType() != MapObjectType::TypeWreck && this->getObjectType() != MapObjectType::TypeWreckMini)
 		WreckManager::add(new Wreck(this));

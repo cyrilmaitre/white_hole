@@ -4,19 +4,20 @@
 //*************************************************************
 // Define
 //*************************************************************
-#define DESTRUCTABLEDATA_CONFIG_WRECKSPRITE			"sprite_wreck"
-#define CONFIG_WRECKEMBERSPRITE						"sprite_wreckember"
-#define CONFIG_WRECKELECTSPRITE						"sprite_wreckelec"
-#define CONFIG_SHIELDSPRITE							"sprite_shield"
-#define DESTRUCTABLEDATA_CONFIG_SHIELD				"shield"
-#define DESTRUCTABLEDATA_CONFIG_SHIELDREGEN			"shield_regen"
-#define DESTRUCTABLEDATA_CONFIG_SHIELDRESIST		"shield_resist"
-#define DESTRUCTABLEDATA_CONFIG_ARMOR				"armor"
-#define DESTRUCTABLEDATA_CONFIG_ARMORREGEN			"armor_regen"
-#define DESTRUCTABLEDATA_CONFIG_ARMORRESIST			"armor_resist"
-#define DESTRUCTABLEDATA_CONFIG_STRUCTURE			"structure"
-#define DESTRUCTABLEDATA_CONFIG_STRUCTUREREGEN		"structure_regen"
-#define DESTRUCTABLEDATA_CONFIG_STRUCTURERESIST		"structure_resist"
+#define CONFIG_WRECKSPRITE					"sprite_wreck"
+#define CONFIG_WRECKEMBERSPRITE				"sprite_wreckember"
+#define CONFIG_WRECKELECTSPRITE				"sprite_wreckelec"
+#define CONFIG_SHIELDSPRITE					"sprite_shield"
+#define CONFIG_EXPLOSIONSOUND				"explosion_sound"
+#define CONFIG_SHIELD						"shield"
+#define CONFIG_SHIELDREGEN					"shield_regen"
+#define CONFIG_SHIELDRESIST					"shield_resist"
+#define CONFIG_ARMOR						"armor"
+#define CONFIG_ARMORREGEN					"armor_regen"
+#define CONFIG_ARMORRESIST					"armor_resist"
+#define CONFIG_STRUCTURE					"structure"
+#define CONFIG_STRUCTUREREGEN				"structure_regen"
+#define CONFIG_STRUCTURERESIST				"structure_resist"
 
 
 //*************************************************************
@@ -27,6 +28,7 @@ DestructableData::DestructableData(void)
 	this->mWreckSprite = "";
 	this->mWreckEmberSprite = "";
 	this->mShieldSprite = "";
+	this->mExplosionSound = "";
 	this->mShieldMax = 0;
 	this->mShieldRegen = 0;
 	this->mShieldResist = 0;
@@ -87,6 +89,16 @@ std::string DestructableData::getShieldSprite()
 void DestructableData::setShieldSprite( std::string p_sprite )
 {
 	this->mShieldSprite = p_sprite;
+}
+
+std::string DestructableData::getExplosionSound()
+{
+	return this->mExplosionSound;
+}
+
+void DestructableData::setExplosionSound( std::string p_sound )
+{
+	this->mExplosionSound = p_sound;
 }
 
 double DestructableData::getShieldMax()
@@ -224,8 +236,8 @@ void DestructableData::notifyStructureMaxChanged()
 
 void DestructableData::loadFromConfig( KeyValueFile* p_config )
 {
-	if(p_config->has(DESTRUCTABLEDATA_CONFIG_WRECKSPRITE))
-		this->setWreckSprite(p_config->getString(DESTRUCTABLEDATA_CONFIG_WRECKSPRITE));
+	if(p_config->has(CONFIG_WRECKSPRITE))
+		this->setWreckSprite(p_config->getString(CONFIG_WRECKSPRITE));
 
 	if(p_config->has(CONFIG_WRECKEMBERSPRITE))
 		this->setWreckEmberSprite(p_config->getString(CONFIG_WRECKEMBERSPRITE));
@@ -236,32 +248,35 @@ void DestructableData::loadFromConfig( KeyValueFile* p_config )
 	if(p_config->has(CONFIG_SHIELDSPRITE))
 		this->setShieldSprite(p_config->getString(CONFIG_SHIELDSPRITE));
 
-	if(p_config->has(DESTRUCTABLEDATA_CONFIG_SHIELD))
-		this->setShieldMax(p_config->getDouble(DESTRUCTABLEDATA_CONFIG_SHIELD));
+	if(p_config->has(CONFIG_EXPLOSIONSOUND))
+		this->setExplosionSound(p_config->getString(CONFIG_EXPLOSIONSOUND));
 
-	if(p_config->has(DESTRUCTABLEDATA_CONFIG_SHIELDREGEN))
-		this->setShieldRegen(p_config->getDouble(DESTRUCTABLEDATA_CONFIG_SHIELDREGEN));
+	if(p_config->has(CONFIG_SHIELD))
+		this->setShieldMax(p_config->getDouble(CONFIG_SHIELD));
 
-	if(p_config->has(DESTRUCTABLEDATA_CONFIG_SHIELDRESIST))
-		this->setShieldResist(p_config->getDouble(DESTRUCTABLEDATA_CONFIG_SHIELDRESIST));
+	if(p_config->has(CONFIG_SHIELDREGEN))
+		this->setShieldRegen(p_config->getDouble(CONFIG_SHIELDREGEN));
 
-	if(p_config->has(DESTRUCTABLEDATA_CONFIG_ARMOR))
-		this->setArmorMax(p_config->getDouble(DESTRUCTABLEDATA_CONFIG_ARMOR));
+	if(p_config->has(CONFIG_SHIELDRESIST))
+		this->setShieldResist(p_config->getDouble(CONFIG_SHIELDRESIST));
 
-	if(p_config->has(DESTRUCTABLEDATA_CONFIG_ARMORREGEN))
-		this->setArmorRegen(p_config->getDouble(DESTRUCTABLEDATA_CONFIG_ARMORREGEN));
+	if(p_config->has(CONFIG_ARMOR))
+		this->setArmorMax(p_config->getDouble(CONFIG_ARMOR));
 
-	if(p_config->has(DESTRUCTABLEDATA_CONFIG_ARMORRESIST))
-		this->setArmorResist(p_config->getDouble(DESTRUCTABLEDATA_CONFIG_ARMORRESIST));
+	if(p_config->has(CONFIG_ARMORREGEN))
+		this->setArmorRegen(p_config->getDouble(CONFIG_ARMORREGEN));
+
+	if(p_config->has(CONFIG_ARMORRESIST))
+		this->setArmorResist(p_config->getDouble(CONFIG_ARMORRESIST));
 	
-	if(p_config->has(DESTRUCTABLEDATA_CONFIG_STRUCTURE))
-		this->setStructureMax(p_config->getDouble(DESTRUCTABLEDATA_CONFIG_STRUCTURE));
+	if(p_config->has(CONFIG_STRUCTURE))
+		this->setStructureMax(p_config->getDouble(CONFIG_STRUCTURE));
 	
-	if(p_config->has(DESTRUCTABLEDATA_CONFIG_STRUCTUREREGEN))
-		this->setStructureRegen(p_config->getDouble(DESTRUCTABLEDATA_CONFIG_STRUCTUREREGEN));
+	if(p_config->has(CONFIG_STRUCTUREREGEN))
+		this->setStructureRegen(p_config->getDouble(CONFIG_STRUCTUREREGEN));
 	
-	if(p_config->has(DESTRUCTABLEDATA_CONFIG_STRUCTURERESIST))
-		this->setStructureResist(p_config->getDouble(DESTRUCTABLEDATA_CONFIG_STRUCTURERESIST));
+	if(p_config->has(CONFIG_STRUCTURERESIST))
+		this->setStructureResist(p_config->getDouble(CONFIG_STRUCTURERESIST));
 }
 
 void DestructableData::loadFromDestructableData( DestructableData* p_object )
@@ -270,6 +285,7 @@ void DestructableData::loadFromDestructableData( DestructableData* p_object )
 	this->setWreckSprite(p_object->getWreckSprite());
 	this->setWreckElecSprite(p_object->getWreckElecSprite());
 	this->setWreckEmberSprite(p_object->getWreckEmberSprite());
+	this->setExplosionSound(p_object->getExplosionSound());
 	this->setShieldMax(p_object->getShieldMax());
 	this->setShieldRegen(p_object->getShieldRegen());
 	this->setShieldResist(p_object->getShieldResist());
@@ -280,12 +296,4 @@ void DestructableData::loadFromDestructableData( DestructableData* p_object )
 	this->setStructureRegen(p_object->getStructureRegen());
 	this->setStructureResist(p_object->getStructureResist());
 }
-
-
-
-
-
-
-
-
 

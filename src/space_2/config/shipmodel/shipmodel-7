@@ -10,6 +10,7 @@ sprite_wreck = wreck_shipsmall_1.png
 sprite_wreckember = wreck_shipsmall_1_ember.png
 sprite_wreckelec = wreck_shipsmall_1_elec.png
 sprite_shield = frigateshield-01.png
+explosion_sound = explosionSmall_01.ogg
 levelconf = shiplevel-1
 shield = 1000
 shield_regen = 5

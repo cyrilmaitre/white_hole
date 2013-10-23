@@ -8,6 +8,7 @@ sprite_wreck = wreck_station_20.png
 sprite_wreckember = wreck_station_20_ember.png
 sprite_wreckelec = wreck_station_20_elec.png
 sprite_screen = station_background_2.jpg
+explosion_sound = explosionHuge_01.ogg
 shield = 0
 shield_regen = 0
 shield_resist = 0

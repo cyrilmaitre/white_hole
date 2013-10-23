@@ -22,6 +22,9 @@ public:
 	std::string getShieldSprite();
 	void setShieldSprite(std::string p_sprite);
 
+	std::string getExplosionSound();
+	void setExplosionSound(std::string p_sound);
+
 	virtual double getShieldMax();
 	void setShieldMax(double p_shieldMax);
 
@@ -67,6 +70,7 @@ protected:
 	std::string mWreckEmberSprite;
 	std::string mWreckElecSprite;
 	std::string mShieldSprite;
+	std::string mExplosionSound;
 
 	double mShieldMax;
 	double mShieldRegen;
