@@ -5,13 +5,6 @@
 #include "Entity.h"
 #include "Clock.h"
 
-// Define
-#define JSON_IDWEAPON			"idWeapon"
-#define JSON_AMMOCOUNT			"ammoCount"
-#define JSON_ACTIF				"actif"
-#define JSON_IDAMMO				"idAmmo"	
-#define JSON_IDCHARACTERSHIP	"idCharacterShip"
-#define JSON_IDWEAPONMODEL		"idWeaponModel"
 
 class Weapon
 {
@@ -25,9 +18,6 @@ public:
 	~Weapon(void);
 
 	// Getters - Setters
-	long getIdWeapon();
-	void setIdWeapon(long p_id);
-
 	AmmoModel *getAmmo();
 	void setAmmo(AmmoModel *p_ammo);
 	bool isAmmoChanged();
@@ -78,8 +68,6 @@ public:
 
 private:
 	// Attributs
-	long mIdWeapon;
-
 	AmmoModel *mAmmo;
 	bool mAmmoChanged;
 

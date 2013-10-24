@@ -10,7 +10,6 @@
 #include "ToolsImage.h"
 #include "NetworkJobManager.h"
 #include "CharacterShipUpdate.h"
-#include "CharacterShipWeaponCreate.h"
 #include "CharacterUpdate.h"
 #include "Jukebox.h"
 
@@ -231,11 +230,20 @@ void CharacterShip::loadFromJson( Json::Value json )
 	this->setShipModel(FactoryGet::getShipModelFactory()->getShipModel(json.get(JSON_IDSHIPMODEL, 0).asInt()));
 	
 	// Weapons
-	Json::Value weapons = json.get(JSON_WEAPONS, NULL);
-	if(weapons != NULL)
+	std::string weaponsString = json.get(JSON_WEAPONS, "").asString();
+	if(weaponsString != "")
 	{
-		for(int i = 0; i < weapons.size(); i++)
-			this->addWeapon(new Weapon(weapons.get(i, NULL), this), false);
+		Json::Reader reader;
+		Json::Value weaponsJson;
+		if(reader.parse(weaponsString, weaponsJson))
+		{
+			if(weaponsJson.isArray())
+			{
+				for(int i = 0; i < weaponsJson.size(); i++)
+					this->addWeapon(new Weapon(weaponsJson.get(i, NULL), this), false);
+			}
+		}
+
 	}
 
 	// ItemStacks
@@ -311,9 +319,6 @@ void CharacterShip::notifyWeaponsChanged()
 	Weaponable::notifyWeaponsChanged();
 	if(this->isPiloted() && UserInterface::mUserInterface != NULL)
 		UserInterface::mUserInterface->notifyWeaponViewChanged();
-
-	if(this->mLoaded)
-		NetworkJobManager::getInstance()->addJob(new CharacterShipWeaponCreate(this));
 }
 
 void CharacterShip::notifyPositionChanged()

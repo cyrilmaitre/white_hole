@@ -1251,9 +1251,6 @@
     <ClCompile Include="HangarShipWeaponView.cpp">
       <Filter>Fichiers sources\game\ui\stationscreen\panel\hangar</Filter>
     </ClCompile>
-    <ClCompile Include="CharacterShipWeaponCreate.cpp">
-      <Filter>Fichiers sources\resource\network</Filter>
-    </ClCompile>
     <ClCompile Include="UnloadingGameScreen.cpp">
       <Filter>Fichiers sources\screen</Filter>
     </ClCompile>
@@ -2203,9 +2200,6 @@
     </ClInclude>
     <ClInclude Include="HangarShipWeaponView.h">
       <Filter>Fichiers d%27en-tête\game\ui\stationscreen\panel\hangar</Filter>
-    </ClInclude>
-    <ClInclude Include="CharacterShipWeaponCreate.h">
-      <Filter>Fichiers d%27en-tête\resource\network</Filter>
     </ClInclude>
     <ClInclude Include="UnloadingGameScreen.h">
       <Filter>Fichiers d%27en-tête\screen</Filter>

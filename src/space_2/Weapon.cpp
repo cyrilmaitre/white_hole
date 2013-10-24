@@ -12,6 +12,11 @@
 //*************************************************************
 #define SOUNDFIRE_DISTMIN				25.0f
 #define SOUNDIFRE_ATTENUATION			30.0f
+#define JSON_AMMOCOUNT					"ammoCount"
+#define JSON_ACTIF						"actif"
+#define JSON_IDAMMO						"idAmmo"	
+#define JSON_IDCHARACTERSHIP			"idCharacterShip"
+#define JSON_IDWEAPONMODEL				"idWeaponModel"
 
 
 //*************************************************************
@@ -43,7 +48,6 @@ Weapon::Weapon( CharacterShip* p_ship, WeaponModel* p_model )
 	this->setEntity(p_ship);
 	this->setWeaponModel(p_model);
 
-	this->mIdWeapon = -1;
 	this->mAmmo = NULL;
 	this->mAmmoCount = 0;
 	this->mActif = true;
@@ -55,7 +59,6 @@ void Weapon::init()
 	this->mEntity = NULL;
 	this->mAmmo = NULL;
 
-	this->mIdWeapon = -1;
 	this->mAmmoChanged = false;
 	this->mAmmoCount = 0;
 	this->mAmmoCountChanged = false;
@@ -79,16 +82,6 @@ Weapon::~Weapon(void)
 //*************************************************************
 // Getters - Setters
 //*************************************************************
-long Weapon::getIdWeapon()
-{
-	return this->mIdWeapon;
-}
-
-void Weapon::setIdWeapon( long p_id )
-{
-	this->mIdWeapon = p_id;
-}
-
 AmmoModel * Weapon::getAmmo()
 {
 	return this->mAmmo;
@@ -269,12 +262,12 @@ double Weapon::getDps()
 //*************************************************************
 void Weapon::loadFromJson( Json::Value json )
 {
-	this->setIdWeapon(json.get(JSON_IDWEAPON, -1).asInt());
 	long ammoId = json.get(JSON_IDAMMO, -1).asInt();
 	if(ammoId != -1)
 		this->setAmmo(FactoryGet::getAmmoFactory()->getAmmo(ammoId));
 	else
 		this->setAmmo(NULL);
+
 	this->setAmmoCount(json.get(JSON_AMMOCOUNT, 0).asInt());
 	this->setActif(json.get(JSON_ACTIF, true).asBool());
 	this->setWeaponModel(FactoryGet::getWeaponModelFactory()->getWeaponModel(json.get(JSON_IDWEAPONMODEL, -1).asInt()));
@@ -287,11 +280,11 @@ Json::Value Weapon::saveToJson()
 	{
 		CharacterShip* characterShip = (CharacterShip*)this->getEntity();
 		
-		json[JSON_IDWEAPON] = this->getIdWeapon();
 		if(this->getAmmo() != NULL)
 			json[JSON_IDAMMO] = this->getAmmo()->getIdItem();
 		else
 			json[JSON_IDAMMO] = -1;
+
 		json[JSON_AMMOCOUNT] = this->getAmmoCount();
 		json[JSON_ACTIF] = this->isActif();
 		json[JSON_IDCHARACTERSHIP] = characterShip->getIdCharacterShip();
@@ -378,11 +371,3 @@ void Weapon::reload()
 		this->mReloadClock.restart();
 	}
 }
-
-
-
-
-
-
-
-
