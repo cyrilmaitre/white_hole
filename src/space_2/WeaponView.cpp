@@ -333,6 +333,9 @@ void WeaponView::notifyWeaponChanged()
 	if(this->mWeapon != NULL)
 	{
 		this->mWeaponIcon.setBackgroundImage(SpriteParameterFactory::getSpriteParameterItems()->getSpritePtr(this->mWeapon->getWeaponModel()->getSpriteId()), true);
+
+		for(int i = 0; i < this->mWeapon->getWeaponModel()->getAmmoTypeAllowedCount(); i++)
+			this->mAmmoContainer->getContainerItem()->addItemTypeAllowed(this->mWeapon->getWeaponModel()->getAmmoTypeAllowed(i));
 	}
 	this->updateWeaponInfo();
 	this->updateAmmoCount();
