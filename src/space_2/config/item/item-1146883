@@ -1,7 +1,7 @@
-id = 9
+id = 1146883
 name = shipModelFrigate6Name
 description = shipModelFrigate6Description
-price = 1000000
+price = 1000000.0
 stackmax = 1
 sprite = 2-6
 itemtype = 35

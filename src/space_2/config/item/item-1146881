@@ -1,11 +1,11 @@
-id = 101
+id = 1146881
 name = shipModelFrigate4Name
 description = shipModelFrigate4Description
-price = 1000000
+price = 1000000.0
 stackmax = 1
 sprite = 1-6
 itemtype = 35
-itemtier = 1
+itemtier = 2
 buyable = true
 stockminimum_min = 1
 stockminimum_max = 2
