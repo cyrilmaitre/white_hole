@@ -324,7 +324,9 @@ void HangarShipWeaponView::notifyCharacterShipChanged()
 		this->mContainerWeaponStackViews.push_back(newView);
 
 		// Ammo view
-		this->mContainerAmmosItemViews.push_back(new ContainerItemAmmoView(this, new ContainerItem()));
+		ContainerItem* ammoContainer = new ContainerItem();
+		ammoContainer->setRestrictAllWhenEmpty(true);
+		this->mContainerAmmosItemViews.push_back(new ContainerItemAmmoView(this, ammoContainer));
 	}
 
 	// Update pub

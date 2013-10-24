@@ -6,6 +6,7 @@
 //*************************************************************
 ContainerRestriction::ContainerRestriction(void)
 {
+	this->mRestrictAllWhenEmpty = false;
 }
 
 ContainerRestriction::~ContainerRestriction(void)
@@ -16,10 +17,20 @@ ContainerRestriction::~ContainerRestriction(void)
 //*************************************************************
 // Getters - Setters
 //*************************************************************
+bool ContainerRestriction::isRestrictAllWhenEmpty()
+{
+	return this->mRestrictAllWhenEmpty;
+}
+
+void ContainerRestriction::setRestrictAllWhenEmpty( bool p_value )
+{
+	this->mRestrictAllWhenEmpty = p_value;
+}
+
 bool ContainerRestriction::isItemTypeAllowed( ItemType* p_type )
 {
 	if(this->mItemTypesAllowed.size() == 0)
-		return true;
+		return !this->mRestrictAllWhenEmpty;
 
 	for(int i = 0; i < this->mItemTypesAllowed.size(); i++)
 	{
@@ -43,3 +54,5 @@ void ContainerRestriction::clearItemTypeAllowed()
 {
 	this->mItemTypesAllowed.clear();
 }
+
+

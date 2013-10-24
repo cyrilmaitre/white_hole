@@ -10,6 +10,9 @@ public:
 	~ContainerRestriction(void);
 
 	// Getters - Setters
+	bool isRestrictAllWhenEmpty();
+	void setRestrictAllWhenEmpty(bool p_value);
+
 	bool isItemTypeAllowed(ItemType* p_type);
 
 	// Methods
@@ -20,5 +23,6 @@ public:
 private:
 	// Attributs
 	std::vector<ItemType*> mItemTypesAllowed;
+	bool mRestrictAllWhenEmpty;
 };
 
