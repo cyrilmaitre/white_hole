@@ -360,6 +360,10 @@ shipModelFrigate5Name = Crucifier I
 shipModelFrigate5Description = desc.
 shipModelFrigate6Name = Crucifier II
 shipModelFrigate6Description = desc.
+shipModelFrigate7Name = Tormentor I
+shipModelFrigate7Description = desc.
+shipModelFrigate8Name = Tormentor II
+shipModelFrigate8Description = desc.
 #
 #
 # Window UiGame Ship Small
