@@ -4,6 +4,7 @@
 #include "Npc.h"
 #include "Star.h"
 #include "Terminable.h"
+#include "Tools.h"
 
 
 //*************************************************************
@@ -120,7 +121,7 @@ int ToolsMap::getRadius( MapObject* p_object, int p_plane )
 
 Sector::SectorColor ToolsMap::getRandomSectorColor()
 {
-	return static_cast<Sector::SectorColor>(rand() % Sector::SectorColor::Last);
+	return static_cast<Sector::SectorColor>(Tools::random() % Sector::SectorColor::Last);
 }
 
 sf::Color ToolsMap::convertSectorColor( Sector::SectorColor p_color )

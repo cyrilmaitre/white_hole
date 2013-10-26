@@ -43,6 +43,7 @@ public:
 	static std::string sha1(std::string p_string);
 
 	// Random
+	static int random();
 	static int random(int p_min, int p_max);
 	static long random(long p_min, long p_max);
 	static float random(float p_min, float p_max);
