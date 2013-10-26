@@ -364,6 +364,30 @@ shipModelFrigate7Name = Tormentor I
 shipModelFrigate7Description = desc.
 shipModelFrigate8Name = Tormentor II
 shipModelFrigate8Description = desc.
+shipModelFrigate9Name = Executioner I
+shipModelFrigate9Description = desc.
+shipModelFrigate10Name = Executioner II
+shipModelFrigate10Description = desc.
+shipModelFrigate11Name = Impairor I
+shipModelFrigate11Description = desc.
+shipModelFrigate12Name = Impairor II
+shipModelFrigate12Description = desc.
+shipModelDestroyer1Name = Atron I
+shipModelDestroyer1Description = desc.
+shipModelDestroyer2Name = Atron II
+shipModelDestroyer2Description = desc.
+shipModelDestroyer3Name = Imicus I
+shipModelDestroyer3Description = desc.
+shipModelDestroyer4Name = Imicus II
+shipModelDestroyer4Description = desc.
+shipModelDestroyer5Name = Maulus I
+shipModelDestroyer5Description = desc.
+shipModelDestroyer6Name = Maulus II
+shipModelDestroyer6Description = desc.
+shipModelDestroyer7Name = Tristan I
+shipModelDestroyer7Description = desc.
+shipModelDestroyer8Name = Tristan I
+shipModelDestroyer8Description = desc.
 #
 #
 # Window UiGame Ship Small
