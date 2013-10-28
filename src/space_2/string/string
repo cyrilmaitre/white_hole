@@ -400,6 +400,8 @@ shipModelDestroyer13Name = Incursus I
 shipModelDestroyer13Description = desc.
 shipModelDestroyer14Name = Incursus II
 shipModelDestroyer14Description = desc.
+shipModelBuilder1Name = Covetor I
+shipModelBuilder1Description = desc.
 #
 #
 # Window UiGame Ship Small
