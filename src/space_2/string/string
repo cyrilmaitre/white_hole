@@ -404,6 +404,14 @@ shipModelBuilder1Name = Retriever I
 shipModelBuilder1Description = desc.
 shipModelBuilder2Name = Retriever II
 shipModelBuilder2Description = desc.
+shipModelCruiser1Name = Arbitrator I
+shipModelCruiser1Description = desc.
+shipModelCruiser2Name = Arbitrator II
+shipModelCruiser2Description = desc.
+shipModelCruiser3Name = Augoror I
+shipModelCruiser3Description = desc.
+shipModelCruiser4Name = Augoror II
+shipModelCruiser4Description = desc.
 #
 #
 # Window UiGame Ship Small
