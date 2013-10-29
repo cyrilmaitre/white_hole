@@ -90,7 +90,7 @@ WreckMini::WreckMini( Wreck* p_parent, float p_velocity )
 		this->setVelocityAt(Movable::MovableCardinality::North, Tools::random(0, velocityMax));
 	}
 
-	this->setRockingActived(false);
+	this->setRockingState(RockingState::Inactive);
 	this->setQuickening(QUICKENING);
 	this->setSize(SIZE, SIZE);
 	this->setPosition(p_parent->Object::getX(), p_parent->Object::getY());

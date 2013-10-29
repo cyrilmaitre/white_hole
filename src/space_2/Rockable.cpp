@@ -2,12 +2,19 @@
 
 
 //*************************************************************
+// Define
+//*************************************************************
+#define ROCKING_AMPLITUDE				5
+#define ROCKING_SPEED					3	// per sec
+
+
+//*************************************************************
 // Constructreur - Destructeur
 //*************************************************************
 Rockable::Rockable(void)
 {
 	this->mRocking = 0;
-	this->setRockingActived(true);
+	this->setRockingState(RockingState::ActiveUp);
 }
 
 Rockable::~Rockable(void)
@@ -23,14 +30,32 @@ float Rockable::getRocking()
 	return this->mRocking;
 }
 
-bool Rockable::isRockingActived()
+void Rockable::setRocking( float p_rocking )
 {
-	return this->mRockingActived;
+	if(p_rocking > ROCKING_AMPLITUDE)
+	{
+		this->setRockingState(RockingState::ActiveDown);
+		this->mRocking = 2 * ROCKING_AMPLITUDE - p_rocking;
+	}
+	else if(p_rocking < -ROCKING_AMPLITUDE)
+	{
+		this->setRockingState(RockingState::ActiveUp);
+		this->mRocking = -2 * ROCKING_AMPLITUDE - p_rocking;
+	}
+	else
+	{
+		this->mRocking = p_rocking;
+	}
 }
 
-void Rockable::setRockingActived( bool p_actived )
+Rockable::RockingState Rockable::getRockingState()
 {
-	this->mRockingActived = p_actived;
+	return this->mRockingState;
+}
+
+void Rockable::setRockingState( RockingState p_state )
+{
+	this->mRockingState = p_state;
 }
 
 
@@ -39,23 +64,18 @@ void Rockable::setRockingActived( bool p_actived )
 //*************************************************************
 void Rockable::update()
 {
-	if(this->isRockingActived())
+	if(this->mRockingState != RockingState::Inactive)
 		this->updateRocking();
 }
 
 void Rockable::updateRocking()
 {
-	// Update clock
-	float elapsedTime = this->mRockingClock.getElapsedTimeAsSeconds();
-	if(elapsedTime > ROCKING_CYCLE)
-	{
-		this->mRockingClock.restart();
-		elapsedTime = 0;
-	}
+	float offsetRocking = this->mRockingClock.getElapsedTimeAsSeconds() * ROCKING_SPEED;
+	this->mRockingClock.restart();
 
-	// Set new rocking
-	if( elapsedTime < ROCKING_CYCLE_DEMI)
-		this->mRocking = elapsedTime / ROCKING_PERIOD;
+	if(this->mRockingState == RockingState::ActiveUp)
+		this->setRocking(this->mRocking + offsetRocking);
 	else
-		this->mRocking = ROCKING_CYCLE_DEMI_OFFSET - ((elapsedTime - ROCKING_CYCLE_DEMI) / ROCKING_PERIOD);
+		this->setRocking(this->mRocking - offsetRocking);
 }
+

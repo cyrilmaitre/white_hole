@@ -186,6 +186,8 @@ void EntityMovable::updateRocking()
 {
 	if(!this->isMoving())
 		Rockable::updateRocking();
+	else
+		this->mRockingClock.restart();
 }
 
 void EntityMovable::updateSprite()

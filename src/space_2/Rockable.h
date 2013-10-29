@@ -2,35 +2,38 @@
 #include "Resource.h"
 #include "Clock.h"
 
-// Define
-#define ROCKING_PERIOD					0.3	// Sec
-#define ROCKING_AMPLITUDE				5
-#define ROCKING_CYCLE					ROCKING_AMPLITUDE * ROCKING_PERIOD * 4
-#define ROCKING_CYCLE_DEMI				ROCKING_CYCLE / 2
-#define ROCKING_CYCLE_DEMI_OFFSET		ROCKING_CYCLE_DEMI / ROCKING_PERIOD
 
 class Rockable
 {
 public:
+	// Enum
+	enum RockingState
+	{
+		ActiveUp,
+		ActiveDown,
+		Inactive
+	};
+
 	// Constructor - Destructor
 	Rockable(void);
 	~Rockable(void);
 
 	// Getters - Setters
 	float getRocking();
+	void setRocking(float p_rocking);
 
-	bool isRockingActived();
-	void setRockingActived(bool p_actived);
+	RockingState getRockingState();
+	void setRockingState(RockingState p_state);
 
 	// Methods
 	void update();
 	virtual void updateRocking();
 
 
-private:
+protected:
 	// Attributs
-	mks::Clock mRockingClock;
 	float mRocking;
-	bool mRockingActived;
+	RockingState mRockingState;
+	mks::Clock mRockingClock;
 };
 
